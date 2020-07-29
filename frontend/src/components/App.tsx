@@ -1,4 +1,5 @@
 import React from 'react';
+import './App.scss';	
 import Scientia from './pages/Scientia'
 import Container from 'react-bootstrap/Container';
 

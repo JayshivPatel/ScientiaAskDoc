@@ -1,12 +1,4 @@
-// Override default variables before the import
-
-
-
-//Bootstrap 5 scss from: https://github.com/twbs/bootstrap/tree/main/scss
-@import './bootstrapV5/bootstrap.scss';
-
-// If ./bootstrapV5/ causes problems, delete and replace with below: 
-// @import '~bootstrap/scss/bootstrap.scss';
+@import '../scss/custom';
 
 body {
   margin: 0;
