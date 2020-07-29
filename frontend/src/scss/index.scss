@@ -1,0 +1,24 @@
+// Override default variables before the import
+
+
+
+//Bootstrap 5 scss from: https://github.com/twbs/bootstrap/tree/main/scss
+@import './bootstrapV5/bootstrap.scss';
+
+// If ./bootstrapV5/ causes problems, delete and replace with below: 
+// @import '~bootstrap/scss/bootstrap.scss';
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	// background-color: $teal-300;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
