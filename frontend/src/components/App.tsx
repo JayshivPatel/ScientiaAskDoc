@@ -1,13 +1,14 @@
-import React from 'react';
-import './App.scss';	
-import Scientia from './pages/Scientia'
-import Container from 'react-bootstrap/Container';
+import React from "react";
+import "./App.scss";
+import ExamplePage from "./pages/ExamplePage";
+import TopBar from "./organisms/TopBar/TopBar";
 
 const App: React.FC = () => {
   return (
-    <Container className="p-3">
-      <Scientia/>
-    </Container>
+    <>
+      <TopBar />
+      <ExamplePage />
+    </>
   );
 };
 
