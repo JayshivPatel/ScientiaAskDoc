@@ -3,8 +3,8 @@ import React from "react";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Container from "react-bootstrap/Container";
 
-import ButtonsShowcase from "../molecules/Buttons";
-import ToastsShowcase from "../molecules/Toasts";
+import ButtonsShowcase from "components/molecules/Buttons";
+import ToastsShowcase from "components/molecules/Toasts";
 
 const ExamplePage: React.FC = () => {
   return (

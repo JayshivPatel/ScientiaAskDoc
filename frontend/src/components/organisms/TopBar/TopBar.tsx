@@ -2,8 +2,8 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import logo from "../../../images/logo.svg";
-import userPic from "../../../images/user.png";
+import logo from "images/logo.svg";
+import userPic from "images/user.png";
 import "./style.scss";
 
 const TopBar: React.FC = () => {
