@@ -6,12 +6,12 @@ import Container from "react-bootstrap/Container";
 import ButtonsShowcase from "components/molecules/Buttons";
 import ToastsShowcase from "components/molecules/Toasts";
 
-const ExamplePage: React.FC = () => {
+const ExampleCourses: React.FC = () => {
   return (
     <Container className="p-3">
       <Jumbotron>
         <h1 className="header">
-          Welcome To React-Bootstrap TypeScript Example
+          Welcome To Other
         </h1>
       </Jumbotron>
       <h2>Buttons</h2>
@@ -22,4 +22,4 @@ const ExamplePage: React.FC = () => {
   );
 };
 
-export default ExamplePage;
+export default ExampleCourses;

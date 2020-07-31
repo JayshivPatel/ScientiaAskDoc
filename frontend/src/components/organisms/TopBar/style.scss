@@ -35,7 +35,7 @@
     border-radius: 5px;
     font-family: 'IBM Plex Sans';
     font-size: 18px;
-    color: $black;
+    color: $black !important;
     text-align: center;
     line-height: 22px;
     width: 120px;
@@ -46,13 +46,13 @@
 
 .page-button:hover {
     background: $gray-200;
-    color: $black; 
+    color: $black !important; 
 }
 
-.page-button:active {
-    background: $black;
-    font-weight: 500;
-    color: $white;
+.page-button.active {
+    background: $black !important;
+    font-weight: 500 !important;
+    color: $white !important; 
 }
 
 .page-button-group {
