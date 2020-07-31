@@ -15,48 +15,32 @@
     width: 100%;
   }
 
-  .bottom-bar-buttons button {
+  .bottom-bar-buttons .btn {
     border: 0;
     border-radius: 0px;
     width: 25%;
     margin-left: 0;
+    color: #000;
+    background-color: #fff !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .bottom-bar-buttons button:active,
-  .button-active {
+  .bottom-bar-buttons .btn-primary .btn:active {
     border: 0;
     background-color: #000 !important;
+    color: #fff;
   }
 
-  .bottom-bar-buttons button:focus {
+  .bottom-bar-buttons .btn:focus {
     border: 0;
     outline: 0;
     box-shadow: 0 0 0 0px;
   }
 
-  .bottom-bar-buttons button:hover {
+  .bottom-bar-buttons .btn:hover {
     border: 0px;
-  }
-
-  .button-holder {
-    align-items: center;
-  }
-
-  .inactive {
-    display: none;
-  }
-
-  .button-active,
-  .bottom-bar-buttons button:hover,
-  .bottom-bar-buttons button:active,
-  .bottom-bar-buttons button:focus {
-    color: #000;
-  }
-
-  .button-inactive {
-    border: 0px;
-    color: #000;
-    background-color: #fff !important;
   }
 }
 
@@ -65,3 +49,5 @@
     display: none;
   }
 }
+
+//style="background-color:white; border-width:0px; color:black; display:flex; align-items:center; justify-content:center;"

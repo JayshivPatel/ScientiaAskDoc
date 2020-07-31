@@ -8,26 +8,24 @@ import {
   faEllipsisH,
   faCalendarWeek,
   faChalkboardTeacher,
-	IconDefinition,
+  IconDefinition
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink, Link } from "react-router-dom";
 
 export interface BottomBarProps {
-	pages: {
+  pages: {
     name: string;
     path: string;
     icon: IconDefinition;
-}[];
+  }[];
 }
 
-const BottomBar: React.FC<BottomBarProps> = ({pages}: BottomBarProps) => {
-
-	const BottomBarItems = pages.map(({ name, path, icon }) => (
+const BottomBar: React.FC<BottomBarProps> = ({ pages }: BottomBarProps) => {
+  const BottomBarItems = pages.map(({ name, path, icon }) => (
     <Button
-      active
-      as={Link}
-			// activeClassName="button-active"
+      activeClassName="active"
+      as={NavLink}
       to={path}
       id={"bottom-" + name}
       key={name}
@@ -36,17 +34,12 @@ const BottomBar: React.FC<BottomBarProps> = ({pages}: BottomBarProps) => {
         <FontAwesomeIcon icon={icon} size="lg" />
       </div>
     </Button>
-	));
-	
+  ));
+
   return (
     <Navbar className="bottom-bar footer">
       <ButtonGroup aria-label="Basic example" className="bottom-bar-buttons">
-				{BottomBarItems}
-        <Button active className="button-active" id="bottom-courses">
-          <div className="button-holder">
-            <FontAwesomeIcon icon={faChalkboardTeacher} size="lg" />
-          </div>
-        </Button>
+        {BottomBarItems}
       </ButtonGroup>
     </Navbar>
   );
