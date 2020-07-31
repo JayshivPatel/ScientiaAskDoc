@@ -6,12 +6,17 @@ import Container from "react-bootstrap/Container";
 import ButtonsShowcase from "components/molecules/Buttons";
 import ToastsShowcase from "components/molecules/Toasts";
 
-const ExampleCourses: React.FC = () => {
+export interface ExamplePageProps {
+  name: string;
+}
+
+
+const ExamplePage: React.FC<ExamplePageProps> = ({name} : ExamplePageProps) => {
   return (
     <Container className="p-3">
       <Jumbotron>
         <h1 className="header">
-          Welcome To Other
+          Welcome To {name}
         </h1>
       </Jumbotron>
       <h2>Buttons</h2>
@@ -22,4 +27,4 @@ const ExampleCourses: React.FC = () => {
   );
 };
 
-export default ExampleCourses;
+export default ExamplePage;

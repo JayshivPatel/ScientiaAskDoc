@@ -7,7 +7,27 @@ import userPic from "images/user.png";
 import "./style.scss";
 import { Link, NavLink } from "react-router-dom";
 
-const TopBar: React.FC = () => {
+export interface TopBarProps {
+  pages: {
+    name: string;
+    path: string;
+  }[];
+}
+
+const TopBar: React.FC<TopBarProps> = ({ pages }: TopBarProps) => {
+  const NavItems = pages.map(({ name, path }) => (
+    <Nav.Item key={name}>
+      <Nav.Link
+        as={NavLink}
+        activeClassName="active"
+        to={path}
+        className="page-button"
+      >
+        {name}
+      </Nav.Link>
+    </Nav.Item>
+  ));
+
   return (
     <Navbar className="top-bar" sticky="top" expand="lg" variant="light">
       <Container fluid>
@@ -23,48 +43,7 @@ const TopBar: React.FC = () => {
         </Navbar.Brand>
 
         <Navbar className="page-button-group m-auto" id="responsive-navbar-nav">
-          <Nav variant="pills" defaultActiveKey="/timetable">
-            <Nav.Item>
-              <Nav.Link
-                as={NavLink}
-                activeClassName="active"
-                to="/courses"
-                className="page-button"
-              >
-                Courses
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link
-                as={NavLink}
-                activeClassName="active"
-                to="/timetable"
-                className="page-button"
-              >
-                Timetable
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link
-                as={NavLink}
-                activeClassName="active"
-                to="/exams"
-                className="page-button"
-              >
-                Exams
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link
-                as={NavLink}
-                activeClassName="active"
-                to="/other"
-                className="page-button"
-              >
-                Other
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
+          <Nav variant="pills">{NavItems}</Nav>
         </Navbar>
 
         <img

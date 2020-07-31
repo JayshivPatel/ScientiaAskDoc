@@ -1,35 +1,39 @@
 import React from "react";
 import "./App.scss";
-import ExampleCourses from "./pages/ExampleCourses";
-import ExampleExams from "./pages/ExampleExams";
-import ExampleOther from "./pages/ExampleOther";
-import ExampleTimetable from "./pages/ExampleTimetable";
+import ExamplePage from "./templates/ExamplePage";
 
 import TopBar from "./organisms/TopBar/TopBar";
 import BottomBar from "./organisms/BottomBar/BottomBar";
 import { Redirect, Switch, Route } from "react-router-dom";
+import {
+  faBookOpen,
+  faEllipsisH,
+  faCalendarWeek,
+  faChalkboardTeacher,
+} from "@fortawesome/free-solid-svg-icons";
 
 const App: React.FC = () => {
+  const horizontalBarPages = [
+    { name: "Courses", path: "/courses", icon: faChalkboardTeacher },
+    { name: "Timetable", path: "/timetable", icon: faCalendarWeek },
+    { name: "Exams", path: "/exams", icon: faBookOpen },
+    { name: "Other", path: "/other", icon: faEllipsisH },
+  ];
+
+  const topBarRoutes = horizontalBarPages.map(({ name, path }) => 
+    <Route path={path} key={name}>
+      <ExamplePage name={name} />
+    </Route>
+  );
+
   return (
     <>
-      <TopBar />
+      <TopBar pages={horizontalBarPages}/>
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/courses" />} />
-
-        <Route path="/courses">
-          <ExampleCourses />
-        </Route>
-        <Route path="/timetable">
-          <ExampleTimetable />
-        </Route>
-        <Route path="/exams">
-          <ExampleExams />
-        </Route>
-        <Route path="/other">
-          <ExampleOther />
-        </Route>
+        {topBarRoutes}
       </Switch>
-      <BottomBar />
+      <BottomBar  pages={horizontalBarPages}/>
     </>
   );
 };
