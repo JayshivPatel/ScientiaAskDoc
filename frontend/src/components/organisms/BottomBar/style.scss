@@ -13,6 +13,12 @@
   .block {
     height: 100%;
     width: 100%;
+	}
+	
+	.btn:active, .btn.active {
+    border: 0;
+    background-color:#000 !important;
+    color: #fff;
   }
 
   .bottom-bar-buttons .btn {
@@ -21,17 +27,13 @@
     width: 25%;
     margin-left: 0;
     color: #000;
-    background-color: #fff !important;
+    background-color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .bottom-bar-buttons .btn-primary .btn:active {
-    border: 0;
-    background-color: #000 !important;
-    color: #fff;
-  }
+
 
   .bottom-bar-buttons .btn:focus {
     border: 0;
