@@ -1,0 +1,63 @@
+@import "scss/custom";
+
+//-----------------------------------Top Bar-----------------------------------
+
+.top-bar {
+    padding: 10px 16px;
+    background: #FFF;
+    border-bottom: 1px solid #CDD4DB;
+}
+
+
+//------------------------------------Brand------------------------------------
+
+.brand-image {
+    margin-right: 10px;
+}
+
+.brand-container {
+    font-family: 'IBM Plex Sans';
+    font-weight: 500;
+    font-size: 28px;
+    color: #000;
+    text-align: left;
+    padding: 0px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin: 0px;
+}
+
+//--------------------------------Page Buttons---------------------------------
+
+.page-button {
+    background: $gray-100;
+    border-radius: 5px;
+    font-family: 'IBM Plex Sans';
+    font-size: 18px;
+    color: $black;
+    text-align: center;
+    line-height: 22px;
+    width: 120px;
+    height: 36px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.page-button:hover {
+    background: $gray-200;
+    color: $black; 
+}
+
+.page-button:active {
+    background: $black;
+    font-weight: 500;
+    color: $white;
+}
+
+.page-button-group {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

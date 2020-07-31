@@ -10,41 +10,32 @@ const TopBar: React.FC = () => {
   return (
     <>
       <Navbar
-        className="justify-content-center"
+        className="top-bar"
         sticky="top"
         expand="lg"
         variant="light"
-        bg="light"
       >
-        <Container>
-          <Navbar.Brand href="#">
-            <img
-              src={logo}
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-              alt="React Bootstrap logo"
-            />{" "}
+        <Container fluid>
+          <Navbar.Brand href="#" className="brand-container">
+              <img
+                src={logo}
+                width="40"
+                height="40"
+                className="d-inline-block align-center brand-image"
+                alt="React Bootstrap logo"
+              />{" "}
             Scientia
           </Navbar.Brand>
 
-          <Nav variant="pills" activeKey="/">
-            <Nav.Item>
-              <Nav.Link href="/">Courses</Nav.Link>
-            </Nav.Item>
+        <Navbar className="page-button-group m-auto" id="responsive-navbar-nav">
+            <Nav.Link active href="/" className="page-button">Courses</Nav.Link>
 
-            <Nav.Item>
-              <Nav.Link eventKey="link-1">Timetable</Nav.Link>
-            </Nav.Item>
+            <Nav.Link eventKey="link-1" className="page-button">Timetable</Nav.Link>
 
-            <Nav.Item>
-              <Nav.Link eventKey="link-2">Exams</Nav.Link>
-            </Nav.Item>
+            <Nav.Link eventKey="link-2" className="page-button">Exams</Nav.Link>
 
-            <Nav.Item>
-              <Nav.Link eventKey="link-3">Other</Nav.Link>
-            </Nav.Item>
-          </Nav>
+            <Nav.Link eventKey="link-3" className="page-button">Other</Nav.Link>
+        </Navbar>
 
           <img
             src={userPic}
