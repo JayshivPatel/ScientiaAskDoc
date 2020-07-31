@@ -22,7 +22,9 @@
   }
 
   .bottom-bar-buttons .btn {
-    border: 0;
+		border: 0;
+		box-shadow: none !important;
+    outline: 0 !important;
     border-radius: 0px;
     width: 25%;
     margin-left: 0;
@@ -35,9 +37,8 @@
 
 
 
-  .bottom-bar-buttons .btn:focus {
+  .btn:focus {
     border: 0;
-    outline: 0;
     box-shadow: 0 0 0 0px;
   }
 
