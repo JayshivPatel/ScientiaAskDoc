@@ -3,38 +3,37 @@
 //-----------------------------------Top Bar-----------------------------------
 
 .top-bar {
-    padding: 12px 16px;
-    background: #FFF;
-    border-bottom: 1px solid #CDD4DB;
+  padding: 12px 16px;
+  background: #fff;
+  border-bottom: 1px solid #cdd4db;
 }
-
 
 //------------------------------------Brand------------------------------------
 
 .brand-image {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .brand-container {
-    font-family: 'IBM Plex Sans';
-    font-weight: 500;
-    font-size: 24px;
-    color: #000;
-    text-align: left;
-    padding: 0px;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    margin: 0px;
+  font-family: "IBM Plex Sans";
+  font-weight: 500;
+  font-size: 24px;
+  color: #000;
+  text-align: left;
+  padding: 0px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin: 0px;
 }
 
 //--------------------------------Page Buttons---------------------------------
 
 @media (min-width: 992px) {
-.page-button {
+  .page-button {
     background: $gray-100;
     border-radius: 5px;
-    font-family: 'IBM Plex Sans';
+    font-family: "IBM Plex Sans";
     font-size: 18px;
     color: $black !important;
     text-align: center;
@@ -43,29 +42,29 @@
     height: 36px;
     margin-right: 10px;
     margin-left: 10px;
-}
+  }
 
-.page-button:hover {
+  .page-button:hover {
     background: $gray-200;
-    color: $black !important; 
-}
+    color: $black !important;
+  }
 
-.page-button.active {
+  .page-button.active {
     background: $black !important;
     font-weight: 500 !important;
-    color: $white !important; 
-}
+    color: $white !important;
+  }
 
-.page-button-group {
+  .page-button-group {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
+  }
 }
 
 @media (max-width: 992px) {
-    .page-button-group {
-        display: none;
-    }
+  .page-button-group {
+    display: none;
+  }
 }

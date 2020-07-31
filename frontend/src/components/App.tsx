@@ -8,8 +8,6 @@ import ExampleTimetable from "./pages/ExampleTimetable";
 import TopBar from "./organisms/TopBar/TopBar";
 import BottomBar from "./organisms/BottomBar/BottomBar";
 import { Redirect, Switch, Route } from "react-router-dom";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const App: React.FC = () => {
   return (

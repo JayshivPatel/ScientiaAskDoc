@@ -25,22 +25,42 @@ const TopBar: React.FC = () => {
         <Navbar className="page-button-group m-auto" id="responsive-navbar-nav">
           <Nav variant="pills" defaultActiveKey="/timetable">
             <Nav.Item>
-              <Nav.Link as={NavLink} activeClassName='active' to="/courses" className="page-button">
+              <Nav.Link
+                as={NavLink}
+                activeClassName="active"
+                to="/courses"
+                className="page-button"
+              >
                 Courses
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link as={NavLink} activeClassName='active' to="/timetable" className="page-button">
+              <Nav.Link
+                as={NavLink}
+                activeClassName="active"
+                to="/timetable"
+                className="page-button"
+              >
                 Timetable
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link as={NavLink} activeClassName='active' to="/exams" className="page-button">
+              <Nav.Link
+                as={NavLink}
+                activeClassName="active"
+                to="/exams"
+                className="page-button"
+              >
                 Exams
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link as={NavLink} activeClassName='active' to="/other" className="page-button">
+              <Nav.Link
+                as={NavLink}
+                activeClassName="active"
+                to="/other"
+                className="page-button"
+              >
                 Other
               </Nav.Link>
             </Nav.Item>
