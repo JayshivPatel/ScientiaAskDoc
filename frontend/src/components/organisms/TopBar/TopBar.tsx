@@ -31,15 +31,27 @@ const TopBar: React.FC<TopBarProps> = ({ pages }: TopBarProps) => {
   return (
     <Navbar className="top-bar" sticky="top" expand="lg" variant="light">
       <Container fluid>
-        <Navbar.Brand as={Link} to="/" className="brand-container">
+        <Navbar.Brand className="brand-container">
           <img
             src={logo}
             width="30"
             height="30"
             className="d-inline-block align-center brand-image"
             alt="React Bootstrap logo"
+            onClick={(e) => {
+							// TODO: change to using react states
+              e.preventDefault();
+              const wrapper = document.querySelector("#wrapper") || document.createElement("div");
+              if (wrapper.classList.contains("toggled")) {
+                wrapper.classList.remove("toggled");
+              } else {
+                wrapper.classList.add("toggled");
+              }
+            }}
           />{" "}
-          Scientia
+          <Link to="/" style={{ textDecoration: "none" }}>
+            Scientia
+          </Link>
         </Navbar.Brand>
 
         <Navbar className="page-button-group m-auto" id="responsive-navbar-nav">

@@ -11,6 +11,7 @@ import {
   faCalendarWeek,
   faChalkboardTeacher,
 } from "@fortawesome/free-solid-svg-icons";
+import LeftBar from "./organisms/LeftBar/LeftBar";
 
 const App: React.FC = () => {
   const horizontalBarPages = [
@@ -20,20 +21,23 @@ const App: React.FC = () => {
     { name: "Other", path: "/other", icon: faEllipsisH },
   ];
 
-  const topBarRoutes = horizontalBarPages.map(({ name, path }) => 
+  const topBarRoutes = horizontalBarPages.map(({ name, path }) => (
     <Route path={path} key={name}>
       <ExamplePage name={name} />
     </Route>
-  );
+  ));
 
   return (
     <>
-      <TopBar pages={horizontalBarPages}/>
-      <Switch>
-        <Route exact path="/" render={() => <Redirect to="/courses" />} />
-        {topBarRoutes}
-      </Switch>
-      <BottomBar  pages={horizontalBarPages}/>
+      <TopBar pages={horizontalBarPages} />
+      <div id="wrapper">
+				<LeftBar/>
+        <Switch>
+          <Route exact path="/" render={() => <Redirect to="/courses" />} />
+          {topBarRoutes}
+        </Switch>
+      </div>
+      <BottomBar pages={horizontalBarPages} />
     </>
   );
 };

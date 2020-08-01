@@ -4,14 +4,10 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import "./style.scss";
 import {
-  faBookOpen,
-  faEllipsisH,
-  faCalendarWeek,
-  faChalkboardTeacher,
   IconDefinition
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export interface BottomBarProps {
   pages: {
