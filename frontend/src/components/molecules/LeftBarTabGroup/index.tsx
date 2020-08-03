@@ -12,9 +12,9 @@ const LeftBarTabGroup: React.FC = () => {
       >
         <Button className="exam-outline-button">Progress</Button>
         <Button className="exam-outline-button-a active" type="button">
-          Course Title
+          Module Title
         </Button>
-        <Button className="exam-outline-button">Course Code</Button>
+        <Button className="exam-outline-button">Module Code</Button>
         <Button className="exam-outline-button">Term</Button>
       </div>
     </>

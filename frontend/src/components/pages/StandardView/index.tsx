@@ -25,7 +25,7 @@ const StandardView: React.FC<StandardViewProps> = ({
     <div id="wrapper" className={isToggled ? "toggled" : ""}>
       <LeftBar />
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/courses" />} />
+        <Route exact path="/" render={() => <Redirect to="/modules" />} />
         {topBarRoutes}
       </Switch>
     </div>

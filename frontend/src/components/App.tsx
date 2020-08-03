@@ -30,7 +30,7 @@ class App extends React.Component<{}, MyState> {
 
   render() {
     const horizontalBarPages = [
-      { name: "Courses", path: "/courses", icon: faChalkboardTeacher },
+      { name: "Modules", path: "/modules", icon: faChalkboardTeacher },
       { name: "Timetable", path: "/timetable", icon: faCalendarWeek },
       { name: "Exams", path: "/exams", icon: faBookOpen },
       { name: "Other", path: "/other", icon: faEllipsisH },

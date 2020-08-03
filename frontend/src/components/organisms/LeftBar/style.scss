@@ -1,0 +1,146 @@
+@import "scss/custom";
+
+#wrapper {
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#sidebar-wrapper {
+  position: fixed;
+  left: 250px;
+  width: 0;
+  margin-left: -250px;
+  height: 100%;
+  margin-bottom: 61px;
+  overflow-y: auto;
+  background: #fff;
+  background: #ffffff;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.module-outline-button {
+  margin-bottom: 10px;
+}
+
+.module-outline-button-a {
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+#sidebar-wrapper .btn-group-vertical > .btn-group:not(:last-child) > .btn,
+#sidebar-wrapper
+  .btn-group-vertical
+  > .btn:not(:last-child):not(.dropdown-toggle) {
+  border-radius: 5px;
+}
+
+#sidebar-wrapper
+  .btn-group-vertical
+  > .btn-group:not(:first-child)
+  > #sidebar-wrapper
+  .btn,
+.btn-group-vertical > .btn:not(:first-child) {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+#wrapper.toggled {
+  padding-left: 250px;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  width: 250px;
+}
+
+@media (max-width: 992px) {
+  .sidebar-status {
+    margin-top: 30px;
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: "IBM Plex Sans";
+    color: #000000;
+    letter-spacing: 0;
+    position: absolute;
+    width: max-content;
+    text-transform: uppercase;
+  }
+
+  .module-outline-heading {
+    font-size: 24px;
+    color: #000000;
+    text-align: left;
+    margin-top: 64px;
+    margin-left: 16px;
+    margin-right: 16px;
+    position: absolute;
+    width: max-content;
+    margin-bottom: 0px;
+  }
+
+  #module-outline-button-group {
+    margin-top: 102px;
+    margin-left: 16px;
+    margin-right: 16px;
+    width: 218px;
+  }
+}
+
+@media (min-width: 992px) {
+  #wrapper {
+    padding-left: 250px;
+  }
+
+  #sidebar-wrapper {
+    width: 250px;
+  }
+
+  .sidebar-status {
+    margin-top: 30px;
+    margin-left: 32px;
+    margin-right: 32px;
+    margin-bottom: 0px;
+    font-size: 16px;
+    color: #000000;
+    letter-spacing: 0;
+    position: absolute;
+    width: max-content;
+  }
+
+  .module-outline-heading {
+    font-size: 24px;
+    color: #000000;
+    text-align: left;
+    margin-top: 64px;
+    margin-left: 32px;
+    margin-right: 32px;
+    position: absolute;
+    width: max-content;
+    margin-bottom: 0px;
+  }
+
+  #module-outline-button-group {
+    margin-top: 102px;
+    margin-left: 32px;
+    margin-right: 32px;
+    width: 186px;
+  }
+
+  #wrapper.toggled {
+    padding-left: 0;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    width: 0;
+  }
+}
