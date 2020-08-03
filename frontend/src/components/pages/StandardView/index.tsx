@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import ExamplePage from "components/templates/ExamplePage";
 import LeftBar from "components/organisms/LeftBar";
+import "./style.scss"
 
 interface StandardViewProps {
   pages: {

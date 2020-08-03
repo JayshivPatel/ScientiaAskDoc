@@ -1,5 +1,4 @@
-@import "scss/custom";
-
+//TODO: make into css module
 #wrapper {
   padding-left: 0;
   -webkit-transition: all 0.5s ease;
@@ -25,14 +24,36 @@
   transition: all 0.5s ease;
 }
 
-.module-outline-button {
+.exam-outline-button {
   margin-bottom: 10px;
 }
 
-.module-outline-button-a {
+.exam-outline-button-a {
   margin-bottom: 10px;
   border-radius: 8px;
   font-weight: 500;
+}
+
+#sidebar-wrapper .btn-primary:not(:disabled):not(.disabled).active,
+#sidebar-wrapper .btn-primary:not(:disabled):not(.disabled):active{
+  color: #fff;
+  background-color: #000;
+  border-radius: 5px;
+  text-align: left;
+  border-width: 0px;
+  height: 40px;
+}
+
+#sidebar-wrapper .btn-primary {
+  color: #000;
+  background: #f6f8fa;
+  font-size: 17px;
+  color: #000000;
+  letter-spacing: 0;
+  border-width: 0px;
+  height: 40px;
+  border-radius: 5px;
+  text-align: left;
 }
 
 #sidebar-wrapper .btn-group-vertical > .btn-group:not(:last-child) > .btn,
@@ -50,6 +71,12 @@
 .btn-group-vertical > .btn:not(:first-child) {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+}
+
+#sidebar-wrapper .btn-primary:hover {
+  color: #000;
+  background-color: #e5e5e5;
+  border-color: #fff;
 }
 
 #wrapper.toggled {
@@ -76,7 +103,7 @@
     text-transform: uppercase;
   }
 
-  .module-outline-heading {
+  .exam-outline-heading {
     font-size: 24px;
     color: #000000;
     text-align: left;
@@ -88,7 +115,7 @@
     margin-bottom: 0px;
   }
 
-  #module-outline-button-group {
+  #exam-outline-button-group {
     margin-top: 102px;
     margin-left: 16px;
     margin-right: 16px;
@@ -117,7 +144,7 @@
     width: max-content;
   }
 
-  .module-outline-heading {
+  .exam-outline-heading {
     font-size: 24px;
     color: #000000;
     text-align: left;
@@ -129,7 +156,7 @@
     margin-bottom: 0px;
   }
 
-  #module-outline-button-group {
+  #exam-outline-button-group {
     margin-top: 102px;
     margin-left: 32px;
     margin-right: 32px;
