@@ -17,7 +17,7 @@ const NavBarTabItem: React.FC<NavBarItemProps> = ({
     <Nav.Item>
       <Nav.Link
         as={NavLink}
-        activeClassName={styles.active}
+        activeClassName="active"
         to={page.path}
         className={styles.pageButton}
       >

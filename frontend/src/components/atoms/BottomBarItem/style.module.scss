@@ -1,6 +1,6 @@
 @media (max-width: 992px) {
   .btn:active,
-  .btn.active {
+  .btn:global(.active) {
     border: 0;
     background-color: #000 !important;
     color: #fff;

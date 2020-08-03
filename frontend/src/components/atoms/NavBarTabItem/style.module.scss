@@ -20,7 +20,7 @@
     color: $black !important;
   }
 
-  .pageButton.active {
+  .pageButton:global(.active) {
     background: $black !important;
     font-weight: 500 !important;
     color: $white !important;

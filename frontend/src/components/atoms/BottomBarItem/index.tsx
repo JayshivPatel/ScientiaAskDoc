@@ -18,7 +18,7 @@ const BottomBarItem: React.FC<BottomBarItemProps> = ({
 }: BottomBarItemProps) => {
   return (
     <Button
-      activeClassName={"active " + styles.active}
+      activeClassName="active"
       as={NavLink}
 			to={page.path}
 			className={styles.btn}
