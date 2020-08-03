@@ -4,18 +4,18 @@ import Button from "react-bootstrap/Button";
 const LeftBarTabGroup: React.FC = () => {
   return (
     <>
-      <h1 className="exam-outline-heading">Sort</h1>
+      <h1 className="module-outline-heading">Sort</h1>
       <div
         className="btn-group-vertical"
         role="group"
-        id="exam-outline-button-group"
+        id="module-outline-button-group"
       >
-        <Button className="exam-outline-button">Progress</Button>
-        <Button className="exam-outline-button-a active" type="button">
+        <Button className="module-outline-button">Progress</Button>
+        <Button className="module-outline-button-a active" type="button">
           Module Title
         </Button>
-        <Button className="exam-outline-button">Module Code</Button>
-        <Button className="exam-outline-button">Term</Button>
+        <Button className="module-outline-button">Module Code</Button>
+        <Button className="module-outline-button">Term</Button>
       </div>
     </>
   );
