@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
+import styles from "./style.module.scss";
 
 export interface BottomBarItemProps {
   page: {
@@ -17,9 +18,10 @@ const BottomBarItem: React.FC<BottomBarItemProps> = ({
 }: BottomBarItemProps) => {
   return (
     <Button
-      activeClassName="active"
+      activeClassName={"active " + styles.active}
       as={NavLink}
-      to={page.path}
+			to={page.path}
+			className={styles.btn}
       id={"bottom-" + page.name}
     >
       <div className="button-holder">

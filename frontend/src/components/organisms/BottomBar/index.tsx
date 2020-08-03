@@ -3,6 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import BottomBarItem from "components/atoms/BottomBarItem";
+import styles from "./style.module.scss"
 
 export interface BottomBarProps {
   pages: {
@@ -14,8 +15,8 @@ export interface BottomBarProps {
 
 const BottomBar: React.FC<BottomBarProps> = ({ pages }: BottomBarProps) => {
   return (
-    <Navbar className="bottom-bar footer">
-      <ButtonGroup aria-label="Basic example" className="bottom-bar-buttons">
+    <Navbar className={"footer " + styles.bottomBar}>
+      <ButtonGroup aria-label="Basic example" className={styles.bottomBarButtons}>
         {pages.map((page) => (
           <BottomBarItem page={page} key={page.name} />
         ))}

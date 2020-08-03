@@ -1,0 +1,32 @@
+@media (max-width: 992px) {
+  .btn:active,
+  .btn.active {
+    border: 0;
+    background-color: #000 !important;
+    color: #fff;
+  }
+
+  .btn {
+    border: 0;
+    box-shadow: none !important;
+    outline: 0 !important;
+    border-radius: 0px;
+    width: 25%;
+    margin-left: 0;
+    color: #000;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn:focus {
+    border: 0;
+    box-shadow: 0 0 0 0px;
+  }
+
+  .btn:hover {
+    border: 0px;
+    background-color: #ced4da;
+  }
+}
