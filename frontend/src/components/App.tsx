@@ -2,8 +2,8 @@ import React from "react";
 import "./App.scss";
 import ExamplePage from "./templates/ExamplePage";
 
-import TopBar from "./organisms/TopBar/TopBar";
-import BottomBar from "./organisms/BottomBar/BottomBar";
+import TopBar from "./organisms/TopBar";
+import BottomBar from "./organisms/BottomBar";
 import { Redirect, Switch, Route } from "react-router-dom";
 import {
   faBookOpen,
@@ -11,7 +11,7 @@ import {
   faCalendarWeek,
   faChalkboardTeacher,
 } from "@fortawesome/free-solid-svg-icons";
-import LeftBar from "./organisms/LeftBar/LeftBar";
+import LeftBar from "./organisms/LeftBar";
 
 const App: React.FC = () => {
   const horizontalBarPages = [
