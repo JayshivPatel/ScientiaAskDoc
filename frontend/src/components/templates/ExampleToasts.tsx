@@ -4,7 +4,7 @@ import Toast from "react-bootstrap/Toast";
 import Button from "react-bootstrap/Button";
 
 const ToastsShowcase: React.FC = () => {
-  const [show, toggleShow] = useState(true);
+  const [show, toggleShow] = useState(false);
 
   return (
     <>
