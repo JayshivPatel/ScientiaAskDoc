@@ -13,7 +13,7 @@ export interface ExamplePageProps {
 
 const ExamplePage: React.FC<ExamplePageProps> = ({name} : ExamplePageProps) => {
   return (
-    <Container className="p-3">
+    <Container className="p-3" style={{overflow: "hidden"}}>
       <Jumbotron>
         <h1 className="header">
           Welcome To {name}
