@@ -3,31 +3,27 @@ import Navbar from "react-bootstrap/Navbar";
 import logo from "images/logo.svg";
 import { Link } from "react-router-dom";
 
-const NavBarBrand: React.FC = () => {
+interface NavBarBrandProps {
+  onClick: (event: React.MouseEvent<HTMLImageElement>) => void;
+}
 
+const NavBarBrand: React.FC<NavBarBrandProps> = ({
+  onClick,
+}: NavBarBrandProps) => {
   return (
-        <Navbar.Brand className="brand-container">
-          <img
-            src={logo}
-            width="30"
-            height="30"
-            className="d-inline-block align-center brand-image"
-            alt="React Bootstrap logo"
-            onClick={(e) => {
-							// TODO: change to using react states
-              e.preventDefault();
-              const wrapper = document.querySelector("#wrapper") || document.createElement("div");
-              if (wrapper.classList.contains("toggled")) {
-                wrapper.classList.remove("toggled");
-              } else {
-                wrapper.classList.add("toggled");
-              }
-            }}
-          />{" "}
-          <Link to="/" style={{ textDecoration: "none" }}>
-            Scientia
-          </Link>
-        </Navbar.Brand>
+    <Navbar.Brand className="brand-container">
+      <img
+        src={logo}
+        width="30"
+        height="30"
+        className="d-inline-block align-center brand-image"
+        alt="React Bootstrap logo"
+        onClick={(e) => onClick(e)}
+      />{" "}
+      <Link to="/" style={{ textDecoration: "none" }}>
+        Scientia
+      </Link>
+    </Navbar.Brand>
   );
 };
 

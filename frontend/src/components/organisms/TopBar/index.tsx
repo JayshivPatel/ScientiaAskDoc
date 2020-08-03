@@ -9,16 +9,17 @@ export interface TopBarProps {
   pages: {
     name: string;
     path: string;
-  }[];
+	}[];
+	onIconClick: (event: React.MouseEvent<HTMLImageElement>) => void;
 }
 
-const TopBar: React.FC<TopBarProps> = ({ pages }: TopBarProps) => {
+const TopBar: React.FC<TopBarProps> = ({ pages, onIconClick}: TopBarProps) => {
 
   return (
     <Navbar className="top-bar" sticky="top" expand="lg" variant="light">
       <Container fluid>
 
-        <NavBarBrand/>
+        <NavBarBrand onClick={onIconClick}/>
 
         <NavBarTabGroup pages={pages}/>
 

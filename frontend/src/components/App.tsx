@@ -13,35 +13,53 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import LeftBar from "./organisms/LeftBar";
 
-const App: React.FC = () => {
-  const horizontalBarPages = [
-    { name: "Courses", path: "/courses", icon: faChalkboardTeacher },
-    { name: "Timetable", path: "/timetable", icon: faCalendarWeek },
-    { name: "Exams", path: "/exams", icon: faBookOpen },
-    { name: "Other", path: "/other", icon: faEllipsisH },
-  ];
-
-  const topBarRoutes = horizontalBarPages.map(({ name, path }) => (
-    <Route path={path} key={name}>
-      <ExamplePage name={name} />
-    </Route>
-  ));
-
-  return (
-    <>
-      <TopBar pages={horizontalBarPages} />
-
-      <div id="wrapper">
-				<LeftBar/>
-        <Switch>
-          <Route exact path="/" render={() => <Redirect to="/courses" />} />
-          {topBarRoutes}
-        </Switch>
-      </div>
-			
-      <BottomBar pages={horizontalBarPages} />
-    </>
-  );
+type MyState = {
+	isToggled: boolean;
 };
+
+class App extends React.Component<{}, MyState> {
+	constructor(props: {}) {
+    super(props);
+    this.state = {isToggled: false};
+	}
+	
+  handleIconClick(e: React.MouseEvent<HTMLImageElement>) {
+		e.preventDefault();
+		this.setState(state => ({
+      isToggled: !state.isToggled
+		}));
+  }
+
+  render() {
+    const horizontalBarPages = [
+      { name: "Courses", path: "/courses", icon: faChalkboardTeacher },
+      { name: "Timetable", path: "/timetable", icon: faCalendarWeek },
+      { name: "Exams", path: "/exams", icon: faBookOpen },
+      { name: "Other", path: "/other", icon: faEllipsisH },
+    ];
+
+    const topBarRoutes = horizontalBarPages.map(({ name, path }) => (
+      <Route path={path} key={name}>
+        <ExamplePage name={name} />
+      </Route>
+    ));
+
+    return (
+      <>
+        <TopBar pages={horizontalBarPages} onIconClick={e => this.handleIconClick(e)}/>
+
+        <div id="wrapper" className={this.state.isToggled ? "toggled" : ""}>
+          <LeftBar />
+          <Switch>
+            <Route exact path="/" render={() => <Redirect to="/courses" />} />
+            {topBarRoutes}
+          </Switch>
+        </div>
+
+        <BottomBar pages={horizontalBarPages} />
+      </>
+    );
+  }
+}
 
 export default App;
