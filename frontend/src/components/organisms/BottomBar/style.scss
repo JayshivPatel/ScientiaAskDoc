@@ -13,17 +13,18 @@
   .block {
     height: 100%;
     width: 100%;
-	}
-	
-	.btn:active, .btn.active {
+  }
+
+  .btn:active,
+  .btn.active {
     border: 0;
-    background-color:#000 !important;
+    background-color: #000 !important;
     color: #fff;
   }
 
   .bottom-bar-buttons .btn {
-		border: 0;
-		box-shadow: none !important;
+    border: 0;
+    box-shadow: none !important;
     outline: 0 !important;
     border-radius: 0px;
     width: 25%;
@@ -35,8 +36,6 @@
     justify-content: center;
   }
 
-
-
   .btn:focus {
     border: 0;
     box-shadow: 0 0 0 0px;
@@ -44,6 +43,7 @@
 
   .bottom-bar-buttons .btn:hover {
     border: 0px;
+    background-color: #ced4da;
   }
 }
 
@@ -52,5 +52,3 @@
     display: none;
   }
 }
-
-//style="background-color:white; border-width:0px; color:black; display:flex; align-items:center; justify-content:center;"
