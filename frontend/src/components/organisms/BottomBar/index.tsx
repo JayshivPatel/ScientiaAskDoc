@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import "./style.scss";
 import {
   IconDefinition
 } from "@fortawesome/free-solid-svg-icons";

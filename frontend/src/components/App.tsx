@@ -30,6 +30,7 @@ const App: React.FC = () => {
   return (
     <>
       <TopBar pages={horizontalBarPages} />
+
       <div id="wrapper">
 				<LeftBar/>
         <Switch>
@@ -37,6 +38,7 @@ const App: React.FC = () => {
           {topBarRoutes}
         </Switch>
       </div>
+			
       <BottomBar pages={horizontalBarPages} />
     </>
   );

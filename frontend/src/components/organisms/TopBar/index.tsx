@@ -4,7 +4,6 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import logo from "images/logo.svg";
 import userPic from "images/user.png";
-import "./style.scss";
 import { Link, NavLink } from "react-router-dom";
 
 export interface TopBarProps {

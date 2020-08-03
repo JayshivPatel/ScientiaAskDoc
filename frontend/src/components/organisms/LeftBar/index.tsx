@@ -1,8 +1,7 @@
 import React from "react";
-import "./style.scss";
+import Button from "react-bootstrap/Button";
 
 const LeftBar: React.FC = () => {
-  // TODO: change to using react components
   return (
     <div id="sidebar-wrapper">
       <div>
@@ -14,21 +13,21 @@ const LeftBar: React.FC = () => {
         role="group"
         id="exam-outline-button-group"
       >
-        <button className="btn btn-primary exam-outline-button" type="button">
+        <Button className="exam-outline-button">
           Progress
-        </button>
-        <button
-          className="btn btn-primary exam-outline-button-a active"
+        </Button>
+        <Button
+          className="exam-outline-button-a active"
           type="button"
         >
           Course Title
-        </button>
-        <button className="btn btn-primary exam-outline-button" type="button">
+        </Button>
+        <Button className="exam-outline-button">
           Course Code
-        </button>
-        <button className="btn btn-primary exam-outline-button" type="button">
+        </Button>
+        <Button className="exam-outline-button">
           Term
-        </button>
+        </Button>
       </div>
     </div>
   );
