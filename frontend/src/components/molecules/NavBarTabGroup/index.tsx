@@ -17,7 +17,7 @@ const NavBarTabGroup: React.FC<NavBarTabGroupProps> = ({
     <Navbar className="page-button-group m-auto" id="responsive-navbar-nav">
       <Nav variant="pills">
         {pages.map((page) => (
-          <NavBarTabItem page={page} />
+          <NavBarTabItem page={page} key={page.name} />
         ))}
       </Nav>
     </Navbar>

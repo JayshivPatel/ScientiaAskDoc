@@ -13,7 +13,7 @@ const NavBarTabItem: React.FC<NavBarItemProps> = ({
   page,
 }: NavBarItemProps) => {
   return (
-    <Nav.Item key={page.name}>
+    <Nav.Item>
       <Nav.Link
         as={NavLink}
         activeClassName="active"
