@@ -4,6 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import userPic from "images/user.png";
 import NavBarTabGroup from "components/molecules/NavBarTabGroup";
 import NavBarBrand from "components/molecules/NavBarBrand";
+import styles from "./style.module.scss";
 
 export interface TopBarProps {
   pages: {
@@ -15,7 +16,7 @@ export interface TopBarProps {
 
 const TopBar: React.FC<TopBarProps> = ({ pages, onIconClick }: TopBarProps) => {
   return (
-    <Navbar className="top-bar" sticky="top" expand="lg" variant="light">
+    <Navbar className={styles.navBar} sticky="top" expand="lg" variant="light">
       <Container fluid>
         <NavBarBrand onClick={onIconClick} />
 

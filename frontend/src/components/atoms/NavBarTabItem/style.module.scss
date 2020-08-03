@@ -1,0 +1,28 @@
+@import "scss/custom";
+
+@media (min-width: 992px) {
+  .pageButton {
+    background: $gray-100;
+    border-radius: 5px;
+    font-family: "IBM Plex Sans";
+    font-size: 18px;
+    color: $black !important;
+    text-align: center;
+    line-height: 22px;
+    width: 120px;
+    height: 36px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  .pageButton:hover {
+    background: $gray-200;
+    color: $black !important;
+  }
+
+  .pageButton.active {
+    background: $black !important;
+    font-weight: 500 !important;
+    color: $white !important;
+  }
+}

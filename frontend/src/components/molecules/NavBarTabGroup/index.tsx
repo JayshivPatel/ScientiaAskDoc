@@ -2,6 +2,8 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavBarTabItem from "components/atoms/NavBarTabItem";
+import styles from "./style.module.scss"
+import cx from "classnames";
 
 export interface NavBarTabGroupProps {
   pages: {
@@ -14,7 +16,7 @@ const NavBarTabGroup: React.FC<NavBarTabGroupProps> = ({
   pages,
 }: NavBarTabGroupProps) => {
   return (
-    <Navbar className="page-button-group m-auto" id="responsive-navbar-nav">
+    <Navbar className={cx("m-auto", styles.pageButtonGroup)} id="responsive-navbar-nav">
       <Nav variant="pills">
         {pages.map((page) => (
           <NavBarTabItem page={page} key={page.name} />

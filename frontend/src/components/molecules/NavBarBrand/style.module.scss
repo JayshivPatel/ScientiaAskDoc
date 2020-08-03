@@ -1,0 +1,24 @@
+@import "scss/custom";
+
+.brandImage {
+  margin-right: 10px;
+}
+
+.brandContainer {
+  font-family: "IBM Plex Sans";
+  font-weight: 500;
+  font-size: 24px;
+  color: #000;
+  text-align: left;
+  padding: 0px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin: 0px;
+}
+
+.brandContainer a{
+	color: #000 !important;
+	text-decoration: none !important;
+}
+

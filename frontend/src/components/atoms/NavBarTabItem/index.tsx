@@ -1,6 +1,7 @@
 import React from "react";
 import Nav from "react-bootstrap/Nav";
 import { NavLink } from "react-router-dom";
+import styles from "./style.module.scss"
 
 export interface NavBarItemProps {
   page: {
@@ -16,9 +17,9 @@ const NavBarTabItem: React.FC<NavBarItemProps> = ({
     <Nav.Item>
       <Nav.Link
         as={NavLink}
-        activeClassName="active"
+        activeClassName={styles.active}
         to={page.path}
-        className="page-button"
+        className={styles.pageButton}
       >
         {page.name}
       </Nav.Link>
