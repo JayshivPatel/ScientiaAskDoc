@@ -6,12 +6,35 @@
   transition: all 0.5s ease;
 }
 
+#sidenav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  display: none;
+
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
 @media (min-width: 992px) {
   #wrapper {
     padding-left: 250px;
-	}
-	
+  }
+
   #wrapper.toggled {
     padding-left: 0;
+  }
+}
+
+@media (max-width: 992px) {
+  #wrapper.toggled #sidenav-overlay {
+    display: block;
   }
 }

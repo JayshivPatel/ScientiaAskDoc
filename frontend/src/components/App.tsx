@@ -21,7 +21,7 @@ class App extends React.Component<{}, MyState> {
     this.state = { isToggled: false };
   }
 
-  handleIconClick(e: React.MouseEvent<HTMLImageElement>) {
+  toggleLeftBar(e: React.MouseEvent<HTMLElement>) {
     e.preventDefault();
     this.setState((state) => ({
       isToggled: !state.isToggled,
@@ -40,12 +40,13 @@ class App extends React.Component<{}, MyState> {
       <>
         <TopBar
           pages={horizontalBarPages}
-          onIconClick={(e) => this.handleIconClick(e)}
+          onIconClick={(e) => this.toggleLeftBar(e)}
         />
 
         <StandardView
           pages={horizontalBarPages}
-          isToggled={this.state.isToggled}
+					isToggled={this.state.isToggled}
+					onOverlayClick={(e) => this.toggleLeftBar(e)}
         />
 
         <BottomBar pages={horizontalBarPages} />

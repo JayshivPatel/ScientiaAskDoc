@@ -9,12 +9,14 @@ interface StandardViewProps {
     name: string;
     path: string;
   }[];
-  isToggled: boolean;
+	isToggled: boolean;
+  onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 const StandardView: React.FC<StandardViewProps> = ({
   pages,
-  isToggled,
+	isToggled,
+	onOverlayClick,
 }: StandardViewProps) => {
   const topBarRoutes = pages.map(({ name, path }) => (
     <Route path={path} key={name}>
@@ -25,6 +27,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   return (
     <div id="wrapper" className={isToggled ? "toggled" : ""}>
       <LeftBar />
+			<div id="sidenav-overlay" onClick={e => onOverlayClick(e)}></div>
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/modules" />} />
         {topBarRoutes}
