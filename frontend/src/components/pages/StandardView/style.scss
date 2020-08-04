@@ -13,10 +13,9 @@
   right: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-  display: none;
-
+  z-index: 500;
+	display: block;
+	visibility:hidden;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
@@ -35,6 +34,7 @@
 
 @media (max-width: 992px) {
   #wrapper.toggled #sidenav-overlay {
-    display: block;
+		visibility:visible;
+		background-color: rgba(0, 0, 0, 0.3);
   }
 }
