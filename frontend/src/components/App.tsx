@@ -12,19 +12,19 @@ import {
 import StandardView from "./pages/StandardView";
 
 type MyState = {
-  isToggled: boolean;
+  toggledLeft: boolean;
 };
 
 class App extends React.Component<{}, MyState> {
   constructor(props: {}) {
     super(props);
-    this.state = { isToggled: false };
+    this.state = { toggledLeft: false };
   }
 
   toggleLeftBar(e: React.MouseEvent<HTMLElement>) {
     e.preventDefault();
     this.setState((state) => ({
-      isToggled: !state.isToggled,
+      toggledLeft: !state.toggledLeft,
     }));
   }
 
@@ -45,7 +45,7 @@ class App extends React.Component<{}, MyState> {
 
         <StandardView
           pages={horizontalBarPages}
-					isToggled={this.state.isToggled}
+					toggledLeft={this.state.toggledLeft}
 					onOverlayClick={(e) => this.toggleLeftBar(e)}
         />
 

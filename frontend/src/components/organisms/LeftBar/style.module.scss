@@ -1,6 +1,6 @@
 @import "assets/scss/custom";
 
-#sidebarWrapper {
+#leftbarWrapper {
   position: fixed;
   left: 250px;
   width: 0;
@@ -18,13 +18,13 @@
 	z-index: 5000;
 }
 
-:global(#wrapper.toggled) #sidebarWrapper {
+:global(#wrapper.toggledLeft) #leftbarWrapper {
 	width: 250px;
 }
 
 
 @media (max-width: 992px) {
-  .sidebarStatus {
+  .leftbarStatus {
     margin-top: 30px;
     margin-left: 16px;
     margin-right: 16px;
@@ -40,7 +40,7 @@
 }
 
 @media (min-width: 992px) {
-  .sidebarStatus {
+  .leftbarStatus {
     margin-top: 30px;
     margin-left: 32px;
     margin-right: 32px;
@@ -52,11 +52,11 @@
     width: max-content;
 	}
 	
-	#sidebarWrapper {
+	#leftbarWrapper {
     width: 250px;
 	}
 	
-	:global(#wrapper.toggled) #sidebarWrapper{
+	:global(#wrapper.toggledLeft) #leftbarWrapper{
     width: 0;
   }
 }

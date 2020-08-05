@@ -4,8 +4,8 @@ import styles from "./style.module.scss"
 
 const LeftBar: React.FC = () => {
   return (
-    <div id={styles.sidebarWrapper}>
-      <p className={styles.sidebarStatus}>1 UPDATE</p>
+    <div id={styles.leftbarWrapper}>
+      <p className={styles.leftbarStatus}>1 UPDATE</p>
       <LeftBarTabGroup />
     </div>
   );
