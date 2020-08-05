@@ -1,5 +1,6 @@
 #wrapper {
-  padding-left: 0;
+	padding-left: 0;
+	padding-right: 0;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
@@ -24,15 +25,21 @@
 
 @media (min-width: 992px) {
   #wrapper {
-    padding-left: 250px;
+		padding-left: 250px;
+    padding-right: 250px;
   }
 
   #wrapper.toggledLeft {
     padding-left: 0;
+	}
+	
+	#wrapper.toggledRight {
+    padding-right: 0;
   }
 }
 
 @media (max-width: 992px) {
+	#wrapper.toggledRight #sidenav-overlay,
   #wrapper.toggledLeft #sidenav-overlay {
 		visibility:visible;
 		background-color: rgba(0, 0, 0, 0.3);

@@ -11,14 +11,15 @@ export interface TopBarProps {
     name: string;
     path: string;
   }[];
-  onIconClick: (event: React.MouseEvent<HTMLImageElement>) => void;
+	onFavIconClick: (event: React.MouseEvent<HTMLElement>) => void;
+  onUserIconClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const TopBar: React.FC<TopBarProps> = ({ pages, onIconClick }: TopBarProps) => {
+const TopBar: React.FC<TopBarProps> = ({ pages, onFavIconClick, onUserIconClick }: TopBarProps) => {
   return (
     <Navbar className={styles.navBar} sticky="top" expand="lg" variant="light">
       <Container fluid>
-        <NavBarBrand onClick={onIconClick} />
+        <NavBarBrand onClick={onFavIconClick} />
 
         <NavBarTabGroup pages={pages} />
 
@@ -27,7 +28,8 @@ const TopBar: React.FC<TopBarProps> = ({ pages, onIconClick }: TopBarProps) => {
           width="30"
           height="30"
           className="d-inline-block align-top"
-          alt="userPic"
+					alt="userPic"
+					onClick={onUserIconClick}
         />
       </Container>
     </Navbar>

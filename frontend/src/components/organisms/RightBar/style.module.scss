@@ -1,0 +1,64 @@
+@import "assets/scss/custom";
+
+#rightbarWrapper {
+  position: fixed;
+  right: 250px;
+  width: 0;
+  margin-right: -250px;
+  height: 100%;
+  margin-bottom: 61px;
+  overflow-y: auto;
+  background: #fff;
+  background: #ffffff;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+	z-index: 5000;
+}
+
+:global(#wrapper.toggledRight) #rightbarWrapper {
+	width: 250px;
+}
+
+
+@media (max-width: 992px) {
+  .rightbarStatus {
+    margin-top: 30px;
+    margin-left: 16px;
+    margin-right: 16px;
+		margin-bottom: 0px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000000;
+    letter-spacing: 0;
+    position: absolute;
+    width: max-content;
+    text-transform: uppercase;
+  }
+}
+
+@media (min-width: 992px) {
+  .rightbarStatus {
+    margin-top: 30px;
+    margin-left: 32px;
+    margin-right: 32px;
+    margin-bottom: 0px;
+		font-size: 16px;
+		font-weight: 500;
+		text-align: right;
+    color: #000000;
+    letter-spacing: 0;
+    position: absolute;
+    width: max-content;
+	}
+	
+	#rightbarWrapper {
+    width: 250px;
+	}
+	
+	:global(#wrapper.toggledRight) #rightbarWrapper{
+    width: 0;
+  }
+}

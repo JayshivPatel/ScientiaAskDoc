@@ -11,20 +11,26 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import StandardView from "./pages/StandardView";
 
-type MyState = {
+type AppState = {
   toggledLeft: boolean;
+  toggledRight: boolean;
 };
 
-class App extends React.Component<{}, MyState> {
+class App extends React.Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
-    this.state = { toggledLeft: false };
+    this.state = { toggledLeft: false, toggledRight: false };
   }
 
-  toggleLeftBar(e: React.MouseEvent<HTMLElement>) {
-    e.preventDefault();
+  toggleLeftBar() {
     this.setState((state) => ({
       toggledLeft: !state.toggledLeft,
+    }));
+  }
+
+  toggleRightBar() {
+    this.setState((state) => ({
+      toggledRight: !state.toggledRight,
     }));
   }
 
@@ -40,13 +46,24 @@ class App extends React.Component<{}, MyState> {
       <>
         <TopBar
           pages={horizontalBarPages}
-          onIconClick={(e) => this.toggleLeftBar(e)}
+          onFavIconClick={(e) => {
+            e.preventDefault();
+            this.toggleLeftBar();
+          }}
+          onUserIconClick={(e) => {
+            e.preventDefault();
+            this.toggleRightBar();
+          }}
         />
 
         <StandardView
           pages={horizontalBarPages}
 					toggledLeft={this.state.toggledLeft}
-					onOverlayClick={(e) => this.toggleLeftBar(e)}
+          toggledRight={this.state.toggledRight}
+          onOverlayClick={(e) => {
+            e.preventDefault();
+            this.setState({ toggledLeft: false, toggledRight: false });
+          }}
         />
 
         <BottomBar pages={horizontalBarPages} />
