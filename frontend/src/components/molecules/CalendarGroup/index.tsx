@@ -1,21 +1,24 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 import styles from "./style.module.scss";
 import Card from "react-bootstrap/Card";
 
 const CalendarGroup: React.FC = () => {
   return (
     <>
-      <h1 className={styles.moduleOutlineHeading}>Today</h1>
+      <h1 className={styles.tabGroupHeading}>Today</h1>
       <div
-        className={"btn-group-vertical " + styles.moduleOutlineButtonGroup}
+        className={"btn-group-vertical " + styles.tabGroupButtonGroup}
         role="group"
       >
-        {/* <Button className={styles.moduleOutlineButton}>Progress</Button>
-        <Button className={"active " + styles.moduleOutlineButton}>
-          Module Title
-        </Button> */}
-
+        <Card>
+          <Card.Body>
+            <Card.Title>Lecture: CO142</Card.Title>
+            <Card.Text>
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
+            </Card.Text>
+          </Card.Body>
+        </Card>
       </div>
     </>
   );
