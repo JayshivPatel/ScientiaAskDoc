@@ -12,7 +12,7 @@ const RightBar: React.FC = () => {
 			icon: faCog,
     },
     {
-			title: "Signout",
+			title: "Sign Out",
 			icon: faSignOutAlt,
     },
 	];
