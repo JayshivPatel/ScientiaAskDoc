@@ -5,7 +5,7 @@ import TopBar from "./organisms/TopBar";
 import BottomBar from "./organisms/BottomBar";
 import {
   faBookOpen,
-  faEllipsisH,
+  faHome,
   faCalendarWeek,
   faChalkboardTeacher,
 } from "@fortawesome/free-solid-svg-icons";
@@ -30,10 +30,10 @@ class App extends React.Component<{}, MyState> {
 
   render() {
     const horizontalBarPages = [
+      { name: "Home", path: "/home", icon: faHome },
       { name: "Modules", path: "/modules", icon: faChalkboardTeacher },
       { name: "Timetable", path: "/timetable", icon: faCalendarWeek },
       { name: "Exams", path: "/exams", icon: faBookOpen },
-      { name: "Other", path: "/other", icon: faEllipsisH },
     ];
 
     return (
