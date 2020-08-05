@@ -1,0 +1,73 @@
+@import "assets/scss/custom";
+
+.moduleOutlineButton {
+	margin-bottom: 10px;
+
+	color: #000;
+  background: #f6f8fa;
+  font-size: 17px;
+  letter-spacing: 0;
+  border-width: 0px;
+  height: 40px;
+  border-radius: 5px !important;
+	text-align: left;
+	
+}
+
+.moduleOutlineButton:global(.active),
+.moduleOutlineButton:active{
+  color: #fff;
+	background-color: #000 !important;
+  font-weight: 500;
+  text-align: left;
+  border-width: 0px;
+  height: 40px;
+}
+
+.moduleOutlineButton:hover {
+	background-color: #e5e5e5;
+	border-color: #fff;
+	color: #000;
+}
+
+@media (max-width: 992px) {
+  .moduleOutlineButtonGroup {
+    margin-top: 102px;
+    margin-left: 16px;
+    margin-right: 16px;
+    width: 218px !important;
+	}
+	
+	.moduleOutlineHeading {
+    font-size: 24px;
+    color: #000000;
+    text-align: left;
+    margin-top: 64px;
+    margin-left: 16px;
+    margin-right: 16px;
+    position: absolute;
+    width: max-content;
+    margin-bottom: 0px;
+  }
+}
+
+@media (min-width: 992px) {
+  .moduleOutlineButtonGroup {
+    margin-top: 102px;
+    margin-left: 32px;
+    margin-right: 32px;
+    width: 186px !important;
+	}
+	
+	.moduleOutlineHeading {
+    font-size: 24px;
+    color: #000000;
+    text-align: left;
+    margin-top: 64px;
+    margin-left: 32px;
+    margin-right: 32px;
+    position: absolute;
+    width: max-content;
+    margin-bottom: 0px;
+  }
+}
