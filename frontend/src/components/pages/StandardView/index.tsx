@@ -40,7 +40,7 @@ const StandardView: React.FC<StandardViewProps> = ({
       <RightBar />
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/modules" />} />
+        <Route exact path="/" render={() => <Redirect to="/home" />} />
         {topBarRoutes}
       </Switch>
     </div>
