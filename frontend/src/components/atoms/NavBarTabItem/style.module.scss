@@ -25,4 +25,9 @@
     font-weight: 500 !important;
     color: $white !important;
   }
+
+  .pageButton:active:hover,
+  .pageButton:global(.active):hover {
+    background-color: $gray-900 !important;
+  }
 }

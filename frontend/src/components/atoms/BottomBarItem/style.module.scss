@@ -1,3 +1,4 @@
+@import "assets/scss/custom";
 @media (max-width: 992px) {
   .btn:active,
   .btn:global(.active) {
@@ -28,5 +29,11 @@
   .btn:hover {
     border: 0px;
     background-color: #ced4da;
+    color: #000;
+  }
+
+  .btn:active:hover,
+  .btn:global(.active):hover {
+    background-color: $gray-900 !important;
   }
 }
