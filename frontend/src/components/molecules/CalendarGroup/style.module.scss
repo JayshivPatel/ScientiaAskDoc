@@ -1,72 +1,110 @@
 @import "assets/scss/custom";
 
-.tabGroupButton {
-	margin-bottom: 10px;
+$lecture-background: transparentize($blue-100, 0.5);
+$labs-background: transparentize($pink-100, 0.5);
+$deadline-background: transparentize($teal-100, 0.5);
 
-	color: #000;
-  background: #f6f8fa;
-  font-size: 17px;
-  letter-spacing: 0;
+.calendarCard {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #000;
   border-width: 0px;
-  height: 40px;
+  width: 100%;
   border-radius: 5px !important;
-	text-align: left;
-	
+  text-align: left;
 }
 
-.tabGroupButton:global(.active),
-.tabGroupButton:active{
+.calendarLabs * {
+  color: $pink-700;
+}
+
+.calendarLabs {
+  background: $labs-background; 
+}
+
+.calendarLecture * {
+  color: $blue-700;
+}
+
+.calendarLecture {
+  background: $lecture-background;
+}
+
+.calendarDeadline * {
+  color: $teal-700;
+}
+
+.calendarDeadline {
+  background: $deadline-background;
+}
+
+.calendarCard :global(.card-body) {
+  padding: 8px !important;
+}
+
+.calendarCard :global(.card-title) {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.calendarCard :global(.card-subtitle) {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.calendarCard :global(.card-text) {
+  font-size: 16px;
+}
+
+.calendarCard:global(.active),
+.claendarCard:active {
   color: #fff;
-	background-color: #000 !important;
+  background-color: #000 !important;
   font-weight: 500;
   text-align: left;
   border-width: 0px;
-  height: 40px;
 }
 
-.tabGroupButton:hover {
-	background-color: #e5e5e5;
-	border-color: #fff;
-	color: #000;
-}
 
 @media (max-width: 992px) {
-  .tabGroupButtonGroup {
-    margin-top: 102px;
+  .calendarCardGroup {
+    margin-top: 20px;
     margin-left: 16px;
     margin-right: 16px;
+    position: relative;
     width: 218px !important;
-	}
-	
-	.tabGroupHeading {
+  }
+
+  .calendarCardGroupHeading {
     font-size: 24px;
     color: #000000;
     text-align: left;
-    margin-top: 64px;
+    margin-top: 30px;
     margin-left: 16px;
     margin-right: 16px;
-    position: absolute;
+    position: relative;
     width: max-content;
     margin-bottom: 0px;
   }
 }
 
 @media (min-width: 992px) {
-  .tabGroupButtonGroup {
-    margin-top: 102px;
+  .calendarCardGroup {
+    margin-top: 20px;
     margin-left: 32px;
     margin-right: 32px;
+    position: relative;
     width: 186px !important;
-	}
-	
-	.tabGroupHeading {
+  }
+
+  .calendarCardGroupHeading {
     font-size: 24px;
     color: #000000;
     text-align: left;
-    margin-top: 64px;
+    margin-top: 30px;
     margin-left: 32px;
     margin-right: 32px;
-    position: absolute;
+    position: relative;
     width: max-content;
     margin-bottom: 0px;
   }
