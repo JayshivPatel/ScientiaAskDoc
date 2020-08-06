@@ -1,10 +1,19 @@
 import React from "react";
 import styles from "./style.module.scss";
 import classNames from "classnames";
-import CalendarCard, { eventTypes, CalendarCardProps } from "components/atoms/CalendarCard";
+import CalendarCard, {
+  eventTypes,
+  CalendarCardProps,
+} from "components/atoms/CalendarCard";
 
 const CalendarGroup: React.FC = () => {
   let events: CalendarCardProps[] = [
+    {
+      type: eventTypes.Lecture,
+      title: "CO142",
+      subtitle: "09:00 - 11:00",
+      content: "308, Huxley Building, South Kensington Campus",
+    },
     {
       type: eventTypes.Lecture,
       title: "CO145",
@@ -37,8 +46,8 @@ const CalendarGroup: React.FC = () => {
             title={title}
             type={type}
             subtitle={subtitle}
-						content={content}
-						key={title + type + subtitle}
+            content={content}
+            key={title + type + subtitle}
           />
         ))}
       </div>

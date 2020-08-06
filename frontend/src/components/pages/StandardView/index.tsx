@@ -5,6 +5,7 @@ import LeftBar from "components/organisms/LeftBar";
 import "./style.scss";
 import RightBar from "components/organisms/RightBar";
 import classNames from "classnames";
+import ModulePage from "../ModulePage";
 
 interface StandardViewProps {
   pages: {
@@ -17,17 +18,10 @@ interface StandardViewProps {
 }
 
 const StandardView: React.FC<StandardViewProps> = ({
-  pages,
   toggledLeft,
   toggledRight,
   onOverlayClick,
 }: StandardViewProps) => {
-  const topBarRoutes = pages.map(({ name, path }) => (
-    <Route path={path} key={name}>
-      <ExamplePage name={name} />
-    </Route>
-  ));
-
   return (
     <div
       id="wrapper"
@@ -41,7 +35,21 @@ const StandardView: React.FC<StandardViewProps> = ({
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/home" />} />
-        {topBarRoutes}
+        <Route path="/home" key="Home">
+          <ExamplePage name="Home" />
+        </Route>
+
+				<Route path="/modules" key="Modules">
+          <ModulePage />
+        </Route>
+
+				<Route path="/timetable" key="Timetable">
+          <ExamplePage name="Timetable" />
+        </Route>
+
+				<Route path="/exams" key="Exams">
+          <ExamplePage name="Exams" />
+        </Route>
       </Switch>
     </div>
   );
