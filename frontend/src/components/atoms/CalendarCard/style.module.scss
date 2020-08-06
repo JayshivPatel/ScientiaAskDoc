@@ -1,0 +1,66 @@
+@import "assets/scss/custom";
+
+$lecture-background: transparentize($blue-100, 0.5);
+$labs-background: transparentize($pink-100, 0.5);
+$deadline-background: transparentize($teal-100, 0.5);
+
+.calendarCard {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #000;
+  border-width: 0px;
+  width: 100%;
+  border-radius: 5px !important;
+  text-align: left;
+}
+
+.calendarLabs * {
+  color: $pink-700;
+}
+
+.calendarLabs {
+  background: $labs-background; 
+}
+
+.calendarLecture * {
+  color: $blue-700;
+}
+
+.calendarLecture {
+  background: $lecture-background;
+}
+
+.calendarDeadline * {
+  color: $teal-700;
+}
+
+.calendarDeadline {
+  background: $deadline-background;
+}
+
+.calendarCard :global(.card-body) {
+  padding: 8px !important;
+}
+
+.calendarCard :global(.card-title) {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.calendarCard :global(.card-subtitle) {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.calendarCard :global(.card-text) {
+  font-size: 16px;
+}
+
+.calendarCard:global(.active),
+.claendarCard:active {
+  color: #fff;
+  background-color: #000 !important;
+  font-weight: 500;
+  text-align: left;
+  border-width: 0px;
+}
