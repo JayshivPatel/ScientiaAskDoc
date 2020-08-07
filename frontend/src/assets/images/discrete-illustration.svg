@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240px" height="120px" viewBox="0 0 240 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Illustration</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="240" height="120"></rect>
+    </defs>
+    <g id="Modules" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Module-View" transform="translate(-600.000000, -393.000000)">
+            <g id="Main-Body" transform="translate(330.000000, 94.000000)">
+                <g id="Course-Tiles" transform="translate(0.000000, 264.000000)">
+                    <g id="Discrete-Mathematics" transform="translate(270.000000, 0.000000)">
+                        <g id="Group" transform="translate(0.000000, 35.000000)">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="Rectangle" fill="#EDF2FF" xlink:href="#path-1"></use>
+                            <g id="Group-3" mask="url(#mask-2)">
+                                <g transform="translate(18.000000, -8.000000)">
+                                    <text id="A" stroke="none" fill="none" font-family="CMUClassicalSerif-Italic, CMU Classical Serif" font-size="17" font-style="italic" font-weight="normal" letter-spacing="-0.408">
+                                        <tspan x="32" y="82" fill="#5B7CFA">A</tspan>
+                                    </text>
+                                    <circle id="Oval" stroke="#5B7CFA" stroke-width="1.4" fill="none" transform="translate(54.129729, 75.536072) rotate(27.000000) translate(-54.129729, -75.536072) " cx="54.1297293" cy="75.5360718" r="40"></circle>
+                                    <text id="B" stroke="none" fill="none" font-family="CMUClassicalSerif-Italic, CMU Classical Serif" font-size="17" font-style="italic" font-weight="normal" letter-spacing="-0.408">
+                                        <tspan x="96" y="120" fill="#5B7CFA">B</tspan>
+                                    </text>
+                                    <text id="C" stroke="none" fill="none" font-family="CMUClassicalSerif-Italic, CMU Classical Serif" font-size="17" font-style="italic" font-weight="normal" letter-spacing="-0.408">
+                                        <tspan x="102" y="43" fill="#5B7CFA">C</tspan>
+                                    </text>
+                                    <text id="U" stroke="none" fill="none" font-family="CMUClassicalSerif-Italic, CMU Classical Serif" font-size="17" font-style="italic" font-weight="normal" letter-spacing="-0.408">
+                                        <tspan x="194" y="33" fill="#5B7CFA">U</tspan>
+                                    </text>
+                                    <circle id="Oval" stroke="#5B7CFA" stroke-width="1.4" fill="none" transform="translate(102.146555, 53.986491) rotate(27.000000) translate(-102.146555, -53.986491) " cx="102.146555" cy="53.9864908" r="40"></circle>
+                                    <circle id="Oval" stroke="#5B7CFA" stroke-width="1.4" fill="none" transform="translate(99.083123, 104.052601) rotate(27.000000) translate(-99.083123, -104.052601) " cx="99.0831226" cy="104.052601" r="40"></circle>
+                                    <path d="M92.6003343,64.5804359 C95.1357692,73.47592 94.6103336,83.2663365 90.4710953,92.2499358 C88.2730843,91.5780281 86.1045273,90.7057189 83.9869351,89.6267518 C78.0083417,86.5805063 73.1236371,82.2373626 69.5009033,77.114624 C75.5188013,70.4979896 83.5162485,66.1967397 92.0836506,64.6675024 Z" id="Combined-Shape" stroke="#5B7CFA" stroke-width="1.4" fill="#BAC8FF" fill-rule="evenodd"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

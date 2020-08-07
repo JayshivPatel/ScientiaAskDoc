@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240px" height="120px" viewBox="0 0 240 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Illustration</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="240" height="120"></rect>
+    </defs>
+    <g id="Modules" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Module-View" transform="translate(-330.000000, -683.000000)">
+            <g id="Main-Body" transform="translate(330.000000, 94.000000)">
+                <g id="Course-Tiles" transform="translate(0.000000, 264.000000)">
+                    <g id="Mathematical-Methods" transform="translate(0.000000, 290.000000)">
+                        <g id="Group" transform="translate(0.000000, 35.000000)">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="Rectangle" fill="#F3F0FF" xlink:href="#path-1"></use>
+                            <g id="Group-9" mask="url(#mask-2)">
+                                <g transform="translate(19.000000, 7.000000)">
+                                    <path d="M61.2499785,74 C55.0624817,74 49.9062344,71.95 46.2968613,68.3625 C42.6874882,64.775 40.6249893,59.65 40.6249893,53.5 L61.2499785,53.5 L61.2499785,74 Z M61.2499785,74 C67.4374753,74 72.5937226,71.95 76.2030957,68.3625 C79.8124688,64.775 81.8750537,59.65 81.8750537,53.5 L61.2499785,53.5 L61.2499785,74 Z M143.750021,74 C137.562525,74 132.406277,71.95 128.796904,68.3625 C125.187531,64.775 123.125032,59.65 123.125032,53.5 L143.750021,53.5 L143.750021,74 Z M143.750021,74 C149.937518,74 155.093766,71.95 158.703139,68.3625 C162.312512,64.775 164.375011,59.65 164.375011,53.5 L143.750021,53.5 L143.750021,74 Z M102.500043,33 C96.3125462,33 91.1562989,35.05 87.5469258,38.6375 C83.9375526,42.225 81.8750537,47.35 81.8750537,53.5 L102.500043,53.5 L102.500043,33 Z M102.500043,33 C108.68754,33 113.843787,35.05 117.45316,38.6375 C121.062533,42.225 123.125032,47.35 123.125032,53.5 L102.500043,53.5 L102.500043,33 Z M20,33 C26.1874968,33 31.3437441,35.05 34.9531172,38.6375 C38.5624903,42.225 40.6249893,47.35 40.6249893,53.5 L20,53.5 L20,33 Z M185,33 C178.812503,33 173.656256,35.05 170.046883,38.6375 C166.43751,42.225 164.375011,47.35 164.375011,53.5 L185,53.5 L185,33 Z" id="Fill-1" stroke="none" fill="#D0BFFF" fill-rule="evenodd"></path>
+                                    <path d="M143.750021,74 C149.937518,74 155.093766,71.95 158.703139,68.3625 C162.312512,64.775 164.375011,59.65 164.375011,53.5 M61.2499785,74 C67.4374753,74 72.5937226,71.95 76.2030957,68.3625 C79.8124688,64.775 81.8750537,59.65 81.8750537,53.5 M143.750021,74 C137.562525,74 132.406277,71.95 128.796904,68.3625 C125.187531,64.775 123.125032,59.65 123.125032,53.5 M61.2499785,74 C55.0624817,74 49.9062344,71.95 46.2968613,68.3625 C42.6874882,64.775 40.6249893,59.65 40.6249893,53.5 M102.500043,33 C96.3125462,33 91.1562989,35.05 87.5469258,38.6375 C83.9375526,42.225 81.8750537,47.35 81.8750537,53.5 M102.500043,33 C108.68754,33 113.843787,35.05 117.45316,38.6375 C121.062533,42.225 123.125032,47.35 123.125032,53.5 M20,33 C26.1874968,33 31.3437441,35.05 34.9531172,38.6375 C38.5624903,42.225 40.6249893,47.35 40.6249893,53.5 M185,33 C178.812503,33 173.656256,35.05 170.046883,38.6375 C166.43751,42.225 164.375011,47.35 164.375011,53.5" id="Stroke-2" stroke="#855EF6" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <polyline id="Stroke-3" stroke="#855EF6" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round" points="105 3 102.5 0 100 3"></polyline>
+                                    <polyline id="Stroke-4" stroke="#855EF6" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round" points="105 103 102.5 106 100 103"></polyline>
+                                    <line x1="102.5" y1="0" x2="102.5" y2="106" id="Stroke-5" stroke="#855EF6" stroke-width="1.4" fill="#7950F2" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></line>
+                                    <polyline id="Stroke-6" stroke="#855EF6" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round" points="202 56 205 53.5 202 51"></polyline>
+                                    <polyline id="Stroke-7" stroke="#855EF6" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round" points="3 56 0 53.5 3 51"></polyline>
+                                    <line x1="205" y1="53.5" x2="0" y2="53.5" id="Stroke-8" stroke="#855EF6" stroke-width="1.4" fill="#7950F2" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></line>
+                                </g>
+                            </g>
+                            <text id="y-=-cos(x)" mask="url(#mask-2)" font-family="CMUSerif-BoldItalic, CMU Serif" font-size="9" font-style="italic" font-weight="bold" letter-spacing="-0.216" fill="#855EF6">
+                                <tspan x="140" y="33">y = cos(x)</tspan>
+                            </text>
+                            <text id="y" mask="url(#mask-2)" font-family="CMUSerif-Italic, CMU Serif" font-size="9" font-style="italic" font-weight="normal" letter-spacing="-0.216" fill="#855EF6">
+                                <tspan x="127" y="11">y</tspan>
+                            </text>
+                            <text id="x’" mask="url(#mask-2)" font-family="CMUSerif-Italic, CMU Serif" font-size="9" font-style="italic" font-weight="normal" letter-spacing="-0.216" fill="#855EF6">
+                                <tspan x="18" y="70">x’</tspan>
+                            </text>
+                            <text id="x" mask="url(#mask-2)" font-family="CMUSerif-Italic, CMU Serif" font-size="9" font-style="italic" font-weight="normal" letter-spacing="-0.216" fill="#855EF6">
+                                <tspan x="219" y="70">x</tspan>
+                            </text>
+                            <text id="y’" mask="url(#mask-2)" font-family="CMUSerif-Italic, CMU Serif" font-size="9" font-style="italic" font-weight="normal" letter-spacing="-0.216" fill="#855EF6">
+                                <tspan x="127" y="111">y’</tspan>
+                            </text>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
