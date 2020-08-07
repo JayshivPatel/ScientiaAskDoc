@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./style.module.scss";
-import Breadcrumb from "react-bootstrap/Breadcrumb";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
@@ -10,6 +9,7 @@ import discreteIllustration from "assets/images/discrete-illustration.svg";
 import systemsIllustration from "assets/images/systems-illustration.svg";
 import methodsIllustration from "assets/images/methods-illustration.svg";
 import ModuleCard from "components/atoms/ModuleCard";
+import Dandruff from "components/molecules/Dandruff";
 
 const ModuleList: React.FC = () => {
   let modules = [
@@ -43,13 +43,7 @@ const ModuleList: React.FC = () => {
   ];
   return (
     <Container className={classNames("p-4", styles.moduleContainer)}>
-      <Breadcrumb className={classNames(styles.breadcrumb)}>
-        <Breadcrumb.Item active>Modules</Breadcrumb.Item>
-        <Breadcrumb.Item></Breadcrumb.Item>
-      </Breadcrumb>
-
-      <h3 className={classNames(styles.moduleHeader)}>Modules</h3>
-      <hr />
+      <Dandruff heading="Modules"/>
       <h4 className={classNames(styles.moduleSectionHeader)}>
         First Year Undergraduate
       </h4>
