@@ -11,8 +11,9 @@ export interface SideBarTabGroupProp {
   buttons: {
     title: string;
     icon?: IconDefinition;
-		active?: boolean;
-		activeURL?: string;
+    active?: boolean;
+    activeURL?: string;
+    externalURL?: string;
   }[];
 }
 
@@ -20,38 +21,54 @@ const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
   title,
   buttons,
 }: SideBarTabGroupProp) => {
-  let displayButtons = buttons.map(({ title, icon, active, activeURL }) => {
-    let FAicon;
-    if (icon) {
-      FAicon = (
-        <FontAwesomeIcon className={styles.tabGroupButtonSvg} icon={icon} />
-      );
-		}
-		if (activeURL !== undefined){
-			return (
-				<Button
-					as={NavLink} 
-					to={activeURL}
-					activeClassName={"active"}
-					className={styles.tabGroupButton}
-					key={title}
-				>
-					{title}
-					{FAicon}
-				</Button>
-			);
-		}
+  let displayButtons = buttons.map(
+    ({ title, icon, active, activeURL, externalURL }) => {
+      let FAicon;
+      if (icon) {
+        FAicon = (
+          <FontAwesomeIcon className={styles.tabGroupButtonSvg} icon={icon} />
+        );
+      }
+      if (activeURL !== undefined) {
+        return (
+          <Button
+            as={NavLink}
+            to={activeURL}
+            activeClassName={"active"}
+            className={styles.tabGroupButton}
+            key={title}
+          >
+            {title}
+            {FAicon}
+          </Button>
+        );
+      }
 
-    return (
-      <Button
-        className={classNames({ active: active }, styles.tabGroupButton)}
-        key={title}
-      >
-        {title}
-        {FAicon}
-      </Button>
-    );
-  });
+      if (externalURL !== undefined) {
+        return (
+          <Button
+            href={externalURL}
+            target="_blank"
+            className={styles.tabGroupButton}
+            key={title}
+          >
+            {title}
+            {FAicon}
+          </Button>
+        );
+      }
+
+      return (
+        <Button
+          className={classNames({ active: active }, styles.tabGroupButton)}
+          key={title}
+        >
+          {title}
+          {FAicon}
+        </Button>
+      );
+    }
+  );
 
   return (
     <>
