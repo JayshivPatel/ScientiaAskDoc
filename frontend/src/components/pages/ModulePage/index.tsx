@@ -8,7 +8,7 @@ import Card from "react-bootstrap/Card";
 const ModulePage: React.FC = () => {
   // only needed for using holder images, delete when done
   // @ts-ignore
-  useEffect(window.holder);
+  useEffect(() => {window.Holder.run()});
 
   return (
     <Container className="p-4">
