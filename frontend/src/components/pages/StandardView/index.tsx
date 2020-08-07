@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import ExamplePage from "components/templates/ExamplePage";
 import ModuleOverview from "components/pages/ModuleOverview";
-import LeftBar from "components/organisms/LeftBar";
 
 import "./style.scss";
 import RightBar from "components/organisms/RightBar";
@@ -10,6 +9,9 @@ import classNames from "classnames";
 import ModuleList from "../ModuleList";
 import ModuleMaterials from "../ModuleMaterials";
 import ModuleCoursework from "../ModuleCoursework";
+import LeftBarHome from "components/organisms/LeftBarHome";
+import LeftBarModuleList from "components/organisms/LeftBarModuleList";
+import LeftBarModule from "components/organisms/LeftBarModule";
 
 interface StandardViewProps {
   pages: {
@@ -34,37 +36,43 @@ const StandardView: React.FC<StandardViewProps> = ({
         toggledRight: toggledRight,
       })}
     >
-      <LeftBar />
       <RightBar />
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
       <Switch>
         <Route path="/home">
+					<LeftBarHome />
           <ExamplePage name="Home" />
         </Route>
 
 				<Route exact path="/modules">
+					<LeftBarModuleList />
           <ModuleList />
         </Route>
 
 				<Route path="/modules/:id/overview">
+					<LeftBarModule/>
           <ModuleOverview />
         </Route>
 
 				<Route path="/modules/:id/materials">
+					<LeftBarModule/>
           <ModuleMaterials />
         </Route>
 
 				<Route path="/modules/:id/coursework">
+					<LeftBarModule/>
           <ModuleCoursework />
         </Route>
 
         <Route path="/modules/:id" render={props => <Redirect to={`/modules/${props.match.params.id}/overview`} />} />
 			
 				<Route path="/timetable">
+					<LeftBarHome />
           <ExamplePage name="Timetable" />
         </Route>
 
 				<Route path="/exams">
+					<LeftBarHome />
           <ExamplePage name="Exams" />
         </Route>
 
