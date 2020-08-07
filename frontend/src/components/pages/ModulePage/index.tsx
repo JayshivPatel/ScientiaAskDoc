@@ -4,6 +4,9 @@ import Breadcrumb from "react-bootstrap/Breadcrumb";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import CardDeck from "react-bootstrap/CardDeck";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 import classNames from "classnames";
 import logicIllustration from "assets/images/logic-illustration.svg";
 import discreteIllustration from "assets/images/discrete-illustration.svg";
@@ -30,80 +33,91 @@ const ModulePage: React.FC = () => {
         Structures, Graphs and Algorithms, Introduction to Databases.
       </p>
 
-      <CardDeck className={classNames(styles.moduleCardDeck)}>
-        <Card className={classNames(styles.moduleCard)}>
-          <Card.Header className={classNames(styles.moduleCardHeader)}>
-            CO140
-          </Card.Header>
-          <Card.Img
-            style={{ borderRadius: 0 }}
-            variant="top"
-            src={logicIllustration}
-          />
-          <Card.Body>
-            <Card.Title>Introduction to Logic</Card.Title>
-          </Card.Body>
-          <Card.Footer>
-            <small className={classNames(styles.moduleCardProgressText)}>
-              in progress
-            </small>
-          </Card.Footer>
-        </Card>
-        <Card className={classNames(styles.moduleCard)}>
-          <Card.Header className={classNames(styles.moduleCardHeader)}>
-            CO142
-          </Card.Header>
-          <Card.Img
-            style={{ borderRadius: 0 }}
-            variant="top"
-            src={discreteIllustration}
-          />
-          <Card.Body>
-            <Card.Title>Discrete Mathematics</Card.Title>
-          </Card.Body>
-          <Card.Footer>
-            <small className={classNames(styles.moduleCardProgressText)}>
-              in progress
-            </small>
-          </Card.Footer>
-        </Card>
-        <Card className={classNames(styles.moduleCard)}>
-          <Card.Header className={classNames(styles.moduleCardHeader)}>
-            CO112
-          </Card.Header>
-          <Card.Img
-            style={{ borderRadius: 0 }}
-            variant="top"
-            src={systemsIllustration}
-          />
-          <Card.Body>
-            <Card.Title>Introduction to Computer Systems</Card.Title>
-          </Card.Body>
-          <Card.Footer>
-            <small className={classNames(styles.moduleCardProgressText)}>
-              in progress
-            </small>
-          </Card.Footer>
-        </Card>
-        <Card className={classNames(styles.moduleCard)}>
-          <Card.Header className={classNames(styles.moduleCardHeader)}>
-            CO145
-          </Card.Header>
-          <Card.Img
-            style={{ borderRadius: 0 }}
-            variant="top"
-            src={methodsIllustration}
-          />
-          <Card.Body>
-            <Card.Title>Mathematical Methods</Card.Title>
-          </Card.Body>
-          <Card.Footer>
-            <small className={classNames(styles.moduleCardProgressText)}>
-              in progress
-            </small>
-          </Card.Footer>
-        </Card>
-      </CardDeck>
+      <Row>
+        <Col xs={12} md={4} style={{marginTop: "30px"}} >
+          <Card className={classNames(styles.moduleCard)}>
+            <Card.Header className={classNames(styles.moduleCardHeader)}>
+              CO140
+            </Card.Header>
+            <Card.Img
+              style={{ borderRadius: 0 }}
+              variant="top"
+              src={logicIllustration}
+            />
+            <Card.Body>
+              <Card.Title>Introduction to Logic</Card.Title>
+            </Card.Body>
+            <Card.Footer>
+              <small className={classNames(styles.moduleCardProgressText)}>
+                in progress
+              </small>
+            </Card.Footer>
+          </Card>
+        </Col>
+
+        <Col xs={12} md={4} style={{marginTop: "30px"}} >
+          <Card className={classNames(styles.moduleCard)}>
+            <Card.Header className={classNames(styles.moduleCardHeader)}>
+              CO142
+            </Card.Header>
+            <Card.Img
+              style={{ borderRadius: 0 }}
+              variant="top"
+              src={discreteIllustration}
+            />
+            <Card.Body>
+              <Card.Title>Discrete Mathematics</Card.Title>
+            </Card.Body>
+            <Card.Footer>
+              <small className={classNames(styles.moduleCardProgressText)}>
+                in progress
+              </small>
+            </Card.Footer>
+          </Card>
+        </Col>
+
+        <Col xs={12} md={4} style={{marginTop: "30px"}} >
+          <Card className={classNames(styles.moduleCard)}>
+            <Card.Header className={classNames(styles.moduleCardHeader)}>
+              CO112
+            </Card.Header>
+            <Card.Img
+              style={{ borderRadius: 0 }}
+              variant="top"
+              src={systemsIllustration}
+            />
+            <Card.Body>
+              <Card.Title>Introduction to Computer Systems</Card.Title>
+            </Card.Body>
+            <Card.Footer>
+              <small className={classNames(styles.moduleCardProgressText)}>
+                in progress
+              </small>
+            </Card.Footer>
+          </Card>
+        </Col>
+
+        <Col xs={12} md={4} style={{marginTop: "30px"}} >
+          <Card className={classNames(styles.moduleCard)}>
+            <Card.Header className={classNames(styles.moduleCardHeader)}>
+              CO145
+            </Card.Header>
+            <Card.Img
+              style={{ borderRadius: 0 }}
+              variant="top"
+              src={methodsIllustration}
+            />
+            <Card.Body>
+              <Card.Title>Mathematical Methods</Card.Title>
+            </Card.Body>
+            <Card.Footer>
+              <small className={classNames(styles.moduleCardProgressText)}>
+                in progress
+              </small>
+            </Card.Footer>
+          </Card>
+        </Col>
+      </Row>
     </Container>
   );
 };
