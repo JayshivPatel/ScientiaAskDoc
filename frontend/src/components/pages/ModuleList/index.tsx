@@ -56,7 +56,7 @@ const ModuleList: React.FC = () => {
 
       <Row>
         {modules.map((module) => (
-          <ModuleCard module={module} />
+          <ModuleCard module={module} key={module.code}/>
         ))}
       </Row>
     </Container>
