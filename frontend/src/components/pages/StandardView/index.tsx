@@ -5,7 +5,7 @@ import LeftBar from "components/organisms/LeftBar";
 import "./style.scss";
 import RightBar from "components/organisms/RightBar";
 import classNames from "classnames";
-import ModulePage from "../ModulePage";
+import ModuleList from "../ModuleList";
 
 interface StandardViewProps {
   pages: {
@@ -40,7 +40,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         </Route>
 
 				<Route path="/modules" key="Modules">
-          <ModulePage />
+          <ModuleList />
         </Route>
 
 				<Route path="/timetable" key="Timetable">

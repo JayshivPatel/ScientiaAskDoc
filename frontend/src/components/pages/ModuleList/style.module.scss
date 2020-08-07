@@ -1,0 +1,35 @@
+@import "assets/scss/custom";
+
+.breadcrumb,
+:global(.breadcrumb) {
+  background: #fff !important;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #000;
+  padding: 0px;
+  margin-bottom: 30px;
+}
+
+.moduleContainer {
+  padding-top: 30px;
+  margin-bottom: 72px;
+}
+
+.breadcrumb,
+:global(.breadcrumb, .active) {
+  color: #000;
+}
+
+.moduleSectionHeader {
+  margin-top: 30px;
+}
+
+.moduleParagraph {
+  margin-top: 15px;	
+}
+
+@media (max-width: 992px) {
+}
+
+@media (min-width: 992px) {
+}
