@@ -23,10 +23,10 @@
   transition: all 0.5s ease;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 62rem) {
   #wrapper {
-		padding-left: 250px;
-    padding-right: 250px;
+		padding-left: 15.625rem;
+    padding-right: 15.625rem;
   }
 
   #wrapper.toggledLeft {
@@ -38,7 +38,7 @@
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 62rem) {
 	#wrapper.toggledRight #sidenav-overlay,
   #wrapper.toggledLeft #sidenav-overlay {
 		visibility:visible;

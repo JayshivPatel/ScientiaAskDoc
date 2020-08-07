@@ -1,14 +1,14 @@
 @import "assets/scss/custom";
 
-@media (max-width: 992px) {
+@media (max-width: 62rem) {
   .bottomBar {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 60px;
+    height: 3.75rem;
     background-color: #fff;
-    border-top: 1px solid #cdd4db;
-    padding: 0px;
+    border-top: 0.0625rem solid #cdd4db;
+    padding: 0rem;
   }
 
   .bottomBarButtons{
@@ -17,7 +17,7 @@
   }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 62rem) {
   .bottomBar {
     display: none;
   }

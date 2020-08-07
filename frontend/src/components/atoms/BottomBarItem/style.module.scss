@@ -1,5 +1,5 @@
 @import "assets/scss/custom";
-@media (max-width: 992px) {
+@media (max-width: 62rem) {
   .btn:active,
   .btn:global(.active) {
     border: 0;
@@ -11,7 +11,7 @@
     border: 0;
     box-shadow: none !important;
     outline: 0 !important;
-    border-radius: 0px;
+    border-radius: 0rem;
     width: 25%;
     margin-left: 0;
     color: #000;
@@ -23,11 +23,11 @@
 
   .btn:focus {
     border: 0;
-    box-shadow: 0 0 0 0px;
+    box-shadow: 0 0 0 0rem;
   }
 
   .btn:hover {
-    border: 0px;
+    border: 0rem;
     background-color: #ced4da;
     color: #000;
   }
