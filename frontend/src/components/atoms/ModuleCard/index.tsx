@@ -16,7 +16,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({
   module
 }: ModuleCardProps) => {
   return (
-    <Col xs={12} md={4} style={{ marginTop: "30px" }}>
+    <Col xs={12} sm={6} lg={4} xl={3} style={{ marginTop: "30px" }}>
       <Card className={classNames(styles.moduleCard)}>
         <Card.Header className={classNames(styles.moduleCardHeader)}>
           {module.code}
