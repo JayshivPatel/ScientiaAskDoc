@@ -19,7 +19,14 @@ class App extends React.Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
     this.state = { toggledLeft: false, toggledRight: false };
-  }
+	}
+	
+	componentDidMount(){
+		let interfaceSize = localStorage.getItem("interfaceSize");
+		if (interfaceSize){
+			document.documentElement.style.fontSize = `${interfaceSize}%`;
+		}
+	}
 
   toggleLeftBar() {
     this.setState((state) => ({
