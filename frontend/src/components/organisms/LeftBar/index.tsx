@@ -23,13 +23,15 @@ const LeftBar: React.FC = () => {
 	let outlineButtons = [
     {
 			title: "Overview",
-      active: true,
+      activeURL: "overview",
     },
     {
 			title: "Coursework",
+      activeURL: "coursework",
     },
     {
 			title: "Materials",
+      activeURL: "materials",
     },
     {
       title: "Piazza",

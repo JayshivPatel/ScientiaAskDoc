@@ -8,6 +8,8 @@ import "./style.scss";
 import RightBar from "components/organisms/RightBar";
 import classNames from "classnames";
 import ModuleList from "../ModuleList";
+import ModuleMaterials from "../ModuleMaterials";
+import ModuleCoursework from "../ModuleCoursework";
 
 interface StandardViewProps {
   pages: {
@@ -47,8 +49,17 @@ const StandardView: React.FC<StandardViewProps> = ({
 				<Route path="/modules/:id/overview">
           <ModuleOverview />
         </Route>
-        <Route path="/modules/:id" render={props => <Redirect to={`/modules/${props.match.params.id}/overview`} />} />
 
+				<Route path="/modules/:id/materials">
+          <ModuleMaterials />
+        </Route>
+
+				<Route path="/modules/:id/coursework">
+          <ModuleCoursework />
+        </Route>
+
+        <Route path="/modules/:id" render={props => <Redirect to={`/modules/${props.match.params.id}/overview`} />} />
+			
 				<Route path="/timetable">
           <ExamplePage name="Timetable" />
         </Route>

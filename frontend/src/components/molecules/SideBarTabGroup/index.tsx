@@ -4,13 +4,15 @@ import styles from "./style.module.scss";
 import classNames from "classnames";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { NavLink } from "react-router-dom";
 
 export interface SideBarTabGroupProp {
   title: string;
   buttons: {
     title: string;
     icon?: IconDefinition;
-    active?: boolean;
+		active?: boolean;
+		activeURL?: string;
   }[];
 }
 
@@ -18,13 +20,28 @@ const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
   title,
   buttons,
 }: SideBarTabGroupProp) => {
-  let displayButtons = buttons.map(({ title, icon, active }) => {
+  let displayButtons = buttons.map(({ title, icon, active, activeURL }) => {
     let FAicon;
     if (icon) {
       FAicon = (
         <FontAwesomeIcon className={styles.tabGroupButtonSvg} icon={icon} />
       );
-    }
+		}
+		if (activeURL !== undefined){
+			return (
+				<Button
+					as={NavLink} 
+					to={activeURL}
+					activeClassName={"active"}
+					className={styles.tabGroupButton}
+					key={title}
+				>
+					{title}
+					{FAicon}
+				</Button>
+			);
+		}
+
     return (
       <Button
         className={classNames({ active: active }, styles.tabGroupButton)}
