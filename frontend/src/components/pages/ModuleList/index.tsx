@@ -28,14 +28,14 @@ const ModuleList: React.FC = () => {
     },
 
     {
-      title: "Mathematical Methods",
+      title: "Introduction to Computer Systems",
       code: "CO112",
       image: systemsIllustration,
       content: "",
     },
 
     {
-      title: "Introduction to Logic",
+      title: "Mathematical Methods",
       code: "CO145",
       image: methodsIllustration,
       content: "",
