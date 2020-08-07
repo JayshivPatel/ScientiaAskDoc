@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.scss";
-
 import TopBar from "./organisms/TopBar";
 import BottomBar from "./organisms/BottomBar";
 import {
