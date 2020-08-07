@@ -1,7 +1,9 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import ExamplePage from "components/templates/ExamplePage";
+import ModuleOverview from "components/pages/ModuleOverview";
 import LeftBar from "components/organisms/LeftBar";
+
 import "./style.scss";
 import RightBar from "components/organisms/RightBar";
 import classNames from "classnames";
@@ -34,22 +36,28 @@ const StandardView: React.FC<StandardViewProps> = ({
       <RightBar />
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/home" />} />
-        <Route path="/home" key="Home">
+        <Route path="/home">
           <ExamplePage name="Home" />
         </Route>
 
-				<Route path="/modules" key="Modules">
+				<Route exact path="/modules">
           <ModuleList />
         </Route>
 
-				<Route path="/timetable" key="Timetable">
+				<Route path="/modules/:id/overview">
+          <ModuleOverview />
+        </Route>
+        <Route path="/modules/:id" render={props => <Redirect to={`/modules/${props.match.params.id}/overview`} />} />
+
+				<Route path="/timetable">
           <ExamplePage name="Timetable" />
         </Route>
 
-				<Route path="/exams" key="Exams">
+				<Route path="/exams">
           <ExamplePage name="Exams" />
         </Route>
+
+        <Route path="/" render={() => <Redirect to="/home" />} />
       </Switch>
     </div>
   );

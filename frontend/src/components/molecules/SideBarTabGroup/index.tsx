@@ -9,15 +9,33 @@ export interface SideBarTabGroupProp {
   title: string;
   buttons: {
     title: string;
-    icon: IconDefinition;
+    icon?: IconDefinition;
     active?: boolean;
   }[];
 }
 
 const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
-	title,
+  title,
   buttons,
 }: SideBarTabGroupProp) => {
+  let displayButtons = buttons.map(({ title, icon, active }) => {
+    let FAicon;
+    if (icon) {
+      FAicon = (
+        <FontAwesomeIcon className={styles.tabGroupButtonSvg} icon={icon} />
+      );
+    }
+    return (
+      <Button
+        className={classNames({ active: active }, styles.tabGroupButton)}
+        key={title}
+      >
+        {title}
+        {FAicon}
+      </Button>
+    );
+  });
+
   return (
     <>
       <h1 className={styles.tabGroupHeading}>{title}</h1>
@@ -25,18 +43,7 @@ const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
         className={"btn-group-vertical " + styles.tabGroupButtonGroup}
         role="group"
       >
-        {buttons.map(({ title, icon, active }) => (
-          <Button
-            className={classNames({ active: active }, styles.tabGroupButton)}
-            key={title}
-          >
-            {title}
-            <FontAwesomeIcon
-							className={styles.tabGroupButtonSvg}
-							icon={icon}
-            />
-          </Button>
-        ))}
+        {displayButtons}
       </div>
     </>
   );

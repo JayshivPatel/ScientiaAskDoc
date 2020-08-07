@@ -1,33 +1,63 @@
 import React from "react";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
 import styles from "./style.module.scss";
-import { faSpinner, faSortNumericDown, faSortAlphaDown, faSnowflake } from "@fortawesome/free-solid-svg-icons";
+import { Route , Switch} from "react-router-dom";
 
 const LeftBar: React.FC = () => {
-  let buttons = [
+  let sortButtons = [
     {
 			title: "Progress",
-			icon: faSpinner,
     },
     {
 			title: "Module Title",
-			icon: faSortAlphaDown,
       active: true,
     },
     {
 			title: "Module Code",
-			icon: faSortNumericDown,
     },
     {
-			icon: faSnowflake,
       title: "Term",
+    },
+	];
+	
+	let outlineButtons = [
+    {
+			title: "Overview",
+      active: true,
+    },
+    {
+			title: "Coursework",
+    },
+    {
+			title: "Materials",
+    },
+    {
+      title: "Piazza",
+		},
+		{
+      title: "Policies",
+		},
+		{
+      title: "FAQs",
     },
   ];
 
   return (
     <div id={styles.leftbarWrapper}>
       <p className={styles.leftbarStatus}>1 UPDATE</p>
-      <SideBarTabGroup title="Sort" buttons={buttons}/>
+
+			<Switch>
+
+				<Route path="/modules/:id">
+					<SideBarTabGroup title="Outline" buttons={outlineButtons}/>
+        </Route>
+
+				<Route path="/">
+					<SideBarTabGroup title="Sort" buttons={sortButtons}/>
+        </Route>
+
+      </Switch>
+
     </div>
   );
 };
