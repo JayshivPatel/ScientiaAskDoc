@@ -1,11 +1,16 @@
 @import "assets/scss/custom";
 
 .moduleCard {
-	background: #ffffff;
-	height: 100%;
-	box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  height: 100%;
+  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
   border-width: 0rem;
   border-radius: 0.5rem !important;
+  transition: transform .2s;
+}
+
+.moduleCard:hover {
+  transform: scale(1.05);
 }
 
 .moduleCard :global(.card-header) {
@@ -29,7 +34,6 @@
   border-width: 0rem;
   padding: 0.5rem;
 }
-
 
 .moduleCardHeader {
   font-weight: 600;
