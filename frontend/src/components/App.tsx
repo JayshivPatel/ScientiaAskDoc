@@ -6,7 +6,7 @@ import {
   faBookOpen,
   faHome,
   faCalendarWeek,
-  faChalkboardTeacher,
+  faChalkboardTeacher
 } from "@fortawesome/free-solid-svg-icons";
 import StandardView from "./pages/StandardView";
 
@@ -19,25 +19,39 @@ class App extends React.Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
     this.state = { toggledLeft: false, toggledRight: false };
-	}
-	
-	componentDidMount(){
-		let interfaceSize = localStorage.getItem("interfaceSize");
-		if (interfaceSize){
-			document.documentElement.style.fontSize = `${interfaceSize}%`;
-		}
-	}
+  }
+
+  componentDidMount() {
+    let interfaceSize = localStorage.getItem("interfaceSize");
+    if (interfaceSize) {
+      document.documentElement.style.fontSize = `${interfaceSize}%`;
+    }
+  }
 
   toggleLeftBar() {
-    this.setState((state) => ({
-      toggledLeft: !state.toggledLeft,
-    }));
+    if (window.innerWidth < 992) {
+      this.setState(state => ({
+        toggledRight: false,
+        toggledLeft: !state.toggledLeft
+      }));
+    } else {
+      this.setState(state => ({
+        toggledLeft: !state.toggledLeft
+      }));
+    }
   }
 
   toggleRightBar() {
-    this.setState((state) => ({
-      toggledRight: !state.toggledRight,
-    }));
+    if (window.innerWidth < 992) {
+      this.setState(state => ({
+        toggledRight: !state.toggledRight,
+        toggledLeft: false 
+      }));
+    } else {
+      this.setState(state => ({
+        toggledRight: !state.toggledRight
+      }));
+    }
   }
 
   render() {
@@ -45,18 +59,18 @@ class App extends React.Component<{}, AppState> {
       { name: "Home", path: "/home", icon: faHome },
       { name: "Modules", path: "/modules", icon: faChalkboardTeacher },
       { name: "Timeline", path: "/timeline", icon: faCalendarWeek },
-      { name: "Exams", path: "/exams", icon: faBookOpen },
+      { name: "Exams", path: "/exams", icon: faBookOpen }
     ];
 
     return (
       <>
         <TopBar
           pages={horizontalBarPages}
-          onFavIconClick={(e) => {
+          onFavIconClick={e => {
             e.preventDefault();
             this.toggleLeftBar();
           }}
-          onUserIconClick={(e) => {
+          onUserIconClick={e => {
             e.preventDefault();
             this.toggleRightBar();
           }}
@@ -64,9 +78,9 @@ class App extends React.Component<{}, AppState> {
 
         <StandardView
           pages={horizontalBarPages}
-					toggledLeft={this.state.toggledLeft}
+          toggledLeft={this.state.toggledLeft}
           toggledRight={this.state.toggledRight}
-          onOverlayClick={(e) => {
+          onOverlayClick={e => {
             e.preventDefault();
             this.setState({ toggledLeft: false, toggledRight: false });
           }}
