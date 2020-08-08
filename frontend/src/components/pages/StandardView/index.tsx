@@ -74,8 +74,8 @@ const StandardView: React.FC<StandardViewProps> = ({
           <ModuleCoursework />
         </Route>
 
-        <Route path="/timetable">
-          <ExamplePage name="Timetable" />
+        <Route path="/timeline">
+          <ExamplePage name="Timeline" />
         </Route>
 
         <Route path="/exams">

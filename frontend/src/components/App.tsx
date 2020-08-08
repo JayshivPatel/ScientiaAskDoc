@@ -44,7 +44,7 @@ class App extends React.Component<{}, AppState> {
     const horizontalBarPages = [
       { name: "Home", path: "/home", icon: faHome },
       { name: "Modules", path: "/modules", icon: faChalkboardTeacher },
-      { name: "Timetable", path: "/timetable", icon: faCalendarWeek },
+      { name: "Timeline", path: "/timeline", icon: faCalendarWeek },
       { name: "Exams", path: "/exams", icon: faBookOpen },
     ];
 

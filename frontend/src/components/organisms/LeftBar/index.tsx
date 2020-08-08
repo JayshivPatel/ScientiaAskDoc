@@ -8,7 +8,7 @@ export interface LeftBarProps{
 const LeftBar: React.FC<LeftBarProps> = ({children}: LeftBarProps) => {
   return (
     <div id={styles.leftbarWrapper}>
-      <p className={styles.leftbarStatus}>1 UPDATE</p>
+      <p className={styles.leftbarStatus}>1 DEADLINE</p>
 			{children}
     </div>
   );
