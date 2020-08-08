@@ -36,6 +36,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         toggledRight: toggledRight,
       })}
     >
+      <RightBar />
       <Switch>
         <Route path="/modules/:id">
           <LeftBarModule />
@@ -50,7 +51,6 @@ const StandardView: React.FC<StandardViewProps> = ({
         </Route>
       </Switch>
 
-      <RightBar />
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
 
       <Switch>
