@@ -13,7 +13,8 @@ import javaIllustration from "assets/images/java-illustration.png";
 import reasoningIllustration from "assets/images/reasoning-illustration.png";
 import architectureIllustration from "assets/images/architecture-illustration.png";
 import databaseIllustration from "assets/images/database-illustration.png";
-import ModuleCard, { Term } from "components/atoms/ModuleCard";
+
+import ModuleCard, { Term, ProgressStatus } from "components/atoms/ModuleCard";
 import Dandruff from "components/molecules/Dandruff";
 
 const ModuleList: React.FC = () => {
@@ -23,7 +24,7 @@ const ModuleList: React.FC = () => {
       code: "CO140",
       image: logicIllustration,
       terms: [Term.AUTUMN],
-      progressStatus: "in progress",
+      progressStatus: ProgressStatus.IN_PROGRESS,
       progressPercent: 50,
       content: ""
     },
@@ -32,7 +33,7 @@ const ModuleList: React.FC = () => {
       code: "CO142",
       image: discreteIllustration,
       terms: [Term.AUTUMN],
-      progressStatus: "in progress",
+      progressStatus: ProgressStatus.IN_PROGRESS,
       progressPercent: 60,
       content: ""
     },
@@ -41,7 +42,7 @@ const ModuleList: React.FC = () => {
       code: "CO112",
       image: systemsIllustration,
       terms: [Term.AUTUMN],
-      progressStatus: "in progress",
+      progressStatus: ProgressStatus.IN_PROGRESS,
       progressPercent: 93,
       content: ""
     },
@@ -50,7 +51,7 @@ const ModuleList: React.FC = () => {
       code: "CO145",
       terms: [Term.AUTUMN],
       image: methodsIllustration,
-      progressStatus: "in progress",
+      progressStatus: ProgressStatus.IN_PROGRESS,
       progressPercent: 45,
       content: ""
     },
@@ -59,7 +60,7 @@ const ModuleList: React.FC = () => {
       code: "CO120.2",
       image: javaIllustration,
       terms: [Term.AUTUMN, Term.SPRING, Term.SUMMER],
-      progressStatus: "in progress",
+      progressStatus: ProgressStatus.IN_PROGRESS,
       progressPercent: 20,
       content: ""
     },
@@ -68,7 +69,7 @@ const ModuleList: React.FC = () => {
       code: "CO150",
       image: graphIllustration,
       terms: [Term.SPRING],
-      progressStatus: "no started",
+      progressStatus: ProgressStatus.NOT_STARTED,
       progressPercent: 0,
       content: ""
     },
@@ -77,7 +78,7 @@ const ModuleList: React.FC = () => {
       code: "CO113",
       image: architectureIllustration,
       terms: [Term.SPRING],
-      progressStatus: "no started",
+      progressStatus: ProgressStatus.NOT_STARTED,
       progressPercent: 0,
       content: ""
     },
@@ -86,7 +87,7 @@ const ModuleList: React.FC = () => {
       code: "CO141",
       image: reasoningIllustration,
       terms: [Term.SPRING],
-      progressStatus: "no started",
+      progressStatus: ProgressStatus.NOT_STARTED,
       progressPercent: 0,
       content: ""
     },
@@ -95,7 +96,7 @@ const ModuleList: React.FC = () => {
       code: "CO130",
       image: databaseIllustration,
       terms: [Term.SPRING],
-      progressStatus: "no started",
+      progressStatus: ProgressStatus.NOT_STARTED,
       progressPercent: 0,
       content: ""
     }

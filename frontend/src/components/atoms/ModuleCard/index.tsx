@@ -10,8 +10,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export enum Term {
   AUTUMN,
   SPRING,
-  SUMMER,
+  SUMMER
 }
+
+export enum ProgressStatus {
+  NOT_STARTED = "Not Started",
+  IN_PROGRESS = "In Progress",
+  COMPLETED = "Completed"
+}
+
 export interface ModuleCardProps {
   module: {
     title: string;
@@ -19,12 +26,21 @@ export interface ModuleCardProps {
     image: string;
     content: string;
     terms: Term[];
-    progressStatus?: string;
+    progressStatus?: ProgressStatus;
     progressPercent?: number;
   };
 }
 
 const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
+  let textColor: string = "";
+  switch (module.progressStatus) {
+    case ProgressStatus.NOT_STARTED:
+      textColor = "#ACB5BD"; break;
+    case ProgressStatus.IN_PROGRESS:
+      textColor = "#29A745"; break;
+    case ProgressStatus.COMPLETED:
+      textColor = "#000";
+  }
   return (
     <Col xs={12} sm={12} md={6} lg={6} xl={3} style={{ marginTop: "1.875rem" }}>
       <Card
@@ -37,11 +53,13 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
             {module.terms.map((term: Term) => {
               switch (term) {
                 case Term.AUTUMN:
-                  return <FontAwesomeIcon icon={faLeaf} key={Term.AUTUMN}/>;
+                  return <FontAwesomeIcon icon={faLeaf} key={Term.AUTUMN} />;
                 case Term.SPRING:
-                  return <FontAwesomeIcon icon={faSeedling} key={Term.SPRING}/>;
+                  return (
+                    <FontAwesomeIcon icon={faSeedling} key={Term.SPRING} />
+                  );
                 case Term.SUMMER:
-                  return <FontAwesomeIcon icon={faSun} key={Term.SUMMER}/>;
+                  return <FontAwesomeIcon icon={faSun} key={Term.SUMMER} />;
                 default:
                   return "";
               }
@@ -58,10 +76,16 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
           <Card.Title style={{ color: "#000" }}>{module.title}</Card.Title>
         </Card.Body>
         <Card.Footer>
-          <span className={classNames(styles.moduleCardProgressText)}>
+          <span
+            style={{ color: textColor }}
+            className={styles.moduleCardProgressText}
+          >
             {module.progressStatus}
           </span>
-          <span className={classNames(styles.moduleCardProgressText)}>{`${module.progressPercent}%`}</span>
+          <span
+            style={{ color: textColor }}
+            className={styles.moduleCardProgressText}
+          >{`${module.progressPercent}%`}</span>
         </Card.Footer>
       </Card>
     </Col>
