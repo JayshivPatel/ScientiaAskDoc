@@ -2,7 +2,7 @@ import React from "react";
 import LeftBar from "components/organisms/LeftBar";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
 import { faGitlab } from "@fortawesome/free-brands-svg-icons";
-import { faFlask, faAward, faDatabase, faEnvelopeOpen } from "@fortawesome/free-solid-svg-icons";
+import { faFlask, faAward, faDatabase, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const LeftBarHome: React.FC = () => {
   let linkButtons = [
@@ -13,7 +13,7 @@ const LeftBarHome: React.FC = () => {
     },
     {
 			title: "Outlook",
-			icon: faEnvelopeOpen,
+			icon: faEnvelope,
 			externalURL: "https://outlook.office.com/",
     },
     {
