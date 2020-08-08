@@ -12,17 +12,25 @@
   height: 2.25rem;
   border-radius: 0.5rem !important;
   text-align: left;
+  transition: 0.5s background;
+  -webkit-transition: 0.5s background;
+  -moz-transition: 0.5s background;
 }
 
 .tabGroupButtonSvg {
   float: right;
-  margin-top: 0.22rem; 
+  margin-top: 0.22rem;
+}
+
+.tabGroupButton:active:hover,
+.tabGroupButton:global(.active):hover {
+  background-color: $gray-900 !important;
 }
 
 .tabGroupButton:global(.active),
 .tabGroupButton:active {
   color: #fff;
-  background-color: #000 !important;
+  background: #000 !important;
   font-weight: 500;
   text-align: left;
   border-width: 0rem;
@@ -31,7 +39,7 @@
 }
 
 .tabGroupButton:hover {
-  background-color: #e5e5e5;
+  background: #e5e5e5;
   border-color: #fff;
   color: #000;
 }

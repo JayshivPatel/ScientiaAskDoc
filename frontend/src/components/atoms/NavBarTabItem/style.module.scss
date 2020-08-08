@@ -13,6 +13,9 @@
     height: 2.25rem;
     margin-right: 0.625rem;
     margin-left: 0.625rem;
+    transition: 0.5s background;
+    -webkit-transition: 0.5s background;
+    -moz-transition: 0.5s background;
   }
 
   .pageButton:hover {
