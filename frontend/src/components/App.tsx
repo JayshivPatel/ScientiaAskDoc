@@ -52,7 +52,7 @@ class App extends React.Component<{}, AppState> {
 
   render() {
     const horizontalBarPages = [
-      { name: "Home", path: "/home", icon: faHome },
+      { name: "Dashboard", path: "/dashboard", icon: faHome },
       { name: "Modules", path: "/modules", icon: faChalkboardTeacher },
       { name: "Timeline", path: "/timeline", icon: faCalendarWeek },
       { name: "Exams", path: "/exams", icon: faBookOpen },

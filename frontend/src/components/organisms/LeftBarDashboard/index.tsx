@@ -4,7 +4,7 @@ import SideBarTabGroup from "components/molecules/SideBarTabGroup";
 import { faGitlab } from "@fortawesome/free-brands-svg-icons";
 import { faFlask, faAward, faDatabase, faEnvelopeOpen } from "@fortawesome/free-solid-svg-icons";
 
-const LeftBarHome: React.FC = () => {
+const LeftBarDashboard: React.FC = () => {
   let linkButtons = [
     {
 			title: "GitLab",
@@ -40,4 +40,4 @@ const LeftBarHome: React.FC = () => {
   );
 };
 
-export default LeftBarHome;
+export default LeftBarDashboard;

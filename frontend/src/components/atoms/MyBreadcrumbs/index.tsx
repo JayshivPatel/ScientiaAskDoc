@@ -5,8 +5,7 @@ import styles from "./style.module.scss";
 import withBreadcrumbs from "react-router-breadcrumbs-hoc";
 import { Link } from "react-router-dom";
 
-// delete [{ path: "/", breadcrumb: "" }] to enable Home in front of breadcrumbs
-const MyBreadcrumbs = withBreadcrumbs([{ path: "/", breadcrumb: "" }])(
+const MyBreadcrumbs = withBreadcrumbs()(
   ({ breadcrumbs }: { breadcrumbs: any }) => (
     <Breadcrumb className={styles.breadcrumb}>
       {breadcrumbs.map(

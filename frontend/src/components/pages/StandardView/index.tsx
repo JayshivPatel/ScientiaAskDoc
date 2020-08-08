@@ -9,7 +9,7 @@ import classNames from "classnames";
 import ModuleList from "../ModuleList";
 import ModuleResources from "../ModuleResources";
 import ModuleFeedback from "../ModuleFeedback";
-import LeftBarHome from "components/organisms/LeftBarHome";
+import LeftBarDashboard from "components/organisms/LeftBarDashboard";
 import LeftBarModuleList from "components/organisms/LeftBarModuleList";
 import LeftBarModule from "components/organisms/LeftBarModule";
 import Container from "react-bootstrap/esm/Container";
@@ -48,15 +48,15 @@ const StandardView: React.FC<StandardViewProps> = ({
         </Route>
 
         <Route path="/">
-          <LeftBarHome />
+          <LeftBarDashboard />
         </Route>
       </Switch>
 
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
       <Container className={classNames("py-4", "px-5", "pageContainer")}>
         <Switch>
-          <Route path="/home">
-            <ExamplePage name="Home" />
+          <Route path="/dashboard">
+            <ExamplePage name="Dashboard" />
           </Route>
 
           <Route exact path="/modules">
@@ -89,7 +89,7 @@ const StandardView: React.FC<StandardViewProps> = ({
               <Redirect to={`/modules/${props.match.params.id}/overview`} />
             )}
           />
-          <Route path="/" render={() => <Redirect to="/home" />} />
+          <Route path="/" render={() => <Redirect to="/dashboard" />} />
         </Switch>
       </Container>
     </div>
