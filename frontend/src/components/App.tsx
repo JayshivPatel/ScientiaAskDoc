@@ -6,7 +6,7 @@ import {
   faBookOpen,
   faHome,
   faCalendarWeek,
-  faChalkboardTeacher
+  faChalkboardTeacher,
 } from "@fortawesome/free-solid-svg-icons";
 import StandardView from "./pages/StandardView";
 
@@ -30,28 +30,24 @@ class App extends React.Component<{}, AppState> {
 
   toggleLeftBar() {
     if (window.innerWidth < 992) {
-      this.setState(state => ({
+      this.setState({
         toggledRight: false,
-        toggledLeft: !state.toggledLeft
-      }));
-    } else {
-      this.setState(state => ({
-        toggledLeft: !state.toggledLeft
-      }));
+      });
     }
+    this.setState((state) => ({
+      toggledLeft: !state.toggledLeft,
+    }));
   }
 
   toggleRightBar() {
     if (window.innerWidth < 992) {
-      this.setState(state => ({
-        toggledRight: !state.toggledRight,
-        toggledLeft: false 
-      }));
-    } else {
-      this.setState(state => ({
-        toggledRight: !state.toggledRight
-      }));
+      this.setState({
+        toggledLeft: false,
+      });
     }
+    this.setState((state) => ({
+      toggledRight: !state.toggledRight,
+    }));
   }
 
   render() {
@@ -59,18 +55,18 @@ class App extends React.Component<{}, AppState> {
       { name: "Home", path: "/home", icon: faHome },
       { name: "Modules", path: "/modules", icon: faChalkboardTeacher },
       { name: "Timeline", path: "/timeline", icon: faCalendarWeek },
-      { name: "Exams", path: "/exams", icon: faBookOpen }
+      { name: "Exams", path: "/exams", icon: faBookOpen },
     ];
 
     return (
       <>
         <TopBar
           pages={horizontalBarPages}
-          onFavIconClick={e => {
+          onFavIconClick={(e) => {
             e.preventDefault();
             this.toggleLeftBar();
           }}
-          onUserIconClick={e => {
+          onUserIconClick={(e) => {
             e.preventDefault();
             this.toggleRightBar();
           }}
@@ -80,7 +76,7 @@ class App extends React.Component<{}, AppState> {
           pages={horizontalBarPages}
           toggledLeft={this.state.toggledLeft}
           toggledRight={this.state.toggledRight}
-          onOverlayClick={e => {
+          onOverlayClick={(e) => {
             e.preventDefault();
             this.setState({ toggledLeft: false, toggledRight: false });
           }}
