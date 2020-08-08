@@ -36,46 +36,58 @@ const StandardView: React.FC<StandardViewProps> = ({
         toggledRight: toggledRight,
       })}
     >
+      <Switch>
+        <Route path="/modules/:id">
+          <LeftBarModule />
+        </Route>
+
+        <Route exact path="/modules">
+          <LeftBarModuleList />
+        </Route>
+
+        <Route path="/">
+          <LeftBarHome />
+        </Route>
+      </Switch>
+
       <RightBar />
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
+
       <Switch>
         <Route path="/home">
-					<LeftBarHome />
           <ExamplePage name="Home" />
         </Route>
 
-				<Route exact path="/modules">
-					<LeftBarModuleList />
+        <Route exact path="/modules">
           <ModuleList />
         </Route>
 
-				<Route path="/modules/:id/overview">
-					<LeftBarModule/>
+        <Route path="/modules/:id/overview">
           <ModuleOverview />
         </Route>
 
-				<Route path="/modules/:id/materials">
-					<LeftBarModule/>
+        <Route path="/modules/:id/materials">
           <ModuleMaterials />
         </Route>
 
-				<Route path="/modules/:id/coursework">
-					<LeftBarModule/>
+        <Route path="/modules/:id/coursework">
           <ModuleCoursework />
         </Route>
 
-        <Route path="/modules/:id" render={props => <Redirect to={`/modules/${props.match.params.id}/overview`} />} />
-			
-				<Route path="/timetable">
-					<LeftBarHome />
+        <Route path="/timetable">
           <ExamplePage name="Timetable" />
         </Route>
 
-				<Route path="/exams">
-					<LeftBarHome />
+        <Route path="/exams">
           <ExamplePage name="Exams" />
         </Route>
 
+        <Route
+          path="/modules/:id"
+          render={(props) => (
+            <Redirect to={`/modules/${props.match.params.id}/overview`} />
+          )}
+        />
         <Route path="/" render={() => <Redirect to="/home" />} />
       </Switch>
     </div>
