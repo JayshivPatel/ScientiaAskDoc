@@ -29,18 +29,18 @@ class App extends React.Component<{}, AppState> {
   }
 
   toggleLeftBar() {
-    if (window.innerWidth < 992) {
+    if (window.innerWidth <= 1024) {
       this.setState({
         toggledRight: false,
       });
-    }
+    } 
     this.setState((state) => ({
       toggledLeft: !state.toggledLeft,
     }));
   }
 
   toggleRightBar() {
-    if (window.innerWidth < 992) {
+    if (window.innerWidth <= 1024) {
       this.setState({
         toggledLeft: false,
       });
