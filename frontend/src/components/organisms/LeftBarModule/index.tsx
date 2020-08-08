@@ -27,12 +27,12 @@ const LeftBarModule: React.FC = () => {
       activeURL: "overview",
     },
     {
-      title: "Coursework",
-      activeURL: "coursework",
+      title: "Feedback",
+      activeURL: "feedback",
     },
     {
-      title: "Materials",
-      activeURL: "materials",
+      title: "Resources",
+      activeURL: "resources",
     },
     {
       title: "Piazza",

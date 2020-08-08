@@ -7,8 +7,8 @@ import "./style.scss";
 import RightBar from "components/organisms/RightBar";
 import classNames from "classnames";
 import ModuleList from "../ModuleList";
-import ModuleMaterials from "../ModuleMaterials";
-import ModuleCoursework from "../ModuleCoursework";
+import ModuleResources from "../ModuleResources";
+import ModuleFeedback from "../ModuleResources";
 import LeftBarHome from "components/organisms/LeftBarHome";
 import LeftBarModuleList from "components/organisms/LeftBarModuleList";
 import LeftBarModule from "components/organisms/LeftBarModule";
@@ -66,12 +66,12 @@ const StandardView: React.FC<StandardViewProps> = ({
           <ModuleOverview />
         </Route>
 
-        <Route path="/modules/:id/materials">
-          <ModuleMaterials />
+        <Route path="/modules/:id/resources">
+          <ModuleResources />
         </Route>
 
-        <Route path="/modules/:id/coursework">
-          <ModuleCoursework />
+        <Route path="/modules/:id/feedback">
+          <ModuleFeedback />
         </Route>
 
         <Route path="/timeline">

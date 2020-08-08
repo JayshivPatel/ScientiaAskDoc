@@ -5,12 +5,12 @@ import Container from "react-bootstrap/Container";
 import classNames from "classnames";
 import Dandruff from "components/molecules/Dandruff";
 
-const ModuleMaterials: React.FC = () => {
+const ModuleFeedback: React.FC = () => {
   return (
     <Container className={classNames("p-4", styles.moduleContainer)}>
-      <Dandruff heading="Materials"/>
+      <Dandruff heading="Feedback"/>
     </Container>
   );
 };
 
-export default ModuleMaterials;
+export default ModuleFeedback;
