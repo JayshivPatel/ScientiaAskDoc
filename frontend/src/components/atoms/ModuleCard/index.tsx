@@ -5,7 +5,7 @@ import styles from "./style.module.scss";
 import classNames from "classnames";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
-import { faLeaf, faSun, faSnowflake } from "@fortawesome/free-solid-svg-icons";
+import { faSun, faLeaf, faSeedling } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export interface ModuleCardProps {
@@ -22,12 +22,12 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
       >
         <Card.Header>
           <div>
-            <FontAwesomeIcon icon={faLeaf} style={{ marginRight: "8px" }} />
+            <FontAwesomeIcon icon={faLeaf} style={{ marginRight: "8px", height: "18px" }} />
             <FontAwesomeIcon
-              icon={faSnowflake}
-              style={{ marginRight: "8px" }}
+              icon={faSeedling}
+              style={{ marginRight: "8px", height: "18px" }}
             />
-            <FontAwesomeIcon icon={faSun} />
+            <FontAwesomeIcon icon={faSun} style={{ height: "18px" }} />
           </div>
           <span>{module.code}</span>
         </Card.Header>
