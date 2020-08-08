@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import styles from "./style.module.scss";
-import Container from "react-bootstrap/Container";
 
 import classNames from "classnames";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
@@ -20,7 +19,7 @@ const ModuleResources: React.FC = () => {
   });
 
   return (
-    <Container className={classNames("p-4", styles.moduleContainer)}>
+    <>
       <MyBreadcrumbs />
       <InputGroup  style={{ marginTop: "3rem" }}>
         <InputGroup.Prepend>
@@ -59,7 +58,7 @@ const ModuleResources: React.FC = () => {
           </Col>
         ))}
       </Row>
-    </Container>
+    </>
   );
 };
 

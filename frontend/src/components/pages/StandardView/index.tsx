@@ -12,6 +12,7 @@ import ModuleFeedback from "../ModuleFeedback";
 import LeftBarHome from "components/organisms/LeftBarHome";
 import LeftBarModuleList from "components/organisms/LeftBarModuleList";
 import LeftBarModule from "components/organisms/LeftBarModule";
+import Container from "react-bootstrap/esm/Container";
 
 interface StandardViewProps {
   pages: {
@@ -52,44 +53,45 @@ const StandardView: React.FC<StandardViewProps> = ({
       </Switch>
 
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
+      <Container className={classNames("py-4", "px-5", "pageContainer")}>
+        <Switch>
+          <Route path="/home">
+            <ExamplePage name="Home" />
+          </Route>
 
-      <Switch>
-        <Route path="/home">
-          <ExamplePage name="Home" />
-        </Route>
+          <Route exact path="/modules">
+            <ModuleList />
+          </Route>
 
-        <Route exact path="/modules">
-          <ModuleList />
-        </Route>
+          <Route path="/modules/:id/overview">
+            <ModuleOverview />
+          </Route>
 
-        <Route path="/modules/:id/overview">
-          <ModuleOverview />
-        </Route>
+          <Route path="/modules/:id/resources">
+            <ModuleResources />
+          </Route>
 
-        <Route path="/modules/:id/resources">
-          <ModuleResources />
-        </Route>
+          <Route path="/modules/:id/feedback">
+            <ModuleFeedback />
+          </Route>
 
-        <Route path="/modules/:id/feedback">
-          <ModuleFeedback />
-        </Route>
+          <Route path="/timeline">
+            <ExamplePage name="Timeline" />
+          </Route>
 
-        <Route path="/timeline">
-          <ExamplePage name="Timeline" />
-        </Route>
+          <Route path="/exams">
+            <ExamplePage name="Exams" />
+          </Route>
 
-        <Route path="/exams">
-          <ExamplePage name="Exams" />
-        </Route>
-
-        <Route
-          path="/modules/:id"
-          render={(props) => (
-            <Redirect to={`/modules/${props.match.params.id}/overview`} />
-          )}
-        />
-        <Route path="/" render={() => <Redirect to="/home" />} />
-      </Switch>
+          <Route
+            path="/modules/:id"
+            render={(props) => (
+              <Redirect to={`/modules/${props.match.params.id}/overview`} />
+            )}
+          />
+          <Route path="/" render={() => <Redirect to="/home" />} />
+        </Switch>
+      </Container>
     </div>
   );
 };

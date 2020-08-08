@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./style.module.scss";
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
 import classNames from "classnames";
@@ -102,7 +101,7 @@ const ModuleList: React.FC = () => {
     }
   ];
   return (
-    <Container className={classNames("p-4", styles.moduleContainer)}>
+    <>
       <Dandruff heading="Modules" />
       <h4 className={classNames(styles.moduleSectionHeader)}>
         First Year Undergraduate
@@ -119,7 +118,7 @@ const ModuleList: React.FC = () => {
           <ModuleCard module={module} key={module.code} />
         ))}
       </Row>
-    </Container>
+    </>
   );
 };
 
