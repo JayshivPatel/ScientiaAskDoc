@@ -8,7 +8,7 @@ import RightBar from "components/organisms/RightBar";
 import classNames from "classnames";
 import ModuleList from "../ModuleList";
 import ModuleResources from "../ModuleResources";
-import ModuleFeedback from "../ModuleResources";
+import ModuleFeedback from "../ModuleFeedback";
 import LeftBarHome from "components/organisms/LeftBarHome";
 import LeftBarModuleList from "components/organisms/LeftBarModuleList";
 import LeftBarModule from "components/organisms/LeftBarModule";
