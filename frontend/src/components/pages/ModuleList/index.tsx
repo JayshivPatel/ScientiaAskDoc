@@ -8,7 +8,7 @@ import logicIllustration from "assets/images/logic-illustration.svg";
 import discreteIllustration from "assets/images/discrete-illustration.svg";
 import systemsIllustration from "assets/images/systems-illustration.svg";
 import methodsIllustration from "assets/images/methods-illustration.svg";
-import ModuleCard from "components/atoms/ModuleCard";
+import ModuleCard, {Term} from "components/atoms/ModuleCard";
 import Dandruff from "components/molecules/Dandruff";
 
 const ModuleList: React.FC = () => {
@@ -16,7 +16,10 @@ const ModuleList: React.FC = () => {
     {
       title: "Introduction to Logic",
       code: "CO140",
-      image: logicIllustration,
+			image: logicIllustration,
+			terms: [Term.AUTUMN, Term.SPRING],
+			progressStatus: "in progress",
+			progressPercent: 50,
       content: "",
     },
 
@@ -24,6 +27,9 @@ const ModuleList: React.FC = () => {
       title: "Discrete Mathematics",
       code: "CO142",
       image: discreteIllustration,
+			terms: [Term.SPRING, Term.SUMMER],
+			progressStatus: "in progress",
+			progressPercent: 60,
       content: "",
     },
 
@@ -31,13 +37,19 @@ const ModuleList: React.FC = () => {
       title: "Introduction to Computer Systems",
       code: "CO112",
       image: systemsIllustration,
+			terms: [Term.SPRING],
+			progressStatus: "in progress",
+			progressPercent: 93,
       content: "",
     },
 
     {
       title: "Mathematical Methods",
-      code: "CO145",
-      image: methodsIllustration,
+			code: "CO145",
+			terms: [Term.AUTUMN],
+			image: methodsIllustration,
+			progressStatus: "in progress",
+			progressPercent: 45,
       content: "",
     },
   ];

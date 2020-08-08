@@ -1,6 +1,5 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
 import styles from "./style.module.scss";
 import classNames from "classnames";
 import Col from "react-bootstrap/Col";
@@ -8,8 +7,21 @@ import { Link } from "react-router-dom";
 import { faSun, faLeaf, faSeedling } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+export enum Term {
+  AUTUMN,
+  SPRING,
+  SUMMER,
+}
 export interface ModuleCardProps {
-  module: { title: string; code: string; image: string; content: string };
+  module: {
+    title: string;
+    code: string;
+    image: string;
+    content: string;
+    terms: Term[];
+    progressStatus?: string;
+    progressPercent?: number;
+  };
 }
 
 const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
@@ -21,13 +33,19 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
         to={`modules/${module.code}`}
       >
         <Card.Header>
-          <div>
-            <FontAwesomeIcon icon={faLeaf} style={{ marginRight: "8px", height: "18px" }} />
-            <FontAwesomeIcon
-              icon={faSeedling}
-              style={{ marginRight: "8px", height: "18px" }}
-            />
-            <FontAwesomeIcon icon={faSun} style={{ height: "18px" }} />
+          <div className={styles.termIcons}>
+            {module.terms.map((term: Term) => {
+              switch (term) {
+                case Term.AUTUMN:
+                  return <FontAwesomeIcon icon={faLeaf} />;
+                case Term.SPRING:
+                  return <FontAwesomeIcon icon={faSeedling} />;
+                case Term.SUMMER:
+                  return <FontAwesomeIcon icon={faSun} />;
+                default:
+                  return "";
+              }
+            })}
           </div>
           <span>{module.code}</span>
         </Card.Header>
@@ -41,9 +59,9 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
         </Card.Body>
         <Card.Footer>
           <span className={classNames(styles.moduleCardProgressText)}>
-            in progress
+            {module.progressStatus}
           </span>
-          <span className={classNames(styles.moduleCardProgressText)}>60%</span>
+          <span className={classNames(styles.moduleCardProgressText)}>{`${module.progressPercent}%`}</span>
         </Card.Footer>
       </Card>
     </Col>
