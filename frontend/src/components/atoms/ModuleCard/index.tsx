@@ -18,18 +18,20 @@ const ModuleCard: React.FC<ModuleCardProps> = ({
   return (
     <Col xs={12} sm={6} lg={4} xl={3} style={{ marginTop: "1.875rem" }}>
       <Card className={classNames(styles.moduleCard)}>
+        <Link style={{ textDecoration: "none" }} to={`modules/${module.code}`}>
         <Card.Header className={classNames(styles.moduleCardHeader)}>
           {module.code}
         </Card.Header>
         <Card.Img style={{ borderRadius: 0 }} variant="top" src={module.image} />
         <Card.Body>
-          <Card.Title ><Link to={`modules/${module.code}`} style={{color: "black"}}>{module.title}</Link></Card.Title>
+          <Card.Title style={{ color: "#000" }}>{module.title}</Card.Title>
         </Card.Body>
         <Card.Footer>
           <small className={classNames(styles.moduleCardProgressText)}>
             in progress
           </small>
         </Card.Footer>
+          </Link>
       </Card>
     </Col>
   );
