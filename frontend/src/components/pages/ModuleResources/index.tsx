@@ -28,14 +28,14 @@ const ModuleResources: React.FC = () => {
           </InputGroup.Text>
         </InputGroup.Prepend>
 
-        <FormControl aria-label="Search" placeholder="search" />
+        <FormControl aria-label="Search" placeholder="Search" />
       </InputGroup>
 
       <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
 
       <Row>
         {[...Array(4)].map((e, i) => (
-          <Col md={3} key={i}>
+          <Col xs={6} sm={6} md={3} key={i}>
             <Card style={{ marginTop: "1rem" }}>
               <Card.Img variant="top" src="holder.js/100px100" />
               <Card.Body>
@@ -49,7 +49,7 @@ const ModuleResources: React.FC = () => {
       <h5 className={classNames(styles.moduleSectionHeader)}>Folders</h5>
       <Row>
         {[...Array(10)].map((e, i) => (
-          <Col md={3} key={i}>
+          <Col xs={6} sm={6} md={3} key={i}>
             <Card style={{ marginTop: ".6rem" }}>
               <Card.Body style={{ padding: ".6rem" }}>
                 <Card.Text>Folder{i}</Card.Text>
