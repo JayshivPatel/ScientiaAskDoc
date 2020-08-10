@@ -9,7 +9,7 @@
 }
 
 .searchBar {
-  border-radius: 8px;
+  border-radius: .5rem;
   background-color: $gray-100;
 	border-color: $gray-100;
 	transition: 0.2s background-color;
@@ -38,7 +38,7 @@
 }
 
 .searchBarIcon {
-  border-radius: 8px;
+  border-radius: .5rem;
   background-color: $gray-100;
   border-color: $gray-100;
   color: $gray-500;
@@ -63,8 +63,8 @@
 }
 
 .quickViewCard {
-  margin-top: 20px;
-  border-radius: 8px;
+  margin-top: 1.25rem;
+  border-radius: .5rem;
   border-color: $gray-300;
   transition: transform 0.2s;
 }
@@ -91,14 +91,14 @@
 }
 
 .quickViewCard :global(.card-title) {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 400;
   margin-bottom: 0px;
 }
 
 .quickViewCard :global(.card-img-top) {
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
 }
 
 $blue-tag-background: transparentize($blue-100, 0.5);
@@ -106,10 +106,10 @@ $teal-tag-background: transparentize($teal-100, 0.5);
 
 .quickViewTag {
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: .8rem;
   font-weight: 500;
-  border-radius: 4px;
-  margin-right: 8px;
+  border-radius: .33rem;
+  margin-right: .5rem;
 }
 
 .tagBlue {
@@ -123,9 +123,9 @@ $teal-tag-background: transparentize($teal-100, 0.5);
 }
 
 .folderCard {
-  border-radius: 8px;
+  border-radius: .5rem;
   transition: transform 0.2s;
-  margin-top: 10px;
+  margin-top: 0.67rem;
 }
 
 .folderCard:hover {
