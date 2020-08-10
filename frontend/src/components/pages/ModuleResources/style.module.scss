@@ -17,7 +17,7 @@
   -moz-transition: 0.2s back-ground-color;
 }
 
-.serachBar::placeholder {
+.searchBar::placeholder {
   color: #acb5bd;
   opacity: 1;
 }
@@ -28,7 +28,6 @@
   border-color: $gray-300;
 	background-color: $white;
 }
-
 
 .searchBar:focus{
 	box-shadow: none !important;
@@ -46,7 +45,6 @@
   -webkit-transition: 0.2s background-color;
   -moz-transition: 0.2s back-ground-color;
 }
-
 
 .searchBarIcon:hover {
   background: $gray-200;

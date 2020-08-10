@@ -5,9 +5,158 @@
 }
 
 .moduleParagraph {
-  margin-top: 1rem;	
+  margin-top: 1rem;
 }
 
+.assessmentIcons > * {
+	margin-right: .5rem;
+	height: 1.125rem;
+}
+
+.searchBar {
+  border-radius: 0.5rem;
+  background-color: $gray-100;
+  border-color: $gray-100;
+  transition: 0.2s background-color;
+  -webkit-transition: 0.2s background-color;
+  -moz-transition: 0.2s back-ground-color;
+}
+
+.serachBar::placeholder {
+  color: #acb5bd;
+  opacity: 1;
+}
+
+.searchBar:focus + :global(.input-group-append) .searchBarIcon {
+  box-shadow: none !important;
+  border-left: none;
+  border-color: $gray-300;
+  background-color: $white;
+}
+
+.searchBar:focus {
+  box-shadow: none !important;
+  border-right: none;
+  border-color: $gray-300;
+  background-color: $white;
+}
+
+.searchBarIcon {
+  border-radius: 0.5rem;
+  background-color: $gray-100;
+  border-color: $gray-100;
+  color: $gray-500;
+  transition: 0.2s background-color;
+  -webkit-transition: 0.2s background-color;
+  -moz-transition: 0.2s back-ground-color;
+}
+
+.searchBarIcon:hover {
+  background: $gray-200;
+  color: $gray-700 !important;
+  border-color: $gray-200;
+}
+
+.searchBarIcon:global(.active),
+.searchBarIcon:active {
+  background: $black !important;
+  font-weight: 500 !important;
+  color: $white !important;
+  border-color: $black;
+}
+
+.quickViewCard {
+  margin-top: 1.25rem;
+  border-radius: 0.5rem;
+  border-color: $gray-300;
+  transition: transform 0.2s;
+}
+
+.quickViewCard:hover {
+  transform: scale(1.03);
+}
+
+.quickViewCard :global(.card-body) {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid $gray-300;
+}
+
+.quickViewCard :global(.card-header) {
+  background: #fff;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  border-width: 0rem;
+  color: #000;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: right;
+  padding: 0.5rem;
+  font-size: 1.125rem;
+  border-bottom: 1px solid $gray-300;
+  display: flex;
+  justify-content: space-between;
+}
+
+.quickViewCard :global(.card-footer) {
+  border-radius: 0.5rem !important;
+  background: #fff;
+  border-width: 0rem;
+  padding: 0.5rem;
+  display: flex;
+  align-items: flex-end;
+}
+
+.quickViewCard :global(.card-title) {
+  font-size: 1.125rem;
+  font-weight: 400;
+  margin-bottom: 0px;
+}
+
+.quickViewCard :global(.card-img-top) {
+  border-radius: 0px;
+}
+
+$blue-tag-background: transparentize($blue-100, 0.5);
+$teal-tag-background: transparentize($teal-100, 0.5);
+
+.quickViewTag {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 0.33rem;
+  margin-right: 0.5rem;
+  align-items: center;
+  display: flex;
+}
+
+.tagBlue {
+  color: $blue-700;
+  background: $blue-tag-background;
+}
+
+.tagTeal {
+  color: $teal-700;
+  background: $teal-tag-background;
+}
+
+.folderCard {
+  border-radius: 0.5rem;
+  transition: transform 0.2s;
+  margin-top: 0.67rem;
+}
+
+.folderCard:hover {
+  transform: scale(1.03);
+}
+
+.folderCard :global(.card-body) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 @media (max-width: 62rem) {
 }
 
