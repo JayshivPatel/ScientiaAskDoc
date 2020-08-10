@@ -11,10 +11,10 @@
 .searchBar {
   border-radius: 8px;
   background-color: $gray-100;
-  border-color: $gray-100;
-  transition: 0.5s border-color;
-  -webkit-transition: 0.5s border-color;
-  -moz-transition: 0.5s border-color;
+	border-color: $gray-100;
+	transition: 0s all;
+  -webkit-transition: 0s all;
+  -moz-transition: 0s all;
 }
 
 .serachBar::placeholder {
@@ -22,10 +22,19 @@
   opacity: 1;
 }
 
-.searchBar:focus {
-  box-shadow: none !important;
+.searchBar:focus + :global(.input-group-append) .searchBarIcon{
+	box-shadow: none !important;
+	border-left: none;
   border-color: $gray-300;
-  background-color: $white;
+	background-color: $white;
+}
+
+
+.searchBar:focus{
+	box-shadow: none !important;
+	border-right: none;
+  border-color: $gray-300;
+	background-color: $white;
 }
 
 .searchBarIcon {
@@ -33,11 +42,12 @@
   background-color: $gray-100;
   border-color: $gray-100;
   color: $gray-500;
-  transition: 0.2s background;
-  -webkit-transition: 0.2s background;
-  -moz-transition: 0.2s background;
+  transition: 0s all;
+  -webkit-transition: 0s all;
+  -moz-transition: 0s all;
   margin-left: 1px;
 }
+
 
 .searchBarIcon:hover {
   background: $gray-200;
