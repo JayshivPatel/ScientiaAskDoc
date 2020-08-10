@@ -7,13 +7,19 @@ import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import graphIllustration from "assets/images/graph-illustration.svg";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
+import Carousel from "react-bootstrap/Carousel";
+
 import Button from "react-bootstrap/Button";
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle, faFile } from "@fortawesome/free-solid-svg-icons";
+import {
+  faInfoCircle,
+  faFile,
+  faFolder,
+} from "@fortawesome/free-solid-svg-icons";
 
 const ModuleResources: React.FC = () => {
   useEffect(() => {
@@ -52,10 +58,16 @@ const ModuleResources: React.FC = () => {
                 />
               </Card.Body>
               <Card.Footer>
-                <Badge pill className={classNames(styles.quickViewTag, styles.tagTeal)}>
+                <Badge
+                  pill
+                  className={classNames(styles.quickViewTag, styles.tagTeal)}
+                >
                   New
                 </Badge>
-                <Badge pill className={classNames(styles.quickViewTag, styles.tagBlue)}>
+                <Badge
+                  pill
+                  className={classNames(styles.quickViewTag, styles.tagBlue)}
+                >
                   Week 1
                 </Badge>
               </Card.Footer>
@@ -78,7 +90,7 @@ const ModuleResources: React.FC = () => {
                 <Card.Text style={{ marginBottom: 0 }}>Folder {i}</Card.Text>
                 <FontAwesomeIcon
                   style={{ fontSize: "1.125rem" }}
-                  icon={faFile}
+                  icon={faFolder}
                 />
               </Card.Body>
             </Card>

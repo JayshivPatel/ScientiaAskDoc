@@ -39,12 +39,7 @@ const ModuleFeedback: React.FC = () => {
           <Col xs={12} sm={6} md={6} lg={4} xl={3} key={i}>
             <Card className={styles.quickViewCard}>
               <Card.Header>
-                <div className={styles.assessmentIcons}>
-                  <FontAwesomeIcon icon={faClock} />
-                  <FontAwesomeIcon icon={faExclamationTriangle} />
-                  <FontAwesomeIcon icon={faCalendarPlus} />
-                </div>
-                <span>40 / 50</span>
+                <span className={styles.assessmentResult}>40 / 50</span>
               </Card.Header>
               <Card.Img variant="top" src={graphIllustration} />
               <Card.Body>
