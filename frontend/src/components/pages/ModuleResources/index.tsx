@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, RefObject } from "react";
 import styles from "./style.module.scss";
 
 import classNames from "classnames";
@@ -7,8 +7,6 @@ import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import graphIllustration from "assets/images/graph-illustration.svg";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
-import Carousel from "react-bootstrap/Carousel";
-
 import Button from "react-bootstrap/Button";
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
@@ -22,11 +20,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const ModuleResources: React.FC = () => {
-  useEffect(() => {
-    //@ts-ignore
-    window.Holder.run();
-  });
-
   return (
     <>
       <MyBreadcrumbs />
@@ -44,10 +37,26 @@ const ModuleResources: React.FC = () => {
       </InputGroup>
 
       <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
-
-      <Row>
-        {[...Array(4)].map((e, i) => (
-          <Col xs={12} sm={6} md={6} lg={4} xl={3} key={i}>
+	
+			{/* TODO: add scroll listener once code is refactored */}
+      <Row
+        className={classNames(
+          "d-flex",
+          "flex-row",
+          "flex-nowrap",
+          styles.quickAccessRow
+        )}
+      >
+        {[...Array(6)].map((e, i) => (
+          <Col
+            xs={7}
+            sm={7}
+            md={7}
+            lg={5}
+            xl={3}
+						key={i}
+						style={{marginBottom: ".5rem"}}
+          >
             <Card className={styles.quickViewCard}>
               <Card.Img variant="top" src={graphIllustration} />
               <Card.Body>

@@ -136,6 +136,33 @@ $teal-tag-background: transparentize($teal-100, 0.5);
   align-items: center;
 }
 
+.quickAccessRow {
+  scrollbar-width: thin;
+	scrollbar-color: $gray-300 $gray-100;
+	margin-top: 1rem;
+	margin-left: 0;
+}
+
+.quickAccessRow::-webkit-scrollbar {
+	width: 1rem;
+}
+.quickAccessRow::-webkit-scrollbar-track {
+  background: $gray-100;
+}
+.quickAccessRow::-webkit-scrollbar-thumb {
+  background-color: $gray-300;
+  border-radius: .5rem;
+}
+
+
+.quickAccessRow {
+	overflow-y: visible;
+	overflow-x: auto;
+	white-space: nowrap;
+	height: max-content;
+}
+
+
 @media (max-width: 62rem) {
 }
 
