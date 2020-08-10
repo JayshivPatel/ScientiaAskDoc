@@ -56,12 +56,4 @@
     position: relative;
     width: max-content;
   }
-
-  #leftbarWrapper {
-    width: 15.625rem;
-  }
-
-  :global(#wrapper.toggledLeft) #leftbarWrapper {
-    width: 0;
-  }
 }

@@ -25,16 +25,14 @@ class App extends React.Component<{}, AppState> {
     let interfaceSize = localStorage.getItem("interfaceSize");
     if (interfaceSize) {
       document.documentElement.style.fontSize = `${interfaceSize}%`;
-    }
-  }
+		}
+		
+		window.addEventListener('resize', () => this.showOrHideSideBars());
+		this.showOrHideSideBars();
+	}
 
   toggleLeftBar() {
 		if (window.innerWidth <= 1024) {
-      this.setState({
-        toggledRight: true,
-			});
-    } 
-		if (window.innerWidth <= 992) {
       this.setState({
         toggledRight: false,
 			});
@@ -47,11 +45,6 @@ class App extends React.Component<{}, AppState> {
   toggleRightBar() {
 		if (window.innerWidth <= 1024) {
       this.setState({
-        toggledLeft: true,
-			});
-    } 
-		if (window.innerWidth <= 992) {
-      this.setState({
         toggledLeft: false,
 			});
 		} 
@@ -59,6 +52,20 @@ class App extends React.Component<{}, AppState> {
       toggledRight: !state.toggledRight,
     }));
   }
+
+	showOrHideSideBars(){
+		if (window.innerWidth <= 1024) {
+      this.setState({
+				toggledLeft: false,
+        toggledRight: false,
+			});
+		} else{
+			this.setState({
+				toggledLeft: true,
+        toggledRight: true,
+			});
+		}
+	}
 
   render() {
     const horizontalBarPages = [

@@ -67,12 +67,4 @@
     width: max-content;
     text-transform: uppercase;
   }
-
-  #rightbarWrapper {
-    width: 15.625rem;
-  }
-
-  :global(#wrapper.toggledRight) #rightbarWrapper {
-    width: 0;
-  }
 }

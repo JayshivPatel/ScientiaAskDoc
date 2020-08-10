@@ -53,7 +53,7 @@ const StandardView: React.FC<StandardViewProps> = ({
       </Switch>
 
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
-      <Container className={classNames("p-4", "pageContainer")}>
+      <Container className={classNames("px-4", "pageContainer")}>
         <Switch>
           <Route path="/dashboard">
             <ExamplePage name="Dashboard" />
