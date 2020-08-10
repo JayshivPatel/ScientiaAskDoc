@@ -28,7 +28,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   toggledLeft,
   toggledRight,
   onOverlayClick,
-}: StandardViewProps) => {
+}: StandardViewProps) => { 
   return (
     <div
       id="wrapper"
