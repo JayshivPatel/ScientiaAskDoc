@@ -16,6 +16,7 @@ type AppState = {
 };
 
 class App extends React.Component<{}, AppState> {
+  width = window.innerWidth;
   constructor(props: {}) {
     super(props);
     this.state = { toggledLeft: false, toggledRight: false };
@@ -25,47 +26,52 @@ class App extends React.Component<{}, AppState> {
     let interfaceSize = localStorage.getItem("interfaceSize");
     if (interfaceSize) {
       document.documentElement.style.fontSize = `${interfaceSize}%`;
-		}
-		
-		window.addEventListener('resize', () => this.showOrHideSideBars());
-		this.showOrHideSideBars();
-	}
+    }
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth !== this.width) {
+        this.width = window.innerWidth;
+        this.showOrHideSideBars();
+      }
+    });
+    this.showOrHideSideBars();
+  }
 
   toggleLeftBar() {
-		if (window.innerWidth <= 1024) {
+    if (window.innerWidth <= 1024) {
       this.setState({
         toggledRight: false,
-			});
-		} 
+      });
+    }
     this.setState((state) => ({
       toggledLeft: !state.toggledLeft,
     }));
   }
 
   toggleRightBar() {
-		if (window.innerWidth <= 1024) {
+    if (window.innerWidth <= 1024) {
       this.setState({
         toggledLeft: false,
-			});
-		} 
+      });
+    }
     this.setState((state) => ({
       toggledRight: !state.toggledRight,
     }));
   }
 
-	showOrHideSideBars(){
-		if (window.innerWidth <= 1024) {
+  showOrHideSideBars() {
+    if (window.innerWidth <= 1024) {
       this.setState({
-				toggledLeft: false,
+        toggledLeft: false,
         toggledRight: false,
-			});
-		} else{
-			this.setState({
-				toggledLeft: true,
+      });
+    } else {
+      this.setState({
+        toggledLeft: true,
         toggledRight: true,
-			});
-		}
-	}
+      });
+    }
+  }
 
   render() {
     const horizontalBarPages = [
