@@ -1,10 +1,10 @@
 #wrapper {
-	padding-left: 0;
-	padding-right: 0;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+  padding-left: 0;
+  padding-right: 0;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   z-index: 5050;
 }
 
@@ -16,34 +16,34 @@
   width: 100vw;
   height: 100vh;
   z-index: 500;
-	display: block;
-	visibility:hidden;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+  display: block;
+  visibility: hidden;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 @media (min-width: 62rem) {
   #wrapper {
-		padding-left: 0;
+    padding-left: 0;
     padding-right: 0;
   }
 
   #wrapper.toggledLeft {
-    padding-left: 15.625rem;
-	}
-	
-	#wrapper.toggledRight {
-    padding-right: 15.625rem;
+    padding-left: 250px;
+  }
+
+  #wrapper.toggledRight {
+    padding-right: 250px;
   }
 }
 
 @media (max-width: 62rem) {
-	#wrapper.toggledRight #sidenav-overlay,
+  #wrapper.toggledRight #sidenav-overlay,
   #wrapper.toggledLeft #sidenav-overlay {
-		visibility:visible;
-		background-color: rgba(0, 0, 0, 0.3);
+    visibility: visible;
+    background-color: rgba(0, 0, 0, 0.3);
   }
 }
 

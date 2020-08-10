@@ -2,25 +2,32 @@
 
 #leftbarWrapper {
   position: fixed;
-  left: 15.625rem;
-  width: 0;
-  margin-left: -15.625rem;
-  height: calc(100vh - 3.75rem);
-  padding-bottom: 1.875rem;
+  visibility: hidden;
+  transform: translateX(-100%);
+  display: block;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: calc(100vh - 61px);
+
   overflow-y: auto;
-	overflow-x: hidden;
-	overscroll-behavior: contain;
+  overflow-x: hidden;
+
+  -webkit-transition: visibility 0.5s ease-in-out, transform 0.5s ease-in-out;
+  -moz-transition: visibility 0.5s ease-in-out, transform 0.5s ease-in-out;
+  -o-transition: visibility 0.5s ease-in-out, transform 0.5s ease-in-out;
+  transition: visibility 0.5s ease-in-out, transform 0.5s ease-in-out;
+  
+  z-index: 5000;
+  margin-top: 61px;
+  padding-bottom: 1.875rem;
   background: #fff;
   box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-  z-index: 5000;
 }
 
 :global(#wrapper.toggledLeft) #leftbarWrapper {
-  width: 15.625rem;
+  visibility: visible;
+  transform: translateX(0);
 }
 
 @media (max-width: 62rem) {

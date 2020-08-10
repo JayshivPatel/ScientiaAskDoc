@@ -37,7 +37,6 @@ const StandardView: React.FC<StandardViewProps> = ({
         toggledRight: toggledRight,
       })}
     >
-      <RightBar />
       <Switch>
         <Route path="/modules/:id">
           <LeftBarModule />
@@ -92,6 +91,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           <Route path="/" render={() => <Redirect to="/dashboard" />} />
         </Switch>
       </Container>
+      <RightBar />
     </div>
   );
 };
