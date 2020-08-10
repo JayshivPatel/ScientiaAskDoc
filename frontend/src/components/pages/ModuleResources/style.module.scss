@@ -12,9 +12,9 @@
   border-radius: 8px;
   background-color: $gray-100;
 	border-color: $gray-100;
-	transition: 0s all;
-  -webkit-transition: 0s all;
-  -moz-transition: 0s all;
+	transition: 0.2s background-color;
+  -webkit-transition: 0.2s background-color;
+  -moz-transition: 0.2s back-ground-color;
 }
 
 .serachBar::placeholder {
@@ -42,10 +42,9 @@
   background-color: $gray-100;
   border-color: $gray-100;
   color: $gray-500;
-  transition: 0s all;
-  -webkit-transition: 0s all;
-  -moz-transition: 0s all;
-  margin-left: 1px;
+  transition: 0.2s background-color;
+  -webkit-transition: 0.2s background-color;
+  -moz-transition: 0.2s back-ground-color;
 }
 
 
@@ -78,6 +77,7 @@
   padding: 0.5rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-top: 1px solid $gray-300;
 }
 
@@ -101,15 +101,25 @@
   border-top-right-radius: 8px;
 }
 
-$new-tag-background: transparentize($blue-100, 0.5);
+$blue-tag-background: transparentize($blue-100, 0.5);
+$teal-tag-background: transparentize($teal-100, 0.5);
 
 .quickViewTag {
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 500;
-  color: $blue-700;
-  background: $new-tag-background;
   border-radius: 4px;
+  margin-right: 8px;
+}
+
+.tagBlue {
+  color: $blue-700;
+  background: $blue-tag-background;
+}
+
+.tagTeal {
+  color: $teal-700;
+  background: $teal-tag-background;
 }
 
 .folderCard {

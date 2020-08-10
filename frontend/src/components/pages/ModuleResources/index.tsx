@@ -41,7 +41,7 @@ const ModuleResources: React.FC = () => {
 
       <Row>
         {[...Array(4)].map((e, i) => (
-          <Col xs={6} sm={6} md={3} key={i}>
+          <Col xs={12} sm={6} md={6} lg={4} xl={3} key={i}>
             <Card className={styles.quickViewCard}>
               <Card.Img variant="top" src={graphIllustration} />
               <Card.Body>
@@ -52,8 +52,11 @@ const ModuleResources: React.FC = () => {
                 />
               </Card.Body>
               <Card.Footer>
-                <Badge pill className={styles.quickViewTag}>
+                <Badge pill className={classNames(styles.quickViewTag, styles.tagTeal)}>
                   New
+                </Badge>
+                <Badge pill className={classNames(styles.quickViewTag, styles.tagBlue)}>
+                  Week 1
                 </Badge>
               </Card.Footer>
             </Card>
