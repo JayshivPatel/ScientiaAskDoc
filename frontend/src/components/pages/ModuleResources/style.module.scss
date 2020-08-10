@@ -138,7 +138,7 @@ $teal-tag-background: transparentize($teal-100, 0.5);
 
 .quickAccessRow {
   scrollbar-width: thin;
-	scrollbar-color: $gray-300 $gray-100;
+	scrollbar-color: $gray-200 $white;
 	margin-top: 1rem;
 	margin-left: 0;
 }
@@ -147,10 +147,10 @@ $teal-tag-background: transparentize($teal-100, 0.5);
 	width: 1rem;
 }
 .quickAccessRow::-webkit-scrollbar-track {
-  background: $gray-100;
+  background: $white;
 }
 .quickAccessRow::-webkit-scrollbar-thumb {
-  background-color: $gray-300;
+  background-color: $gray-200;
   border-radius: .5rem;
 }
 
