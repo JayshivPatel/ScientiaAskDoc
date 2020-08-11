@@ -72,7 +72,7 @@
 }
 
 .sectionHeaderButton {
-  background: $gray-100;
+  background: $white;
   color: #000;
   border-width: 0px;
   border-radius: 8px;
@@ -84,11 +84,10 @@
   -webkit-transition: 0.2s background;
   -moz-transition: 0.2s background;
   font-size: 1.05rem;
-  width: 180px;
+  width: 40px;
 }
 
 .buttonIcon {
-  float: right;
   margin-top: 0.22rem;
 }
 

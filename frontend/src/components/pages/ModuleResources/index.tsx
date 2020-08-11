@@ -22,6 +22,7 @@ import {
   faDownload,
   faCheckSquare
 } from "@fortawesome/free-solid-svg-icons";
+import { faSquare } from "@fortawesome/free-regular-svg-icons";
 
 const ModuleResources: React.FC = () => {
   return (
@@ -44,23 +45,10 @@ const ModuleResources: React.FC = () => {
         <span className={styles.sectionHeader}>Quick Access</span>
         <div className={styles.sectionHeaderButtonGroup}>
           <Button className={styles.sectionHeaderButton}>
-            Download
             <FontAwesomeIcon className={styles.buttonIcon} icon={faDownload} />
           </Button>
-          <Button className={styles.sectionHeaderButton}>
-            <span
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center"
-              }}
-            >
-              Select All
-              <Form.Check
-                className={styles.buttonCheckbox}
-                aria-label="option 1"
-              />
-            </span>
+          <Button className={styles.sectionHeaderButton}> 
+            <FontAwesomeIcon className={styles.buttonIcon} icon={faSquare} />
           </Button>
         </div>
       </div>
@@ -117,23 +105,10 @@ const ModuleResources: React.FC = () => {
         <span className={styles.sectionHeader}>Folders</span>
         <div className={styles.sectionHeaderButtonGroup}>
           <Button className={styles.sectionHeaderButton}>
-            Download
             <FontAwesomeIcon className={styles.buttonIcon} icon={faDownload} />
           </Button>
-          <Button className={styles.sectionHeaderButton}>
-            <span
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center"
-              }}
-            >
-              Select All
-              <Form.Check
-                className={styles.buttonCheckbox}
-                aria-label="option 1"
-              />
-            </span>
+          <Button className={styles.sectionHeaderButton}> 
+            <FontAwesomeIcon className={styles.buttonIcon} icon={faCheckSquare} />
           </Button>
         </div>
       </div>
