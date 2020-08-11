@@ -136,43 +136,64 @@ $teal-tag-background: transparentize($teal-100, 0.5);
   align-items: center;
 }
 
-.quickAccessRow {
-  scrollbar-width: thin;
-	scrollbar-color: $white $white;
-	margin-top: 1rem;
-	// margin-left: 0; // leave space before card
-}
-
 .quickAccessRow::-webkit-scrollbar {
-	width: 1rem;
+  width: 1rem;
+  height: 0.5rem;
 }
 .quickAccessRow::-webkit-scrollbar-track {
   background: $white;
 }
 .quickAccessRow::-webkit-scrollbar-thumb {
   background-color: $white;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 
 .quickAccessRow:hover {
-	scrollbar-color: $gray-400 $white;
+  scrollbar-color: $gray-400 $white;
 }
 
 .quickAccessRow:hover::-webkit-scrollbar-thumb {
-	background-color: $gray-400;
+  background-color: $gray-400;
 }
-
 
 .quickAccessRow {
-	overflow-y: visible;
-	overflow-x: auto;
-	white-space: nowrap;
-	height: max-content;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  height: max-content;
+
+  scrollbar-width: thin;
+  scrollbar-color: $white $white;
+
+  margin-top: 1rem;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-rows: minmax(max-width, 1fr);
+  grid-auto-flow: column;
+  padding-left: 0px;
+
+  overflow-x: scroll;
+  scroll-snap-type: x proximity;
+  padding-bottom: calc(0.75 * 20px);
+  margin-bottom: calc(-0.25 * 20px);
+  // margin-left: 0; // leave space before card
 }
 
+.quickAccessRow::before,
+.quickAccessRow::after {
+  content: ‘’;
+  width: 10px;
+}
 
 @media (max-width: 62rem) {
+  .quickAccessRow {
+    grid-auto-columns: minmax(44%, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(44%, 1fr));
+  }
 }
 
 @media (min-width: 62rem) {
+  .quickAccessRow {
+    grid-auto-columns: minmax(20%, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
+  }
 }
