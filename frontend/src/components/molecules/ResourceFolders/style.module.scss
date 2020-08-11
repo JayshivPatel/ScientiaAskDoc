@@ -1,17 +1,1 @@
 @import "assets/scss/custom";
-
-.folderCard {
-  border-radius: 0.5rem;
-  transition: transform 0.2s;
-  margin-top: 0.67rem;
-}
-
-.folderCard:hover {
-  transform: scale(1.03);
-}
-
-.folderCard :global(.card-body) {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}

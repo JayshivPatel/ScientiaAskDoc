@@ -8,11 +8,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faSquare , faCheckSquare} from "@fortawesome/free-regular-svg-icons";
 
-const ResourceSectionHeader: React.FC = () => {
+export interface SectionHeaderProps {
+  heading: string;
+}
+
+const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({heading}: SectionHeaderProps) => {
   return (
     <>
       <div className={styles.sectionHeaderContainer}>
-        <span className={styles.sectionHeader}>Quick Access</span>
+        <span className={styles.sectionHeader}>{heading}</span>
         <div className={styles.sectionHeaderButtonGroup}>
           <Button className={styles.sectionHeaderButton}>
             <FontAwesomeIcon className={styles.buttonIcon} icon={faDownload} />
