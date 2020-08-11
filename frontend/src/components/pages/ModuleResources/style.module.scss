@@ -1,5 +1,9 @@
 @import "assets/scss/custom";
 
+
+	/* bootstrap 5's grid, delete if causes trouble */
+@import "assets/scss/bootstrap5/bootstrap-grid";
+
 .moduleSectionHeader {
   margin-top: 1.875rem;
 }

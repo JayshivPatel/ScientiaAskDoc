@@ -47,14 +47,15 @@ const ModuleResources: React.FC = () => {
           styles.quickAccessRow
         )}
       >
-        {[...Array(6)].map((e, i) => (
+        {[...Array(10)].map((e, i) => (
           <Col
             xs={7}
             sm={7}
             md={7}
             lg={5}
-            xl={3}
+						xl={3}
 						key={i}
+						className={styles["col-xxl-2"]}
 						style={{marginBottom: ".5rem"}}
           >
             <Card className={styles.quickViewCard}>
