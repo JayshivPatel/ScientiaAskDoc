@@ -138,7 +138,7 @@ $teal-tag-background: transparentize($teal-100, 0.5);
 
 .quickAccessRow {
   scrollbar-width: thin;
-	scrollbar-color: $gray-200 $white;
+	scrollbar-color: $white $white;
 	margin-top: 1rem;
 	// margin-left: 0; // leave space before card
 }
@@ -150,8 +150,16 @@ $teal-tag-background: transparentize($teal-100, 0.5);
   background: $white;
 }
 .quickAccessRow::-webkit-scrollbar-thumb {
-  background-color: $gray-200;
+  background-color: $white;
   border-radius: .5rem;
+}
+
+.quickAccessRow:hover {
+	scrollbar-color: $gray-400 $white;
+}
+
+.quickAccessRow:hover::-webkit-scrollbar-thumb {
+	background-color: $gray-400;
 }
 
 
