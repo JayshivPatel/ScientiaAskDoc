@@ -71,6 +71,10 @@
   font-size: 24px;
 }
 
+.sectionHeaderButtonGroup {
+  display: none;
+}
+
 .sectionHeaderButton {
   background: $white;
   color: #000;
@@ -79,12 +83,10 @@
   margin-left: 20px;
   justify-content: space-between;
   height: 2.25rem;
-  text-align: left;
   transition: 0.2s background;
   -webkit-transition: 0.2s background;
   -moz-transition: 0.2s background;
   font-size: 1.05rem;
-  width: 40px;
 }
 
 .buttonIcon {
@@ -122,6 +124,7 @@
   border-color: $gray-300;
   transition: transform 0.2s;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .quickViewCard:hover {
@@ -202,6 +205,7 @@ $teal-tag-background: transparentize($teal-100, 0.5);
 
 .quickAccessRow::-webkit-scrollbar {
 	width: 1rem;
+  height: 0.5rem;
 }
 .quickAccessRow::-webkit-scrollbar-track {
   background: $white;
