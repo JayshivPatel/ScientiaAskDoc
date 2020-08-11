@@ -47,7 +47,7 @@ const ModuleResources: React.FC = () => {
           styles.quickAccessRow
         )}
       >
-        {[...Array(6)].map((e, i) => (
+        {[...Array(4)].map((e, i) => (
           <Col
             xs={7}
             sm={7}
