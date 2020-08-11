@@ -140,7 +140,7 @@ $teal-tag-background: transparentize($teal-100, 0.5);
   scrollbar-width: thin;
 	scrollbar-color: $gray-200 $white;
 	margin-top: 1rem;
-	margin-left: 0;
+	// margin-left: 0; // leave space before card
 }
 
 .quickAccessRow::-webkit-scrollbar {
