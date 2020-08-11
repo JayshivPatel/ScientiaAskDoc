@@ -1,6 +1,15 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Setup
+
+First, run
+
+### `yarn install`
+
+to install the node modules used for the frontend. In order for the API links to work, the following repository branches need to be cloned and run (separately):
+
+
+## To run
 
 In the project directory, you can run:
 

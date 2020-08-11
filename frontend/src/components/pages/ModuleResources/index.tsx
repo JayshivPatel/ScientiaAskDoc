@@ -2,6 +2,8 @@ import React from "react";
 import styles from "./style.module.scss";
 
 import classNames from "classnames";
+import { request } from "../../../utils/api"
+import { api } from "../../../constants/routes"
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
 import graphIllustration from "assets/images/graph-illustration.svg";
@@ -21,6 +23,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const ModuleResources: React.FC = () => {
+<<<<<<< Updated upstream
+=======
+  useEffect(() => {
+    //@ts-ignore
+    window.Holder.run();
+    const onSuccess = (data: any) => {
+      console.log(data);
+    }
+    const onFailure = (error: any) => {
+      console.log(error);
+    }
+    request(api.MATERIALS_COURSES, "GET", onSuccess, onFailure)
+  }, []);
+
+>>>>>>> Stashed changes
   return (
     <>
       <MyBreadcrumbs />
@@ -39,6 +56,7 @@ const ModuleResources: React.FC = () => {
 
       <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
 
+<<<<<<< Updated upstream
       {/* TODO: add scroll listener once code is refactored */}
       <Container className={classNames(styles.quickAccessRow)}>
         {[...Array(6)].map((e, i) => (
@@ -63,6 +81,18 @@ const ModuleResources: React.FC = () => {
               </Badge>
             </Card.Footer>
           </Card>
+=======
+      <Row>
+        {[...Array(4)].map((e, i) => (
+          <Col xs={6} sm={6} md={3} key={i}>
+            <Card style={{ marginTop: "1rem" }}>
+              <Card.Img variant="top" src="holder.js/100px100" />
+              <Card.Body>
+                <Card.Title>Document :( {i}</Card.Title>
+              </Card.Body>
+            </Card>
+          </Col>
+>>>>>>> Stashed changes
         ))}
       </Container>
 
