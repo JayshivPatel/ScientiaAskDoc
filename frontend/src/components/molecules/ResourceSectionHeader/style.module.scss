@@ -1,0 +1,64 @@
+@import "assets/scss/custom";
+
+.sectionHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.875rem;  
+  align-items: center;
+}
+
+.sectionHeader {
+  font-weight: 500;
+	font-size: 20px;
+	display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sectionHeaderButtonGroup {
+  // display: none;
+}
+
+.sectionHeaderButton {
+  background: $white;
+  color: #000;
+  border-width: 0px;
+  border-radius: 8px;
+  margin-left: 20px;
+  justify-content: space-between;
+  height: 2.25rem;
+  transition: 0.2s background;
+  -webkit-transition: 0.2s background;
+  -moz-transition: 0.2s background;
+  font-size: 1.05rem;
+}
+
+.buttonIcon {
+  margin-top: 0.22rem;
+}
+
+.buttonCheckbox :global(.form-check-input) {
+  margin: 0px;
+}
+
+.sectionHeaderButton:active:hover,
+.sectionHeaderButton:global(.active):hover {
+  background-color: $gray-900 !important;
+}
+
+.sectionHeaderButton:global(.active),
+.sectionHeaderButton:active {
+  color: #fff;
+  background: #000 !important;
+  font-weight: 500;
+  text-align: left;
+  border-width: 0rem;
+  height: 2.25rem;
+  line-height: 1.375rem;
+}
+
+.sectionHeaderButton:hover {
+  background: #e5e5e5;
+  border-color: #fff;
+  color: #000;
+}
