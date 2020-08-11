@@ -32,7 +32,7 @@ const FileCard: React.FC<FileCardProps> = ({
       <Card.Footer>
 				{
 					tags.map(tag => 
-						<Badge pill className={classNames(styles.quickViewTag, tag==="new" ? styles.tagTeal : styles.tagBlue)}>
+						<Badge pill key={tag} className={classNames(styles.quickViewTag, tag==="new" ? styles.tagTeal : styles.tagBlue)}>
 						{tag}
 					</Badge>
 					)
