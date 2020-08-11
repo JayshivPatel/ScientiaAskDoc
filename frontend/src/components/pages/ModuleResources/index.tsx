@@ -12,11 +12,12 @@ import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
+import Container from "react-bootstrap/Container";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInfoCircle,
   faFile,
-  faFolder,
+  faFolder
 } from "@fortawesome/free-solid-svg-icons";
 
 const ModuleResources: React.FC = () => {
@@ -37,53 +38,33 @@ const ModuleResources: React.FC = () => {
       </InputGroup>
 
       <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
-	
-			{/* TODO: add scroll listener once code is refactored */}
-      <Row
-        className={classNames(
-          "d-flex",
-          "flex-row",
-          "flex-nowrap",
-          styles.quickAccessRow
-        )}
-      >
+
+      {/* TODO: add scroll listener once code is refactored */}
+      <Container className={classNames(styles.quickAccessRow)}>
         {[...Array(6)].map((e, i) => (
-          <Col
-            xs={7}
-            sm={7}
-            md={7}
-            lg={5}
-            xl={3}
-						key={i}
-						style={{marginBottom: ".5rem"}}
-          >
-            <Card className={styles.quickViewCard}>
-              <Card.Img variant="top" src={graphIllustration} />
-              <Card.Body>
-                <Card.Title>Document {i}</Card.Title>
-                <FontAwesomeIcon
-                  style={{ fontSize: "1.125rem" }}
-                  icon={faFile}
-                />
-              </Card.Body>
-              <Card.Footer>
-                <Badge
-                  pill
-                  className={classNames(styles.quickViewTag, styles.tagTeal)}
-                >
-                  New
-                </Badge>
-                <Badge
-                  pill
-                  className={classNames(styles.quickViewTag, styles.tagBlue)}
-                >
-                  Week 1
-                </Badge>
-              </Card.Footer>
-            </Card>
-          </Col>
+          <Card className={styles.quickViewCard}>
+            <Card.Img variant="top" src={graphIllustration} />
+            <Card.Body>
+              <Card.Title>Document {i}</Card.Title>
+              <FontAwesomeIcon style={{ fontSize: "1.125rem" }} icon={faFile} />
+            </Card.Body>
+            <Card.Footer>
+              <Badge
+                pill
+                className={classNames(styles.quickViewTag, styles.tagTeal)}
+              >
+                New
+              </Badge>
+              <Badge
+                pill
+                className={classNames(styles.quickViewTag, styles.tagBlue)}
+              >
+                Week 1
+              </Badge>
+            </Card.Footer>
+          </Card>
         ))}
-      </Row>
+      </Container>
 
       <h5
         style={{ marginTop: "30px", marginBottom: "10px" }}
