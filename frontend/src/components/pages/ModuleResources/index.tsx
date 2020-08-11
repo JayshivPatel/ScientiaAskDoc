@@ -12,11 +12,15 @@ import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInfoCircle,
   faFile,
   faFolder,
+  faDownload,
+  faCheckSquare
 } from "@fortawesome/free-solid-svg-icons";
 
 const ModuleResources: React.FC = () => {
@@ -36,9 +40,32 @@ const ModuleResources: React.FC = () => {
         </InputGroup.Append>
       </InputGroup>
 
-      <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
-	
-			{/* TODO: add scroll listener once code is refactored */}
+      <div className={styles.sectionHeaderContainer}>
+        <span className={styles.sectionHeader}>Quick Access</span>
+        <div className={styles.sectionHeaderButtonGroup}>
+          <Button className={styles.sectionHeaderButton}>
+            Download
+            <FontAwesomeIcon className={styles.buttonIcon} icon={faDownload} />
+          </Button>
+          <Button className={styles.sectionHeaderButton}>
+            <span
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center"
+              }}
+            >
+              Select All
+              <Form.Check
+                className={styles.buttonCheckbox}
+                aria-label="option 1"
+              />
+            </span>
+          </Button>
+        </div>
+      </div>
+
+      {/* TODO: add scroll listener once code is refactored */}
       <Row
         className={classNames(
           "d-flex",
@@ -86,13 +113,32 @@ const ModuleResources: React.FC = () => {
         ))}
       </Row>
 
-      <h5
-        style={{ marginTop: "30px", marginBottom: "10px" }}
-        className={classNames(styles.moduleSectionHeader)}
-      >
-        Folders
-      </h5>
-      <Row>
+      <div className={styles.sectionHeaderContainer}>
+        <span className={styles.sectionHeader}>Folders</span>
+        <div className={styles.sectionHeaderButtonGroup}>
+          <Button className={styles.sectionHeaderButton}>
+            Download
+            <FontAwesomeIcon className={styles.buttonIcon} icon={faDownload} />
+          </Button>
+          <Button className={styles.sectionHeaderButton}>
+            <span
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center"
+              }}
+            >
+              Select All
+              <Form.Check
+                className={styles.buttonCheckbox}
+                aria-label="option 1"
+              />
+            </span>
+          </Button>
+        </div>
+      </div>
+
+      <Row style={{ marginTop: "10px" }}>
         {[...Array(10)].map((e, i) => (
           <Col xs={6} sm={6} md={3} key={i}>
             <Card className={styles.folderCard}>
