@@ -70,7 +70,6 @@ const ModuleResources: React.FC = () => {
             lg={4}
 						xl={3}
 						key={i}
-						className={styles["col-xxl-2"]}
 						style={{marginBottom: ".5rem"}}
           >
             <Card className={styles.quickViewCard}>
