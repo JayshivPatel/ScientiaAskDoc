@@ -13,7 +13,7 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle, faFile, faFolder, faClock, faExclamationTriangle, faCalendarPlus } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle, faFile, faFolder } from "@fortawesome/free-solid-svg-icons";
 
 const ModuleFeedback: React.FC = () => {
   return (
