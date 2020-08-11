@@ -4,15 +4,22 @@ import Col from "react-bootstrap/esm/Col";
 import ResourceSectionHeader from "../ResourceSectionHeader";
 import FolderCard from "components/atoms/FolderCard";
 
-const ResourceFolders: React.FC = () => {
+export interface ResourceFoldersProps{
+	folderItems: {
+    title: string;
+    id: number;
+	}[];
+}
+
+const ResourceFolders: React.FC<ResourceFoldersProps> = ({folderItems}: ResourceFoldersProps) => {
   return (
     <>
       <ResourceSectionHeader heading="Folders" />
 
       <Row style={{ marginTop: "10px" }}>
-        {[...Array(10)].map((e, i) => (
-          <Col xs={6} sm={6} md={3} key={i}>
-            <FolderCard/>
+        {folderItems.map(({title, id}) => (
+          <Col xs={6} sm={6} md={3} key={id}>
+            <FolderCard title={title} id={id}/>
           </Col>
         ))}
       </Row>

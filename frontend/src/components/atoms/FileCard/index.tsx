@@ -9,21 +9,34 @@ import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile } from "@fortawesome/free-solid-svg-icons";
 
-const FileCard: React.FC = () => {
+export interface FileCardProps {
+  title: string;
+  type: string;
+  tags: string[];
+  id: number;
+}
+
+const FileCard: React.FC<FileCardProps> = ({
+  title,
+  type,
+  tags,
+  id,
+}: FileCardProps) => {
   return (
     <Card className={styles.quickViewCard}>
       <Card.Img variant="top" src={graphIllustration} />
       <Card.Body>
-        <Card.Title>Document</Card.Title>
+        <Card.Title>{title}</Card.Title>
         <FontAwesomeIcon style={{ fontSize: "1.125rem" }} icon={faFile} />
       </Card.Body>
       <Card.Footer>
-        <Badge pill className={classNames(styles.quickViewTag, styles.tagTeal)}>
-          New
-        </Badge>
-        <Badge pill className={classNames(styles.quickViewTag, styles.tagBlue)}>
-          Week 1
-        </Badge>
+				{
+					tags.map(tag => 
+						<Badge pill className={classNames(styles.quickViewTag, tag==="new" ? styles.tagTeal : styles.tagBlue)}>
+						{tag}
+					</Badge>
+					)
+				}
       </Card.Footer>
     </Card>
   );

@@ -6,11 +6,21 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import ResourceSectionHeader from "../ResourceSectionHeader";
 import FileCard from "components/atoms/FileCard";
+export interface QuickAccessProps {
+  quickAccessItems: {
+    title: string;
+    type: string;
+    tags: string[];
+    id: number;
+  }[];
+}
 
-const QuickAccess: React.FC = () => {
+const QuickAccess: React.FC<QuickAccessProps> = ({
+  quickAccessItems,
+}: QuickAccessProps) => {
   return (
     <>
-      <ResourceSectionHeader heading="Quick Access"/>
+      <ResourceSectionHeader heading="Quick Access" />
 
       <Row
         className={classNames(
@@ -20,17 +30,17 @@ const QuickAccess: React.FC = () => {
           styles.quickAccessRow
         )}
       >
-        {[...Array(10)].map((e, i) => (
+        {quickAccessItems.map(({ title, type, tags, id }) => (
           <Col
             xs={7}
             sm={5}
             md={5}
             lg={4}
-						xl={3}
-						key={i}
-						style={{marginBottom: ".5rem"}}
+            xl={3}
+            key={id}
+            style={{ marginBottom: ".5rem" }}
           >
-            <FileCard/>
+            <FileCard title={title} type={type} tags={tags} id={id} />
           </Col>
         ))}
       </Row>
