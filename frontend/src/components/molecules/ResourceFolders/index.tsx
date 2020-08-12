@@ -14,15 +14,15 @@ export interface ResourceFoldersProps {
 
 type idBooleanMap = { [key: number]: boolean };
 interface MyState {
-	isSelected: idBooleanMap;
-	isHoveringOver: idBooleanMap;
-	isHoveringTitle: Boolean;
+  isSelected: idBooleanMap;
+  isHoveringOver: idBooleanMap;
+  isHoveringTitle: Boolean;
 }
 
 class ResourceFolders extends React.Component<ResourceFoldersProps, MyState> {
   constructor(props: ResourceFoldersProps) {
     super(props);
-    this.state = { isSelected: [], isHoveringOver: [] , isHoveringTitle: false};
+    this.state = { isSelected: [], isHoveringOver: [], isHoveringTitle: false };
   }
 
   componentDidMount() {
@@ -56,11 +56,11 @@ class ResourceFolders extends React.Component<ResourceFoldersProps, MyState> {
   }
 
   handleIconClick(id: number) {
-		let isSelected = JSON.parse(JSON.stringify(this.state.isSelected));
+    let isSelected = JSON.parse(JSON.stringify(this.state.isSelected));
     let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver));
-		isSelected[id] = !isSelected[id];
+    isSelected[id] = !isSelected[id];
     isHoveringOver[id] = false;
-    this.setState({ isSelected , isHoveringOver});
+    this.setState({ isSelected, isHoveringOver });
   }
 
   handleSelectAllClick() {
@@ -70,7 +70,7 @@ class ResourceFolders extends React.Component<ResourceFoldersProps, MyState> {
     for (let item in items) {
       isSelected[items[item].id] = setValue;
     }
-    this.setState({ isSelected });
+    this.setState({ isSelected, isHoveringTitle: false });
   }
 
   handleCardClick(id: number) {
@@ -79,28 +79,32 @@ class ResourceFolders extends React.Component<ResourceFoldersProps, MyState> {
       isSelected[id] = !isSelected[id];
       this.setState({ isSelected });
     }
-	}
-	
-	handleMouseOver(id: number){
+  }
+
+  handleMouseOver(id: number) {
     let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver));
     isHoveringOver[id] = true;
     this.setState({ isHoveringOver });
-	}
+  }
 
-	handleMouseOut(id: number){
+  handleMouseOut(id: number) {
     let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver));
     isHoveringOver[id] = false;
     this.setState({ isHoveringOver });
-	}
+  }
 
   render() {
     return (
       <>
         <ResourceSectionHeader
-					heading="Folders"
-					onMouseOver={() => {this.setState({isHoveringTitle: true})}}
-					onMouseOut={() => {this.setState({isHoveringTitle: false})}}
-					showDownload={this.isAnySelected()}
+          heading="Folders"
+          onMouseOver={() => {
+            this.setState({ isHoveringTitle: true });
+          }}
+          onMouseOut={() => {
+            this.setState({ isHoveringTitle: false });
+          }}
+          showDownload={this.isAnySelected()}
           showSelectAll={this.isAnySelected() || this.state.isHoveringTitle}
           onSelectAllClick={() => this.handleSelectAllClick()}
           selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
@@ -108,12 +112,7 @@ class ResourceFolders extends React.Component<ResourceFoldersProps, MyState> {
 
         <Row style={{ marginTop: "10px" }}>
           {this.props.folderItems.map(({ title, id }) => (
-            <Col
-              xs={6}
-              sm={6}
-              md={3}
-              key={id}
-            >
+            <Col xs={6} sm={6} md={3} key={id}>
               <FolderCard
                 title={title}
                 icon={
@@ -123,10 +122,10 @@ class ResourceFolders extends React.Component<ResourceFoldersProps, MyState> {
                       : faSquare
                     : faFolder
                 }
-								onIconClick={() => this.handleIconClick(id)}
-								onClick={() => this.handleCardClick(id)}
-								onMouseOver={() => this.handleMouseOver(id)}
-								onMouseOut={() => this.handleMouseOut(id)}
+                onIconClick={() => this.handleIconClick(id)}
+                onClick={() => this.handleCardClick(id)}
+                onMouseOver={() => this.handleMouseOver(id)}
+                onMouseOut={() => this.handleMouseOut(id)}
               />
             </Col>
           ))}

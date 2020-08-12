@@ -65,8 +65,10 @@ class QuickAccess extends React.Component<QuickAccessProps, MyState> {
 
   handleIconClick(id: number) {
     let isSelected = JSON.parse(JSON.stringify(this.state.isSelected));
+    let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver));
     isSelected[id] = !isSelected[id];
-    this.setState({ isSelected });
+    isHoveringOver[id] = false;
+    this.setState({ isSelected, isHoveringOver });
   }
 
   handleSelectAllClick() {
@@ -76,7 +78,7 @@ class QuickAccess extends React.Component<QuickAccessProps, MyState> {
     for (let item in items) {
       isSelected[items[item].id] = setValue;
     }
-    this.setState({ isSelected });
+    this.setState({ isSelected ,isHoveringTitle: false});
   }
 
   handleCardClick(id: number) {
