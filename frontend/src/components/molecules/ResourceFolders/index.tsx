@@ -14,14 +14,15 @@ export interface ResourceFoldersProps {
 
 type idBooleanMap = { [key: number]: boolean };
 interface MyState {
-  isSelected: idBooleanMap;
+	isSelected: idBooleanMap;
+	isHoveringOver: idBooleanMap;
+	isHoveringTitle: Boolean;
 }
 
 class ResourceFolders extends React.Component<ResourceFoldersProps, MyState> {
   constructor(props: ResourceFoldersProps) {
     super(props);
-    let isSelected: idBooleanMap = [];
-    this.state = { isSelected };
+    this.state = { isSelected: [], isHoveringOver: [] , isHoveringTitle: false};
   }
 
   componentDidMount() {
@@ -70,29 +71,60 @@ class ResourceFolders extends React.Component<ResourceFoldersProps, MyState> {
     this.setState({ isSelected });
   }
 
+  handleCardClick(id: number) {
+    if (this.isAnySelected()) {
+      let isSelected = JSON.parse(JSON.stringify(this.state.isSelected));
+      isSelected[id] = !isSelected[id];
+      this.setState({ isSelected });
+    }
+	}
+	
+	handleMouseOver(id: number){
+    let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver));
+    isHoveringOver[id] = true;
+    this.setState({ isHoveringOver });
+	}
+
+	handleMouseOut(id: number){
+    let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver));
+    isHoveringOver[id] = false;
+    this.setState({ isHoveringOver });
+	}
+
   render() {
     return (
       <>
         <ResourceSectionHeader
 					heading="Folders"
+					onMouseOver={() => {this.setState({isHoveringTitle: true})}}
+					onMouseOut={() => {this.setState({isHoveringTitle: false})}}
 					showDownload={this.isAnySelected()}
+          showSelectAll={this.isAnySelected() || this.state.isHoveringTitle}
           onSelectAllClick={() => this.handleSelectAllClick()}
           selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
         />
 
         <Row style={{ marginTop: "10px" }}>
           {this.props.folderItems.map(({ title, id }) => (
-            <Col xs={6} sm={6} md={3} key={id}>
+            <Col
+              xs={6}
+              sm={6}
+              md={3}
+              key={id}
+							onMouseOver={() => this.handleMouseOver(id)}
+							onMouseOut={() => this.handleMouseOut(id)}
+            >
               <FolderCard
                 title={title}
                 icon={
-                  this.isAnySelected()
+                  this.isAnySelected() || this.state.isHoveringOver[id]
                     ? this.state.isSelected[id]
                       ? faCheckSquare
                       : faSquare
                     : faFolder
                 }
-                onIconClick={() => this.handleIconClick(id)}
+								onIconClick={() => this.handleIconClick(id)}
+								onClick={() => this.handleCardClick(id)}
               />
             </Col>
           ))}

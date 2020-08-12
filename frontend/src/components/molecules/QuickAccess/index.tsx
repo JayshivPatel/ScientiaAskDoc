@@ -20,22 +20,25 @@ export interface QuickAccessProps {
 
 type idBooleanMap = { [key: number]: boolean };
 interface MyState {
-  isSelected: idBooleanMap;
+	isSelected: idBooleanMap;
+  isHoveringOver: idBooleanMap;
+	isHoveringTitle: Boolean;
 }
 
 class QuickAccess extends React.Component<QuickAccessProps, MyState> {
   constructor(props: QuickAccessProps) {
     super(props);
-    let isSelected: idBooleanMap = [];
-    this.state = { isSelected };
+    this.state = { isSelected : [], isHoveringOver: [], isHoveringTitle: false};
   }
 
   componentDidMount() {
-    let isSelected: idBooleanMap = [];
+		let isSelected: idBooleanMap = [];
+    let isHoveringOver: idBooleanMap = [];
     this.props.quickAccessItems.forEach(({ id }: { id: number }) => {
-      isSelected[id] = false;
+			isSelected[id] = false;
+			isHoveringOver[id] = false;
     });
-    this.setState({ isSelected });
+    this.setState({ isSelected, isHoveringOver });
   }
 
   isAnySelected(): boolean {
@@ -74,14 +77,37 @@ class QuickAccess extends React.Component<QuickAccessProps, MyState> {
       isSelected[items[item].id] = setValue;
     }
     this.setState({ isSelected });
-  }
+	}
+	
+	handleCardClick(id: number) {
+    if (this.isAnySelected()) {
+      let isSelected = JSON.parse(JSON.stringify(this.state.isSelected));
+      isSelected[id] = !isSelected[id];
+      this.setState({ isSelected });
+    }
+	}
+	
+	handleMouseOver(id: number){
+    let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver));
+    isHoveringOver[id] = true;
+    this.setState({ isHoveringOver });
+	}
+
+	handleMouseOut(id: number){
+    let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver));
+    isHoveringOver[id] = false;
+    this.setState({ isHoveringOver });
+	}
 
   render() {
     return (
       <>
         <ResourceSectionHeader
 					heading="Quick Access"
+					onMouseOver={() => {this.setState({isHoveringTitle: true})}}
+					onMouseOut={() => {this.setState({isHoveringTitle: false})}}
 					showDownload={this.isAnySelected()}
+					showSelectAll={this.state.isHoveringTitle || this.isAnySelected()}
           onSelectAllClick={() => this.handleSelectAllClick()}
           selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
         />
@@ -102,19 +128,22 @@ class QuickAccess extends React.Component<QuickAccessProps, MyState> {
               lg={4}
               xl={3}
               key={id}
-              style={{ marginBottom: ".5rem" }}
+							style={{ marginBottom: ".5rem" }}
+							onMouseOver={() => this.handleMouseOver(id)}
+							onMouseOut={() => this.handleMouseOut(id)}
             >
               <FileCard
                 title={title}
                 type={type}
                 tags={tags}
                 icon={
-                  this.isAnySelected()
+                  this.isAnySelected() || this.state.isHoveringOver[id]
                     ? this.state.isSelected[id]
                       ? faCheckSquare
                       : faSquare
                     : faFile
-                }
+								}
+								onClick={() => this.handleCardClick(id)}
                 onIconClick={() => {
                   this.handleIconClick(id);
                 }}

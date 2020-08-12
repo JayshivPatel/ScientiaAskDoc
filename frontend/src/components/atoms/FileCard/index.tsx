@@ -15,6 +15,7 @@ export interface FileCardProps {
 	tags: string[];
 	icon: IconDefinition;
 	onIconClick: (event: React.MouseEvent) => void;
+	onClick: (event: React.MouseEvent) => void;
 }
 
 const FileCard: React.FC<FileCardProps> = ({
@@ -23,9 +24,10 @@ const FileCard: React.FC<FileCardProps> = ({
 	tags,
 	icon,
 	onIconClick,
+	onClick,
 }: FileCardProps) => {
   return (
-    <Card className={styles.quickViewCard}>
+    <Card className={styles.quickViewCard} onClick={onClick}>
       <Card.Img variant="top" src={graphIllustration} />
       <Card.Body>
         <Card.Title>{title}</Card.Title>
