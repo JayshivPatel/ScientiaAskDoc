@@ -16,18 +16,42 @@ import ResourcesFolderView from "components/molecules/ResourcesFolderView";
 import CurrentDirectoryView from "components/molecules/CurrentDirectoryView";
 import { useParams } from "react-router-dom";
 
-const ModuleResources: React.FC = () => {
-  let { scope } = useParams();
+const ModuleResources: React.FC<{ year: string}> = ({year}) => {
+  let {id, scope } = useParams();
   scope = scope === undefined ? "" : scope;
 
-  let quickAccessItems = resourceItems.filter(
+  const quickAccessItems = resourceItems.filter(
     ({ tags, folder }) =>
       tags.includes("new") && (scope === "" || scope === folder)
   );
 
-  let currentDirectoryFiles = resourceItems.filter(
+  const currentDirectoryFiles = resourceItems.filter(
     ({ folder }) => folder === scope
-  );
+	);
+	
+	const module_code = id.startsWith("CO") ? id : id.slice(2);
+
+	//maybe refactor into class?
+	const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [resources, setResources] = useState([]);
+
+  useEffect(() => {
+    setIsLoaded(false);
+    const onSuccess = (data: any) => {
+      setIsLoaded(true);
+      setResources(data.json());
+    }
+    const onFailure = (error: any) => {
+      setIsLoaded(true);
+      setError(error);
+    }
+
+    request(api.MATERIALS_RESOURCES, "GET", onSuccess, onFailure, {
+      "year": year,
+      "course": module_code
+    })
+  }, [year, module_code]);
 
   return (
     <>
