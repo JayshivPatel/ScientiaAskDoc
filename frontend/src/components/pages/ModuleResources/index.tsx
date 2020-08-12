@@ -9,113 +9,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import QuickAccessView from "components/molecules/QuickAccessView";
 import ResourcesFolderView from "components/molecules/ResourcesFolderView";
+import CurrentDirectoryView from "components/molecules/CurrentDirectoryView";
+import { useParams } from "react-router-dom";
 
 const ModuleResources: React.FC = () => {
-  let folderItems = [
-    {
-      title: "Slides",
-      id: 0,
-    },
-    {
-      title: "Logic Exercise",
-      id: 2,
-    },
-    {
-      title: "Pandor Lab",
-      id: 3,
-    },
-    {
-      title: "Extra",
-      id: 4,
-    },
-	];
-	
-	let ResourceItems = [
-    {
-			title: "Syntax Semantics Propositional Logic",
-			type: "File",
-			tags:["new", "Week 1"],
-      id: 0,
-		},
-		{
-			title: "Classical First-Order Predicate Logic",
-			type: "File",
-			tags:["new", "Week 2"],
-      id: 1,
-		},
-		{
-			title: "Translation Validity",
-			type: "Link",
-			tags:["new", "Week 2"],
-      id: 2,
-		},
-		{
-			title: "validityPL-part1",
-			type: "Panopto",
-			tags:["new"],
-      id: 3,
-		},
-		{
-			title: "validityPL-part2",
-			type: "Link",
-			tags:["Week 2"],
-      id: 4,
-		},
-		{
-			title: "validityPL-part3",
-			type: "File",
-			tags:["Week 3"],
-      id: 5,
-		},
-		{
-			title: "validityPL-part3",
-			type: "File",
-			tags:["Week 3"],
-      id: 6,
-		},
-		{
-			title: "validityFOL-part2",
-			type: "File",
-			tags:["Week 3"],
-      id: 7,
-		},
-				{
-			title: "Logic Exercise 1",
-			type: "File",
-			tags:["Week 3"],
-      id: 8,
-		},
-		{
-			title: "Logic Exercise 2",
-			type: "File",
-			tags:["Week 3"],
-      id: 9,
-		},
-		{
-			title: "Logic Exercise 3",
-			type: "File",
-			tags:["Week 3"],
-      id: 10,
-		},
-		{
-			title: "Pandor Lab",
-			type: "File",
-			tags:["Week 3"],
-      id: 11,
-		},
-		{
-			title: "Propositional Logic Exercises",
-			type: "File",
-			tags:["Week 3"],
-      id: 12,
-		},
-		{
-			title: "Extra Logic Exercises",
-			type: "File",
-			tags:["Week 3"],
-      id: 13,
-		},
-	]
+  let { scope } = useParams();
+  scope = scope === undefined ? "" : scope;
+
+  let quickAccessItems = resourceItems.filter(
+    ({ tags, folder }) =>
+      tags.includes("new") && (scope === "" || scope === folder)
+  );
+
+  let currentDirectoryFiles = resourceItems.filter(
+    ({ folder }) => folder === scope
+  );
 
   return (
     <>
@@ -133,10 +41,138 @@ const ModuleResources: React.FC = () => {
         </InputGroup.Append>
       </InputGroup>
 
-      <QuickAccessView quickAccessItems={ResourceItems}/>
-      <ResourcesFolderView folderItems={folderItems}/>
+      <QuickAccessView quickAccessItems={quickAccessItems} />
+      {scope === "" && folderItems.length > 0 ? <ResourcesFolderView folderItems={folderItems} /> : null}
+      {currentDirectoryFiles.length > 0 ? <CurrentDirectoryView documentItems={currentDirectoryFiles} /> : null}
     </>
   );
 };
 
 export default ModuleResources;
+
+let folderItems = [
+  {
+    title: "Lecture Notes",
+    id: 0,
+  },
+  {
+    title: "Logic Exercise",
+    id: 1,
+  },
+  {
+    title: "Pandor Lab",
+    id: 2,
+  },
+  {
+    title: "Extra",
+    id: 3,
+  },
+];
+
+let resourceItems = [
+  {
+    title: "Syntax Semantics Propositional Logic",
+    type: "File",
+    tags: ["Slides"],
+    folder: "Lecture Notes",
+    id: 0,
+  },
+  {
+    title: "Classical First-Order Predicate Logic",
+    type: "File",
+    tags: ["Slides"],
+    folder: "Lecture Notes",
+    id: 1,
+  },
+  {
+    title: "Translation Validity",
+    type: "File",
+    tags: ["new", "Slides"],
+    folder: "Lecture Notes",
+    id: 2,
+  },
+  {
+    title: "validityPL-part1",
+    type: "File",
+    tags: ["Slides"],
+    folder: "Lecture Notes",
+    id: 3,
+  },
+  {
+    title: "validityPL-part2",
+    type: "File",
+    tags: ["Slides"],
+    folder: "Lecture Notes",
+    id: 4,
+  },
+  {
+    title: "validityPL-part3",
+    type: "File",
+    tags: ["new", "Slides"],
+    folder: "Lecture Notes",
+    id: 5,
+  },
+  {
+    title: "validityFOL-part1",
+    type: "File",
+    tags: ["Slides"],
+    folder: "Lecture Notes",
+    id: 6,
+  },
+  {
+    title: "validityFOL-part2",
+    type: "File",
+    tags: ["new", "Slides"],
+    folder: "Lecture Notes",
+    id: 7,
+  },
+  {
+    title: "Logic Exercise 1",
+    type: "File",
+    tags: ["Week 1"],
+    folder: "Logic Exercise",
+    id: 8,
+  },
+  {
+    title: "Logic Exercise 2",
+    type: "File",
+    tags: ["Week 2"],
+    folder: "Logic Exercise",
+    id: 9,
+  },
+  {
+    title: "Logic Exercise 3",
+    type: "File",
+    tags: ["new", "Week 3"],
+    folder: "Logic Exercise",
+    id: 10,
+  },
+  {
+    title: "Pandor Lab",
+    type: "File",
+    tags: [],
+    folder: "Pandor Lab",
+    id: 11,
+  },
+  {
+    title: "Propositional Logic Exercises",
+    type: "File",
+    tags: ["new", "Revision"],
+    folder: "Extra",
+    id: 12,
+  },
+  {
+    title: "Extra Logic Exercises",
+    type: "File",
+    tags: ["new", "Revision"],
+    folder: "Extra",
+    id: 13,
+  },
+  {
+    title: "Course Introduction",
+    type: "File",
+    tags: ["README"],
+    folder: "",
+    id: 14,
+  },
+];

@@ -2,21 +2,15 @@ import React from "react";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import ResourceSectionHeader from "../ResourceSectionHeader";
-import FolderCard from "components/atoms/FolderCard";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
-import { faFolder } from "@fortawesome/free-solid-svg-icons";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import { faFile } from "@fortawesome/free-solid-svg-icons";
+import FileCard from "components/atoms/FileCard";
 
-type PathParamsType = {
-	location: any;
-  history: string;
-};
-
-type PropsType = RouteComponentProps<PathParamsType> & ResourceFoldersProps;
-
-export interface ResourceFoldersProps {
-  folderItems: {
+export interface CurrentDirectoryViewProps {
+  documentItems: {
     title: string;
+    type: string;
+    tags: string[];
     id: number;
   }[];
 }
@@ -28,22 +22,22 @@ interface MyState {
   isHoveringTitle: Boolean;
 }
 
-class ResourcesFolderView extends React.Component<PropsType, MyState> {
-  constructor(props: PropsType) {
+class CurrentDirectoryView extends React.Component<CurrentDirectoryViewProps, MyState> {
+  constructor(props: CurrentDirectoryViewProps) {
     super(props);
-		this.state = { isSelected: [], isHoveringOver: [], isHoveringTitle: false };
+    this.state = { isSelected: [], isHoveringOver: [], isHoveringTitle: false };
   }
 
   componentDidMount() {
     let isSelected: idBooleanMap = [];
-    this.props.folderItems.forEach(({ id }: { id: number }) => {
+    this.props.documentItems.forEach(({ id }: { id: number }) => {
       isSelected[id] = false;
     });
     this.setState({ isSelected });
   }
 
   isAnySelected(): boolean {
-    let items = this.props.folderItems;
+    let items = this.props.documentItems;
     let isSelected = this.state.isSelected;
     for (let item in items) {
       if (isSelected[items[item].id]) {
@@ -54,7 +48,7 @@ class ResourcesFolderView extends React.Component<PropsType, MyState> {
   }
 
   isAllSelected(): boolean {
-    let items = this.props.folderItems;
+    let items = this.props.documentItems;
     let isSelected = this.state.isSelected;
     for (let item in items) {
       if (!isSelected[items[item].id]) {
@@ -73,7 +67,7 @@ class ResourcesFolderView extends React.Component<PropsType, MyState> {
   }
 
   handleSelectAllClick() {
-    let items = this.props.folderItems;
+    let items = this.props.documentItems;
     let isSelected = JSON.parse(JSON.stringify(this.state.isSelected));
     let setValue = !this.isAllSelected();
     for (let item in items) {
@@ -85,16 +79,6 @@ class ResourcesFolderView extends React.Component<PropsType, MyState> {
   handleCardClick(id: number) {
     if (this.isAnySelected()) {
       this.handleIconClick(id);
-      return;
-    }
-
-    let items = this.props.folderItems;
-    for (let item in items) {
-      if (items[item].id == id) {
-				console.log(`/${items[item].title}`);
-        this.props.history.push(`${this.props.location.pathname}/${items[item].title}`);
-        return;
-      }
     }
   }
 
@@ -114,7 +98,7 @@ class ResourcesFolderView extends React.Component<PropsType, MyState> {
     return (
       <>
         <ResourceSectionHeader
-          heading="Folders"
+          heading="Files"
           onMouseOver={() => {
             this.setState({ isHoveringTitle: true });
           }}
@@ -128,19 +112,29 @@ class ResourcesFolderView extends React.Component<PropsType, MyState> {
         />
 
         <Row style={{ marginTop: "10px" }}>
-          {this.props.folderItems.map(({ title, id }) => (
-            <Col xs={6} sm={6} md={3} key={id}>
-              <FolderCard
+          {this.props.documentItems.map(({ title, type, tags, id }) => (
+            <Col
+              xs={6}
+              sm={6}
+              md={6}
+              lg={4}
+              xl={3}
+              key={id}
+              style={{ marginBottom: ".5rem", marginTop: ".5rem" }}
+            >
+              <FileCard
                 title={title}
+                type={type}
+                tags={tags}
                 icon={
                   this.isAnySelected() || this.state.isHoveringOver[id]
                     ? this.state.isSelected[id]
                       ? faCheckSquare
                       : faSquare
-                    : faFolder
+                    : faFile
                 }
-                onIconClick={() => this.handleIconClick(id)}
                 onClick={() => this.handleCardClick(id)}
+                onIconClick={() => this.handleIconClick(id)}
                 onMouseOver={() => this.handleMouseOver(id)}
                 onMouseOut={() => this.handleMouseOut(id)}
               />
@@ -152,4 +146,4 @@ class ResourcesFolderView extends React.Component<PropsType, MyState> {
   }
 }
 
-export default withRouter(ResourcesFolderView);
+export default CurrentDirectoryView;

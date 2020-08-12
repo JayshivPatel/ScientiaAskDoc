@@ -29,15 +29,15 @@ const LeftBarModule: React.FC = () => {
   let outlineButtons = [
     {
       title: "Overview",
-      activeURL: "overview",
+      activeURL: `/modules/${id}/overview`,
     },
     {
       title: "Feedback",
-      activeURL: "feedback",
+      activeURL: `/modules/${id}/feedback`,
     },
     {
       title: "Resources",
-      activeURL: "resources",
+      activeURL: `/modules/${id}/resources`,
     },
     {
       title: "Piazza",
