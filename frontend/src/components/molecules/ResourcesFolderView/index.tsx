@@ -1,19 +1,13 @@
 import React from "react";
-import styles from "./style.module.scss";
-
-import classNames from "classnames";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import ResourceSectionHeader from "../ResourceSectionHeader";
-import FileCard from "components/atoms/FileCard";
+import FolderCard from "components/atoms/FolderCard";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
-import { faFile } from "@fortawesome/free-solid-svg-icons";
-
-export interface QuickAccessProps {
-  quickAccessItems: {
+import { faFolder } from "@fortawesome/free-solid-svg-icons";
+export interface ResourceFoldersProps {
+  folderItems: {
     title: string;
-    type: string;
-    tags: string[];
     id: number;
   }[];
 }
@@ -25,24 +19,22 @@ interface MyState {
   isHoveringTitle: Boolean;
 }
 
-class QuickAccess extends React.Component<QuickAccessProps, MyState> {
-  constructor(props: QuickAccessProps) {
+class ResourcesFolderView extends React.Component<ResourceFoldersProps, MyState> {
+  constructor(props: ResourceFoldersProps) {
     super(props);
     this.state = { isSelected: [], isHoveringOver: [], isHoveringTitle: false };
   }
 
   componentDidMount() {
     let isSelected: idBooleanMap = [];
-    let isHoveringOver: idBooleanMap = [];
-    this.props.quickAccessItems.forEach(({ id }: { id: number }) => {
+    this.props.folderItems.forEach(({ id }: { id: number }) => {
       isSelected[id] = false;
-      isHoveringOver[id] = false;
     });
-    this.setState({ isSelected, isHoveringOver });
+    this.setState({ isSelected });
   }
 
   isAnySelected(): boolean {
-    let items = this.props.quickAccessItems;
+    let items = this.props.folderItems;
     let isSelected = this.state.isSelected;
     for (let item in items) {
       if (isSelected[items[item].id]) {
@@ -53,7 +45,7 @@ class QuickAccess extends React.Component<QuickAccessProps, MyState> {
   }
 
   isAllSelected(): boolean {
-    let items = this.props.quickAccessItems;
+    let items = this.props.folderItems;
     let isSelected = this.state.isSelected;
     for (let item in items) {
       if (!isSelected[items[item].id]) {
@@ -72,13 +64,13 @@ class QuickAccess extends React.Component<QuickAccessProps, MyState> {
   }
 
   handleSelectAllClick() {
-    let items = this.props.quickAccessItems;
+    let items = this.props.folderItems;
     let isSelected = JSON.parse(JSON.stringify(this.state.isSelected));
     let setValue = !this.isAllSelected();
     for (let item in items) {
       isSelected[items[item].id] = setValue;
     }
-    this.setState({ isSelected ,isHoveringTitle: false});
+    this.setState({ isSelected, isHoveringTitle: false });
   }
 
   handleCardClick(id: number) {
@@ -103,7 +95,7 @@ class QuickAccess extends React.Component<QuickAccessProps, MyState> {
     return (
       <>
         <ResourceSectionHeader
-          heading="Quick Access"
+          heading="Folders"
           onMouseOver={() => {
             this.setState({ isHoveringTitle: true });
           }}
@@ -111,42 +103,25 @@ class QuickAccess extends React.Component<QuickAccessProps, MyState> {
             this.setState({ isHoveringTitle: false });
           }}
           showDownload={this.isAnySelected()}
-          showSelectAll={this.state.isHoveringTitle || this.isAnySelected()}
+          showSelectAll={this.isAnySelected() || this.state.isHoveringTitle}
           onSelectAllClick={() => this.handleSelectAllClick()}
           selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
         />
 
-        <Row
-          className={classNames(
-            "d-flex",
-            "flex-row",
-            "flex-nowrap",
-            styles.quickAccessRow
-          )}
-        >
-          {this.props.quickAccessItems.map(({ title, type, tags, id }) => (
-            <Col
-              xs={7}
-              sm={5}
-              md={5}
-              lg={4}
-              xl={3}
-              key={id}
-              style={{ marginBottom: ".5rem" }}
-            >
-              <FileCard
+        <Row style={{ marginTop: "10px" }}>
+          {this.props.folderItems.map(({ title, id }) => (
+            <Col xs={6} sm={6} md={3} key={id}>
+              <FolderCard
                 title={title}
-                type={type}
-                tags={tags}
                 icon={
                   this.isAnySelected() || this.state.isHoveringOver[id]
                     ? this.state.isSelected[id]
                       ? faCheckSquare
                       : faSquare
-                    : faFile
+                    : faFolder
                 }
-                onClick={() => this.handleCardClick(id)}
                 onIconClick={() => this.handleIconClick(id)}
+                onClick={() => this.handleCardClick(id)}
                 onMouseOver={() => this.handleMouseOver(id)}
                 onMouseOut={() => this.handleMouseOut(id)}
               />
@@ -158,4 +133,4 @@ class QuickAccess extends React.Component<QuickAccessProps, MyState> {
   }
 }
 
-export default QuickAccess;
+export default ResourcesFolderView;

@@ -7,8 +7,8 @@ import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import QuickAccess from "components/molecules/QuickAccess";
-import ResourceFolders from "components/molecules/ResourceFolders";
+import QuickAccessView from "components/molecules/QuickAccessView";
+import ResourcesFolderView from "components/molecules/ResourcesFolderView";
 
 const ModuleResources: React.FC = () => {
   let folderItems = [
@@ -40,7 +40,7 @@ const ModuleResources: React.FC = () => {
 	
 	let quickAccessItems = [
     {
-			title: "Notes 1",
+			title: "My very very very very very long title",
 			type: "File",
 			tags:["new", "Week 1"],
       id: 0,
@@ -93,8 +93,8 @@ const ModuleResources: React.FC = () => {
         </InputGroup.Append>
       </InputGroup>
 
-      <QuickAccess quickAccessItems={quickAccessItems}/>
-      <ResourceFolders folderItems={folderItems}/>
+      <QuickAccessView quickAccessItems={quickAccessItems}/>
+      <ResourcesFolderView folderItems={folderItems}/>
     </>
   );
 };

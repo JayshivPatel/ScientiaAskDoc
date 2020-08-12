@@ -34,7 +34,7 @@ const FileCard: React.FC<FileCardProps> = ({
     <Card className={styles.quickViewCard} onClick={onClick}>
       <Card.Img variant="top" src={graphIllustration} />
       <Card.Body>
-        <Card.Title>{title}</Card.Title>
+        <Card.Title className={"text-truncate"}>{title}</Card.Title>
         <FontAwesomeIcon
           style={{ fontSize: "1.125rem" }}
           icon={icon}
