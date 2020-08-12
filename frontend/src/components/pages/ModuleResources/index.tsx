@@ -6,21 +6,13 @@ import { request } from "../../../utils/api"
 import { api } from "../../../constants/routes"
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
-import graphIllustration from "assets/images/graph-illustration.svg";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-import Badge from "react-bootstrap/Badge";
-import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
-import Container from "react-bootstrap/Container";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faInfoCircle,
-  faFile,
-  faFolder
-} from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import QuickAccess from "components/molecules/QuickAccess";
+import ResourceFolders from "components/molecules/ResourceFolders";
 
 const ModuleResources: React.FC<{ year: string, module_code: string }> = ({ year, module_code }) => {
   // TODO: Use these state variables in component
@@ -44,6 +36,72 @@ const ModuleResources: React.FC<{ year: string, module_code: string }> = ({ year
       "course": module_code
     })
   }, [year, module_code]);
+  
+  let folderItems = [
+    {
+      title: "Lecture Materials",
+      id: 0,
+    },
+    {
+      title: "Panopto Videos",
+      id: 1,
+    },
+    {
+      title: "Tutorial Sheets",
+      id: 2,
+    },
+    {
+      title: "Code",
+      id: 3,
+    },
+    {
+      title: "Useful Links",
+      id: 4,
+    },
+    {
+      title: "Other",
+      id: 5,
+    },
+	];
+	
+	let quickAccessItems = [
+    {
+			title: "Notes 1",
+			type: "File",
+			tags:["new", "Week 1"],
+      id: 0,
+		},
+		{
+			title: "Slides 1 - 1UP",
+			type: "File",
+			tags:["new", "Week 2"],
+      id: 1,
+		},
+		{
+			title: "Circuit simulator",
+			type: "Link",
+			tags:["new", "Week 2"],
+      id: 2,
+		},
+		{
+			title: "C - Lecture 1",
+			type: "Panopto",
+			tags:["new"],
+      id: 3,
+		},
+		{
+			title: "Translation Validity",
+			type: "Link",
+			tags:["Week 2"],
+      id: 4,
+		},
+		{
+			title: "Revision Exercises",
+			type: "File",
+			tags:["Week 3"],
+      id: 5,
+		},
+	]
 
   return (
     <>
@@ -61,56 +119,8 @@ const ModuleResources: React.FC<{ year: string, module_code: string }> = ({ year
         </InputGroup.Append>
       </InputGroup>
 
-      <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
-
-      {/* TODO: add scroll listener once code is refactored */}
-      <Container className={classNames(styles.quickAccessRow)}>
-        {[...Array(6)].map((e, i) => (
-          <Card className={styles.quickViewCard}>
-            <Card.Img variant="top" src={graphIllustration} />
-            <Card.Body>
-              <Card.Title>Document {i}</Card.Title>
-              <FontAwesomeIcon style={{ fontSize: "1.125rem" }} icon={faFile} />
-            </Card.Body>
-            <Card.Footer>
-              <Badge
-                pill
-                className={classNames(styles.quickViewTag, styles.tagTeal)}
-              >
-                New
-              </Badge>
-              <Badge
-                pill
-                className={classNames(styles.quickViewTag, styles.tagBlue)}
-              >
-                Week 1
-              </Badge>
-            </Card.Footer>
-          </Card>
-        ))}
-      </Container>
-
-      <h5
-        style={{ marginTop: "30px", marginBottom: "10px" }}
-        className={classNames(styles.moduleSectionHeader)}
-      >
-        Folders
-      </h5>
-      <Row>
-        {[...Array(10)].map((e, i) => (
-          <Col xs={6} sm={6} md={3} key={i}>
-            <Card className={styles.folderCard}>
-              <Card.Body style={{ padding: ".6rem" }}>
-                <Card.Text style={{ marginBottom: 0 }}>Folder {i}</Card.Text>
-                <FontAwesomeIcon
-                  style={{ fontSize: "1.125rem" }}
-                  icon={faFolder}
-                />
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+      <QuickAccess quickAccessItems={quickAccessItems}/>
+      <ResourceFolders folderItems={folderItems}/>
     </>
   );
 };

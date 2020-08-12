@@ -1,6 +1,18 @@
 // Override default variables before the import
 $nav-pills-link-active-color: black;
 
+
+//* bootstrap 5's grid. To use, import the following line in the .module.scss */
+// @import "assets/scss/bootstrap5/bootstrap-grid";
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 2000px
+);
+
 //Bootstrap 5 scss from: https://github.com/twbs/bootstrap/tree/main/scss
 @import "bootstrap5/functions";
 @import "bootstrap5/variables";

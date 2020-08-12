@@ -1,0 +1,69 @@
+@import "assets/scss/custom";
+
+.quickViewCard {
+  border-radius: 0.5rem;
+  border-color: $gray-300;
+  transition: transform 0.2s;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.quickViewCard:hover {
+  transform: scale(1.03);
+}
+
+.quickViewCard :global(.card-body) {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid $gray-300;
+}
+
+.quickViewCard :global(.card-footer) {
+  border-radius: 0.5rem !important;
+  background: #fff;
+  border-width: 0rem;
+  padding: 0.5rem;
+  display: flex;
+  align-items: flex-end;
+}
+
+.quickViewCard :global(.card-title) {
+  font-size: 1.125rem;
+  font-weight: 400;
+  margin-bottom: 0px;
+}
+
+.quickViewCard :global(.card-img-top) {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+$blue-tag-background: transparentize($blue-100, 0.5);
+$teal-tag-background: transparentize($teal-100, 0.5);
+
+.quickViewTag {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 0.33rem;
+  margin-right: 0.5rem;
+}
+
+.tagBlue {
+  color: $blue-700;
+  background: $blue-tag-background;
+}
+
+.tagTeal {
+  color: $teal-700;
+  background: $teal-tag-background;
+}
+
+.quickAccessRow {
+  scrollbar-width: thin;
+	scrollbar-color: $white $white;
+	margin-top: 10px;
+	// margin-left: 0; // leave space before card
+}
