@@ -67,7 +67,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           </Route>
 
           <Route path="/modules/:id/resources/:scope?">
-            <ModuleResources />
+            <ModuleResources year="1819"/>
           </Route>
 
           <Route path="/modules/:id/feedback" component={ModuleFeedback} />

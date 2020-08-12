@@ -69,7 +69,8 @@ const ModuleResources: React.FC<{ year: string}> = ({year}) => {
         </InputGroup.Append>
       </InputGroup>
 
-      <QuickAccessView quickAccessItems={quickAccessItems} />
+      
+			{quickAccessItems.length > 0 ? <QuickAccessView quickAccessItems={quickAccessItems} /> : null}
       {scope === "" && folderItems.length > 0 ? <ResourcesFolderView folderItems={folderItems} /> : null}
       {currentDirectoryFiles.length > 0 ? <CurrentDirectoryView documentItems={currentDirectoryFiles} /> : null}
     </>

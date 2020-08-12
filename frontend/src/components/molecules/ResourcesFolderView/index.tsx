@@ -8,7 +8,7 @@ import { faFolder } from "@fortawesome/free-solid-svg-icons";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 
 type PathParamsType = {
-	location: any;
+  location: any;
   history: string;
 };
 
@@ -31,7 +31,7 @@ interface MyState {
 class ResourcesFolderView extends React.Component<PropsType, MyState> {
   constructor(props: PropsType) {
     super(props);
-		this.state = { isSelected: [], isHoveringOver: [], isHoveringTitle: false };
+    this.state = { isSelected: [], isHoveringOver: [], isHoveringTitle: false };
   }
 
   componentDidMount() {
@@ -91,8 +91,10 @@ class ResourcesFolderView extends React.Component<PropsType, MyState> {
     let items = this.props.folderItems;
     for (let item in items) {
       if (items[item].id == id) {
-				console.log(`/${items[item].title}`);
-        this.props.history.push(`${this.props.location.pathname}/${items[item].title}`);
+        console.log(`/${items[item].title}`);
+        this.props.history.push(
+          `${this.props.location.pathname}/${items[item].title}`
+        );
         return;
       }
     }
@@ -139,7 +141,10 @@ class ResourcesFolderView extends React.Component<PropsType, MyState> {
                       : faSquare
                     : faFolder
                 }
-                onIconClick={() => this.handleIconClick(id)}
+                onIconClick={(e) => {
+                  e.stopPropagation();
+                  this.handleIconClick(id);
+                }}
                 onClick={() => this.handleCardClick(id)}
                 onMouseOver={() => this.handleMouseOver(id)}
                 onMouseOut={() => this.handleMouseOut(id)}

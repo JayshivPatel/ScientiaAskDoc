@@ -134,7 +134,10 @@ class CurrentDirectoryView extends React.Component<CurrentDirectoryViewProps, My
                     : faFile
                 }
                 onClick={() => this.handleCardClick(id)}
-                onIconClick={() => this.handleIconClick(id)}
+                onIconClick={(e) => {
+                  e.stopPropagation();
+                  this.handleIconClick(id);
+                }}
                 onMouseOver={() => this.handleMouseOver(id)}
                 onMouseOut={() => this.handleMouseOut(id)}
               />
