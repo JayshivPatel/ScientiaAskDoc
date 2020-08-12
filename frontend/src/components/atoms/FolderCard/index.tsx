@@ -22,14 +22,17 @@ const FolderCard: React.FC<FolderCardProps> = ({
   onMouseOut,
 }: FolderCardProps) => {
   return (
-    <Card className={styles.folderCard} onClick={onClick}>
+    <Card
+      className={styles.folderCard}
+      onClick={onClick}
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}
+    >
       <Card.Body style={{ padding: ".6rem" }}>
         <Card.Text style={{ marginBottom: 0 }}>{title}</Card.Text>
         <FontAwesomeIcon
           style={{ fontSize: "1.125rem" }}
           icon={icon}
-          onMouseOver={onMouseOver}
-          onMouseOut={onMouseOut}
           onClick={onIconClick}
         />
       </Card.Body>

@@ -31,15 +31,18 @@ const FileCard: React.FC<FileCardProps> = ({
   onMouseOut,
 }: FileCardProps) => {
   return (
-    <Card className={styles.quickViewCard} onClick={onClick}>
+    <Card
+      className={styles.quickViewCard}
+      onClick={onClick}
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}
+    >
       <Card.Img variant="top" src={applicationPDF} />
       <Card.Body>
-        <Card.Title style={{wordWrap: "break-word"}} >{title}</Card.Title>
+        <Card.Title style={{ wordWrap: "break-word" }}>{title}</Card.Title>
         <FontAwesomeIcon
           style={{ fontSize: "1.125rem" }}
           icon={icon}
-          onMouseOver={onMouseOver}
-          onMouseOut={onMouseOut}
           onClick={onIconClick}
         />
       </Card.Body>
