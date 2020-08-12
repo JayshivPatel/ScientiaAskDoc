@@ -29,7 +29,7 @@ const ModuleList: React.FC = () => {
     },
     {
       title: "Discrete Mathematics",
-      code: "CO142",
+      code: "142",
       image: discreteIllustration,
       terms: [Term.AUTUMN],
       progressStatus: ProgressStatus.IN_PROGRESS,
