@@ -20,7 +20,7 @@ const ModuleList: React.FC = () => {
   let modules = [
     {
       title: "Introduction to Logic",
-      code: "CO140",
+      code: "140",
       image: logicIllustration,
       terms: [Term.AUTUMN],
       progressStatus: ProgressStatus.IN_PROGRESS,
@@ -29,7 +29,7 @@ const ModuleList: React.FC = () => {
     },
     {
       title: "Discrete Mathematics",
-      code: "CO142",
+      code: "142",
       image: discreteIllustration,
       terms: [Term.AUTUMN],
       progressStatus: ProgressStatus.IN_PROGRESS,
@@ -38,7 +38,7 @@ const ModuleList: React.FC = () => {
     },
     {
       title: "Introduction to Computer Systems",
-      code: "CO112",
+      code: "112",
       image: systemsIllustration,
       terms: [Term.AUTUMN],
       progressStatus: ProgressStatus.IN_PROGRESS,
@@ -47,7 +47,7 @@ const ModuleList: React.FC = () => {
     },
     {
       title: "Mathematical Methods",
-      code: "CO145",
+      code: "145",
       terms: [Term.AUTUMN],
       image: methodsIllustration,
       progressStatus: ProgressStatus.IN_PROGRESS,
@@ -56,7 +56,7 @@ const ModuleList: React.FC = () => {
     },
     {
       title: "Java",
-      code: "CO120.2",
+      code: "120.2",
       image: javaIllustration,
       terms: [Term.AUTUMN, Term.SPRING, Term.SUMMER],
       progressStatus: ProgressStatus.IN_PROGRESS,
@@ -65,7 +65,7 @@ const ModuleList: React.FC = () => {
     },
     {
       title: "Graphs and Algorithms",
-      code: "CO150",
+      code: "150",
       image: graphIllustration,
       terms: [Term.SPRING],
       progressStatus: ProgressStatus.NOT_STARTED,
@@ -74,7 +74,7 @@ const ModuleList: React.FC = () => {
     },
     {
       title: "Introduction to Computer Architecture",
-      code: "CO113",
+      code: "113",
       image: architectureIllustration,
       terms: [Term.SPRING],
       progressStatus: ProgressStatus.NOT_STARTED,
@@ -83,7 +83,7 @@ const ModuleList: React.FC = () => {
     },
     {
       title: "Reasoning About Programs",
-      code: "CO141",
+      code: "141",
       image: reasoningIllustration,
       terms: [Term.SPRING],
       progressStatus: ProgressStatus.NOT_STARTED,
@@ -92,7 +92,7 @@ const ModuleList: React.FC = () => {
     },
     {
       title: "Introduction to Databases",
-      code: "CO130",
+      code: "130",
       image: databaseIllustration,
       terms: [Term.SPRING],
       progressStatus: ProgressStatus.NOT_STARTED,

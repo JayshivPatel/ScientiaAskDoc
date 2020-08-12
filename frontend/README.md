@@ -2,11 +2,26 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Setup
 
-First, run
+First, run `yarn install` to install the node modules used for the frontend. 
 
-### `yarn install`
+In order for the API links to work, the following repository branches need to be cloned and run separately:
 
-to install the node modules used for the frontend. In order for the API links to work, the following repository branches need to be cloned and run (separately):
+### 1. materials@scientia-integration
+```shell
+# Clone the repository and checkout to the relevant branch
+git clone https://gitlab.doc.ic.ac.uk/edtech/materials.git
+git checkout scientia-integration
+
+# Setup and run the development server on port 5000
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip && pip install -r requirements.txt 
+export FLASK_ENV=development
+export FLASK_APP=materials
+flask create_all
+flask populate -r materials/mocks/resources.json
+flask run
+```
 
 
 ## To run

@@ -1,5 +1,4 @@
 import authConstants from "../constants/auth";
-import { api } from "../constants/routes";
 
 function storeDataInStorage(data: { access_token: string; user_info: any; }) {
   sessionStorage.setItem(authConstants.ACCESS_TOKEN, data.access_token);
@@ -22,9 +21,8 @@ function getUserInfo() {
   return {}
 }
 
-async function login(username: string, password: string) {
-  // TODO: endpoint route should be passed in
-  const response = await fetch(api.MATERIALS_LOGIN, {
+async function login(username: string, password: string, login_url: string) {
+  const response = await fetch(login_url, {
     method: "POST",
     mode: "cors",
     headers: {

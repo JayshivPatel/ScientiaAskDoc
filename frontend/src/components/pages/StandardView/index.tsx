@@ -66,13 +66,15 @@ const StandardView: React.FC<StandardViewProps> = ({
             <ModuleOverview />
           </Route>
 
-          <Route path="/modules/:id/resources">
-            <ModuleResources />
-          </Route>
+          <Route
+            path="/modules/:id/resources"
+            render={(props) => <ModuleResources
+              year="1819"
+              module_code={props.match.params.id}
+            />}
+          />
 
-          <Route path="/modules/:id/feedback">
-            <ModuleFeedback />
-          </Route>
+          <Route path="/modules/:id/feedback" component={ModuleFeedback} />
 
           <Route path="/timeline">
             <ExamplePage name="Timeline" />

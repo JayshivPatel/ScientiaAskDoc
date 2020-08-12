@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 
 import classNames from "classnames";
@@ -22,22 +22,29 @@ import {
   faFolder
 } from "@fortawesome/free-solid-svg-icons";
 
-const ModuleResources: React.FC = () => {
-<<<<<<< Updated upstream
-=======
+const ModuleResources: React.FC<{ year: string, module_code: string }> = ({ year, module_code }) => {
+  // TODO: Use these state variables in component
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [resources, setResources] = useState([]);
+
   useEffect(() => {
-    //@ts-ignore
-    window.Holder.run();
+    setIsLoaded(false);
     const onSuccess = (data: any) => {
-      console.log(data);
+      setIsLoaded(true);
+      setResources(data.json());
     }
     const onFailure = (error: any) => {
-      console.log(error);
+      setIsLoaded(true);
+      setError(error);
     }
-    request(api.MATERIALS_COURSES, "GET", onSuccess, onFailure)
-  }, []);
 
->>>>>>> Stashed changes
+    request(api.MATERIALS_RESOURCES, "GET", onSuccess, onFailure, {
+      "year": year,
+      "course": module_code
+    })
+  }, [year, module_code]);
+
   return (
     <>
       <MyBreadcrumbs />
@@ -56,7 +63,6 @@ const ModuleResources: React.FC = () => {
 
       <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
 
-<<<<<<< Updated upstream
       {/* TODO: add scroll listener once code is refactored */}
       <Container className={classNames(styles.quickAccessRow)}>
         {[...Array(6)].map((e, i) => (
@@ -81,18 +87,6 @@ const ModuleResources: React.FC = () => {
               </Badge>
             </Card.Footer>
           </Card>
-=======
-      <Row>
-        {[...Array(4)].map((e, i) => (
-          <Col xs={6} sm={6} md={3} key={i}>
-            <Card style={{ marginTop: "1rem" }}>
-              <Card.Img variant="top" src="holder.js/100px100" />
-              <Card.Body>
-                <Card.Title>Document :( {i}</Card.Title>
-              </Card.Body>
-            </Card>
-          </Col>
->>>>>>> Stashed changes
         ))}
       </Container>
 
