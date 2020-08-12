@@ -3,6 +3,7 @@ import LeftBar from "components/organisms/LeftBar";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
 import { faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
+import WorkDueGroup from "components/molecules/WorkDueGroup";
 
 const LeftBarModule: React.FC = () => {
   let { id } = useParams();
@@ -49,6 +50,7 @@ const LeftBarModule: React.FC = () => {
   return (
     <LeftBar>
       <SideBarTabGroup title="Outline" buttons={outlineButtons} />
+			<WorkDueGroup filter={id}/>
     </LeftBar>
   );
 };

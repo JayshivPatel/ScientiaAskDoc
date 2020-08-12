@@ -1,6 +1,7 @@
 import React from "react";
 import LeftBar from "components/organisms/LeftBar";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
+import WorkDueGroup from "components/molecules/WorkDueGroup";
 
 const LeftBarModuleList: React.FC = () => {
   let sortButtons = [
@@ -22,6 +23,7 @@ const LeftBarModuleList: React.FC = () => {
   return (
     <LeftBar>
 			<SideBarTabGroup title="Sort" buttons={sortButtons} />
+			<WorkDueGroup/>
 		</LeftBar>
   );
 };

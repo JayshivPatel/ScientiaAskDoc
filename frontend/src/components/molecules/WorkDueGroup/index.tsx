@@ -2,22 +2,35 @@ import React from "react";
 import SideBarCardGroup from "../SideBarCardGroup";
 import { eventTypes } from "components/atoms/SideBarCard";
 
-const WorkDueGroup: React.FC = () => {
+export interface WorkDueGroupProps {
+  filter?: String;
+}
+
+const WorkDueGroup: React.FC<WorkDueGroupProps> = ({
+  filter,
+}: WorkDueGroupProps) => {
   return (
     <SideBarCardGroup
       title="Work Due"
-      events={events.map(({ type, title, subtitle }) => {
-        let colorType: eventTypes;
-        switch (type) {
-          case "tutorial":
-            colorType = eventTypes.BlueCard;
-            break;
-          default:
-            colorType = eventTypes.GreenCard;
-            break;
-        }
-        return { title, subtitle, type: colorType };
-      })}
+      events={events
+        .filter(({ subtitle }) => filter === undefined || subtitle === filter)
+        .map(({ type, title, subtitle }) => {
+          let colorType: eventTypes;
+          switch (type) {
+            case "tutorial":
+              colorType = eventTypes.BlueCard;
+              break;
+            default:
+              colorType = eventTypes.GreenCard;
+              break;
+          }
+
+          return {
+            title,
+            subtitle: filter === undefined ? subtitle : undefined,
+            type: colorType,
+          };
+        })}
     />
   );
 };

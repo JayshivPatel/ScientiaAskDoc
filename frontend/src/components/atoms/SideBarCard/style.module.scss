@@ -52,6 +52,10 @@ $deadline-background: transparentize($teal-100, 0.5);
   font-weight: 500;
 }
 
+.sideBarEmptyCard :global(.card-title) {
+  margin-bottom: 0 !important;
+}
+
 .sideBarCard :global(.card-subtitle) {
   font-size: 1rem;
   font-weight: 500;

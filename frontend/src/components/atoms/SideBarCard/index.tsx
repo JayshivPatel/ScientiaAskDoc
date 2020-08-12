@@ -6,7 +6,7 @@ import classNames from "classnames";
 export interface SideBarCardProps {
   type: eventTypes;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   content?: string;
 }
 
@@ -23,12 +23,20 @@ const SideBarCard: React.FC<SideBarCardProps> = ({
   content,
 }: SideBarCardProps) => {
   return (
-    <Card className={classNames(styles.sideBarCard, getStyle(type))}>
+    <Card
+      className={classNames(
+        styles.sideBarCard,
+        getStyle(type),
+        subtitle === undefined && content === undefined
+          ? styles.sideBarEmptyCard
+          : ""
+      )}
+    >
       <Card.Body>
-        <Card.Title>
-          {title}
-        </Card.Title>
-        <Card.Subtitle>{subtitle}</Card.Subtitle>
+        <Card.Title>{title}</Card.Title>
+        {subtitle !== undefined ? (
+          <Card.Subtitle>{subtitle}</Card.Subtitle>
+        ) : null}
         {content !== undefined ? <Card.Text>{content}</Card.Text> : null}
       </Card.Body>
     </Card>
