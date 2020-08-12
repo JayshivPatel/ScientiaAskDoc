@@ -4,7 +4,7 @@ $lecture-background: transparentize($blue-100, 0.5);
 $labs-background: transparentize($pink-100, 0.5);
 $deadline-background: transparentize($teal-100, 0.5);
 
-.calendarCard {
+.sideBarCard {
   margin-top: 0.3125rem;
   margin-bottom: 0.3125rem;
   color: #000;
@@ -15,53 +15,53 @@ $deadline-background: transparentize($teal-100, 0.5);
   transition: transform .2s;
 }
 
-.calendarCard:hover {
+.sideBarCard:hover {
   transform: scale(1.03);
 }
 
-.calendarLabs * {
+.sideBarRedCard * {
   color: $pink-700;
 }
 
-.calendarLabs {
+.sideBarRedCard {
   background: $labs-background; 
 }
 
-.calendarLecture * {
+.sideBarBlueCard * {
   color: $blue-700;
 }
 
-.calendarLecture {
+.sideBarBlueCard {
   background: $lecture-background;
 }
 
-.calendarDeadline * {
+.sideBarGreenCard * {
   color: $teal-700;
 }
 
-.calendarDeadline {
+.sideBarGreenCard {
   background: $deadline-background;
 }
 
-.calendarCard :global(.card-body) {
+.sideBarCard :global(.card-body) {
   padding: 0.5rem !important;
 }
 
-.calendarCard :global(.card-title) {
+.sideBarCard :global(.card-title) {
   font-size: 1.125rem;
   font-weight: 500;
 }
 
-.calendarCard :global(.card-subtitle) {
+.sideBarCard :global(.card-subtitle) {
   font-size: 1rem;
   font-weight: 500;
 }
 
-.calendarCard :global(.card-text) {
+.sideBarCard :global(.card-text) {
   font-size: 1rem;
 }
 
-.calendarCard:global(.active),
+.sideBarCard:global(.active),
 .claendarCard:active {
   color: #fff;
   background-color: #000 !important;

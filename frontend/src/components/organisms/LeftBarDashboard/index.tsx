@@ -3,6 +3,7 @@ import LeftBar from "components/organisms/LeftBar";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
 import { faGitlab } from "@fortawesome/free-brands-svg-icons";
 import { faFlask, faAward, faDatabase, faEnvelopeOpen } from "@fortawesome/free-solid-svg-icons";
+import WorkDueGroup from "components/molecules/WorkDueGroup";
 
 const LeftBarDashboard: React.FC = () => {
   let linkButtons = [
@@ -36,6 +37,7 @@ const LeftBarDashboard: React.FC = () => {
   return (
     <LeftBar>
 			<SideBarTabGroup title="Links" buttons={linkButtons} />
+			<WorkDueGroup/>
 		</LeftBar>
   );
 };

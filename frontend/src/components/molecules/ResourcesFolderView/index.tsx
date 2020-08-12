@@ -90,7 +90,7 @@ class ResourcesFolderView extends React.Component<PropsType, MyState> {
 
     let items = this.props.folderItems;
     for (let item in items) {
-      if (items[item].id == id) {
+      if (items[item].id === id) {
         console.log(`/${items[item].title}`);
         this.props.history.push(
           `${this.props.location.pathname}/${items[item].title}`
