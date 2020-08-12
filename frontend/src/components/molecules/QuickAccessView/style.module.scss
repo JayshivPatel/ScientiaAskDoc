@@ -4,6 +4,9 @@
   scrollbar-width: thin;
 	scrollbar-color: $white $white;
 	margin-top: 10px;
+	overflow-y: visible;
+	overflow-x: auto;
+	height: fit-content;
 	// margin-left: 0; // leave space before card
 }
 
@@ -27,11 +30,4 @@
 
 .quickAccessRow:hover::-webkit-scrollbar-thumb {
 	background-color: $gray-400;
-}
-
-.quickAccessRow {
-	overflow-y: visible;
-	overflow-x: auto;
-	white-space: nowrap;
-	height: max-content;
 }

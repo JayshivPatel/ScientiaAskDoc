@@ -13,67 +13,107 @@ import ResourcesFolderView from "components/molecules/ResourcesFolderView";
 const ModuleResources: React.FC = () => {
   let folderItems = [
     {
-      title: "Lecture Materials",
+      title: "Slides",
       id: 0,
     },
     {
-      title: "Panopto Videos",
-      id: 1,
-    },
-    {
-      title: "Tutorial Sheets",
+      title: "Logic Exercise",
       id: 2,
     },
     {
-      title: "Code",
+      title: "Pandor Lab",
       id: 3,
     },
     {
-      title: "Useful Links",
+      title: "Extra",
       id: 4,
-    },
-    {
-      title: "Other",
-      id: 5,
     },
 	];
 	
-	let quickAccessItems = [
+	let ResourceItems = [
     {
-			title: "My very very very very very long title",
+			title: "Syntax Semantics Propositional Logic",
 			type: "File",
 			tags:["new", "Week 1"],
       id: 0,
 		},
 		{
-			title: "Slides 1 - 1UP",
+			title: "Classical First-Order Predicate Logic",
 			type: "File",
 			tags:["new", "Week 2"],
       id: 1,
 		},
 		{
-			title: "Circuit simulator",
+			title: "Translation Validity",
 			type: "Link",
 			tags:["new", "Week 2"],
       id: 2,
 		},
 		{
-			title: "C - Lecture 1",
+			title: "validityPL-part1",
 			type: "Panopto",
 			tags:["new"],
       id: 3,
 		},
 		{
-			title: "Translation Validity",
+			title: "validityPL-part2",
 			type: "Link",
 			tags:["Week 2"],
       id: 4,
 		},
 		{
-			title: "Revision Exercises",
+			title: "validityPL-part3",
 			type: "File",
 			tags:["Week 3"],
       id: 5,
+		},
+		{
+			title: "validityPL-part3",
+			type: "File",
+			tags:["Week 3"],
+      id: 6,
+		},
+		{
+			title: "validityFOL-part2",
+			type: "File",
+			tags:["Week 3"],
+      id: 7,
+		},
+				{
+			title: "Logic Exercise 1",
+			type: "File",
+			tags:["Week 3"],
+      id: 8,
+		},
+		{
+			title: "Logic Exercise 2",
+			type: "File",
+			tags:["Week 3"],
+      id: 9,
+		},
+		{
+			title: "Logic Exercise 3",
+			type: "File",
+			tags:["Week 3"],
+      id: 10,
+		},
+		{
+			title: "Pandor Lab",
+			type: "File",
+			tags:["Week 3"],
+      id: 11,
+		},
+		{
+			title: "Propositional Logic Exercises",
+			type: "File",
+			tags:["Week 3"],
+      id: 12,
+		},
+		{
+			title: "Extra Logic Exercises",
+			type: "File",
+			tags:["Week 3"],
+      id: 13,
 		},
 	]
 
@@ -93,7 +133,7 @@ const ModuleResources: React.FC = () => {
         </InputGroup.Append>
       </InputGroup>
 
-      <QuickAccessView quickAccessItems={quickAccessItems}/>
+      <QuickAccessView quickAccessItems={ResourceItems}/>
       <ResourcesFolderView folderItems={folderItems}/>
     </>
   );

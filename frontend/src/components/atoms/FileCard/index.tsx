@@ -3,7 +3,7 @@ import styles from "./style.module.scss";
 
 import classNames from "classnames";
 
-import graphIllustration from "assets/images/graph-illustration.svg";
+import applicationPDF from "assets/images/pdf-label.png";
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -32,9 +32,9 @@ const FileCard: React.FC<FileCardProps> = ({
 }: FileCardProps) => {
   return (
     <Card className={styles.quickViewCard} onClick={onClick}>
-      <Card.Img variant="top" src={graphIllustration} />
+      <Card.Img variant="top" src={applicationPDF} />
       <Card.Body>
-        <Card.Title className={"text-truncate"}>{title}</Card.Title>
+        <Card.Title style={{wordWrap: "break-word"}} >{title}</Card.Title>
         <FontAwesomeIcon
           style={{ fontSize: "1.125rem" }}
           icon={icon}
