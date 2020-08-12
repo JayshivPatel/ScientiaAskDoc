@@ -30,9 +30,8 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
         className={styles.sectionHeaderContainer}
         onMouseOut={onMouseOut}
 				onMouseOver={onMouseOver}
-				onClick={onSelectAllClick}
       >
-        <span className={styles.sectionHeader} >
+        <span className={styles.sectionHeader} onClick={onSelectAllClick}>
           {heading}
         </span>
         <div className={styles.sectionHeaderButtonGroup}>
