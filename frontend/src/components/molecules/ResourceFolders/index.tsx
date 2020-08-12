@@ -56,9 +56,11 @@ class ResourceFolders extends React.Component<ResourceFoldersProps, MyState> {
   }
 
   handleIconClick(id: number) {
-    let isSelected = JSON.parse(JSON.stringify(this.state.isSelected));
-    isSelected[id] = !isSelected[id];
-    this.setState({ isSelected });
+		let isSelected = JSON.parse(JSON.stringify(this.state.isSelected));
+    let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver));
+		isSelected[id] = !isSelected[id];
+    isHoveringOver[id] = false;
+    this.setState({ isSelected , isHoveringOver});
   }
 
   handleSelectAllClick() {
@@ -111,8 +113,6 @@ class ResourceFolders extends React.Component<ResourceFoldersProps, MyState> {
               sm={6}
               md={3}
               key={id}
-							onMouseOver={() => this.handleMouseOver(id)}
-							onMouseOut={() => this.handleMouseOut(id)}
             >
               <FolderCard
                 title={title}
@@ -125,6 +125,8 @@ class ResourceFolders extends React.Component<ResourceFoldersProps, MyState> {
                 }
 								onIconClick={() => this.handleIconClick(id)}
 								onClick={() => this.handleCardClick(id)}
+								onMouseOver={() => this.handleMouseOver(id)}
+								onMouseOut={() => this.handleMouseOut(id)}
               />
             </Col>
           ))}
