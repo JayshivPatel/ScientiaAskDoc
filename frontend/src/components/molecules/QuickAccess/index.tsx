@@ -83,9 +83,7 @@ class QuickAccess extends React.Component<QuickAccessProps, MyState> {
 
   handleCardClick(id: number) {
     if (this.isAnySelected()) {
-      let isSelected = JSON.parse(JSON.stringify(this.state.isSelected));
-      isSelected[id] = !isSelected[id];
-      this.setState({ isSelected });
+      this.handleIconClick(id);
     }
   }
 
