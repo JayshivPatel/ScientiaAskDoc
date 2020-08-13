@@ -35,11 +35,11 @@ export default DashboardButtonGroup;
 
 const buttons = [
   {
-    title: "Student Record",
+    title: "Record",
     icon: faFileInvoice,
   },
   {
-    title: "Personal Website",
+    title: "Website",
     icon: faGlobe,
   },
   {
