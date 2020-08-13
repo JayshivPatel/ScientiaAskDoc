@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import styles from "./style.module.scss";
-import classnames from "classnames";
 import { faFile } from "@fortawesome/free-solid-svg-icons";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

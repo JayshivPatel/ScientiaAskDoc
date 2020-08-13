@@ -23,6 +23,7 @@ const LeftBarModuleList: React.FC = () => {
   return (
     <LeftBar>
 			<SideBarTabGroup title="Sort" buttons={sortButtons} />
+			<WorkDueGroup/>
 		</LeftBar>
   );
 };

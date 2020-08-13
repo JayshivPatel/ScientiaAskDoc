@@ -22,13 +22,12 @@ type idBooleanMap = { [key: number]: boolean };
 interface MyState {
   isSelected: idBooleanMap;
   isHoveringOver: idBooleanMap;
-  isHoveringTitle: Boolean;
 }
 
 class QuickAccessView extends React.Component<QuickAccessProps, MyState> {
   constructor(props: QuickAccessProps) {
     super(props);
-    this.state = { isSelected: [], isHoveringOver: [], isHoveringTitle: false };
+    this.state = { isSelected: [], isHoveringOver: []};
   }
 
   componentDidMount() {
@@ -78,7 +77,7 @@ class QuickAccessView extends React.Component<QuickAccessProps, MyState> {
     for (let item in items) {
       isSelected[items[item].id] = setValue;
     }
-    this.setState({ isSelected ,isHoveringTitle: false});
+    this.setState({ isSelected});
   }
 
   handleCardClick(id: number) {
@@ -104,16 +103,10 @@ class QuickAccessView extends React.Component<QuickAccessProps, MyState> {
       <>
         <ResourceSectionHeader
           heading="Quick Access"
-          onMouseOver={() => {
-            this.setState({ isHoveringTitle: true });
-          }}
-          onMouseOut={() => {
-            this.setState({ isHoveringTitle: false });
-          }}
           showDownload={this.isAnySelected()}
-          showSelectAll={this.state.isHoveringTitle || this.isAnySelected()}
           onSelectAllClick={() => this.handleSelectAllClick()}
-          selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
+					selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
+					checkBoxColur={this.isAllSelected() ? "#495057" : "#acb5bd"}
         />
 
         <Row
