@@ -101,7 +101,7 @@ class CurrentDirectoryView extends React.Component<CurrentDirectoryViewProps, My
           showDownload={this.isAnySelected()}
           onSelectAllClick={() => this.handleSelectAllClick()}
 					selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
-					checkBoxColur={this.isAllSelected() ? "#495057" : "#acb5bd"}
+					checkBoxColur={this.isAnySelected() ? "#495057" : "#acb5bd"}
         />
 
         <Row style={{ marginTop: "10px" }}>

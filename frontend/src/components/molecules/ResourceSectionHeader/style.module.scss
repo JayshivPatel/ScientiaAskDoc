@@ -44,9 +44,10 @@
   line-height: 1.375rem;
 }
 
-.sectionHeaderButton:hover {
+.sectionHeaderButton:hover, .sectionHeaderButton:focus {
   background-color: $gray-200;
-  color: $gray-700 !important;
+	color: $gray-700 !important;
+	box-shadow: none !important;
 }
 
 .alert-enter {
