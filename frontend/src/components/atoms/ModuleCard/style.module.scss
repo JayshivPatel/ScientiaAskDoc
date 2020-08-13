@@ -36,6 +36,10 @@
   padding: 0.5rem;
 }
 
+.moduleCard :global(.card-title) {
+  margin-bottom: 0;
+}
+
 .moduleCard :global(.card-footer) {
   border-radius: 0.5rem !important;
   background: #fff;
