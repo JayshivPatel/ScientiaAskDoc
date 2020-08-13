@@ -4,20 +4,20 @@
   border-radius: 0.5rem;
   border-color: $gray-300;
   border-width: 0px;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
   background-color: $gray-100;
-	height: 96%;
+  height: 96%;
 }
 
 .quickViewCard:hover {
   transform: scale(1.03);
+  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
 }
 
 .quickViewCard :global(.card-body) {
   padding: 0.5rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .quickViewCard :global(.card-footer) {
@@ -25,16 +25,14 @@
   background: $gray-100;
   border-width: 0rem;
   padding: 0.5rem;
-  display: flex;
-  align-items: flex-end;
 }
 
 .quickViewCard :global(.card-title) {
   font-size: 1.125rem;
-	font-weight: 400;
-	white-space: normal;
-	margin-bottom: 0px;
-	
+  font-weight: 400;
+  white-space: normal;
+  margin-bottom: 0px;
+  width: 90%;
 	overflow-wrap: break-word;
 	word-wrap: break-word;
 	-ms-word-break: break-all;
@@ -72,7 +70,7 @@ $teal-tag-background: transparentize($teal-100, 0.5);
 
 .quickAccessRow {
   scrollbar-width: thin;
-	scrollbar-color: $white $white;
-	margin-top: 10px;
-	// margin-left: 0; // leave space before card
+  scrollbar-color: $white $white;
+  margin-top: 10px;
+  // margin-left: 0; // leave space before card
 }

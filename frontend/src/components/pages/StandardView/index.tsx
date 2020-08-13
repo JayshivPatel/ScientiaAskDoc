@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import ExamplePage from "components/templates/ExamplePage";
 import ModuleOverview from "components/pages/ModuleOverview";
+import Dashboard from "components/pages/Dashboard";
 
 import "./style.scss";
 import RightBar from "components/organisms/RightBar";
@@ -55,7 +56,7 @@ const StandardView: React.FC<StandardViewProps> = ({
       <Container className={classNames("pageContainer")}>
         <Switch>
           <Route path="/dashboard">
-            <ExamplePage name="Dashboard" />
+            <Dashboard />
           </Route>
 
           <Route exact path="/modules">

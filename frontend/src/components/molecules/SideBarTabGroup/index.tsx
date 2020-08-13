@@ -26,7 +26,7 @@ const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
       let FAicon;
       if (icon) {
         FAicon = (
-          <FontAwesomeIcon className={styles.tabGroupButtonSvg} icon={icon} />
+          <FontAwesomeIcon fixedWidth className={styles.tabGroupButtonSvg} icon={icon} />
         );
       }
       if (activeURL !== undefined) {
