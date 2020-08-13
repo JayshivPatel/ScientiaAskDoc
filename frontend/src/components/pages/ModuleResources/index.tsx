@@ -68,11 +68,11 @@ const ModuleResources: React.FC<{ year: string}> = ({year}) => {
         </InputGroup.Append>
       </InputGroup>
 
-      
-			{quickAccessItems.length > 0 ? <QuickAccessView quickAccessItems={quickAccessItems} /> : null}
       {scope === "" && folderItems.length > 0 ? <ResourcesFolderView folderItems={folderItems} /> : null}
-      {currentDirectoryFiles.length > 0 ? <CurrentDirectoryView documentItems={currentDirectoryFiles} /> : null}
-    </>
+      {scope !== "" && currentDirectoryFiles.length > 0 ? <CurrentDirectoryView documentItems={currentDirectoryFiles} /> : null}
+			{scope === "" && quickAccessItems.length > 0 ? <QuickAccessView quickAccessItems={quickAccessItems} /> : null}
+
+		</>
   );
 };
 
@@ -179,7 +179,7 @@ let resourceItems = [
     title: "Pandor Lab",
     type: "File",
     tags: [],
-    folder: "Pandor Lab",
+    folder: "Pandora Lab",
     id: 11,
   },
   {

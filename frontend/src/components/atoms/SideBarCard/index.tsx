@@ -27,7 +27,7 @@ const SideBarCard: React.FC<SideBarCardProps> = ({
       className={classNames(
         styles.sideBarCard,
         getStyle(type),
-        subtitle === undefined && content === undefined
+        subtitle === undefined || content === undefined
           ? styles.sideBarEmptyCard
           : ""
       )}

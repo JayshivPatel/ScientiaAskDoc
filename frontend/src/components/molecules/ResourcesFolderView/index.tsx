@@ -25,13 +25,12 @@ type idBooleanMap = { [key: number]: boolean };
 interface MyState {
   isSelected: idBooleanMap;
   isHoveringOver: idBooleanMap;
-  isHoveringTitle: Boolean;
 }
 
 class ResourcesFolderView extends React.Component<PropsType, MyState> {
   constructor(props: PropsType) {
     super(props);
-    this.state = { isSelected: [], isHoveringOver: [], isHoveringTitle: false };
+    this.state = { isSelected: [], isHoveringOver: []};
   }
 
   componentDidMount() {
@@ -79,7 +78,7 @@ class ResourcesFolderView extends React.Component<PropsType, MyState> {
     for (let item in items) {
       isSelected[items[item].id] = setValue;
     }
-    this.setState({ isSelected, isHoveringTitle: false });
+    this.setState({ isSelected });
   }
 
   handleCardClick(id: number) {
@@ -117,16 +116,10 @@ class ResourcesFolderView extends React.Component<PropsType, MyState> {
       <>
         <ResourceSectionHeader
           heading="Folders"
-          onMouseOver={() => {
-            this.setState({ isHoveringTitle: true });
-          }}
-          onMouseOut={() => {
-            this.setState({ isHoveringTitle: false });
-          }}
           showDownload={this.isAnySelected()}
-          showSelectAll={this.isAnySelected() || this.state.isHoveringTitle}
           onSelectAllClick={() => this.handleSelectAllClick()}
-          selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
+					selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
+					checkBoxColur={this.isAnySelected() ? "#495057" : "#dee2e6"}
         />
 
         <Row style={{ marginTop: "10px" }}>
