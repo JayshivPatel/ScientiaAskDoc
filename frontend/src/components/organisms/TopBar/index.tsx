@@ -29,12 +29,10 @@ const TopBar: React.FC<TopBarProps> = ({
 
         <img
           src={userPic}
-          width="36"
-          height="36"
           className="d-inline-block align-top"
           alt="userPic"
           onClick={onUserIconClick}
-          style={{ borderRadius: "50%" }}
+          style={{ borderRadius: "50%",width:"2.25rem", height:"2.25rem"  }}
         />
       </Container>
     </Navbar>
