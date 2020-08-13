@@ -99,3 +99,66 @@
   border-color: #fff;
   color: #000;
 }
+
+.tutorImage {
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.tutorName, .tutorEmail, .tutorAddress {
+  font-size: 18px;
+  margin-bottom: 0px;
+  line-height: 24px !important;
+}
+
+.tutorName {
+  color: $blue-500;
+}
+
+.tutorEmail {
+  color: $gray-700;
+}
+
+.tutorAddress {
+  color: $gray-600;
+}
+
+.noticeContainer {
+  background-color: $gray-100;
+  border-radius: 8px;
+  padding: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.noticeContainer:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1); 
+}
+
+.noticeHeading {
+  font-size: 18px;
+  color: $black;
+  font-weight: 500;
+  margin-bottom: 2px;
+  line-height: 22px;
+}
+
+.noticeUser {
+  font-size: 16px;
+  color: $gray-700;
+  line-height: 18px;
+  margin-bottom: 10px;
+}
+
+.noticeTime {
+  font-size: 16px;
+  color: $gray-600;
+  line-height: 18px;
+  margin-bottom: 10px;
+}
+
+.noticeBody {
+  font-size: 16px;
+  color: $gray-800;
+  margin-bottom: 0px;
+}
