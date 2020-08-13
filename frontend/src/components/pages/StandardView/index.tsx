@@ -85,7 +85,7 @@ const StandardView: React.FC<StandardViewProps> = ({
             <ExamplePage name="Timeline" />
           </Route>
 
-          <Route path="/exams">
+          <Route path="/exams/overview">
             <Exams />
           </Route>
 
@@ -95,6 +95,7 @@ const StandardView: React.FC<StandardViewProps> = ({
               <Redirect to={`/modules/${props.match.params.id}/overview`} />
             )}
           />
+					<Route path="/exams" render={() => <Redirect to="/exams/overview" />} />
           <Route path="/" render={() => <Redirect to="/dashboard" />} />
         </Switch>
       </Container>
