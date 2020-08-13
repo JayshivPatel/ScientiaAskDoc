@@ -39,6 +39,11 @@
   transform: translateX(0);
 }
 
+.leftbarStatus a {
+	text-decoration: none !important;
+	color: #000 !important;
+}
+
 @media (max-width: 62rem) {
   .leftbarStatus {
     margin-top: 1.875rem;

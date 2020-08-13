@@ -6,23 +6,23 @@ import WorkDueGroup from "components/molecules/WorkDueGroup";
 const LeftBarModuleList: React.FC = () => {
   let sortButtons = [
     {
-			title: "Progress",
-    },
-    {
-			title: "Module Title",
+			title: "All",
       active: true,
     },
     {
-			title: "Module Code",
+			title: "In Progress",
     },
     {
-      title: "Term",
+			title: "Not Started",
+    },
+    {
+      title: "Completed",
     },
 	];
 
   return (
     <LeftBar>
-			<SideBarTabGroup title="Sort" buttons={sortButtons} />
+			<SideBarTabGroup title="Filter" buttons={sortButtons} />
 			<WorkDueGroup/>
 		</LeftBar>
   );
