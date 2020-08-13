@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import ExamplePage from "components/templates/ExamplePage";
 import ModuleOverview from "components/pages/ModuleOverview";
@@ -30,6 +30,8 @@ const StandardView: React.FC<StandardViewProps> = ({
   toggledRight,
   onOverlayClick,
 }: StandardViewProps) => { 
+	const [modulesFilter, setModulesFilter] = useState("");
+
   return (
     <div
       id="wrapper"
@@ -44,7 +46,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         </Route>
 
         <Route exact path="/modules">
-          <LeftBarModuleList />
+          <LeftBarModuleList modulesFilter={modulesFilter} setModulesFilter={setModulesFilter}/>
         </Route>
 
         <Route path="/">
@@ -60,7 +62,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           </Route>
 
           <Route exact path="/modules">
-            <ModuleList />
+            <ModuleList modulesFilter={modulesFilter}/>
           </Route>
 
           <Route path="/modules/:id/overview">

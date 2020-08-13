@@ -13,16 +13,17 @@ export interface SideBarTabGroupProp {
     icon?: IconDefinition;
     active?: boolean;
     activeURL?: string;
-    externalURL?: string;
+		externalURL?: string;
+		onClick? : (event: React.MouseEvent) => void;
   }[];
 }
 
 const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
   title,
-  buttons,
+	buttons,
 }: SideBarTabGroupProp) => {
   let displayButtons = buttons.map(
-    ({ title, icon, active, activeURL, externalURL }) => {
+    ({ title, icon, active, activeURL, externalURL, onClick }) => {
       let FAicon;
       if (icon) {
         FAicon = (
@@ -60,7 +61,8 @@ const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
 
       return (
         <Button
-          className={classNames({ active: active }, styles.tabGroupButton)}
+					className={classNames({ active: active }, styles.tabGroupButton)}
+					onClick={onClick}
           key={title}
         >
           {title}
