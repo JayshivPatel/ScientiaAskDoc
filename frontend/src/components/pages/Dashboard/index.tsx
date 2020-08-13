@@ -19,7 +19,7 @@ import tutorImage2 from "assets/images/tutor-2.png";
 import tutorImage3 from "assets/images/tutor-3.png";
 
 
-const ModuleOverview: React.FC = () => {
+const Dashboard: React.FC = () => {
   return (
     <>
       <MyBreadcrumbs />
@@ -76,7 +76,7 @@ const ModuleOverview: React.FC = () => {
   );
 };
 
-export default ModuleOverview;
+export default Dashboard;
 
 const tutors = [
   {

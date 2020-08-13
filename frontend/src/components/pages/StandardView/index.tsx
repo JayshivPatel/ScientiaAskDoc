@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import ExamplePage from "components/templates/ExamplePage";
 import ModuleOverview from "components/pages/ModuleOverview";
 import Dashboard from "components/pages/Dashboard";
+import Exams from "components/pages/Exams";
 
 import "./style.scss";
 import RightBar from "components/organisms/RightBar";
@@ -13,6 +14,7 @@ import ModuleFeedback from "../ModuleFeedback";
 import LeftBarDashboard from "components/organisms/LeftBarDashboard";
 import LeftBarModuleList from "components/organisms/LeftBarModuleList";
 import LeftBarModule from "components/organisms/LeftBarModule";
+import LeftBarExams from "components/organisms/LeftBarExams";
 import Container from "react-bootstrap/esm/Container";
 
 interface StandardViewProps {
@@ -49,6 +51,10 @@ const StandardView: React.FC<StandardViewProps> = ({
           <LeftBarModuleList modulesFilter={modulesFilter} setModulesFilter={setModulesFilter}/>
         </Route>
 
+        <Route exact path="/exams">
+          <LeftBarExams />
+        </Route>
+
         <Route path="/">
           <LeftBarDashboard />
         </Route>
@@ -80,7 +86,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           </Route>
 
           <Route path="/exams">
-            <ExamplePage name="Exams" />
+            <Exams />
           </Route>
 
           <Route
