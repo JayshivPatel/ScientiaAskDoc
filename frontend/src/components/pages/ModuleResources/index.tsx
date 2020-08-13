@@ -88,7 +88,7 @@ let folderItems = [
     id: 1,
   },
   {
-    title: "Pandor Lab",
+    title: "Pandora Lab",
     id: 2,
   },
   {

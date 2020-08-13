@@ -2,7 +2,9 @@
 
 .folderCard {
   border-radius: 0.5rem;
+  border-width: 0px;
   transition: transform 0.2s;
+  background-color: $gray-100;
   margin-top: 0.67rem;
 }
 

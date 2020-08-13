@@ -10,9 +10,6 @@
 .sectionHeader {
   font-weight: 500;
 	font-size: 20px;
-	display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .sectionHeaderButtonGroup {
@@ -20,16 +17,16 @@
 }
 
 .sectionHeaderButton {
-  background: $white;
-  color: #000;
+  background-color: $white;
+  color: $gray-500;
   border-width: 0px;
   border-radius: 8px;
   margin-left: 20px;
   justify-content: space-between;
   height: 2.25rem;
-  transition: 0.2s background;
-  -webkit-transition: 0.2s background;
-  -moz-transition: 0.2s background;
+  transition: 0.2s background-color;
+  -webkit-transition: 0.2s background-color;
+  -moz-transition: 0.2s background-color;
   font-size: 1.05rem;
 }
 
@@ -38,18 +35,12 @@
 }
 
 .buttonCheckbox :global(.form-check-input) {
-  margin: 0px;
-}
-
-.sectionHeaderButton:active:hover,
-.sectionHeaderButton:global(.active):hover {
-  background-color: $gray-900 !important;
+  margin: 0px; 
 }
 
 .sectionHeaderButton:global(.active),
 .sectionHeaderButton:active {
-  color: #fff;
-  background: #000 !important;
+  background: $gray-400 !important;
   font-weight: 500;
   text-align: left;
   border-width: 0rem;
@@ -58,7 +49,24 @@
 }
 
 .sectionHeaderButton:hover {
-  background: #e5e5e5;
-  border-color: #fff;
-  color: #000;
+  background-color: $gray-200;
+  color: $gray-700 !important;
+}
+
+.alert-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.alert-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.alert-exit {
+  opacity: 1;
+}
+.alert-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
 }

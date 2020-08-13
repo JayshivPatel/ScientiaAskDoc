@@ -41,7 +41,7 @@ const FileCard: React.FC<FileCardProps> = ({
       <Card.Body>
         <Card.Title style={{ wordWrap: "break-word" }}>{title}</Card.Title>
         <FontAwesomeIcon
-          style={{ fontSize: "1.125rem" }}
+          style={{ marginLeft: "8px", fontSize: "1.125rem" }}
           icon={icon}
           onClick={onIconClick}
         />
