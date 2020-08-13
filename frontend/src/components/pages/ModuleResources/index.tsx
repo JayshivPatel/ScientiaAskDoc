@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 
-import { request } from "../../../utils/api"
-import { api } from "../../../constants/routes"
+// import { request } from "../../../utils/api"
+// import { api } from "../../../constants/routes"
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
 import InputGroup from "react-bootstrap/InputGroup";
@@ -31,26 +31,26 @@ const ModuleResources: React.FC<{ year: string}> = ({year}) => {
 	const module_code = id.startsWith("CO") ? id : id.slice(2);
 
 	//maybe refactor into class?
-	const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [resources, setResources] = useState([]);
+	// const [error, setError] = useState(null);
+  // const [isLoaded, setIsLoaded] = useState(false);
+  // const [resources, setResources] = useState([]);
 
-  useEffect(() => {
-    setIsLoaded(false);
-    const onSuccess = (data: any) => {
-      setIsLoaded(true);
-      setResources(data.json());
-    }
-    const onFailure = (error: any) => {
-      setIsLoaded(true);
-      setError(error);
-    }
+  // useEffect(() => {
+  //   setIsLoaded(false);
+  //   const onSuccess = (data: any) => {
+  //     setIsLoaded(true);
+  //     setResources(data.json());
+  //   }
+  //   const onFailure = (error: any) => {
+  //     setIsLoaded(true);
+  //     setError(error);
+  //   }
 
-    request(api.MATERIALS_RESOURCES, "GET", onSuccess, onFailure, {
-      "year": year,
-      "course": module_code
-    })
-  }, [year, module_code]);
+  //   request(api.MATERIALS_RESOURCES, "GET", onSuccess, onFailure, {
+  //     "year": year,
+  //     "course": module_code
+  //   })
+  // }, [year, module_code]);
 
   return (
     <>

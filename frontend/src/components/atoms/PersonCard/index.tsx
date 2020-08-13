@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
-import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import styles from "./style.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import userImage from "assets/images/user.png";
 
 const PersonCard: React.FC = () => {

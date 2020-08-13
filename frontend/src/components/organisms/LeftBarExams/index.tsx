@@ -45,7 +45,7 @@ const LeftBarExams: React.FC = () => {
 
   return (
     <LeftBar>
-      <SideBarTabGroup title="Links" buttons={examButtons} />
+      <SideBarTabGroup title="Pages" buttons={examButtons} />
     </LeftBar>
   );
 };
