@@ -4,36 +4,71 @@ import { eventTypes } from "components/atoms/SideBarCard";
 
 export interface WorkDueGroupProps {
   filter?: String;
+  noModuleCode?: Boolean;
 }
 
 const WorkDueGroup: React.FC<WorkDueGroupProps> = ({
-  filter
+  filter,
+  noModuleCode
 }: WorkDueGroupProps) => {
-  return (
-    <SideBarCardGroup
-      title="Work Due"
-      events={events
-        .filter(({ subtitle }) => filter === undefined || subtitle === filter)
-        .map(({ type, title, subtitle, content }) => {
-          let colorType: eventTypes;
-          switch (type) {
-            case "tutorial":
-              colorType = eventTypes.BlueCard;
-              break;
-            default:
-              colorType = eventTypes.GreenCard;
-              break;
-          }
+  {/* TODO: This has to be cleaned up and refactored into a simpler implementation 
+      Note (sudarshan): I tried doing this with the basic knowledge I have, 
+                        so please excuse me if this is bad code.  */}
+  if (noModuleCode !== undefined && noModuleCode.valueOf()) {
+    return (
+      <SideBarCardGroup
+        title="Work Due"
+        events={events
+          .filter(({ title }) => filter === undefined || title === filter)
+          .map(({ type, title, subtitle, content }) => {
+            let colorType: eventTypes;
+            switch (type) {
+              case "tutorial":
+                colorType = eventTypes.BlueCard;
+                title = subtitle;
+                break;
+              default:
+                colorType = eventTypes.GreenCard;
+                title = subtitle;
+                break;
+            }
 
-          return {
-            type: colorType,
-            title,
-            subtitle: filter === undefined ? subtitle : undefined,
-            content
-          };
-        })}
-    />
-  );
+            return {
+              type: colorType,
+              title,
+              subtitle: filter === undefined ? subtitle : undefined,
+              content
+            };
+          })}
+      />
+    );
+  } else {
+    return (
+      <SideBarCardGroup
+        title="Work Due"
+        events={events
+          .filter(({ title }) => filter === undefined || title === filter)
+          .map(({ type, title, subtitle, content }) => {
+            let colorType: eventTypes;
+            switch (type) {
+              case "tutorial":
+                colorType = eventTypes.BlueCard;
+                break;
+              default:
+                colorType = eventTypes.GreenCard;
+                break;
+            }
+
+            return {
+              type: colorType,
+              title,
+              subtitle: filter === undefined ? subtitle : undefined,
+              content
+            };
+          })}
+      />
+    );
+  }
 };
 
 export default WorkDueGroup;

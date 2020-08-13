@@ -50,7 +50,7 @@ const LeftBarModule: React.FC = () => {
   return (
     <LeftBar>
       <SideBarTabGroup title="Outline" buttons={outlineButtons} />
-			<WorkDueGroup filter={id}/>
+			<WorkDueGroup filter={id} noModuleCode={true}/>
     </LeftBar>
   );
 };
