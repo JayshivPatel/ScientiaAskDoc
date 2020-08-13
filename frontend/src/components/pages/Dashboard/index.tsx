@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import Image from "react-bootstrap/Image";
@@ -12,6 +12,10 @@ import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ModuleOverview: React.FC = () => {
+
+	// @ts-ignore
+	useEffect(() => {window.Holder.run()});
+
   return (
     <>
       <MyBreadcrumbs />
