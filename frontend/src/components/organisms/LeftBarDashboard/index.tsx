@@ -5,6 +5,7 @@ import { faGitlab } from "@fortawesome/free-brands-svg-icons";
 import { faFlask, faEnvelopeOpen, faUserFriends, faPlay, faStarHalfAlt} from "@fortawesome/free-solid-svg-icons";
 import WorkDueGroup from "components/molecules/WorkDueGroup";
 
+import Col from "react-bootstrap/Col";
 const LeftBarDashboard: React.FC = () => {
   let linkButtons = [
     {

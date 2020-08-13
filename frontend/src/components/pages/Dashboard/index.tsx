@@ -8,86 +8,25 @@ import styles from "./style.module.scss";
 import { faFile } from "@fortawesome/free-solid-svg-icons";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import PersonCard from "components/atoms/PersonCard";
 import DashboardButtonGroup from "components/molecules/DashboardButtonGroup";
+import TutorCard from "components/atoms/TutorCard";
+import TutorCardGroup from "components/molecules/TutorCardGroup";
+
+import tutorImage1 from "assets/images/tutor-1.png";
+import tutorImage2 from "assets/images/tutor-2.png";
+import tutorImage3 from "assets/images/tutor-3.png";
+
 
 const ModuleOverview: React.FC = () => {
-
-	// @ts-ignore
-	useEffect(() => {window.Holder.run()});
-
   return (
     <>
       <MyBreadcrumbs />
       <PersonCard />
       <DashboardButtonGroup />
-
-      {/* Tutors and Notice Board */}
-
       <Row style={{ marginTop: "30px" }}>
-        <Col>
-          <h4>Tutors</h4>
-
-          {/* Tutor 1 */}
-
-          <Container
-            style={{
-              display: "flex",
-              padding: 0,
-              marginTop: "20px",
-              alignItems: "center"
-            }}
-          >
-            <span>
-              <Image className={styles.tutorImage} src="holder.js/60x60" />
-            </span>
-            <span style={{ height: "72px" }}>
-              <p className={styles.tutorName}>Dr. Nicolas Wu</p>
-              <p className={styles.tutorEmail}>n.wu@imperial.ac.uk</p>
-              <p className={styles.tutorAddress}>374, Huxley Building</p>
-            </span>
-          </Container>
-
-          {/* Tutor 2 */}
-
-          <Container
-            style={{
-              display: "flex",
-              padding: 0,
-              marginTop: "15px",
-              alignItems: "center"
-            }}
-          >
-            <span>
-              <Image className={styles.tutorImage} src="holder.js/60x60" />
-            </span>
-            <span style={{ height: "72px" }}>
-              <p className={styles.tutorName}>Dr. Sophia Drossopoulou</p>
-              <p className={styles.tutorEmail}>s.drossopoulou@imperial.ac.uk</p>
-              <p className={styles.tutorAddress}>559, Huxley Building</p>
-            </span>
-          </Container>
-
-          {/* Tutor 3 */}
-
-          <Container
-            style={{
-              display: "flex",
-              padding: 0,
-              marginTop: "15px",
-              alignItems: "center"
-            }}
-          >
-            <span>
-              <Image className={styles.tutorImage} src="holder.js/60x60" />
-            </span>
-            <span style={{ height: "72px" }}>
-              <p className={styles.tutorName}>Mr. Evangelos Ververas</p>
-              <p className={styles.tutorEmail}>e.ververas16@imperial.ac.uk</p>
-              <p className={styles.tutorAddress}>Huxley Building</p>
-            </span>
-          </Container>
-        </Col>
+        <TutorCardGroup tutors={tutors} />
         <Col>
           <h4>Notice Board</h4>
 
@@ -138,3 +77,24 @@ const ModuleOverview: React.FC = () => {
 };
 
 export default ModuleOverview;
+
+const tutors = [
+  {
+    name: "Dr. Zahid Barr",
+    email: "zahid.barr@imperial.ac.uk",
+    address: "373, Huxley Building",
+    image: tutorImage1,
+  },
+  {
+    name: "Dr. Rosalind Baker",
+    email: "rosalind.baker@imperial.ac.uk",
+    address: "590, Huxley Building",
+    image: tutorImage2,
+  },
+  {
+    name: "Mr. Subhaan Wicks",
+    email: "subhaan.wicks16@imperial.ac.uk",
+    address: "Huxley Building",
+    image: tutorImage3,
+  }
+];
