@@ -51,7 +51,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           <LeftBarModuleList modulesFilter={modulesFilter} setModulesFilter={setModulesFilter}/>
         </Route>
 
-        <Route exact path="/exams">
+        <Route path="/exams">
           <LeftBarExams />
         </Route>
 

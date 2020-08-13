@@ -9,32 +9,32 @@ const LeftBarExams: React.FC = () => {
     {
       title: "Overview",
       icon: faList,
-      activeURL: `/exams/`,
+      activeURL: `/exams`,
     },
     {
       title: "Past Papers",
       icon: faArchive,
-      activeURL: `/exams/past-papers/`,
+      activeURL: `/exams/papers`,
     },
     {
       title: "Submissions",
       icon: faUpload,
-      activeURL: `/exams/past-papers/`,
+      activeURL: `/exams/submissions`,
     },
     {
       title: "Exam Timetable",
       icon: faCalendarAlt,
-      activeURL: `/exams/past-papers/`,
+      activeURL: `/exams/timetable`,
     },
     {
       title: "Regulations",
       icon: faGavel,
-      activeURL: `/exams/regulations/`,
+      activeURL: `/exams/regulations`,
     },
     {
       title: "Grading",
       icon: faFont,
-      activeURL: `/exams/grading/`,
+      activeURL: `/exams/grading`,
     },
     {
       title: "Rubrics",
