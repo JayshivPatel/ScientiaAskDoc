@@ -3,7 +3,10 @@ import styles from "./style.module.scss";
 
 import classNames from "classnames";
 
-import applicationPDF from "assets/images/pdf-label.png";
+import applicationPDF from "assets/images/pdf-banner.png";
+import applicationDocument from "assets/images/document-banner.png";
+import applicationVideo from "assets/images/video-banner.png";
+
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,6 +33,18 @@ const FileCard: React.FC<FileCardProps> = ({
   onMouseOver,
   onMouseOut,
 }: FileCardProps) => {
+	let banner: string;
+	switch (type) {
+		case "pdf":
+			banner = applicationPDF;
+			break;
+		case "video":
+			banner = applicationVideo;
+			break;
+		default:
+			banner = applicationDocument;
+			break;
+	}
   return (
     <Card
       className={styles.quickViewCard}
@@ -37,7 +52,7 @@ const FileCard: React.FC<FileCardProps> = ({
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
     >
-      <Card.Img variant="top" src={applicationPDF} />
+      <Card.Img variant="top" src={banner} />
       <Card.Body>
         <Card.Title style={{ wordWrap: "break-word" }}>{title}</Card.Title>
         <FontAwesomeIcon

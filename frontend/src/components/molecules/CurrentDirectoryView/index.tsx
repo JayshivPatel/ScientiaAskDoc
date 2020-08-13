@@ -3,7 +3,7 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import ResourceSectionHeader from "../ResourceSectionHeader";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
-import { faFile } from "@fortawesome/free-solid-svg-icons";
+import { faFileAlt, faFileVideo, faFilePdf, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import FileCard from "components/atoms/FileCard";
 
 export interface CurrentDirectoryViewProps {
@@ -105,8 +105,20 @@ class CurrentDirectoryView extends React.Component<CurrentDirectoryViewProps, My
         />
 
         <Row style={{ marginTop: "10px" }}>
-          {this.props.documentItems.map(({ title, type, tags, id }) => (
-            <Col
+          {this.props.documentItems.map(({ title, type, tags, id }) => {
+						let normalIcon : IconDefinition;
+						switch (type) {
+							case "pdf":
+								normalIcon = faFilePdf;
+								break;
+							case "video":
+								normalIcon = faFileVideo;
+								break;
+							default:
+								normalIcon = faFileAlt;
+								break;
+						}
+            return (<Col
               xs={6}
               sm={6}
               md={6}
@@ -124,7 +136,7 @@ class CurrentDirectoryView extends React.Component<CurrentDirectoryViewProps, My
                     ? this.state.isSelected[id]
                       ? faCheckSquare
                       : faSquare
-                    : faFile
+                    : normalIcon
                 }
                 onClick={() => this.handleCardClick(id)}
                 onIconClick={(e) => {
@@ -134,8 +146,8 @@ class CurrentDirectoryView extends React.Component<CurrentDirectoryViewProps, My
                 onMouseOver={() => this.handleMouseOver(id)}
                 onMouseOut={() => this.handleMouseOut(id)}
               />
-            </Col>
-          ))}
+            </Col>)
+})}
         </Row>
       </>
     );

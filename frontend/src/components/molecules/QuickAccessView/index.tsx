@@ -7,7 +7,7 @@ import Col from "react-bootstrap/esm/Col";
 import ResourceSectionHeader from "../ResourceSectionHeader";
 import FileCard from "components/atoms/FileCard";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
-import { faFile } from "@fortawesome/free-solid-svg-icons";
+import { faFileAlt, IconDefinition, faFilePdf, faFileVideo } from "@fortawesome/free-solid-svg-icons";
 
 export interface QuickAccessProps {
   quickAccessItems: {
@@ -27,7 +27,7 @@ interface MyState {
 class QuickAccessView extends React.Component<QuickAccessProps, MyState> {
   constructor(props: QuickAccessProps) {
     super(props);
-    this.state = { isSelected: [], isHoveringOver: []};
+    this.state = { isSelected: [], isHoveringOver: [] };
   }
 
   componentDidMount() {
@@ -77,7 +77,7 @@ class QuickAccessView extends React.Component<QuickAccessProps, MyState> {
     for (let item in items) {
       isSelected[items[item].id] = setValue;
     }
-    this.setState({ isSelected});
+    this.setState({ isSelected });
   }
 
   handleCardClick(id: number) {
@@ -105,8 +105,8 @@ class QuickAccessView extends React.Component<QuickAccessProps, MyState> {
           heading="Quick Access"
           showDownload={this.isAnySelected()}
           onSelectAllClick={() => this.handleSelectAllClick()}
-					selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
-					checkBoxColur={this.isAnySelected() ? "#495057" : "#dee2e6"}
+          selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
+          checkBoxColur={this.isAnySelected() ? "#495057" : "#dee2e6"}
         />
 
         <Row
@@ -117,37 +117,51 @@ class QuickAccessView extends React.Component<QuickAccessProps, MyState> {
             styles.quickAccessRow
           )}
         >
-          {this.props.quickAccessItems.map(({ title, type, tags, id }) => (
-            <Col
-              xs={7}
-              sm={5}
-              md={5}
-              lg={4}
-              xl={3}
-              key={id}
-              style={{ marginBottom: ".5rem", marginTop: ".5rem" }}
-            >
-              <FileCard
-                title={title}
-                type={type}
-                tags={tags}
-                icon={
-                  this.isAnySelected() || this.state.isHoveringOver[id]
-                    ? this.state.isSelected[id]
-                      ? faCheckSquare
-                      : faSquare
-                    : faFile
-                }
-                onClick={() => this.handleCardClick(id)}
-                onIconClick={(e) => {
-                  e.stopPropagation();
-                  this.handleIconClick(id);
-                }}
-                onMouseOver={() => this.handleMouseOver(id)}
-                onMouseOut={() => this.handleMouseOut(id)}
-              />
-            </Col>
-          ))}
+          {this.props.quickAccessItems.map(({ title, type, tags, id }) => {
+            let normalIcon: IconDefinition;
+            switch (type) {
+              case "pdf":
+                normalIcon = faFilePdf;
+                break;
+              case "video":
+                normalIcon = faFileVideo;
+                break;
+              default:
+                normalIcon = faFileAlt;
+                break;
+            }
+            return (
+              <Col
+                xs={7}
+                sm={5}
+                md={5}
+                lg={4}
+                xl={3}
+                key={id}
+                style={{ marginBottom: ".5rem", marginTop: ".5rem" }}
+              >
+                <FileCard
+                  title={title}
+                  type={type}
+                  tags={tags}
+                  icon={
+                    this.isAnySelected() || this.state.isHoveringOver[id]
+                      ? this.state.isSelected[id]
+                        ? faCheckSquare
+                        : faSquare
+                      : normalIcon
+                  }
+                  onClick={() => this.handleCardClick(id)}
+                  onIconClick={(e) => {
+                    e.stopPropagation();
+                    this.handleIconClick(id);
+                  }}
+                  onMouseOver={() => this.handleMouseOver(id)}
+                  onMouseOut={() => this.handleMouseOut(id)}
+                />
+              </Col>
+            );
+          })}
         </Row>
       </>
     );
