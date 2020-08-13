@@ -30,7 +30,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   toggledRight,
   onOverlayClick,
 }: StandardViewProps) => { 
-	const [modulesFilter, setModulesFilter] = useState("");
+	const [modulesFilter, setModulesFilter] = useState("In Progress");
 
   return (
     <div
