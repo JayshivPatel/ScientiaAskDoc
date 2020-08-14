@@ -104,7 +104,7 @@ class CurrentDirectoryView extends React.Component<CurrentDirectoryViewProps, My
 					checkBoxColur={this.isAnySelected() ? "#495057" : "#dee2e6"}
         />
 
-        <Row style={{ marginTop: "10px" }}>
+        <Row style={{ marginTop: "10px", marginLeft: "-10px", marginRight: "-10px" }}>
           {this.props.documentItems.map(({ title, type, tags, id }) => {
 						let normalIcon : IconDefinition;
 						switch (type) {
@@ -125,7 +125,7 @@ class CurrentDirectoryView extends React.Component<CurrentDirectoryViewProps, My
               lg={4}
               xl={3}
               key={id}
-              style={{ marginBottom: ".5rem", marginTop: ".5rem" }}
+              style={{ marginBottom: ".5rem", marginTop: ".5rem", paddingLeft: "10px", paddingRight: "10px" }}
             >
               <FileCard
                 title={title}
