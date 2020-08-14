@@ -4,20 +4,20 @@
   border-radius: 0.5rem;
   transition: transform 0.2s, box-shadow 0.2s;
   padding: 1px;
-  background-color: $white;
+  background-color: $white ;
   height: 96%;
-  border: 1px solid $gray-300;
+  border: 1px solid $gray-200;
 }
 
 .quickViewCard:hover {
   transform: scale(1.03);
   box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
+  border-color: $gray-300;
 }
 
 .quickViewCard :global(.card-body) {
   padding: 0.5rem;
   display: flex;
-  border-top: 1px solid $gray-300;
   justify-content: space-between;
 }
 
