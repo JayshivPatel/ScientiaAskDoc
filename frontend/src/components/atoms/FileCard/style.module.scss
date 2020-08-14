@@ -1,0 +1,76 @@
+@import "assets/scss/custom";
+
+.quickViewCard {
+  border-radius: 0.5rem;
+  border-color: $gray-300;
+  border-width: 0px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: $gray-100;
+  height: 96%;
+}
+
+.quickViewCard:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.quickViewCard :global(.card-body) {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.quickViewCard :global(.card-footer) {
+  border-radius: 0.5rem !important;
+  background: $gray-100;
+  border-width: 0rem;
+  padding: 0.5rem;
+}
+
+.quickViewCard :global(.card-title) {
+  font-size: 1.125rem;
+  font-weight: 400;
+  white-space: normal;
+  margin-bottom: 0px;
+  width: 90%;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
+}
+
+.quickViewCard :global(.card-img-top) {
+  border: 1px solid $gray-100;
+  padding: 1px;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+$blue-tag-background: transparentize($blue-100, 0.5);
+$teal-tag-background: transparentize($teal-100, 0.5);
+
+.quickViewTag {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 0.33rem;
+  margin-right: 0.5rem;
+}
+
+.tagBlue {
+  color: $blue-700;
+  background: $blue-tag-background;
+}
+
+.tagTeal {
+  color: $teal-700;
+  background: $teal-tag-background;
+}
+
+.quickAccessRow {
+  scrollbar-width: thin;
+  scrollbar-color: $white $white;
+  margin-top: 10px;
+  // margin-left: 0; // leave space before card
+}

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import ExamplePage from "components/templates/ExamplePage";
 import ModuleOverview from "components/pages/ModuleOverview";
+import Dashboard from "components/pages/Dashboard";
+import Exams from "components/pages/Exams";
 
 import "./style.scss";
 import RightBar from "components/organisms/RightBar";
@@ -12,6 +14,7 @@ import ModuleFeedback from "../ModuleFeedback";
 import LeftBarDashboard from "components/organisms/LeftBarDashboard";
 import LeftBarModuleList from "components/organisms/LeftBarModuleList";
 import LeftBarModule from "components/organisms/LeftBarModule";
+import LeftBarExams from "components/organisms/LeftBarExams";
 import Container from "react-bootstrap/esm/Container";
 
 interface StandardViewProps {
@@ -29,6 +32,8 @@ const StandardView: React.FC<StandardViewProps> = ({
   toggledRight,
   onOverlayClick,
 }: StandardViewProps) => { 
+	const [modulesFilter, setModulesFilter] = useState("In Progress");
+
   return (
     <div
       id="wrapper"
@@ -43,7 +48,11 @@ const StandardView: React.FC<StandardViewProps> = ({
         </Route>
 
         <Route exact path="/modules">
-          <LeftBarModuleList />
+          <LeftBarModuleList modulesFilter={modulesFilter} setModulesFilter={setModulesFilter}/>
+        </Route>
+
+        <Route path="/exams">
+          <LeftBarExams />
         </Route>
 
         <Route path="/">
@@ -52,34 +61,32 @@ const StandardView: React.FC<StandardViewProps> = ({
       </Switch>
 
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
-      <Container className={classNames("px-3", "pageContainer")}>
+      <Container className={classNames("pageContainer")}>
         <Switch>
           <Route path="/dashboard">
-            <ExamplePage name="Dashboard" />
+            <Dashboard />
           </Route>
 
           <Route exact path="/modules">
-            <ModuleList />
+            <ModuleList modulesFilter={modulesFilter}/>
           </Route>
 
           <Route path="/modules/:id/overview">
             <ModuleOverview />
           </Route>
 
-          <Route path="/modules/:id/resources">
-            <ModuleResources />
+          <Route path="/modules/:id/resources/:scope?">
+            <ModuleResources year="1819"/>
           </Route>
 
-          <Route path="/modules/:id/feedback">
-            <ModuleFeedback />
-          </Route>
+          <Route path="/modules/:id/feedback" component={ModuleFeedback} />
 
           <Route path="/timeline">
             <ExamplePage name="Timeline" />
           </Route>
 
-          <Route path="/exams">
-            <ExamplePage name="Exams" />
+          <Route path="/exams/overview">
+            <Exams />
           </Route>
 
           <Route
@@ -88,6 +95,7 @@ const StandardView: React.FC<StandardViewProps> = ({
               <Redirect to={`/modules/${props.match.params.id}/overview`} />
             )}
           />
+					<Route path="/exams" render={() => <Redirect to="/exams/overview" />} />
           <Route path="/" render={() => <Redirect to="/dashboard" />} />
         </Switch>
       </Container>

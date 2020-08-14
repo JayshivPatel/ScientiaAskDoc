@@ -1,0 +1,83 @@
+@import "assets/scss/custom";
+
+.noticeContainer {
+  background-color: $gray-100;
+  border-radius: 8px;
+  padding: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.noticeContainer:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1); 
+}
+
+.noticeHeading {
+  font-size: 20px;
+  color: $black;
+  font-weight: 500;
+  margin-bottom: 4px;
+  line-height: 22px;
+  text-align: left;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
+}
+
+.noticeUser {
+  font-size: 16px;
+  color: $gray-700;
+  line-height: 18px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  text-align: left;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
+}
+
+.noticeTime {
+  font-size: 16px;
+  color: $gray-600;
+  line-height: 18px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  text-align: right;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
+}
+
+.noticeBody {
+  font-size: 16px;
+  color: $gray-800;
+  margin-bottom: 0px;
+  overflow: hidden;
+  position: relative; 
+  line-height: 1.2em;
+  max-height: 3.6em; 
+  padding-right: 1em;
+}
+
+.noticeBody:before {
+  content: '...';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.noticeBody:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  background: $gray-100;
+}

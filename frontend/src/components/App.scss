@@ -14,3 +14,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.btn-primary.focus, .btn-primary:focus {
+	color: #000;
+	background-color: #f8f9fa;
+	border-color: #0062cc;
+	box-shadow: none;
+}

@@ -5,12 +5,6 @@ export interface DandruffProps {
   heading: string;
 }
 
-export enum eventTypes {
-  Lecture = "Lecture",
-  Labs = "Labs",
-  Deadline = "Deadline",
-}
-
 const Dandruff: React.FC<DandruffProps> = ({ heading }: DandruffProps) => {
   return (
     <>

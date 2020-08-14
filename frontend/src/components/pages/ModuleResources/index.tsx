@@ -1,26 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 
-import classNames from "classnames";
+// import { request } from "../../../utils/api"
+// import { api } from "../../../constants/routes"
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
-import graphIllustration from "assets/images/graph-illustration.svg";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-import Badge from "react-bootstrap/Badge";
-import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
-import Container from "react-bootstrap/Container";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faInfoCircle,
-  faFile,
-  faFolder
-} from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import QuickAccessView from "components/molecules/QuickAccessView";
+import ResourcesFolderView from "components/molecules/ResourcesFolderView";
+import CurrentDirectoryView from "components/molecules/CurrentDirectoryView";
+import { useParams } from "react-router-dom";
 
-const ModuleResources: React.FC = () => {
+const ModuleResources: React.FC<{ year: string}> = ({year}) => {
+  let {id, scope } = useParams();
+  scope = scope === undefined ? "" : scope;
+
+  const quickAccessItems = resourceItems.filter(
+    ({ tags, folder }) =>
+      tags.includes("new") && (scope === "" || scope === folder)
+  );
+
+  const currentDirectoryFiles = resourceItems.filter(
+    ({ folder }) => folder === scope
+	);
+	
+	const module_code = id.startsWith("CO") ? id : id.slice(2);
+
+	//maybe refactor into class?
+	// const [error, setError] = useState(null);
+  // const [isLoaded, setIsLoaded] = useState(false);
+  // const [resources, setResources] = useState([]);
+
+  // useEffect(() => {
+  //   setIsLoaded(false);
+  //   const onSuccess = (data: any) => {
+  //     setIsLoaded(true);
+  //     setResources(data.json());
+  //   }
+  //   const onFailure = (error: any) => {
+  //     setIsLoaded(true);
+  //     setError(error);
+  //   }
+
+  //   request(api.MATERIALS_RESOURCES, "GET", onSuccess, onFailure, {
+  //     "year": year,
+  //     "course": module_code
+  //   })
+  // }, [year, module_code]);
+
   return (
     <>
       <MyBreadcrumbs />
@@ -37,58 +68,139 @@ const ModuleResources: React.FC = () => {
         </InputGroup.Append>
       </InputGroup>
 
-      <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
+      {scope === "" && folderItems.length > 0 ? <ResourcesFolderView folderItems={folderItems} /> : null}
+      {scope !== "" && currentDirectoryFiles.length > 0 ? <CurrentDirectoryView documentItems={currentDirectoryFiles} /> : null}
+			{scope === "" && quickAccessItems.length > 0 ? <QuickAccessView quickAccessItems={quickAccessItems} /> : null}
 
-      {/* TODO: add scroll listener once code is refactored */}
-      <Container className={classNames(styles.quickAccessRow)}>
-        {[...Array(6)].map((e, i) => (
-          <Card className={styles.quickViewCard}>
-            <Card.Img variant="top" src={graphIllustration} />
-            <Card.Body>
-              <Card.Title>Document {i}</Card.Title>
-              <FontAwesomeIcon style={{ fontSize: "1.125rem" }} icon={faFile} />
-            </Card.Body>
-            <Card.Footer>
-              <Badge
-                pill
-                className={classNames(styles.quickViewTag, styles.tagTeal)}
-              >
-                New
-              </Badge>
-              <Badge
-                pill
-                className={classNames(styles.quickViewTag, styles.tagBlue)}
-              >
-                Week 1
-              </Badge>
-            </Card.Footer>
-          </Card>
-        ))}
-      </Container>
-
-      <h5
-        style={{ marginTop: "30px", marginBottom: "10px" }}
-        className={classNames(styles.moduleSectionHeader)}
-      >
-        Folders
-      </h5>
-      <Row>
-        {[...Array(10)].map((e, i) => (
-          <Col xs={6} sm={6} md={3} key={i}>
-            <Card className={styles.folderCard}>
-              <Card.Body style={{ padding: ".6rem" }}>
-                <Card.Text style={{ marginBottom: 0 }}>Folder {i}</Card.Text>
-                <FontAwesomeIcon
-                  style={{ fontSize: "1.125rem" }}
-                  icon={faFolder}
-                />
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </>
+		</>
   );
 };
 
 export default ModuleResources;
+
+let folderItems = [
+  {
+    title: "Lecture Notes",
+    id: 0,
+  },
+  {
+    title: "Logic Exercise",
+    id: 1,
+  },
+  {
+    title: "Pandora Lab",
+    id: 2,
+  },
+  {
+    title: "Extra",
+    id: 3,
+  },
+];
+
+let resourceItems = [
+	{
+    title: "How To Use Pandora",
+    type: "video",
+    tags: ["new", "WATCHME"],
+    folder: "Pandora Lab",
+    id: 14,
+	},
+	{
+    title: "Logic Exercise 1",
+    type: "File",
+    tags: ["Week 1"],
+    folder: "Logic Exercise",
+    id: 8,
+  },
+  {
+    title: "Logic Exercise 2",
+    type: "File",
+    tags: ["Week 2"],
+    folder: "Logic Exercise",
+    id: 9,
+  },
+  {
+    title: "Logic Exercise 3",
+    type: "File",
+    tags: ["new", "Week 3"],
+    folder: "Logic Exercise",
+    id: 10,
+  },
+  {
+    title: "Syntax Semantics Propositional Logic",
+    type: "pdf",
+    tags: ["Slides"],
+    folder: "Lecture Notes",
+    id: 0,
+  },
+  {
+    title: "Classical First-Order Predicate Logic",
+    type: "pdf",
+    tags: ["Slides"],
+    folder: "Lecture Notes",
+    id: 1,
+  },
+  {
+    title: "Translation Validity",
+    type: "pdf",
+    tags: ["new", "Slides"],
+    folder: "Lecture Notes",
+    id: 2,
+  },
+  {
+    title: "validityPL-part1",
+    type: "pdf",
+    tags: ["Slides"],
+    folder: "Lecture Notes",
+    id: 3,
+  },
+  {
+    title: "validityPL-part2",
+    type: "pdf",
+    tags: ["Slides"],
+    folder: "Lecture Notes",
+    id: 4,
+  },
+  {
+    title: "validityPL-part3",
+    type: "pdf",
+    tags: ["new", "Slides"],
+    folder: "Lecture Notes",
+    id: 5,
+  },
+  {
+    title: "validityFOL-part1",
+    type: "pdf",
+    tags: ["Slides"],
+    folder: "Lecture Notes",
+    id: 6,
+  },
+  {
+    title: "validityFOL-part2",
+    type: "pdf",
+    tags: ["new", "Slides"],
+    folder: "Lecture Notes",
+    id: 7,
+  },
+  {
+    title: "Pandora Lab",
+    type: "File",
+    tags: [],
+    folder: "Pandora Lab",
+    id: 11,
+  },
+  {
+    title: "Propositional Logic Exercises",
+    type: "pdf",
+    tags: ["new", "Revision"],
+    folder: "Extra",
+    id: 12,
+  },
+  {
+    title: "Extra Logic Exercises",
+    type: "pdf",
+    tags: ["new", "Revision"],
+    folder: "Extra",
+    id: 13,
+  },
+];

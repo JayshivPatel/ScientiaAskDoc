@@ -16,90 +16,11 @@ import databaseIllustration from "assets/images/database-illustration.png";
 import ModuleCard, { Term, ProgressStatus } from "components/atoms/ModuleCard";
 import Dandruff from "components/molecules/Dandruff";
 
-const ModuleList: React.FC = () => {
-  let modules = [
-    {
-      title: "Introduction to Logic",
-      code: "CO140",
-      image: logicIllustration,
-      terms: [Term.AUTUMN],
-      progressStatus: ProgressStatus.IN_PROGRESS,
-      progressPercent: 50,
-      content: ""
-    },
-    {
-      title: "Discrete Mathematics",
-      code: "CO142",
-      image: discreteIllustration,
-      terms: [Term.AUTUMN],
-      progressStatus: ProgressStatus.IN_PROGRESS,
-      progressPercent: 60,
-      content: ""
-    },
-    {
-      title: "Introduction to Computer Systems",
-      code: "CO112",
-      image: systemsIllustration,
-      terms: [Term.AUTUMN],
-      progressStatus: ProgressStatus.IN_PROGRESS,
-      progressPercent: 93,
-      content: ""
-    },
-    {
-      title: "Mathematical Methods",
-      code: "CO145",
-      terms: [Term.AUTUMN],
-      image: methodsIllustration,
-      progressStatus: ProgressStatus.IN_PROGRESS,
-      progressPercent: 45,
-      content: ""
-    },
-    {
-      title: "Java",
-      code: "CO120.2",
-      image: javaIllustration,
-      terms: [Term.AUTUMN, Term.SPRING, Term.SUMMER],
-      progressStatus: ProgressStatus.IN_PROGRESS,
-      progressPercent: 20,
-      content: ""
-    },
-    {
-      title: "Graphs and Algorithms",
-      code: "CO150",
-      image: graphIllustration,
-      terms: [Term.SPRING],
-      progressStatus: ProgressStatus.NOT_STARTED,
-      progressPercent: 0,
-      content: ""
-    },
-    {
-      title: "Introduction to Computer Architecture",
-      code: "CO113",
-      image: architectureIllustration,
-      terms: [Term.SPRING],
-      progressStatus: ProgressStatus.NOT_STARTED,
-      progressPercent: 0,
-      content: ""
-    },
-    {
-      title: "Reasoning About Programs",
-      code: "CO141",
-      image: reasoningIllustration,
-      terms: [Term.SPRING],
-      progressStatus: ProgressStatus.NOT_STARTED,
-      progressPercent: 0,
-      content: ""
-    },
-    {
-      title: "Introduction to Databases",
-      code: "CO130",
-      image: databaseIllustration,
-      terms: [Term.SPRING],
-      progressStatus: ProgressStatus.NOT_STARTED,
-      progressPercent: 0,
-      content: ""
-    }
-  ];
+export interface ModuleListProps {
+	modulesFilter: String;
+}
+
+const ModuleList: React.FC<ModuleListProps> = ({modulesFilter}: ModuleListProps) => {
   return (
     <>
       <Dandruff heading="Modules" />
@@ -114,7 +35,7 @@ const ModuleList: React.FC = () => {
       </p>
 
       <Row>
-        {modules.map(module => (
+        {modules.filter(({progressStatus})=>  modulesFilter === "" || progressStatus === modulesFilter).map(module => (
           <ModuleCard module={module} key={module.code} />
         ))}
       </Row>
@@ -123,3 +44,87 @@ const ModuleList: React.FC = () => {
 };
 
 export default ModuleList;
+
+let modules = [
+	{
+		title: "Introduction to Logic",
+		code: "CO140",
+		image: logicIllustration,
+		terms: [Term.AUTUMN],
+		progressStatus: ProgressStatus.IN_PROGRESS,
+		progressPercent: 50,
+		content: ""
+	},
+	{
+		title: "Discrete Mathematics",
+		code: "CO142",
+		image: discreteIllustration,
+		terms: [Term.AUTUMN],
+		progressStatus: ProgressStatus.IN_PROGRESS,
+		progressPercent: 60,
+		content: ""
+	},
+	{
+		title: "Introduction to Computer Systems",
+		code: "CO112",
+		image: systemsIllustration,
+		terms: [Term.AUTUMN],
+		progressStatus: ProgressStatus.IN_PROGRESS,
+		progressPercent: 93,
+		content: ""
+	},
+	{
+		title: "Mathematical Methods",
+		code: "CO145",
+		terms: [Term.AUTUMN],
+		image: methodsIllustration,
+		progressStatus: ProgressStatus.IN_PROGRESS,
+		progressPercent: 45,
+		content: ""
+	},
+	{
+		title: "Java",
+		code: "CO120.2",
+		image: javaIllustration,
+		terms: [Term.AUTUMN, Term.SPRING, Term.SUMMER],
+		progressStatus: ProgressStatus.IN_PROGRESS,
+		progressPercent: 20,
+		content: ""
+	},
+	{
+		title: "Graphs and Algorithms",
+		code: "CO150",
+		image: graphIllustration,
+		terms: [Term.SPRING],
+		progressStatus: ProgressStatus.NOT_STARTED,
+		progressPercent: 0,
+		content: ""
+	},
+	{
+		title: "Introduction to Computer Architecture",
+		code: "CO113",
+		image: architectureIllustration,
+		terms: [Term.SPRING],
+		progressStatus: ProgressStatus.NOT_STARTED,
+		progressPercent: 0,
+		content: ""
+	},
+	{
+		title: "Reasoning About Programs",
+		code: "CO141",
+		image: reasoningIllustration,
+		terms: [Term.SPRING],
+		progressStatus: ProgressStatus.NOT_STARTED,
+		progressPercent: 0,
+		content: ""
+	},
+	{
+		title: "Introduction to Databases",
+		code: "CO130",
+		image: databaseIllustration,
+		terms: [Term.SPRING],
+		progressStatus: ProgressStatus.NOT_STARTED,
+		progressPercent: 0,
+		content: ""
+	}
+];
