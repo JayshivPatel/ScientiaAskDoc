@@ -38,9 +38,9 @@ const ModuleFeedback: React.FC = () => {
       >
         Folders
       </h5>
-      <Row>
+      <Row style={{marginRight:"-10px", marginLeft:"-10px"}}>
         {[...Array(3)].map((e, i) => (
-          <Col xs={6} sm={6} md={3} key={i}>
+          <Col xs={6} sm={6} md={3} key={i} style={{paddingLeft: "10px", paddingRight: "10px"}}>
             <Card className={styles.folderCard}>
               <Card.Body style={{ padding: ".6rem" }}>
                 <Card.Text style={{ marginBottom: 0 }}>Folder {i}</Card.Text>
@@ -56,9 +56,9 @@ const ModuleFeedback: React.FC = () => {
 
       <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
 
-      <Row>
+      <Row style={{marginRight:"-10px", marginLeft:"-10px"}}>
         {[...Array(4)].map((e, i) => (
-          <Col xs={12} sm={6} md={6} lg={4} xl={3} key={i}>
+          <Col xs={12} sm={6} md={6} lg={4} xl={3} key={i} style={{paddingLeft: "10px", paddingRight: "10px"}}>
             <Card className={styles.quickViewCard}>
               <Card.Header>
                 <span className={styles.assessmentResult}>40 / 50</span>
