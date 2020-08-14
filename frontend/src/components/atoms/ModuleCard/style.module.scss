@@ -3,15 +3,16 @@
 .moduleCard {
   background: #ffffff;
   height: 100%;
-  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
   border-width: 0rem;
   border-radius: 0.5rem !important;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid $gray-200;
 }
 
 .moduleCard:hover {
   transform: scale(1.03);
   text-decoration: none;
+  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
 }
 
 .termIcons > * {
@@ -21,7 +22,8 @@
 
 .moduleCard :global(.card-header) {
   background: #fff;
-  border-radius: 0.5rem !important;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
   border-width: 0rem;
   color: #000;
   font-weight: 500;
@@ -30,10 +32,12 @@
   padding: 0.5rem;
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid $gray-300;
 }
 
 .moduleCard :global(.card-body) {
   padding: 0.5rem;
+  border-top: 1px solid $gray-300;
 }
 
 .moduleCard :global(.card-title) {

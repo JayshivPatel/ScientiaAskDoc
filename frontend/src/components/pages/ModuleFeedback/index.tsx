@@ -32,6 +32,28 @@ const ModuleFeedback: React.FC = () => {
         </InputGroup.Append>
       </InputGroup>
 
+      <h5
+        style={{ marginTop: "30px", marginBottom: "10px" }}
+        className={classNames(styles.moduleSectionHeader)}
+      >
+        Folders
+      </h5>
+      <Row>
+        {[...Array(3)].map((e, i) => (
+          <Col xs={6} sm={6} md={3} key={i}>
+            <Card className={styles.folderCard}>
+              <Card.Body style={{ padding: ".6rem" }}>
+                <Card.Text style={{ marginBottom: 0 }}>Folder {i}</Card.Text>
+                <FontAwesomeIcon
+                  style={{ fontSize: "1.125rem" }}
+                  icon={faFolder}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+
       <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
 
       <Row>
@@ -68,27 +90,6 @@ const ModuleFeedback: React.FC = () => {
         ))}
       </Row>
 
-      <h5
-        style={{ marginTop: "30px", marginBottom: "10px" }}
-        className={classNames(styles.moduleSectionHeader)}
-      >
-        Folders
-      </h5>
-      <Row>
-        {[...Array(3)].map((e, i) => (
-          <Col xs={6} sm={6} md={3} key={i}>
-            <Card className={styles.folderCard}>
-              <Card.Body style={{ padding: ".6rem" }}>
-                <Card.Text style={{ marginBottom: 0 }}>Folder {i}</Card.Text>
-                <FontAwesomeIcon
-                  style={{ fontSize: "1.125rem" }}
-                  icon={faFolder}
-                />
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
     </>
   );
 };
