@@ -6,7 +6,13 @@ const NoticeBoard: React.FC = () => {
     <>
       <h4>Notice Board</h4>
       {noticeItems.map(({ heading, user, time, body }) => (
-        <NoticeItem key={heading} heading={heading} user={user} time={time} body={body} />
+        <NoticeItem
+          key={heading}
+          heading={heading}
+          user={user}
+          time={time}
+          body={body}
+        />
       ))}
     </>
   );
@@ -16,24 +22,24 @@ export default NoticeBoard;
 
 const noticeItems = [
   {
-    heading: "Foyer Closure Information",
-    user: "Konstantinos Gkotuzis",
+    heading: "Lab Closure Information",
+    user: "Mr. Zachery Hroderich",
     time: "1 Minute Ago",
     body:
-      "The foyer area, along with computing lab rooms 209, 208, and 210 would be closed due to unforeseen circumstances on Friday 20th of April.",
+      "Computing lab rooms 202, 206, and 219 would be closed for the year one haskell exams on Friday 20th of April."
   },
   {
-    heading: "Dead body found in foyer area",
-    user: "Orenthal James Simpson",
+    heading: "Exam Timetable Released",
+    user: "Prof. Leonardas Quinctius",
     time: "1 hour Ago",
     body:
-      "Whoever left the dead body of Dr Rosalind Baker in the foyer area could you please cleanup after youself, thank you. Nobody needs to see that. ",
+      "The Summer Exams timetable has now been re-released, to reflect the changes for online exams due to the on-going health crisis. Information regarding the schedule and remote assessment policies can be found in the exams page"
   },
   {
-    heading: "Autumn Fee Information",
-    user: "Rosalind Baker",
+    heading: "Pass Requirements For Year Two",
+    user: "Dr. Rosalind Baker",
     time: "5 hours Ago",
     body:
-      "We understand that a lot of you would not be on campus for the autumn term, however that does not mean that you should stop paying us. Good day. ",
-  },
+      "The exams will still be considered as exams, even though they are now online, so all stated pass requirements still apply. To pass a core module, it is 40% overall, i.e. coursework + exams combined at 15% + 85%. To pass 161, it is 50% overall; the percentage breakdown is on the website."
+  }
 ];

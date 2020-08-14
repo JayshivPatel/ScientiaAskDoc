@@ -24,17 +24,16 @@ const TutorCard: React.FC<TutorCardProp> = ({
           display: "flex",
           padding: 0,
           marginTop: "20px",
-          alignItems: "center"
+          alignItems: "center",
+          width: "100%"
         }}
       >
-        <span>
-          <Image className={styles.tutorImage} src={image} />
-        </span>
-        <span style={{ height: "72px" }}>
+        <Image className={styles.tutorImage} src={image} />
+        <div>
           <p className={styles.tutorName}>{name}</p>
           <p className={styles.tutorEmail}>{email}</p>
           <p className={styles.tutorAddress}>{address}</p>
-        </span>
+        </div>
       </Container>
     </>
   );

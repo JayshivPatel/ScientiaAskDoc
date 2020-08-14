@@ -13,11 +13,11 @@ const Dashboard: React.FC = () => {
       <MyBreadcrumbs />
       <PersonCard />
       <DashboardButtonGroup />
-      <Row style={{ marginTop: "30px" }}>
-        <Col>
+      <Row>
+        <Col xs={12} sm={12} md={12} lg={6} style={{ marginTop: "30px", paddingRight: "10px", paddingLeft: "10px"}}>
           <TutorCardGroup />
         </Col>
-        <Col>
+        <Col xs={12} sm={12} md={12} lg={6} style={{ marginTop: "30px", paddingRight: "10px", paddingLeft: "10px"}}>
           <NoticeBoard />
         </Col>
       </Row>

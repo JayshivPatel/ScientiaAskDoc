@@ -13,11 +13,17 @@
 }
 
 .noticeHeading {
-  font-size: 18px;
+  font-size: 20px;
   color: $black;
   font-weight: 500;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
   line-height: 22px;
+  text-align: left;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
 }
 
 .noticeUser {
@@ -25,6 +31,13 @@
   color: $gray-700;
   line-height: 18px;
   margin-bottom: 10px;
+  margin-right: 10px;
+  text-align: left;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
 }
 
 .noticeTime {
@@ -32,10 +45,39 @@
   color: $gray-600;
   line-height: 18px;
   margin-bottom: 10px;
+  margin-left: 10px;
+  text-align: right;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
 }
 
 .noticeBody {
   font-size: 16px;
   color: $gray-800;
   margin-bottom: 0px;
+  overflow: hidden;
+  position: relative; 
+  line-height: 1.2em;
+  max-height: 3.6em; 
+  padding-right: 1em;
+}
+
+.noticeBody:before {
+  content: '...';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.noticeBody:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  background: $gray-100;
 }

@@ -11,11 +11,9 @@ const PersonCard: React.FC = () => {
 
   return (
     <>
-      <Container style={{ display: "flex", padding: 0 }}>
-        <span>
-          <Image className={styles.userImage} src={userImage} />
-        </span>
-        <span style={{ height: "180px" }}>
+      <Container className={styles.userCardContainer}>
+        <Image className={styles.userImage} src={userImage} />
+        <div className={styles.userInfoBlock}>
           <p className={styles.userName}>{userInfo.name}</p>
           <p className={styles.userEmail}>{userInfo.email}</p>
           <p className={styles.userIdentifier}>
@@ -26,7 +24,7 @@ const PersonCard: React.FC = () => {
           <p className={styles.userYear}>{userInfo.year + ','}</p>
           <p className={styles.userDepartment}>{userInfo.dep}</p>
           <p className={styles.userCourse}>{userInfo.course}</p>
-        </span>
+        </div>
       </Container>
     </>
   );

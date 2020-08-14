@@ -20,7 +20,7 @@ const DashboardButtonGroup: React.FC = () => {
     <>
       <Row style={{ marginTop: "45px" }}>
         {buttons.map(({ title, icon, url }, i) => (
-          <Col xs={6} sm={6} md={3} key={i}>
+          <Col xs={6} sm={6} md={4} lg={4} xl={3} key={i} style={{ paddingRight: "10px", paddingLeft:"10px"}}>
             <Button
               className={styles.dashboardButton}
               href={url}
