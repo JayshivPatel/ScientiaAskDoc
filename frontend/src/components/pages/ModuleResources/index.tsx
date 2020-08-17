@@ -15,43 +15,73 @@ import ResourcesFolderView from "components/molecules/ResourcesFolderView";
 import CurrentDirectoryView from "components/molecules/CurrentDirectoryView";
 import { useParams } from "react-router-dom";
 
+export interface Resource {
+  title: string;
+  type: string;
+  tags: string[];
+  folder: string;
+  id: number;
+}
+
 const ModuleResources: React.FC<{ year: string}> = ({year}) => {
   let {id, scope } = useParams();
   scope = scope === undefined ? "" : scope;
+	
+	const module_code = id.startsWith("CO") ? id.slice(2) : id;
 
-  const quickAccessItems = resourceItems.filter(
+	//maybe refactor into class?
+	const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [resources, setResources] = useState<Resource[]>([]);
+
+  const quickAccessItems = resources.filter(
     ({ tags, folder }) =>
       tags.includes("new") && (scope === "" || scope === folder)
   );
 
-  const currentDirectoryFiles = resourceItems.filter(
+  const currentDirectoryFiles = resources.filter(
     ({ folder }) => folder === scope
 	);
-	
-	const module_code = id.startsWith("CO") ? id : id.slice(2);
 
-	//maybe refactor into class?
-	// const [error, setError] = useState(null);
-  // const [isLoaded, setIsLoaded] = useState(false);
-  // const [resources, setResources] = useState([]);
+  let folders: { title: string; id: number;}[] = Array.from(new Set<string>(resources.map((res: Resource) => { 
+    return res.folder; }))).map((title: string) => {
+      return {
+        title: title,
+        id: 0,
+      };
+    })
 
-  // useEffect(() => {
-  //   setIsLoaded(false);
-  //   const onSuccess = (data: any) => {
-  //     setIsLoaded(true);
-  //     setResources(data.json());
-  //   }
-  //   const onFailure = (error: any) => {
-  //     setIsLoaded(true);
-  //     setError(error);
-  //   }
+  useEffect(() => {
+    setIsLoaded(false);
+    const onSuccess = (data: { json: () => any[]; }) => {
+      var resourceArr = [];
+      var json = data.json()
+      for (const key in json) {
+        let resource = json[key]
+        resourceArr.push({
+          title: resource.title,
+          type: resource.type,
+          tags: resource.tags,
+          folder: resource.category,
+          id: resource.id,
+        } as Resource);
+      }
+      setResources(resourceArr);
+      console.log(resources);
+      setIsLoaded(true);
+    }
+    const onFailure = (error: any) => {
+      setError(error);
+      setIsLoaded(true);
+    }
 
-  //   request(api.MATERIALS_RESOURCES, "GET", onSuccess, onFailure, {
-  //     "year": year,
-  //     "course": module_code
-  //   })
-  // }, [year, module_code]);
+    request(api.MATERIALS_RESOURCES, "GET", onSuccess, onFailure, {
+      "year": year,
+      "course": module_code
+    })
+  }, [year, module_code]);
 
+  
   return (
     <>
       <MyBreadcrumbs />
@@ -68,7 +98,7 @@ const ModuleResources: React.FC<{ year: string}> = ({year}) => {
         </InputGroup.Append>
       </InputGroup>
 
-      {scope === "" && folderItems.length > 0 ? <ResourcesFolderView folderItems={folderItems} /> : null}
+      {scope === "" && folders.length > 0 ? <ResourcesFolderView folderItems={folders} /> : null}
       {scope !== "" && currentDirectoryFiles.length > 0 ? <CurrentDirectoryView documentItems={currentDirectoryFiles} /> : null}
 			{scope === "" && quickAccessItems.length > 0 ? <QuickAccessView quickAccessItems={quickAccessItems} /> : null}
 
@@ -77,130 +107,3 @@ const ModuleResources: React.FC<{ year: string}> = ({year}) => {
 };
 
 export default ModuleResources;
-
-let folderItems = [
-  {
-    title: "Lecture Notes",
-    id: 0,
-  },
-  {
-    title: "Logic Exercise",
-    id: 1,
-  },
-  {
-    title: "Pandora Lab",
-    id: 2,
-  },
-  {
-    title: "Extra",
-    id: 3,
-  },
-];
-
-let resourceItems = [
-	{
-    title: "How To Use Pandora",
-    type: "video",
-    tags: ["new", "WATCHME"],
-    folder: "Pandora Lab",
-    id: 14,
-	},
-	{
-    title: "Logic Exercise 1",
-    type: "File",
-    tags: ["Week 1"],
-    folder: "Logic Exercise",
-    id: 8,
-  },
-  {
-    title: "Logic Exercise 2",
-    type: "File",
-    tags: ["Week 2"],
-    folder: "Logic Exercise",
-    id: 9,
-  },
-  {
-    title: "Logic Exercise 3",
-    type: "File",
-    tags: ["new", "Week 3"],
-    folder: "Logic Exercise",
-    id: 10,
-  },
-  {
-    title: "Syntax Semantics Propositional Logic",
-    type: "pdf",
-    tags: ["Slides"],
-    folder: "Lecture Notes",
-    id: 0,
-  },
-  {
-    title: "Classical First-Order Predicate Logic",
-    type: "pdf",
-    tags: ["Slides"],
-    folder: "Lecture Notes",
-    id: 1,
-  },
-  {
-    title: "Translation Validity",
-    type: "pdf",
-    tags: ["new", "Slides"],
-    folder: "Lecture Notes",
-    id: 2,
-  },
-  {
-    title: "validityPL-part1",
-    type: "pdf",
-    tags: ["Slides"],
-    folder: "Lecture Notes",
-    id: 3,
-  },
-  {
-    title: "validityPL-part2",
-    type: "pdf",
-    tags: ["Slides"],
-    folder: "Lecture Notes",
-    id: 4,
-  },
-  {
-    title: "validityPL-part3",
-    type: "pdf",
-    tags: ["new", "Slides"],
-    folder: "Lecture Notes",
-    id: 5,
-  },
-  {
-    title: "validityFOL-part1",
-    type: "pdf",
-    tags: ["Slides"],
-    folder: "Lecture Notes",
-    id: 6,
-  },
-  {
-    title: "validityFOL-part2",
-    type: "pdf",
-    tags: ["new", "Slides"],
-    folder: "Lecture Notes",
-    id: 7,
-  },
-  {
-    title: "Pandora Lab",
-    type: "File",
-    tags: [],
-    folder: "Pandora Lab",
-    id: 11,
-  },
-  {
-    title: "Propositional Logic Exercises",
-    type: "pdf",
-    tags: ["new", "Revision"],
-    folder: "Extra",
-    id: 12,
-  },
-  {
-    title: "Extra Logic Exercises",
-    type: "pdf",
-    tags: ["new", "Revision"],
-    folder: "Extra",
-    id: 13,
-  },
-];
