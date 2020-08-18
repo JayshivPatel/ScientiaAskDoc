@@ -22,7 +22,8 @@ const BottomBarItem: React.FC<BottomBarItemProps> = ({
       as={NavLink}
 			to={page.path}
 			className={styles.btn}
-      id={"bottom-" + page.name}
+			id={"bottom-" + page.name}
+			variant="secondary"
     >
       <div className="button-holder">
         <FontAwesomeIcon icon={page.icon} size="lg" />
