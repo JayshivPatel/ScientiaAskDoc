@@ -35,6 +35,7 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
             <span id="download-button">
               <Button
 								style={{ color: checkBoxColur }}
+								variant="secondary" 
                 className={styles.sectionHeaderButton}
                 onClick={() => {}}
               >
@@ -48,7 +49,8 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
           <Button
             style={{ color: checkBoxColur }}
             className={styles.sectionHeaderButton}
-            onClick={onSelectAllClick}
+						onClick={onSelectAllClick}
+						variant="secondary" 
             aria-controls="download-button"
             aria-expanded={show}
           >

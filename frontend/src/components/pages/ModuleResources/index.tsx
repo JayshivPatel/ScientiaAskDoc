@@ -62,7 +62,7 @@ const ModuleResources: React.FC<{ year: string}> = ({year}) => {
           placeholder="Search..."
         />
         <InputGroup.Append>
-          <Button className={styles.searchBarIcon}>
+          <Button variant="secondary" className={styles.searchBarIcon}>
             <FontAwesomeIcon size="1x" icon={faInfoCircle} />
           </Button>
         </InputGroup.Append>
