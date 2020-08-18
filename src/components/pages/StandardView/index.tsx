@@ -4,6 +4,7 @@ import Timeline from "components/pages/Timeline";
 import ModuleOverview from "components/pages/ModuleOverview";
 import Dashboard from "components/pages/Dashboard";
 import Exams from "components/pages/Exams";
+import ExamTimetable from "components/pages/Exams/Timetable";
 
 import "./style.scss";
 import RightBar from "components/organisms/RightBar";
@@ -16,6 +17,9 @@ import LeftBarModuleList from "components/organisms/LeftBarModuleList";
 import LeftBarModule from "components/organisms/LeftBarModule";
 import LeftBarExams from "components/organisms/LeftBarExams";
 import Container from "react-bootstrap/esm/Container";
+import ExamRubrics from "../Exams/Rubrics";
+import ExamGrading from "../Exams/Grading";
+import ExamPastPapers from "../Exams/PastPapers";
 
 interface StandardViewProps {
   pages: {
@@ -97,6 +101,22 @@ const StandardView: React.FC<StandardViewProps> = ({
 
           <Route path="/exams/overview">
             <Exams />
+          </Route>
+
+					<Route path="/exams/timetable">
+            <ExamTimetable />
+          </Route>
+
+					<Route path="/exams/grading">
+            <ExamGrading />
+          </Route>
+
+					<Route path="/exams/rubrics">
+            <ExamRubrics />
+          </Route>
+
+					<Route path="/exams/papers">
+            <ExamPastPapers />
           </Route>
 
           <Route

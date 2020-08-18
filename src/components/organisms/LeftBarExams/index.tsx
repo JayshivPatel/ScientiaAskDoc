@@ -17,19 +17,9 @@ const LeftBarExams: React.FC = () => {
       activeURL: `/exams/papers`,
     },
     {
-      title: "Submissions",
-      icon: faUpload,
-      activeURL: `/exams/submissions`,
-    },
-    {
       title: "Exam Timetable",
       icon: faCalendarAlt,
       activeURL: `/exams/timetable`,
-    },
-    {
-      title: "Regulations",
-      icon: faGavel,
-      activeURL: `/exams/regulations`,
     },
     {
       title: "Grading",
@@ -40,6 +30,11 @@ const LeftBarExams: React.FC = () => {
       title: "Rubrics",
 			icon: faTable,
       activeURL: `/exams/rubrics`,
+		},
+		{
+      title: "Regulations",
+      icon: faGavel,
+      externalURL: `https://www.imperial.ac.uk/computing/current-students/course-admin/regulations/meng-comp/`,
     },
   ];
 

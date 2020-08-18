@@ -1,0 +1,57 @@
+@import "assets/scss/custom";
+
+$button-background: transparentize($gray-200, 0.75);
+$button-border: transparentize($gray-300, 1);
+
+.searchBar {
+  border-radius: 0.5rem;
+  background-color: $button-background;
+  border-color: $button-background;
+  transition: 0.2s background-color;
+  -webkit-transition: 0.2s background-color;
+  -moz-transition: 0.2s back-ground-color;
+}
+
+.searchBar::placeholder {
+  color: #acb5bd;
+  opacity: 1;
+}
+
+.searchBar:focus + :global(.input-group-append) .searchBarIcon {
+  box-shadow: none !important;
+  border-left: none;
+  border-color: $gray-300;
+  background-color: $white;
+}
+
+.searchBar:focus {
+  box-shadow: none !important;
+  border-right: none;
+  border-color: $gray-300;
+  background-color: $white;
+}
+
+.searchBarIcon {
+  border-radius: 0.5rem;
+  background-color: $gray-100;
+  border-color: $gray-100;
+  color: $gray-500;
+  transition: 0.2s background-color;
+  -webkit-transition: 0.2s background-color;
+  -moz-transition: 0.2s back-ground-color;
+}
+
+.searchBarIcon:hover {
+  background: $gray-200;
+  color: $gray-700 !important;
+  border-color: $gray-200;
+}
+
+.searchBarIcon:global(.active),
+.searchBarIcon:active {
+  background: $black !important;
+  font-weight: 500 !important;
+  color: $white !important;
+  border-color: $black;
+}
+
