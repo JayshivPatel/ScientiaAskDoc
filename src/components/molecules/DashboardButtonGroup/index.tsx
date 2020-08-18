@@ -7,14 +7,60 @@ import {
   faPrint,
   faFileInvoice,
   faDatabase,
-  faBullhorn,
-  faUserFriends,
+  faQuestionCircle,
   faBug,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const DashboardButtonGroup: React.FC = () => {
+export interface ButtonGroupProps {
+	loginShort: string;
+}
+
+const DashboardButtonGroup: React.FC<ButtonGroupProps> = ({loginShort}: ButtonGroupProps) => {
+	const buttons = [
+		{
+			title: "My Record",
+			icon: faFileInvoice,
+			url: "https://cate.doc.ic.ac.uk/student.cgi?key=2019",
+		},
+		{
+			title: "My Website",
+			icon: faGlobe,
+			url: `https://www.doc.ic.ac.uk/~${loginShort}/`,
+		},
+		{
+			title: "My Imperial",
+			icon: faFileAlt,
+			url: "https://my.imperial.ac.uk/HomeScreen.aspx",
+		},
+		{
+			title: "TeachDB",
+			icon: faDatabase,
+			url: "https://teachdb.doc.ic.ac.uk/db/",
+		},
+		{
+			title: "ICT Guides",
+			icon: faQuestionCircle,
+			url: "https://www.imperial.ac.uk/admin-services/ict/self-service/",
+		},
+		{
+			title: "CSG Guides",
+			icon: faQuestionCircle,
+			url: "https://www.imperial.ac.uk/computing/csg/guides/",
+		},
+		{
+			title: "Printing",
+			icon: faPrint,
+			url: "https://ictprintservice.imperial.ac.uk/safecom/webuser.dll/login",
+		},
+		{
+			title: "Report Bugs",
+			icon: faBug,
+			url: "https://gitlab.doc.ic.ac.uk/edtech/scientia/-/issues/new",
+		},
+	];
+	
   return (
     <>
       <Row style={{ marginTop: "45px" }}>
@@ -38,45 +84,3 @@ const DashboardButtonGroup: React.FC = () => {
 };
 
 export default DashboardButtonGroup;
-
-const buttons = [
-  {
-    title: "Record",
-    icon: faFileInvoice,
-    url: "https://cate.doc.ic.ac.uk/student.cgi?key=2019",
-  },
-  {
-    title: "Website",
-    icon: faGlobe,
-    url: "https://www.doc.ic.ac.uk/~js4416/",
-  },
-  {
-    title: "TeachDB",
-    icon: faDatabase,
-    url: "https://teachdb.doc.ic.ac.uk/db/",
-  },
-  {
-    title: "Notice Board",
-    icon: faBullhorn,
-  },
-  {
-    title: "Documents",
-    icon: faFileAlt,
-    url: "https://my.imperial.ac.uk/HomeScreen.aspx",
-  },
-  {
-    title: "Printing",
-    icon: faPrint,
-    url: "https://ictprintservice.imperial.ac.uk/safecom/webuser.dll/login",
-  },
-  {
-    title: "DoCSoc",
-    icon: faUserFriends,
-    url: "https://docsoc.co.uk/",
-  },
-  {
-    title: "Report Bugs",
-    icon: faBug,
-    url: "https://gitlab.doc.ic.ac.uk/edtech/scientia/-/issues/new",
-  },
-];

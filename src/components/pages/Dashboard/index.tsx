@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
     <>
       <MyBreadcrumbs />
       <PersonCard />
-      <DashboardButtonGroup />
+      <DashboardButtonGroup loginShort="br819"/>
       <Row>
         <Col xs={12} sm={12} md={12} lg={6} style={{ marginTop: "30px", paddingRight: "10px", paddingLeft: "10px"}}>
           <TutorCardGroup />
