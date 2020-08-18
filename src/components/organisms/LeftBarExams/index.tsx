@@ -1,7 +1,7 @@
 import React from "react";
 import LeftBar from "components/organisms/LeftBar";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
-import { faCalendarAlt, faList, faUpload, faArchive, faGavel, faTable, faFont } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt, faList, faArchive, faGavel, faTable, faFont } from "@fortawesome/free-solid-svg-icons";
 
 const LeftBarExams: React.FC = () => {
 
