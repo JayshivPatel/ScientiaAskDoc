@@ -31,8 +31,8 @@ const StandardView: React.FC<StandardViewProps> = ({
   toggledLeft,
   toggledRight,
   onOverlayClick,
-}: StandardViewProps) => { 
-	const [modulesFilter, setModulesFilter] = useState("In Progress");
+}: StandardViewProps) => {
+  const [modulesFilter, setModulesFilter] = useState("In Progress");
 
   return (
     <div
@@ -48,7 +48,10 @@ const StandardView: React.FC<StandardViewProps> = ({
         </Route>
 
         <Route exact path="/modules">
-          <LeftBarModuleList modulesFilter={modulesFilter} setModulesFilter={setModulesFilter}/>
+          <LeftBarModuleList
+            modulesFilter={modulesFilter}
+            setModulesFilter={setModulesFilter}
+          />
         </Route>
 
         <Route path="/exams">
@@ -68,21 +71,28 @@ const StandardView: React.FC<StandardViewProps> = ({
           </Route>
 
           <Route exact path="/modules">
-            <ModuleList modulesFilter={modulesFilter}/>
+            <ModuleList modulesFilter={modulesFilter} />
           </Route>
 
           <Route path="/modules/:id/overview">
             <ModuleOverview />
           </Route>
 
-          <Route path="/modules/:id/resources/:scope?">
-            <ModuleResources year="2021"/>
-          </Route>
+          <Route
+            path="/modules/:id/resources/:scope?"
+            render={(props) => (
+              <ModuleResources
+                year="1819"
+                moduleID={props.match.params.id}
+                scope={props.match.params.scope}
+              />
+            )}
+          />
 
           <Route path="/modules/:id/feedback" component={ModuleFeedback} />
 
           <Route path="/timeline">
-            <Timeline/>
+            <Timeline />
           </Route>
 
           <Route path="/exams/overview">
@@ -95,7 +105,10 @@ const StandardView: React.FC<StandardViewProps> = ({
               <Redirect to={`/modules/${props.match.params.id}/overview`} />
             )}
           />
-					<Route path="/exams" render={() => <Redirect to="/exams/overview" />} />
+          <Route
+            path="/exams"
+            render={() => <Redirect to="/exams/overview" />}
+          />
           <Route path="/" render={() => <Redirect to="/dashboard" />} />
         </Switch>
       </Container>
