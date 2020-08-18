@@ -82,7 +82,7 @@ const StandardView: React.FC<StandardViewProps> = ({
             path="/modules/:id/resources/:scope?"
             render={(props) => (
               <ModuleResources
-                year="1819"
+                year="2021"
                 moduleID={props.match.params.id}
                 scope={props.match.params.scope}
               />

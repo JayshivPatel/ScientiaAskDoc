@@ -53,6 +53,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 			let resourceArr: Resource[] = [];
 			
       data.json().then((json) => {
+				console.log(`data: ${data}`);
         for (const key in json) {
           let resource = json[key];
           resourceArr.push({
