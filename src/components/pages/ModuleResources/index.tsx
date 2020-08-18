@@ -94,9 +94,9 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
     let folders: { title: string; id: number }[] = Array.from(
       new Set<string>(resources.map((res: Resource) => res.folder))
-    ).map((title: string) => ({
+    ).map((title: string, id: number) => ({
       title: title,
-      id: 0,
+      id: id,
     }));
 
     return (
