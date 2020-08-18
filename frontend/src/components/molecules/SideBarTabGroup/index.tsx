@@ -36,7 +36,6 @@ const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
             as={NavLink}
             to={activeURL}
             activeClassName={"active"}
-            className={styles.tabGroupButton}
             key={title}
           >
             {title}
@@ -50,7 +49,6 @@ const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
           <Button
             href={externalURL}
             target="_blank"
-            className={styles.tabGroupButton}
             key={title}
           >
             {title}
@@ -61,7 +59,7 @@ const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
 
       return (
         <Button
-					className={classNames({ active: active }, styles.tabGroupButton)}
+					className={classNames({ active: active })}
 					onClick={onClick}
           key={title}
         >
