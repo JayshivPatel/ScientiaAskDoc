@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import ExamplePage from "components/templates/ExamplePage";
+import Timeline from "components/pages/Timeline";
 import ModuleOverview from "components/pages/ModuleOverview";
 import Dashboard from "components/pages/Dashboard";
 import Exams from "components/pages/Exams";
@@ -82,7 +82,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           <Route path="/modules/:id/feedback" component={ModuleFeedback} />
 
           <Route path="/timeline">
-            <ExamplePage name="Timeline" />
+            <Timeline/>
           </Route>
 
           <Route path="/exams/overview">

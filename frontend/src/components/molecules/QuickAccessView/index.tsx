@@ -138,7 +138,7 @@ class QuickAccessView extends React.Component<QuickAccessProps, MyState> {
                 lg={4}
                 xl={3}
                 key={id}
-                style={{ marginBottom: ".5rem", marginTop: ".5rem" }}
+                style={{ marginBottom: ".5rem", marginTop: ".5rem", paddingLeft: "10px", paddingRight: "10px" }}
               >
                 <FileCard
                   title={title}

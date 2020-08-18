@@ -121,9 +121,9 @@ class ResourcesFolderView extends React.Component<PropsType, MyState> {
 					checkBoxColur={this.isAnySelected() ? "#495057" : "#dee2e6"}
         />
 
-        <Row style={{ marginTop: "10px" }}>
+        <Row style={{ marginTop: "10px", marginRight: "-10px", marginLeft: "-10px" }}>
           {this.props.folderItems.map(({ title, id }) => (
-            <Col xs={6} sm={6} md={3} key={id}>
+            <Col xs={6} sm={6} md={3} key={id} style={{ paddingLeft: "10px", paddingRight: "10px" }}>
               <FolderCard
                 title={title}
                 icon={

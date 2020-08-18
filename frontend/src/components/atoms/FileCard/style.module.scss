@@ -2,16 +2,16 @@
 
 .quickViewCard {
   border-radius: 0.5rem;
-  border-color: $gray-300;
-  border-width: 0px;
   transition: transform 0.2s, box-shadow 0.2s;
-  background-color: $gray-100;
+  background-color: $white ;
   height: 96%;
+  border: 1px solid $gray-200;
 }
 
 .quickViewCard:hover {
   transform: scale(1.03);
   box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
+  border-color: $gray-300;
 }
 
 .quickViewCard :global(.card-body) {
@@ -22,7 +22,7 @@
 
 .quickViewCard :global(.card-footer) {
   border-radius: 0.5rem !important;
-  background: $gray-100;
+  background: $white;
   border-width: 0rem;
   padding: 0.5rem;
 }
@@ -41,10 +41,9 @@
 }
 
 .quickViewCard :global(.card-img-top) {
-  border: 1px solid $gray-100;
-  padding: 1px;
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
+  border-bottom: 0px;
+  border-top-left-radius: 0.4rem;
+  border-top-right-radius: 0.4rem;
 }
 
 $blue-tag-background: transparentize($blue-100, 0.5);

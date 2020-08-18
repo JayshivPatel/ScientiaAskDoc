@@ -34,7 +34,7 @@ const ModuleList: React.FC<ModuleListProps> = ({modulesFilter}: ModuleListProps)
         Structures, Graphs and Algorithms, Introduction to Databases.
       </p>
 
-      <Row>
+      <Row style={{marginLeft: "-10px", marginRight:"-10px"}}>
         {modules.filter(({progressStatus})=>  modulesFilter === "" || progressStatus === modulesFilter).map(module => (
           <ModuleCard module={module} key={module.code} />
         ))}

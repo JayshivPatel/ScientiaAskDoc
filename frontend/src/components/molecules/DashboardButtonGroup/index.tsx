@@ -1,7 +1,6 @@
 import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import styles from "./style.module.scss";
 import {
   faGlobe,
   faFileAlt,
@@ -22,7 +21,6 @@ const DashboardButtonGroup: React.FC = () => {
         {buttons.map(({ title, icon, url }, i) => (
           <Col xs={6} sm={6} md={4} lg={4} xl={3} key={i} style={{ paddingRight: "10px", paddingLeft:"10px"}}>
             <Button
-              className={styles.dashboardButton}
               href={url}
               target="_blank"
             >
@@ -30,7 +28,6 @@ const DashboardButtonGroup: React.FC = () => {
               <FontAwesomeIcon
                 style={{ fontSize: "1.125rem" }}
                 icon={icon}
-                className={styles.dashboardButtonSvg}
               />
             </Button>
           </Col>

@@ -42,7 +42,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
       textColor = "#000";
   }
   return (
-    <Col xs={12} sm={12} md={6} lg={4} xl={3} style={{ marginTop: "1.875rem" }}>
+    <Col xs={12} sm={12} md={6} lg={4} xl={3} style={{ marginTop: "1.875rem", paddingLeft: "10px", paddingRight: "10px"}}>
       <Card
         className={classNames(styles.moduleCard)}
         as={Link}

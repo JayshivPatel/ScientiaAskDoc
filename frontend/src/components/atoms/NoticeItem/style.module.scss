@@ -1,20 +1,28 @@
 @import "assets/scss/custom";
 
+$notice-line: transparentize($gray-600, 0.4);
+
 .noticeContainer {
-  background-color: $gray-100;
-  border-radius: 8px;
+  background-color: $white;
+  border-radius: .5rem;
+  border: 1px solid $gray-200;
   padding: 10px;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: 0.2s transform, 0.2s box-shadow, 0.2s background-color;
+  -webkit-transition: 0.2s transform, 0.2s box-shadow, 0.2s background-color;
+  -moz-transition: 0.2s transform, 0.2s box-shadow, 0.2s background-color;
 }
 
 .noticeContainer:hover {
+  background-color: $white;
+  border-color: $gray-300;
+  color: #000;
   transform: scale(1.03);
-  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
 }
 
 .noticeHeading {
   font-size: 20px;
-  color: $black;
+  color: $gray-900;
   font-weight: 500;
   margin-bottom: 4px;
   line-height: 22px;
@@ -28,7 +36,7 @@
 
 .noticeUser {
   font-size: 16px;
-  color: $gray-700;
+  color: $notice-line;
   line-height: 18px;
   margin-bottom: 10px;
   margin-right: 10px;
@@ -42,7 +50,7 @@
 
 .noticeTime {
   font-size: 16px;
-  color: $gray-600;
+  color: $notice-line;
   line-height: 18px;
   margin-bottom: 10px;
   margin-left: 10px;
@@ -56,7 +64,7 @@
 
 .noticeBody {
   font-size: 16px;
-  color: $gray-800;
+  color: $gray-700;
   margin-bottom: 0px;
   overflow: hidden;
   position: relative; 
@@ -79,5 +87,5 @@
   width: 1em;
   height: 1em;
   margin-top: 0.2em;
-  background: $gray-100;
+  background: $white;
 }
