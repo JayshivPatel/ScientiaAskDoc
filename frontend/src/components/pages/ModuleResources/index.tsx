@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 
-// import { request } from "../../../utils/api"
-// import { api } from "../../../constants/routes"
+import { request } from "../../../utils/api"
+import { api } from "../../../constants/routes"
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
 import InputGroup from "react-bootstrap/InputGroup";
@@ -34,12 +34,12 @@ const ModuleResources: React.FC<{ year: string}> = ({year}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [resources, setResources] = useState<Resource[]>([]);
 
-  const quickAccessItems = resources.filter(
+  let quickAccessItems = resources.filter(
     ({ tags, folder }) =>
       tags.includes("new") && (scope === "" || scope === folder)
   );
 
-  const currentDirectoryFiles = resources.filter(
+  let currentDirectoryFiles = resources.filter(
     ({ folder }) => folder === scope
 	);
 
@@ -53,26 +53,28 @@ const ModuleResources: React.FC<{ year: string}> = ({year}) => {
 
   useEffect(() => {
     setIsLoaded(false);
-    const onSuccess = (data: { json: () => any[]; }) => {
-      var resourceArr = [];
-      var json = data.json()
-      for (const key in json) {
-        let resource = json[key]
-        resourceArr.push({
-          title: resource.title,
-          type: resource.type,
-          tags: resource.tags,
-          folder: resource.category,
-          id: resource.id,
-        } as Resource);
-      }
-      setResources(resourceArr);
-      console.log(resources);
-      setIsLoaded(true);
+    const onSuccess = (data: { json: () => Promise<any>; }) => {
+      let resourceArr : Resource[] = [];
+      data.json().then(json => {
+        for (const key in json) {
+          let resource = json[key]
+          resourceArr.push({
+            title: resource.title,
+            type: resource.type,
+            tags: resource.tags,
+            folder: resource.category,
+            id: resource.id,
+          } as Resource);
+        }
+        setResources(resourceArr);
+        setIsLoaded(true);
+      });
     }
-    const onFailure = (error: any) => {
-      setError(error);
-      setIsLoaded(true);
+    const onFailure = (error: { text: () => Promise<any>; }) => {
+      error.text().then(errorText => {
+        setError(errorText);
+        setIsLoaded(true);
+      });
     }
 
     request(api.MATERIALS_RESOURCES, "GET", onSuccess, onFailure, {
@@ -97,11 +99,12 @@ const ModuleResources: React.FC<{ year: string}> = ({year}) => {
           </Button>
         </InputGroup.Append>
       </InputGroup>
-
+      {isLoaded ? (
+      error ? <> Error retrieving data: {error} </> : <>
       {scope === "" && folders.length > 0 ? <ResourcesFolderView folderItems={folders} /> : null}
       {scope !== "" && currentDirectoryFiles.length > 0 ? <CurrentDirectoryView documentItems={currentDirectoryFiles} /> : null}
 			{scope === "" && quickAccessItems.length > 0 ? <QuickAccessView quickAccessItems={quickAccessItems} /> : null}
-
+      </>) : <>Loading...</>}
 		</>
   );
 };
