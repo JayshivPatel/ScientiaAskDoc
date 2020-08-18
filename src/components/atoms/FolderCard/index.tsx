@@ -26,12 +26,12 @@ const FolderCard: React.FC<FolderCardProps> = ({
       className={styles.folderCard}
       onClick={onClick}
       onMouseOver={onMouseOver}
-      onMouseOut={onMouseOut}
+			onMouseOut={onMouseOut}
     >
       <Card.Body style={{ padding: ".6rem" }}>
         <Card.Text style={{ marginBottom: 0 }}>{title}</Card.Text>
         <FontAwesomeIcon
-          style={{ fontSize: "1.125rem" }}
+          style={{ fontSize: "1.125rem", cursor: "default" }}
           icon={icon}
           onClick={onIconClick}
         />

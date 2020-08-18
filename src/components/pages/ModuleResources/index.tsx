@@ -80,7 +80,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
   }
 
   render() {
-		let scope = this.props.scope === undefined ? "" : this.props.scope;
+		let scope = this.props.scope || "";
     let resources = this.state.resources;
 
     let quickAccessItems = resources.filter(

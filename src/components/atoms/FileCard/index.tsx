@@ -47,7 +47,7 @@ const FileCard: React.FC<FileCardProps> = ({
 	}
   return (
     <Card
-      className={styles.quickViewCard}
+      className={styles.fileCard}
       onClick={onClick}
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
@@ -56,7 +56,7 @@ const FileCard: React.FC<FileCardProps> = ({
       <Card.Body>
         <Card.Title style={{ wordWrap: "break-word" }}>{title}</Card.Title>
         <FontAwesomeIcon
-          style={{ marginLeft: "8px", fontSize: "1.125rem" }}
+          style={{ marginLeft: "8px", fontSize: "1.125rem", cursor: "default"}}
           icon={icon}
           onClick={onIconClick}
         />
@@ -67,7 +67,7 @@ const FileCard: React.FC<FileCardProps> = ({
             pill
             key={tag}
             className={classNames(
-              styles.quickViewTag,
+              styles.fileTag,
               tag === "new" ? styles.tagTeal : styles.tagBlue
             )}
           >

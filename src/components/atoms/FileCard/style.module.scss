@@ -1,33 +1,34 @@
 @import "assets/scss/custom";
 
-.quickViewCard {
+.fileCard {
   border-radius: 0.5rem;
   transition: transform 0.2s, box-shadow 0.2s;
   background-color: $white ;
-  height: 96%;
+	height: 96%;
+	cursor: pointer;
   border: 1px solid $gray-200;
 }
 
-.quickViewCard:hover {
+.fileCard:hover {
   transform: scale(1.03);
   box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
   border-color: $gray-300;
 }
 
-.quickViewCard :global(.card-body) {
+.fileCard :global(.card-body) {
   padding: 0.5rem;
   display: flex;
   justify-content: space-between;
 }
 
-.quickViewCard :global(.card-footer) {
+.fileCard :global(.card-footer) {
   border-radius: 0.5rem !important;
   background: $white;
   border-width: 0rem;
   padding: 0.5rem;
 }
 
-.quickViewCard :global(.card-title) {
+.fileCard :global(.card-title) {
   font-size: 1.125rem;
   font-weight: 400;
   white-space: normal;
@@ -40,7 +41,7 @@
 	word-break: break-word;
 }
 
-.quickViewCard :global(.card-img-top) {
+.fileCard :global(.card-img-top) {
   border-bottom: 0px;
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
@@ -49,7 +50,7 @@
 $blue-tag-background: transparentize($blue-100, 0.5);
 $teal-tag-background: transparentize($teal-100, 0.5);
 
-.quickViewTag {
+.fileTag {
   text-transform: uppercase;
   font-size: 0.8rem;
   font-weight: 500;
@@ -67,7 +68,7 @@ $teal-tag-background: transparentize($teal-100, 0.5);
   background: $teal-tag-background;
 }
 
-.quickAccessRow {
+.fileRow {
   scrollbar-width: thin;
   scrollbar-color: $white $white;
   margin-top: 10px;

@@ -5,7 +5,8 @@
   border: 1px solid $gray-200; 
   transition: transform 0.2s, box-shadow 0.2s;
   background-color: $white;
-  margin-top: 0.67rem;
+	margin-top: 0.67rem;
+	cursor: pointer;
 }
 
 .folderCard:hover {
@@ -17,5 +18,5 @@
 .folderCard :global(.card-body) {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+	align-items: center;
 }
