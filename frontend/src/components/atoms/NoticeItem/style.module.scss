@@ -4,7 +4,7 @@ $notice-line: transparentize($gray-600, 0.4);
 
 .noticeContainer {
   background-color: $white;
-  border-radius: 8px;
+  border-radius: .5rem;
   border: 1px solid $gray-200;
   padding: 10px;
   transition: 0.2s transform, 0.2s box-shadow, 0.2s background-color;
