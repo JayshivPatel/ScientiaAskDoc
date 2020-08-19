@@ -128,6 +128,11 @@ class QuickAccessView extends React.Component<QuickAccessProps, MyState> {
   }
 
   handleCardClick(id: number) {
+		if (this.isAnySelected()) {
+			this.handleIconClick(id);
+			return;
+		}
+		
     const onSuccess = (data: any) => {
       // TODO: Try to navigate straight to the endpoint url instead of creating an object url
       data.blob().then((blob: any) => {
@@ -145,10 +150,6 @@ class QuickAccessView extends React.Component<QuickAccessProps, MyState> {
       });
 		};
     request(api.MATERIALS_RESOURCES_FILE(id), methods.GET, onSuccess, onFailure);
-
-    if (this.isAnySelected()) {
-      this.handleIconClick(id);
-    }
   }
 
   handleMouseOver(id: number) {
