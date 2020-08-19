@@ -31,6 +31,10 @@ export interface ResourceState {
 }
 
 class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
+  moduleCode = this.props.moduleID.startsWith("CO")
+    ? this.props.moduleID.slice(2)
+    : this.props.moduleID;
+
   constructor(props: ResourcesProps) {
     super(props);
     this.state = {
@@ -40,10 +44,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       searchText: "",
     };
   }
-
-  moduleCode = this.props.moduleID.startsWith("CO")
-  ? this.props.moduleID.slice(2)
-  : this.props.moduleID;
 
   componentDidMount() {
     this.setState({ isLoaded: false });
@@ -76,10 +76,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     });
   }
 
-  handleSearchTextChange(searchText: string) {
-    this.setState({ searchText: searchText });
-  }
-
   includeInSearchResult(item: Resource, searchText: string) {
     let rx = /([a-z]+)\(([^)]+)\)/gi;
     let match: RegExpExecArray | null;
@@ -106,24 +102,27 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       }
     }
     let rest = searchText.replace(rx, "").trim();
-    for (let i in tags) {
-      if (tags[i].indexOf(rest) !== -1) {
-        return true;
-      }
+    if (tags.some((tag) => tag.indexOf(rest) !== -1)) {
+      return false;
     }
     return title.indexOf(rest) !== -1;
   }
 
-  render() {
-    let scope = this.props.scope || "";
-    let resources = this.state.resources;
+  getResourcesFolderView(scope: any) {
+    let folders: { title: string; id: number }[] = Array.from(
+      new Set<string>(this.state.resources.map((res: Resource) => res.folder))
+    ).map((title: string, id: number) => ({
+      title: title,
+      id: id,
+    }));
 
-    let quickAccessItems = resources.filter(
-      ({ tags, folder }) =>
-        tags.includes("new") && (scope === "" || scope === folder)
-    );
+    if (this.state.searchText === "" && scope === "" && folders.length > 0) {
+      return <ResourcesFolderView folderItems={folders} />;
+    }
+  }
 
-    let filesContent: Resource[] = resources;
+  getCurrentDirectoryView(scope: any) {
+    let filesContent: Resource[] = this.state.resources;
     if (scope !== "") {
       filesContent = filesContent.filter(({ folder }) => folder === scope);
     }
@@ -133,43 +132,61 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       );
     }
 
-    let folders: { title: string; id: number }[] = Array.from(
-      new Set<string>(resources.map((res: Resource) => res.folder))
-    ).map((title: string, id: number) => ({
-      title: title,
-      id: id,
-    }));
+    if (scope !== "" || this.state.searchText !== "") {
+      return (
+        <CurrentDirectoryView
+          documentItems={filesContent}
+          moduleCode={this.moduleCode}
+        />
+      );
+    }
+  }
+
+  getQuickAccessView(scope: any) {
+    let quickAccessItems = this.state.resources.filter(
+      ({ tags, folder }) =>
+        tags.includes("new") && (scope === "" || scope === folder)
+    );
+
+    if (
+      this.state.searchText === "" &&
+      scope === "" &&
+      quickAccessItems.length > 0
+    ) {
+      return (
+        <QuickAccessView
+          quickAccessItems={quickAccessItems}
+          moduleCode={this.moduleCode}
+        />
+      );
+    }
+  }
+
+  getloadedItems(pageItems: JSX.Element) {
+    if (!this.state.isLoaded) return <>Loading...</>;
+    if (this.state.error)
+      return <> Error retrieving data: {this.state.error} </>;
+    return pageItems;
+  }
+
+  render() {
+    let scope = this.props.scope || "";
+    let pageItems = (
+      <>
+        {this.getResourcesFolderView(scope)}
+        {this.getCurrentDirectoryView(scope)}
+        {this.getQuickAccessView(scope)}
+      </>
+    );
 
     return (
       <>
         <MyBreadcrumbs />
         <SearchBox
           searchText={this.state.searchText}
-          onSearchTextChange={(text) => this.handleSearchTextChange(text)}
+          onSearchTextChange={(text) => this.setState({ searchText: text })}
         />
-        {this.state.isLoaded ? (
-          this.state.error ? (
-            <> Error retrieving data: {this.state.error} </>
-          ) : (
-            <>
-              {this.state.searchText === "" &&
-              scope === "" &&
-              folders.length > 0 ? (
-                <ResourcesFolderView folderItems={folders} />
-              ) : null}
-              {scope !== "" || this.state.searchText !== "" ? (
-                <CurrentDirectoryView documentItems={filesContent} moduleCode={this.moduleCode}/>
-              ) : null}
-              {this.state.searchText === "" &&
-              scope === "" &&
-              quickAccessItems.length > 0 ? (
-                <QuickAccessView quickAccessItems={quickAccessItems} moduleCode={this.moduleCode}/>
-              ) : null}
-            </>
-          )
-        ) : (
-          <>Loading...</>
-        )}
+        {this.getloadedItems(pageItems)}
       </>
     );
   }

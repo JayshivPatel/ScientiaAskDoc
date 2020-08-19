@@ -1,0 +1,34 @@
+@import "assets/scss/custom";
+
+.quickAccessRow {
+  scrollbar-width: thin;
+	scrollbar-color: $white $white;
+	margin-top: 10px;
+	overflow-y: visible;
+	overflow-x: auto;
+  margin-right: -10px;
+  margin-left: -10px;
+	// margin-left: 0; // leave space before card
+}
+
+.quickAccessRow::-webkit-scrollbar {
+	width: 1rem;
+  height: 0.5rem;
+}
+.quickAccessRow::-webkit-scrollbar-track {
+  background: $white;
+	margin-left: 10px; 
+	margin-right: 10px; 
+}
+.quickAccessRow::-webkit-scrollbar-thumb {
+  background-color: $white;
+  border-radius: .5rem;
+}
+
+.quickAccessRow:hover {
+	scrollbar-color: $gray-400 $white;
+}
+
+.quickAccessRow:hover::-webkit-scrollbar-thumb {
+	background-color: $gray-400;
+}
