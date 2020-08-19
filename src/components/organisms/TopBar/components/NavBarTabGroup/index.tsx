@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import NavBarTabItem from "components/atoms/NavBarTabItem";
+import NavBarTabItem from "components/organisms/TopBar/components/NavBarTabItem";
 import styles from "./style.module.scss"
 import cx from "classnames";
 

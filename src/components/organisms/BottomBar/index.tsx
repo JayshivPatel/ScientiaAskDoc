@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import BottomBarItem from "components/atoms/BottomBarItem";
+import BottomBarItem from "components/organisms/BottomBar/BottomBarItem";
 import styles from "./style.module.scss"
 
 export interface BottomBarProps {

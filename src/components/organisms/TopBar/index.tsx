@@ -2,8 +2,8 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import userPic from "assets/images/user.png";
-import NavBarTabGroup from "components/molecules/NavBarTabGroup";
-import NavBarBrand from "components/molecules/NavBarBrand";
+import NavBarTabGroup from "components/organisms/TopBar/components/NavBarTabGroup";
+import NavBarBrand from "components/organisms/TopBar/components/NavBarBrand";
 import styles from "./style.module.scss";
 
 export interface TopBarProps {

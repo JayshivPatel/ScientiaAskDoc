@@ -1,5 +1,5 @@
 import React from "react";
-import ResourceSectionHeader from "../ResourceSectionHeader";
+import ResourceSectionHeader from "./components/SectionHeader";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 
 interface SelectionItem {

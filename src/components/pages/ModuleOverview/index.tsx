@@ -2,12 +2,9 @@ import React from "react";
 import Dandruff from "components/molecules/Dandruff";
 import { useParams } from "react-router-dom";
 import styles from "./style.module.scss";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
 import classNames from "classnames";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe, faLink } from "@fortawesome/free-solid-svg-icons";
+import PageButtonGroup from "components/molecules/PageButtonGroup";
 
 const ModuleOverview: React.FC = () => {
   let { id } = useParams();
@@ -91,24 +88,7 @@ const ModuleOverview: React.FC = () => {
       </p>
 
       <h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
-      <Row style={{ marginTop: "1.25rem" }}>
-        {buttons.map(({ title, icon, url }, i) => (
-          <Col
-            xs={6}
-            sm={6}
-            md={4}
-            lg={4}
-            xl={3}
-            key={i}
-            style={{ paddingRight: "10px", paddingLeft: "10px" }}
-          >
-            <Button href={url} target="_blank">
-              {title}
-              <FontAwesomeIcon style={{ fontSize: "1.125rem" }} icon={icon} />
-            </Button>
-          </Col>
-        ))}
-      </Row>
+      <PageButtonGroup buttons={buttons}/>
     </>
   );
 };

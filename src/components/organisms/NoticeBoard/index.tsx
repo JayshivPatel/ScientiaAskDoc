@@ -1,5 +1,5 @@
 import React from "react";
-import NoticeItem from "components/atoms/NoticeItem";
+import NoticeItem from "components/organisms/NoticeBoard/components/NoticeItem";
 
 const NoticeBoard: React.FC = () => {
   return (
