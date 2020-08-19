@@ -5,13 +5,17 @@ import { request } from "../../../utils/api";
 import ResourceSectionHeader from "../ResourceSectionHeader";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 
+interface SelectionItem {
+  title: string;
+  id: number;
+  type?: string;
+  tags?: string[];
+}
+
+type idBooleanMap = { [key: number]: boolean };
+
 export interface SelectionProps {
-  quickAccessItems: {
-    title: string;
-    type: string;
-    tags: string[];
-    id: number;
-  }[];
+  selectionItems: SelectionItem[];
   state: MyState;
   isAnySelected: () => boolean;
   handleCardClick: (id: number) => void;
@@ -21,17 +25,11 @@ export interface SelectionProps {
 }
 
 export interface MyProps {
-  quickAccessItems: {
-    title: string;
-    type: string;
-    tags: string[];
-    id: number;
-  }[];
+  selectionItems: SelectionItem[];
   moduleCode?: string;
-  render: (selection: SelectionProps) => any;
+	render: (selection: SelectionProps) => any;
+	heading: string;
 }
-
-type idBooleanMap = { [key: number]: boolean };
 
 interface MyState {
   isSelected: idBooleanMap;
@@ -47,7 +45,7 @@ class SelectionView extends React.Component<MyProps, MyState> {
   componentDidMount() {
     let isSelected: idBooleanMap = [];
     let isHoveringOver: idBooleanMap = [];
-    this.props.quickAccessItems.forEach(({ id }: { id: number }) => {
+    this.props.selectionItems.forEach(({ id }: { id: number }) => {
       isSelected[id] = false;
       isHoveringOver[id] = false;
     });
@@ -55,7 +53,7 @@ class SelectionView extends React.Component<MyProps, MyState> {
   }
 
   isAnySelected(): boolean {
-    let items = this.props.quickAccessItems;
+    let items = this.props.selectionItems;
     let isSelected = this.state.isSelected;
     for (let item in items) {
       if (isSelected[items[item].id]) {
@@ -66,7 +64,7 @@ class SelectionView extends React.Component<MyProps, MyState> {
   }
 
   isAllSelected(): boolean {
-    let items = this.props.quickAccessItems;
+    let items = this.props.selectionItems;
     let isSelected = this.state.isSelected;
     for (let item in items) {
       if (!isSelected[items[item].id]) {
@@ -87,7 +85,7 @@ class SelectionView extends React.Component<MyProps, MyState> {
   handleDownloadClick() {}
 
   handleSelectAllClick() {
-    let items = this.props.quickAccessItems;
+    let items = this.props.selectionItems;
     let isSelected = JSON.parse(JSON.stringify(this.state.isSelected));
     let setValue = !this.isAllSelected();
     for (let item in items) {
@@ -117,7 +115,7 @@ class SelectionView extends React.Component<MyProps, MyState> {
 
   render() {
     let selection: SelectionProps = {
-      quickAccessItems: this.props.quickAccessItems,
+      selectionItems: this.props.selectionItems,
       state: this.state,
       isAnySelected: () => this.isAnySelected(),
       handleCardClick: (id: number) => this.handleCardClick(id),
@@ -129,7 +127,7 @@ class SelectionView extends React.Component<MyProps, MyState> {
     return (
       <>
         <ResourceSectionHeader
-          heading="Quick Access"
+          heading={this.props.heading}
           onDownloadClick={() => this.handleDownloadClick()}
           showDownload={this.isAnySelected()}
           onSelectAllClick={() => this.handleSelectAllClick()}

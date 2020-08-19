@@ -4,10 +4,15 @@ import { request } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
-import QuickAccessView from "components/molecules/QuickAccessView";
+import QuickAccessRow from "components/molecules/QuickAccessRow";
 import ResourcesFolderView from "components/molecules/ResourcesFolderView";
 import CurrentDirectoryView from "components/molecules/CurrentDirectoryView";
 import SearchBox from "components/molecules/SearchBox";
+import SelectionView, {
+  SelectionProps,
+} from "components/molecules/SelectionView";
+import CurrentDirectoryRow from "components/molecules/CurrentDirectoryRow";
+import FoldersRow from "components/molecules/FoldersRow";
 
 interface Resource {
   title: string;
@@ -116,8 +121,16 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       id: id,
     }));
 
-    if (this.state.searchText === "" && scope === "" && folders.length > 0) {
-      return <ResourcesFolderView folderItems={folders} />;
+    if (this.state.searchText === "" && scope === "" && folders.length > 0) {			
+			return (
+        <SelectionView
+          heading="Folders"
+          selectionItems={folders}
+          render={(select: SelectionProps) => (
+            <FoldersRow select={select} />
+          )}
+        />
+			);
     }
   }
 
@@ -134,9 +147,12 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
     if (scope !== "" || this.state.searchText !== "") {
       return (
-        <CurrentDirectoryView
-          documentItems={filesContent}
-          moduleCode={this.moduleCode}
+        <SelectionView
+          heading="Files"
+          selectionItems={filesContent}
+          render={(select: SelectionProps) => (
+            <CurrentDirectoryRow select={select} />
+          )}
         />
       );
     }
@@ -154,9 +170,12 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       quickAccessItems.length > 0
     ) {
       return (
-        <QuickAccessView
-          quickAccessItems={quickAccessItems}
-          moduleCode={this.moduleCode}
+        <SelectionView
+          heading="Quick Access"
+          selectionItems={quickAccessItems}
+          render={(select: SelectionProps) => (
+            <QuickAccessRow select={select} />
+          )}
         />
       );
     }
