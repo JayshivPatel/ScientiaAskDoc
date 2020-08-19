@@ -26,9 +26,10 @@ export interface SelectionProps {
 
 export interface MyProps {
   selectionItems: SelectionItem[];
-  moduleCode?: string;
 	render: (selection: SelectionProps) => any;
 	heading: string;
+	onDownloadClick: (identifiers: number[]) => void;
+	onItemClick: (identifier: number) => void;
 }
 
 interface MyState {
@@ -80,9 +81,18 @@ class SelectionView extends React.Component<MyProps, MyState> {
     isSelected[id] = !isSelected[id];
     isHoveringOver[id] = false;
     this.setState({ isSelected, isHoveringOver });
+	}
+	
+	handleDownloadClick(e: React.MouseEvent) {
+		e.preventDefault();
+    let indices : number[] = [];
+    for (let key in this.state.isSelected) {
+      if (this.state.isSelected[key]) {
+        indices.push(parseInt(key));
+      }
+    }
+		this.props.onDownloadClick(indices);
   }
-
-  handleDownloadClick() {}
 
   handleSelectAllClick() {
     let items = this.props.selectionItems;
@@ -98,7 +108,8 @@ class SelectionView extends React.Component<MyProps, MyState> {
     if (this.isAnySelected()) {
       this.handleIconClick(id);
       return;
-    }
+		}
+		this.props.onItemClick(id);
   }
 
   handleMouseOver(id: number) {
@@ -128,7 +139,7 @@ class SelectionView extends React.Component<MyProps, MyState> {
       <>
         <ResourceSectionHeader
           heading={this.props.heading}
-          onDownloadClick={() => this.handleDownloadClick()}
+          onDownloadClick={(e) => this.handleDownloadClick(e)}
           showDownload={this.isAnySelected()}
           onSelectAllClick={() => this.handleSelectAllClick()}
           selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}

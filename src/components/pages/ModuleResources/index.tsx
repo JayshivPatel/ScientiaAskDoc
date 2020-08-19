@@ -5,8 +5,6 @@ import { api, methods } from "../../../constants/routes";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
 import QuickAccessRow from "components/molecules/QuickAccessRow";
-import ResourcesFolderView from "components/molecules/ResourcesFolderView";
-import CurrentDirectoryView from "components/molecules/CurrentDirectoryView";
 import SearchBox from "components/molecules/SearchBox";
 import SelectionView, {
   SelectionProps,
@@ -113,6 +111,76 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     return title.indexOf(rest) !== -1;
   }
 
+  handleFileDownload(indices: number[]) {
+    const onSuccess = (filename: string, data: any) => {
+      // TODO: Try to navigate straight to the endpoint url instead of creating an object url
+      data.blob().then((blob: any) => {
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+        a.remove();
+      });
+    };
+    // Partial application utility
+    const downloadFilename = (filename: string) => {
+      return (data: any) => {
+        return onSuccess(filename, data);
+      };
+    };
+    const onFailure = (error: { text: () => Promise<any> }) => {
+      error.text().then((errorText) => {
+        console.log(errorText);
+      });
+    };
+
+    if (indices.length === 1) {
+      // Only one file to download, call single file endpoint
+      let filename = this.state.resources.filter(
+        (document) => document.id === indices[0]
+      )[0].title;
+      request(
+        api.MATERIALS_RESOURCES_FILE(indices[0]),
+        methods.GET,
+        downloadFilename(filename),
+        onFailure
+      );
+    } else {
+      // Multiple files to download, call zipped selection endpoint
+      request(
+        api.MATERIALS_ZIPPED_SELECTION,
+        methods.GET,
+        downloadFilename("materials.zip"),
+        onFailure,
+        {
+          ids: indices,
+          course: this.moduleCode,
+        }
+      );
+    }
+	}
+	
+	handleFileClick(id: number){
+		const onSuccess = (data: any) => {
+      // TODO: Try to navigate straight to the endpoint url instead of creating an object url
+      data.blob().then((blob: any) => {
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.target = "_blank";
+        a.href = url;
+        a.click();
+        a.remove();
+      });
+    };
+    const onFailure = (error: { text: () => Promise<any> }) => {
+      error.text().then((errorText) => {
+        console.log(errorText);
+      });
+		};
+    request(api.MATERIALS_RESOURCES_FILE(id), methods.GET, onSuccess, onFailure);
+	}
+
   getResourcesFolderView(scope: any) {
     let folders: { title: string; id: number }[] = Array.from(
       new Set<string>(this.state.resources.map((res: Resource) => res.folder))
@@ -121,16 +189,16 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       id: id,
     }));
 
-    if (this.state.searchText === "" && scope === "" && folders.length > 0) {			
-			return (
+    if (this.state.searchText === "" && scope === "" && folders.length > 0) {
+      return (
         <SelectionView
           heading="Folders"
+					onDownloadClick={() => {}}
+					onItemClick={() => {}}
           selectionItems={folders}
-          render={(select: SelectionProps) => (
-            <FoldersRow select={select} />
-          )}
+          render={(select: SelectionProps) => <FoldersRow select={select} />}
         />
-			);
+      );
     }
   }
 
@@ -149,6 +217,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       return (
         <SelectionView
           heading="Files"
+					onItemClick={(id) => this.handleFileClick(id)}
+          onDownloadClick={(ids) => this.handleFileDownload(ids)}
           selectionItems={filesContent}
           render={(select: SelectionProps) => (
             <CurrentDirectoryRow select={select} />
@@ -172,6 +242,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       return (
         <SelectionView
           heading="Quick Access"
+					onItemClick={(id) => this.handleFileClick(id)}
+          onDownloadClick={(ids) => this.handleFileDownload(ids)}
           selectionItems={quickAccessItems}
           render={(select: SelectionProps) => (
             <QuickAccessRow select={select} />
