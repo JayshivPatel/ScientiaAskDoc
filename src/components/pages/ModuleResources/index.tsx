@@ -97,20 +97,42 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     let filesContent: Resource[] = resources;
     if (scope !== "") {
       filesContent = filesContent.filter(({ folder }) => folder === scope);
-		}
-		
-		let searchText = this.state.searchText.toLowerCase();
+    }
+
+    let searchText = this.state.searchText.toLowerCase();
     if (searchText !== "") {
-      filesContent = filesContent.filter(
-        ({ title, tags }) => {
-					for(let i in tags){
-						if (tags[i].toLowerCase().indexOf(searchText) !== -1){
-							return true;
-						}
-					}
-				 return	title.toLowerCase().indexOf(searchText) !== -1;
-				}
-      );
+      filesContent = filesContent.filter((item) => {
+        let rx = /([a-z]+)\(([^)]+)\)/gi;
+        let match: RegExpExecArray | null;
+
+        let title = item.title.toLowerCase();
+        let tags = item.tags.map((tag) => tag.toLowerCase());
+        let folder = item.folder.toLowerCase();
+
+        while ((match = rx.exec(searchText)) !== null) {
+          switch (match[1]) {
+            case "folder":
+              if (folder !== match[2]) {
+                return false;
+              }
+              break;
+            case "tag":
+              if (!tags.some((tag) => match !== null && tag === match[2])) {
+                return false;
+              }
+              break;
+            default:
+              break;
+          }
+        }
+        let rest = searchText.replace(rx, "").trim();
+        for (let i in tags) {
+          if (tags[i].indexOf(rest) !== -1) {
+            return true;
+          }
+        }
+        return title.indexOf(rest) !== -1;
+      });
     }
 
     let folders: { title: string; id: number }[] = Array.from(
