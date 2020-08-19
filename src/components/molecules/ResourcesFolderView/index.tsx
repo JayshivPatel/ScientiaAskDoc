@@ -116,6 +116,7 @@ class ResourcesFolderView extends React.Component<PropsType, MyState> {
         <ResourceSectionHeader
           heading="Folders"
           showDownload={this.isAnySelected()}
+          onDownloadClick={() => {}}
           onSelectAllClick={() => this.handleSelectAllClick()}
 					selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
 					checkBoxColur={this.isAnySelected() ? "#495057" : "#dee2e6"}
