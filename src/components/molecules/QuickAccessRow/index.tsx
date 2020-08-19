@@ -28,7 +28,7 @@ const QuickAccessRow: React.FC<{ select: SelectionProps }> = ({
     >
       {select.selectionItems.map(({ title, type, tags, id }) => {
         let normalIcon: IconDefinition;
-        if (type === undefined || tags === undefined) return;
+        if (type === undefined || tags === undefined) return null;
         switch (type) {
           case "pdf":
             normalIcon = faFilePdf;

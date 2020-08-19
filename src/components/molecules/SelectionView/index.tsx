@@ -1,7 +1,4 @@
 import React from "react";
-import classNames from "classnames";
-import { api, methods } from "../../../constants/routes";
-import { request } from "../../../utils/api";
 import ResourceSectionHeader from "../ResourceSectionHeader";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 

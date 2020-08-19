@@ -1,12 +1,21 @@
 @import "assets/scss/custom";
 
-$button-background: transparentize($gray-200, 0.75);
-$button-border: transparentize($gray-300, 1);
+.moduleSectionHeader {
+  margin-top: 1.875rem;
+}
+
+.moduleParagraph {
+  margin-top: 1rem;
+}
+
+.assessmentResult{
+	float: right;
+}
 
 .searchBar {
   border-radius: 0.5rem;
-  background-color: $button-background;
-  border-color: $button-background;
+  background-color: $gray-100;
+  border-color: $gray-100;
   transition: 0.2s background-color;
   -webkit-transition: 0.2s background-color;
   -moz-transition: 0.2s back-ground-color;
@@ -55,3 +64,114 @@ $button-border: transparentize($gray-300, 1);
   border-color: $black;
 }
 
+.quickViewCard {
+  margin-top: 1.25rem;
+  border-radius: 0.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: $white;
+  height: 96%;
+  border: 1px solid $gray-200;
+}
+
+.quickViewCard:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
+  border-color: $gray-300;
+}
+
+.quickViewCard :global(.card-body) {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quickViewCard :global(.card-header) {
+  background: $white;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  border-width: 0rem;
+  color: #000;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: right;
+  // padding: 0.5rem;
+  font-size: 1.125rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.quickViewCard :global(.card-footer) {
+  display: flex;
+  align-items: flex-end;
+  border-radius: 0.5rem !important;
+  background: $white;
+  border-width: 0rem;
+  padding: 0.5rem;
+}
+
+.quickViewCard :global(.card-title) {
+  font-size: 1.125rem;
+  font-weight: 400;
+  white-space: normal;
+  margin-bottom: 0px;
+  width: 90%;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
+}
+
+.quickViewCard :global(.card-img-top) {
+  border-radius: 0px;
+}
+
+$blue-tag-background: transparentize($blue-100, 0.5);
+$teal-tag-background: transparentize($teal-100, 0.5);
+
+.quickViewTag {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 0.33rem;
+  margin-right: 0.5rem;
+  align-items: center;
+  display: flex;
+}
+
+.tagBlue {
+  color: $blue-700;
+  background: $blue-tag-background;
+}
+
+.tagTeal {
+  color: $teal-700;
+  background: $teal-tag-background;
+}
+
+.folderCard {
+  border-radius: 0.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid $gray-200;
+  background-color: $white;
+  margin-top: 0.67rem;
+}
+
+.folderCard:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
+  border-color: $gray-300;
+}
+
+.folderCard :global(.card-body) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 62rem) {
+}
+
+@media (min-width: 62rem) {
+}

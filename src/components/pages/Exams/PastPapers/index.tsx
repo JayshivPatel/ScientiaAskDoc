@@ -1,91 +1,97 @@
 import React from "react";
 import styles from "./style.module.scss";
 
+import classNames from "classnames";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
+import graphIllustration from "assets/images/graph-illustration.svg";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
+import Badge from "react-bootstrap/Badge";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/esm/Row";
+import Col from "react-bootstrap/esm/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import QuickAccessView from "components/molecules/QuickAccessView";
-import ResourcesFolderView from "components/molecules/ResourcesFolderView";
-import CurrentDirectoryView from "components/molecules/CurrentDirectoryView";
+import { faInfoCircle, faFile, faFolder } from "@fortawesome/free-solid-svg-icons";
 
-class ExamPastPapers extends React.Component<{}, {}> {
-  render() {
-		let scope = ""
-    let resources = resourceItems;
+const PastPapers: React.FC = () => {
+  return (
+    <>
+      <MyBreadcrumbs />
+      <InputGroup>
+        <FormControl
+          className={styles.searchBar}
+          aria-label="Search"
+          placeholder="Search..."
+        />
+        <InputGroup.Append>
+          <Button className={styles.searchBarIcon}>
+            <FontAwesomeIcon size="1x" icon={faInfoCircle} />
+          </Button>
+        </InputGroup.Append>
+      </InputGroup>
 
-    let quickAccessItems = resources.filter(
-      ({ tags, folder }) =>
-        tags.includes("new") && (scope === "" || scope === folder)
-    );
+      <h5
+        style={{ marginTop: "30px", marginBottom: "10px" }}
+        className={classNames(styles.moduleSectionHeader)}
+      >
+        Folders
+      </h5>
+      <Row style={{marginRight:"-10px", marginLeft:"-10px"}}>
+        {[...Array(3)].map((e, i) => (
+          <Col xs={6} sm={6} md={3} key={i} style={{paddingLeft: "10px", paddingRight: "10px"}}>
+            <Card className={styles.folderCard}>
+              <Card.Body style={{ padding: ".6rem" }}>
+                <Card.Text style={{ marginBottom: 0 }}>Folder {i}</Card.Text>
+                <FontAwesomeIcon
+                  style={{ fontSize: "1.125rem" }}
+                  icon={faFolder}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
 
-    let currentDirectoryFiles = resources.filter(
-      ({ folder }) => folder === scope
-    );
+      <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
 
-    let folders: { title: string; id: number }[] = Array.from(
-      new Set<string>(resources.map((res) => res.folder))
-    ).map((title: string, id: number) => ({
-      title: title,
-      id: id,
-    }));
+      <Row style={{marginRight:"-10px", marginLeft:"-10px"}}>
+        {[...Array(4)].map((e, i) => (
+          <Col xs={12} sm={6} md={6} lg={4} xl={3} key={i} style={{paddingLeft: "10px", paddingRight: "10px"}}>
+            <Card className={styles.quickViewCard}>
+              <Card.Header>
+                <span className={styles.assessmentResult}>40 / 50</span>
+              </Card.Header>
+              <Card.Img variant="top" src={graphIllustration} />
+              <Card.Body>
+                <Card.Title>Paper {i}</Card.Title>
+                <FontAwesomeIcon
+                  style={{ fontSize: "1.125rem" }}
+                  icon={faFile}
+                />
+              </Card.Body>
+              <Card.Footer>
+                <Badge
+                  pill
+                  className={classNames(styles.quickViewTag, styles.tagTeal)}
+                >
+                  New
+                </Badge>
+                <Badge
+                  pill
+                  className={classNames(styles.quickViewTag, styles.tagBlue)}
+                >
+                  Week 1
+                </Badge>
+              </Card.Footer>
+            </Card>
+          </Col>
+        ))}
+      </Row>
 
-    return (
-      <>
-        <MyBreadcrumbs />
-        <InputGroup>
-          <FormControl
-            className={styles.searchBar}
-            aria-label="Search"
-            placeholder="Search..."
-          />
-          <InputGroup.Append>
-            <Button variant="secondary" className={styles.searchBarIcon}>
-              <FontAwesomeIcon size="1x" icon={faInfoCircle} />
-            </Button>
-          </InputGroup.Append>
-        </InputGroup>
-            <>
-              {scope === "" && folders.length > 0 ? (
-                <ResourcesFolderView folderItems={folders} />
-              ) : null}
-              {scope !== "" && currentDirectoryFiles.length > 0 ? (
-                <CurrentDirectoryView documentItems={currentDirectoryFiles} />
-              ) : null}
-              {scope === "" && quickAccessItems.length > 0 ? (
-                <QuickAccessView quickAccessItems={quickAccessItems} />
-              ) : null}
-            </>
-      </>
-    );
-  }
-}
+    </>
+  );
+};
 
-export default ExamPastPapers;
-
-let resourceItems = [
-	{
-    title: "C304: Logic-Based Learning",
-    type: "pdf",
-    tags: ["new", "Summer"],
-    folder: "2018 - 2019",
-    id: 14,
-	},
-	{
-    title: "C316: Computer Vision",
-    type: "pdf",
-    tags: ["new", "Summer"],
-    folder: "2017 - 2018",
-    id: 8,
-  },
-  {
-    title: "C317: Graphics",
-    type: "pdf",
-    tags: ["new", "Summer"],
-    folder: "2016 - 2017",
-    id: 9,
-  },
-];
+export default PastPapers;
