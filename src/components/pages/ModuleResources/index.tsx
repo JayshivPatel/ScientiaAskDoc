@@ -1,18 +1,13 @@
 import React from "react";
-import styles from "./style.module.scss";
 
 import { request } from "../../../utils/api";
 import { api } from "../../../constants/routes";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
-import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import QuickAccessView from "components/molecules/QuickAccessView";
 import ResourcesFolderView from "components/molecules/ResourcesFolderView";
 import CurrentDirectoryView from "components/molecules/CurrentDirectoryView";
+import SearchBox from "components/molecules/SearchBox";
 
 interface Resource {
   title: string;
@@ -55,7 +50,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       let resourceArr: Resource[] = [];
 
       data.json().then((json) => {
-        console.log(`data: ${data}`);
         for (const key in json) {
           let resource = json[key];
           resourceArr.push({
@@ -85,6 +79,40 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     this.setState({ searchText: searchText });
   }
 
+  includeInSearchResult(item: Resource, searchText: string) {
+    let rx = /([a-z]+)\(([^)]+)\)/gi;
+    let match: RegExpExecArray | null;
+
+    let title = item.title.toLowerCase();
+    let tags = item.tags.map((tag) => tag.toLowerCase());
+    let type = item.type.toLowerCase();
+
+    while ((match = rx.exec(searchText)) !== null) {
+      switch (match[1]) {
+        case "type":
+          if (type !== match[2]) {
+            return false;
+          }
+          break;
+        case "tag":
+          let matchSafe = match as RegExpExecArray;
+          if (!tags.some((tag) => tag === matchSafe[2])) {
+            return false;
+          }
+          break;
+        default:
+          break;
+      }
+    }
+    let rest = searchText.replace(rx, "").trim();
+    for (let i in tags) {
+      if (tags[i].indexOf(rest) !== -1) {
+        return true;
+      }
+    }
+    return title.indexOf(rest) !== -1;
+  }
+
   render() {
     let scope = this.props.scope || "";
     let resources = this.state.resources;
@@ -98,41 +126,10 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     if (scope !== "") {
       filesContent = filesContent.filter(({ folder }) => folder === scope);
     }
-
-    let searchText = this.state.searchText.toLowerCase();
-    if (searchText !== "") {
-      filesContent = filesContent.filter((item) => {
-        let rx = /([a-z]+)\(([^)]+)\)/gi;
-        let match: RegExpExecArray | null;
-
-        let title = item.title.toLowerCase();
-        let tags = item.tags.map((tag) => tag.toLowerCase());
-        let folder = item.folder.toLowerCase();
-
-        while ((match = rx.exec(searchText)) !== null) {
-          switch (match[1]) {
-            case "folder":
-              if (folder !== match[2]) {
-                return false;
-              }
-              break;
-            case "tag":
-              if (!tags.some((tag) => match !== null && tag === match[2])) {
-                return false;
-              }
-              break;
-            default:
-              break;
-          }
-        }
-        let rest = searchText.replace(rx, "").trim();
-        for (let i in tags) {
-          if (tags[i].indexOf(rest) !== -1) {
-            return true;
-          }
-        }
-        return title.indexOf(rest) !== -1;
-      });
+    if (this.state.searchText !== "") {
+      filesContent = filesContent.filter((item) =>
+        this.includeInSearchResult(item, this.state.searchText.toLowerCase())
+      );
     }
 
     let folders: { title: string; id: number }[] = Array.from(
@@ -145,20 +142,10 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     return (
       <>
         <MyBreadcrumbs />
-        <InputGroup>
-          <FormControl
-            className={styles.searchBar}
-            aria-label="Search"
-            placeholder="Search..."
-            value={this.state.searchText}
-            onChange={(e) => this.handleSearchTextChange(e.target.value)}
-          />
-          <InputGroup.Append>
-            <Button variant="secondary" className={styles.searchBarIcon}>
-              <FontAwesomeIcon size="1x" icon={faInfoCircle} />
-            </Button>
-          </InputGroup.Append>
-        </InputGroup>
+        <SearchBox
+          searchText={this.state.searchText}
+          onSearchTextChange={(text) => this.handleSearchTextChange(text)}
+        />
         {this.state.isLoaded ? (
           this.state.error ? (
             <> Error retrieving data: {this.state.error} </>

@@ -32,26 +32,25 @@ $button-border: transparentize($gray-300, 1);
 }
 
 .searchBarIcon {
-  border-radius: 0.5rem;
+	border-radius: 0.5rem;
+	border-top-right-radius: 0.5rem !important;
+	border-bottom-right-radius: 0.5rem !important;
   background-color: $gray-100;
   border-color: $gray-100;
   color: $gray-500;
-  transition: 0.2s background-color;
-  -webkit-transition: 0.2s background-color;
-  -moz-transition: 0.2s back-ground-color;
+  transition: 0.2s background-color !important;
+  -webkit-transition: 0.2s background-color !important;
+  -moz-transition: 0.2s back-ground-color !important;
 }
 
-.searchBarIcon:hover {
-  background: $gray-200;
-  color: $gray-700 !important;
-  border-color: $gray-200;
-}
 
 .searchBarIcon:global(.active),
-.searchBarIcon:active {
-  background: $black !important;
-  font-weight: 500 !important;
-  color: $white !important;
-  border-color: $black;
+.searchBarIcon:active,
+.searchBarIcon:hover,  
+.searchBarIcon:focus{
+  background: $gray-200 !important;
+  color: $gray-700 !important;
+	border-color: $gray-200 !important;
+	box-shadow: none !important;
 }
 
