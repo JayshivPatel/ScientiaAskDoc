@@ -32,6 +32,7 @@ export interface ResourceState {
   error: any;
   isLoaded: Boolean;
   resources: Resource[];
+  searchText: string;
 }
 
 class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
@@ -41,6 +42,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       error: null,
       isLoaded: false,
       resources: [],
+      searchText: "",
     };
   }
 
@@ -50,10 +52,10 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       ? this.props.moduleID.slice(2)
       : this.props.moduleID;
     const onSuccess = (data: { json: () => Promise<any> }) => {
-			let resourceArr: Resource[] = [];
-			
+      let resourceArr: Resource[] = [];
+
       data.json().then((json) => {
-				console.log(`data: ${data}`);
+        console.log(`data: ${data}`);
         for (const key in json) {
           let resource = json[key];
           resourceArr.push({
@@ -63,7 +65,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             folder: resource.category,
             id: resource.id,
           } as Resource);
-				}
+        }
         this.setState({ resources: resourceArr, isLoaded: true });
       });
     };
@@ -71,16 +73,20 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       error.text().then((errorText) => {
         this.setState({ error: errorText, isLoaded: true });
       });
-		};
+    };
 
     request(api.MATERIALS_RESOURCES, "GET", onSuccess, onFailure, {
       year: this.props.year,
       course: moduleCode,
-		});
+    });
+  }
+
+  handleSearchTextChange(searchText: string) {
+    this.setState({ searchText: searchText });
   }
 
   render() {
-		let scope = this.props.scope || "";
+    let scope = this.props.scope || "";
     let resources = this.state.resources;
 
     let quickAccessItems = resources.filter(
@@ -88,9 +94,24 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
         tags.includes("new") && (scope === "" || scope === folder)
     );
 
-    let currentDirectoryFiles = resources.filter(
-      ({ folder }) => folder === scope
-    );
+    let filesContent: Resource[] = resources;
+    if (scope !== "") {
+      filesContent = filesContent.filter(({ folder }) => folder === scope);
+		}
+		
+		let searchText = this.state.searchText.toLowerCase();
+    if (searchText !== "") {
+      filesContent = filesContent.filter(
+        ({ title, tags }) => {
+					for(let i in tags){
+						if (tags[i].toLowerCase().indexOf(searchText) !== -1){
+							return true;
+						}
+					}
+				 return	title.toLowerCase().indexOf(searchText) !== -1;
+				}
+      );
+    }
 
     let folders: { title: string; id: number }[] = Array.from(
       new Set<string>(resources.map((res: Resource) => res.folder))
@@ -107,6 +128,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             className={styles.searchBar}
             aria-label="Search"
             placeholder="Search..."
+            value={this.state.searchText}
+            onChange={(e) => this.handleSearchTextChange(e.target.value)}
           />
           <InputGroup.Append>
             <Button variant="secondary" className={styles.searchBarIcon}>
@@ -119,13 +142,17 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             <> Error retrieving data: {this.state.error} </>
           ) : (
             <>
-              {scope === "" && folders.length > 0 ? (
+              {this.state.searchText === "" &&
+              scope === "" &&
+              folders.length > 0 ? (
                 <ResourcesFolderView folderItems={folders} />
               ) : null}
-              {scope !== "" && currentDirectoryFiles.length > 0 ? (
-                <CurrentDirectoryView documentItems={currentDirectoryFiles} />
+              {scope !== "" || this.state.searchText !== "" ? (
+                <CurrentDirectoryView documentItems={filesContent} />
               ) : null}
-              {scope === "" && quickAccessItems.length > 0 ? (
+              {this.state.searchText === "" &&
+              scope === "" &&
+              quickAccessItems.length > 0 ? (
                 <QuickAccessView quickAccessItems={quickAccessItems} />
               ) : null}
             </>
