@@ -1,7 +1,7 @@
 import React from "react";
 
 import { request } from "../../../utils/api";
-import { api } from "../../../constants/routes";
+import { api, methods } from "../../../constants/routes";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
 import QuickAccessView from "components/molecules/QuickAccessView";
@@ -41,11 +41,12 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     };
   }
 
+  moduleCode = this.props.moduleID.startsWith("CO")
+  ? this.props.moduleID.slice(2)
+  : this.props.moduleID;
+
   componentDidMount() {
     this.setState({ isLoaded: false });
-    let moduleCode = this.props.moduleID.startsWith("CO")
-      ? this.props.moduleID.slice(2)
-      : this.props.moduleID;
     const onSuccess = (data: { json: () => Promise<any> }) => {
       let resourceArr: Resource[] = [];
 
@@ -69,9 +70,9 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       });
     };
 
-    request(api.MATERIALS_RESOURCES, "GET", onSuccess, onFailure, {
+    request(api.MATERIALS_RESOURCES, methods.GET, onSuccess, onFailure, {
       year: this.props.year,
-      course: moduleCode,
+      course: this.moduleCode,
     });
   }
 
@@ -157,12 +158,12 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
                 <ResourcesFolderView folderItems={folders} />
               ) : null}
               {scope !== "" || this.state.searchText !== "" ? (
-                <CurrentDirectoryView documentItems={filesContent} />
+                <CurrentDirectoryView documentItems={filesContent} moduleCode={this.moduleCode}/>
               ) : null}
               {this.state.searchText === "" &&
               scope === "" &&
               quickAccessItems.length > 0 ? (
-                <QuickAccessView quickAccessItems={quickAccessItems} />
+                <QuickAccessView quickAccessItems={quickAccessItems} moduleCode={this.moduleCode}/>
               ) : null}
             </>
           )

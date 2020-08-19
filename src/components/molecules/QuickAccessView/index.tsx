@@ -4,6 +4,8 @@ import styles from "./style.module.scss";
 import classNames from "classnames";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
+import { api, methods } from "../../../constants/routes";
+import { request } from "../../../utils/api";
 import ResourceSectionHeader from "../ResourceSectionHeader";
 import FileCard from "components/atoms/FileCard";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
@@ -16,6 +18,7 @@ export interface QuickAccessProps {
     tags: string[];
     id: number;
   }[];
+  moduleCode?: string;
 }
 
 type idBooleanMap = { [key: number]: boolean };
@@ -70,6 +73,50 @@ class QuickAccessView extends React.Component<QuickAccessProps, MyState> {
     this.setState({ isSelected, isHoveringOver });
   }
 
+  handleDownloadClick() {
+    const onSuccess = (filename: string, data: any) => {
+      // TODO: Try to navigate straight to the endpoint url instead of creating an object url
+      data.blob().then((blob: any) => {
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+        a.remove();
+      });
+    };
+    // Partial application utility
+    const downloadFilename = (filename: string) => {
+      return (data: any) => {
+        return onSuccess(filename, data);
+      };
+    };
+    const onFailure = (error: { text: () => Promise<any> }) => {
+      error.text().then((errorText) => {
+        console.log(errorText);
+      });
+    };
+
+    let indices : number[] = [];
+    for (let key in this.state.isSelected) {
+      if (this.state.isSelected[key]) {
+        indices.push(parseInt(key));
+      }
+    }
+
+    if (indices.length === 1) {
+      // Only one file to download, call single file endpoint
+      let filename = this.props.quickAccessItems.filter(document => document.id === indices[0])[0].title;
+      request(api.MATERIALS_RESOURCES_FILE(indices[0]), methods.GET, downloadFilename(filename), onFailure);
+    } else {
+      // Multiple files to download, call zipped selection endpoint
+      request(api.MATERIALS_ZIPPED_SELECTION, methods.GET, downloadFilename("materials.zip"), onFailure, {
+        ids: indices,
+        course: this.props.moduleCode,
+      });
+    }
+  }
+
   handleSelectAllClick() {
     let items = this.props.quickAccessItems;
     let isSelected = JSON.parse(JSON.stringify(this.state.isSelected));
@@ -81,6 +128,24 @@ class QuickAccessView extends React.Component<QuickAccessProps, MyState> {
   }
 
   handleCardClick(id: number) {
+    const onSuccess = (data: any) => {
+      // TODO: Try to navigate straight to the endpoint url instead of creating an object url
+      data.blob().then((blob: any) => {
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.target = "_blank";
+        a.href = url;
+        a.click();
+        a.remove();
+      });
+    };
+    const onFailure = (error: { text: () => Promise<any> }) => {
+      error.text().then((errorText) => {
+        console.log(errorText);
+      });
+		};
+    request(api.MATERIALS_RESOURCES_FILE(id), methods.GET, onSuccess, onFailure);
+
     if (this.isAnySelected()) {
       this.handleIconClick(id);
     }
@@ -103,6 +168,7 @@ class QuickAccessView extends React.Component<QuickAccessProps, MyState> {
       <>
         <ResourceSectionHeader
           heading="Quick Access"
+          onDownloadClick={() => this.handleDownloadClick()}
           showDownload={this.isAnySelected()}
           onSelectAllClick={() => this.handleSelectAllClick()}
           selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}

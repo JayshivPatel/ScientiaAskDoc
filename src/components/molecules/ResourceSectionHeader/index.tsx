@@ -10,6 +10,7 @@ export interface SectionHeaderProps {
   heading: string;
   selectAllIcon: IconDefinition;
   showDownload: Boolean;
+	onDownloadClick: (event: React.MouseEvent) => void;
 	onSelectAllClick: (event: React.MouseEvent) => void;
 	checkBoxColur: string;
 }
@@ -18,6 +19,7 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
   heading,
   showDownload,
   selectAllIcon,
+  onDownloadClick,
 	onSelectAllClick,
 	checkBoxColur,
 }: SectionHeaderProps) => {
@@ -37,7 +39,7 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
 								style={{ color: checkBoxColur }}
 								variant="secondary" 
                 className={styles.sectionHeaderButton}
-                onClick={() => {}}
+                onClick={onDownloadClick}
               >
                 <FontAwesomeIcon
                   className={styles.buttonIcon}

@@ -1,6 +1,6 @@
 import authConstants from "../constants/auth";
 import authenticationService from "../utils/auth";
-import { api } from "../constants/routes"
+import { api, methods } from "../constants/routes"
 
 interface RequestOptions {
     [key: string]: any
@@ -26,7 +26,7 @@ export async function request(url: string, method: string, onSuccess: any, onErr
     },
   };
 
-  if (method === "GET") {
+  if (method === methods.GET) {
     url = url + "?" + new URLSearchParams(body);
   } else {
     options.body = JSON.stringify(body);

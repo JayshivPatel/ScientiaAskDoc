@@ -2,10 +2,13 @@ import React from "react";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import ResourceSectionHeader from "../ResourceSectionHeader";
+import { api, methods } from "../../../constants/routes";
+import { request } from "../../../utils/api";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import { faFileAlt, faFileVideo, faFilePdf, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import FileCard from "components/atoms/FileCard";
 
+// TODO: Refactor out duplication with QuickAccessView
 export interface CurrentDirectoryViewProps {
   documentItems: {
     title: string;
@@ -13,6 +16,7 @@ export interface CurrentDirectoryViewProps {
     tags: string[];
     id: number;
   }[];
+  moduleCode?: string;
 }
 
 type idBooleanMap = { [key: number]: boolean };
@@ -65,6 +69,49 @@ class CurrentDirectoryView extends React.Component<CurrentDirectoryViewProps, My
     this.setState({ isSelected, isHoveringOver });
   }
 
+  handleDownloadClick() {
+    const onSuccess = (filename: string, data: any) => {
+      data.blob().then((blob: any) => {
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+        a.remove();
+      });
+    };
+    // Partial application utility
+    const downloadFilename = (filename: string) => {
+      return (data: any) => {
+        return onSuccess(filename, data);
+      };
+    };
+    const onFailure = (error: { text: () => Promise<any> }) => {
+      error.text().then((errorText) => {
+        console.log(errorText);
+      });
+    };
+
+    let indices : number[] = [];
+    for (let key in this.state.isSelected) {
+      if (this.state.isSelected[key]) {
+        indices.push(parseInt(key));
+      }
+    }
+
+    if (indices.length === 1) {
+      // Only one file to download, call single file endpoint
+      let filename = this.props.documentItems.filter(document => document.id === indices[0])[0].title;
+      request(api.MATERIALS_RESOURCES_FILE(indices[0]), methods.GET, downloadFilename(filename), onFailure);
+    } else {
+      // Multiple files to download, call zipped selection endpoint
+      request(api.MATERIALS_ZIPPED_SELECTION, methods.GET, downloadFilename("materials.zip"), onFailure, {
+        ids: indices,
+        course: this.props.moduleCode,
+      });
+    }
+  }
+
   handleSelectAllClick() {
     let items = this.props.documentItems;
     let isSelected = JSON.parse(JSON.stringify(this.state.isSelected));
@@ -76,6 +123,23 @@ class CurrentDirectoryView extends React.Component<CurrentDirectoryViewProps, My
   }
 
   handleCardClick(id: number) {
+    const onSuccess = (data: any) => {
+      data.blob().then((blob: any) => {
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.target = "_blank";
+        a.href = url;
+        a.click();
+        a.remove();
+      });
+    };
+    const onFailure = (error: { text: () => Promise<any> }) => {
+      error.text().then((errorText) => {
+        console.log(errorText);
+      });
+		};
+    request(api.MATERIALS_RESOURCES_FILE(id), methods.GET, onSuccess, onFailure);
+
     if (this.isAnySelected()) {
       this.handleIconClick(id);
     }
@@ -99,6 +163,7 @@ class CurrentDirectoryView extends React.Component<CurrentDirectoryViewProps, My
         <ResourceSectionHeader
           heading="Files"
           showDownload={this.isAnySelected()}
+          onDownloadClick={() => this.handleDownloadClick()}
           onSelectAllClick={() => this.handleSelectAllClick()}
 					selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
 					checkBoxColur={this.isAnySelected() ? "#495057" : "#dee2e6"}
