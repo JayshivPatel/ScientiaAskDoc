@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
 
 import { request } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
@@ -7,6 +8,7 @@ import SearchBox from "components/molecules/SearchBox";
 import QuickAccessView from "./components/QuickAccessView";
 import CurrentDirectoryView from "./components/CurrentDirectoryView";
 import FoldersView from "./components/FoldersView";
+import ListView from "./components/ListView";
 
 export interface Resource {
   title: string;
@@ -25,6 +27,7 @@ export interface ResourcesProps {
 export interface ResourceState {
   error: any;
   isLoaded: Boolean;
+  view: string;
   resources: Resource[];
   searchText: string;
 }
@@ -39,6 +42,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     this.state = {
       error: null,
       isLoaded: false,
+      view: "folder",
       resources: [],
       searchText: "",
     };
@@ -150,6 +154,37 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     );
   }
 
+  includeInSearchResult(item: Resource, searchText: string) {
+    let rx = /([a-z]+)\(([^)]+)\)/gi;
+    let match: RegExpExecArray | null;
+    let title = item.title.toLowerCase();
+    let tags = item.tags.map((tag) => tag.toLowerCase());
+    let type = item.type.toLowerCase();
+
+    while ((match = rx.exec(searchText)) !== null) {
+      switch (match[1]) {
+        case "type":
+          if (type !== match[2]) {
+            return false;
+          }
+          break;
+        case "tag":
+          let matchSafe = match as RegExpExecArray;
+          if (!tags.some((tag) => tag === matchSafe[2])) {
+            return false;
+          }
+          break;
+        default:
+          break;
+      }
+    }
+    let rest = searchText.replace(rx, "").trim();
+    if (tags.some((tag) => tag.indexOf(rest) !== -1)) {
+      return true;
+    }
+    return title.indexOf(rest) !== -1;
+  }
+
   getloadedItems() {
     if (!this.state.isLoaded) return <>Loading...</>;
     if (this.state.error)
@@ -157,19 +192,30 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     return null;
   }
 
+  toggleView() {
+    if (this.state.view === "folder") {
+      this.setState({ view: "list" });
+    } else {
+      this.setState({ view: "folder" });
+    }
+  }
+
   render() {
     let scope = this.props.scope || "";
-    return (
-      <>
-        <MyBreadcrumbs />
-        <SearchBox
-          searchText={this.state.searchText}
-          onSearchTextChange={(text) => this.setState({ searchText: text })}
-        />
-        {this.getloadedItems() || (
+
+    let folders: { title: string; id: number }[] = Array.from(
+      new Set<string>(this.state.resources.map((res: Resource) => res.folder))
+    ).map((title: string, id: number) => ({
+      title: title,
+      id: id,
+    }));
+
+    const view = () => {
+      switch(this.state.view) {
+        case "folder": return (
           <>
             <FoldersView
-              resources={this.state.resources}
+              folders={folders}
               scope={scope}
               searchText={this.state.searchText}
             />
@@ -180,6 +226,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               searchText={this.state.searchText}
               onDownloadClick={(ids) => this.handleFileDownload(ids)}
               onItemClick={(id) => this.handleFileClick(id)}
+              includeInSearchResult={this.includeInSearchResult}
             />
 
             <QuickAccessView
@@ -189,6 +236,37 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               onDownloadClick={(ids) => this.handleFileDownload(ids)}
               onItemClick={(id) => this.handleFileClick(id)}
             />
+          </>
+        );
+        case "list": return (
+          <>
+            <ListView
+              folders={folders}
+              resources={this.state.resources}
+              searchText={this.state.searchText}
+              onDownloadClick={(ids) => this.handleFileDownload(ids)}
+              onItemClick={(id) => this.handleFileClick(id)}
+              includeInSearchResult={this.includeInSearchResult}
+            />
+          </>
+        );
+      }
+    }
+    return (
+      <>
+        <MyBreadcrumbs />
+        <SearchBox
+          searchText={this.state.searchText}
+          onSearchTextChange={(text) => this.setState({ searchText: text })}
+        />
+        {this.getloadedItems() || (
+          <>
+            { view() }
+            <Button
+              variant="secondary"
+              className="mt-5"
+              onClick={this.state.isLoaded ? () => this.toggleView() : undefined}
+            >Toggle view</Button>
           </>
         )}
       </>
