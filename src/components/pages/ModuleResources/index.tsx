@@ -1,14 +1,12 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
-
 import { request, download } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
-import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import SearchBox from "components/molecules/SearchBox";
 import QuickAccessView from "./components/QuickAccessView";
 import CurrentDirectoryView from "./components/CurrentDirectoryView";
 import FoldersView from "./components/FoldersView";
 import ListView from "./components/ListView";
+import TopSection from "./components/TopSection";
 
 export interface Resource {
   title: string;
@@ -85,33 +83,24 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       let filename = this.state.resources.filter(
         (document) => document.id === indices[0]
       )[0].title;
-      download(
-        api.MATERIALS_RESOURCES_FILE(indices[0]),
-        methods.GET,
-        filename
-      );
+      download(api.MATERIALS_RESOURCES_FILE(indices[0]), methods.GET, filename);
     } else {
       // Multiple files to download, call zipped selection endpoint
-      download(
-        api.MATERIALS_ZIPPED_SELECTION,
-        methods.GET,
-        "materials.zip",
-        {
-          ids: indices,
-          course: this.moduleCode,
-          year: this.props.year
-        }
-      );
+      download(api.MATERIALS_ZIPPED_SELECTION, methods.GET, "materials.zip", {
+        ids: indices,
+        course: this.moduleCode,
+        year: this.props.year,
+      });
     }
   }
 
   handleSectionDownload(category: string) {
-		download(api.MATERIALS_ZIPPED, methods.GET, category + ".zip", {
-			year: this.props.year,
-			course: this.moduleCode,
-			category: category,
-		})
-	}
+    download(api.MATERIALS_ZIPPED, methods.GET, category + ".zip", {
+      year: this.props.year,
+      course: this.moduleCode,
+      category: category,
+    });
+  }
 
   handleFileClick(id: number) {
     const onSuccess = (data: any) => {
@@ -195,65 +184,63 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     }));
 
     const view = () => {
-      switch(this.state.view) {
-        case "folder": return (
-          <>
-            <FoldersView
-              folders={folders}
-              scope={scope}
-              searchText={this.state.searchText}
-            />
+      switch (this.state.view) {
+        case "folder":
+          return (
+            <>
+              <FoldersView
+                folders={folders}
+                scope={scope}
+                searchText={this.state.searchText}
+              />
 
-            <CurrentDirectoryView
-              resources={this.state.resources}
-              scope={scope}
-              searchText={this.state.searchText}
-              onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onItemClick={(id) => this.handleFileClick(id)}
-              includeInSearchResult={this.includeInSearchResult}
-            />
+              <CurrentDirectoryView
+                resources={this.state.resources}
+                scope={scope}
+                searchText={this.state.searchText}
+                onDownloadClick={(ids) => this.handleFileDownload(ids)}
+                onItemClick={(id) => this.handleFileClick(id)}
+                includeInSearchResult={this.includeInSearchResult}
+              />
 
-            <QuickAccessView
-              resources={this.state.resources}
-              scope={scope}
-              searchText={this.state.searchText}
-              onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onItemClick={(id) => this.handleFileClick(id)}
-            />
-          </>
-        );
-        case "list": return (
-          <>
-            <ListView
-              folders={folders}
-              resources={this.state.resources}
-              searchText={this.state.searchText}
-              onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onSectionDownloadClick={(category) => this.handleSectionDownload(category)}
-              onItemClick={(id) => this.handleFileClick(id)}
-              includeInSearchResult={this.includeInSearchResult}
-            />
-          </>
-        );
+              <QuickAccessView
+                resources={this.state.resources}
+                scope={scope}
+                searchText={this.state.searchText}
+                onDownloadClick={(ids) => this.handleFileDownload(ids)}
+                onItemClick={(id) => this.handleFileClick(id)}
+              />
+            </>
+          );
+        case "list":
+          return (
+            <>
+              <ListView
+                folders={folders}
+                resources={this.state.resources}
+                searchText={this.state.searchText}
+                onDownloadClick={(ids) => this.handleFileDownload(ids)}
+                onSectionDownloadClick={(category) =>
+                  this.handleSectionDownload(category)
+                }
+                onItemClick={(id) => this.handleFileClick(id)}
+                includeInSearchResult={this.includeInSearchResult}
+              />
+            </>
+          );
       }
-    }
+    };
     return (
       <>
-        <MyBreadcrumbs />
+        <TopSection
+          onViewButtonClick={() => this.toggleView()}
+          currentView={this.state.view}
+        />
         <SearchBox
           searchText={this.state.searchText}
           onSearchTextChange={(text) => this.setState({ searchText: text })}
         />
-        {this.getloadedItems() || (
-          <>
-            { view() }
-            <Button
-              variant="secondary"
-              className="mt-5"
-              onClick={this.state.isLoaded ? () => this.toggleView() : undefined}
-            >Toggle view</Button>
-          </>
-        )}
+        {this.getloadedItems() || view()}
       </>
     );
   }

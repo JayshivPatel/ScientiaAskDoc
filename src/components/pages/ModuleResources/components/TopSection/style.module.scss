@@ -1,0 +1,25 @@
+@import "assets/scss/custom";
+
+.viewToggleButton {
+  background-color: $white !important;
+	// color: $gray-500 !important;
+	color: $gray-700 !important;
+  border-width: 0px !important;	
+  justify-content: space-between !important;
+	height: 2.25rem !important;
+	box-shadow: none !important;
+	border-radius: .5rem;
+	margin-bottom: 1rem;
+	font-size: 1.05rem;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.viewToggleButton:hover{
+  background-color: $gray-100 !important;
+	color: $gray-700 !important;
+}
+
+.buttonIcon {
+  margin-top: 0.22rem;
+}

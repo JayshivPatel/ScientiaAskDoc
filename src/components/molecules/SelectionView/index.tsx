@@ -141,7 +141,7 @@ class SelectionView extends React.Component<MyProps, MyState> {
           showDownload={this.isAnySelected()}
           onSelectAllClick={() => this.handleSelectAllClick()}
           selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
-          checkBoxColur={this.isAnySelected() ? "#495057" : "#dee2e6"}
+          checkBoxColur={this.isAnySelected() ? "#495057" : "#e9ecef"}
         />
 
         {this.props.render(selection)}
