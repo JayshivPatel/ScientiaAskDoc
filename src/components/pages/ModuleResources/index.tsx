@@ -234,7 +234,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       <>
         <TopSection
           onViewButtonClick={() => this.toggleView()}
-          currentView={this.state.view}
+					currentView={this.state.view}
+					scope={scope}
         />
         <SearchBox
           searchText={this.state.searchText}

@@ -8,31 +8,37 @@ import { faBorderAll, faList } from "@fortawesome/free-solid-svg-icons";
 export interface TopSectionProps {
   onViewButtonClick: (event: React.MouseEvent) => void;
   currentView: string;
+  scope: string;
 }
 
 const TopSection: React.FC<TopSectionProps> = ({
   onViewButtonClick,
   currentView,
+  scope,
 }) => {
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "space-between",
-				alignItems: "center",
-				marginTop: "-0.375rem"
+        alignItems: "center",
+				marginTop: scope === "" ? "-0.375rem" : "0",
+        marginBottom: scope === "" ? "-0.375rem" : "0",
       }}
     >
       <MyBreadcrumbs />
-      <Button
-        className={styles.viewToggleButton}
-        onClick={onViewButtonClick}
-        variant="secondary"
-      >
-        <FontAwesomeIcon
-          icon={currentView === "folder" ? faBorderAll : faList}
-        />
-      </Button>
+
+      {scope === "" ? (
+        <Button
+          className={styles.viewToggleButton}
+          onClick={onViewButtonClick}
+          variant="secondary"
+        >
+          <FontAwesomeIcon
+            icon={currentView === "folder" ? faBorderAll : faList}
+          />
+        </Button>
+      ) : null}
     </div>
   );
 };
