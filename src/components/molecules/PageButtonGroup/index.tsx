@@ -10,15 +10,16 @@ export interface ButtonGroupProps {
     title: string;
     icon: IconDefinition;
     url: string;
-  }[];
+	}[];
+	style?: React.CSSProperties;
 }
 
 const PageButtonGroup: React.FC<ButtonGroupProps> = ({
-  buttons,
+  buttons,style,
 }: ButtonGroupProps) => {
   return (
     <>
-      <Row style={{ marginTop: "45px" }}>
+      <Row style={style}>
         {buttons.map(({ title, icon, url }, i) => (
           <Col
             xs={6}

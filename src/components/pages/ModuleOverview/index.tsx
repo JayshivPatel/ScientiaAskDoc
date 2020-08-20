@@ -88,7 +88,7 @@ const ModuleOverview: React.FC = () => {
       </p>
 
       <h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
-      <PageButtonGroup buttons={buttons}/>
+      <PageButtonGroup buttons={buttons}  style={{ marginTop: "1.25rem" }}/>
     </>
   );
 };

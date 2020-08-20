@@ -3,7 +3,7 @@ import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import PersonCard from "components/atoms/PersonCard";
-import DashboardButtonGroup from "components/molecules/PageButtonGroup";
+import PageButtonGroup from "components/molecules/PageButtonGroup";
 import TutorCardGroup from "components/molecules/TutorCardGroup";
 import NoticeBoard from "components/organisms/NoticeBoard";
 import {
@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => {
     <>
       <MyBreadcrumbs />
       <PersonCard />
-      <DashboardButtonGroup buttons={buttons}/>
+      <PageButtonGroup buttons={buttons} style={{ marginTop: "2.8rem" }}/>
       <Row>
         <Col xs={12} sm={12} md={12} lg={6} style={{ marginTop: "30px", paddingRight: "10px", paddingLeft: "10px"}}>
           <TutorCardGroup />
