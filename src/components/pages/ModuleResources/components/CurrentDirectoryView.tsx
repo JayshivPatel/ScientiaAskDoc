@@ -22,6 +22,7 @@ function includeInSearchResult(item: Resource, searchText: string) {
 	let type = item.type.toLowerCase();
 
 	while ((match = rx.exec(searchText)) !== null) {
+
 		switch (match[1]) {
 			case "type":
 				if (type !== match[2]) {
@@ -40,7 +41,7 @@ function includeInSearchResult(item: Resource, searchText: string) {
 	}
 	let rest = searchText.replace(rx, "").trim();
 	if (tags.some((tag) => tag.indexOf(rest) !== -1)) {
-		return false;
+		return true;
 	}
 	return title.indexOf(rest) !== -1;
 }
