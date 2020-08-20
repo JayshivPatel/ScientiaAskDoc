@@ -39,3 +39,26 @@ export async function request(url: string, method: string, onSuccess: any, onErr
       onError(error);
     })
 }
+
+// Utility that downloads files fetched by request
+export async function download(url: string, method: string, filename: string, body?: any) {
+  const onSuccess = (data: any) => {
+    // TODO: Try to navigate straight to the endpoint url instead of creating an object url
+    data.blob().then((blob: any) => {
+      let url = URL.createObjectURL(blob);
+      let a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.click();
+      a.remove();
+    });
+  };
+
+  const onFailure = (error: { text: () => Promise<any> }) => {
+    error.text().then((errorText) => {
+      console.log(errorText);
+    });
+  };
+
+  request(url, method, onSuccess, onFailure, body);
+}

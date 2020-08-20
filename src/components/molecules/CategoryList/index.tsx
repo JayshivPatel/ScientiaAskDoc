@@ -64,12 +64,13 @@ const CategoryList: React.FC<{ select: SelectionProps }> = ({
             </Col>
             <Col md="auto">
               <FontAwesomeIcon
-                style={{ marginLeft: "8px", fontSize: "1.125rem", cursor: "default"}}
+                style={{ fontSize: "1.125rem" }}
                 icon={icon}
                 onClick={(e) => {
                   e.stopPropagation();
                   select.handleIconClick(id);
                 }}
+                fixedWidth
               />
             </Col>
           </Row>

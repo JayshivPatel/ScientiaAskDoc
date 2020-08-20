@@ -18,5 +18,6 @@ export const api = {
   MATERIALS_COURSES: config.MATERIALS_URL + "/courses/1819",
   MATERIALS_RESOURCES: config.MATERIALS_URL + "/resources",
   MATERIALS_RESOURCES_FILE: (id: number) => { return config.MATERIALS_URL + "/resources/" + id + "/file"; },
+  MATERIALS_ZIPPED: config.MATERIALS_URL + "/resources/zipped",
   MATERIALS_ZIPPED_SELECTION: config.MATERIALS_URL + "/resources/zipped/selection",
 }

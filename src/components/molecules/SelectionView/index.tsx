@@ -2,9 +2,10 @@ import React from "react";
 import ResourceSectionHeader from "./components/SectionHeader";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 
-interface SelectionItem {
+export interface SelectionItem {
   title: string;
   id: number;
+  folder?: string;
   type?: string;
   tags?: string[];
 }

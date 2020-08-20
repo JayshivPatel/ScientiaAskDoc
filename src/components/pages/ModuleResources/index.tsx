@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
-import { request } from "../../../utils/api";
+import { request, download } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import SearchBox from "components/molecules/SearchBox";
@@ -80,54 +80,38 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
   }
 
   handleFileDownload(indices: number[]) {
-    const onSuccess = (filename: string, data: any) => {
-      // TODO: Try to navigate straight to the endpoint url instead of creating an object url
-      data.blob().then((blob: any) => {
-        let url = URL.createObjectURL(blob);
-        let a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-        a.click();
-        a.remove();
-      });
-    };
-    // Partial application utility
-    const downloadFilename = (filename: string) => {
-      return (data: any) => {
-        return onSuccess(filename, data);
-      };
-    };
-    const onFailure = (error: { text: () => Promise<any> }) => {
-      error.text().then((errorText) => {
-        console.log(errorText);
-      });
-    };
-
     if (indices.length === 1) {
       // Only one file to download, call single file endpoint
       let filename = this.state.resources.filter(
         (document) => document.id === indices[0]
       )[0].title;
-      request(
+      download(
         api.MATERIALS_RESOURCES_FILE(indices[0]),
         methods.GET,
-        downloadFilename(filename),
-        onFailure
+        filename
       );
     } else {
       // Multiple files to download, call zipped selection endpoint
-      request(
+      download(
         api.MATERIALS_ZIPPED_SELECTION,
         methods.GET,
-        downloadFilename("materials.zip"),
-        onFailure,
+        "materials.zip",
         {
           ids: indices,
           course: this.moduleCode,
+          year: this.props.year
         }
       );
     }
   }
+
+  handleSectionDownload(category: string) {
+		download(api.MATERIALS_ZIPPED, methods.GET, category + ".zip", {
+			year: this.props.year,
+			course: this.moduleCode,
+			category: category,
+		})
+	}
 
   handleFileClick(id: number) {
     const onSuccess = (data: any) => {
@@ -245,6 +229,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               resources={this.state.resources}
               searchText={this.state.searchText}
               onDownloadClick={(ids) => this.handleFileDownload(ids)}
+              onSectionDownloadClick={(category) => this.handleSectionDownload(category)}
               onItemClick={(id) => this.handleFileClick(id)}
               includeInSearchResult={this.includeInSearchResult}
             />
