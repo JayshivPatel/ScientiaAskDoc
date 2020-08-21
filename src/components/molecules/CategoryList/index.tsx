@@ -43,7 +43,7 @@ const CategoryList: React.FC<{ select: SelectionProps }> = ({
 
         return (
           <Row
-          style={{ marginTop: "10px", marginLeft: "-10px", marginRight: "-10px", cursor: "pointer" }}
+          style={{ marginTop: "10px", marginLeft: "0px", marginRight: "0px", cursor: "pointer" }}
           onClick={() => select.handleCardClick(id)}
           onMouseOver={() => select.handleMouseOver(id)}
           onMouseOut={() => select.handleMouseOut(id)}
@@ -62,9 +62,9 @@ const CategoryList: React.FC<{ select: SelectionProps }> = ({
                 </Badge>
               ))}
             </Col>
-            <Col md="auto">
+            <Col md="auto" className="px-0">
               <FontAwesomeIcon
-                style={{ fontSize: "1.125rem" }}
+                style={{ fontSize: "1.125rem", marginRight: "0.5rem" }}
                 icon={icon}
                 onClick={(e) => {
                   e.stopPropagation();

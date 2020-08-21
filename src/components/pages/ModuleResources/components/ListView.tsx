@@ -5,6 +5,7 @@ import SelectionView, {
 } from "components/molecules/SelectionView";
 import CategoryList from "components/molecules/CategoryList";
 import CategoryHeader from "components/molecules/CategoryHeader";
+import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 
 export interface ListViewProps {
   folders: Folder[];
@@ -20,8 +21,7 @@ const ListView: React.FC<ListViewProps> = ({
   folders,
   resources,
   searchText,
-	onDownloadClick,
-	onSectionDownloadClick,
+  onDownloadClick,
   onItemClick,
   includeInSearchResult
 }) => {
@@ -44,14 +44,36 @@ const ListView: React.FC<ListViewProps> = ({
 					let categorySelect : SelectionProps = {
 						selectionItems: select.selectionItems.filter(res => res.folder === title),
 						state: select.state,
+						setIsSelected: select.setIsSelected,
 						isAnySelected: select.isAnySelected,
 						handleCardClick: select.handleCardClick,
 						handleIconClick: select.handleIconClick,
 						handleMouseOver: select.handleMouseOver,
 						handleMouseOut: select.handleMouseOut
 					}
+
+				  function isAllSelected() : boolean {
+						let isSelected = categorySelect.state.isSelected;
+						return categorySelect.selectionItems.every(item => isSelected[item.id]);
+					}
+
+					function onSelectAllClick() {
+						let setValue = !isAllSelected();
+						let isSelected = JSON.parse(JSON.stringify(select.state.isSelected));
+						let items = categorySelect.selectionItems;
+						for (let item in items) {
+							isSelected[items[item].id] = setValue;
+						}
+						select.setIsSelected(isSelected);
+					}
+
 					return (<>
-						<CategoryHeader heading={title} onDownloadClick={() => onSectionDownloadClick(title)}/>
+						<CategoryHeader
+							heading={title}
+						  onSelectAllClick={onSelectAllClick}
+							selectAllIcon={isAllSelected() ? faCheckSquare : faSquare}
+							checkBoxColor={select.isAnySelected() ? "#495057" : "#e9ecef"}
+						/>
 						<CategoryList select={categorySelect} />
 					</>)
 				})}
