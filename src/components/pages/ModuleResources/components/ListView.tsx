@@ -1,5 +1,5 @@
 import React from "react";
-import { Resource } from "../index";
+import { Resource, Folder } from "../index";
 import SelectionView, {
   SelectionProps,
 } from "components/molecules/SelectionView";
@@ -7,10 +7,7 @@ import CategoryList from "components/molecules/CategoryList";
 import CategoryHeader from "components/molecules/CategoryHeader";
 
 export interface ListViewProps {
-  folders: {
-	title: string;
-	id: number;
-  }[];
+  folders: Folder[];
   resources: Resource[];
   searchText: string;
 	onDownloadClick: (identifiers: number[]) => void;
