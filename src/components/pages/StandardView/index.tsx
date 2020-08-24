@@ -28,13 +28,15 @@ interface StandardViewProps {
   }[];
   toggledLeft: boolean;
   toggledRight: boolean;
-  onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
+	onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
+  onSettingsClick: (event: React.MouseEvent) => void;
 }
 
 const StandardView: React.FC<StandardViewProps> = ({
   toggledLeft,
   toggledRight,
-  onOverlayClick,
+	onOverlayClick,
+	onSettingsClick,
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
 
@@ -132,7 +134,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           <Route path="/" render={() => <Redirect to="/dashboard" />} />
         </Switch>
       </Container>
-      <RightBar />
+      <RightBar onSettingsClick={onSettingsClick} />
     </div>
   );
 };
