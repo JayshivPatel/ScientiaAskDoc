@@ -7,7 +7,7 @@ import QuickAccessView from "./components/QuickAccessView";
 import CurrentDirectoryView from "./components/CurrentDirectoryView";
 import FoldersView from "./components/FoldersView";
 import ListView from "./components/ListView";
-import TopSection from "./components/TopSection";
+import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
 export interface Resource {
   title: string;
@@ -20,13 +20,13 @@ export interface Resource {
 export interface ResourcesProps {
   year: string;
   moduleID: string;
-  scope?: string;
+	scope?: string;
+	view: string;
 }
 
 export interface ResourceState {
   error: any;
   isLoaded: Boolean;
-  view: string;
   resources: Resource[];
   searchText: string;
 }
@@ -41,7 +41,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     this.state = {
       error: null,
       isLoaded: false,
-      view: "folder",
       resources: [],
       searchText: ""
     };
@@ -178,13 +177,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     return null;
   }
 
-  toggleView() {
-    if (this.state.view === "folder") {
-      this.setState({ view: "list" });
-    } else {
-      this.setState({ view: "folder" });
-    }
-  }
 
   render() {
     let scope = this.props.scope || "";
@@ -197,8 +189,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     }));
 
     const view = () => {
-      switch (this.state.view) {
-        case "folder":
+      switch (this.props.view) {
+        case "card":
           return (
             <>
               <FoldersView
@@ -245,11 +237,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     };
     return (
       <>
-        <TopSection
-          onViewButtonClick={() => this.toggleView()}
-          currentView={this.state.view}
-          scope={scope}
-        />
+			<MyBreadcrumbs />
         <SearchBox
           searchText={this.state.searchText}
           onSearchTextChange={text => this.setState({ searchText: text })}

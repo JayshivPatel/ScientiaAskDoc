@@ -27,6 +27,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-transition-group": "^4.4.1",
+    "react-use-localstorage": "^3.5.3",
     "types": "^0.1.1",
     "typescript": "~3.7.2"
   },
