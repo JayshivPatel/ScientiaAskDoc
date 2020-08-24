@@ -1,6 +1,10 @@
 @import "assets/scss/custom";
 @import "assets/scss/global";
 
+.sectionHeader {
+  cursor: pointer;
+}
+
 .alert-enter {
   opacity: 0;
   transform: scale(0.9);
