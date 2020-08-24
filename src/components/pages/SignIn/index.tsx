@@ -42,7 +42,7 @@ const SignIn: React.FC = () => {
           <InputGroup className="mb-3">
             <FormControl
               className={styles.inputBar}
-              placeholder="Username"
+              placeholder="E.g. abc123"
               aria-label="Username"
               aria-describedby="basic-addon1"
             />
@@ -51,7 +51,8 @@ const SignIn: React.FC = () => {
           <InputGroup className="mb-3">
             <FormControl
               className={styles.inputBar}
-              placeholder="Password"
+							placeholder="Enter your password"
+							type="password"
               aria-label="Password"
               aria-describedby="basic-addon1"
             />
