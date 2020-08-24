@@ -1,4 +1,5 @@
 import React from "react";
+import Spinner from "react-bootstrap/Spinner";
 import { request, download } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
 import SearchBox from "components/molecules/SearchBox";
@@ -42,7 +43,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       isLoaded: false,
       view: "folder",
       resources: [],
-      searchText: "",
+      searchText: ""
     };
   }
 
@@ -51,7 +52,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     const onSuccess = (data: { json: () => Promise<any> }) => {
       let resourceArr: Resource[] = [];
 
-      data.json().then((json) => {
+      data.json().then(json => {
         for (const key in json) {
           let resource = json[key];
           resourceArr.push({
@@ -59,21 +60,21 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             type: resource.type,
             tags: resource.tags,
             folder: resource.category,
-            id: resource.id,
+            id: resource.id
           } as Resource);
         }
         this.setState({ resources: resourceArr, isLoaded: true });
       });
     };
     const onFailure = (error: { text: () => Promise<any> }) => {
-      error.text().then((errorText) => {
+      error.text().then(errorText => {
         this.setState({ error: errorText, isLoaded: true });
       });
     };
 
     request(api.MATERIALS_RESOURCES, methods.GET, onSuccess, onFailure, {
       year: this.props.year,
-      course: this.moduleCode,
+      course: this.moduleCode
     });
   }
 
@@ -81,7 +82,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     if (indices.length === 1) {
       // Only one file to download, call single file endpoint
       let filename = this.state.resources.filter(
-        (document) => document.id === indices[0]
+        document => document.id === indices[0]
       )[0].title;
       download(api.MATERIALS_RESOURCES_FILE(indices[0]), methods.GET, filename);
     } else {
@@ -89,7 +90,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       download(api.MATERIALS_ZIPPED_SELECTION, methods.GET, "materials.zip", {
         ids: indices,
         course: this.moduleCode,
-        year: this.props.year,
+        year: this.props.year
       });
     }
   }
@@ -98,7 +99,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     download(api.MATERIALS_ZIPPED, methods.GET, category + ".zip", {
       year: this.props.year,
       course: this.moduleCode,
-      category: category,
+      category: category
     });
   }
 
@@ -115,7 +116,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       });
     };
     const onFailure = (error: { text: () => Promise<any> }) => {
-      error.text().then((errorText) => {
+      error.text().then(errorText => {
         console.log(errorText);
       });
     };
@@ -131,7 +132,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     let rx = /([a-z]+)\(([^)]+)\)/gi;
     let match: RegExpExecArray | null;
     let title = item.title.toLowerCase();
-    let tags = item.tags.map((tag) => tag.toLowerCase());
+    let tags = item.tags.map(tag => tag.toLowerCase());
     let type = item.type.toLowerCase();
 
     while ((match = rx.exec(searchText)) !== null) {
@@ -143,7 +144,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
           break;
         case "tag":
           let matchSafe = match as RegExpExecArray;
-          if (!tags.some((tag) => tag === matchSafe[2])) {
+          if (!tags.some(tag => tag === matchSafe[2])) {
             return false;
           }
           break;
@@ -152,14 +153,26 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       }
     }
     let rest = searchText.replace(rx, "").trim();
-    if (tags.some((tag) => tag.indexOf(rest) !== -1)) {
+    if (tags.some(tag => tag.indexOf(rest) !== -1)) {
       return true;
     }
     return title.indexOf(rest) !== -1;
   }
 
   getloadedItems() {
-    if (!this.state.isLoaded) return <>Loading...</>;
+    if (!this.state.isLoaded)
+      return (
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)"
+          }}
+        >
+          <Spinner animation="border" />
+        </div>
+      );
     if (this.state.error)
       return <> Error retrieving data: {this.state.error} </>;
     return null;
@@ -180,7 +193,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       new Set<string>(this.state.resources.map((res: Resource) => res.folder))
     ).map((title: string, id: number) => ({
       title: title,
-      id: id,
+      id: id
     }));
 
     const view = () => {
@@ -198,8 +211,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
                 resources={this.state.resources}
                 scope={scope}
                 searchText={this.state.searchText}
-                onDownloadClick={(ids) => this.handleFileDownload(ids)}
-                onItemClick={(id) => this.handleFileClick(id)}
+                onDownloadClick={ids => this.handleFileDownload(ids)}
+                onItemClick={id => this.handleFileClick(id)}
                 includeInSearchResult={this.includeInSearchResult}
               />
 
@@ -207,8 +220,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
                 resources={this.state.resources}
                 scope={scope}
                 searchText={this.state.searchText}
-                onDownloadClick={(ids) => this.handleFileDownload(ids)}
-                onItemClick={(id) => this.handleFileClick(id)}
+                onDownloadClick={ids => this.handleFileDownload(ids)}
+                onItemClick={id => this.handleFileClick(id)}
               />
             </>
           );
@@ -219,11 +232,11 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
                 folders={folders}
                 resources={this.state.resources}
                 searchText={this.state.searchText}
-                onDownloadClick={(ids) => this.handleFileDownload(ids)}
-                onSectionDownloadClick={(category) =>
+                onDownloadClick={ids => this.handleFileDownload(ids)}
+                onSectionDownloadClick={category =>
                   this.handleSectionDownload(category)
                 }
-                onItemClick={(id) => this.handleFileClick(id)}
+                onItemClick={id => this.handleFileClick(id)}
                 includeInSearchResult={this.includeInSearchResult}
               />
             </>
@@ -234,12 +247,12 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       <>
         <TopSection
           onViewButtonClick={() => this.toggleView()}
-					currentView={this.state.view}
-					scope={scope}
+          currentView={this.state.view}
+          scope={scope}
         />
         <SearchBox
           searchText={this.state.searchText}
-          onSearchTextChange={(text) => this.setState({ searchText: text })}
+          onSearchTextChange={text => this.setState({ searchText: text })}
         />
         {this.getloadedItems() || view()}
       </>
