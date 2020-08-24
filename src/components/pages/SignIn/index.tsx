@@ -2,8 +2,6 @@ import React from "react";
 import styles from "./style.module.scss";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import logo from "assets/images/logo.svg";
 import cx from "classnames";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -42,7 +40,7 @@ const SignIn: React.FC = () => {
           <InputGroup className="mb-3">
             <FormControl
               className={styles.inputBar}
-              placeholder="E.g. abc123"
+              placeholder="abc123"
               aria-label="Username"
               aria-describedby="basic-addon1"
             />
