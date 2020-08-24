@@ -9,11 +9,12 @@
 .centered {
   position: fixed;
   left: 50%;
-  /* bring your own prefixes */
   transform: translate(-50%, 0%);
   margin-top: 75px;
-  width: 50%;
+  max-width: 420px;
+  width: 90%;
 }
+
 
 $button-background: transparentize($gray-200, 0.75);
 $button-border: transparentize($gray-300, 1);

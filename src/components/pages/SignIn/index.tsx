@@ -30,16 +30,14 @@ const SignIn: React.FC = () => {
         </Container>
       </Navbar>
 
-      <Row className={styles.centered}>
-        <Col style={{ marginRight: "15px", marginLeft: "15px" }}>
+      <div className={styles.centered}>
+        <div style={{ marginRight: "15px", marginLeft: "15px", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <h1>Scientia</h1>
-          <p style={{ color: "gray" }}>
-            A central hub for the Department of Computing's EdTech services
-            focused on enhancing the remote learning experience for students and
-            faculty alike
-          </p>
-        </Col>
-        <Col style={{ marginRight: "15px", marginLeft: "15px" }}>
+          <i style={{ color: "gray"}}>
+            A Unified DoC EdTech Platform
+          </i>
+        </div>
+        <div style={{ marginRight: "15px", marginLeft: "15px", marginTop: "20px" }}>
           <p className={styles.inputBarHeading}>Username</p>
           <InputGroup className="mb-3">
             <FormControl
@@ -61,8 +59,8 @@ const SignIn: React.FC = () => {
           <Button variant="secondary" className={styles.inputButton}>
             Sign In
           </Button>
-        </Col>
-      </Row>
+        </div>
+      </div>
     </>
   );
 };
