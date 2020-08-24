@@ -9,6 +9,8 @@ import {
   faChalkboardTeacher,
 } from "@fortawesome/free-solid-svg-icons";
 import StandardView from "./pages/StandardView";
+import { Switch, Route } from "react-router-dom";
+import SignIn from "./pages/SignIn";
 
 type AppState = {
   toggledLeft: boolean;
@@ -83,29 +85,37 @@ class App extends React.Component<{}, AppState> {
 
     return (
       <>
-        <TopBar
-          pages={horizontalBarPages}
-          onFavIconClick={(e) => {
-            e.preventDefault();
-            this.toggleLeftBar();
-          }}
-          onUserIconClick={(e) => {
-            e.preventDefault();
-            this.toggleRightBar();
-          }}
-        />
+        <Switch>
+          <Route path="/signin">
+            <SignIn />
+          </Route>
 
-        <StandardView
-          pages={horizontalBarPages}
-          toggledLeft={this.state.toggledLeft}
-          toggledRight={this.state.toggledRight}
-          onOverlayClick={(e) => {
-            e.preventDefault();
-            this.setState({ toggledLeft: false, toggledRight: false });
-          }}
-        />
+          <Route path="/">
+            <TopBar
+              pages={horizontalBarPages}
+              onFavIconClick={(e) => {
+                e.preventDefault();
+                this.toggleLeftBar();
+              }}
+              onUserIconClick={(e) => {
+                e.preventDefault();
+                this.toggleRightBar();
+              }}
+            />
 
-        <BottomBar pages={horizontalBarPages} />
+            <StandardView
+              pages={horizontalBarPages}
+              toggledLeft={this.state.toggledLeft}
+              toggledRight={this.state.toggledRight}
+              onOverlayClick={(e) => {
+                e.preventDefault();
+                this.setState({ toggledLeft: false, toggledRight: false });
+              }}
+            />
+
+            <BottomBar pages={horizontalBarPages} />
+          </Route>
+        </Switch>
       </>
     );
   }
