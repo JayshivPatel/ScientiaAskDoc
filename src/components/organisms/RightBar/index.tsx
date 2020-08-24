@@ -3,14 +3,19 @@ import styles from "./style.module.scss";
 import CalendarGroup from "components/molecules/CalendarGroup";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
 import { faCog, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+
 export interface RightBarState {
   date: Date;
 }
 
-class RightBar extends React.Component<{}, RightBarState> {
+export interface RightBarProps {
+  onSettingsClick: (event: React.MouseEvent) => void;
+}
+
+class RightBar extends React.Component<RightBarProps, RightBarState> {
   private timerID: number = 0;
 
-  constructor(props: {}) {
+  constructor(props: RightBarProps) {
     super(props);
     this.state = { date: new Date() };
   }
@@ -33,7 +38,8 @@ class RightBar extends React.Component<{}, RightBarState> {
     let buttons = [
       {
         title: "Settings",
-        icon: faCog,
+				icon: faCog,
+				onClick: this.props.onSettingsClick,
       },
       {
         title: "Sign Out",

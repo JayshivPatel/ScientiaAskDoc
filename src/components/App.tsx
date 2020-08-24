@@ -11,24 +11,30 @@ import {
 import StandardView from "./pages/StandardView";
 import { Switch, Route } from "react-router-dom";
 import SignIn from "./pages/SignIn";
+import SettingsModal from "./pages/SettingsModal";
 
 type AppState = {
   toggledLeft: boolean;
   toggledRight: boolean;
+	showSettings: boolean;
+	fileView: string;
 };
 
 class App extends React.Component<{}, AppState> {
   width = window.innerWidth;
   constructor(props: {}) {
     super(props);
-    this.state = { toggledLeft: false, toggledRight: false };
+    this.state = {
+      toggledLeft: false,
+      toggledRight: false,
+			showSettings: false,
+			fileView: localStorage.getItem("fileView") || "card",
+    };
   }
 
   componentDidMount() {
-    let interfaceSize = localStorage.getItem("interfaceSize");
-    if (interfaceSize) {
-      document.documentElement.style.fontSize = `${interfaceSize}%`;
-    }
+		document.documentElement.style.fontSize = `${localStorage.getItem("interfaceSize") || "100"}%`;
+    
 
     window.addEventListener("resize", () => {
       if (window.innerWidth !== this.width) {
@@ -73,7 +79,12 @@ class App extends React.Component<{}, AppState> {
         toggledRight: true,
       });
     }
-  }
+	}
+	
+	setFileView(view: string){
+		this.setState({fileView: view});
+		localStorage.setItem("fileView", view);
+	}
 
   render() {
     const horizontalBarPages = [
@@ -85,6 +96,14 @@ class App extends React.Component<{}, AppState> {
 
     return (
       <>
+        <SettingsModal
+          show={this.state.showSettings}
+					onHide={() => this.setState({ showSettings: false })}
+					fileView={this.state.fileView}
+					onCardViewClick={() => this.setFileView("card")}
+					onListViewClick={() => this.setFileView("list")}
+        />
+
         <Switch>
           <Route path="/signin">
             <SignIn />
@@ -104,13 +123,14 @@ class App extends React.Component<{}, AppState> {
             />
 
             <StandardView
-              pages={horizontalBarPages}
+              onSettingsClick={() => this.setState({ showSettings: true })}
               toggledLeft={this.state.toggledLeft}
               toggledRight={this.state.toggledRight}
               onOverlayClick={(e) => {
                 e.preventDefault();
                 this.setState({ toggledLeft: false, toggledRight: false });
-              }}
+							}}
+							fileView={this.state.fileView}
             />
 
             <BottomBar pages={horizontalBarPages} />
