@@ -1,5 +1,4 @@
 import React from "react";
-import { Folder } from "../index";
 import SelectionView, {
   SelectionProps,
 } from "components/molecules/SelectionView";
@@ -7,17 +6,18 @@ import FoldersRow from "components/molecules/FoldersRow";
 import { useHistory, useLocation } from "react-router-dom";
 
 export interface FoldersViewProps {
-  folders: Folder[];
+  folders: {
+    title: string;
+    id: number;
+  }[];
   scope: string;
   searchText: string;
-  handleFolderDownload: (ids: number[]) => void;
 }
 
 const FoldersView: React.FC<FoldersViewProps> = ({
   folders,
   scope,
   searchText,
-  handleFolderDownload
 }) => {
   let history = useHistory();
   let location = useLocation();
@@ -31,7 +31,7 @@ const FoldersView: React.FC<FoldersViewProps> = ({
     return (
       <SelectionView
         heading="Folders"
-        onDownloadClick={handleFolderDownload}
+        onDownloadClick={() => {}}
         onItemClick={handleFolderClick}
         selectionItems={folders}
         render={(select: SelectionProps) => <FoldersRow select={select} />}

@@ -15,7 +15,6 @@ type idBooleanMap = { [key: number]: boolean };
 export interface SelectionProps {
   selectionItems: SelectionItem[];
   state: MyState;
-  setIsSelected: (selection: idBooleanMap) => void;
   isAnySelected: () => boolean;
   handleCardClick: (id: number) => void;
   handleIconClick: (id: number) => void;
@@ -127,7 +126,6 @@ class SelectionView extends React.Component<MyProps, MyState> {
     let selection: SelectionProps = {
       selectionItems: this.props.selectionItems,
       state: this.state,
-      setIsSelected: (selection) => this.setState({ isSelected: selection }),
       isAnySelected: () => this.isAnySelected(),
       handleCardClick: (id: number) => this.handleCardClick(id),
       handleIconClick: (id: number) => this.handleIconClick(id),
