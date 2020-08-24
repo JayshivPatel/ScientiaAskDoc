@@ -6,13 +6,8 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import FileCard from "components/atoms/FileCard";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
-import {
-  faFileAlt,
-  IconDefinition,
-  faFilePdf,
-  faFileVideo,
-} from "@fortawesome/free-solid-svg-icons";
 import { SelectionProps } from "components/molecules/SelectionView";
+import { resourceTypeToIcon } from "../../pages/ModuleResources"
 
 const QuickAccessRow: React.FC<{ select: SelectionProps }> = ({
   select,
@@ -27,19 +22,8 @@ const QuickAccessRow: React.FC<{ select: SelectionProps }> = ({
       )}
     >
       {select.selectionItems.map(({ title, type, tags, id }) => {
-        let normalIcon: IconDefinition;
         if (type === undefined || tags === undefined) return null;
-        switch (type) {
-          case "pdf":
-            normalIcon = faFilePdf;
-            break;
-          case "video":
-            normalIcon = faFileVideo;
-            break;
-          default:
-            normalIcon = faFileAlt;
-            break;
-        }
+
         return (
           <Col
             xs={7}
@@ -64,7 +48,7 @@ const QuickAccessRow: React.FC<{ select: SelectionProps }> = ({
                   ? select.state.isSelected[id]
                     ? faCheckSquare
                     : faSquare
-                  : normalIcon
+                  : resourceTypeToIcon(type)
               }
               onClick={() => select.handleCardClick(id)}
               onIconClick={(e) => {

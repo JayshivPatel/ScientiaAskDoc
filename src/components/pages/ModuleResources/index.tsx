@@ -7,6 +7,13 @@ import CurrentDirectoryView from "./components/CurrentDirectoryView";
 import FoldersView from "./components/FoldersView";
 import ListView from "./components/ListView";
 import TopSection from "./components/TopSection";
+import {
+  faFileAlt,
+  faFilePdf,
+  faFileVideo,
+  faLink,
+  IconDefinition,
+} from "@fortawesome/free-solid-svg-icons";
 
 export interface Resource {
   title: string;
@@ -14,6 +21,7 @@ export interface Resource {
   tags: string[];
   folder: string;
   id: number;
+  path?: string;
 }
 
 export interface Folder {
@@ -33,6 +41,19 @@ export interface ResourceState {
   view: string;
   resources: Resource[];
   searchText: string;
+}
+
+export function resourceTypeToIcon(type: string): IconDefinition {
+  switch (type) {
+    case "pdf":
+      return faFilePdf;
+    case "video":
+      return faFileVideo;
+    case "link":
+      return faLink;
+    default:
+      return faFileAlt;
+  }
 }
 
 class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
@@ -65,6 +86,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             tags: resource.tags,
             folder: resource.category,
             id: resource.id,
+            path: resource.path,
           } as Resource);
         }
         this.setState({ resources: resourceArr, isLoaded: true });
@@ -128,7 +150,17 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     });
   }
 
-  handleFileClick(id: number) {
+  handleResourceClick(id: number) {
+    let resource = this.state.resources.find(resource => resource.id === id);
+    if (resource === undefined) {
+      return;
+    }
+    if (resource.type === "link") {
+      window.open(resource.path, "_blank");
+      return;
+    }
+
+    // Resource is of file type, get from Materials
     const onSuccess = (data: any) => {
       // TODO: Try to navigate straight to the endpoint url instead of creating an object url
       data.blob().then((blob: any) => {
@@ -218,7 +250,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               scope={scope}
               searchText={this.state.searchText}
               onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onItemClick={(id) => this.handleFileClick(id)}
+              onItemClick={(id) => this.handleResourceClick(id)}
               includeInSearchResult={this.includeInSearchResult}
             />
 
@@ -227,7 +259,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               scope={scope}
               searchText={this.state.searchText}
               onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onItemClick={(id) => this.handleFileClick(id)}
+              onItemClick={(id) => this.handleResourceClick(id)}
             />
           </>
         );
@@ -239,7 +271,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               searchText={this.state.searchText}
               onDownloadClick={(ids) => this.handleFileDownload(ids)}
               onSectionDownloadClick={(category) => this.handleSectionDownload(category)}
-              onItemClick={(id) => this.handleFileClick(id)}
+              onItemClick={(id) => this.handleResourceClick(id)}
               includeInSearchResult={this.includeInSearchResult}
             />
           </>
