@@ -6,14 +6,9 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Badge from "react-bootstrap/Badge";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
-import {
-  faFileAlt,
-  IconDefinition,
-  faFilePdf,
-  faFileVideo,
-} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SelectionProps } from "components/molecules/SelectionView";
+import { resourceTypeToIcon } from "../../pages/ModuleResources"
 
 const CategoryList: React.FC<{ select: SelectionProps }> = ({
   select,
@@ -21,29 +16,17 @@ const CategoryList: React.FC<{ select: SelectionProps }> = ({
   return (
       <>
       {select.selectionItems.map(({ title, type, tags, id }) => {
-        let normalIcon: IconDefinition;
         if (type === undefined || tags === undefined) return null;
-        switch (type) {
-          case "pdf":
-            normalIcon = faFilePdf;
-            break;
-          case "video":
-            normalIcon = faFileVideo;
-            break;
-          default:
-            normalIcon = faFileAlt;
-            break;
-        }
 
         let icon = select.isAnySelected() || select.state.isHoveringOver[id]
           ? select.state.isSelected[id]
             ? faCheckSquare
             : faSquare
-          : normalIcon;
+          : resourceTypeToIcon(type);
 
         return (
           <Row
-          style={{ marginTop: "10px", marginLeft: "-10px", marginRight: "-10px", cursor: "pointer" }}
+          style={{ marginTop: "10px", marginLeft: "0px", marginRight: "0px", cursor: "pointer" }}
           onClick={() => select.handleCardClick(id)}
           onMouseOver={() => select.handleMouseOver(id)}
           onMouseOut={() => select.handleMouseOut(id)}
@@ -62,9 +45,9 @@ const CategoryList: React.FC<{ select: SelectionProps }> = ({
                 </Badge>
               ))}
             </Col>
-            <Col md="auto">
+            <Col md="auto" className="px-0">
               <FontAwesomeIcon
-                style={{ fontSize: "1.125rem" }}
+                style={{ fontSize: "1.125rem", marginRight: "0.5rem" }}
                 icon={icon}
                 onClick={(e) => {
                   e.stopPropagation();
