@@ -24,7 +24,7 @@
 
 .fileCard :global(.card-footer) {
   border-radius: 0.5rem !important;
-  background: $white;
+  background: transparent;
   border-width: 0rem;
 	padding: 0.5rem;
 	padding-top: 0;
@@ -48,7 +48,7 @@
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
 
-	max-height: 70%;
+	height: 120px;
 	object-fit: cover;
 }
 
@@ -56,4 +56,10 @@
   scrollbar-width: thin;
   scrollbar-color: $white $white;
   margin-top: 0.625rem;
+}
+
+@media (max-width: 576px) {
+	.fileCard :global(.card-img-top) {
+		height: 100px;
+	}
 }

@@ -25,7 +25,7 @@ const CurrentDirectoryRow: React.FC<{ select: SelectionProps }> = ({
           <Col
             xs={6}
             sm={6}
-            md={6}
+            md={4}
             lg={4}
             xl={3}
             key={id}
