@@ -1,80 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Dandruff from "components/molecules/Dandruff";
 import { useParams } from "react-router-dom";
 import styles from "./style.module.scss";
 import classNames from "classnames";
 import { faGlobe, faLink } from "@fortawesome/free-solid-svg-icons";
 import PageButtonGroup from "components/molecules/PageButtonGroup";
+import { request } from "../../../utils/api";
+import { api, methods } from "../../../constants/routes";
 
 const ModuleOverview: React.FC = () => {
   let { id } = useParams();
   let moduleCode = id.startsWith("CO") ? id.slice(2) : id;
-  const buttons = [
+  const initialButtons = [
     {
       title: "College Website",
       icon: faGlobe,
-      url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`
+      url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
     },
-    {
-      title: "Materials Link 1",
-      icon: faLink,
-      url: `https://www.doc.ic.ac.uk/~wl/teachlocal/arch/`
-    },
-    {
-      title: "Materials Link 2",
-      icon: faLink,
-      url: "http://wp.doc.ic.ac.uk/bkainz/teaching/co112-hardware/"
-    }
   ];
+  let [buttons, setButtons] = useState(initialButtons);
 
-  let modules = [
-    {
-      title: "Introduction to Logic",
-      code: "CO140"
-    },
-    {
-      title: "Discrete Mathematics",
-      code: "CO142"
-    },
-    {
-      title: "Introduction to Computer Systems",
-      code: "CO112"
-    },
-    {
-      title: "Mathematical Methods",
-      code: "CO145"
-    },
-    {
-      title: "Java",
-      code: "CO120.2"
-    },
-    {
-      title: "Graphs and Algorithms",
-      code: "CO150"
-    },
-    {
-      title: "Introduction to Computer Architecture",
-      code: "CO113"
-    },
-    {
-      title: "Reasoning About Programs",
-      code: "CO141"
-    },
-    {
-      title: "Introduction to Databases",
-      code: "CO130"
-    }
-  ];
-  let heading = id;
-  for (let i in modules) {
-    if (modules[i].code === id) {
-      heading = modules[i].title;
-      break;
-    }
-  }
+  useEffect(() => {
+    const onSuccess = (data: { json: () => Promise<any> }) => {
+      let newButtons: any[] = [];
+
+      data.json().then((json) => {
+        for (const key in json) {
+          let resource = json[key];
+          if (resource.type !== "link") continue;
+
+          newButtons.push({
+            title: resource.title,
+            icon: faLink,
+            url: resource.path,
+          });
+        }
+        setButtons((b) => b.concat(newButtons));
+      });
+    };
+    request(
+      api.MATERIALS_RESOURCES,
+      methods.GET,
+      onSuccess,
+      () => {
+        console.log("fail");
+      },
+      {
+        year: "2021",
+        course: moduleCode,
+      }
+    );
+  }, [moduleCode]);
+
   return (
     <>
-      <Dandruff heading={heading} />
+      <Dandruff heading={generateHeading(id)} />
 
       <h4 className={classNames(styles.moduleSectionHeader)}>Description</h4>
       <p>
@@ -92,5 +72,54 @@ const ModuleOverview: React.FC = () => {
     </>
   );
 };
+
+function generateHeading(id: string) {
+  let modules = [
+    {
+      title: "Introduction to Logic",
+      code: "CO140",
+    },
+    {
+      title: "Discrete Mathematics",
+      code: "CO142",
+    },
+    {
+      title: "Introduction to Computer Systems",
+      code: "CO112",
+    },
+    {
+      title: "Mathematical Methods",
+      code: "CO145",
+    },
+    {
+      title: "Java",
+      code: "CO120.2",
+    },
+    {
+      title: "Graphs and Algorithms",
+      code: "CO150",
+    },
+    {
+      title: "Introduction to Computer Architecture",
+      code: "CO113",
+    },
+    {
+      title: "Reasoning About Programs",
+      code: "CO141",
+    },
+    {
+      title: "Introduction to Databases",
+      code: "CO130",
+    },
+  ];
+  let heading = id;
+  for (let i in modules) {
+    if (modules[i].code === id) {
+      heading = modules[i].title;
+      break;
+    }
+  }
+  return heading;
+}
 
 export default ModuleOverview;
