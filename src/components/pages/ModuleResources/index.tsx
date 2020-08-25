@@ -1,4 +1,5 @@
 import React from "react";
+import Spinner from "react-bootstrap/Spinner";
 import { request, download } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
 import SearchBox from "components/molecules/SearchBox";
@@ -6,7 +7,6 @@ import QuickAccessView from "./components/QuickAccessView";
 import CurrentDirectoryView from "./components/CurrentDirectoryView";
 import FoldersView from "./components/FoldersView";
 import ListView from "./components/ListView";
-import TopSection from "./components/TopSection";
 import {
   faFileAlt,
   faFilePdf,
@@ -14,6 +14,7 @@ import {
   faLink,
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
+import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
 export interface Resource {
   title: string;
@@ -32,13 +33,13 @@ export interface Folder {
 export interface ResourcesProps {
   year: string;
   moduleID: string;
-  scope?: string;
+	scope?: string;
+	view: string;
 }
 
 export interface ResourceState {
   error: any;
   isLoaded: Boolean;
-  view: string;
   resources: Resource[];
   searchText: string;
 }
@@ -66,9 +67,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     this.state = {
       error: null,
       isLoaded: false,
-      view: "folder",
       resources: [],
-      searchText: "",
+      searchText: ""
     };
   }
 
@@ -77,7 +77,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     const onSuccess = (data: { json: () => Promise<any> }) => {
       let resourceArr: Resource[] = [];
 
-      data.json().then((json) => {
+      data.json().then(json => {
         for (const key in json) {
           let resource = json[key];
           resourceArr.push({
@@ -93,14 +93,14 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       });
     };
     const onFailure = (error: { text: () => Promise<any> }) => {
-      error.text().then((errorText) => {
+      error.text().then(errorText => {
         this.setState({ error: errorText, isLoaded: true });
       });
     };
 
     request(api.MATERIALS_RESOURCES, methods.GET, onSuccess, onFailure, {
       year: this.props.year,
-      course: this.moduleCode,
+      course: this.moduleCode
     });
   }
 
@@ -115,7 +115,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     if (indices.length === 1) {
       // Only one file to download, call single file endpoint
       let filename = this.state.resources.filter(
-        (document) => document.id === indices[0]
+        document => document.id === indices[0]
       )[0].title;
       download(api.MATERIALS_RESOURCES_FILE(indices[0]), methods.GET, filename);
     } else {
@@ -123,7 +123,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       download(api.MATERIALS_ZIPPED_SELECTION, methods.GET, "materials.zip", {
         ids: indices,
         course: this.moduleCode,
-        year: this.props.year,
+        year: this.props.year
       });
     }
   }
@@ -146,7 +146,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     download(api.MATERIALS_ZIPPED, methods.GET, category + ".zip", {
       year: this.props.year,
       course: this.moduleCode,
-      category: category,
+      category: category
     });
   }
 
@@ -173,7 +173,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       });
     };
     const onFailure = (error: { text: () => Promise<any> }) => {
-      error.text().then((errorText) => {
+      error.text().then(errorText => {
         console.log(errorText);
       });
     };
@@ -189,7 +189,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     let rx = /([a-z]+)\(([^)]+)\)/gi;
     let match: RegExpExecArray | null;
     let title = item.title.toLowerCase();
-    let tags = item.tags.map((tag) => tag.toLowerCase());
+    let tags = item.tags.map(tag => tag.toLowerCase());
     let type = item.type.toLowerCase();
 
     while ((match = rx.exec(searchText)) !== null) {
@@ -201,7 +201,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
           break;
         case "tag":
           let matchSafe = match as RegExpExecArray;
-          if (!tags.some((tag) => tag === matchSafe[2])) {
+          if (!tags.some(tag => tag === matchSafe[2])) {
             return false;
           }
           break;
@@ -210,32 +210,37 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       }
     }
     let rest = searchText.replace(rx, "").trim();
-    if (tags.some((tag) => tag.indexOf(rest) !== -1)) {
+    if (tags.some(tag => tag.indexOf(rest) !== -1)) {
       return true;
     }
     return title.indexOf(rest) !== -1;
   }
 
   getloadedItems() {
-    if (!this.state.isLoaded) return <>Loading...</>;
+    if (!this.state.isLoaded)
+      return (
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)"
+          }}
+        >
+          <Spinner animation="border" />
+        </div>
+      );
     if (this.state.error)
       return <> Error retrieving data: {this.state.error} </>;
     return null;
   }
 
-  toggleView() {
-    if (this.state.view === "folder") {
-      this.setState({ view: "list" });
-    } else {
-      this.setState({ view: "folder" });
-    }
-  }
 
   render() {
     let scope = this.props.scope || "";
 
     const view = () => {
-      switch(this.state.view) {
+      switch(this.props.view) {
         case "folder": return (
           <>
             <FoldersView
@@ -280,14 +285,10 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     };
     return (
       <>
-        <TopSection
-          onViewButtonClick={() => this.toggleView()}
-					currentView={this.state.view}
-					scope={scope}
-        />
+			<MyBreadcrumbs />
         <SearchBox
           searchText={this.state.searchText}
-          onSearchTextChange={(text) => this.setState({ searchText: text })}
+          onSearchTextChange={text => this.setState({ searchText: text })}
         />
         {this.getloadedItems() || view()}
       </>

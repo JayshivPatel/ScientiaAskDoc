@@ -9,24 +9,32 @@ import {
   faChalkboardTeacher,
 } from "@fortawesome/free-solid-svg-icons";
 import StandardView from "./pages/StandardView";
+import { Switch, Route } from "react-router-dom";
+import SignIn from "./pages/SignIn";
+import SettingsModal from "./pages/SettingsModal";
 
 type AppState = {
   toggledLeft: boolean;
   toggledRight: boolean;
+	showSettings: boolean;
+	fileView: string;
 };
 
 class App extends React.Component<{}, AppState> {
   width = window.innerWidth;
   constructor(props: {}) {
     super(props);
-    this.state = { toggledLeft: false, toggledRight: false };
+    this.state = {
+      toggledLeft: false,
+      toggledRight: false,
+			showSettings: false,
+			fileView: localStorage.getItem("fileView") || "folder",
+    };
   }
 
   componentDidMount() {
-    let interfaceSize = localStorage.getItem("interfaceSize");
-    if (interfaceSize) {
-      document.documentElement.style.fontSize = `${interfaceSize}%`;
-    }
+		document.documentElement.style.fontSize = `${localStorage.getItem("interfaceSize") || "100"}%`;
+    
 
     window.addEventListener("resize", () => {
       if (window.innerWidth !== this.width) {
@@ -71,7 +79,12 @@ class App extends React.Component<{}, AppState> {
         toggledRight: true,
       });
     }
-  }
+	}
+	
+	setFileView(view: string){
+		this.setState({fileView: view});
+		localStorage.setItem("fileView", view);
+	}
 
   render() {
     const horizontalBarPages = [
@@ -83,29 +96,46 @@ class App extends React.Component<{}, AppState> {
 
     return (
       <>
-        <TopBar
-          pages={horizontalBarPages}
-          onFavIconClick={(e) => {
-            e.preventDefault();
-            this.toggleLeftBar();
-          }}
-          onUserIconClick={(e) => {
-            e.preventDefault();
-            this.toggleRightBar();
-          }}
+        <SettingsModal
+          show={this.state.showSettings}
+					onHide={() => this.setState({ showSettings: false })}
+					fileView={this.state.fileView}
+					onCardViewClick={() => this.setFileView("folder")}
+					onListViewClick={() => this.setFileView("list")}
         />
 
-        <StandardView
-          pages={horizontalBarPages}
-          toggledLeft={this.state.toggledLeft}
-          toggledRight={this.state.toggledRight}
-          onOverlayClick={(e) => {
-            e.preventDefault();
-            this.setState({ toggledLeft: false, toggledRight: false });
-          }}
-        />
+        <Switch>
+          <Route path="/signin">
+            <SignIn />
+          </Route>
 
-        <BottomBar pages={horizontalBarPages} />
+          <Route path="/">
+            <TopBar
+              pages={horizontalBarPages}
+              onFavIconClick={(e) => {
+                e.preventDefault();
+                this.toggleLeftBar();
+              }}
+              onUserIconClick={(e) => {
+                e.preventDefault();
+                this.toggleRightBar();
+              }}
+            />
+
+            <StandardView
+              onSettingsClick={() => this.setState({ showSettings: true })}
+              toggledLeft={this.state.toggledLeft}
+              toggledRight={this.state.toggledRight}
+              onOverlayClick={(e) => {
+                e.preventDefault();
+                this.setState({ toggledLeft: false, toggledRight: false });
+							}}
+							fileView={this.state.fileView}
+            />
+
+            <BottomBar pages={horizontalBarPages} />
+          </Route>
+        </Switch>
       </>
     );
   }

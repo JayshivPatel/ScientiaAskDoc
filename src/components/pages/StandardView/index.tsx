@@ -22,19 +22,19 @@ import ExamGrading from "../Exams/Grading";
 import ExamPastPapers from "../Exams/PastPapers";
 
 interface StandardViewProps {
-  pages: {
-    name: string;
-    path: string;
-  }[];
   toggledLeft: boolean;
-  toggledRight: boolean;
-  onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
+	toggledRight: boolean;
+	fileView: string;
+	onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
+	onSettingsClick: (event: React.MouseEvent) => void;
 }
 
 const StandardView: React.FC<StandardViewProps> = ({
   toggledLeft,
   toggledRight,
-  onOverlayClick,
+	onOverlayClick,
+	onSettingsClick,
+	fileView,
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
 
@@ -88,7 +88,8 @@ const StandardView: React.FC<StandardViewProps> = ({
               <ModuleResources
                 year="2021"
                 moduleID={props.match.params.id}
-                scope={props.match.params.scope}
+								scope={props.match.params.scope}
+								view={fileView}
               />
             )}
           />
@@ -132,7 +133,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           <Route path="/" render={() => <Redirect to="/dashboard" />} />
         </Switch>
       </Container>
-      <RightBar />
+      <RightBar onSettingsClick={onSettingsClick} />
     </div>
   );
 };

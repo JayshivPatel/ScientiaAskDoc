@@ -1,0 +1,11 @@
+@import "assets/scss/custom";
+
+@media (min-width: 62rem) {
+	.modal {
+		width: 50%;
+		height: 70%;
+		max-width: none!important;
+		max-height: none!important;
+
+	}
+}
