@@ -7,6 +7,8 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 import useLocalStorage from "react-use-localstorage";
 import styles from "./style.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 interface Props {
   show: boolean;
   onHide: any;
@@ -35,19 +37,27 @@ const SettingsModal: React.FC<Props> = ({
       onHide={onHide}
       centered
     >
-      <Modal.Header closeButton>
+      <Modal.Header className={styles.modalHeader}>
         <Modal.Title>Settings</Modal.Title>
+        <Button
+          variant="secondary"
+          className={styles.sectionHeaderButton}
+          onClick={onHide}
+        >
+          <FontAwesomeIcon className={styles.buttonIcon} icon={faTimes} />
+        </Button>
       </Modal.Header>
       <Modal.Body style={{ minHeight: "60vh" }}>
-        <h5>Interface</h5>
+        <h5 className={styles.modalSubHeading}>Interface</h5>
 
-        <Form>
+        <Form className={styles.interfaceGroup}>
           <Form.Group as={Row}>
             <Form.Label column xs="9" sm="10">
               Size
             </Form.Label>
             <Col xs="3" sm="2">
               <Form.Control
+                className={styles.inputBar}
                 value={interfaceSize}
                 onChange={e => setInterfaceSize(e.target.value)}
                 onBlur={() =>
@@ -61,6 +71,7 @@ const SettingsModal: React.FC<Props> = ({
             <Form.Label>File View</Form.Label>
             <ButtonGroup style={{ float: "right" }}>
               <Button
+                className={styles.modalToggleButton}
                 active={fileView === "card"}
                 variant="secondary"
                 onClick={onCardViewClick}
@@ -68,6 +79,7 @@ const SettingsModal: React.FC<Props> = ({
                 Card
               </Button>
               <Button
+                className={styles.modalToggleButton}
                 active={fileView === "list"}
                 variant="secondary"
                 onClick={onListViewClick}

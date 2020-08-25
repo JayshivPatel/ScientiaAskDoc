@@ -49,8 +49,6 @@ class NavBarBrand extends React.Component<NavBarBrandProps, NavBarBrandState> {
       <Navbar.Brand className={styles.brandContainer}>
         <img
           src={logo}
-          width="30"
-          height="30"
           className={cx("d-inline-block", "align-center", styles.brandImage, {
             rotate: this.state.iconRotate
           })}

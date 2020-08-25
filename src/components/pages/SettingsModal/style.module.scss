@@ -1,4 +1,5 @@
 @import "assets/scss/custom";
+@import "assets/scss/global";
 
 @media (min-width: 62rem) {
   .modal {
@@ -7,4 +8,81 @@
     max-width: none !important;
     max-height: none !important;
   }
+}
+
+.modalHeader {
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalSubHeading {
+}
+
+.interfaceGroup {
+  border-bottom: 0.0625rem solid $gray-300;
+  padding: 0rem 0.5rem;
+}
+
+$button-background: transparentize($gray-200, 0.75);
+$button-border: transparentize($gray-300, 1);
+
+.inputBar {
+  border-radius: 0.5rem;
+  border-width: 0.0625rem;
+  background-color: $button-background;
+  text-align: right;
+  border-color: $button-background;
+  transition: 0.2s background-color;
+  -webkit-transition: 0.2s background-color;
+  -moz-transition: 0.2s back-ground-color;
+}
+
+.inputBar::placeholder {
+  color: #acb5bd;
+  opacity: 1;
+}
+
+.inputBar:focus {
+  box-shadow: none !important;
+  border-color: $gray-300;
+  background-color: $white;
+}
+
+.modalToggleButton {
+  background-color: $gray-100;
+  color: $black;
+  border-width: 0px;
+  border-radius: 8px;
+  margin-left: 20px;
+  justify-content: space-between;
+  height: 2.25rem;
+  transition: 0.2s background-color;
+  -webkit-transition: 0.2s background-color;
+  -moz-transition: 0.2s background-color;
+  font-size: 1.05rem;
+}
+
+.modalToggleButton:active,
+.modalToggleButton:global(.active) {
+  background: $black !important;
+  font-weight: 500;
+  text-align: left;
+  border-width: 0rem;
+  height: 2.25rem;
+  line-height: 1.375rem;
+  color: $white;
+}
+
+.modalToggleButton:hover, .modalToggleButton:focus {
+  background-color: $gray-200;
+	color: $gray-700 !important;
+	box-shadow: none !important;
+}
+
+.modalToggleButton:active:hover,
+.modalToggleButton:global(.active):hover {
+  background-color: $gray-900;
+  color: $white !important;
 }
