@@ -12,7 +12,7 @@ $deadline-background: transparentize($teal-100, 0.5);
   width: 100%;
   border-radius: 0.5rem !important;
   text-align: left;
-  transition: transform .2s;
+  transition: transform 0.2s;
 }
 
 .sideBarCard:hover {
@@ -24,7 +24,7 @@ $deadline-background: transparentize($teal-100, 0.5);
 }
 
 .sideBarRedCard {
-  background: $labs-background; 
+  background: $labs-background;
 }
 
 .sideBarBlueCard * {

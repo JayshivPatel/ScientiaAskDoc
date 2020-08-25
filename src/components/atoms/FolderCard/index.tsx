@@ -19,14 +19,14 @@ const FolderCard: React.FC<FolderCardProps> = ({
   onIconClick,
   onClick,
   onMouseOver,
-  onMouseOut,
+  onMouseOut
 }: FolderCardProps) => {
   return (
     <Card
       className={styles.folderCard}
       onClick={onClick}
       onMouseOver={onMouseOver}
-			onMouseOut={onMouseOut}
+      onMouseOut={onMouseOut}
     >
       <Card.Body style={{ padding: ".6rem" }}>
         <Card.Text style={{ marginBottom: 0 }}>{title}</Card.Text>

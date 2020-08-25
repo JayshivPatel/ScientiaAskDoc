@@ -11,19 +11,18 @@ export interface TutorCardProp {
 }
 
 const TutorCard: React.FC<TutorCardProp> = ({
-  name, 
+  name,
   email,
-  address, 
-  image,
+  address,
+  image
 }: TutorCardProp) => {
-
   return (
     <>
       <Container
         style={{
           display: "flex",
           padding: 0,
-          marginTop: "20px",
+          marginTop: "1.25rem",
           alignItems: "center",
           width: "100%"
         }}

@@ -5,9 +5,10 @@ import styles from "./style.module.scss";
 import userImage from "assets/images/user.png";
 
 const PersonCard: React.FC = () => {
-
-	// @ts-ignore
-	useEffect(() => {window.Holder.run()});
+  // @ts-ignore
+  useEffect(() => {
+    window.Holder.run();
+  });
 
   return (
     <>
@@ -21,7 +22,7 @@ const PersonCard: React.FC = () => {
             <span className={styles.dot}></span>
             {userInfo.cid}
           </p>
-          <p className={styles.userYear}>{userInfo.year + ','}</p>
+          <p className={styles.userYear}>{userInfo.year + ","}</p>
           <p className={styles.userDepartment}>{userInfo.dep}</p>
           <p className={styles.userCourse}>{userInfo.course}</p>
         </div>
@@ -40,4 +41,4 @@ const userInfo = {
   year: "First Year Undergraduate",
   dep: "Department of Computing",
   course: "MEng Computing (AI)"
-}
+};

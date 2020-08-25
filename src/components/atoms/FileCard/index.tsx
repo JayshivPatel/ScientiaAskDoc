@@ -31,20 +31,20 @@ const FileCard: React.FC<FileCardProps> = ({
   onIconClick,
   onClick,
   onMouseOver,
-  onMouseOut,
+  onMouseOut
 }: FileCardProps) => {
-	let banner: string;
-	switch (type) {
-		case "pdf":
-			banner = applicationPDF;
-			break;
-		case "video":
-			banner = applicationVideo;
-			break;
-		default:
-			banner = applicationDocument;
-			break;
-	}
+  let banner: string;
+  switch (type) {
+    case "pdf":
+      banner = applicationPDF;
+      break;
+    case "video":
+      banner = applicationVideo;
+      break;
+    default:
+      banner = applicationDocument;
+      break;
+  }
   return (
     <Card
       className={styles.fileCard}
@@ -56,13 +56,17 @@ const FileCard: React.FC<FileCardProps> = ({
       <Card.Body>
         <Card.Title style={{ wordWrap: "break-word" }}>{title}</Card.Title>
         <FontAwesomeIcon
-          style={{ marginLeft: "8px", fontSize: "1.125rem", cursor: "default"}}
+          style={{
+            marginLeft: "0.5rem",
+            fontSize: "1.125rem",
+            cursor: "default"
+          }}
           icon={icon}
           onClick={onIconClick}
         />
       </Card.Body>
       <Card.Footer>
-        {tags.map((tag) => (
+        {tags.map(tag => (
           <Badge
             pill
             key={tag}

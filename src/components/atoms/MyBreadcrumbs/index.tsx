@@ -11,7 +11,7 @@ const MyBreadcrumbs = withBreadcrumbs()(
       {breadcrumbs.map(
         ({ match, breadcrumb }: { match: any; breadcrumb: any }) => (
           <Breadcrumb.Item
-						key={match.url}
+            key={match.url}
             className={styles.breadcrumbItem}
             linkAs={Link}
             linkProps={{ to: match.url }}

@@ -35,14 +35,27 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
   let textColor: string = "";
   switch (module.progressStatus) {
     case ProgressStatus.NOT_STARTED:
-      textColor = "#ACB5BD"; break;
+      textColor = "#ACB5BD";
+      break;
     case ProgressStatus.IN_PROGRESS:
-      textColor = "#29A745"; break;
+      textColor = "#29A745";
+      break;
     case ProgressStatus.COMPLETED:
       textColor = "#000";
   }
   return (
-    <Col xs={12} sm={12} md={6} lg={4} xl={3} style={{ marginTop: "1.875rem", paddingLeft: "10px", paddingRight: "10px"}}>
+    <Col
+      xs={12}
+      sm={12}
+      md={6}
+      lg={4}
+      xl={3}
+      style={{
+        marginTop: "1.875rem",
+        paddingLeft: "0.625rem",
+        paddingRight: "0.625rem"
+      }}
+    >
       <Card
         className={classNames(styles.moduleCard)}
         as={Link}

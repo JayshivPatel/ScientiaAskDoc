@@ -13,14 +13,14 @@ export interface SideBarCardProps {
 export enum eventTypes {
   BlueCard,
   RedCard,
-  GreenCard,
+  GreenCard
 }
 
 const SideBarCard: React.FC<SideBarCardProps> = ({
   type,
   title,
   subtitle,
-  content,
+  content
 }: SideBarCardProps) => {
   return (
     <Card

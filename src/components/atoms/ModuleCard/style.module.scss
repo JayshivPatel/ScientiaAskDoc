@@ -6,7 +6,7 @@
   border-width: 0rem;
   border-radius: 0.5rem !important;
   transition: transform 0.2s, box-shadow 0.2s;
-  border: 1px solid $gray-200;
+  border: 0.0625rem solid $gray-200;
 }
 
 .moduleCard:hover {
@@ -17,8 +17,8 @@
 }
 
 .termIcons > * {
-	margin-right: .5rem;
-	height: 1.125rem;
+  margin-right: 0.5rem;
+  height: 1.125rem;
 }
 
 .moduleCard :global(.card-header) {
