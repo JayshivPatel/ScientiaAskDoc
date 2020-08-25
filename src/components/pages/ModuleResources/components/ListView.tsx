@@ -67,15 +67,15 @@ const ListView: React.FC<ListViewProps> = ({
 						select.setIsSelected(isSelected);
 					}
 
-					return (<>
+					return (<div key={id}>
 						<CategoryHeader
 							heading={title}
-						  onSelectAllClick={onSelectAllClick}
+						  	onSelectAllClick={onSelectAllClick}
 							selectAllIcon={isAllSelected() ? faCheckSquare : faSquare}
 							checkBoxColor={select.isAnySelected() ? "#495057" : "#e9ecef"}
 						/>
 						<CategoryList select={categorySelect} />
-					</>)
+					</div>)
 				})}
 				</>
 			)}

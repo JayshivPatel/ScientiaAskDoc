@@ -30,6 +30,7 @@ const CategoryList: React.FC<{ select: SelectionProps }> = ({
           onClick={() => select.handleCardClick(id)}
           onMouseOver={() => select.handleMouseOver(id)}
           onMouseOut={() => select.handleMouseOut(id)}
+          key={id}
           >
             <Col>{title}</Col>
             <Col md="auto">
