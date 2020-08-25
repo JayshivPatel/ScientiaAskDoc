@@ -34,7 +34,7 @@ const ListView: React.FC<ListViewProps> = ({
 
 	return (
 		<SelectionView
-			heading="Materials"
+      heading="Resources"
 			onItemClick={onItemClick}
 			onDownloadClick={onDownloadClick}
 			selectionItems={filesContent}
