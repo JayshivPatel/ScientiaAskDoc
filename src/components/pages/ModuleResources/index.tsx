@@ -91,8 +91,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             resourceURL.url ===
               "https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx"
           ) {
-						thumbnail = `https://imperial.cloud.panopto.eu/Panopto/Services/FrameGrabber.svc/FrameRedirect?objectId=${resourceURL.query.id}&mode=Delivery`;
-						console.log(thumbnail);
+            thumbnail = `https://imperial.cloud.panopto.eu/Panopto/Services/FrameGrabber.svc/FrameRedirect?objectId=${resourceURL.query.id}&mode=Delivery`;
           }
           resourceArr.push({
             title: resource.title,
@@ -108,9 +107,11 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       });
     };
     const onFailure = (error: { text: () => Promise<any> }) => {
-      error.text().then((errorText) => {
-        this.setState({ error: errorText, isLoaded: true });
-      });
+      if (error.text){
+        error.text().then((errorText) => {
+          this.setState({ error: errorText, isLoaded: true });
+        });
+      }
     };
 
     request(api.MATERIALS_RESOURCES, methods.GET, onSuccess, onFailure, {
@@ -286,19 +287,17 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
           );
         case "list":
           return (
-            <>
-              <ListView
-                folders={this.folders()}
-                resources={this.state.resources}
-                searchText={this.state.searchText}
-                onDownloadClick={(ids) => this.handleFileDownload(ids)}
-                onSectionDownloadClick={(category) =>
-                  this.handleSectionDownload(category)
-                }
-                onItemClick={(id) => this.handleResourceClick(id)}
-                includeInSearchResult={this.includeInSearchResult}
-              />
-            </>
+            <ListView
+              folders={this.folders()}
+              resources={this.state.resources}
+              searchText={this.state.searchText}
+              onDownloadClick={(ids) => this.handleFileDownload(ids)}
+              onSectionDownloadClick={(category) =>
+                this.handleSectionDownload(category)
+              }
+              onItemClick={(id) => this.handleResourceClick(id)}
+              includeInSearchResult={this.includeInSearchResult}
+            />
           );
       }
     };
