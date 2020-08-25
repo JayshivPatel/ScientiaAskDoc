@@ -7,7 +7,7 @@ export interface WorkDueGroupProps {
 }
 
 const WorkDueGroup: React.FC<WorkDueGroupProps> = ({
-  filter,
+  filter
 }: WorkDueGroupProps) => {
   return (
     <SideBarCardGroup
@@ -27,15 +27,14 @@ const WorkDueGroup: React.FC<WorkDueGroupProps> = ({
 
           return {
             title: filter === undefined ? module : task,
-						subtitle: filter === undefined ? task : undefined,
-						content,
-            type: colorType,
+            subtitle: filter === undefined ? task : undefined,
+            content,
+            type: colorType
           };
         })}
     />
   );
 };
-
 
 export default WorkDueGroup;
 

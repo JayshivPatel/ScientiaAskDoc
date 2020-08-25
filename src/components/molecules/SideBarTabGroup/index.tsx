@@ -13,21 +13,25 @@ export interface SideBarTabGroupProp {
     icon?: IconDefinition;
     active?: boolean;
     activeURL?: string;
-		externalURL?: string;
-		onClick? : (event: React.MouseEvent) => void;
+    externalURL?: string;
+    onClick?: (event: React.MouseEvent) => void;
   }[];
 }
 
 const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
   title,
-	buttons,
+  buttons
 }: SideBarTabGroupProp) => {
   let displayButtons = buttons.map(
     ({ title, icon, active, activeURL, externalURL, onClick }) => {
       let FAicon;
       if (icon) {
         FAicon = (
-          <FontAwesomeIcon fixedWidth className={styles.tabGroupButtonSvg} icon={icon} />
+          <FontAwesomeIcon
+            fixedWidth
+            className={styles.tabGroupButtonSvg}
+            icon={icon}
+          />
         );
       }
       if (activeURL !== undefined) {
@@ -46,11 +50,7 @@ const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
 
       if (externalURL !== undefined) {
         return (
-          <Button
-            href={externalURL}
-            target="_blank"
-            key={title}
-          >
+          <Button href={externalURL} target="_blank" key={title}>
             {title}
             {FAicon}
           </Button>
@@ -59,8 +59,8 @@ const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
 
       return (
         <Button
-					className={classNames({ active: active })}
-					onClick={onClick}
+          className={classNames({ active: active })}
+          onClick={onClick}
           key={title}
         >
           {title}

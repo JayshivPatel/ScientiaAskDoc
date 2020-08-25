@@ -21,15 +21,13 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
   return (
     <>
       <div className={styles.sectionHeaderContainer}>
-        <span className={styles.sectionHeader}>
-          {heading}
-        </span>
+        <span className={styles.sectionHeader}>{heading}</span>
         <div className={styles.sectionHeaderButtonGroup}>
           <Button
             style={{ color: checkBoxColor }}
             className={styles.sectionHeaderButton}
-						onClick={onSelectAllClick}
-						variant="secondary"
+            onClick={onSelectAllClick}
+            variant="secondary"
           >
             <FontAwesomeIcon
               className={styles.buttonIcon}
@@ -39,7 +37,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
         </div>
       </div>
     </>
-  )
+  );
 };
 
 export default CategoryHeader;

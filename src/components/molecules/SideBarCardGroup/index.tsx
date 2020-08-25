@@ -10,7 +10,7 @@ export interface SideBarCardGroupProps {
 
 const SideBarCardGroup: React.FC<SideBarCardGroupProps> = ({
   events,
-  title,
+  title
 }: SideBarCardGroupProps) => {
   return (
     <>

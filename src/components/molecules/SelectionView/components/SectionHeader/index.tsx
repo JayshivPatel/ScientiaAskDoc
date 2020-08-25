@@ -10,9 +10,9 @@ export interface SectionHeaderProps {
   heading: string;
   selectAllIcon: IconDefinition;
   showDownload: Boolean;
-	onDownloadClick: (event: React.MouseEvent) => void;
-	onSelectAllClick: (event: React.MouseEvent) => void;
-	checkBoxColur: string;
+  onDownloadClick: (event: React.MouseEvent) => void;
+  onSelectAllClick: (event: React.MouseEvent) => void;
+  checkBoxColur: string;
 }
 
 const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
@@ -20,15 +20,13 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
   showDownload,
   selectAllIcon,
   onDownloadClick,
-	onSelectAllClick,
-	checkBoxColur,
+  onSelectAllClick,
+  checkBoxColur
 }: SectionHeaderProps) => {
   let show = showDownload.valueOf();
   return (
     <>
-      <div
-        className={styles.sectionHeaderContainer}
-      >
+      <div className={styles.sectionHeaderContainer}>
         <span className={styles.sectionHeader} onClick={onSelectAllClick}>
           {heading}
         </span>
@@ -36,8 +34,8 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
           <Fade in={show} timeout={500}>
             <span id="download-button">
               <Button
-								style={{ color: checkBoxColur }}
-								variant="secondary" 
+                style={{ color: checkBoxColur }}
+                variant="secondary"
                 className={styles.sectionHeaderButton}
                 onClick={onDownloadClick}
               >
@@ -51,8 +49,8 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
           <Button
             style={{ color: checkBoxColur }}
             className={styles.sectionHeaderButton}
-						onClick={onSelectAllClick}
-						variant="secondary" 
+            onClick={onSelectAllClick}
+            variant="secondary"
             aria-controls="download-button"
             aria-expanded={show}
           >

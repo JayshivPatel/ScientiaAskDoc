@@ -55,7 +55,9 @@ const SearchBox: React.FC<SearchBoxProps> = ({
             >
               File
             </Dropdown.Item>
-            <Dropdown.Header className={styles.dropdownHeader}>Tags: </Dropdown.Header>
+            <Dropdown.Header className={styles.dropdownHeader}>
+              Tags:{" "}
+            </Dropdown.Header>
             <Dropdown.Item
               className={styles.dropdownItem}
               onClick={() => onSearchTextChange(`${searchText} tag(new) `)}

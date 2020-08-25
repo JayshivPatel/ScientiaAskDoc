@@ -10,12 +10,13 @@ export interface ButtonGroupProps {
     title: string;
     icon: IconDefinition;
     url: string;
-	}[];
-	style?: React.CSSProperties;
+  }[];
+  style?: React.CSSProperties;
 }
 
 const PageButtonGroup: React.FC<ButtonGroupProps> = ({
-  buttons,style,
+  buttons,
+  style
 }: ButtonGroupProps) => {
   return (
     <>
@@ -28,7 +29,7 @@ const PageButtonGroup: React.FC<ButtonGroupProps> = ({
             lg={4}
             xl={3}
             key={i}
-            style={{ paddingRight: "10px", paddingLeft: "10px" }}
+            style={{ paddingRight: "0.625rem", paddingLeft: "0.625rem" }}
           >
             <Button href={url} target="_blank">
               {title}

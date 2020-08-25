@@ -5,14 +5,18 @@ import Col from "react-bootstrap/esm/Col";
 import FileCard from "components/atoms/FileCard";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import { SelectionProps } from "components/molecules/SelectionView";
-import { resourceTypeToIcon } from "../../pages/ModuleResources"
+import { resourceTypeToIcon } from "../../pages/ModuleResources";
 
 const CurrentDirectoryRow: React.FC<{ select: SelectionProps }> = ({
-  select,
+  select
 }) => {
   return (
     <Row
-      style={{ marginTop: "10px", marginLeft: "-10px", marginRight: "-10px" }}
+      style={{
+        marginTop: "0.625rem",
+        marginLeft: "-0.625rem",
+        marginRight: "-0.625rem"
+      }}
     >
       {select.selectionItems.map(({ title, type, tags, id }) => {
         if (type === undefined || tags === undefined) return null;
@@ -28,8 +32,8 @@ const CurrentDirectoryRow: React.FC<{ select: SelectionProps }> = ({
             style={{
               marginBottom: ".5rem",
               marginTop: ".5rem",
-              paddingLeft: "10px",
-              paddingRight: "10px",
+              paddingLeft: "0.625rem",
+              paddingRight: "0.625rem"
             }}
           >
             <FileCard
@@ -44,7 +48,7 @@ const CurrentDirectoryRow: React.FC<{ select: SelectionProps }> = ({
                   : resourceTypeToIcon(type)
               }
               onClick={() => select.handleCardClick(id)}
-              onIconClick={(e) => {
+              onIconClick={e => {
                 e.stopPropagation();
                 select.handleIconClick(id);
               }}

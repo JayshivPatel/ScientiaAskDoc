@@ -8,7 +8,13 @@ import tutorImage3 from "assets/images/tutor-3.png";
 const TutorCardGroup: React.FC = () => {
   let tutorCards = tutors.map(({ name, email, address, image }) => {
     return (
-      <TutorCard key={email} name={name} email={email} address={address} image={image} />
+      <TutorCard
+        key={email}
+        name={name}
+        email={email}
+        address={address}
+        image={image}
+      />
     );
   });
 
@@ -32,18 +38,18 @@ const tutors: {
     name: "Dr. Zahid Barr",
     email: "zahid.barr@imperial.ac.uk",
     address: "373, Huxley Building",
-    image: tutorImage1,
+    image: tutorImage1
   },
   {
     name: "Dr. Rosalind Baker",
     email: "rosalind.baker@imperial.ac.uk",
     address: "590, Huxley Building",
-    image: tutorImage2,
+    image: tutorImage2
   },
   {
     name: "Mr. Subhaan Wicks",
     email: "subhaan.wicks16@imperial.ac.uk",
     address: "Huxley Building",
-    image: tutorImage3,
-  },
+    image: tutorImage3
+  }
 ];

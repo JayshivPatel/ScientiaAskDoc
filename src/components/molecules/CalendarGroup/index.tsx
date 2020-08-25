@@ -19,7 +19,12 @@ const CalendarGroup: React.FC = () => {
             colorType = eventTypes.GreenCard;
             break;
         }
-        return { title : `${type}: ${title}`, subtitle, content, type: colorType };
+        return {
+          title: `${type}: ${title}`,
+          subtitle,
+          content,
+          type: colorType
+        };
       })}
     />
   );
@@ -32,24 +37,24 @@ let events = [
     type: "Lecture",
     title: "CO142",
     subtitle: "09:00 - 11:00",
-    content: "308, Huxley Building, South Kensington Campus",
+    content: "308, Huxley Building, South Kensington Campus"
   },
   {
     type: "Lecture",
     title: "CO145",
     subtitle: "13:00 - 14:00",
-    content: "311, Huxley Building, South Kensington Campus",
+    content: "311, Huxley Building, South Kensington Campus"
   },
   {
     type: "Labs",
     title: "CO161",
     subtitle: "15:00 - 17:00",
-    content: "219, Huxley Building, South Kensington Campus",
+    content: "219, Huxley Building, South Kensington Campus"
   },
   {
     type: "Deadline",
     title: "CO120.1",
     subtitle: "19:00",
-    content: "Haskell L Systems",
-  },
+    content: "Haskell L Systems"
+  }
 ];

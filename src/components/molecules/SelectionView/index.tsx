@@ -25,10 +25,10 @@ export interface SelectionProps {
 
 export interface MyProps {
   selectionItems: SelectionItem[];
-	render: (selection: SelectionProps) => any;
-	heading: string;
-	onDownloadClick: (identifiers: number[]) => void;
-	onItemClick: (identifier: number) => void;
+  render: (selection: SelectionProps) => any;
+  heading: string;
+  onDownloadClick: (identifiers: number[]) => void;
+  onItemClick: (identifier: number) => void;
 }
 
 interface MyState {
@@ -80,17 +80,17 @@ class SelectionView extends React.Component<MyProps, MyState> {
     isSelected[id] = !isSelected[id];
     isHoveringOver[id] = false;
     this.setState({ isSelected, isHoveringOver });
-	}
-	
-	handleDownloadClick(e: React.MouseEvent) {
-		e.preventDefault();
-    let indices : number[] = [];
+  }
+
+  handleDownloadClick(e: React.MouseEvent) {
+    e.preventDefault();
+    let indices: number[] = [];
     for (let key in this.state.isSelected) {
       if (this.state.isSelected[key]) {
         indices.push(parseInt(key));
       }
     }
-		this.props.onDownloadClick(indices);
+    this.props.onDownloadClick(indices);
   }
 
   handleSelectAllClick() {
@@ -107,8 +107,8 @@ class SelectionView extends React.Component<MyProps, MyState> {
     if (this.isAnySelected()) {
       this.handleIconClick(id);
       return;
-		}
-		this.props.onItemClick(id);
+    }
+    this.props.onItemClick(id);
   }
 
   handleMouseOver(id: number) {
@@ -127,19 +127,19 @@ class SelectionView extends React.Component<MyProps, MyState> {
     let selection: SelectionProps = {
       selectionItems: this.props.selectionItems,
       state: this.state,
-      setIsSelected: (selection) => this.setState({ isSelected: selection }),
+      setIsSelected: selection => this.setState({ isSelected: selection }),
       isAnySelected: () => this.isAnySelected(),
       handleCardClick: (id: number) => this.handleCardClick(id),
       handleIconClick: (id: number) => this.handleIconClick(id),
       handleMouseOver: (id: number) => this.handleMouseOver(id),
-      handleMouseOut: (id: number) => this.handleMouseOut(id),
+      handleMouseOut: (id: number) => this.handleMouseOut(id)
     };
 
     return (
       <>
         <ResourceSectionHeader
           heading={this.props.heading}
-          onDownloadClick={(e) => this.handleDownloadClick(e)}
+          onDownloadClick={e => this.handleDownloadClick(e)}
           showDownload={this.isAnySelected()}
           onSelectAllClick={() => this.handleSelectAllClick()}
           selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
