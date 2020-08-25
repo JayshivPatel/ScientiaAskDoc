@@ -7,7 +7,8 @@ export interface SelectionItem {
   id: number;
   folder?: string;
   type?: string;
-  tags?: string[];
+	tags?: string[];
+	thumbnail?: string;
 }
 
 type idBooleanMap = { [key: number]: boolean };

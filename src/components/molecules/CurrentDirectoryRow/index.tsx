@@ -8,17 +8,17 @@ import { SelectionProps } from "components/molecules/SelectionView";
 import { resourceTypeToIcon } from "../../pages/ModuleResources";
 
 const CurrentDirectoryRow: React.FC<{ select: SelectionProps }> = ({
-  select
+  select,
 }) => {
   return (
     <Row
       style={{
         marginTop: "0.625rem",
         marginLeft: "-0.625rem",
-        marginRight: "-0.625rem"
+        marginRight: "-0.625rem",
       }}
     >
-      {select.selectionItems.map(({ title, type, tags, id }) => {
+      {select.selectionItems.map(({ title, type, thumbnail, tags, id }) => {
         if (type === undefined || tags === undefined) return null;
 
         return (
@@ -33,13 +33,14 @@ const CurrentDirectoryRow: React.FC<{ select: SelectionProps }> = ({
               marginBottom: ".5rem",
               marginTop: ".5rem",
               paddingLeft: "0.625rem",
-              paddingRight: "0.625rem"
+              paddingRight: "0.625rem",
             }}
           >
             <FileCard
               title={title}
               type={type}
               tags={tags}
+              thumbnail={thumbnail}
               icon={
                 select.isAnySelected() || select.state.isHoveringOver[id]
                   ? select.state.isSelected[id]
@@ -48,7 +49,7 @@ const CurrentDirectoryRow: React.FC<{ select: SelectionProps }> = ({
                   : resourceTypeToIcon(type)
               }
               onClick={() => select.handleCardClick(id)}
-              onIconClick={e => {
+              onIconClick={(e) => {
                 e.stopPropagation();
                 select.handleIconClick(id);
               }}

@@ -19,7 +19,7 @@ const QuickAccessRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
         styles.quickAccessRow
       )}
     >
-      {select.selectionItems.map(({ title, type, tags, id }) => {
+      {select.selectionItems.map(({ title, type, tags, thumbnail, id }) => {
         if (type === undefined || tags === undefined) return null;
 
         return (
@@ -52,7 +52,8 @@ const QuickAccessRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
               onIconClick={e => {
                 e.stopPropagation();
                 select.handleIconClick(id);
-              }}
+							}}
+              thumbnail={thumbnail}
               onMouseOver={() => select.handleMouseOver(id)}
               onMouseOut={() => select.handleMouseOut(id)}
             />

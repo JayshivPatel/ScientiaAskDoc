@@ -16,7 +16,8 @@ export interface FileCardProps {
   title: string;
   type: string;
   tags: string[];
-  icon: IconDefinition;
+	icon: IconDefinition;
+	thumbnail?: string;
   onIconClick: (event: React.MouseEvent) => void;
   onClick: (event: React.MouseEvent) => void;
   onMouseOver: (event: React.MouseEvent) => void;
@@ -27,7 +28,8 @@ const FileCard: React.FC<FileCardProps> = ({
   title,
   type,
   tags,
-  icon,
+	icon,
+	thumbnail,
   onIconClick,
   onClick,
   onMouseOver,
@@ -39,7 +41,7 @@ const FileCard: React.FC<FileCardProps> = ({
       banner = applicationPDF;
       break;
     case "video":
-      banner = applicationVideo;
+			banner = applicationVideo;
       break;
     default:
       banner = applicationDocument;
@@ -52,7 +54,7 @@ const FileCard: React.FC<FileCardProps> = ({
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
     >
-      <Card.Img variant="top" src={banner} />
+      <Card.Img variant="top"  src={thumbnail || banner} />
       <Card.Body>
         <Card.Title style={{ wordWrap: "break-word" }}>{title}</Card.Title>
         <FontAwesomeIcon

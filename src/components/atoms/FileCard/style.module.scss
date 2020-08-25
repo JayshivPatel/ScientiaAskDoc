@@ -26,7 +26,8 @@
   border-radius: 0.5rem !important;
   background: $white;
   border-width: 0rem;
-  padding: 0.5rem;
+	padding: 0.5rem;
+	padding-top: 0;
 }
 
 .fileCard :global(.card-title) {
@@ -46,6 +47,9 @@
   border-bottom: 0rem;
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
+
+	max-height: 70%;
+	object-fit: cover;
 }
 
 .fileRow {
