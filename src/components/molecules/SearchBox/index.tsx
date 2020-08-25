@@ -16,7 +16,7 @@ export interface SearchBoxProps {
 
 const SearchBox: React.FC<SearchBoxProps> = ({
   searchText,
-  onSearchTextChange,
+  onSearchTextChange
 }: SearchBoxProps) => {
   return (
     <Dropdown alignRight>
@@ -33,33 +33,40 @@ const SearchBox: React.FC<SearchBoxProps> = ({
         <InputGroup.Append>
           <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" />
 
-          <Dropdown.Menu alignRight>
-            <Dropdown.Header>Search types: </Dropdown.Header>
+          <Dropdown.Menu alignRight className={styles.dropdownMenu}>
+            <Dropdown.Header className={styles.dropdownHeader}>
+              Types:{" "}
+            </Dropdown.Header>
             <Dropdown.Item
+              className={styles.dropdownItem}
               onClick={() => onSearchTextChange(`${searchText} type(pdf) `)}
             >
-              type(pdf)
+              PDF
             </Dropdown.Item>
             <Dropdown.Item
+              className={styles.dropdownItem}
               onClick={() => onSearchTextChange(`${searchText} type(video) `)}
             >
-              type(video)
+              Video
             </Dropdown.Item>
             <Dropdown.Item
+              className={styles.dropdownItem}
               onClick={() => onSearchTextChange(`${searchText} type(file) `)}
             >
-              type(file)
+              File
             </Dropdown.Item>
-            <Dropdown.Header>Search tags: </Dropdown.Header>
+            <Dropdown.Header className={styles.dropdownHeader}>Tags: </Dropdown.Header>
             <Dropdown.Item
+              className={styles.dropdownItem}
               onClick={() => onSearchTextChange(`${searchText} tag(new) `)}
             >
-              tag(new)
+              New
             </Dropdown.Item>
             <Dropdown.Item
+              className={styles.dropdownItem}
               onClick={() => onSearchTextChange(`${searchText} tag(my tag) `)}
             >
-              tag(my tag)
+              My Tag
             </Dropdown.Item>
           </Dropdown.Menu>
         </InputGroup.Append>
@@ -73,7 +80,7 @@ const CustomToggle = React.forwardRef(({ onClick }: any, ref: any) => (
     variant="secondary"
     className={styles.searchBarIcon}
     ref={ref}
-    onClick={(e) => {
+    onClick={e => {
       e.preventDefault();
       onClick(e);
     }}

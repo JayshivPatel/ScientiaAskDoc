@@ -10,6 +10,7 @@ $button-border: transparentize($gray-300, 1);
   transition: 0.2s background-color;
   -webkit-transition: 0.2s background-color;
   -moz-transition: 0.2s back-ground-color;
+  margin-top: 0.875rem;
 }
 
 .searchBar::placeholder {
@@ -41,6 +42,7 @@ $button-border: transparentize($gray-300, 1);
   transition: 0.2s background-color !important;
   -webkit-transition: 0.2s background-color !important;
   -moz-transition: 0.2s back-ground-color !important;
+  margin-top: 0.875rem;
 }
 
 
@@ -52,5 +54,50 @@ $button-border: transparentize($gray-300, 1);
   color: $gray-700 !important;
 	border-color: $gray-200 !important;
 	box-shadow: none !important;
+}
+
+.dropdownMenu {
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid $gray-300;
+  padding: 0.75rem;
+}
+
+.dropdownHeader {
+  font-weight: 500;
+  font-size: 1rem;
+  color: $black;
+  padding: 0px;
+  margin-bottom: 0.75rem;
+}
+
+.dropdownHeader:not(:first-child) {
+  margin-top: 1rem;
+}
+
+.dropdownItem {
+  border-radius: 0.5rem;
+  background: $gray-100;
+  font-size: 1rem;
+  text-align: center;
+  transition: 0.2s background;
+  -webkit-transition: 0.2s background;
+  -moz-transition: 0.2s background;
+}
+
+.dropdownItem:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+.dropdownItem:hover {
+  background: $gray-200;
+}
+
+.dropdownItem:active,
+.dropdown:global(.active) {
+  color: $white;
+  font-weight: 500;
+  background: $black;
 }
 
