@@ -1,7 +1,7 @@
 import React from "react";
 import Nav from "react-bootstrap/Nav";
 import { NavLink } from "react-router-dom";
-import styles from "./style.module.scss"
+import styles from "./style.module.scss";
 
 export interface NavBarItemProps {
   page: {
@@ -11,7 +11,7 @@ export interface NavBarItemProps {
 }
 
 const NavBarTabItem: React.FC<NavBarItemProps> = ({
-  page,
+  page
 }: NavBarItemProps) => {
   return (
     <Nav.Item>

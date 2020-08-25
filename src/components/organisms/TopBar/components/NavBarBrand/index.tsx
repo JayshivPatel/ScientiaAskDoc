@@ -40,7 +40,7 @@ class NavBarBrand extends React.Component<NavBarBrandProps, NavBarBrandState> {
 
   rotatingDone() {
     this.setState({
-      iconRotate: false,
+      iconRotate: false
     });
   }
 
@@ -52,16 +52,16 @@ class NavBarBrand extends React.Component<NavBarBrandProps, NavBarBrandState> {
           width="30"
           height="30"
           className={cx("d-inline-block", "align-center", styles.brandImage, {
-            rotate: this.state.iconRotate,
+            rotate: this.state.iconRotate
           })}
           alt="Scientia logo"
-          onClick={(e) => {
+          onClick={e => {
             this.setState({
-              iconRotate: true,
+              iconRotate: true
             });
             this.props.onClick(e);
           }}
-          ref={(elm) => {
+          ref={elm => {
             this.brandIcon = elm;
           }}
         />

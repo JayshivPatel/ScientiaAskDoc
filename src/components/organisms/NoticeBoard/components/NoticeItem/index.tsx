@@ -12,11 +12,11 @@ const NoticeItem: React.FC<NoticeItemProps> = ({
   heading,
   user,
   time,
-  body,
+  body
 }: NoticeItemProps) => {
   return (
     <>
-      <div style={{ marginTop: "20px" }} className={styles.noticeContainer}>
+      <div style={{ marginTop: "1.25rem" }} className={styles.noticeContainer}>
         <p className={styles.noticeHeading}>{heading}</p>
         <span style={{ display: "flex", justifyContent: "space-between" }}>
           <p className={styles.noticeUser}>{user}</p>

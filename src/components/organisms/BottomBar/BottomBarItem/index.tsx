@@ -14,16 +14,16 @@ export interface BottomBarItemProps {
 }
 
 const BottomBarItem: React.FC<BottomBarItemProps> = ({
-  page,
+  page
 }: BottomBarItemProps) => {
   return (
     <Button
       activeClassName="active"
       as={NavLink}
-			to={page.path}
-			className={styles.btn}
-			id={"bottom-" + page.name}
-			variant="secondary"
+      to={page.path}
+      className={styles.btn}
+      id={"bottom-" + page.name}
+      variant="secondary"
     >
       <div className="button-holder">
         <FontAwesomeIcon icon={page.icon} size="lg" />

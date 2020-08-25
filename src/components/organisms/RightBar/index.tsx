@@ -24,7 +24,7 @@ class RightBar extends React.Component<RightBarProps, RightBarState> {
     this.timerID = window.setInterval(
       () =>
         this.setState({
-          date: new Date(),
+          date: new Date()
         }),
       1000
     );
@@ -38,13 +38,13 @@ class RightBar extends React.Component<RightBarProps, RightBarState> {
     let buttons = [
       {
         title: "Settings",
-				icon: faCog,
-				onClick: this.props.onSettingsClick,
+        icon: faCog,
+        onClick: this.props.onSettingsClick
       },
       {
         title: "Sign Out",
-        icon: faSignOutAlt,
-      },
+        icon: faSignOutAlt
+      }
     ];
 
     let timeOptions = {
@@ -55,7 +55,7 @@ class RightBar extends React.Component<RightBarProps, RightBarState> {
       second: "2-digit",
       weekday: "short",
       day: "2-digit",
-      month: "short",
+      month: "short"
     };
     return (
       <div id={styles.rightbarWrapper}>

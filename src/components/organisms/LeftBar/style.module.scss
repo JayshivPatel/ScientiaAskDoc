@@ -8,7 +8,7 @@
   top: 0;
   left: 0;
   width: 15.625rem;
-  height: calc(100vh - 	3.8125rem);
+  height: calc(100vh - 3.8125rem);
 
   overflow-y: auto;
   overflow-x: hidden;
@@ -17,7 +17,7 @@
   -moz-transition: visibility 0.5s ease-in-out, transform 0.5s ease-in-out;
   -o-transition: visibility 0.5s ease-in-out, transform 0.5s ease-in-out;
   transition: visibility 0.5s ease-in-out, transform 0.5s ease-in-out;
-  
+
   z-index: 5000;
   margin-top: 3.8125rem;
   padding-bottom: 1.875rem;
@@ -40,8 +40,8 @@
 }
 
 .leftbarStatus a {
-	text-decoration: none !important;
-	color: #000 !important;
+  text-decoration: none !important;
+  color: #000 !important;
 }
 
 @media (max-width: 62rem) {
