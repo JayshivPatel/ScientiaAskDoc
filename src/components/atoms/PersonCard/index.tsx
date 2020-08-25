@@ -5,11 +5,6 @@ import styles from "./style.module.scss";
 import userImage from "assets/images/user.png";
 
 const PersonCard: React.FC = () => {
-  // @ts-ignore
-  useEffect(() => {
-    window.Holder.run();
-  });
-
   return (
     <>
       <Container className={styles.userCardContainer}>

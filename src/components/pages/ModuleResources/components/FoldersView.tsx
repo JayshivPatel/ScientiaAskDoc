@@ -1,7 +1,7 @@
 import React from "react";
 import { Folder } from "../index";
 import SelectionView, {
-  SelectionProps,
+  SelectionProps
 } from "components/molecules/SelectionView";
 import FoldersRow from "components/molecules/FoldersRow";
 import { useHistory, useLocation } from "react-router-dom";

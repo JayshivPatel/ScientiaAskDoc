@@ -13,7 +13,11 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle, faFile, faFolder } from "@fortawesome/free-solid-svg-icons";
+import {
+  faInfoCircle,
+  faFile,
+  faFolder
+} from "@fortawesome/free-solid-svg-icons";
 
 const PastPapers: React.FC = () => {
   return (
@@ -33,14 +37,20 @@ const PastPapers: React.FC = () => {
       </InputGroup>
 
       <h5
-        style={{ marginTop: "30px", marginBottom: "10px" }}
+        style={{ marginTop: "1.875rem", marginBottom: "0.625rem" }}
         className={classNames(styles.moduleSectionHeader)}
       >
         Folders
       </h5>
-      <Row style={{marginRight:"-10px", marginLeft:"-10px"}}>
+      <Row style={{ marginRight: "-0.625rem", marginLeft: "-0.625rem" }}>
         {[...Array(3)].map((e, i) => (
-          <Col xs={6} sm={6} md={3} key={i} style={{paddingLeft: "10px", paddingRight: "10px"}}>
+          <Col
+            xs={6}
+            sm={6}
+            md={3}
+            key={i}
+            style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}
+          >
             <Card className={styles.folderCard}>
               <Card.Body style={{ padding: ".6rem" }}>
                 <Card.Text style={{ marginBottom: 0 }}>Folder {i}</Card.Text>
@@ -56,9 +66,17 @@ const PastPapers: React.FC = () => {
 
       <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
 
-      <Row style={{marginRight:"-10px", marginLeft:"-10px"}}>
+      <Row style={{ marginRight: "-0.625rem", marginLeft: "-0.625rem" }}>
         {[...Array(4)].map((e, i) => (
-          <Col xs={12} sm={6} md={6} lg={4} xl={3} key={i} style={{paddingLeft: "10px", paddingRight: "10px"}}>
+          <Col
+            xs={12}
+            sm={6}
+            md={6}
+            lg={4}
+            xl={3}
+            key={i}
+            style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}
+          >
             <Card className={styles.quickViewCard}>
               <Card.Header>
                 <span className={styles.assessmentResult}>40 / 50</span>
@@ -89,7 +107,6 @@ const PastPapers: React.FC = () => {
           </Col>
         ))}
       </Row>
-
     </>
   );
 };

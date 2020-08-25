@@ -29,13 +29,25 @@ const SignIn: React.FC = () => {
       </Navbar>
 
       <div className={styles.centered}>
-        <div style={{ marginRight: "15px", marginLeft: "15px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div
+          style={{
+            marginRight: "0.9375rem",
+            marginLeft: "0.9375rem",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
+          }}
+        >
           <h1>Scientia</h1>
-          <i style={{ color: "gray"}}>
-            A Unified DoC EdTech Platform
-          </i>
+          <i style={{ color: "gray" }}>A Unified DoC EdTech Platform</i>
         </div>
-        <div style={{ marginRight: "15px", marginLeft: "15px", marginTop: "20px" }}>
+        <div
+          style={{
+            marginRight: "0.9375rem",
+            marginLeft: "0.9375rem",
+            marginTop: "1.25rem"
+          }}
+        >
           <p className={styles.inputBarHeading}>Username</p>
           <InputGroup className="mb-3">
             <FormControl
@@ -49,8 +61,8 @@ const SignIn: React.FC = () => {
           <InputGroup className="mb-3">
             <FormControl
               className={styles.inputBar}
-							placeholder="Enter your password"
-							type="password"
+              placeholder="Enter your password"
+              type="password"
               aria-label="Password"
               aria-describedby="basic-addon1"
             />

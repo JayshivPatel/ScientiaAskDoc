@@ -1,7 +1,7 @@
 import React from "react";
 import { Resource } from "../index";
 import SelectionView, {
-  SelectionProps,
+  SelectionProps
 } from "components/molecules/SelectionView";
 import CurrentDirectoryRow from "components/molecules/CurrentDirectoryRow";
 
@@ -22,29 +22,29 @@ const CurrentDirectoryView: React.FC<CurrentDirectoryViewProps> = ({
   onItemClick,
   includeInSearchResult
 }) => {
-	let filesContent: Resource[] = resources;
-	if (scope !== "") {
-		filesContent = filesContent.filter(({ folder }) => folder === scope);
-	}
-	if (searchText !== "") {
-		filesContent = filesContent.filter((item) =>
-			includeInSearchResult(item, searchText.toLowerCase())
-		);
-	}
+  let filesContent: Resource[] = resources;
+  if (scope !== "") {
+    filesContent = filesContent.filter(({ folder }) => folder === scope);
+  }
+  if (searchText !== "") {
+    filesContent = filesContent.filter(item =>
+      includeInSearchResult(item, searchText.toLowerCase())
+    );
+  }
 
-	if (scope !== "" || searchText !== "") {
-		return (
-			<SelectionView
-				heading="Files"
-				onItemClick={onItemClick}
-				onDownloadClick={onDownloadClick}
-				selectionItems={filesContent}
-				render={(select: SelectionProps) => (
-					<CurrentDirectoryRow select={select} />
-				)}
-			/>
-		);
-	}
+  if (scope !== "" || searchText !== "") {
+    return (
+      <SelectionView
+        heading="Files"
+        onItemClick={onItemClick}
+        onDownloadClick={onDownloadClick}
+        selectionItems={filesContent}
+        render={(select: SelectionProps) => (
+          <CurrentDirectoryRow select={select} />
+        )}
+      />
+    );
+  }
   return null;
 };
 

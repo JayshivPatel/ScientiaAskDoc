@@ -6,9 +6,15 @@ const ExamGrading: React.FC = () => {
     <>
       <Dandruff heading="Grading" />
       {/* TODO: Convert below into MarkDown */}
-			<p>Every Academic Year has its own schema, as determined annually by the Teaching Operations Committee or equivalent.</p>
-      <p>The grades below are to be used in the marking of coursework and labwork.</p>
-			<div className="table-responsive">
+      <p>
+        Every Academic Year has its own schema, as determined annually by the
+        Teaching Operations Committee or equivalent.
+      </p>
+      <p>
+        The grades below are to be used in the marking of coursework and
+        labwork.
+      </p>
+      <div className="table-responsive">
         <table className="table table-striped table-responsive table-bordered">
           <tbody>
             <tr>

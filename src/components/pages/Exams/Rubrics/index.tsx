@@ -6,7 +6,7 @@ const ExamRubrics: React.FC = () => {
     <>
       <Dandruff heading="Rubrics" />
       {/* TODO: Convert below into MarkDown */}
-			<p>Information about durations, how many questions. </p>
+      <p>Information about durations, how many questions. </p>
       <div className="table-responsive">
         <table className="table table-striped table-responsive table-bordered">
           <tbody>

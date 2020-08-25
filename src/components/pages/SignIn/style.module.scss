@@ -10,18 +10,17 @@
   position: fixed;
   left: 50%;
   transform: translate(-50%, 0%);
-  margin-top: 75px;
-  max-width: 420px;
+  margin-top: 4.688rem;
+  max-width: 26.25rem;
   width: 90%;
 }
-
 
 $button-background: transparentize($gray-200, 0.75);
 $button-border: transparentize($gray-300, 1);
 
 .inputBar {
   border-radius: 0.5rem;
-  border-width: 1px;
+  border-width: 0.0625rem;
   background-color: $button-background;
   border-color: $button-background;
   transition: 0.2s background-color;
@@ -42,9 +41,9 @@ $button-border: transparentize($gray-300, 1);
 
 .inputBarHeading {
   color: $black;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 500;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 }
 
 .inputButton.focus,
@@ -70,7 +69,7 @@ $button-border: transparentize($gray-300, 1);
   -webkit-transition: 0.2s background;
   -moz-transition: 0.2s background;
   text-align: center;
-  margin-top: 30px;
+  margin-top: 1.875rem;
   width: 100%;
 }
 

@@ -5,14 +5,14 @@ const Exams: React.FC = () => {
   return (
     <>
       <Dandruff heading="Exams" />
-			{/* TODO: Convert below into MarkDown */}
+      {/* TODO: Convert below into MarkDown */}
       <div>
         {/* saved from url=(0027)https://exams.doc.ic.ac.uk/ */}
         <p>
           Messages from the Senior Tutor about examination results for Computing
           and JMC students are now available - please see your grades page using
           the link below. Also MSc students will find their unofficial
-          examination results and messages.	
+          examination results and messages.
         </p>
         <p>
           <a href="https://exams.doc.ic.ac.uk/prog/showgrades.cgi">

@@ -23,18 +23,18 @@ import ExamPastPapers from "../Exams/PastPapers";
 
 interface StandardViewProps {
   toggledLeft: boolean;
-	toggledRight: boolean;
-	fileView: string;
-	onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
-	onSettingsClick: (event: React.MouseEvent) => void;
+  toggledRight: boolean;
+  fileView: string;
+  onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
+  onSettingsClick: (event: React.MouseEvent) => void;
 }
 
 const StandardView: React.FC<StandardViewProps> = ({
   toggledLeft,
   toggledRight,
-	onOverlayClick,
-	onSettingsClick,
-	fileView,
+  onOverlayClick,
+  onSettingsClick,
+  fileView
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
 
@@ -43,7 +43,7 @@ const StandardView: React.FC<StandardViewProps> = ({
       id="wrapper"
       className={classNames({
         toggledLeft: toggledLeft,
-        toggledRight: toggledRight,
+        toggledRight: toggledRight
       })}
     >
       <Switch>
@@ -67,7 +67,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         </Route>
       </Switch>
 
-      <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
+      <div id="sidenav-overlay" onClick={e => onOverlayClick(e)}></div>
       <Container className={classNames("pageContainer")}>
         <Switch>
           <Route path="/dashboard">
@@ -84,12 +84,12 @@ const StandardView: React.FC<StandardViewProps> = ({
 
           <Route
             path="/modules/:id/resources/:scope?"
-            render={(props) => (
+            render={props => (
               <ModuleResources
                 year="2021"
                 moduleID={props.match.params.id}
-								scope={props.match.params.scope}
-								view={fileView}
+                scope={props.match.params.scope}
+                view={fileView}
               />
             )}
           />
@@ -104,25 +104,25 @@ const StandardView: React.FC<StandardViewProps> = ({
             <Exams />
           </Route>
 
-					<Route path="/exams/timetable">
+          <Route path="/exams/timetable">
             <ExamTimetable />
           </Route>
 
-					<Route path="/exams/grading">
+          <Route path="/exams/grading">
             <ExamGrading />
           </Route>
 
-					<Route path="/exams/rubrics">
+          <Route path="/exams/rubrics">
             <ExamRubrics />
           </Route>
 
-					<Route path="/exams/papers">
+          <Route path="/exams/papers">
             <ExamPastPapers />
           </Route>
 
           <Route
             path="/modules/:id"
-            render={(props) => (
+            render={props => (
               <Redirect to={`/modules/${props.match.params.id}/overview`} />
             )}
           />

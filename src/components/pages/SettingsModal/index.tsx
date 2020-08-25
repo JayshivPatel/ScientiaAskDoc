@@ -11,7 +11,7 @@ interface Props {
   show: boolean;
   onHide: any;
   fileView: string;
-	onCardViewClick: (event: React.MouseEvent) => void;
+  onCardViewClick: (event: React.MouseEvent) => void;
   onListViewClick: (event: React.MouseEvent) => void;
 }
 
@@ -19,8 +19,8 @@ const SettingsModal: React.FC<Props> = ({
   show,
   onHide,
   fileView,
-	onCardViewClick,
-	onListViewClick,
+  onCardViewClick,
+  onListViewClick
 }) => {
   const [interfaceSize, setInterfaceSize] = useLocalStorage(
     "interfaceSize",
@@ -49,7 +49,7 @@ const SettingsModal: React.FC<Props> = ({
             <Col xs="3" sm="2">
               <Form.Control
                 value={interfaceSize}
-                onChange={(e) => setInterfaceSize(e.target.value)}
+                onChange={e => setInterfaceSize(e.target.value)}
                 onBlur={() =>
                   (document.documentElement.style.fontSize = `${interfaceSize}%`)
                 }

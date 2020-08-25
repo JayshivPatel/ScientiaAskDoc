@@ -13,57 +13,57 @@ const ModuleOverview: React.FC = () => {
     {
       title: "College Website",
       icon: faGlobe,
-      url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
+      url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`
     },
     {
       title: "Materials Link 1",
       icon: faLink,
-      url: `https://www.doc.ic.ac.uk/~wl/teachlocal/arch/`,
+      url: `https://www.doc.ic.ac.uk/~wl/teachlocal/arch/`
     },
     {
       title: "Materials Link 2",
       icon: faLink,
-      url: "http://wp.doc.ic.ac.uk/bkainz/teaching/co112-hardware/",
-    },
+      url: "http://wp.doc.ic.ac.uk/bkainz/teaching/co112-hardware/"
+    }
   ];
 
   let modules = [
     {
       title: "Introduction to Logic",
-      code: "CO140",
+      code: "CO140"
     },
     {
       title: "Discrete Mathematics",
-      code: "CO142",
+      code: "CO142"
     },
     {
       title: "Introduction to Computer Systems",
-      code: "CO112",
+      code: "CO112"
     },
     {
       title: "Mathematical Methods",
-      code: "CO145",
+      code: "CO145"
     },
     {
       title: "Java",
-      code: "CO120.2",
+      code: "CO120.2"
     },
     {
       title: "Graphs and Algorithms",
-      code: "CO150",
+      code: "CO150"
     },
     {
       title: "Introduction to Computer Architecture",
-      code: "CO113",
+      code: "CO113"
     },
     {
       title: "Reasoning About Programs",
-      code: "CO141",
+      code: "CO141"
     },
     {
       title: "Introduction to Databases",
-      code: "CO130",
-    },
+      code: "CO130"
+    }
   ];
   let heading = id;
   for (let i in modules) {
@@ -88,7 +88,7 @@ const ModuleOverview: React.FC = () => {
       </p>
 
       <h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
-      <PageButtonGroup buttons={buttons}  style={{ marginTop: "1.25rem" }}/>
+      <PageButtonGroup buttons={buttons} style={{ marginTop: "1.25rem" }} />
     </>
   );
 };

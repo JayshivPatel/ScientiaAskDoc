@@ -12,7 +12,7 @@ import {
   faFilePdf,
   faFileVideo,
   faLink,
-  IconDefinition,
+  IconDefinition
 } from "@fortawesome/free-solid-svg-icons";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
@@ -33,8 +33,8 @@ export interface Folder {
 export interface ResourcesProps {
   year: string;
   moduleID: string;
-	scope?: string;
-	view: string;
+  scope?: string;
+  view: string;
 }
 
 export interface ResourceState {
@@ -86,7 +86,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             tags: resource.tags,
             folder: resource.category,
             id: resource.id,
-            path: resource.path,
+            path: resource.path
           } as Resource);
         }
         this.setState({ resources: resourceArr, isLoaded: true });
@@ -106,8 +106,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
   // Gets the unique categories/folders that have been assigned for the resources
   folders(): Folder[] {
-    return Array.from(new Set<string>(
-      this.state.resources.map((res: Resource) => res.folder))
+    return Array.from(
+      new Set<string>(this.state.resources.map((res: Resource) => res.folder))
     ).map((title, id) => ({ title: title, id: id }));
   }
 
@@ -129,7 +129,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
   }
 
   handleFolderDownload(ids: number[]) {
-    let categories = this.folders().filter(folder => folder.id in ids)
+    let categories = this.folders()
+      .filter(folder => folder.id in ids)
       .map(folder => folder.title);
     if (categories.length === 1) {
       this.handleSectionDownload(categories[0]);
@@ -235,57 +236,60 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     return null;
   }
 
-
   render() {
     let scope = this.props.scope || "";
 
     const view = () => {
-      switch(this.props.view) {
-        case "card": return (
-          <>
-            <FoldersView
-              folders={this.folders()}
-              scope={scope}
-              searchText={this.state.searchText}
-              handleFolderDownload={(ids) => this.handleFolderDownload(ids)}
-            />
+      switch (this.props.view) {
+        case "card":
+          return (
+            <>
+              <FoldersView
+                folders={this.folders()}
+                scope={scope}
+                searchText={this.state.searchText}
+                handleFolderDownload={ids => this.handleFolderDownload(ids)}
+              />
 
-            <CurrentDirectoryView
-              resources={this.state.resources}
-              scope={scope}
-              searchText={this.state.searchText}
-              onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onItemClick={(id) => this.handleResourceClick(id)}
-              includeInSearchResult={this.includeInSearchResult}
-            />
+              <CurrentDirectoryView
+                resources={this.state.resources}
+                scope={scope}
+                searchText={this.state.searchText}
+                onDownloadClick={ids => this.handleFileDownload(ids)}
+                onItemClick={id => this.handleResourceClick(id)}
+                includeInSearchResult={this.includeInSearchResult}
+              />
 
-            <QuickAccessView
-              resources={this.state.resources}
-              scope={scope}
-              searchText={this.state.searchText}
-              onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onItemClick={(id) => this.handleResourceClick(id)}
-            />
-          </>
-        );
-        case "list": return (
-          <>
-            <ListView
-              folders={this.folders()}
-              resources={this.state.resources}
-              searchText={this.state.searchText}
-              onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onSectionDownloadClick={(category) => this.handleSectionDownload(category)}
-              onItemClick={(id) => this.handleResourceClick(id)}
-              includeInSearchResult={this.includeInSearchResult}
-            />
-          </>
-        );
+              <QuickAccessView
+                resources={this.state.resources}
+                scope={scope}
+                searchText={this.state.searchText}
+                onDownloadClick={ids => this.handleFileDownload(ids)}
+                onItemClick={id => this.handleResourceClick(id)}
+              />
+            </>
+          );
+        case "list":
+          return (
+            <>
+              <ListView
+                folders={this.folders()}
+                resources={this.state.resources}
+                searchText={this.state.searchText}
+                onDownloadClick={ids => this.handleFileDownload(ids)}
+                onSectionDownloadClick={category =>
+                  this.handleSectionDownload(category)
+                }
+                onItemClick={id => this.handleResourceClick(id)}
+                includeInSearchResult={this.includeInSearchResult}
+              />
+            </>
+          );
       }
     };
     return (
       <>
-			<MyBreadcrumbs />
+        <MyBreadcrumbs />
         <SearchBox
           searchText={this.state.searchText}
           onSearchTextChange={text => this.setState({ searchText: text })}
