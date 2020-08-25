@@ -5,9 +5,9 @@ body {
   margin: 0;
   font-family: "IBM Plex Sans", sans-serif !important;
   -webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-overflow-scrolling: touch;
-	overflow-y: scroll;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
 }
 
 code {
@@ -15,14 +15,15 @@ code {
     monospace;
 }
 
-.btn-primary.focus, .btn-primary:focus {
-	color: #000;
-	background-color: #f8f9fa;
-	border-color: #0062cc;
-	box-shadow: none;
+.btn-primary.focus,
+.btn-primary:focus {
+  color: #000;
+  background-color: #f8f9fa;
+  border-color: #0062cc;
+  box-shadow: none;
 }
 
-.btn-primary{
+.btn-primary {
   margin-bottom: 0.625rem;
   color: #000;
   background: #f6f8fa;
@@ -59,6 +60,6 @@ code {
   color: #000;
 }
 
-.modal-backdrop{
-	z-index: 9000;
+.modal-backdrop {
+  z-index: 9000;
 }
