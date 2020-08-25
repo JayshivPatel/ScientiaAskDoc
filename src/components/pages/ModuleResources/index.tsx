@@ -241,7 +241,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
     const view = () => {
       switch(this.props.view) {
-        case "folder": return (
+        case "card": return (
           <>
             <FoldersView
               folders={this.folders()}

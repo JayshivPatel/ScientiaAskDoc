@@ -28,7 +28,7 @@ class App extends React.Component<{}, AppState> {
       toggledLeft: false,
       toggledRight: false,
 			showSettings: false,
-			fileView: localStorage.getItem("fileView") || "folder",
+			fileView: localStorage.getItem("fileView") || "card",
     };
   }
 
@@ -100,7 +100,7 @@ class App extends React.Component<{}, AppState> {
           show={this.state.showSettings}
 					onHide={() => this.setState({ showSettings: false })}
 					fileView={this.state.fileView}
-					onCardViewClick={() => this.setFileView("folder")}
+					onCardViewClick={() => this.setFileView("card")}
 					onListViewClick={() => this.setFileView("list")}
         />
 
