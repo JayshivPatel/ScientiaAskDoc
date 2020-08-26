@@ -7,9 +7,9 @@ import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 export interface CategoryHeaderProps {
   heading: string;
-  onSelectAllClick: (event: React.MouseEvent) => void;
-  selectAllIcon: IconDefinition;
-  checkBoxColor: string;
+  onSelectAllClick?: (event: React.MouseEvent) => void;
+  selectAllIcon?: IconDefinition;
+  checkBoxColor?: string;
 }
 
 const CategoryHeader: React.FC<CategoryHeaderProps> = ({
@@ -22,6 +22,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
     <>
       <div className={styles.sectionHeaderContainer}>
         <span className={styles.sectionHeader}>{heading}</span>
+        { !selectAllIcon ||
         <div className={styles.sectionHeaderButtonGroup}>
           <Button
             style={{ color: checkBoxColor }}
@@ -35,6 +36,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
             />
           </Button>
         </div>
+        }
       </div>
     </>
   );

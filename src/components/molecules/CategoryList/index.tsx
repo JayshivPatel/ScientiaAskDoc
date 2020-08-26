@@ -7,17 +7,33 @@ import Col from "react-bootstrap/esm/Col";
 import Badge from "react-bootstrap/Badge";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SelectionProps } from "components/molecules/SelectionView";
-import { resourceTypeToIcon } from "../../pages/ModuleResources";
+import { Resource, resourceTypeToIcon } from "../../pages/ModuleResources";
+import { SelectionProps } from "../SelectionView";
 
-const CategoryList: React.FC<{ select: SelectionProps }> = ({ select }) => {
+export interface CategoryListProps {
+  categoryItems: Resource[];
+  select?: SelectionProps;
+  handleRowClick: (id: number) => void;
+  handleIconClick: (id: number) => void;
+  handleMouseOver: (id: number) => void;
+  handleMouseOut: (id: number) => void;
+}
+
+const CategoryList: React.FC<CategoryListProps> = ({
+  categoryItems,
+  select,
+  handleRowClick,
+  handleIconClick,
+  handleMouseOver,
+  handleMouseOut,
+}) => {
   return (
-    <>
-      {select.selectionItems.map(({ title, type, tags, id }) => {
+      <>
+      {categoryItems.map(({ title, type, tags, id }) => {
         if (type === undefined || tags === undefined) return null;
 
         let icon =
-          select.isAnySelected() || select.state.isHoveringOver[id]
+          select && (select.isAnySelected() || select.state.isHoveringOver[id])
             ? select.state.isSelected[id]
               ? faCheckSquare
               : faSquare
@@ -26,9 +42,9 @@ const CategoryList: React.FC<{ select: SelectionProps }> = ({ select }) => {
         return (
           <Row
             className={styles.listRow}
-            onClick={() => select.handleCardClick(id)}
-            onMouseOver={() => select.handleMouseOver(id)}
-            onMouseOut={() => select.handleMouseOut(id)}
+            onClick={() => handleRowClick(id)}
+            onMouseOver={() => handleMouseOver(id)}
+            onMouseOut={() => handleMouseOut(id)}
             key={id}
           >
             <Col
@@ -60,7 +76,7 @@ const CategoryList: React.FC<{ select: SelectionProps }> = ({ select }) => {
               icon={icon}
               onClick={e => {
                 e.stopPropagation();
-                select.handleIconClick(id);
+                handleIconClick(id);
               }}
               fixedWidth
             />

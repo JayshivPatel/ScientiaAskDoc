@@ -1,5 +1,6 @@
 import React from "react";
 import Spinner from "react-bootstrap/Spinner";
+import Button from "react-bootstrap/Button";
 import { request, download } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
 import SearchBox from "components/molecules/SearchBox";
@@ -8,7 +9,7 @@ import CurrentDirectoryView from "./components/CurrentDirectoryView";
 import FoldersView from "./components/FoldersView";
 import ListView from "./components/ListView";
 import queryString from "query-string";
-
+import StaffView from "./components/StaffView";
 import {
   faFileAlt,
   faFilePdf,
@@ -45,6 +46,7 @@ export interface ResourceState {
   isLoaded: Boolean;
   resources: Resource[];
   searchText: string;
+  view: string;
 }
 
 export function resourceTypeToIcon(type: string): IconDefinition {
@@ -72,6 +74,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       isLoaded: false,
       resources: [],
       searchText: "",
+      view: this.props.view
     };
   }
 
@@ -256,7 +259,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     let scope = this.props.scope || "";
 
     const view = () => {
-      switch (this.props.view) {
+      switch (this.state.view) {
         case "card":
           return (
             <>
@@ -299,6 +302,16 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               includeInSearchResult={this.includeInSearchResult}
             />
           );
+          case "staff": return (
+            <StaffView
+              year={this.props.year}
+              course={this.moduleCode}
+              folders={this.folders()}
+              resources={this.state.resources}
+              searchText={this.state.searchText}
+              includeInSearchResult={this.includeInSearchResult}
+            />
+          )
       }
     };
     return (
@@ -309,6 +322,14 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
           onSearchTextChange={(text) => this.setState({ searchText: text })}
         />
         {this.getloadedItems() || view()}
+        {this.state.view === "staff" ||
+          <Button
+            style={{ marginTop: "1rem" }}
+            onClick={() => this.setState({ view: "staff" })}
+          >
+            Staff View
+          </Button>
+        }
       </>
     );
   }
