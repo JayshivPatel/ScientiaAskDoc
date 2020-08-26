@@ -7,6 +7,9 @@ import { faGlobe, faLink } from "@fortawesome/free-solid-svg-icons";
 import PageButtonGroup from "components/molecules/PageButtonGroup";
 import { request } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
+import ProgressBar from "react-bootstrap/ProgressBar";
+import Accordion from "react-bootstrap/Accordion";
+import Card from "react-bootstrap/Card";
 
 const ModuleOverview: React.FC = () => {
   let { id } = useParams();
@@ -69,6 +72,31 @@ const ModuleOverview: React.FC = () => {
 
       <h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
       <PageButtonGroup buttons={buttons} style={{ marginTop: "1.25rem" }} />
+
+			<h4 className={classNames(styles.moduleSectionHeader)}>Progress</h4>
+      {/* <ProgressBar
+				now={60}
+				className={styles.progress}
+      /> */}
+      <Accordion defaultActiveKey="0"  style={{ marginTop: "30px", borderRadius: ".5rem"}}>
+        <Card>
+          <Accordion.Toggle as={Card.Header} eventKey="0">
+            Week 1
+          </Accordion.Toggle>
+          <Accordion.Collapse eventKey="0">
+            <Card.Body>Hello! I'm the body</Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+          <Accordion.Toggle as={Card.Header} eventKey="1">
+            Week 2
+          </Accordion.Toggle>
+          <Accordion.Collapse eventKey="1">
+            <Card.Body>Hello! I'm another body</Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
+
     </>
   );
 };
