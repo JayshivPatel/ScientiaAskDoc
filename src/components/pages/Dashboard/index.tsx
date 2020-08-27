@@ -27,7 +27,7 @@ const Dashboard: React.FC = () => {
           xs={12}
           sm={12}
           md={12}
-          lg={6}
+          lg={12}
           style={{
             marginTop: "1.875rem",
             paddingRight: "0.625rem",
@@ -36,18 +36,18 @@ const Dashboard: React.FC = () => {
         >
           <TutorCardGroup />
         </Col>
-        <Col
+
+				<Col
           xs={12}
           sm={12}
           md={12}
-          lg={6}
+          lg={12}
           style={{
             marginTop: "1.875rem",
             paddingRight: "0.625rem",
             paddingLeft: "0.625rem"
           }}
         >
-          <NoticeBoard />
         </Col>
       </Row>
     </>

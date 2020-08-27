@@ -1,13 +1,15 @@
 import React from "react";
 import TutorCard from "components/atoms/TutorCard";
-
+import Col from "react-bootstrap/Col";
 import tutorImage1 from "assets/images/tutor-1.png";
 import tutorImage2 from "assets/images/tutor-2.png";
 import tutorImage3 from "assets/images/tutor-3.png";
+import Row from "react-bootstrap/esm/Row";
 
 const TutorCardGroup: React.FC = () => {
   let tutorCards = tutors.map(({ name, email, address, image }) => {
     return (
+			<Col md={6}>
       <TutorCard
         key={email}
         name={name}
@@ -15,13 +17,16 @@ const TutorCardGroup: React.FC = () => {
         address={address}
         image={image}
       />
+			</Col>
     );
   });
 
   return (
     <>
       <h4>Tutors</h4>
+			<Row>
       {tutorCards}
+			</Row>
     </>
   );
 };
