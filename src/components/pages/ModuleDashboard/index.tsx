@@ -9,11 +9,9 @@ import PageButtonGroup from "components/molecules/PageButtonGroup";
 import { request } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
 
-import TutorCard from "components/atoms/TutorCard";
 import tutorImage1 from "assets/images/tutor-1.png";
 import tutorImage2 from "assets/images/tutor-2.png";
 
-import Col from "react-bootstrap/Col";
 import TutorCardGroup from "components/molecules/TutorCardGroup";
 
 const ModuleDashboard: React.FC = () => {
@@ -59,20 +57,6 @@ const ModuleDashboard: React.FC = () => {
       }
     );
   }, [moduleCode]);
-
-  let leaderCards = leaders.map(({ name, email, address, image }) => {
-    return (
-      <Col>
-        <TutorCard
-          key={email}
-          name={name}
-          email={email}
-          address={address}
-          image={image}
-        />
-      </Col>
-    );
-  });
 
   return (
     <>

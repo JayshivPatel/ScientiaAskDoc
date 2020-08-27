@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Dandruff from "components/molecules/Dandruff";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import styles from "./style.module.scss";
-import classNames from "classnames";
 
-import { request } from "../../../utils/api";
-import { api, methods } from "../../../constants/routes";
+// import { request } from "../../../utils/api";
+// import { api, methods } from "../../../constants/routes";
 
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Accordion from "react-bootstrap/Accordion";
@@ -13,8 +11,8 @@ import Card from "react-bootstrap/Card";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
 const ModuleOverview: React.FC = () => {
-  let { id } = useParams();
-  let moduleCode = id.startsWith("CO") ? id.slice(2) : id;
+  // let { id } = useParams();
+  // let moduleCode = id.startsWith("CO") ? id.slice(2) : id;
 
   return (
     <>
