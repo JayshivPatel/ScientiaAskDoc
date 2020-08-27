@@ -10,7 +10,6 @@ $button-border: transparentize($gray-300, 1);
   transition: 0.2s background-color;
   -webkit-transition: 0.2s background-color;
   -moz-transition: 0.2s back-ground-color;
-  margin-top: 0.875rem;
 }
 
 .searchBar::placeholder {
@@ -42,7 +41,6 @@ $button-border: transparentize($gray-300, 1);
   transition: 0.2s background-color !important;
   -webkit-transition: 0.2s background-color !important;
   -moz-transition: 0.2s back-ground-color !important;
-  margin-top: 0.875rem;
 }
 
 .searchBarIcon:global(.active),

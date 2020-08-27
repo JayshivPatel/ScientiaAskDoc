@@ -19,7 +19,6 @@ const ModuleProgress: React.FC = () => {
   return (
     <>
 			<MyBreadcrumbs />
-			<h3>Progress</h3>
 
       <ProgressBar
 				now={50}
