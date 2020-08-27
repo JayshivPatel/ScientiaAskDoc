@@ -1,7 +1,7 @@
 import React from "react";
 import LeftBar from "components/organisms/LeftBar";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
-import { faUserFriends, faList, faTasks, faSpinner, faArchive, faHighlighter } from "@fortawesome/free-solid-svg-icons";
+import { faUserFriends, faList, faArchive, faHighlighter, faHome } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import WorkDueGroup from "components/molecules/WorkDueGroup";
 
@@ -31,12 +31,12 @@ const LeftBarModule: React.FC = () => {
     {
       title: "Dashboard",
 			activeURL: `/modules/${id}/dashboard`,
-			icon: faList,
+			icon: faHome,
 		},
 		{
-      title: "Progress",
-			activeURL: `/modules/${id}/progress`,
-			icon: faSpinner,
+      title: "Overview",
+			activeURL: `/modules/${id}/overview`,
+			icon: faList,
     },
     {
       title: "Resources",

@@ -20,7 +20,7 @@ import Container from "react-bootstrap/esm/Container";
 import ExamRubrics from "../Exams/Rubrics";
 import ExamGrading from "../Exams/Grading";
 import ExamPastPapers from "../Exams/PastPapers";
-import ModuleProgress from "../ModuleProgress";
+import ModuleOverview from "../ModuleOverview";
 
 interface StandardViewProps {
   toggledLeft: boolean;
@@ -83,8 +83,8 @@ const StandardView: React.FC<StandardViewProps> = ({
             <ModuleDashboard />
           </Route>
 
-					<Route path="/modules/:id/progress">
-            <ModuleProgress />
+					<Route path="/modules/:id/overview">
+            <ModuleOverview />
           </Route>
 
           <Route
