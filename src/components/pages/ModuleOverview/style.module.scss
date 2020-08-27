@@ -8,50 +8,6 @@
   margin-top: 1rem;
 }
 
-.progress {
-  background-color: $gray-100;
-  margin-top: 1.25rem;
-  border-radius: 0.5rem;
-  height: 0.75rem;
-}
-
-:global(.progress-bar) {
-  background-color: $teal-500;
-  border-radius: 0.5rem;
-}
-
-.progressAccordion {
-  border-radius: 0.5rem;
-}
-
-.weekCard {
-  background: $white;
-  border-width: 0rem;
-  margin-bottom: 0.5rem;
-  transition: 0.2s transform;
-  border-radius: 0.5rem !important;
-}
-
-.weekCardHeader {
-  background: $gray-100;
-  transition: 0.2s background;
-  -webkit-transition: 0.2s background;
-  -moz-transition: 0.2s background;
-  border-radius: 0.5rem !important;
-  font-size: 1.125rem;
-  margin-bottom: 0px !important;
-  padding: 0.5rem 0.75rem;
-  border-width: 0px;
-}
-
-.weekCardHeader:hover {
-  background: $gray-200;
-}
-
-.weekCardBody {
-  border-radius: 0.5rem;
-}
-
 @media (max-width: 62rem) {
 }
 

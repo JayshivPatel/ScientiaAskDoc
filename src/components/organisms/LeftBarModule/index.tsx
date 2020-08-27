@@ -1,7 +1,7 @@
 import React from "react";
 import LeftBar from "components/organisms/LeftBar";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
-import { faUserFriends } from "@fortawesome/free-solid-svg-icons";
+import { faUserFriends, faList, faTasks, faSpinner, faArchive, faHighlighter } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import WorkDueGroup from "components/molecules/WorkDueGroup";
 
@@ -30,15 +30,23 @@ const LeftBarModule: React.FC = () => {
   let outlineButtons = [
     {
       title: "Overview",
-      activeURL: `/modules/${id}/overview`
-    },
-    {
-      title: "Feedback",
-      activeURL: `/modules/${id}/feedback`
+			activeURL: `/modules/${id}/overview`,
+			icon: faList,
+		},
+		{
+      title: "Progress",
+			activeURL: `/modules/${id}/progress`,
+			icon: faSpinner,
     },
     {
       title: "Resources",
-      activeURL: `/modules/${id}/resources`
+			activeURL: `/modules/${id}/resources`,
+			icon: faArchive,
+		},
+		{
+      title: "Feedback",
+			activeURL: `/modules/${id}/feedback`,
+			icon: faHighlighter,
     },
     {
       title: "Piazza",

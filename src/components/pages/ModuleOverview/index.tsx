@@ -9,9 +9,6 @@ import PageButtonGroup from "components/molecules/PageButtonGroup";
 import { request } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
 
-import ProgressBar from "react-bootstrap/ProgressBar";
-import Accordion from "react-bootstrap/Accordion";
-import Card from "react-bootstrap/Card";
 
 import TutorCard from "components/atoms/TutorCard";
 import tutorImage1 from "assets/images/tutor-1.png";
@@ -106,42 +103,13 @@ const ModuleOverview: React.FC = () => {
         </ul>
       </p>
 
-      <h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
-      <PageButtonGroup buttons={buttons} style={{ marginTop: "1.25rem" }} />
-
       <h4 className={classNames(styles.moduleSectionHeader)}>Module Leaders</h4>
       <Row>
-        
       {leaderCards}
       </Row>
 
-      <h4 className={classNames(styles.moduleSectionHeader)}>Progress</h4>
-      { <ProgressBar
-				now={50}
-				className={styles.progress}
-      /> }
-      <Accordion
-        defaultActiveKey="0"
-        style={{ marginTop: "1.25rem", borderRadius: ".5rem" }}
-        className={styles.progressAccordion}
-      >
-        {[...Array(9)].map((e, i) => (
-          <Card className={styles.weekCard}>
-            <Accordion.Toggle
-              className={styles.weekCardHeader}
-              as={Card.Header}
-              eventKey={`${i}`}
-            >
-              Week {i + 1}
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey={`${i}`}>
-              <Card.Body className={styles.weekCardBody}>
-                Hello! I'm the body of week {i + 1}
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        ))}
-      </Accordion>
+			<h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
+      <PageButtonGroup buttons={buttons} style={{ marginTop: "1.25rem" }} />
     </>
   );
 };
