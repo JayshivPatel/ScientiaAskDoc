@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 
-import UploadModal from "./UploadModal"
+import UploadModal from "./UploadModal/UploadModal"
 import { Resource, Folder } from "../index";
 import CategoryList from "components/molecules/CategoryList";
 import CategoryHeader from "components/molecules/CategoryHeader";
@@ -47,8 +47,8 @@ const StaffView: React.FC<StaffViewProps> = ({
 		<UploadModal
 			show={modal === "link"}
 			onHide={closeModal}
-			categories={folders.map(folder => folder.title)}
-			tags={tags}
+			categories={folders.map(folder => folder.title).sort()}
+			tags={tags.sort()}
 		/>
 
 		{folders.map(({ title, id }) => {

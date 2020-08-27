@@ -20,13 +20,7 @@ git checkout scientia-integration
 
 # Setup and run the development server on port 5000
 python3 -m venv venv
-source venv/bin/activate
-pip install --upgrade pip && pip install -r requirements.txt 
-export FLASK_ENV=development
-export FLASK_APP=materials
-flask create_all
-flask populate -r materials/mocks/resources.json
-flask run
+./scripts/start_scientia_dev.sh
 ```
 
 
