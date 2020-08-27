@@ -1,10 +1,31 @@
 @import "assets/scss/custom";
 
+.tutorContainer {
+  display: flex;
+  padding: 0;
+  margin-top: 1.25rem;
+  align-items: center;
+  width: 100%;
+  background: $white;
+  border: 0.0625rem solid $gray-200;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  transition: 0.2s transform, 0.2s box-shadow;
+  -webkit-transition: 0.2s transform, 0.2s box-shadow;
+  -moz-transition: 0.2s transform, 0.2s box-shadow;
+}
+
+.tutorContainer:hover {
+  border-color: $gray-300;
+  transform: scale(1.03);
+  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
+}
+
 .tutorImage {
   border-radius: 50%;
-  margin-right: 1.25rem;
-  height: 3.75rem;
-  width: 3.75rem;
+  margin-right: 0.75rem;
+  height: 4rem;
+  width: 4rem;
 }
 
 .tutorName,

@@ -19,13 +19,7 @@ const TutorCard: React.FC<TutorCardProp> = ({
   return (
     <>
       <Container
-        style={{
-          display: "flex",
-          padding: 0,
-          marginTop: "1.25rem",
-          alignItems: "center",
-          width: "100%"
-        }}
+        className={styles.tutorContainer}
       >
         <Image className={styles.tutorImage} src={image} />
         <div>
