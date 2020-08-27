@@ -5,11 +5,20 @@ import styles from "./style.module.scss";
 import classNames from "classnames";
 import { faGlobe, faLink } from "@fortawesome/free-solid-svg-icons";
 import PageButtonGroup from "components/molecules/PageButtonGroup";
+
 import { request } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
+
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
+
+import TutorCard from "components/atoms/TutorCard";
+import tutorImage1 from "assets/images/tutor-1.png";
+import tutorImage2 from "assets/images/tutor-2.png";
+
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const ModuleOverview: React.FC = () => {
   let { id } = useParams();
@@ -18,8 +27,8 @@ const ModuleOverview: React.FC = () => {
     {
       title: "College Website",
       icon: faGlobe,
-      url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
-    },
+      url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`
+    }
   ];
   let [buttons, setButtons] = useState(initialButtons);
 
@@ -27,7 +36,7 @@ const ModuleOverview: React.FC = () => {
     const onSuccess = (data: { json: () => Promise<any> }) => {
       let newButtons: any[] = [];
 
-      data.json().then((json) => {
+      data.json().then(json => {
         for (const key in json) {
           let resource = json[key];
           if (resource.type !== "link") continue;
@@ -35,10 +44,10 @@ const ModuleOverview: React.FC = () => {
           newButtons.push({
             title: resource.title,
             icon: faLink,
-            url: resource.path,
+            url: resource.path
           });
         }
-        setButtons((b) => b.concat(newButtons));
+        setButtons(b => b.concat(newButtons));
       });
     };
     request(
@@ -50,53 +59,89 @@ const ModuleOverview: React.FC = () => {
       },
       {
         year: "2021",
-        course: moduleCode,
+        course: moduleCode
       }
     );
   }, [moduleCode]);
+
+  let leaderCards = leaders.map(({ name, email, address, image }) => {
+    return (
+      <Col>
+      <TutorCard
+        key={email}
+        name={name}
+        email={email}
+        address={address}
+        image={image}
+      />
+      </Col>
+    );
+  });
 
   return (
     <>
       <Dandruff heading={generateHeading(id)} />
 
-      <h4 className={classNames(styles.moduleSectionHeader)}>Description</h4>
-      <p>
-        Since students don't need to see the full course information everytime
-        they click open a module, instead of making a copy of the college
-        website here in Scientia, we could add links to the relavant site below,
-        and only fetch or generate a short description to place here. The rest
-        of this page could be used for something useful like Sudar's timeline
-        idea and links to lecture's websites (which we could fetch from the
-        links they provided in materials).
+      <h4 className={classNames(styles.moduleSectionHeader)}>Module Aims</h4>
+      <p style={{ paddingTop: "0.75rem" }}>
+        In this module you will have the opportunity to:
+        <ul>
+          <li>
+            Learn about language and semantics of propositional and first-order
+            logic
+          </li>
+          <li>
+            Explore the user of logic for modelling rigorously human reasoning
+          </li>
+          <li>
+            Apply various semantic methods for proving validity of arguments and
+            logical equivalences
+          </li>
+          <li>
+            Study natural deduction and resolution for constructing correct
+            proofs
+          </li>
+          <li>Investigate soundness and completeness of natural deduction</li>
+          <li>Apply first-order logic to program specification</li>
+        </ul>
       </p>
 
       <h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
       <PageButtonGroup buttons={buttons} style={{ marginTop: "1.25rem" }} />
 
-			<h4 className={classNames(styles.moduleSectionHeader)}>Progress</h4>
-      {/* <ProgressBar
-				now={60}
-				className={styles.progress}
-      /> */}
-      <Accordion defaultActiveKey="0"  style={{ marginTop: "30px", borderRadius: ".5rem"}}>
-        <Card>
-          <Accordion.Toggle as={Card.Header} eventKey="0">
-            Week 1
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey="0">
-            <Card.Body>Hello! I'm the body</Card.Body>
-          </Accordion.Collapse>
-        </Card>
-        <Card>
-          <Accordion.Toggle as={Card.Header} eventKey="1">
-            Week 2
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey="1">
-            <Card.Body>Hello! I'm another body</Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion>
+      <h4 className={classNames(styles.moduleSectionHeader)}>Module Leaders</h4>
+      <Row>
+        
+      {leaderCards}
+      </Row>
 
+      <h4 className={classNames(styles.moduleSectionHeader)}>Progress</h4>
+      { <ProgressBar
+				now={50}
+				className={styles.progress}
+      /> }
+      <Accordion
+        defaultActiveKey="0"
+        style={{ marginTop: "1.25rem", borderRadius: ".5rem" }}
+        className={styles.progressAccordion}
+      >
+        {[...Array(9)].map((e, i) => (
+          <Card className={styles.weekCard}>
+            <Accordion.Toggle
+              className={styles.weekCardHeader}
+              as={Card.Header}
+              eventKey={`${i}`}
+            >
+              Week {i + 1}
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey={`${i}`}>
+              <Card.Body className={styles.weekCardBody}>
+                Hello! I'm the body of week {i + 1}
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        ))}
+      </Accordion>
     </>
   );
 };
@@ -105,40 +150,40 @@ function generateHeading(id: string) {
   let modules = [
     {
       title: "Introduction to Logic",
-      code: "CO140",
+      code: "CO140"
     },
     {
       title: "Discrete Mathematics",
-      code: "CO142",
+      code: "CO142"
     },
     {
       title: "Introduction to Computer Systems",
-      code: "CO112",
+      code: "CO112"
     },
     {
       title: "Mathematical Methods",
-      code: "CO145",
+      code: "CO145"
     },
     {
       title: "Java",
-      code: "CO120.2",
+      code: "CO120.2"
     },
     {
       title: "Graphs and Algorithms",
-      code: "CO150",
+      code: "CO150"
     },
     {
       title: "Introduction to Computer Architecture",
-      code: "CO113",
+      code: "CO113"
     },
     {
       title: "Reasoning About Programs",
-      code: "CO141",
+      code: "CO141"
     },
     {
       title: "Introduction to Databases",
-      code: "CO130",
-    },
+      code: "CO130"
+    }
   ];
   let heading = id;
   for (let i in modules) {
@@ -151,3 +196,23 @@ function generateHeading(id: string) {
 }
 
 export default ModuleOverview;
+
+const leaders: {
+  name: string;
+  email: string;
+  address: string;
+  image: string;
+}[] = [
+  {
+    name: "Dr. Zahid Barr",
+    email: "zahid.barr@imperial.ac.uk",
+    address: "373, Huxley Building",
+    image: tutorImage1
+  },
+  {
+    name: "Dr. Rosalind Baker",
+    email: "rosalind.baker@imperial.ac.uk",
+    address: "590, Huxley Building",
+    image: tutorImage2
+  }
+];
