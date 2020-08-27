@@ -23,7 +23,7 @@ const TutorCard: React.FC<TutorCardProp> = ({
       >
         <Image className={styles.tutorImage} src={image} />
         <div>
-          <p className={styles.tutorName}>{name}</p>
+          <h5 className={styles.tutorName}>{name}</h5>
           <p className={styles.tutorEmail}>{email}</p>
           <p className={styles.tutorAddress}>{address}</p>
         </div>

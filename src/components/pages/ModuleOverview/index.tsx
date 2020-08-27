@@ -16,6 +16,7 @@ import tutorImage2 from "assets/images/tutor-2.png";
 
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/esm/Card";
 
 const ModuleOverview: React.FC = () => {
   let { id } = useParams();
