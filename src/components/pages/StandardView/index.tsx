@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Timeline from "components/pages/Timeline";
-import ModuleOverview from "components/pages/ModuleOverview";
+import ModuleDashboard from "components/pages/ModuleDashboard";
 import Dashboard from "components/pages/Dashboard";
 import Exams from "components/pages/Exams";
 import ExamTimetable from "components/pages/Exams/Timetable";
@@ -79,8 +79,8 @@ const StandardView: React.FC<StandardViewProps> = ({
             <ModuleList modulesFilter={modulesFilter} />
           </Route>
 
-          <Route path="/modules/:id/overview">
-            <ModuleOverview />
+          <Route path="/modules/:id/dashboard">
+            <ModuleDashboard />
           </Route>
 
 					<Route path="/modules/:id/progress">
@@ -128,7 +128,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           <Route
             path="/modules/:id"
             render={props => (
-              <Redirect to={`/modules/${props.match.params.id}/overview`} />
+              <Redirect to={`/modules/${props.match.params.id}/dashboard`} />
             )}
           />
           <Route

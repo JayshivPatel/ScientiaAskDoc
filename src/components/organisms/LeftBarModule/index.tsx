@@ -29,8 +29,8 @@ const LeftBarModule: React.FC = () => {
 
   let outlineButtons = [
     {
-      title: "Overview",
-			activeURL: `/modules/${id}/overview`,
+      title: "Dashboard",
+			activeURL: `/modules/${id}/dashboard`,
 			icon: faList,
 		},
 		{
