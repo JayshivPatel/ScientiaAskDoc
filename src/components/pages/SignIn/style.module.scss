@@ -3,7 +3,7 @@
 .navBar {
   padding: 0.75rem 1rem;
   background: #fff;
-  border-bottom: 0.0625rem solid #cdd4db;
+  border-bottom: 1px solid #cdd4db;
 }
 
 .centered {
@@ -20,7 +20,7 @@ $button-border: transparentize($gray-300, 1);
 
 .inputBar {
   border-radius: 0.5rem;
-  border-width: 0.0625rem;
+  border-width: 1px;
   background-color: $button-background;
   border-color: $button-background;
   transition: 0.2s background-color;

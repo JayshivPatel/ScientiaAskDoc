@@ -18,7 +18,7 @@
 }
 
 .interfaceGroup {
-  border-bottom: 0.0625rem solid $gray-300;
+  border-bottom: 1px solid $gray-300;
   padding: 0rem 0.5rem;
 }
 
@@ -27,7 +27,7 @@ $button-border: transparentize($gray-300, 1);
 
 .inputBar {
   border-radius: 0.5rem;
-  border-width: 0.0625rem;
+  border-width: 1px;
   background-color: $button-background;
   text-align: right;
   border-color: $button-background;
