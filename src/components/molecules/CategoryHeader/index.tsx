@@ -25,7 +25,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
         <span className={styles.sectionHeader}>{heading}</span>
         <div className={styles.sectionHeaderButtonGroup}>
           <FontAwesomeIcon
-            style={{ color: checkBoxColor, fontSize: "1.125rem" }}
+            style={{ color: checkBoxColor, fontSize: "1.125rem", marginRight: ".375rem" }}
             icon={selectAllIcon}
           />
         </div>

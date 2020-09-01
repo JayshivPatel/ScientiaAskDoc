@@ -35,7 +35,7 @@ const FileListItem: React.FC<FileListItemProps> = ({
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
     >
-      <Row style={{marginLeft: "-1.125rem", marginRight: "-1.125rem"}}>
+      <Row style={{marginLeft: 0, marginRight: "-.75rem"}}>
         <Col
           style={{
             display: "flex",

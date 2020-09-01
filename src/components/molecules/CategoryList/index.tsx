@@ -7,7 +7,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 
 const CategoryList: React.FC<{ select: SelectionProps }> = ({ select }) => {
   return (
-    <ListGroup variant="flush">
+    <ListGroup variant="flush" style={{marginLeft: ".25rem"}}>
       {select.selectionItems.map(({ title, type, tags, id }) => {
         if (type === undefined || tags === undefined) return null;
 
