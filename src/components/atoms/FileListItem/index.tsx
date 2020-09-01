@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export interface FileListItemProps {
   title: string;
-  id: number;
   icon: IconDefinition;
   tags: string[];
   onIconClick?: (event: React.MouseEvent) => void;
@@ -23,7 +22,6 @@ const FileListItem: React.FC<FileListItemProps> = ({
   title,
   icon,
   tags,
-  id,
   onIconClick,
   onClick,
   onMouseOver,
@@ -35,7 +33,6 @@ const FileListItem: React.FC<FileListItemProps> = ({
       onClick={onClick}
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
-      key={id}
     >
       <Col
         style={{

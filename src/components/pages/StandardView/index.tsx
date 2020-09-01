@@ -35,7 +35,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   toggledRight,
   onOverlayClick,
   onSettingsClick,
-  fileView
+  fileView,
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
 
@@ -44,7 +44,7 @@ const StandardView: React.FC<StandardViewProps> = ({
       id="wrapper"
       className={classNames({
         toggledLeft: toggledLeft,
-        toggledRight: toggledRight
+        toggledRight: toggledRight,
       })}
     >
       <Switch>
@@ -68,7 +68,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         </Route>
       </Switch>
 
-      <div id="sidenav-overlay" onClick={e => onOverlayClick(e)}></div>
+      <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
       <Container className={classNames("pageContainer")}>
         <Switch>
           <Route path="/dashboard">
@@ -83,13 +83,16 @@ const StandardView: React.FC<StandardViewProps> = ({
             <ModuleDashboard />
           </Route>
 
-					<Route path="/modules/:id/overview">
-            <ModuleOverview />
-          </Route>
+          <Route
+            path="/modules/:id/overview"
+            render={(props) => (
+              <ModuleOverview year="2021" moduleID={props.match.params.id} />
+            )}
+          ></Route>
 
           <Route
             path="/modules/:id/resources/:scope?"
-            render={props => (
+            render={(props) => (
               <ModuleResources
                 year="2021"
                 moduleID={props.match.params.id}
@@ -127,7 +130,7 @@ const StandardView: React.FC<StandardViewProps> = ({
 
           <Route
             path="/modules/:id"
-            render={props => (
+            render={(props) => (
               <Redirect to={`/modules/${props.match.params.id}/dashboard`} />
             )}
           />

@@ -1,63 +1,146 @@
-import React, { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
+import React from "react";
 import styles from "./style.module.scss";
 
-// import { request } from "../../../utils/api";
-// import { api, methods } from "../../../constants/routes";
+import { request } from "../../../utils/api";
+import { api, methods } from "../../../constants/routes";
 
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import FileListItem from "components/atoms/FileListItem";
-import { resourceTypeToIcon } from "../../pages/ModuleResources";
+import {
+  resourceTypeToIcon,
+  Resource,
+  openResource,
+  tags,
+} from "../../pages/ModuleResources";
+import LoadingScreen from "components/molecules/LoadingScreen";
+import { titleCase } from "utils/functions";
 
-const ModuleOverview: React.FC = () => {
-  // let { id } = useParams();
-  // let moduleCode = id.startsWith("CO") ? id.slice(2) : id;
+export interface ModuleOverviewProps {
+  year: string;
+  moduleID: string;
+}
 
-  return (
-    <>
-      <MyBreadcrumbs />
-      <Accordion
-        defaultActiveKey="0"
-        style={{ marginTop: "1.25rem", borderRadius: ".5rem" }}
-        className={styles.progressAccordion}
-      >
-        {[...Array(9)].map((e, i) => {
+export interface ModuleOverviewState {
+  error: any;
+  isLoaded: Boolean;
+  resources: Resource[];
+}
 
-          let WeekList = weekList.map(({ title, type, tags, id }: any) => (
-            <FileListItem
-              title={title}
-              id={id}
-              tags={tags}
-              icon={resourceTypeToIcon(type)}
-            />
-          ));
+class ModuleOverview extends React.Component<
+  ModuleOverviewProps,
+  ModuleOverviewState
+> {
+  moduleCode = this.props.moduleID.startsWith("CO")
+    ? this.props.moduleID.slice(2)
+    : this.props.moduleID;
 
-          return (
-            <Card className={styles.weekCard}>
-              <Accordion.Toggle
-                className={styles.weekCardHeader}
-                as={Card.Header}
-                eventKey={`${i}`}
-              >
-                Week {i + 1}
-              </Accordion.Toggle>
-              <Accordion.Collapse eventKey={`${i}`}>
-                <Card.Body className={styles.weekCardBody}>
-                  {WeekList}
-                </Card.Body>
-              </Accordion.Collapse>
-            </Card>
-          );
-        })}
-      </Accordion>
-    </>
-  );
-};
+  constructor(props: ModuleOverviewProps) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoaded: false,
+      resources: [],
+    };
+  }
+
+  componentDidMount() {
+    this.setState({ isLoaded: false });
+    const onSuccess = (data: { json: () => Promise<any> }) => {
+      let resourceArr: Resource[] = [];
+
+      data.json().then((json) => {
+        for (const key in json) {
+          let resource = json[key];
+          resourceArr.push({
+            title: resource.title,
+            type: resource.type,
+            tags: resource.tags,
+            folder: resource.category,
+            id: resource.id,
+            path: resource.path,
+          } as Resource);
+        }
+        this.setState({ resources: resourceArr, isLoaded: true });
+      });
+    };
+    const onFailure = (error: { text: () => Promise<any> }) => {
+      if (error.text) {
+        error.text().then((errorText) => {
+          this.setState({ error: errorText, isLoaded: true });
+        });
+      }
+    };
+
+    request(api.MATERIALS_RESOURCES, methods.GET, onSuccess, onFailure, {
+      year: this.props.year,
+      course: this.moduleCode,
+    });
+  }
+
+  handleResourceClick(id: number) {
+    openResource(this.state.resources, id);
+  }
+
+  render() {
+    let allAvailableWeeks = tags(this.state.resources)
+      .map((t) => t.toLowerCase())
+      .filter((t) => t.startsWith("week"));
+
+    return (
+      <>
+        <MyBreadcrumbs />
+
+        <LoadingScreen
+          error={this.state.error}
+          isLoaded={this.state.isLoaded}
+          successful={
+            <Accordion
+              defaultActiveKey="1"
+              style={{ marginTop: "1.25rem", borderRadius: ".5rem" }}
+              className={styles.progressAccordion}
+            >
+              {allAvailableWeeks.map((weekTitle, i) => {
+                let WeekList = this.state.resources
+                  .filter(({ tags }: any) =>
+                    tags.some((tag: string) => tag.toLowerCase() === weekTitle)
+                  )
+                  .map(({ title, type, tags, id }: any) => (
+                    <FileListItem
+                      title={title}
+                      tags={tags.filter(
+                        (tag: string) => !tag.toLowerCase().startsWith("week")
+                      )}
+                      icon={resourceTypeToIcon(type)}
+                      onClick={() => this.handleResourceClick(id)}
+                      key={id}
+                    />
+                  ));
+
+                return (
+                  <Card className={styles.weekCard}>
+                    <Accordion.Toggle
+                      className={styles.weekCardHeader}
+                      as={Card.Header}
+                      eventKey={`${i}`}
+                    >
+                      {titleCase(weekTitle)}
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey={`${i}`}>
+                      <Card.Body className={styles.weekCardBody}>
+                        {WeekList}
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
+                );
+              })}
+            </Accordion>
+          }
+        />
+      </>
+    );
+  }
+}
 
 export default ModuleOverview;
-
-let weekList = JSON.parse(
-  '[{"title":"Syntax Semantics Propositional Logic","type":"pdf","tags":["Slides","new"],"folder":"Lecture Notes","id":1,"path":"140_slides_Syntac_And_Semantics_FirstOrder_Logic.pdf"},{"title":"Classical First-Order Predicate Logic","type":"pdf","tags":["Week 3","Slides","new"],"folder":"Lecture Notes","id":6,"path":"140_slides_Syntac_And_Semantics_FirstOrder_Logic.pdf"},{"title":"Translation Validity","type":"pdf","tags":["Slides","Week 3","new"],"folder":"Lecture Notes","id":8,"path":"140_slides_Syntac_And_Semantics_FirstOrder_Logic.pdf"},{"title":"validityPL-part1","type":"pdf","tags":["Slides","Week 4","new"],"folder":"Lecture Notes","id":9,"path":"140_slides_Syntac_And_Semantics_FirstOrder_Logic.pdf"},{"title":"validityPL-part2","type":"pdf","tags":["Slides","Week 4","new"],"folder":"Lecture Notes","id":10,"path":"140_slides_Syntac_And_Semantics_FirstOrder_Logic.pdf"},{"title":"validityPL-part3","type":"pdf","tags":["Slides","Week 4","new"],"folder":"Lecture Notes","id":13,"path":"140_slides_Syntac_And_Semantics_FirstOrder_Logic.pdf"},{"title":"validityFOL-part1","type":"pdf","tags":["Slides","Week 5","new"],"folder":"Lecture Notes","id":14,"path":"140_slides_Syntac_And_Semantics_FirstOrder_Logic.pdf"},{"title":"validityFOL-part2","type":"pdf","tags":["Slides","Week 5","new"],"folder":"Lecture Notes","id":15,"path":"140_slides_Syntac_And_Semantics_FirstOrder_Logic.pdf"}]'
-);

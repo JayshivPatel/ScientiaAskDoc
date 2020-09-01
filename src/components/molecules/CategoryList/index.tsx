@@ -25,7 +25,6 @@ const CategoryList: React.FC<{ select: SelectionProps }> = ({ select }) => {
 						onIconClick={() => select.handleIconClick(id)}
             icon={icon}
             tags={tags}
-            id={id}
 						title={title}
 						key={id}
           />

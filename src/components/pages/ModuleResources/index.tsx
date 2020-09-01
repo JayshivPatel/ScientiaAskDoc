@@ -17,6 +17,7 @@ import {
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
+import LoadingScreen from "components/molecules/LoadingScreen";
 
 export interface Resource {
   title: string;
@@ -107,7 +108,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       });
     };
     const onFailure = (error: { text: () => Promise<any> }) => {
-      if (error.text){
+      if (error.text) {
         error.text().then((errorText) => {
           this.setState({ error: errorText, isLoaded: true });
         });
@@ -167,41 +168,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     });
   }
 
-  handleResourceClick(id: number) {
-    let resource = this.state.resources.find((resource) => resource.id === id);
-    if (resource === undefined) {
-      return;
-    }
-    if (resource.type === "link" || resource.type === "video") {
-      window.open(resource.path, "_blank");
-      return;
-    }
-
-    // Resource is of file type, get from Materials
-    const onSuccess = (data: any) => {
-      // TODO: Try to navigate straight to the endpoint url instead of creating an object url
-      data.blob().then((blob: any) => {
-        let url = URL.createObjectURL(blob);
-        let a = document.createElement("a");
-        a.target = "_blank";
-        a.href = url;
-        a.click();
-        a.remove();
-      });
-    };
-    const onFailure = (error: { text: () => Promise<any> }) => {
-      error.text().then((errorText) => {
-        console.log(errorText);
-      });
-    };
-    request(
-      api.MATERIALS_RESOURCES_FILE(id),
-      methods.GET,
-      onSuccess,
-      onFailure
-    );
-  }
-
   includeInSearchResult(item: Resource, searchText: string) {
     let rx = /([a-z]+)\(([^)]+)\)/gi;
     let match: RegExpExecArray | null;
@@ -233,85 +199,116 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     return title.indexOf(rest) !== -1;
   }
 
-  getloadedItems() {
-    if (!this.state.isLoaded)
-      return (
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <Spinner animation="border" />
-        </div>
-      );
-    if (this.state.error)
-      return <> Error retrieving data: {this.state.error} </>;
-    return null;
+  handleResourceClick(id: number) {
+    openResource(this.state.resources, id);
   }
 
   render() {
     let scope = this.props.scope || "";
 
     const view = () => {
-      switch (this.props.view) {
-        case "card":
-          return (
-            <>
-              <FoldersView
-                folders={this.folders()}
-                scope={scope}
-                searchText={this.state.searchText}
-                handleFolderDownload={(ids) => this.handleFolderDownload(ids)}
-              />
-
-              <CurrentDirectoryView
-                resources={this.state.resources}
-                scope={scope}
-                searchText={this.state.searchText}
-                onDownloadClick={(ids) => this.handleFileDownload(ids)}
-                onItemClick={(id) => this.handleResourceClick(id)}
-                includeInSearchResult={this.includeInSearchResult}
-              />
-
-              <QuickAccessView
-                resources={this.state.resources}
-                scope={scope}
-                searchText={this.state.searchText}
-                onDownloadClick={(ids) => this.handleFileDownload(ids)}
-                onItemClick={(id) => this.handleResourceClick(id)}
-              />
-            </>
-          );
-        case "list":
-          return (
-            <ListView
+      if (this.props.view) {
+        return (
+          <>
+            <FoldersView
               folders={this.folders()}
+              scope={scope}
+              searchText={this.state.searchText}
+              handleFolderDownload={(ids) => this.handleFolderDownload(ids)}
+            />
+
+            <CurrentDirectoryView
               resources={this.state.resources}
+              scope={scope}
               searchText={this.state.searchText}
               onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onSectionDownloadClick={(category) =>
-                this.handleSectionDownload(category)
-              }
               onItemClick={(id) => this.handleResourceClick(id)}
               includeInSearchResult={this.includeInSearchResult}
             />
-          );
+
+            <QuickAccessView
+              resources={this.state.resources}
+              scope={scope}
+              searchText={this.state.searchText}
+              onDownloadClick={(ids) => this.handleFileDownload(ids)}
+              onItemClick={(id) => this.handleResourceClick(id)}
+            />
+          </>
+        );
       }
+      return (
+        <ListView
+          folders={this.folders()}
+          resources={this.state.resources}
+          searchText={this.state.searchText}
+          onDownloadClick={(ids) => this.handleFileDownload(ids)}
+          onSectionDownloadClick={(category) =>
+            this.handleSectionDownload(category)
+          }
+          onItemClick={(id) => this.handleResourceClick(id)}
+          includeInSearchResult={this.includeInSearchResult}
+        />
+      );
     };
+
     return (
       <>
         <MyBreadcrumbs />
         <SearchBox
           searchText={this.state.searchText}
           onSearchTextChange={(text) => this.setState({ searchText: text })}
+          tags={tags(this.state.resources)}
         />
-        {this.getloadedItems() || view()}
+
+        <LoadingScreen
+          error={this.state.error}
+          isLoaded={this.state.isLoaded}
+          successful={view()}
+        />
       </>
     );
   }
+}
+
+export function tags(resources: Resource[]) {
+  let tagSet = new Set<string>();
+
+  for (const resource of resources) {
+    for (const tag of resource.tags) {
+      tagSet.add(tag);
+    }
+  }
+  return Array.from(tagSet).filter(tag => tag.length > 0).sort();
+}
+
+export function openResource(resources: Resource[], id: number) {
+  let resource = resources.find((resource) => resource.id === id);
+  if (resource === undefined) {
+    return;
+  }
+  if (resource.type === "link" || resource.type === "video") {
+    window.open(resource.path, "_blank");
+    return;
+  }
+
+  // Resource is of file type, get from Materials
+  const onSuccess = (data: any) => {
+    // TODO: Try to navigate straight to the endpoint url instead of creating an object url
+    data.blob().then((blob: any) => {
+      let url = URL.createObjectURL(blob);
+      let a = document.createElement("a");
+      a.target = "_blank";
+      a.href = url;
+      a.click();
+      a.remove();
+    });
+  };
+  const onFailure = (error: { text: () => Promise<any> }) => {
+    error.text().then((errorText) => {
+      console.log(errorText);
+    });
+  };
+  request(api.MATERIALS_RESOURCES_FILE(id), methods.GET, onSuccess, onFailure);
 }
 
 export default ModuleResources;
