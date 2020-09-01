@@ -7,7 +7,7 @@ import Col from "react-bootstrap/esm/Col";
 import FileCard from "components/atoms/FileCard";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import { SelectionProps } from "components/molecules/SelectionView";
-import { resourceTypeToIcon } from "../../pages/ModuleResources";
+import { resourceTypeToIcon } from "../../pages/ModuleResources/utils";
 
 const QuickAccessRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import { SelectionProps } from "components/molecules/SelectionView";
-import { resourceTypeToIcon } from "../../pages/ModuleResources";
+import { resourceTypeToIcon } from "../../pages/ModuleResources/utils";
 import FileListItem from "components/atoms/FileListItem";
 
 const CategoryList: React.FC<{ select: SelectionProps }> = ({ select }) => {

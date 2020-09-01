@@ -13,7 +13,7 @@ import {
   Resource,
   openResource,
   tags,
-} from "../../pages/ModuleResources";
+} from "../ModuleResources/utils";
 import LoadingScreen from "components/molecules/LoadingScreen";
 import { titleCase } from "utils/functions";
 

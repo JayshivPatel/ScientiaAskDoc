@@ -8,30 +8,9 @@ import FoldersView from "./components/FoldersView";
 import ListView from "./components/ListView";
 import queryString from "query-string";
 
-import {
-  faFileAlt,
-  faFilePdf,
-  faFileVideo,
-  faLink,
-  IconDefinition,
-} from "@fortawesome/free-solid-svg-icons";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import LoadingScreen from "components/molecules/LoadingScreen";
-
-export interface Resource {
-  title: string;
-  type: string;
-  tags: string[];
-  folder: string;
-  id: number;
-  path?: string;
-  thumbnail?: string;
-}
-
-export interface Folder {
-  title: string;
-  id: number;
-}
+import { Resource, openResource, tags, folders } from "./utils";
 
 export interface ResourcesProps {
   year: string;
@@ -45,19 +24,6 @@ export interface ResourceState {
   isLoaded: Boolean;
   resources: Resource[];
   searchText: string;
-}
-
-export function resourceTypeToIcon(type: string): IconDefinition {
-  switch (type) {
-    case "pdf":
-      return faFilePdf;
-    case "video":
-      return faFileVideo;
-    case "link":
-      return faLink;
-    default:
-      return faFileAlt;
-  }
 }
 
 class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
@@ -120,13 +86,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     });
   }
 
-  // Gets the unique categories/folders that have been assigned for the resources
-  folders(): Folder[] {
-    return Array.from(
-      new Set<string>(this.state.resources.map((res: Resource) => res.folder))
-    ).map((title, id) => ({ title: title, id: id }));
-  }
-
   handleFileDownload(indices: number[]) {
     if (indices.length === 1) {
       // Only one file to download, call single file endpoint
@@ -145,7 +104,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
   }
 
   handleFolderDownload(ids: number[]) {
-    let categories = this.folders()
+    let categories = folders(this.state.resources)
       .filter((folder) => folder.id in ids)
       .map((folder) => folder.title);
     if (categories.length === 1) {
@@ -192,10 +151,9 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       }
     }
     let rest = searchText.replace(rx, "").trim();
-    if (tags.some((tag) => tag.indexOf(rest) !== -1)) {
-      return true;
-    }
-    return title.indexOf(rest) !== -1;
+    return (
+      tags.some((tag) => tag.indexOf(rest) !== -1) || title.indexOf(rest) !== -1
+    );
   }
 
   handleResourceClick(id: number) {
@@ -206,11 +164,11 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     let scope = this.props.scope || "";
 
     const view = () => {
-      if (this.props.view) {
+      if (this.props.view === "card") {
         return (
           <>
             <FoldersView
-              folders={this.folders()}
+              folders={folders(this.state.resources)}
               scope={scope}
               searchText={this.state.searchText}
               handleFolderDownload={(ids) => this.handleFolderDownload(ids)}
@@ -237,7 +195,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       }
       return (
         <ListView
-          folders={this.folders()}
+          folders={folders(this.state.resources)}
           resources={this.state.resources}
           searchText={this.state.searchText}
           onDownloadClick={(ids) => this.handleFileDownload(ids)}
@@ -267,47 +225,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       </>
     );
   }
-}
-
-export function tags(resources: Resource[]) {
-  let tagSet = new Set<string>();
-
-  for (const resource of resources) {
-    for (const tag of resource.tags) {
-      tagSet.add(tag);
-    }
-  }
-  return Array.from(tagSet).filter(tag => tag.length > 0).sort();
-}
-
-export function openResource(resources: Resource[], id: number) {
-  let resource = resources.find((resource) => resource.id === id);
-  if (resource === undefined) {
-    return;
-  }
-  if (resource.type === "link" || resource.type === "video") {
-    window.open(resource.path, "_blank");
-    return;
-  }
-
-  // Resource is of file type, get from Materials
-  const onSuccess = (data: any) => {
-    // TODO: Try to navigate straight to the endpoint url instead of creating an object url
-    data.blob().then((blob: any) => {
-      let url = URL.createObjectURL(blob);
-      let a = document.createElement("a");
-      a.target = "_blank";
-      a.href = url;
-      a.click();
-      a.remove();
-    });
-  };
-  const onFailure = (error: { text: () => Promise<any> }) => {
-    error.text().then((errorText) => {
-      console.log(errorText);
-    });
-  };
-  request(api.MATERIALS_RESOURCES_FILE(id), methods.GET, onSuccess, onFailure);
 }
 
 export default ModuleResources;
