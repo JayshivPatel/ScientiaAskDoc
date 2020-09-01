@@ -21,7 +21,8 @@ const CategoryList: React.FC<{ select: SelectionProps }> = ({ select }) => {
           <FileListItem
             onClick={() => select.handleCardClick(id)}
             onMouseOver={() => select.handleMouseOver(id)}
-            onMouseOut={() => select.handleMouseOut(id)}
+						onMouseOut={() => select.handleMouseOut(id)}
+						onIconClick={() => select.handleIconClick(id)}
             icon={icon}
             tags={tags}
             id={id}
