@@ -5,7 +5,6 @@ import styles from "./style.module.scss";
 // import { request } from "../../../utils/api";
 // import { api, methods } from "../../../constants/routes";
 
-import ProgressBar from "react-bootstrap/ProgressBar";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
@@ -19,15 +18,13 @@ const ModuleOverview: React.FC = () => {
   return (
     <>
       <MyBreadcrumbs />
-
-      <ProgressBar now={50} className={styles.progress} />
       <Accordion
         defaultActiveKey="0"
         style={{ marginTop: "1.25rem", borderRadius: ".5rem" }}
         className={styles.progressAccordion}
       >
         {[...Array(9)].map((e, i) => {
-					
+
           let WeekList = weekList.map(({ title, type, tags, id }: any) => (
             <FileListItem
               title={title}
