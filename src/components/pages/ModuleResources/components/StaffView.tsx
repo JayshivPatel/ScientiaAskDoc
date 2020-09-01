@@ -12,7 +12,8 @@ import CategoryHeader from "components/molecules/CategoryHeader";
 export interface StaffViewProps {
 	year: string;
 	course: string;
-  	folders: Folder[];
+	folders: Folder[];
+	reload: () => void;
   	resources: Resource[];
   	searchText: string;
   	includeInSearchResult: (item: Resource, searchText: string) => boolean;
@@ -21,7 +22,8 @@ export interface StaffViewProps {
 const StaffView: React.FC<StaffViewProps> = ({
 	year,
 	course,
-  	folders,
+	folders,
+	reload,
   	resources,
   	searchText,
   	includeInSearchResult
@@ -40,14 +42,19 @@ const StaffView: React.FC<StaffViewProps> = ({
 	let tags: string[] = resources.flatMap(resource => resource.tags)
 	tags = Array.from(new Set(tags))
 	// "new" tag is determined by backend, remove it from selection pool
-	tags = tags.filter(tag => tag !== "new");
-
+	tags = tags.filter(tag => tag !== "new" && tag !== "");
 	return (
     <>
 		<UploadModal
-			show={modal === "link"}
+			show={modal === "upload"}
 			onHide={closeModal}
-			categories={folders.map(folder => folder.title).sort()}
+			hideAndReload={() => {
+				closeModal();
+				reload();
+			}}
+			year={year}
+			course={course}
+			categories={folders.map(folder => folder.title).sort() || ["Lecture notes"]}
 			tags={tags.sort()}
 		/>
 
@@ -67,33 +74,19 @@ const StaffView: React.FC<StaffViewProps> = ({
 		})}
     	<Row style={{ marginTop: "1rem" }}>
 			<Col>
-			<Button
-				onClick={() => setModal("link")}
-				variant="secondary"	block
-			>
-				Upload Link
-			</Button>
+				<Button
+					onClick={() => setModal("upload")}
+					variant="info" block
+				>
+					Upload Resources
+				</Button>
 			</Col>
 			<Col>
-			<Button
-				variant="secondary" block
-			>
-				Upload File
-			</Button>
-			</Col>
-			<Col>
-			<Button
-				variant="secondary" block
-			>
-				Upload Directory
-			</Button>
-			</Col>
-			<Col>
-			<Button
-				variant="warning" block
-			>
-				Remove All
-			</Button>
+				<Button
+					variant="warning" block
+				>
+					Remove All
+				</Button>
 			</Col>
 		</Row>
     </>

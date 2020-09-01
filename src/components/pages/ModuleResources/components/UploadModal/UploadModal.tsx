@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import classNames from "classnames";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,25 +10,31 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Card from "react-bootstrap/Card";
 import Tab from "react-bootstrap/Tab"; 
 import Tabs from "react-bootstrap/Tabs";
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
 import { useDropzone } from "react-dropzone";
 import CreatableSelect from "react-select/creatable";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faCaretDown,
+	faTimes,
 	faFolder,
 	faFolderOpen,
 } from "@fortawesome/free-solid-svg-icons";
 import "react-datepicker/dist/react-datepicker.css";
 
 import styles from "./style.module.scss";
-// import { request } from "../../../../../utils/api"
-// import { api } from "../../../../../constants/routes"
+import { request } from "../../../../../utils/api"
+import { api, methods } from "../../../../../constants/routes"
+import enGB from "date-fns/locale/en-GB";
+registerLocale("en-GB", enGB);
 
 interface UploadModalProps {
 	show: boolean;
 	onHide: any;
+	hideAndReload: () => void;
+	year: string;
+	course: string;
 	categories: string[];
 	tags: string[];
 }
@@ -36,15 +42,23 @@ interface UploadModalProps {
 const UploadModal: React.FC<UploadModalProps> = ({
   	show,
 	onHide,
+	hideAndReload,
+	year,
+	course,
 	categories,
 	tags,
 }) => {
-	const maxSize = 1048576;
-	const prettyBytes = require('pretty-bytes');
+	const [tab, setTab] = useState("file");
+	const [url, setURL] = useState("");
+	const [rejectedFiles, setRejectedFiles] = useState<File[]>([]);
+	const [resourceDetails, setResourceDetails] = useState<{[id: number] : ResourceDetails}>({});
+	const maxSize =  26214400; // 25mb, TODO: lift to constants
+	const prettyBytes = require("pretty-bytes");
 
 	const onDrop = useCallback(acceptedFiles => {
-		console.log(acceptedFiles);
-	}, []);
+		const newFiles = rejectedFiles.filter(file => !acceptedFiles.includes(file));
+		setRejectedFiles(newFiles);
+	}, [rejectedFiles]);
 
 	const { isDragActive, getRootProps, getInputProps, isDragAccept, isDragReject, acceptedFiles } = useDropzone({
 		onDrop,
@@ -53,13 +67,72 @@ const UploadModal: React.FC<UploadModalProps> = ({
 		multiple: true,
 	});
 
-	const handleSubmit = (event: any) => {
+	const removeFile = (file: File) => {
+		const newFiles = [...rejectedFiles, file];
+		setRejectedFiles(newFiles);
+	}
+
+	const updateResourceDetails = (id: number, details: ResourceDetails) => {
+		resourceDetails[id] = details;
+		setResourceDetails({...resourceDetails});
+	}
+
+	const submitFileForResource = (file: File) => {
+		let formData = new FormData()
+		formData.append("file", file);
+		return (data: { json: () => Promise<any>; }) => {
+			data.json().then((data) => {
+				request(api.MATERIALS_RESOURCES_FILE(data["id"]), methods.PUT, () => {}, () => {}, formData, "profx", true);
+			})
+		};
+	}
+
+	const handleSubmit = async (event: any) => {
 		event.preventDefault();
+		switch (tab) {
+			case "file": {
+				await Promise.all(acceptedFiles.map((file, index) => {
+					if (rejectedFiles.includes(file)) {
+						// Empty promise i.e. do nothing
+						return Promise.resolve();
+					}
 		
-		// fetch('/api/form-submit-url', {
-		//   method: 'POST',
-		//   body: data,
-		// });
+					let details: ResourceDetails = resourceDetails[index];
+					let payload: {[key: string]: any} = {
+						type: "file",
+						category: details.category,
+						course: course,
+						title: details.title,
+						year: year,
+						tags: details.tags,
+						path: "",
+					};
+					if (details.visibleAfter !== "") {
+						payload.visible_after = details.visibleAfter;
+					}
+					return request(api.MATERIALS_RESOURCES, methods.POST, submitFileForResource(file), () => {}, payload, "profx");
+				}));
+		
+				hideAndReload();
+			}
+			case "link": {
+				let details: ResourceDetails = resourceDetails[-1];
+				let payload: {[key: string]: any} = {
+					type: "link",
+					category: details.category,
+					course: course,
+					title: details.title,
+					year: year,
+					tags: details.tags,
+					path: url,
+				};
+				if (details.visibleAfter !== "") {
+					payload.visible_after = details.visibleAfter;
+				}
+				request(api.MATERIALS_RESOURCES, methods.POST, hideAndReload, () => {}, payload, "profx");
+			}
+		}
+		
 	}
 
 	return (
@@ -76,11 +149,12 @@ const UploadModal: React.FC<UploadModalProps> = ({
 
 			<Form onSubmit={handleSubmit}>
 				<Modal.Body>
-					<Tabs defaultActiveKey="file">
+					<Tabs activeKey={tab} onSelect={tab => setTab(tab ? tab : "file")}>
 						<Tab eventKey="file" title="File">
 							<div {...getRootProps({
 								className: classNames(
 									styles.dropzone,
+									styles.clickable,
 									isDragAccept ? styles.accept : isDragReject ? styles.reject : ""
 								)
 							})}>
@@ -90,28 +164,42 @@ const UploadModal: React.FC<UploadModalProps> = ({
 							</div>
 
 							<Accordion>
-								{acceptedFiles.length > 0 && acceptedFiles.map((acceptedFile, index) => (
+								{acceptedFiles.length > 0 && acceptedFiles.map((file, index) => (
+									!rejectedFiles.includes(file) &&
 									<Card key={index}>
-										<Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
+										<Accordion.Toggle
+											as={Card.Header}
+											eventKey={`${index}`}
+											className={styles.clickable}
+										>
 											<Row>
-												<Col>
-													{acceptedFile.name}
-													<span className={styles.filesizeDisplay}>
-														{prettyBytes(acceptedFile.size)}
-													</span> 
-												</Col>
 												<Col md="auto">
 													<FontAwesomeIcon icon={faCaretDown}/>
 												</Col>
+												<Col>
+													{file.name}
+													<span className={styles.filesizeDisplay}>
+														{prettyBytes(file.size)}
+													</span> 
+												</Col>
+												<Col md="auto">
+													<FontAwesomeIcon icon={faTimes} onClick={e => {
+														e.stopPropagation();
+														removeFile(file);
+													}}/>
+												</Col>
 											</Row>
 										</Accordion.Toggle>
+
 										<Accordion.Collapse eventKey={`${index}`}>
 											<Card.Body>
 												<ResourceDetailForm
-													id={`${index}`}
+													id={index}
+													key={index}
 													categories={categories}
-													tags={tags}
-													defaultTitle={acceptedFile.name}
+													tagList={tags}
+													defaultTitle={file.name}
+													setResourceDetails={updateResourceDetails}
 												/>
 											</Card.Body>
 										</Accordion.Collapse>
@@ -121,15 +209,20 @@ const UploadModal: React.FC<UploadModalProps> = ({
 						</Tab>
 
 						<Tab eventKey="link" title="Link">
-							<Form.Group>
+							<Form.Group className={styles.tabFirstFormGroup}>
 								<Form.Label>URL</Form.Label>
-								<Form.Control type="text" placeholder="Paste link here." />
+								<Form.Control
+									type="text"
+									placeholder="Paste link here."
+									onChange={e => setURL(e.target.value)}
+								/>
 							</Form.Group>
 
 							<ResourceDetailForm
-								id="link"
+								id={-1}
 								categories={categories}
-								tags={tags}
+								tagList={tags}
+								setResourceDetails={updateResourceDetails}
 							/>
 						</Tab>
 					</Tabs>
@@ -156,25 +249,49 @@ const UploadModal: React.FC<UploadModalProps> = ({
 	);
 };
 
-interface ResourceDetailFormProps {
-	id: string;
-	categories: string[];
+interface ResourceDetails {
+	title: string;
+	category: string;
 	tags: string[];
+	visibleAfter: string;
+}
+
+interface ResourceDetailFormProps {
+	id: number;
+	categories: string[];
+	tagList: string[];
 	defaultTitle?: string;
+	setResourceDetails: (id: number, details: ResourceDetails) => void;
+}
+
+interface Option {
+	label: string;
+	value: string;
 }
 
 const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 	id,
 	categories,
-	tags,
+	tagList,
 	defaultTitle,
+	setResourceDetails,
 }) => {
 	const [showPicker, setShowPicker] = useState(false);
 	const [startDate, setStartDate] = useState(new Date());
-	// Form responses
-	// const [title, setTitle] = useState<string>(defaultTitle || "");
-  	// const [category, setCategory] = useState("");
-	// const [tagsInput, setTags] = useState<string[]>([]);
+
+	const [title, setTitle] = useState<string>(defaultTitle || "");
+	const [category, setCategory] = useState(categories[0] || "");
+	const [tags, setTags] = useState<string[]>([]);
+	const [visibleAfter, setVisibleAfter] = useState("");
+
+	useEffect(() => {
+		setResourceDetails(id, {
+			title,
+			category,
+			tags,
+			visibleAfter
+		})
+	}, [id, title, category, tags, visibleAfter])
 
 	return (<>
 		<Form.Group>
@@ -183,17 +300,22 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 				type="text"
 				placeholder="Type a title for this resource here."
 				defaultValue={defaultTitle}
+				onChange={e => setTitle(e.target.value)}
 			/>
 		</Form.Group>
 
 		<Form.Group>
 			<Form.Label>Category</Form.Label>
 			<CreatableSelect
-				isClearable
+				defaultValue={{
+					value: categories[0],
+					label: categories[0],
+				}}
 				options={categories.map(category => ({
 					value: category,
 					label: category,
 				}))}
+				onChange={selectedCategory => setCategory(selectedCategory ? (selectedCategory as Option).value : "")}
 			/>
 		</Form.Group>
 
@@ -202,29 +324,38 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 			<CreatableSelect
 				isClearable
 				isMulti
-				options={tags.map(tag => ({
+				menuPortalTarget={document.body}
+				styles={{ menuPortal: styles => ({ ...styles, zIndex: 10001 })}}
+				options={tagList.map(tag => ({
 					value: tag,
 					label: tag,
 				}))}
+				onChange={selectedTags => setTags(selectedTags ? (selectedTags as Option[]).map(option => option.value) : [])}
 			/>
 		</Form.Group>
 
 		<Form.Group>
-			<Form.Switch
-				id={`${id}-visibilityPickerSwitch`} 
-				label="Visible immediately"
-				onClick={() => setShowPicker(!showPicker)}
-				defaultChecked
-			/>
-			{showPicker &&
-			<DatePicker
-				selected={startDate}
-				onChange={(date:Date) => setStartDate(date)}
-				locale="en-GB"
-				showTimeInput
-				timeFormat="p"
-				dateFormat="Pp"
-			/>}
+			<Row>
+				<Col md="auto">
+					<Form.Switch
+						id={`${id}-visibilityPickerSwitch`}
+						label={showPicker ? "Visible after" : "Visible immediately"}
+						onClick={() => setShowPicker(!showPicker)}
+						defaultChecked
+					/>
+				</Col>
+				{showPicker &&
+				<Col>
+					<DatePicker
+						selected={startDate}
+						onChange={(date: Date) => setStartDate(date)}
+						onChangeRaw={event => setVisibleAfter(event.target.value)}
+						locale="en-GB"
+						showTimeInput
+						dateFormat="dd/MM/yyyy hh:mm"
+					/>
+				</Col>}
+			</Row>
   		</Form.Group>
 	</>);
 }

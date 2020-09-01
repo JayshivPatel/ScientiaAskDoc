@@ -11,6 +11,8 @@ const config = process.env.NODE_ENV === "development" ? dev : prod;
 export const methods = {
   GET: "GET",
   POST: "POST",
+  PUT: "PUT",
+  DELETE: "DELETE"
 }
 
 export const api = {

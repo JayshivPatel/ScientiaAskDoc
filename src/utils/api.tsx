@@ -10,26 +10,32 @@ interface RequestOptions {
 // and error parameters respectively. Body is process as query parameters if
 // method is GET
 // Note: will trigger CORS OPTIONS preflight due to the Authorization header
-export async function request(url: string, method: string, onSuccess: any, onError: any, body?: any) {
-  if (!authenticationService.userIsLoggedIn()) {
+export async function request(url: string, method: string, onSuccess: any, onError: any, body?: any, username?: string, isFile: boolean = false) {
+  if (!authenticationService.userIsLoggedIn() || (username && authenticationService.getUserInfo()["username"] !== username)) {
     // TODO: Credentials should be handled elsewhere
     // TODO: Specific endpoint login route should be passed in
-    await authenticationService.login("abc123", "a", api.MATERIALS_LOGIN);
+    await authenticationService.login(username ? username : "abc123", "a", api.MATERIALS_LOGIN);
   }
-  
+
+  let headers: { [key: string]: string } = {
+    "Authorization": authConstants.ACCESS_TOKEN_HEADER(),
+    "Access-Control-Allow-Origin": "*",
+  };
+
+  if (!isFile) {
+    headers["Content-Type"] = "application/json";
+  }
+
   var options: RequestOptions = {
     method: method,
     mode: "cors",
-    headers: { 
-      "Authorization": authConstants.ACCESS_TOKEN_HEADER(),
-      "Access-Control-Allow-Origin": "*",
-    },
+    headers: headers
   };
 
   if (method === methods.GET) {
     url = url + "?" + new URLSearchParams(body);
   } else {
-    options.body = JSON.stringify(body);
+    options.body = isFile ? body : JSON.stringify(body);
   }
 
   return fetch(url, options)

@@ -78,7 +78,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     };
   }
 
-  componentDidMount() {
+  loadResources() {
     this.setState({ isLoaded: false });
     const onSuccess = (data: { json: () => Promise<any> }) => {
       let resourceArr: Resource[] = [];
@@ -100,7 +100,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             title: resource.title,
             type: resource.type,
             tags: resource.tags,
-            folder: resource.category,
+            folder: resource.category.toLowerCase(),
             thumbnail: thumbnail,
             id: resource.id,
             path: resource.path,
@@ -110,11 +110,9 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       });
     };
     const onFailure = (error: { text: () => Promise<any> }) => {
-      if (error.text){
-        error.text().then((errorText) => {
-          this.setState({ error: errorText, isLoaded: true });
-        });
-      }
+      error.text().then((errorText) => {
+        this.setState({ error: errorText, isLoaded: true });
+      });
     };
 
     request(api.MATERIALS_RESOURCES, methods.GET, onSuccess, onFailure, {
@@ -123,10 +121,14 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     });
   }
 
+  componentDidMount() {
+    this.loadResources();
+  }
+
   // Gets the unique categories/folders that have been assigned for the resources
   folders(): Folder[] {
     return Array.from(
-      new Set<string>(this.state.resources.map((res: Resource) => res.folder))
+      new Set<string>(this.state.resources.map((res: Resource) => res.folder.toLowerCase()))
     ).map((title, id) => ({ title: title, id: id }));
   }
 
@@ -307,6 +309,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               year={this.props.year}
               course={this.moduleCode}
               folders={this.folders()}
+              reload={() => this.loadResources()}
               resources={this.state.resources}
               searchText={this.state.searchText}
               includeInSearchResult={this.includeInSearchResult}
