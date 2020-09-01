@@ -97,12 +97,12 @@ class ModuleOverview extends React.Component<
           isLoaded={this.state.isLoaded}
           successful={
             <Accordion
-              defaultActiveKey="1"
+              defaultActiveKey="week 2"
               style={{ marginTop: "1.25rem", borderRadius: ".5rem" }}
               className={styles.progressAccordion}
             >
-              {allAvailableWeeks.map((weekTitle, i) => {
-                let WeekList = this.state.resources
+              {allAvailableWeeks.map((weekTitle) => {
+                const WeekList = this.state.resources
                   .filter(({ tags }: any) =>
                     tags.some((tag: string) => tag.toLowerCase() === weekTitle)
                   )
@@ -119,15 +119,15 @@ class ModuleOverview extends React.Component<
                   ));
 
                 return (
-                  <Card className={styles.weekCard}>
+                  <Card className={styles.weekCard} key={weekTitle}>
                     <Accordion.Toggle
                       className={styles.weekCardHeader}
                       as={Card.Header}
-                      eventKey={`${i}`}
+                      eventKey={weekTitle}
                     >
                       {titleCase(weekTitle)}
                     </Accordion.Toggle>
-                    <Accordion.Collapse eventKey={`${i}`}>
+                    <Accordion.Collapse eventKey={weekTitle}>
                       <Card.Body className={styles.weekCardBody}>
                         {WeekList}
                       </Card.Body>

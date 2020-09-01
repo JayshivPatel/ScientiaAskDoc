@@ -17,9 +17,8 @@ const TutorCardGroup: React.FC<TutorCardGroupProps> = ({title
 	,tutors}) => {
   let tutorCards = tutors.map(({ name, email, address, image }) => {
     return (
-      <Col md={6} style={{ paddingRight: "0.625rem", paddingLeft: "0.625rem" }}>
+      <Col md={6} style={{ paddingRight: "0.625rem", paddingLeft: "0.625rem" }} key={email}>
         <TutorCard
-          key={email}
           name={name}
           email={email}
           address={address}

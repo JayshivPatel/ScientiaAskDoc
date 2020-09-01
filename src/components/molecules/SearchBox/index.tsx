@@ -76,7 +76,8 @@ const SearchBox: React.FC<SearchBoxProps> = ({
                         className={styles.dropdownItem}
                         onClick={() =>
                           onSearchTextChange(`${searchText} tag(${tag}) `)
-                        }
+												}
+												key={tag}
                       >
                         {titleCase(tag)}
                       </Dropdown.Item>

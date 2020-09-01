@@ -1,5 +1,4 @@
 import React from "react";
-import Spinner from "react-bootstrap/Spinner";
 import { request, download } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
 import SearchBox from "components/molecules/SearchBox";
