@@ -4,6 +4,7 @@ import styles from "./style.module.scss";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import classNames from "classnames";
 
 export interface CategoryHeaderProps {
   heading: string;
@@ -16,24 +17,17 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
   heading,
   onSelectAllClick,
   selectAllIcon,
-  checkBoxColor
+  checkBoxColor,
 }: CategoryHeaderProps) => {
   return (
     <>
-      <div className={styles.sectionHeaderContainer}>
+      <div className={styles.sectionHeaderContainer} style={{paddingRight: "0.325rem"}} onClick={onSelectAllClick}>
         <span className={styles.sectionHeader}>{heading}</span>
         <div className={styles.sectionHeaderButtonGroup}>
-          <Button
-            style={{ color: checkBoxColor }}
-            className={styles.sectionHeaderButton}
-            onClick={onSelectAllClick}
-            variant="secondary"
-          >
-            <FontAwesomeIcon
-              className={styles.buttonIcon}
-              icon={selectAllIcon}
-            />
-          </Button>
+          <FontAwesomeIcon
+            style={{ color: checkBoxColor, fontSize: "1.125rem" }}
+            icon={selectAllIcon}
+          />
         </div>
       </div>
     </>

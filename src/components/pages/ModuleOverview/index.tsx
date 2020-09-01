@@ -16,6 +16,7 @@ import {
 } from "../ModuleResources/utils";
 import LoadingScreen from "components/molecules/LoadingScreen";
 import { titleCase } from "utils/functions";
+import ListGroup from "react-bootstrap/esm/ListGroup";
 
 export interface ModuleOverviewProps {
   year: string;
@@ -129,7 +130,7 @@ class ModuleOverview extends React.Component<
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey={weekTitle}>
                       <Card.Body className={styles.weekCardBody}>
-                        {WeekList}
+                        <ListGroup variant="flush">{WeekList}</ListGroup>
                       </Card.Body>
                     </Accordion.Collapse>
                   </Card>

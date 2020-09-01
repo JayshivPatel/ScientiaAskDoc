@@ -3,10 +3,11 @@ import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import { SelectionProps } from "components/molecules/SelectionView";
 import { resourceTypeToIcon } from "../../pages/ModuleResources/utils";
 import FileListItem from "components/atoms/FileListItem";
+import ListGroup from "react-bootstrap/ListGroup";
 
 const CategoryList: React.FC<{ select: SelectionProps }> = ({ select }) => {
   return (
-    <>
+    <ListGroup variant="flush">
       {select.selectionItems.map(({ title, type, tags, id }) => {
         if (type === undefined || tags === undefined) return null;
 
@@ -30,7 +31,7 @@ const CategoryList: React.FC<{ select: SelectionProps }> = ({ select }) => {
           />
         );
       })}
-    </>
+    </ListGroup>
   );
 };
 
