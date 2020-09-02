@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import classNames from "classnames";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,9 +10,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Card from "react-bootstrap/Card";
 import Tab from "react-bootstrap/Tab"; 
 import Tabs from "react-bootstrap/Tabs";
-import DatePicker, { registerLocale } from "react-datepicker";
 import { useDropzone } from "react-dropzone";
-import CreatableSelect from "react-select/creatable";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -21,13 +19,11 @@ import {
 	faFolder,
 	faFolderOpen,
 } from "@fortawesome/free-solid-svg-icons";
-import "react-datepicker/dist/react-datepicker.css";
 
 import styles from "./style.module.scss";
-import { request } from "../../../../../utils/api"
+import ResourceDetailForm from "../../../../molecules/ResourceDetailForm"
+import { staffRequest } from "../../../../../utils/api"
 import { api, methods } from "../../../../../constants/routes"
-import enGB from "date-fns/locale/en-GB";
-registerLocale("en-GB", enGB);
 
 interface UploadModalProps {
 	show: boolean;
@@ -37,6 +33,13 @@ interface UploadModalProps {
 	course: string;
 	categories: string[];
 	tags: string[];
+}
+
+export interface ResourceDetails {
+	title: string;
+	category: string;
+	tags: string[];
+	visibleAfter: string;
 }
 
 const UploadModal: React.FC<UploadModalProps> = ({
@@ -82,7 +85,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
 		formData.append("file", file);
 		return (data: { json: () => Promise<any>; }) => {
 			data.json().then((data) => {
-				request(api.MATERIALS_RESOURCES_FILE(data["id"]), methods.PUT, () => {}, () => {}, formData, "profx", true);
+				staffRequest(api.MATERIALS_RESOURCES_FILE(data["id"]), methods.PUT, () => {}, () => {}, formData, true);
 			})
 		};
 	}
@@ -110,10 +113,11 @@ const UploadModal: React.FC<UploadModalProps> = ({
 					if (details.visibleAfter !== "") {
 						payload.visible_after = details.visibleAfter;
 					}
-					return request(api.MATERIALS_RESOURCES, methods.POST, submitFileForResource(file), () => {}, payload, "profx");
+					return staffRequest(api.MATERIALS_RESOURCES, methods.POST, submitFileForResource(file), () => {}, payload);
 				}));
 		
 				hideAndReload();
+				break;
 			}
 			case "link": {
 				let details: ResourceDetails = resourceDetails[-1];
@@ -129,7 +133,8 @@ const UploadModal: React.FC<UploadModalProps> = ({
 				if (details.visibleAfter !== "") {
 					payload.visible_after = details.visibleAfter;
 				}
-				request(api.MATERIALS_RESOURCES, methods.POST, hideAndReload, () => {}, payload, "profx");
+				staffRequest(api.MATERIALS_RESOURCES, methods.POST, hideAndReload, () => {}, payload);
+				break;
 			}
 		}
 		
@@ -248,116 +253,5 @@ const UploadModal: React.FC<UploadModalProps> = ({
 		</Modal>
 	);
 };
-
-interface ResourceDetails {
-	title: string;
-	category: string;
-	tags: string[];
-	visibleAfter: string;
-}
-
-interface ResourceDetailFormProps {
-	id: number;
-	categories: string[];
-	tagList: string[];
-	defaultTitle?: string;
-	setResourceDetails: (id: number, details: ResourceDetails) => void;
-}
-
-interface Option {
-	label: string;
-	value: string;
-}
-
-const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
-	id,
-	categories,
-	tagList,
-	defaultTitle,
-	setResourceDetails,
-}) => {
-	const [showPicker, setShowPicker] = useState(false);
-	const [startDate, setStartDate] = useState(new Date());
-
-	const [title, setTitle] = useState<string>(defaultTitle || "");
-	const [category, setCategory] = useState(categories[0] || "");
-	const [tags, setTags] = useState<string[]>([]);
-	const [visibleAfter, setVisibleAfter] = useState("");
-
-	useEffect(() => {
-		setResourceDetails(id, {
-			title,
-			category,
-			tags,
-			visibleAfter
-		})
-	}, [id, title, category, tags, visibleAfter])
-
-	return (<>
-		<Form.Group>
-			<Form.Label>Title</Form.Label>
-			<Form.Control
-				type="text"
-				placeholder="Type a title for this resource here."
-				defaultValue={defaultTitle}
-				onChange={e => setTitle(e.target.value)}
-			/>
-		</Form.Group>
-
-		<Form.Group>
-			<Form.Label>Category</Form.Label>
-			<CreatableSelect
-				defaultValue={{
-					value: categories[0],
-					label: categories[0],
-				}}
-				options={categories.map(category => ({
-					value: category,
-					label: category,
-				}))}
-				onChange={selectedCategory => setCategory(selectedCategory ? (selectedCategory as Option).value : "")}
-			/>
-		</Form.Group>
-
-		<Form.Group>
-			<Form.Label>Tags</Form.Label>
-			<CreatableSelect
-				isClearable
-				isMulti
-				menuPortalTarget={document.body}
-				styles={{ menuPortal: styles => ({ ...styles, zIndex: 10001 })}}
-				options={tagList.map(tag => ({
-					value: tag,
-					label: tag,
-				}))}
-				onChange={selectedTags => setTags(selectedTags ? (selectedTags as Option[]).map(option => option.value) : [])}
-			/>
-		</Form.Group>
-
-		<Form.Group>
-			<Row>
-				<Col md="auto">
-					<Form.Switch
-						id={`${id}-visibilityPickerSwitch`}
-						label={showPicker ? "Visible after" : "Visible immediately"}
-						onClick={() => setShowPicker(!showPicker)}
-						defaultChecked
-					/>
-				</Col>
-				{showPicker &&
-				<Col>
-					<DatePicker
-						selected={startDate}
-						onChange={(date: Date) => setStartDate(date)}
-						onChangeRaw={event => setVisibleAfter(event.target.value)}
-						locale="en-GB"
-						showTimeInput
-						dateFormat="dd/MM/yyyy hh:mm"
-					/>
-				</Col>}
-			</Row>
-  		</Form.Group>
-	</>);
-}
 
 export default UploadModal;

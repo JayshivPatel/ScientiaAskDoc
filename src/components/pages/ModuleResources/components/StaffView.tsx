@@ -2,12 +2,21 @@ import React, { useState } from "react";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/esm/Col";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 import Row from "react-bootstrap/esm/Row";
 
-import UploadModal from "./UploadModal/UploadModal"
-import { Resource, Folder } from "../index";
+import { faEdit } from "@fortawesome/free-regular-svg-icons";
+import { faDownload, faTrash, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import UploadModal from "./UploadModal"
+import AlertModal from "../../../atoms/AlertModal"
+import { Resource, Folder } from "../";
 import CategoryList from "components/molecules/CategoryList";
 import CategoryHeader from "components/molecules/CategoryHeader";
+
+import { staffRequest, download } from "../../../../utils/api"
+import { api, methods } from "../../../../constants/routes"
 
 export interface StaffViewProps {
 	year: string;
@@ -29,6 +38,7 @@ const StaffView: React.FC<StaffViewProps> = ({
   	includeInSearchResult
 }) => {
 	const [modal, setModal] = useState("");
+	const [resourceID, setResourceID] = useState(-1);
 	const closeModal = () => setModal("");
 
 	let filesContent: Resource[] = resources;
@@ -43,8 +53,45 @@ const StaffView: React.FC<StaffViewProps> = ({
 	tags = Array.from(new Set(tags))
 	// "new" tag is determined by backend, remove it from selection pool
 	tags = tags.filter(tag => tag !== "new" && tag !== "");
+
+	const hiddenFileInput = React.createRef<HTMLInputElement>()
+	const handleReuploadClick = (id: number) => {
+		if (hiddenFileInput.current) {
+			setResourceID(id);
+			hiddenFileInput.current.click();
+		}
+	};
+	const reuploadFile = (event: any) => {
+		const fileUploaded = event.target.files[0];
+		let formData = new FormData();
+		formData.append("file", fileUploaded);
+
+		staffRequest(api.MATERIALS_RESOURCES_FILE(resourceID), methods.PUT,
+			() => {}, () => {}, formData, true
+		)
+	};
+
+	const fileDropdown = (id: number, filename: string) => {
+		return (
+			<>
+				<FontAwesomeIcon onClick={() => {}} icon={faEdit} />
+				<FontAwesomeIcon onClick={() => staffRequest(api.MATERIALS_RESOURCES_ID(id), methods.DELETE, () => {}, () => {})} icon={faTrash}/>
+				{filename && <>
+				<FontAwesomeIcon onClick={() => download(api.MATERIALS_RESOURCES_FILE(id), methods.GET, filename)} icon={faDownload} />
+				<FontAwesomeIcon onClick={() => handleReuploadClick(id)} icon={faUpload}/>
+				</>}
+			</>
+		);
+	}
+
 	return (
     <>
+		<input
+        	type="file"
+        	ref={hiddenFileInput}
+        	onChange={reuploadFile}
+        	hidden
+      	/>
 		<UploadModal
 			show={modal === "upload"}
 			onHide={closeModal}
@@ -65,6 +112,7 @@ const StaffView: React.FC<StaffViewProps> = ({
 				/>
 				<CategoryList 
 					categoryItems={filesContent.filter(res => res.folder === title)}
+					fileDropdown={fileDropdown}
 					handleRowClick={(id) => {}}
 					handleIconClick={(id) => {}}
 					handleMouseOver={(id) => {}}
@@ -83,12 +131,34 @@ const StaffView: React.FC<StaffViewProps> = ({
 			</Col>
 			<Col>
 				<Button
+					onClick={() => setModal("alert")}
 					variant="warning" block
 				>
 					Remove All
 				</Button>
 			</Col>
 		</Row>
+
+		<AlertModal
+			show={modal === "alert"}
+			onHide={closeModal}
+			title="Remove All Warning"
+			message="This will irreversibly delete all course resources and associated files."
+			confirmLabel="Delete All Resources"
+			confirmOnClick={() => staffRequest(
+				api.MATERIALS_RESOURCES,
+				methods.DELETE,
+				() => {
+					closeModal();
+					reload();
+				},
+				() => {},
+				{
+					year: year,
+					course: course
+				}
+			)}
+		/>
     </>
 	);
 };

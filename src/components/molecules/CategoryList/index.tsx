@@ -13,6 +13,7 @@ import { SelectionProps } from "../SelectionView";
 export interface CategoryListProps {
   categoryItems: Resource[];
   select?: SelectionProps;
+  fileDropdown?: (id: number, filename: string) => any;
   handleRowClick: (id: number) => void;
   handleIconClick: (id: number) => void;
   handleMouseOver: (id: number) => void;
@@ -22,6 +23,7 @@ export interface CategoryListProps {
 const CategoryList: React.FC<CategoryListProps> = ({
   categoryItems,
   select,
+  fileDropdown,
   handleRowClick,
   handleIconClick,
   handleMouseOver,
@@ -80,6 +82,9 @@ const CategoryList: React.FC<CategoryListProps> = ({
               }}
               fixedWidth
             />
+            {fileDropdown &&
+              fileDropdown(id, title)
+            }
           </Row>
         );
       })}

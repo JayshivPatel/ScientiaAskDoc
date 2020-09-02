@@ -32,7 +32,7 @@ export async function request(url: string, method: string, onSuccess: any, onErr
     headers: headers
   };
 
-  if (method === methods.GET) {
+  if (method === methods.GET || method === methods.DELETE) {
     url = url + "?" + new URLSearchParams(body);
   } else {
     options.body = isFile ? body : JSON.stringify(body);
@@ -44,6 +44,10 @@ export async function request(url: string, method: string, onSuccess: any, onErr
     }, (error) => {
       onError(error);
     })
+}
+
+export async function staffRequest(url: string, method: string, onSuccess: any, onError: any, body?: any, isFile: boolean = false) {
+  return request(url, method, onSuccess, onError, body, "profx", isFile);
 }
 
 // Utility that downloads files fetched by request
