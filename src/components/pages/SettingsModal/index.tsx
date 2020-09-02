@@ -26,7 +26,7 @@ const SettingsModal: React.FC<Props> = ({
 }) => {
   const [interfaceSize, setInterfaceSize] = useLocalStorage(
     "interfaceSize",
-    "100"
+    "90"
   );
 
   return (

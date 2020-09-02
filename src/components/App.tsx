@@ -35,7 +35,7 @@ class App extends React.Component<{}, AppState> {
   componentDidMount() {
     document.documentElement.style.fontSize = `${localStorage.getItem(
       "interfaceSize"
-    ) || "100"}%`;
+    ) || "90"}%`;
 
     window.addEventListener("resize", () => {
       if (window.innerWidth !== this.width) {
