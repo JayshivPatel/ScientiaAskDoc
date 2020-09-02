@@ -67,9 +67,16 @@ const SearchBox: React.FC<SearchBoxProps> = ({
             >
               New
             </Dropdown.Item>
+						<Dropdown.Item
+              className={styles.dropdownItem}
+              onClick={() => onSearchTextChange(`${searchText} tag(week 1) `)}
+            >
+              Week 1
+            </Dropdown.Item>
             {tags
               ? tags
-                  .filter((tag) => tag.toLowerCase() !== "new")
+									.filter((tag) => tag.toLowerCase() !== "new")
+									.filter((tag) => !tag.toLowerCase().startsWith("week"))
                   .map((tag) => {
                     return (
                       <Dropdown.Item
