@@ -26,28 +26,26 @@ const FileListItem: React.FC<FileListItemProps> = ({
   onIconClick,
   onClick,
   onMouseOver,
-  onMouseOut,
+  onMouseOut
 }) => {
   return (
     <ListGroup.Item
-      className={styles.listRow}
+      className={styles.listItem}
       onClick={onClick}
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
     >
-      <Row style={{marginLeft: 0, marginRight: "-.75rem"}}>
-        <Col
-          style={{
-            display: "flex",
-            alignItems: "center",
-            padding: 0,
-            fontSize: "1rem",
-          }}
+      <Row
+        className={styles.listRow}
+      >
+        <div className={styles.listItemTitle}
         >
           {title}
-        </Col>
-        <Col md="auto" style={{ display: "flex", alignItems: "center" }}>
-          {tags.map((tag) => (
+        </div>
+        <div
+          style={{ padding: 0, display: "flex", alignItems: "center" }}
+        >
+          {tags.map(tag => (
             <Badge
               pill
               key={tag}
@@ -59,16 +57,16 @@ const FileListItem: React.FC<FileListItemProps> = ({
               {tag}
             </Badge>
           ))}
-        </Col>
-        <FontAwesomeIcon
-          style={{ fontSize: "1.125rem" }}
-          icon={icon}
-          onClick={(e) => {
-            e.stopPropagation();
-            if (onIconClick !== undefined) onIconClick(e);
-          }}
-          fixedWidth
-        />
+          <FontAwesomeIcon
+            style={{ fontSize: "1.125rem" }}
+            icon={icon}
+            onClick={e => {
+              e.stopPropagation();
+              if (onIconClick !== undefined) onIconClick(e);
+            }}
+            fixedWidth
+          />
+        </div>
       </Row>
     </ListGroup.Item>
   );

@@ -1,14 +1,34 @@
 @import "assets/scss/global";
 
-.listRow {
+.listItem {
   cursor: pointer;
-	transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-	border-bottom-width: 1px !important;
+  margin: 0;
+  padding: 0.25rem 1.25rem;
+  border: 0 !important;
 }
 
 .listRow:hover {
-	box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
-	z-index: 500;
+  transform: scale(1.01);
+  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
+  z-index: 500;
+}
+
+.listRow {
+  padding: 0.25rem 0.5rem;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  border-radius: 0.5rem !important;
+  display: "flex";
+  align-items: "center";
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.listItemTitle {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  width: 80% !important;
+  margin-right: 0.25rem;
 }
 
 .fileTag:last-child {
