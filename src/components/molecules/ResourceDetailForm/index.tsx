@@ -47,7 +47,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 			tags,
 			visibleAfter
 		})
-	}, [id, title, category, tags, visibleAfter])
+	}, [id, title, category, tags, visibleAfter, setResourceDetails])
 
 	return (<>
 		<Form.Group>
