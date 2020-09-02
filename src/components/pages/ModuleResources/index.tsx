@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 
 import { request, download } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
@@ -27,7 +26,7 @@ export interface ResourceState {
   isLoaded: Boolean;
   resources: Resource[];
   searchText: string;
-  view: string;
+  isStaff: boolean;
 }
 
 class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
@@ -42,7 +41,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       isLoaded: false,
       resources: [],
       searchText: "",
-      view: this.props.view
+      // change this value to switch between staff and student for testing
+      isStaff: false,
     };
   }
 
@@ -171,35 +171,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     let scope = this.props.scope || "";
 
     const view = () => {
-      switch (this.state.view) {
-        case "card": return (
-          <>
-            <FoldersView
-              folders={folders(this.state.resources)}
-              scope={scope}
-              searchText={this.state.searchText}
-              handleFolderDownload={(ids) => this.handleFolderDownload(ids)}
-            />
-
-            <CurrentDirectoryView
-              resources={this.state.resources}
-              scope={scope}
-              searchText={this.state.searchText}
-              onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onItemClick={(id) => this.handleResourceClick(id)}
-              includeInSearchResult={this.includeInSearchResult}
-            />
-
-            <QuickAccessView
-              resources={this.state.resources}
-              scope={scope}
-              searchText={this.state.searchText}
-              onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onItemClick={(id) => this.handleResourceClick(id)}
-            />
-          </>
-        );
-        case "staff": return (
+      if (this.state.isStaff) {
+        return (
           <StaffView
             year={this.props.year}
             course={this.moduleCode}
@@ -209,20 +182,51 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             searchText={this.state.searchText}
             includeInSearchResult={this.includeInSearchResult}
           />
-        )
-        default: return (
-          <ListView
-            folders={folders(this.state.resources)}
-            resources={this.state.resources}
-            searchText={this.state.searchText}
-            onDownloadClick={(ids) => this.handleFileDownload(ids)}
-            onSectionDownloadClick={(category) =>
-              this.handleSectionDownload(category)
-            }
-            onItemClick={(id) => this.handleResourceClick(id)}
-            includeInSearchResult={this.includeInSearchResult}
-          />
         );
+      }
+      switch (this.props.view) {
+        case "card":
+          return (
+            <>
+              <FoldersView
+                folders={folders(this.state.resources)}
+                scope={scope}
+                searchText={this.state.searchText}
+                handleFolderDownload={(ids) => this.handleFolderDownload(ids)}
+              />
+
+              <CurrentDirectoryView
+                resources={this.state.resources}
+                scope={scope}
+                searchText={this.state.searchText}
+                onDownloadClick={(ids) => this.handleFileDownload(ids)}
+                onItemClick={(id) => this.handleResourceClick(id)}
+                includeInSearchResult={this.includeInSearchResult}
+              />
+
+              <QuickAccessView
+                resources={this.state.resources}
+                scope={scope}
+                searchText={this.state.searchText}
+                onDownloadClick={(ids) => this.handleFileDownload(ids)}
+                onItemClick={(id) => this.handleResourceClick(id)}
+              />
+            </>
+          );
+        default:
+          return (
+            <ListView
+              folders={folders(this.state.resources)}
+              resources={this.state.resources}
+              searchText={this.state.searchText}
+              onDownloadClick={(ids) => this.handleFileDownload(ids)}
+              onSectionDownloadClick={(category) =>
+                this.handleSectionDownload(category)
+              }
+              onItemClick={(id) => this.handleResourceClick(id)}
+              includeInSearchResult={this.includeInSearchResult}
+            />
+          );
       }
     };
 
@@ -240,15 +244,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
           isLoaded={this.state.isLoaded}
           successful={view()}
         />
-
-        {this.state.view === "staff" ||
-          <Button
-            style={{ marginTop: "1rem" }}
-            onClick={() => this.setState({ view: "staff" })}
-          >
-            Staff View
-          </Button>
-        }
       </>
     );
   }

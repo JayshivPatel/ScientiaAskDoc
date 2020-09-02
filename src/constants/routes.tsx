@@ -1,5 +1,5 @@
 const dev = {
-  MATERIALS_URL: "http://localhost:5000"
+  MATERIALS_URL: "http://192.168.43.78:5000"
 }
 
 const prod = {
