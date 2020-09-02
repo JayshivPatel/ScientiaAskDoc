@@ -29,7 +29,7 @@ const FolderCard: React.FC<FolderCardProps> = ({
       onMouseOut={onMouseOut}
     >
       <Card.Body style={{ padding: ".6rem" }}>
-        <Card.Text style={{ marginBottom: 0 }}>{title}</Card.Text>
+        <Card.Text style={{ marginBottom: 0, textTransform: "capitalize" }}>{title}</Card.Text>
         <FontAwesomeIcon
           style={{ fontSize: "1.125rem", cursor: "default" }}
           icon={icon}
