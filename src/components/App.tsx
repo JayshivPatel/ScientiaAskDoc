@@ -6,7 +6,7 @@ import {
   faBookOpen,
   faHome,
   faCalendarWeek,
-  faChalkboardTeacher
+  faChalkboardTeacher,
 } from "@fortawesome/free-solid-svg-icons";
 import StandardView from "./pages/StandardView";
 import { Switch, Route } from "react-router-dom";
@@ -28,14 +28,19 @@ class App extends React.Component<{}, AppState> {
       toggledLeft: false,
       toggledRight: false,
       showSettings: false,
-      fileView: localStorage.getItem("fileView") || "card"
+      fileView: localStorage.getItem("fileView") || "card",
     };
   }
 
   componentDidMount() {
-    document.documentElement.style.fontSize = `${localStorage.getItem(
-      "interfaceSize"
-    ) || "90"}%`;
+    document.documentElement.style.fontSize = `${
+      localStorage.getItem("interfaceSize") || "90"
+    }%`;
+
+    const currentTheme = localStorage.getItem("theme");
+    if (currentTheme) {
+      document.documentElement.setAttribute("data-theme", currentTheme);
+    }
 
     window.addEventListener("resize", () => {
       if (window.innerWidth !== this.width) {
@@ -49,22 +54,22 @@ class App extends React.Component<{}, AppState> {
   toggleLeftBar() {
     if (window.innerWidth <= 1024) {
       this.setState({
-        toggledRight: false
+        toggledRight: false,
       });
     }
-    this.setState(state => ({
-      toggledLeft: !state.toggledLeft
+    this.setState((state) => ({
+      toggledLeft: !state.toggledLeft,
     }));
   }
 
   toggleRightBar() {
     if (window.innerWidth <= 1024) {
       this.setState({
-        toggledLeft: false
+        toggledLeft: false,
       });
     }
-    this.setState(state => ({
-      toggledRight: !state.toggledRight
+    this.setState((state) => ({
+      toggledRight: !state.toggledRight,
     }));
   }
 
@@ -72,12 +77,12 @@ class App extends React.Component<{}, AppState> {
     if (window.innerWidth <= 1024) {
       this.setState({
         toggledLeft: false,
-        toggledRight: false
+        toggledRight: false,
       });
     } else {
       this.setState({
         toggledLeft: true,
-        toggledRight: true
+        toggledRight: true,
       });
     }
   }
@@ -92,7 +97,7 @@ class App extends React.Component<{}, AppState> {
       { name: "Dashboard", path: "/dashboard", icon: faHome },
       { name: "Modules", path: "/modules", icon: faChalkboardTeacher },
       { name: "Timeline", path: "/timeline", icon: faCalendarWeek },
-      { name: "Exams", path: "/exams", icon: faBookOpen }
+      { name: "Exams", path: "/exams", icon: faBookOpen },
     ];
 
     return (
@@ -113,11 +118,11 @@ class App extends React.Component<{}, AppState> {
           <Route path="/">
             <TopBar
               pages={horizontalBarPages}
-              onFavIconClick={e => {
+              onFavIconClick={(e) => {
                 e.preventDefault();
                 this.toggleLeftBar();
               }}
-              onUserIconClick={e => {
+              onUserIconClick={(e) => {
                 e.preventDefault();
                 this.toggleRightBar();
               }}
@@ -127,7 +132,7 @@ class App extends React.Component<{}, AppState> {
               onSettingsClick={() => this.setState({ showSettings: true })}
               toggledLeft={this.state.toggledLeft}
               toggledRight={this.state.toggledRight}
-              onOverlayClick={e => {
+              onOverlayClick={(e) => {
                 e.preventDefault();
                 this.setState({ toggledLeft: false, toggledRight: false });
               }}

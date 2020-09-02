@@ -15,6 +15,19 @@ code {
     monospace;
 }
 
+
+:root {
+	--primary-color: #{$gray-100};
+	--font-color: #{$black};
+	--bg-color: #{$white};
+}
+
+[data-theme="dark"] {
+	--primary-color: #{$gray-900};
+	--font-color: #{$white};
+	--bg-color: #{$black};
+}
+
 .btn-primary.focus,
 .btn-primary:focus {
   color: #000;
@@ -25,8 +38,8 @@ code {
 
 .btn-primary {
   margin-bottom: 0.625rem;
-  color: #000;
-  background: #f6f8fa;
+  color: var(--font-color);
+  background: var(--primary-color);
   font-size: 1.05rem;
   letter-spacing: 0;
   border-width: 0rem;

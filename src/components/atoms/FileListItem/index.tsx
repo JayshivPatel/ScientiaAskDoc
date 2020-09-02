@@ -3,7 +3,6 @@ import styles from "./style.module.scss";
 import classNames from "classnames";
 
 import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
 import Badge from "react-bootstrap/Badge";
 import { IconDefinition } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -22,12 +22,14 @@ const SettingsModal: React.FC<Props> = ({
   onHide,
   fileView,
   onCardViewClick,
-  onListViewClick
+  onListViewClick,
 }) => {
   const [interfaceSize, setInterfaceSize] = useLocalStorage(
     "interfaceSize",
     "90"
   );
+
+  const [theme, setTheme] = useLocalStorage("theme", "light");
 
   return (
     <Modal
@@ -59,12 +61,40 @@ const SettingsModal: React.FC<Props> = ({
               <Form.Control
                 className={styles.inputBar}
                 value={interfaceSize}
-                onChange={e => setInterfaceSize(e.target.value)}
+                onChange={(e) => setInterfaceSize(e.target.value)}
                 onBlur={() =>
                   (document.documentElement.style.fontSize = `${interfaceSize}%`)
                 }
               />
             </Col>
+          </Form.Group>
+
+          <Form.Group style={{ alignItems: "center" }}>
+            <Form.Label>Theme</Form.Label>
+            <ButtonGroup style={{ float: "right" }}>
+              <Button
+                className={styles.modalToggleButton}
+                active={theme === "light"}
+                onClick={() => {
+                  document.documentElement.setAttribute("data-theme", "light");
+                  setTheme("light");
+                }}
+                variant="secondary"
+              >
+                Light
+              </Button>
+              <Button
+                className={styles.modalToggleButton}
+                active={theme === "dark"}
+                onClick={() => {
+                  document.documentElement.setAttribute("data-theme", "dark");
+                  setTheme("dark");
+                }}
+                variant="secondary"
+              >
+                Dark
+              </Button>
+            </ButtonGroup>
           </Form.Group>
 
           <Form.Group style={{ alignItems: "center" }}>
