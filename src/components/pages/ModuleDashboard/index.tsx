@@ -63,8 +63,8 @@ const ModuleDashboard: React.FC = () => {
       <Dandruff heading={generateHeading(id)} />
 
       <h4 className={classNames(styles.moduleSectionHeader)}>Module Aims</h4>
-      <p style={{ paddingTop: "0.75rem" }}>
-        In this module you will have the opportunity to:
+      <div style={{ paddingTop: "0.75rem" }}>
+        <span>In this module you will have the opportunity to:</span>
         <ul>
           <li>
             Learn about language and semantics of propositional and first-order
@@ -84,7 +84,7 @@ const ModuleDashboard: React.FC = () => {
           <li>Investigate soundness and completeness of natural deduction</li>
           <li>Apply first-order logic to program specification</li>
         </ul>
-      </p>
+      </div>
 
       <h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
       <PageButtonGroup buttons={buttons} style={{ marginTop: "1.25rem" }} />

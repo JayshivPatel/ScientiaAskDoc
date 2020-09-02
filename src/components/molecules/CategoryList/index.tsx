@@ -1,14 +1,9 @@
 import React from "react";
-import styles from "./style.module.scss";
-import classNames from "classnames";
-
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
-import Badge from "react-bootstrap/Badge";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Resource, resourceTypeToIcon } from "../../pages/ModuleResources";
-import { SelectionProps } from "../SelectionView";
+import { Resource, resourceTypeToIcon } from "../../pages/ModuleResources/utils";
+import { SelectionProps } from "components/molecules/SelectionView";
+import FileListItem from "components/atoms/FileListItem";
+import ListGroup from "react-bootstrap/ListGroup";
 
 export interface CategoryListProps {
   categoryItems: Resource[];
@@ -30,7 +25,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
   handleMouseOut,
 }) => {
   return (
-      <>
+    <ListGroup variant="flush" style={{marginLeft: ".25rem"}}>
       {categoryItems.map(({ title, type, tags, id }) => {
         if (type === undefined || tags === undefined) return null;
 
@@ -42,53 +37,19 @@ const CategoryList: React.FC<CategoryListProps> = ({
             : resourceTypeToIcon(type);
 
         return (
-          <Row
-            className={styles.listRow}
+          <FileListItem
             onClick={() => handleRowClick(id)}
             onMouseOver={() => handleMouseOver(id)}
-            onMouseOut={() => handleMouseOut(id)}
-            key={id}
-          >
-            <Col
-              style={{
-                display: "flex",
-                alignItems: "center",
-                padding: 0,
-                fontSize: "1rem"
-              }}
-            >
-              {title}
-            </Col>
-            <Col md="auto" style={{ display: "flex", alignItems: "center" }}>
-              {tags.map(tag => (
-                <Badge
-                  pill
-                  key={tag}
-                  className={classNames(
-                    styles.fileTag,
-                    tag === "new" ? styles.tagTeal : styles.tagBlue
-                  )}
-                >
-                  {tag}
-                </Badge>
-              ))}
-            </Col>
-            <FontAwesomeIcon
-              style={{ fontSize: "1.125rem" }}
-              icon={icon}
-              onClick={e => {
-                e.stopPropagation();
-                handleIconClick(id);
-              }}
-              fixedWidth
-            />
-            {fileDropdown &&
-              fileDropdown(id, title)
-            }
-          </Row>
+						onMouseOut={() => handleMouseOut(id)}
+						onIconClick={() => handleIconClick(id)}
+            icon={icon}
+            tags={tags}
+						title={title}
+						key={id}
+          />
         );
       })}
-    </>
+    </ListGroup>
   );
 };
 

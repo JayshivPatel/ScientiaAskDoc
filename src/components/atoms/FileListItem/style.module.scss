@@ -1,0 +1,16 @@
+@import "assets/scss/global";
+
+.listRow {
+  cursor: pointer;
+	transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+	border-bottom-width: 1px !important;
+}
+
+.listRow:hover {
+	box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
+	z-index: 500;
+}
+
+.fileTag:last-child {
+  margin-right: 0rem;
+}

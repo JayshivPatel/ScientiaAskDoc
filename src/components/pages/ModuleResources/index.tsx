@@ -1,6 +1,6 @@
 import React from "react";
-import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
+
 import { request, download } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
 import SearchBox from "components/molecules/SearchBox";
@@ -10,29 +10,10 @@ import FoldersView from "./components/FoldersView";
 import ListView from "./components/ListView";
 import queryString from "query-string";
 import StaffView from "./components/StaffView";
-import {
-  faFileAlt,
-  faFilePdf,
-  faFileVideo,
-  faLink,
-  IconDefinition,
-} from "@fortawesome/free-solid-svg-icons";
+
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
-
-export interface Resource {
-  title: string;
-  type: string;
-  tags: string[];
-  folder: string;
-  id: number;
-  path?: string;
-  thumbnail?: string;
-}
-
-export interface Folder {
-  title: string;
-  id: number;
-}
+import LoadingScreen from "components/molecules/LoadingScreen";
+import { Resource, openResource, tags, folders } from "./utils";
 
 export interface ResourcesProps {
   year: string;
@@ -47,19 +28,6 @@ export interface ResourceState {
   resources: Resource[];
   searchText: string;
   view: string;
-}
-
-export function resourceTypeToIcon(type: string): IconDefinition {
-  switch (type) {
-    case "pdf":
-      return faFilePdf;
-    case "video":
-      return faFileVideo;
-    case "link":
-      return faLink;
-    default:
-      return faFileAlt;
-  }
 }
 
 class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
@@ -125,13 +93,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     this.loadResources();
   }
 
-  // Gets the unique categories/folders that have been assigned for the resources
-  folders(): Folder[] {
-    return Array.from(
-      new Set<string>(this.state.resources.map((res: Resource) => res.folder.toLowerCase()))
-    ).map((title, id) => ({ title: title, id: id }));
-  }
-
   handleFileDownload(indices: number[]) {
     if (indices.length === 1) {
       // Only one file to download, call single file endpoint
@@ -150,7 +111,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
   }
 
   handleFolderDownload(ids: number[]) {
-    let categories = this.folders()
+    let categories = folders(this.state.resources)
       .filter((folder) => folder.id in ids)
       .map((folder) => folder.title);
     if (categories.length === 1) {
@@ -170,41 +131,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       course: this.moduleCode,
       category: category,
     });
-  }
-
-  handleResourceClick(id: number) {
-    let resource = this.state.resources.find((resource) => resource.id === id);
-    if (resource === undefined) {
-      return;
-    }
-    if (resource.type === "link" || resource.type === "video") {
-      window.open(resource.path, "_blank");
-      return;
-    }
-
-    // Resource is of file type, get from Materials
-    const onSuccess = (data: any) => {
-      // TODO: Try to navigate straight to the endpoint url instead of creating an object url
-      data.blob().then((blob: any) => {
-        let url = URL.createObjectURL(blob);
-        let a = document.createElement("a");
-        a.target = "_blank";
-        a.href = url;
-        a.click();
-        a.remove();
-      });
-    };
-    const onFailure = (error: { text: () => Promise<any> }) => {
-      error.text().then((errorText) => {
-        console.log(errorText);
-      });
-    };
-    request(
-      api.MATERIALS_RESOURCES_FILE(id),
-      methods.GET,
-      onSuccess,
-      onFailure
-    );
   }
 
   includeInSearchResult(item: Resource, searchText: string) {
@@ -232,29 +158,13 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       }
     }
     let rest = searchText.replace(rx, "").trim();
-    if (tags.some((tag) => tag.indexOf(rest) !== -1)) {
-      return true;
-    }
-    return title.indexOf(rest) !== -1;
+    return (
+      tags.some((tag) => tag.indexOf(rest) !== -1) || title.indexOf(rest) !== -1
+    );
   }
 
-  getloadedItems() {
-    if (!this.state.isLoaded)
-      return (
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <Spinner animation="border" />
-        </div>
-      );
-    if (this.state.error)
-      return <> Error retrieving data: {this.state.error} </>;
-    return null;
+  handleResourceClick(id: number) {
+    openResource(this.state.resources, id);
   }
 
   render() {
@@ -262,69 +172,75 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
     const view = () => {
       switch (this.state.view) {
-        case "card":
-          return (
-            <>
-              <FoldersView
-                folders={this.folders()}
-                scope={scope}
-                searchText={this.state.searchText}
-                handleFolderDownload={(ids) => this.handleFolderDownload(ids)}
-              />
+        case "card": return (
+          <>
+            <FoldersView
+              folders={folders(this.state.resources)}
+              scope={scope}
+              searchText={this.state.searchText}
+              handleFolderDownload={(ids) => this.handleFolderDownload(ids)}
+            />
 
-              <CurrentDirectoryView
-                resources={this.state.resources}
-                scope={scope}
-                searchText={this.state.searchText}
-                onDownloadClick={(ids) => this.handleFileDownload(ids)}
-                onItemClick={(id) => this.handleResourceClick(id)}
-                includeInSearchResult={this.includeInSearchResult}
-              />
-
-              <QuickAccessView
-                resources={this.state.resources}
-                scope={scope}
-                searchText={this.state.searchText}
-                onDownloadClick={(ids) => this.handleFileDownload(ids)}
-                onItemClick={(id) => this.handleResourceClick(id)}
-              />
-            </>
-          );
-        case "list":
-          return (
-            <ListView
-              folders={this.folders()}
+            <CurrentDirectoryView
               resources={this.state.resources}
+              scope={scope}
               searchText={this.state.searchText}
               onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onSectionDownloadClick={(category) =>
-                this.handleSectionDownload(category)
-              }
               onItemClick={(id) => this.handleResourceClick(id)}
               includeInSearchResult={this.includeInSearchResult}
             />
-          );
-          case "staff": return (
-            <StaffView
-              year={this.props.year}
-              course={this.moduleCode}
-              folders={this.folders()}
-              reload={() => this.loadResources()}
+
+            <QuickAccessView
               resources={this.state.resources}
+              scope={scope}
               searchText={this.state.searchText}
-              includeInSearchResult={this.includeInSearchResult}
+              onDownloadClick={(ids) => this.handleFileDownload(ids)}
+              onItemClick={(id) => this.handleResourceClick(id)}
             />
-          )
+          </>
+        );
+        case "staff": return (
+          <StaffView
+            year={this.props.year}
+            course={this.moduleCode}
+            folders={folders(this.state.resources)}
+            reload={() => this.loadResources()}
+            resources={this.state.resources}
+            searchText={this.state.searchText}
+            includeInSearchResult={this.includeInSearchResult}
+          />
+        )
+        default: return (
+          <ListView
+            folders={folders(this.state.resources)}
+            resources={this.state.resources}
+            searchText={this.state.searchText}
+            onDownloadClick={(ids) => this.handleFileDownload(ids)}
+            onSectionDownloadClick={(category) =>
+              this.handleSectionDownload(category)
+            }
+            onItemClick={(id) => this.handleResourceClick(id)}
+            includeInSearchResult={this.includeInSearchResult}
+          />
+        );
       }
     };
+
     return (
       <>
         <MyBreadcrumbs />
         <SearchBox
           searchText={this.state.searchText}
           onSearchTextChange={(text) => this.setState({ searchText: text })}
+          tags={tags(this.state.resources)}
         />
-        {this.getloadedItems() || view()}
+
+        <LoadingScreen
+          error={this.state.error}
+          isLoaded={this.state.isLoaded}
+          successful={view()}
+        />
+
         {this.state.view === "staff" ||
           <Button
             style={{ marginTop: "1rem" }}

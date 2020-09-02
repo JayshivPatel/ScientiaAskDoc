@@ -2,8 +2,6 @@ import React, { useState } from "react";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/esm/Col";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 import Row from "react-bootstrap/esm/Row";
 
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
@@ -11,12 +9,12 @@ import { faDownload, faTrash, faUpload } from "@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UploadModal from "./UploadModal"
 import AlertModal from "../../../atoms/AlertModal"
-import { Resource, Folder } from "../";
+import { Resource, Folder } from "../utils";
 import CategoryList from "components/molecules/CategoryList";
 import CategoryHeader from "components/molecules/CategoryHeader";
 
-import { staffRequest, download } from "../../../../utils/api"
-import { api, methods } from "../../../../constants/routes"
+import { staffRequest, download } from "utils/api"
+import { api, methods } from "constants/routes"
 
 export interface StaffViewProps {
 	year: string;

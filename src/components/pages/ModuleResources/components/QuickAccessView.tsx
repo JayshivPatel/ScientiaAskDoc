@@ -1,7 +1,7 @@
 import React from "react";
-import { Resource } from "../index";
+import { Resource } from "../utils";
 import SelectionView, {
-  SelectionProps
+  SelectionProps,
 } from "components/molecules/SelectionView";
 import QuickAccessRow from "components/molecules/QuickAccessRow";
 
@@ -18,7 +18,7 @@ const QuickAccessView: React.FC<QuickAccessViewProps> = ({
   scope,
   searchText,
   onDownloadClick,
-  onItemClick
+  onItemClick,
 }) => {
   let quickAccessItems = resources.filter(
     ({ tags, folder }) =>

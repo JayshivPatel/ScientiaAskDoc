@@ -16,11 +16,11 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
   heading,
   onSelectAllClick,
   selectAllIcon,
-  checkBoxColor
+  checkBoxColor,
 }: CategoryHeaderProps) => {
   return (
     <>
-      <div className={styles.sectionHeaderContainer}>
+      <div className={styles.sectionHeaderContainer} onClick={onSelectAllClick}>
         <span className={styles.sectionHeader}>{heading}</span>
         { !selectAllIcon ||
         <div className={styles.sectionHeaderButtonGroup}>
@@ -31,7 +31,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
             variant="secondary"
           >
             <FontAwesomeIcon
-              className={styles.buttonIcon}
+              style={{ color: checkBoxColor }}
               icon={selectAllIcon}
             />
           </Button>

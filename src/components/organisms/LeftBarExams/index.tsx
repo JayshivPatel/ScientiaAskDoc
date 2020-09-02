@@ -15,7 +15,7 @@ const LeftBarExams: React.FC = () => {
     {
       title: "Overview",
       icon: faList,
-      activeURL: `/exams/dashboard`
+      activeURL: `/exams/overview`
     },
     {
       title: "Past Papers",

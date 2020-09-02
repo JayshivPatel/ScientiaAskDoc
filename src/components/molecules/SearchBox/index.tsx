@@ -8,15 +8,18 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { titleCase } from "utils/functions";
 
 export interface SearchBoxProps {
   searchText: string;
   onSearchTextChange: (searchText: string) => void;
+  tags?: string[];
 }
 
 const SearchBox: React.FC<SearchBoxProps> = ({
   searchText,
-  onSearchTextChange
+  onSearchTextChange,
+  tags,
 }: SearchBoxProps) => {
   return (
     <Dropdown alignRight>
@@ -64,12 +67,23 @@ const SearchBox: React.FC<SearchBoxProps> = ({
             >
               New
             </Dropdown.Item>
-            <Dropdown.Item
-              className={styles.dropdownItem}
-              onClick={() => onSearchTextChange(`${searchText} tag(my tag) `)}
-            >
-              My Tag
-            </Dropdown.Item>
+            {tags
+              ? tags
+                  .filter((tag) => tag.toLowerCase() !== "new")
+                  .map((tag) => {
+                    return (
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        onClick={() =>
+                          onSearchTextChange(`${searchText} tag(${tag}) `)
+												}
+												key={tag}
+                      >
+                        {titleCase(tag)}
+                      </Dropdown.Item>
+                    );
+                  })
+              : null}
           </Dropdown.Menu>
         </InputGroup.Append>
       </InputGroup>
@@ -82,7 +96,7 @@ const CustomToggle = React.forwardRef(({ onClick }: any, ref: any) => (
     variant="secondary"
     className={styles.searchBarIcon}
     ref={ref}
-    onClick={e => {
+    onClick={(e) => {
       e.preventDefault();
       onClick(e);
     }}

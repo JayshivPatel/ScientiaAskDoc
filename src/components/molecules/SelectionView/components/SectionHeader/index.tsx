@@ -5,7 +5,6 @@ import Button from "react-bootstrap/Button";
 import Fade from "react-bootstrap/Fade";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload, IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import IconButton from "components/atoms/IconButton"
 
 export interface SectionHeaderProps {
   heading: string;
@@ -34,22 +33,32 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
         <div className={styles.sectionHeaderButtonGroup}>
           <Fade in={show} timeout={500}>
             <span id="download-button">
-              <IconButton
-                buttonProps={{ "style": { color: checkBoxColur } }}
+              <Button
+                style={{ color: checkBoxColur }}
+                variant="secondary"
+                className={styles.sectionHeaderButton}
                 onClick={onDownloadClick}
-                icon={faDownload}
-              />
+              >
+                <FontAwesomeIcon
+                  className={styles.buttonIcon}
+                  icon={faDownload}
+                />
+              </Button>
             </span>
           </Fade>
-          <IconButton
-            buttonProps={{
-              "style": { color: checkBoxColur },
-              "aria-controls": "download-button",
-              "aria-expanded": show
-            }}
+          <Button
+            style={{ color: checkBoxColur }}
+            className={styles.sectionHeaderButton}
             onClick={onSelectAllClick}
-            icon={selectAllIcon}
-          />
+            variant="secondary"
+            aria-controls="download-button"
+            aria-expanded={show}
+          >
+            <FontAwesomeIcon
+              className={styles.buttonIcon}
+              icon={selectAllIcon}
+            />
+          </Button>
         </div>
       </div>
     </>

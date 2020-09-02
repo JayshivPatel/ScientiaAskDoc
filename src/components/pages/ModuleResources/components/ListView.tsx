@@ -1,5 +1,5 @@
 import React from "react";
-import { Resource, Folder } from "../index";
+import { Resource, Folder } from "../utils";
 import SelectionView, {
   SelectionProps
 } from "components/molecules/SelectionView";
