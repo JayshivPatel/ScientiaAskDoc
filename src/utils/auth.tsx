@@ -33,7 +33,9 @@ async function login(username: string, password: string, login_url: string) {
   });
   if (response.ok) {
     const data = await response.json();
-    storeDataInStorage(data);
+    storeDataInStorage({...data, user_info: {
+      username: username
+    }});
     return true;
   }
   return false;

@@ -1,4 +1,5 @@
 import React from "react";
+
 import { request, download } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
 import SearchBox from "components/molecules/SearchBox";
@@ -7,6 +8,7 @@ import CurrentDirectoryView from "./components/CurrentDirectoryView";
 import FoldersView from "./components/FoldersView";
 import ListView from "./components/ListView";
 import queryString from "query-string";
+import StaffView from "./components/StaffView";
 
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import LoadingScreen from "components/molecules/LoadingScreen";
@@ -24,6 +26,7 @@ export interface ResourceState {
   isLoaded: Boolean;
   resources: Resource[];
   searchText: string;
+  isStaff: boolean;
 }
 
 class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
@@ -38,10 +41,12 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       isLoaded: false,
       resources: [],
       searchText: "",
+      // change this value to switch between staff and student for testing
+      isStaff: false,
     };
   }
 
-  componentDidMount() {
+  loadResources() {
     this.setState({ isLoaded: false });
     const onSuccess = (data: { json: () => Promise<any> }) => {
       let resourceArr: Resource[] = [];
@@ -63,7 +68,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             title: resource.title,
             type: resource.type,
             tags: resource.tags,
-            folder: resource.category,
+            folder: resource.category.toLowerCase(),
             thumbnail: thumbnail,
             id: resource.id,
             path: resource.path,
@@ -73,17 +78,19 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       });
     };
     const onFailure = (error: { text: () => Promise<any> }) => {
-      if (error.text) {
-        error.text().then((errorText) => {
-          this.setState({ error: errorText, isLoaded: true });
-        });
-      }
+      error.text().then((errorText) => {
+        this.setState({ error: errorText, isLoaded: true });
+      });
     };
 
     request(api.MATERIALS_RESOURCES, methods.GET, onSuccess, onFailure, {
       year: this.props.year,
       course: this.moduleCode,
     });
+  }
+
+  componentDidMount() {
+    this.loadResources();
   }
 
   handleFileDownload(indices: number[]) {
@@ -164,48 +171,63 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     let scope = this.props.scope || "";
 
     const view = () => {
-      if (this.props.view === "card") {
+      if (this.state.isStaff) {
         return (
-          <>
-            <FoldersView
-              folders={folders(this.state.resources)}
-              scope={scope}
-              searchText={this.state.searchText}
-              handleFolderDownload={(ids) => this.handleFolderDownload(ids)}
-            />
+          <StaffView
+            year={this.props.year}
+            course={this.moduleCode}
+            folders={folders(this.state.resources)}
+            reload={() => this.loadResources()}
+            resources={this.state.resources}
+            searchText={this.state.searchText}
+            includeInSearchResult={this.includeInSearchResult}
+          />
+        );
+      }
+      switch (this.props.view) {
+        case "card":
+          return (
+            <>
+              <FoldersView
+                folders={folders(this.state.resources)}
+                scope={scope}
+                searchText={this.state.searchText}
+                handleFolderDownload={(ids) => this.handleFolderDownload(ids)}
+              />
 
-            <CurrentDirectoryView
+              <CurrentDirectoryView
+                resources={this.state.resources}
+                scope={scope}
+                searchText={this.state.searchText}
+                onDownloadClick={(ids) => this.handleFileDownload(ids)}
+                onItemClick={(id) => this.handleResourceClick(id)}
+                includeInSearchResult={this.includeInSearchResult}
+              />
+
+              <QuickAccessView
+                resources={this.state.resources}
+                scope={scope}
+                searchText={this.state.searchText}
+                onDownloadClick={(ids) => this.handleFileDownload(ids)}
+                onItemClick={(id) => this.handleResourceClick(id)}
+              />
+            </>
+          );
+        default:
+          return (
+            <ListView
+              folders={folders(this.state.resources)}
               resources={this.state.resources}
-              scope={scope}
               searchText={this.state.searchText}
               onDownloadClick={(ids) => this.handleFileDownload(ids)}
+              onSectionDownloadClick={(category) =>
+                this.handleSectionDownload(category)
+              }
               onItemClick={(id) => this.handleResourceClick(id)}
               includeInSearchResult={this.includeInSearchResult}
             />
-
-            <QuickAccessView
-              resources={this.state.resources}
-              scope={scope}
-              searchText={this.state.searchText}
-              onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onItemClick={(id) => this.handleResourceClick(id)}
-            />
-          </>
-        );
+          );
       }
-      return (
-        <ListView
-          folders={folders(this.state.resources)}
-          resources={this.state.resources}
-          searchText={this.state.searchText}
-          onDownloadClick={(ids) => this.handleFileDownload(ids)}
-          onSectionDownloadClick={(category) =>
-            this.handleSectionDownload(category)
-          }
-          onItemClick={(id) => this.handleResourceClick(id)}
-          includeInSearchResult={this.includeInSearchResult}
-        />
-      );
     };
 
     return (

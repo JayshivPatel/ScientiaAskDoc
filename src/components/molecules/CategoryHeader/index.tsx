@@ -4,13 +4,12 @@ import styles from "./style.module.scss";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import classNames from "classnames";
 
 export interface CategoryHeaderProps {
   heading: string;
-  onSelectAllClick: (event: React.MouseEvent) => void;
-  selectAllIcon: IconDefinition;
-  checkBoxColor: string;
+  onSelectAllClick?: (event: React.MouseEvent) => void;
+  selectAllIcon?: IconDefinition;
+  checkBoxColor?: string;
 }
 
 const CategoryHeader: React.FC<CategoryHeaderProps> = ({
@@ -21,14 +20,23 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
 }: CategoryHeaderProps) => {
   return (
     <>
-      <div className={styles.sectionHeaderContainer} style={{paddingRight: "0.325rem"}} onClick={onSelectAllClick}>
+      <div className={styles.sectionHeaderContainer} onClick={onSelectAllClick}>
         <span className={styles.sectionHeader}>{heading}</span>
+        { !selectAllIcon ||
         <div className={styles.sectionHeaderButtonGroup}>
-          <FontAwesomeIcon
-            style={{ color: checkBoxColor, fontSize: "1.125rem", marginRight: ".375rem" }}
-            icon={selectAllIcon}
-          />
+          <Button
+            style={{ color: checkBoxColor }}
+            className={styles.sectionHeaderButton}
+            onClick={onSelectAllClick}
+            variant="secondary"
+          >
+            <FontAwesomeIcon
+              style={{ color: checkBoxColor }}
+              icon={selectAllIcon}
+            />
+          </Button>
         </div>
+        }
       </div>
     </>
   );

@@ -41,22 +41,12 @@ const ListView: React.FC<ListViewProps> = ({
       render={(select: SelectionProps) => (
         <>
           {folders.map(({ title, id }) => {
-            let categorySelect: SelectionProps = {
-              selectionItems: select.selectionItems.filter(
-                res => res.folder === title
-              ),
-              state: select.state,
-              setIsSelected: select.setIsSelected,
-              isAnySelected: select.isAnySelected,
-              handleCardClick: select.handleCardClick,
-              handleIconClick: select.handleIconClick,
-              handleMouseOver: select.handleMouseOver,
-              handleMouseOut: select.handleMouseOut
-            };
-
+            let categoryItems = filesContent.filter(
+              res => res.folder === title
+            );
             function isAllSelected(): boolean {
-              let isSelected = categorySelect.state.isSelected;
-              return categorySelect.selectionItems.every(
+              let isSelected = select.state.isSelected;
+              return categoryItems.every(
                 item => isSelected[item.id]
               );
             }
@@ -66,9 +56,8 @@ const ListView: React.FC<ListViewProps> = ({
               let isSelected = JSON.parse(
                 JSON.stringify(select.state.isSelected)
               );
-              let items = categorySelect.selectionItems;
-              for (let item in items) {
-                isSelected[items[item].id] = setValue;
+              for (let item in categoryItems) {
+                isSelected[categoryItems[item].id] = setValue;
               }
               select.setIsSelected(isSelected);
             }
@@ -81,7 +70,14 @@ const ListView: React.FC<ListViewProps> = ({
                   selectAllIcon={isAllSelected() ? faCheckSquare : faSquare}
                   checkBoxColor={select.isAnySelected() ? "#495057" : "#e9ecef"}
                 />
-                <CategoryList select={categorySelect} />
+                <CategoryList
+                  categoryItems={categoryItems}
+                  handleRowClick={select.handleCardClick}
+                  handleIconClick={select.handleIconClick}
+                  handleMouseOver={select.handleMouseOver}
+                  handleMouseOut={select.handleMouseOut}
+                  select={select}
+                />
               </div>
             );
           })}
