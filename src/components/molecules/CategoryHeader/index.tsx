@@ -31,7 +31,6 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
             variant="secondary"
           >
             <FontAwesomeIcon
-              style={{ color: checkBoxColor }}
               icon={selectAllIcon}
             />
           </Button>

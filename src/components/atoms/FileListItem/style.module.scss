@@ -10,17 +10,19 @@
 .listRow:hover {
   transform: scale(1.01);
   box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
-  z-index: 500;
 }
 
 .listRow {
   padding: 0.25rem 0.5rem;
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  -webkit-transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; 
+  -moz-transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   border-radius: 0.5rem !important;
   display: "flex";
   align-items: "center";
   justify-content: space-between;
   flex-wrap: nowrap;
+  background: transparent;
 }
 
 .listItemTitle {

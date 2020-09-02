@@ -3,7 +3,6 @@ import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import { Resource, resourceTypeToIcon } from "../../pages/ModuleResources/utils";
 import { SelectionProps } from "components/molecules/SelectionView";
 import FileListItem from "components/atoms/FileListItem";
-import ListGroup from "react-bootstrap/ListGroup";
 
 export interface CategoryListProps {
   categoryItems: Resource[];
@@ -25,7 +24,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
   handleMouseOut,
 }) => {
   return (
-    <ListGroup variant="flush" style={{marginLeft: ".25rem"}}>
+    <div style={{marginLeft: ".25rem"}}>
       {categoryItems.map(({ title, type, tags, id }) => {
         if (type === undefined || tags === undefined) return null;
 
@@ -49,7 +48,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
           />
         );
       })}
-    </ListGroup>
+    </div>
   );
 };
 
