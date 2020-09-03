@@ -1,26 +1,30 @@
 @import "assets/scss/custom";
 
+
 .brandImage {
   margin-right: 0.625rem;
   width: 1.875rem;
   height: 1.875rem;
+  // Please do not change this:
+  filter: Invert(var(--image-invert));
 }
 
 .brandContainer {
   font-family: "IBM Plex Sans";
   font-weight: 500;
   font-size: 1.5rem;
-  color: #000;
   text-align: left;
+
   padding: 0rem;
+  margin: 0rem;
+
   display: flex;
   justify-content: left;
   align-items: center;
-  margin: 0rem;
 }
 
 .brandContainer a {
-  color: #000 !important;
+  color: var(--primary-text-color) !important;
   text-decoration: none !important;
 }
 

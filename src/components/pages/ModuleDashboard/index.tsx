@@ -63,7 +63,7 @@ const ModuleDashboard: React.FC = () => {
       <Dandruff heading={generateHeading(id)} />
 
       <h4 className={classNames(styles.moduleSectionHeader)}>Module Aims</h4>
-      <div style={{ paddingTop: "0.75rem" }}>
+      <div className={styles.moduleDashboardText} style={{ paddingTop: "0.75rem" }}>
         <span>In this module you will have the opportunity to:</span>
         <ul>
           <li>

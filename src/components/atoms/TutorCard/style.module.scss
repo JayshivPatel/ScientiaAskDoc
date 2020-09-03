@@ -6,8 +6,8 @@
   margin-top: 1.25rem;
   align-items: center;
   width: 100%;
-  background: $white;
-  border: 1px solid $gray-200;
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
   padding: 0.75rem;
   border-radius: 0.5rem;
   transition: 0.2s transform, 0.2s box-shadow;
@@ -16,9 +16,9 @@
 }
 
 .tutorContainer:hover {
-  border-color: $gray-300;
+  border-color: var(--border-color-hover);
   transform: scale(1.03);
-  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
 }
 
 .tutorImage {
@@ -41,12 +41,14 @@
   word-break: break-word;
 }
 
+.tutorName {
+  color: var(--primary-text-color);
+}
+
 .tutorEmail {
-	color: $gray-700;
-  color: $blue-500;
-	
+  color: var(--email-text);
 }
 
 .tutorAddress {
-  color: $gray-600;
+  color: var(--tertiary-text-color);
 }

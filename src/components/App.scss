@@ -8,6 +8,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-overflow-scrolling: touch;
   overflow-y: scroll;
+  background-color: var(--background-color);
 }
 
 code {
@@ -15,51 +16,150 @@ code {
     monospace;
 }
 
-
 :root {
-	--primary-color: #{$gray-100};
-	--font-color: #{$black};
-	--bg-color: #{$white};
+  --background-color: #{$white};
+  --secondary-background-color: #{$gray-100};
+
+  --primary-text-color: #{$black};
+  --secondary-text-color: #{$gray-700};
+  --tertiary-text-color: #{$gray-500};
+
+  --border-color: #{$gray-200};
+  --border-color-hover: #{$gray-300};
+  --border-color-focus: #{$gray-300};
+
+  --primary-button: #{$gray-100};
+  --primary-button-hover: #{$gray-200};
+  --primary-button-active: #{$black};
+
+  --primary-button-text: #{$black};
+  --primary-button-text-active: #{$white};
+  --primary-button-text-inactive: #{$gray-300};
+
+  --secondary-button: #{$white};
+  --secondary-button-hover: #{$gray-100};
+  --secondary-button-active: #{$gray-200};
+
+  --secondary-button-text: #{$gray-400};
+  --secondary-button-text-active: #{$gray-500};
+
+  --tertiary-button: #{$gray-100};
+  --tertiary-button-hover: #{$gray-200};
+  --tertiary-button-active: #{$gray-300};
+
+  --tertiary-button-text: #{$gray-400};
+  --tertiary-button-text-hover: #{$gray-500};
+
+  --input-bar: #{$gray-100};
+  --input-bar-placeholder: #{$gray-400};
+  --input-bar-focus: #{$white};
+
+  --image-invert: 0%;
+  --box-shadow-color: rgba(0, 0, 0, 0.1);
+
+  --scrollbar: #{$gray-400};
+  --email-text: #{$blue-500};
+
+  --lecture-background: #{rgba($blue-100, 0.5)}; 
+  --labs-background: #{rgba($pink-100, 0.5)};
+  --deadline-background: #{rgba($teal-100, 0.5)};
+
+  --lecture-text: #{$blue-700};
+  --labs-text: #{$pink-700};
+  --deadline-text: #{$teal-700};
 }
 
 [data-theme="dark"] {
-	--primary-color: #{$gray-900};
-	--font-color: #{$white};
-	--bg-color: #{$black};
+  --background-color: #{$gray-900};
+  --secondary-background-color: #{$gray-800};
+
+  --primary-text-color: #{$white};
+  --secondary-text-color: #{$gray-300};
+  --tertiary-text-color: #{$gray-500};
+
+  --border-color: #{$gray-700};
+  --border-color-hover: #{$gray-600};
+  --border-color-focus: #{$gray-600};
+
+  --primary-button: #{$gray-800};
+  --primary-button-hover: #{$gray-700};
+  --primary-button-active: #{$white};
+
+  --primary-button-text: #{$white};
+  --primary-button-text-active: #{$black};
+  --primary-button-text-inactive: #{$gray-900};
+
+  --secondary-button: #{$gray-900};
+  --secondary-button-hover: #{$gray-800};
+  --seconary-button-active: #{$gray-200};
+
+  --secondary-button-text: #{$gray-400};
+  --secondary-button-text-active: #{$gray-500};
+
+  --tertiary-button: #{$gray-800};
+  --tertiary-button-hover: #{$gray-700};
+  --tertiary-button-active: #{$gray-600};
+
+  --tertiary-button-text: #{$gray-600};
+  --tertiary-button-text-hover: #{$gray-500};
+
+  --input-bar: #{$gray-800};
+  --input-bar-placeholder: #{$gray-600};
+  --input-bar-focus: #{$gray-900};
+
+  --image-invert: 100%;
+  --box-shadow-color: rgba(0, 0, 0, 0.5);
+
+  --scrollbar: #{$gray-700};
+  --email-text: #{$blue-400};
+
+  --lecture-background: #{rgba($blue-800, 0.5)}; 
+  --labs-background: #{rgba($pink-800, 0.5)};
+  --deadline-background: #{rgba($teal-800, 0.5)};
+
+  --lecture-text: #{$blue-300};
+  --labs-text: #{$pink-300};
+  --deadline-text: #{$teal-300};
 }
 
 .btn-primary.focus,
 .btn-primary:focus {
   color: #000;
-  background-color: #f8f9fa;
-  border-color: #0062cc;
+  background-color: #f8f9fa !important;
+  border-color: #0062cc !important;
   box-shadow: none;
 }
 
 .btn-primary {
   margin-bottom: 0.625rem;
-  color: var(--font-color);
-  background: var(--primary-color);
+
+  color: var(--primary-button-text);
+  background: var(--primary-button);
+
   font-size: 1.05rem;
   letter-spacing: 0;
-  border-width: 0rem;
   line-height: 1.375rem;
-  height: 2.25rem;
-  border-radius: 0.5rem !important;
   text-align: left;
+
+  height: 2.25rem;
+  width: 100%;
+
+  border-width: 0rem;
+  border-radius: 0.5rem !important;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   transition: 0.2s background;
   -webkit-transition: 0.2s background;
   -moz-transition: 0.2s background;
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .btn-primary.active,
 .btn-primary:active {
-  color: #fff;
-  background: #000 !important;
+  color: var(--primary-button-text-active) !important;
+  background: var(--primary-button-active) !important;
   font-weight: 500;
   text-align: left;
   border-width: 0rem;
@@ -68,9 +168,8 @@ code {
 }
 
 .btn-primary:hover {
-  background: #dee2e6;
-  border-color: #fff;
-  color: #000;
+  background: var(--primary-button-hover);
+  color: var(--primary-button-text);
 }
 
 .modal-backdrop {

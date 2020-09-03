@@ -3,8 +3,8 @@
   .btn:active,
   .btn:global(.active) {
     border: 0;
-    background-color: #000 !important;
-    color: #fff;
+    background-color: var(--primary-button-active) !important;
+    color: var(--primary-button-text-active) !important;
   }
 
   .btn {
@@ -14,8 +14,8 @@
     border-radius: 0rem;
     width: 25%;
     margin-left: 0;
-    color: #000;
-    background-color: #fff;
+    color: var(--primary-button-text);
+    background-color: var(--primary-button);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,12 +28,7 @@
 
   .btn:hover {
     border: 0rem;
-    background-color: #ced4da;
-    color: #000;
-  }
-
-  .btn:active:hover,
-  .btn:global(.active):hover {
-    background-color: $gray-900 !important;
+    background-color: var(--primary-button-hover);
+    color: var(--primary-button-text);
   }
 }

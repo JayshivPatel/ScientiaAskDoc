@@ -2,7 +2,7 @@
 
 .breadcrumb,
 :global(.breadcrumb) {
-  background: #fff !important;
+  background: var(--background-color) !important;
   text-transform: uppercase;
   font-weight: 500;
   padding: 0rem;
@@ -10,6 +10,6 @@
 }
 
 .breadcrumbItem * {
-  color: #000 !important;
+  color: var(--primary-text-color) !important;
   text-decoration: none !important;
 }

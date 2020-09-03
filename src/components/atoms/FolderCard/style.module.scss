@@ -2,17 +2,18 @@
 
 .folderCard {
   border-radius: 0.5rem;
-  border: 1px solid $gray-200;
+  border: 1px solid var(--border-color);
   transition: transform 0.2s, box-shadow 0.2s;
-  background-color: $white;
+  background-color: var(--background-color);
   margin-top: 0.67rem;
   cursor: pointer;
+  color: var(--primary-text-color);
 }
 
 .folderCard:hover {
   transform: scale(1.03);
-  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
-  border-color: $gray-300;
+  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
+  border-color: var(--border-color-hover);
 }
 
 .folderCard :global(.card-body) {

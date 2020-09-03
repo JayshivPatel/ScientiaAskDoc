@@ -33,7 +33,7 @@ const SettingsModal: React.FC<Props> = ({
 
   return (
     <Modal
-      style={{ zIndex: "10000" }}
+      className={styles.settingsModal}
       dialogClassName={styles.modal}
       show={show}
       onHide={onHide}
@@ -49,7 +49,7 @@ const SettingsModal: React.FC<Props> = ({
           <FontAwesomeIcon className={styles.buttonIcon} icon={faTimes} />
         </Button>
       </Modal.Header>
-      <Modal.Body style={{ minHeight: "60vh" }}>
+      <Modal.Body className={styles.modalBody}>
         <h5 className={styles.modalSubHeading}>Interface</h5>
 
         <Form className={styles.interfaceGroup}>

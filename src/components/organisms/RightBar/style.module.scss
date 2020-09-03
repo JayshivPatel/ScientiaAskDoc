@@ -21,8 +21,8 @@
   z-index: 5000;
   margin-top: 3.813rem;
   padding-bottom: 1.875rem;
-  background: #fff;
-  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
+  background: var(--background-color);
+  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
 }
 
 #rightbarWrapper::-webkit-scrollbar {
@@ -47,7 +47,7 @@
     margin-bottom: 0rem;
     font-size: 1rem;
     font-weight: 500;
-    color: #000000;
+    color: var(--primary-text-color);
     letter-spacing: 0;
     position: relative;
     width: max-content;
@@ -68,7 +68,7 @@
     font-size: 1rem;
     font-weight: 500;
     text-align: right;
-    color: #000000;
+    color: var(--primary-text-color);
     letter-spacing: 0;
     position: relative;
     width: max-content;

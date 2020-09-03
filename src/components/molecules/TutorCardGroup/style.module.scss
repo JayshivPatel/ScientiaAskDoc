@@ -18,9 +18,9 @@
 }
 
 .tutorEmail {
-  color: $gray-700;
+  color: var(--secondary-text-color);
 }
 
 .tutorAddress {
-  color: $gray-600;
+  color: var(--tertiary-text-color);
 }

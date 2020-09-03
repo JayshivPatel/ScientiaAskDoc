@@ -5,11 +5,12 @@
   margin: 0;
   padding: 0.25rem 1.25rem;
   border: 0 !important;
+  color: var(--primary-text-color);
 }
 
 .listRow:hover {
   transform: scale(1.01);
-  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
 }
 
 .listRow {

@@ -2,7 +2,7 @@
 
 .quickAccessRow {
   scrollbar-width: thin;
-  scrollbar-color: $white $white;
+  scrollbar-color: var(--background-color) var(--background-color);
   margin-top: 0.625rem;
   overflow-y: visible;
   overflow-x: auto;
@@ -15,19 +15,19 @@
   height: 0.5rem;
 }
 .quickAccessRow::-webkit-scrollbar-track {
-  background: $white;
+  background: var(--background-color);
   margin-left: 0.625rem;
   margin-right: 0.625rem;
 }
 .quickAccessRow::-webkit-scrollbar-thumb {
-  background-color: $white;
+  background-color: var(--background-color);
   border-radius: 0.5rem;
 }
 
 .quickAccessRow:hover {
-  scrollbar-color: $gray-400 $white;
+  scrollbar-color: var(--scrollbar) var(--background-color);
 }
 
 .quickAccessRow:hover::-webkit-scrollbar-thumb {
-  background-color: $gray-400;
+  background-color: var(--scrollbar);
 }

@@ -2,6 +2,6 @@
 
 .navBar {
   padding: 0.75rem 1rem;
-  background: #fff;
-  border-bottom: 1px solid #cdd4db;
+  background: var(--background-color);
+  border-bottom: 1px solid var(--border-color);
 }

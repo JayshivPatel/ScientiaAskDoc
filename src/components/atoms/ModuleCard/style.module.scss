@@ -1,19 +1,19 @@
 @import "assets/scss/custom";
 
 .moduleCard {
-  background: #ffffff;
+  background: var(--background-color);
   height: 100%;
   border-width: 0rem;
   border-radius: 0.5rem !important;
   transition: transform 0.2s, box-shadow 0.2s;
-  border: 1px solid $gray-200;
+  border: 1px solid var(--border-color);
 }
 
 .moduleCard:hover {
   transform: scale(1.03);
   text-decoration: none;
-  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
-  border-color: $gray-300;
+  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
+  border-color: var(--border-color-hover);
 }
 
 .termIcons > * {
@@ -22,11 +22,11 @@
 }
 
 .moduleCard :global(.card-header) {
-  background: #fff;
+  background: var(--background-color);
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
   border-width: 0rem;
-  color: #000;
+  color: var(--primary-text-color);
   font-weight: 500;
   text-transform: uppercase;
   text-align: right;
@@ -37,6 +37,7 @@
 
 .moduleCard :global(.card-body) {
   padding: 0.5rem;
+  color: var(--primary-text-color);
 }
 
 .moduleCard :global(.card-title) {
@@ -45,7 +46,7 @@
 
 .moduleCard :global(.card-footer) {
   border-radius: 0.5rem !important;
-  background: #fff;
+  background: var(--background-color);
   border-width: 0rem;
   padding: 0.5rem;
   display: flex;

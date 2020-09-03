@@ -25,7 +25,6 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
         { !selectAllIcon ||
         <div className={styles.sectionHeaderButtonGroup}>
           <Button
-            style={{ color: checkBoxColor }}
             className={styles.sectionHeaderButton}
             onClick={onSelectAllClick}
             variant="secondary"

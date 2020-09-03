@@ -5,39 +5,44 @@ $button-border: transparentize($gray-300, 1);
 
 .searchBar {
   border-radius: 0.5rem;
-  background-color: $button-background;
-  border-color: $button-background;
+  border-width: 1px;
+  border-color: var(--input-bar);
+
+  background-color: var(--input-bar);
+  color: var(--primary-text-color);
+
   transition: 0.2s background-color;
   -webkit-transition: 0.2s background-color;
   -moz-transition: 0.2s back-ground-color;
 }
 
 .searchBar::placeholder {
-  color: #acb5bd;
+  color: var(--input-bar-placeholder);
   opacity: 1;
 }
 
 .searchBar:focus + :global(.input-group-append) .searchBarIcon {
   box-shadow: none !important;
   border-left: none;
-  border-color: $gray-300;
-  background-color: $white;
+  border-color: var(--border-color-focus);
+  background-color: var(--background-color);
 }
 
 .searchBar:focus {
   box-shadow: none !important;
   border-right: none;
-  border-color: $gray-300;
-  background-color: $white;
+  border-color: var(--border-color-focus);
+  background-color: var(--input-bar-focus);
+  color: var(--primary-text-color);
 }
 
 .searchBarIcon {
   border-radius: 0.5rem;
   border-top-right-radius: 0.5rem !important;
   border-bottom-right-radius: 0.5rem !important;
-  background-color: $gray-100;
-  border-color: $gray-100;
-  color: $gray-500;
+  background-color: var(--tertiary-button);
+  border-color: var(--tertiary-button);
+  color: var(--tertiary-button-text);
   transition: 0.2s background-color !important;
   -webkit-transition: 0.2s background-color !important;
   -moz-transition: 0.2s back-ground-color !important;
@@ -47,24 +52,25 @@ $button-border: transparentize($gray-300, 1);
 .searchBarIcon:active,
 .searchBarIcon:hover,
 .searchBarIcon:focus {
-  background: $gray-200 !important;
-  color: $gray-700 !important;
-  border-color: $gray-200 !important;
+  background: var(--tertiary-button-hover) !important;
+  color: var(--tertiary-button-text-hover) !important;
+  border-color: var(--tertiary-button-hover) !important;
   box-shadow: none !important;
 }
 
 .dropdownMenu {
   border-radius: 0.5rem;
   margin-top: 0.5rem;
-  box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid $gray-300;
+  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
+  border: 1px solid var(--border-color);
   padding: 0.75rem;
+  background-color: var(--background-color);
 }
 
 .dropdownHeader {
   font-weight: 500;
   font-size: 1rem;
-  color: $black;
+  color: var(--primary-text-color);
   padding: 0px;
   margin-bottom: 0.75rem;
 }
@@ -75,7 +81,8 @@ $button-border: transparentize($gray-300, 1);
 
 .dropdownItem {
   border-radius: 0.5rem;
-  background: $gray-100;
+  background: var(--primary-button);
+  color: var(--primary-button-text);
   font-size: 1rem;
   text-align: center;
   transition: 0.2s background;
@@ -88,12 +95,13 @@ $button-border: transparentize($gray-300, 1);
 }
 
 .dropdownItem:hover {
-  background: $gray-200;
+  background: var(--primary-button-hover);
+  color: var(--primary-button-text);
 }
 
 .dropdownItem:active,
 .dropdown:global(.active) {
-  color: $white;
+  color: var(--primary-button-text-active);
   font-weight: 500;
-  background: $black;
+  background: var(--primary-button-active);
 }

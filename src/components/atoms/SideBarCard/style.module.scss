@@ -1,18 +1,13 @@
 @import "assets/scss/custom";
 
-$lecture-background: transparentize($blue-100, 0.5);
-$labs-background: transparentize($pink-100, 0.5);
-$deadline-background: transparentize($teal-100, 0.5);
-
 .sideBarCard {
   margin-top: 0.3125rem;
   margin-bottom: 0.3125rem;
-  color: #000;
   border-width: 0rem;
   width: 100%;
   border-radius: 0.5rem !important;
   text-align: left;
-  transition: transform 0.2s;
+  transition: transform .2s;
 }
 
 .sideBarCard:hover {
@@ -20,27 +15,27 @@ $deadline-background: transparentize($teal-100, 0.5);
 }
 
 .sideBarRedCard * {
-  color: $pink-700;
+  color: var(--labs-text);
 }
 
 .sideBarRedCard {
-  background: $labs-background;
+  background: var(--labs-background);
 }
 
 .sideBarBlueCard * {
-  color: $blue-700;
+  color: var(--lecture-text);
 }
 
 .sideBarBlueCard {
-  background: $lecture-background;
+  background: var(--lecture-background);
 }
 
 .sideBarGreenCard * {
-  color: $teal-700;
+  color: var(--deadline-text);
 }
 
 .sideBarGreenCard {
-  background: $deadline-background;
+  background: var(--deadline-background);
 }
 
 .sideBarCard :global(.card-body) {
@@ -67,8 +62,6 @@ $deadline-background: transparentize($teal-100, 0.5);
 
 .sideBarCard:global(.active),
 .claendarCard:active {
-  color: #fff;
-  background-color: #000 !important;
   font-weight: 500;
   text-align: left;
   border-width: 0rem;

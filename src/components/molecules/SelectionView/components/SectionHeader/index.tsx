@@ -34,7 +34,6 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
           <Fade in={show} timeout={500}>
             <span id="download-button">
               <Button
-                style={{ color: checkBoxColur }}
                 variant="secondary"
                 className={styles.sectionHeaderButton}
                 onClick={onDownloadClick}
@@ -47,7 +46,6 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
             </span>
           </Fade>
           <Button
-            style={{ color: checkBoxColur }}
             className={styles.sectionHeaderButton}
             onClick={onSelectAllClick}
             variant="secondary"

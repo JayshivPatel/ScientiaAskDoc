@@ -86,7 +86,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
           src={module.image}
         />
         <Card.Body>
-          <Card.Title style={{ color: "#000" }}>{module.title}</Card.Title>
+          <Card.Title>{module.title}</Card.Title>
         </Card.Body>
         <Card.Footer>
           <span

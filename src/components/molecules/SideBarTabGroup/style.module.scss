@@ -1,8 +1,5 @@
 @import "assets/scss/custom";
 
-$button-background: transparentize($gray-200, 0.75);
-$button-border: transparentize($gray-300, 1);
-
 .tabGroupButtonSvg {
   float: right;
   margin-top: 0.22rem;
@@ -19,7 +16,7 @@ $button-border: transparentize($gray-300, 1);
 
   .tabGroupHeading {
     font-size: 1.5rem;
-    color: #000000;
+    color: var(--primary-text-color);
     text-align: left;
     margin-top: 1.875rem;
     margin-left: 1rem;
@@ -42,7 +39,7 @@ $button-border: transparentize($gray-300, 1);
 
   .tabGroupHeading {
     font-size: 1.5rem;
-    color: #000000;
+    color: var(--primary-text-color);
     text-align: left;
     margin-top: 1.875rem;
     margin-left: 2rem;

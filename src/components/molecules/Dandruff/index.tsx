@@ -10,8 +10,9 @@ const Dandruff: React.FC<DandruffProps> = ({ heading }: DandruffProps) => {
     <>
       <MyBreadcrumbs />
 
-      <h3>{heading}</h3>
-      <hr />
+      <div style={{ borderBottom: "1px solid var(--border-color)"}}>
+        <h3 style={{ color: "var(--primary-text-color)"}}>{heading}</h3>
+      </div>
     </>
   );
 };
