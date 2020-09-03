@@ -1,12 +1,25 @@
 import React from "react";
-import Dandruff from "components/molecules/Dandruff";
 
-const Timeline: React.FC = () => {
-  return (
-    <>
-      <Dandruff heading="Timeline" />
-    </>
-  );
-};
+interface TimelineProps {
+	initSideBar: () => void;
+	revertSideBar: () => void;
+}
+
+class Timeline extends React.Component<TimelineProps, {}> {
+
+  componentDidMount() {;
+		this.props.initSideBar();
+		console.log("mounted");
+  }
+
+  componentWillUnmount() {
+    this.props.revertSideBar();
+  }
+
+  render() {
+		
+    return <></>;
+  }
+}
 
 export default Timeline;

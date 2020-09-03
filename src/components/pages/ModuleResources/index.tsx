@@ -78,9 +78,12 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       });
     };
     const onFailure = (error: { text: () => Promise<any> }) => {
-      error.text().then((errorText) => {
-        this.setState({ error: errorText, isLoaded: true });
-      });
+			if (error.text){
+				error.text().then((errorText) => {
+					this.setState({ error: errorText, isLoaded: true });
+				});
+			}
+
     };
 
     request(api.MATERIALS_RESOURCES, methods.GET, onSuccess, onFailure, {

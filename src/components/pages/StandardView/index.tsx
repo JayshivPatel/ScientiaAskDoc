@@ -12,22 +12,21 @@ import classNames from "classnames";
 import ModuleList from "../ModuleList";
 import ModuleResources from "../ModuleResources";
 import ModuleFeedback from "../ModuleFeedback";
-import LeftBarDashboard from "components/organisms/LeftBarDashboard";
-import LeftBarModuleList from "components/organisms/LeftBarModuleList";
-import LeftBarModule from "components/organisms/LeftBarModule";
-import LeftBarExams from "components/organisms/LeftBarExams";
 import Container from "react-bootstrap/esm/Container";
 import ExamRubrics from "../Exams/Rubrics";
 import ExamGrading from "../Exams/Grading";
 import ExamPastPapers from "../Exams/PastPapers";
 import ModuleOverview from "../ModuleOverview";
+import LeftBar from "components/organisms/LeftBar";
 
 interface StandardViewProps {
   toggledLeft: boolean;
   toggledRight: boolean;
-  fileView: string;
+	fileView: string;
+	initTimelineSideBar: () => void;
+	revertTimelineSideBar: () => void;
   onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
-  onSettingsClick: (event: React.MouseEvent) => void;
+	onSettingsClick: (event: React.MouseEvent) => void;
 }
 
 const StandardView: React.FC<StandardViewProps> = ({
@@ -35,7 +34,9 @@ const StandardView: React.FC<StandardViewProps> = ({
   toggledRight,
   onOverlayClick,
   onSettingsClick,
-  fileView,
+	fileView,
+	revertTimelineSideBar,
+	initTimelineSideBar,
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
 
@@ -47,101 +48,106 @@ const StandardView: React.FC<StandardViewProps> = ({
         toggledRight: toggledRight,
       })}
     >
+      <LeftBar
+        modulesFilter={modulesFilter}
+        setModulesFilter={setModulesFilter}
+      />
+      <RightBar onSettingsClick={onSettingsClick} />
+      <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
       <Switch>
-        <Route path="/modules/:id">
-          <LeftBarModule />
+        <Route path="/dashboard">
+          <Container className={classNames("pageContainer")}>
+            <Dashboard />
+          </Container>
         </Route>
 
         <Route exact path="/modules">
-          <LeftBarModuleList
-            modulesFilter={modulesFilter}
-            setModulesFilter={setModulesFilter}
-          />
-        </Route>
-
-        <Route path="/exams">
-          <LeftBarExams />
-        </Route>
-
-        <Route path="/">
-          <LeftBarDashboard />
-        </Route>
-      </Switch>
-
-      <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
-      <Container className={classNames("pageContainer")}>
-        <Switch>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-
-          <Route exact path="/modules">
+          <Container className={classNames("pageContainer")}>
             <ModuleList modulesFilter={modulesFilter} />
-          </Route>
+          </Container>
+        </Route>
 
-          <Route path="/modules/:id/dashboard">
+        <Route path="/modules/:id/dashboard">
+          <Container className={classNames("pageContainer")}>
             <ModuleDashboard />
-          </Route>
+          </Container>
+        </Route>
 
-          <Route
-            path="/modules/:id/overview"
-            render={(props) => (
+        <Route
+          path="/modules/:id/overview"
+          render={(props) => (
+            <Container className={classNames("pageContainer")}>
               <ModuleOverview year="2021" moduleID={props.match.params.id} />
-            )}
-          ></Route>
+            </Container>
+          )}
+        ></Route>
 
-          <Route
-            path="/modules/:id/resources/:scope?"
-            render={(props) => (
+        <Route
+          path="/modules/:id/resources/:scope?"
+          render={(props) => (
+            <Container className={classNames("pageContainer")}>
               <ModuleResources
                 year="2021"
                 moduleID={props.match.params.id}
                 scope={props.match.params.scope}
                 view={fileView}
               />
-            )}
+            </Container>
+          )}
+        />
+
+        <Route path="/modules/:id/feedback">
+          <Container className={classNames("pageContainer")}>
+            <ModuleFeedback />
+          </Container>
+        </Route>
+
+        <Route path="/timeline">
+          <Timeline
+            initSideBar={initTimelineSideBar}
+						revertSideBar={revertTimelineSideBar}
           />
+        </Route>
 
-          <Route path="/modules/:id/feedback" component={ModuleFeedback} />
-
-          <Route path="/timeline">
-            <Timeline />
-          </Route>
-
-          <Route path="/exams/overview">
+        <Route path="/exams/overview">
+          <Container className={classNames("pageContainer")}>
             <Exams />
-          </Route>
+          </Container>
+        </Route>
 
-          <Route path="/exams/timetable">
+        <Route path="/exams/timetable">
+          <Container className={classNames("pageContainer")}>
             <ExamTimetable />
-          </Route>
+          </Container>
+        </Route>
 
-          <Route path="/exams/grading">
+        <Route path="/exams/grading">
+          <Container className={classNames("pageContainer")}>
             <ExamGrading />
-          </Route>
+          </Container>
+        </Route>
 
-          <Route path="/exams/rubrics">
+        <Route path="/exams/rubrics">
+          <Container className={classNames("pageContainer")}>
             <ExamRubrics />
-          </Route>
+          </Container>
+        </Route>
 
-          <Route path="/exams/papers">
+        <Route path="/exams/papers">
+          <Container className={classNames("pageContainer")}>
             <ExamPastPapers />
-          </Route>
+          </Container>
+        </Route>
 
-          <Route
-            path="/modules/:id"
-            render={(props) => (
-              <Redirect to={`/modules/${props.match.params.id}/dashboard`} />
-            )}
-          />
-          <Route
-            path="/exams"
-            render={() => <Redirect to="/exams/overview" />}
-          />
-          <Route path="/" render={() => <Redirect to="/dashboard" />} />
-        </Switch>
-      </Container>
-      <RightBar onSettingsClick={onSettingsClick} />
+        <Route
+          path="/modules/:id"
+          render={(props) => (
+            <Redirect to={`/modules/${props.match.params.id}/dashboard`} />
+          )}
+        />
+        <Route path="/exams" render={() => <Redirect to="/exams/overview" />} />
+        <Route path="/" render={() => <Redirect to="/dashboard" />} />
+      </Switch>
     </div>
   );
 };
