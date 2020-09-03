@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./style.module.scss";
-import { Link } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 import LeftBarDashboard from "components/organisms/LeftBarDashboard";
 import LeftBarModuleList from "components/organisms/LeftBarModuleList";
@@ -17,7 +16,7 @@ const LeftBar: React.FC<LeftBarProps> = ({modulesFilter, setModulesFilter}) => {
   return (
     <div id={styles.leftbarWrapper}>
       <p className={styles.leftbarStatus}>
-        <Link to="/Dashboard">1 NOTICE</Link>
+        2020 - 2021
       </p>
 			<Switch>
         <Route path="/modules/:id">
