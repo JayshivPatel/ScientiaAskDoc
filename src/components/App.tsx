@@ -38,8 +38,12 @@ class App extends React.Component<{}, AppState> {
     }%`;
 
     const currentTheme = localStorage.getItem("theme");
-    if (currentTheme) {
+    if (currentTheme == "light" || currentTheme == "dark") {
       document.documentElement.setAttribute("data-theme", currentTheme);
+    } else {
+      let mq = window.matchMedia("(prefers-color-scheme: dark)");
+      mq.addListener((mq) => this.setDarkTheme(mq.matches));
+      this.setDarkTheme(mq.matches);
     }
 
     window.addEventListener("resize", () => {
@@ -49,6 +53,13 @@ class App extends React.Component<{}, AppState> {
       }
     });
     this.showOrHideSideBars();
+  }
+
+  setDarkTheme(toSet: boolean) {
+    document.documentElement.setAttribute(
+      "data-theme",
+      toSet ? "dark" : "light"
+    );
   }
 
   toggleLeftBar() {
@@ -108,6 +119,7 @@ class App extends React.Component<{}, AppState> {
           fileView={this.state.fileView}
           onCardViewClick={() => this.setFileView("card")}
           onListViewClick={() => this.setFileView("list")}
+          setDarkTheme={(b) => this.setDarkTheme(b)}
         />
 
         <Switch>

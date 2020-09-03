@@ -13,6 +13,7 @@ interface Props {
   show: boolean;
   onHide: any;
   fileView: string;
+  setDarkTheme: (toSet: boolean) => any;
   onCardViewClick: (event: React.MouseEvent) => void;
   onListViewClick: (event: React.MouseEvent) => void;
 }
@@ -21,6 +22,7 @@ const SettingsModal: React.FC<Props> = ({
   show,
   onHide,
   fileView,
+  setDarkTheme,
   onCardViewClick,
   onListViewClick,
 }) => {
@@ -29,7 +31,7 @@ const SettingsModal: React.FC<Props> = ({
     "90"
   );
 
-  const [theme, setTheme] = useLocalStorage("theme", "light");
+  const [theme, setTheme] = useLocalStorage("theme", "default");
 
   return (
     <Modal
@@ -74,9 +76,22 @@ const SettingsModal: React.FC<Props> = ({
             <ButtonGroup style={{ float: "right" }}>
               <Button
                 className={styles.modalToggleButton}
+                active={theme === "default"}
+                onClick={() => {
+                  let mq = window.matchMedia("(prefers-color-scheme: dark)");
+                  mq.addListener((mq) => setDarkTheme(mq.matches));
+                  setDarkTheme(mq.matches);
+                  setTheme("default");
+                }}
+                variant="secondary"
+              >
+                Default
+              </Button>
+              <Button
+                className={styles.modalToggleButton}
                 active={theme === "light"}
                 onClick={() => {
-                  document.documentElement.setAttribute("data-theme", "light");
+                  setDarkTheme(false);
                   setTheme("light");
                 }}
                 variant="secondary"
@@ -87,7 +102,7 @@ const SettingsModal: React.FC<Props> = ({
                 className={styles.modalToggleButton}
                 active={theme === "dark"}
                 onClick={() => {
-                  document.documentElement.setAttribute("data-theme", "dark");
+                  setDarkTheme(true);
                   setTheme("dark");
                 }}
                 variant="secondary"
