@@ -22,7 +22,8 @@ type AppState = {
 
 class App extends React.Component<{}, AppState> {
   width = window.innerWidth;
-  isSideBarSet = false;
+	isTimelineView = false;
+	
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -53,10 +54,7 @@ class App extends React.Component<{}, AppState> {
         this.showOrHideSideBars();
       }
     });
-    if (!this.isSideBarSet) {
-      console.log("showOrHideSideBars");
-      this.showOrHideSideBars();
-    }
+		this.showOrHideSideBars();
   }
 
   setDarkTheme(toSet: boolean) {
@@ -89,7 +87,7 @@ class App extends React.Component<{}, AppState> {
   }
 
   showOrHideSideBars() {
-    if (window.innerWidth <= 1024) {
+    if (window.innerWidth <= 1024 || this.isTimelineView) {
       this.setState({
         toggledLeft: false,
         toggledRight: false,
@@ -149,13 +147,11 @@ class App extends React.Component<{}, AppState> {
               toggledLeft={this.state.toggledLeft}
               toggledRight={this.state.toggledRight}
               initTimelineSideBar={() => {
-                this.setState({
-                  toggledLeft: false,
-                  toggledRight: false,
-                });
-                this.isSideBarSet = true;
+								this.isTimelineView = true;
+                this.showOrHideSideBars();
 							}}
 							revertTimelineSideBar={() => {
+                this.isTimelineView = false;
                 this.showOrHideSideBars();
               }}
               onOverlayClick={(e) => {

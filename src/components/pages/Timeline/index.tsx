@@ -9,7 +9,6 @@ class Timeline extends React.Component<TimelineProps, {}> {
 
   componentDidMount() {;
 		this.props.initSideBar();
-		console.log("mounted");
   }
 
   componentWillUnmount() {
