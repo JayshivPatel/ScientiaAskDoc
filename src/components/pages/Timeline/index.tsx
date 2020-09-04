@@ -2,11 +2,8 @@ import React from "react";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import styles from "./style.module.scss";
 import TermSwitcher from "./components/TermSwitcher";
-<<<<<<< Updated upstream
 import ModuleHeading from "./components/ModuleHeading";
-=======
 import WeekHeading from "./components/WeekHeading";
->>>>>>> Stashed changes
 
 interface TimelineProps {
   initSideBar: () => void;
