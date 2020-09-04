@@ -43,7 +43,8 @@ class RightBar extends React.Component<RightBarProps, RightBarState> {
       },
       {
         title: "Sign Out",
-        icon: faSignOutAlt
+				icon: faSignOutAlt,
+				activeURL: "/signin",
       }
     ];
 
