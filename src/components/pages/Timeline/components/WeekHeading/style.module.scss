@@ -2,7 +2,7 @@
 
 .weekCard {
   width: 15rem;
-  height: 4rem;
+  height: 4.25rem;
   border-radius: 0.5rem !important;
   border-width: 0rem;
   background: var(--background-color);
@@ -23,11 +23,14 @@
 
 .weekCard :global(.card-body) {
   font-size: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0.5rem;
-  padding-bottom: 0rem;
+  padding: 0rem;
+  padding-top: 0.5rem;
+  flex: none;
+
+  display: inline-grid;
+  grid-template-columns: repeat(5, 3rem);
+  grid-template-rows: auto;
+  place-items: center center;
 }
 
 .dayIndicator {
@@ -36,6 +39,13 @@
   width: 2.25rem !important;
   text-align: center;
   padding: 0rem;
+}
+
+.activeDay {
+  color: var(--primary-text-color-inverse);
+  background-color: var(--background-color-inverse) !important;
+  border-radius: 0.25rem;
+  width: 3rem !important;
 }
 
 .weekDateRange {

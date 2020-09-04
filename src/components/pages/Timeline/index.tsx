@@ -31,32 +31,45 @@ class Timeline extends React.Component<TimelineProps, {}> {
             </div>
             <div className={styles.timelineWeekRow}>
               {[...Array(12)].map((e, i) => {
-                return (
-                  <div className={styles.weekHeading}>
-                    <WeekHeading />
-                  </div>
-                );
+                if (i == 1) {
+                  return (
+                    <div className={styles.weekHeading}>
+                      <WeekHeading
+                        weekNumber={`${i + 1}`}
+                        dateRangeStart={"06/10"}
+                        dateRangeEnd={"10/10"}
+                        activeDay={3}
+                      />
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div className={styles.weekHeading}>
+                      <WeekHeading
+                        weekNumber={`${i + 1}`}
+                        dateRangeStart={"06/10"}
+                        dateRangeEnd={"10/10"}
+                        activeDay={0}
+                      />
+                    </div>
+                  );
+                }
               })}
             </div>
             <div className={styles.timelineModuleColumn}>
+              {modules.map(module => (  
               <div className={styles.moduleHeading}>
                 <ModuleHeading
-                  moduleCode="CO112"
-                  title="Introduction to Computer Systems"
+                  moduleCode={module.code}
+                  title={module.title}
                 />
               </div>
-              <div className={styles.moduleHeading}>
-                <ModuleHeading
-                  moduleCode="CO120.1"
-                  title="Programming I (Haskell)"
-                />
-              </div>
-              <div className={styles.moduleHeading}>
-                <ModuleHeading
-                  moduleCode="CO120.2"
-                  title="Programming II (Java)"
-                />
-              </div>
+              ))}
+            </div>
+            <div className={styles.timelineWeekBackground}> 
+              {[...Array(12)].map((e, i) => {
+                return <div className={styles.timelineBackground}>&nbsp;</div>
+              })}
             </div>
           </div>
         </div>
@@ -64,5 +77,40 @@ class Timeline extends React.Component<TimelineProps, {}> {
     );
   }
 }
+
+let modules = [
+  {
+    title: "Introduction to Computer Systems",
+    code: "CO112"
+  },
+  {
+    title: "Programming I (Haskell)",
+    code: "CO120.1"
+  },
+  {
+    title: "Programming II (Java)",
+    code: "CO120.2"
+  },
+  {
+    title: "Introduction to Logic",
+    code: "CO140"
+  },
+  {
+    title: "Discrete Mathematics",
+    code: "CO142"
+  },
+  {
+    title: "Mathematical Methods",
+    code: "CO145"
+  },
+  {
+    title: "Computing Practical I",
+    code: "CO161"
+  },
+  {
+    title: "Professional Issues",
+    code: "CO166"
+  }
+];
 
 export default Timeline;

@@ -6,13 +6,44 @@
 
 .timelineGrid {
   display: grid;
-  grid-template-areas: "switcher weeks" "modules .";
+  grid-template-areas: "switcher weeks" "modules background";
   grid-template-rows: auto;
   row-gap: 0.625rem;
-  overflow: scroll;
   margin-bottom: 1.25rem;
   margin-left: -0.625rem;
   grid-template-columns: 16.875rem auto;
+
+  overflow: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--background-color) var(--background-color);
+}
+
+.timelineGrid::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.timelineGrid::-webkit-scrollbar-corner {
+  background: var(--background-color);
+}
+
+.timelineGrid::-webkit-scrollbar-track {
+  background: var(--background-color);
+  margin-left: 0.625rem;
+  margin-right: 0.625rem;
+}
+
+.timelineGrid::-webkit-scrollbar-thumb {
+  background-color: var(--background-color);
+  border-radius: 0.5rem;
+}
+
+.timelineGrid:hover {
+  scrollbar-color: var(--scrollbar) var(--background-color);
+}
+
+.timelineGrid:hover::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar);
 }
 
 .timelineTermSwitcher {
@@ -25,6 +56,7 @@
   padding-right: 1.25rem;
   padding-left: 0.625rem;
   box-sizing: border-box;
+  height: 4.25rem !important;
 }
 
 .timelineTermSwitcher > * {
@@ -37,6 +69,7 @@
   grid-auto-flow: row; 
   grid-template-columns: repeat(12, 15rem);
   grid-gap: 0.625rem;
+  padding-right: 0.625rem;
   top: 0;
   position: sticky;
 }
@@ -50,4 +83,24 @@
   padding-right: 1.25rem;
   box-sizing: border-box;
   padding-left: 0.625rem;
+  margin-bottom: 0.625rem;
+  background: var(--background-color);
+}
+
+.weekHeading {
+  height: 4.25rem !important;
+}
+
+.timelineWeekBackground {
+  display: grid;
+  grid-area: background;
+  grid-template-columns: repeat(12, 15rem);
+  grid-template-rows: auto;
+  grid-gap: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.timelineBackground {
+  background-color: var(--primary-button);
+  border-radius: 0.5rem;
 }

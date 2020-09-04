@@ -24,6 +24,9 @@ code {
   --secondary-text-color: #{$gray-700};
   --tertiary-text-color: #{$gray-500};
 
+  --primary-text-color-inverse: #{$white};
+  --background-color-inverse: #{$black};
+
   --border-color: #{$gray-200};
   --border-color-hover: #{$gray-300};
   --border-color-focus: #{$gray-300};
@@ -76,6 +79,9 @@ code {
   --primary-text-color: #{$white};
   --secondary-text-color: #{$gray-300};
   --tertiary-text-color: #{$gray-500};
+
+  --primary-text-color-inverse: #{$black};
+  --background-color-inverse: #{$white};
 
   --border-color: #{$gray-700};
   --border-color-hover: #{$gray-600};

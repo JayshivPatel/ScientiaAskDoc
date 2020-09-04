@@ -1,21 +1,44 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import styles from "./style.module.scss";
+import cx from "classnames";
 
-const WeekHeading: React.FC = () => {
+export interface WeekHeadingProps {
+  weekNumber: string;
+  dateRangeStart: string;
+  dateRangeEnd: string;
+  activeDay: number;
+}
+
+let days = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+
+const WeekHeading: React.FC<WeekHeadingProps> = ({
+  weekNumber,
+  dateRangeStart,
+  dateRangeEnd,
+  activeDay
+}) => {
   return (
     <>
       <Card className={styles.weekCard}>
         <Card.Header>
-          <div className={styles.weekHeading}>Week 1</div>
-          <div className={styles.weekDateRange}>06/10 - 10/10</div>
+          <div className={styles.weekHeading}>Week {weekNumber}</div>
+          <div className={styles.weekDateRange}>
+            {dateRangeStart} - {dateRangeEnd}
+          </div>
         </Card.Header>
         <Card.Body>
-          <div className={styles.dayIndicator}>Mon</div>
-          <div className={styles.dayIndicator}>Tue</div>
-          <div className={styles.dayIndicator}>Wed</div>
-          <div className={styles.dayIndicator}>Thu</div>
-          <div className={styles.dayIndicator}>Fri</div>
+          {days.map(day => {
+            if (activeDay === days.indexOf(day) + 1) {
+              return (
+                <div className={cx(styles.activeDay, styles.dayIndicator)}>
+                  {day}
+                </div>
+              );
+            } else {
+              return <div className={styles.dayIndicator}>{day}</div>;
+            }
+          })}
         </Card.Body>
       </Card>
     </>
