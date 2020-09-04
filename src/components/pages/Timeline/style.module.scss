@@ -1,4 +1,47 @@
 .timelineContainer {
 	margin-top: 1.875rem;
 	margin-left: 1.875rem;
+  margin-right: 1.875rem;
+}
+
+.tableHeading {
+  left: 0;
+  top: 0;
+  z-index: 1;
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  background-color: var(--background-color);
+}
+
+.weekHeading:not(:last-child) {
+  margin-right: 0.625rem;
+}
+
+.moduleHeading {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  left: 0;
+  background-color: var(--background-color);
+}
+
+.timeline {
+  overflow: scroll;
+  height: 400px;
+}
+
+.dummy {
+  color: var(--primary-text-color);
+}
+
+.tableWeekRow {
+  display: flex;
+  top: 0;
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  background-color: var(--background-color);
+  align-items: stretch;
+}
+
+.rowContent {
+  display: flex;
 }

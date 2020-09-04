@@ -5,7 +5,6 @@
   border-width: 0px;
   border-radius: 8px;
 
-  margin-left: 20px;
   justify-content: space-between;
   height: 2.25rem;
   font-size: 1.05rem;
@@ -13,6 +12,8 @@
   transition: 0.2s background-color;
   -webkit-transition: 0.2s background-color;
   -moz-transition: 0.2s background-color;
+
+  margin-bottom: 2.5rem;
 }
 
 .termSwitch:active,
@@ -20,7 +21,6 @@
   background: var(--primary-button-active) !important;
   color: var(--primary-button-text-active) !important;
   font-weight: 500;
-  text-align: left;
   border-width: 0rem;
   height: 2.25rem;
   line-height: 1.375rem;

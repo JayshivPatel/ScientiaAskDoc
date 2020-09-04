@@ -14,21 +14,21 @@ const TermSwitcher: React.FC = () => {
                 active={true}
                 variant="secondary"
               >
-                <FontAwesomeIcon icon={faLeaf}/>
+                <FontAwesomeIcon icon={faLeaf} fixedWidth/>
               </Button>
 							<Button
                 className={styles.termSwitch}
                 active={false}
                 variant="secondary"
               >
-                <FontAwesomeIcon icon={faSeedling}/>
+                <FontAwesomeIcon icon={faSeedling} fixedWidth/>
               </Button>
 							<Button
                 className={styles.termSwitch}
                 active={false}
                 variant="secondary"
               >
-                <FontAwesomeIcon icon={faSun}/>
+                <FontAwesomeIcon icon={faSun} fixedWidth/>
               </Button>
             </ButtonGroup>
     </>
