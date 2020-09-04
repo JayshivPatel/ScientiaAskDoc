@@ -1,0 +1,44 @@
+@import "assets/scss/custom";
+
+.weekCard {
+  width: 11.25rem;
+  height: 3.75rem;
+  border-radius: 0.5rem !important;
+  border-width: 0rem;
+  background: var(--background-color);
+  box-sizing: border-box;
+}
+
+.weekCard :global(.card-header) {
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.5rem !important;
+  background: var(--primary-button);
+}
+
+.weekCard :global(.card-body) {
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: middle;
+  padding: 0.5rem 0.25rem;
+}
+
+.dayIndicator {
+  color: var(--primary-text-color);
+  font-weight: 500;
+  width: 2.25rem !important;
+  text-align: center;
+}
+
+.weekDateRange {
+  color: var(--tertiary-text-color);
+}
+
+.weekHeading {
+  font-weight: 500;
+  color: var(--primary-text-color);
+}
