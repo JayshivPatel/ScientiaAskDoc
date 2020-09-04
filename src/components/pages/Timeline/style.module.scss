@@ -29,8 +29,10 @@
 
 .timelineGrid::-webkit-scrollbar-track {
   background: var(--background-color);
-  margin-left: 0.625rem;
+  margin-left: 16.875rem;
+  margin-top: 4.875rem;
   margin-right: 0.625rem;
+  margin-bottom: 0.625rem;
 }
 
 .timelineGrid::-webkit-scrollbar-thumb {
