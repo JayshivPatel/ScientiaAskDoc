@@ -22,7 +22,7 @@ const SignIn: React.FC = () => {
             src={logo}
             width="30"
             height="30"
-            className={cx("d-inline-block", "align-center")}
+            className={styles.brandLogo}
             alt="Scientia logo"
           />
         </Container>
@@ -38,8 +38,8 @@ const SignIn: React.FC = () => {
             alignItems: "center"
           }}
         >
-          <h1>Scientia</h1>
-          <i style={{ color: "gray" }}>A Unified DoC EdTech Platform</i>
+          <h1 className={styles.brandName}>Scientia</h1>
+          <i className={styles.tagLine}>A Unified DoC EdTech Platform</i>
         </div>
         <div
           style={{
@@ -52,7 +52,7 @@ const SignIn: React.FC = () => {
           <InputGroup className="mb-3">
             <FormControl
               className={styles.inputBar}
-              placeholder="abc123"
+              placeholder="Enter your username"
               aria-label="Username"
               aria-describedby="basic-addon1"
             />
