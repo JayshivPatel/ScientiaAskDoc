@@ -25,78 +25,39 @@ class Timeline extends React.Component<TimelineProps, {}> {
       <>
         <div className={styles.timelineContainer}>
           <MyBreadcrumbs />
-          <div className={styles.timeline}>
-          <Table className={styles.timelineTable} bordered striped hover>
-            <thead>
-              <tr className={styles.tableRow}>
-                <th className={styles.tableHeading}>
-                  <TermSwitcher />
-                </th>
-                <th className={styles.tableWeekRow}>
-                {[...Array(12)].map((e, i) => {
-                  return (
-                    <div className={styles.weekHeading}>
-                      <WeekHeading />
-                    </div>
-                  );
-                })}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th className={styles.moduleHeading}>
-                  <ModuleHeading
-                    moduleCode="CO112"
-                    title="Introduction to Computer Systems"
-                  />
-                </th>
-                <td className={styles.rowContent}>
-                {[...Array(12)].map((e, i) => {
-                  return (
-                    <div className={styles.dummy}>
-                      some text
-                    </div>
-                  );
-                })}
-                </td>
-              </tr>
-              <tr>
-                <th className={styles.moduleHeading}>
-                  <ModuleHeading
-                    moduleCode="CO120.1"
-                    title="Programming I (Haskell)"
-                  />
-                </th>
-                <td className={styles.rowContent}>
-                {[...Array(12)].map((e, i) => {
-                  return (
-                    <div className={styles.dummy}>
-                      some text
-                    </div>
-                  );
-                })}
-                </td>
-              </tr>
-              <tr>
-                <th className={styles.moduleHeading}>
-                  <ModuleHeading
-                    moduleCode="CO120.2"
-                    title="Programming II (Java)"
-                  />
-                </th>
-                <td className={styles.rowContent}>
-                {[...Array(12)].map((e, i) => {
-                  return (
-                    <div className={styles.dummy}>
-                      some text
-                    </div>
-                  );
-                })}
-                </td>
-              </tr>
-            </tbody>
-          </Table>
+          <div className={styles.timelineGrid}>
+            <div className={styles.timelineTermSwitcher}>
+              <TermSwitcher />
+            </div>
+            <div className={styles.timelineWeekRow}>
+              {[...Array(12)].map((e, i) => {
+                return (
+                  <div className={styles.weekHeading}>
+                    <WeekHeading />
+                  </div>
+                );
+              })}
+            </div>
+            <div className={styles.timelineModuleColumn}>
+              <div className={styles.moduleHeading}>
+                <ModuleHeading
+                  moduleCode="CO112"
+                  title="Introduction to Computer Systems"
+                />
+              </div>
+              <div className={styles.moduleHeading}>
+                <ModuleHeading
+                  moduleCode="CO120.1"
+                  title="Programming I (Haskell)"
+                />
+              </div>
+              <div className={styles.moduleHeading}>
+                <ModuleHeading
+                  moduleCode="CO120.2"
+                  title="Programming II (Java)"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </>

@@ -1,47 +1,53 @@
 .timelineContainer {
-	margin-top: 1.875rem;
-	margin-left: 1.875rem;
+  margin-top: 1.875rem;
+  margin-left: 1.875rem;
   margin-right: 1.875rem;
 }
 
-.tableHeading {
-  left: 0;
-  top: 0;
-  z-index: 1;
-  position: -webkit-sticky; /* for Safari */
-  position: sticky;
-  background-color: var(--background-color);
-}
-
-.weekHeading:not(:last-child) {
-  margin-right: 0.625rem;
-}
-
-.moduleHeading {
-  position: -webkit-sticky; /* for Safari */
-  position: sticky;
-  left: 0;
-  background-color: var(--background-color);
-}
-
-.timeline {
+.timelineGrid {
+  display: grid;
+  grid-template-areas: "switcher weeks" "modules .";
+  grid-template-rows: auto;
+  row-gap: 0.625rem;
   overflow: scroll;
-  height: 400px;
+  margin-bottom: 1.25rem;
+  margin-left: -0.625rem;
+  grid-template-columns: 16.875rem auto;
 }
 
-.dummy {
-  color: var(--primary-text-color);
-}
-
-.tableWeekRow {
-  display: flex;
+.timelineTermSwitcher {
+  grid-area: switcher;
   top: 0;
-  position: -webkit-sticky; /* for Safari */
+  left: 0;
   position: sticky;
-  background-color: var(--background-color);
-  align-items: stretch;
+  z-index: 1;
+  background: var(--background-color);
+  padding-right: 1.25rem;
+  padding-left: 0.625rem;
+  box-sizing: border-box;
 }
 
-.rowContent {
-  display: flex;
+.timelineTermSwitcher > * {
+  width: 100%;
+}
+
+.timelineWeekRow {
+  grid-area: weeks;
+  display: grid;
+  grid-auto-flow: row; 
+  grid-template-columns: repeat(12, 15rem);
+  grid-gap: 0.625rem;
+  top: 0;
+  position: sticky;
+}
+
+.timelineModuleColumn {
+  grid-area: modules;
+  display: grid;
+  grid-gap: 0.625rem;
+  left: 0;
+  position: sticky;
+  padding-right: 1.25rem;
+  box-sizing: border-box;
+  padding-left: 0.625rem;
 }
