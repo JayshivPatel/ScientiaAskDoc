@@ -1,13 +1,12 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import styles from "./style.module.scss";
-import cx from "classnames";
 
 export interface WeekHeadingProps {
-  weekNumber: string;
-  dateRangeStart: string;
-  dateRangeEnd: string;
-  activeDay: number;
+  weekNumber: number;
+  dateRangeStart: Date;
+  dateRangeEnd: Date;
+  activeDay: Date;
 }
 
 let days = ["Mon", "Tue", "Wed", "Thu", "Fri"];
@@ -16,25 +15,38 @@ const WeekHeading: React.FC<WeekHeadingProps> = ({
   weekNumber,
   dateRangeStart,
   dateRangeEnd,
-  activeDay
+  activeDay,
 }) => {
+  const dateRangeStartMonth = new Intl.DateTimeFormat("en", {
+    month: "2-digit",
+  }).format(dateRangeStart);
+  const dateRangeStartDay = new Intl.DateTimeFormat("en", {
+    day: "2-digit",
+  }).format(dateRangeStart);
+  const dateRangeEndMonth = new Intl.DateTimeFormat("en", {
+    month: "2-digit",
+  }).format(dateRangeEnd);
+  const dateRangeEndDay = new Intl.DateTimeFormat("en", {
+    day: "2-digit",
+  }).format(dateRangeEnd);
+
   return (
     <>
       <Card className={styles.weekCard}>
         <Card.Header>
           <div className={styles.weekHeading}>Week {weekNumber}</div>
           <div className={styles.weekDateRange}>
-            {dateRangeStart} - {dateRangeEnd}
+            {dateRangeStartDay}/{dateRangeStartMonth} - {dateRangeEndDay}/
+            {dateRangeEndMonth}
           </div>
         </Card.Header>
         <Card.Body>
-          {days.map(day => {
-            if (activeDay === days.indexOf(day) + 1) {
-              return (
-                <div className={cx(styles.activeDay, styles.dayIndicator)}>
-                  {day}
-                </div>
-              );
+          {days.map((day, i) => {
+            if (
+              activeDay.getTime() ===
+              dateRangeStart.getTime() + i * 86400000
+            ) {
+              return <div className={styles.activeDay}>{day}</div>;
             } else {
               return <div className={styles.dayIndicator}>{day}</div>;
             }
