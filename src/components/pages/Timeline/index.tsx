@@ -4,6 +4,7 @@ import styles from "./style.module.scss";
 import TermSwitcher from "./components/TermSwitcher";
 import ModuleHeading from "./components/ModuleHeading";
 import WeekHeading from "./components/WeekHeading";
+import { modulesList } from "../ModuleList/list";
 
 interface TimelineProps {
   initSideBar: () => void;
@@ -49,14 +50,14 @@ class Timeline extends React.Component<TimelineProps, {}> {
             ))}
           </div>
           <div className={styles.timelineModuleColumn}>
-            {modules.map((module) => (
+            {modulesList.map((module) => (
               <div className={styles.moduleHeading}>
                 <ModuleHeading moduleCode={module.code} title={module.title} />
               </div>
             ))}
           </div>
           <div className={styles.timelineWeekBackground}>
-            {[...Array(12)].map((e, i) => {
+            {[...Array(numWeeks)].map(() => {
               return <div className={styles.timelineBackground}>&nbsp;</div>;
             })}
           </div>
@@ -65,40 +66,5 @@ class Timeline extends React.Component<TimelineProps, {}> {
     );
   }
 }
-
-let modules = [
-  {
-    title: "Introduction to Computer Systems",
-    code: "CO112",
-  },
-  {
-    title: "Programming I (Haskell)",
-    code: "CO120.1",
-  },
-  {
-    title: "Programming II (Java)",
-    code: "CO120.2",
-  },
-  {
-    title: "Introduction to Logic",
-    code: "CO140",
-  },
-  {
-    title: "Discrete Mathematics",
-    code: "CO142",
-  },
-  {
-    title: "Mathematical Methods",
-    code: "CO145",
-  },
-  {
-    title: "Computing Practical I",
-    code: "CO161",
-  },
-  {
-    title: "Professional Issues",
-    code: "CO166",
-  },
-];
 
 export default Timeline;
