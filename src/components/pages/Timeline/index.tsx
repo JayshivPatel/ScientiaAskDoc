@@ -33,7 +33,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     this.props.initSideBar();
     let moduleTracks: ModuleTracks = {};
     modulesList.forEach(({ code }) => {
-			moduleTracks[code] = [[], []];			
+      moduleTracks[code] = [[], []];
     });
     this.setState({ moduleTracks: moduleTracks });
   }
@@ -62,13 +62,12 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       const tracks = this.state.moduleTracks[code];
       if (tracks) {
         moduleHeadings.push(
-          <div
+          <ModuleHeading
             key={code}
-            className={styles.moduleHeading}
             style={{ height: `${tracks.length * trackHeight}rem` }}
-          >
-            <ModuleHeading moduleCode={code} title={modulesList[i].title} />
-          </div>
+            moduleCode={code}
+            title={modulesList[i].title}
+          />
         );
         const timelineBackgroundsClass = classNames(
           i % 2 === 0
