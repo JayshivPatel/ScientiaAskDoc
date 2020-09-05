@@ -85,7 +85,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 
   render() {
     const termStart = new Date("2020-09-28");
-    const activeDay = new Date("2020-10-01");
+    const activeDay = new Date("2020-10-23");
     const numWeeks = 11;
     const trackHeight = 4.25;
     const [moduleHeadings, timelineBackgrounds] = this.generateGridItems(
@@ -96,6 +96,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       Math.ceil(
         ((activeDay.getTime() - termStart.getTime()) / 86400000 / 7) * 6
       ) + 1;
+    console.log(activeColumn);
     return (
       <div className={styles.timelineContainer}>
         <MyBreadcrumbs />
@@ -134,6 +135,10 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
             <div
               className={styles.dayIndicatorColumn}
               style={{
+                visibility:
+                  activeDay.getDay() === 6 || activeDay.getDay() == 0
+                    ? "hidden"
+                    : "visible",
                 gridColumn: `${activeColumn} / ${activeColumn + 1}`,
               }}
             ></div>
