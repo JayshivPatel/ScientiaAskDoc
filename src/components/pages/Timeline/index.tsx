@@ -6,6 +6,7 @@ import ModuleHeading from "./components/ModuleHeading";
 import WeekHeading from "./components/WeekHeading";
 import { modulesList } from "../ModuleList/list";
 import classNames from "classnames";
+import { addDays } from "utils/functions";
 
 interface TimelineProps {
   initSideBar: () => void;
@@ -23,6 +24,7 @@ type ModuleTracks = {
 interface TimelineState {
   moduleTracks: ModuleTracks;
 }
+
 class Timeline extends React.Component<TimelineProps, TimelineState> {
   constructor(props: TimelineProps) {
     super(props);
@@ -42,18 +44,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     this.props.revertSideBar();
   }
 
-  addDays(date: Date, days: number) {
-    let result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-  }
-
-  render() {
-    const termStart = new Date("2020-09-28");
-    const activeDay = new Date("2020-10-07");
-    const numWeeks = 12;
-    const trackHeight = 4.25;
-
+  generateGridItems(numWeeks: number, trackHeight: number) {
     let timelineBackgrounds: ReactElement[] = [];
     let moduleHeadings: ReactElement[] = [];
 
@@ -89,6 +80,18 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         }
       }
     }
+    return [moduleHeadings, timelineBackgrounds];
+  }
+
+  render() {
+    const termStart = new Date("2020-09-28");
+    const activeDay = new Date("2020-10-07");
+    const numWeeks = 11;
+    const trackHeight = 4.25;
+    const [moduleHeadings, timelineBackgrounds] = this.generateGridItems(
+      numWeeks,
+      trackHeight
+    );
     return (
       <div className={styles.timelineContainer}>
         <MyBreadcrumbs />
@@ -96,20 +99,26 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
           <div className={styles.timelineTermSwitcher}>
             <TermSwitcher />
           </div>
-          <div className={styles.timelineWeekRow}>
+          <div
+            className={styles.timelineWeekRow}
+            style={{ gridTemplateColumns: `repeat(${numWeeks}, 15rem)` }}
+          >
             {[...Array(numWeeks)].map((_, i) => (
               <div className={styles.weekHeading} key={i}>
                 <WeekHeading
                   weekNumber={i + 1}
-                  dateRangeStart={this.addDays(termStart, i * 7)}
-                  dateRangeEnd={this.addDays(termStart, i * 7 + 4)}
+                  dateRangeStart={addDays(termStart, i * 7)}
+                  dateRangeEnd={addDays(termStart, i * 7 + 4)}
                   activeDay={activeDay}
                 />
               </div>
             ))}
           </div>
           <div className={styles.timelineModuleColumn}>{moduleHeadings}</div>
-          <div className={styles.timelineWeekBackground}>
+          <div
+            className={styles.timelineWeekBackground}
+            style={{ gridTemplateColumns: `repeat(${numWeeks}, 15rem)` }}
+          >
             {timelineBackgrounds}
           </div>
         </div>

@@ -69,7 +69,6 @@
   grid-area: weeks;
   display: grid;
   grid-auto-flow: row; 
-  grid-template-columns: repeat(12, 15rem);
   grid-gap: 0.625rem;
 	padding-right: 0.625rem;
   top: 0;
@@ -96,7 +95,6 @@
 .timelineWeekBackground {
   display: grid;
   grid-area: background;
-  grid-template-columns: repeat(12, 15rem);
   grid-template-rows: auto;
 	column-gap: 0.625rem;
   row-gap: 0;
