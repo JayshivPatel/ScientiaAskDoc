@@ -18,7 +18,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoaded, error, successf
           transform: "translate(-50%, -50%)",
         }}
       >
-        <Spinner animation="border" />
+        <Spinner animation="border" variant={document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark"} />
       </div>
     );
   if (error) return <> Error retrieving data: {error} </>;
