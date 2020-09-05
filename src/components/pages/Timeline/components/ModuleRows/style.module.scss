@@ -1,0 +1,43 @@
+.timelineModuleColumn {
+  grid-area: modules;
+  display: grid;
+  grid-gap: 0.625rem;
+  left: 0;
+  position: sticky;
+  padding-right: 1.25rem;
+  box-sizing: border-box;
+  padding-left: 0.625rem;
+  margin-bottom: 0.625rem;
+  background: var(--background-color);
+  padding-top: 0.625rem;
+  z-index: 4;
+}
+
+.timelineWeekBackground {
+  padding-top: 0.625rem;
+  display: grid;
+  grid-area: background;
+  grid-template-rows: auto;
+	column-gap: 0.625rem;
+  row-gap: 0;
+  margin-bottom: 0.625rem;
+  z-index: 1;
+}
+
+.timelineBackgroundEven {
+  background-color: var(--checker-even-color);
+}
+
+.timelineBackgroundOdd {
+  background-color: var(--checker-odd-color);
+}
+
+.timelineBackgroundFirst {
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+}
+
+.timelineBackgroundLast {
+	border-bottom-left-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+}

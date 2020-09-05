@@ -7,31 +7,27 @@ import { faLeaf, faSeedling, faSun } from "@fortawesome/free-solid-svg-icons";
 
 const TermSwitcher: React.FC = () => {
   return (
-    <>
-				<ButtonGroup style={{ float: "right" }}>
-              <Button
-                className={styles.termSwitch}
-                active={true}
-                variant="secondary"
-              >
-                <FontAwesomeIcon icon={faLeaf} fixedWidth/>
-              </Button>
-							<Button
-                className={styles.termSwitch}
-                active={false}
-                variant="secondary"
-              >
-                <FontAwesomeIcon icon={faSeedling} fixedWidth/>
-              </Button>
-							<Button
-                className={styles.termSwitch}
-                active={false}
-                variant="secondary"
-              >
-                <FontAwesomeIcon icon={faSun} fixedWidth/>
-              </Button>
-            </ButtonGroup>
-    </>
+    <div className={styles.timelineTermSwitcher}>
+      <ButtonGroup style={{ float: "right" }}>
+        <Button className={styles.termSwitch} active={true} variant="secondary">
+          <FontAwesomeIcon icon={faLeaf} fixedWidth />
+        </Button>
+        <Button
+          className={styles.termSwitch}
+          active={false}
+          variant="secondary"
+        >
+          <FontAwesomeIcon icon={faSeedling} fixedWidth />
+        </Button>
+        <Button
+          className={styles.termSwitch}
+          active={false}
+          variant="secondary"
+        >
+          <FontAwesomeIcon icon={faSun} fixedWidth />
+        </Button>
+      </ButtonGroup>
+    </div>
   );
 };
 

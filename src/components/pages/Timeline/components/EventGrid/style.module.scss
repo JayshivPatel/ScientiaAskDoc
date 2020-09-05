@@ -1,0 +1,20 @@
+.timelineCardGrid {
+  padding-top: 0.625rem;
+  display: grid;
+  grid-area: background;
+  z-index: 3;
+}
+
+.timelineEvent {
+  background: red;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.eventTitle {
+  color: var(--primary-text-color);
+  font-size: 1rem;
+}

@@ -1,12 +1,12 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import styles from "./style.module.scss";
 import TermSwitcher from "./components/TermSwitcher";
-import ModuleHeading from "./components/ModuleHeading";
-import WeekHeading from "./components/WeekHeading";
 import { modulesList } from "../ModuleList/list";
-import classNames from "classnames";
-import { addDays } from "utils/functions";
+import WeekRow from "./components/WeekRow";
+import ModuleRows from "./components/ModuleRows";
+import DayIndicatorGrid from "./components/DayIndicatorGrid";
+import EventGrid from "./components/EventGrid";
 
 interface TimelineProps {
   initSideBar: () => void;
@@ -17,7 +17,7 @@ interface Event {
   title: string;
 }
 
-type ModuleTracks = {
+export type ModuleTracks = {
   [index: string]: Event[][];
 };
 
@@ -44,116 +44,36 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     this.props.revertSideBar();
   }
 
-  generateGridItems(numWeeks: number, trackHeight: number) {
-    let timelineBackgrounds: ReactElement[] = [];
-    let moduleHeadings: ReactElement[] = [];
-
-    for (let i = 0; i < modulesList.length; i++) {
-      const code = modulesList[i].code;
-      const tracks = this.state.moduleTracks[code];
-      if (tracks) {
-        moduleHeadings.push(
-          <ModuleHeading
-            key={code}
-            style={{ height: `${tracks.length * trackHeight}rem` }}
-            moduleCode={code}
-            title={modulesList[i].title}
-          />
-        );
-        const timelineBackgroundsClass = classNames(
-          i % 2 === 0
-            ? styles.timelineBackgroundEven
-            : styles.timelineBackgroundOdd,
-          i === 0 ? styles.timelineBackgroundFirst : "",
-          i === modulesList.length - 1 ? styles.timelineBackgroundLast : ""
-        );
-        const offset =
-          i === modulesList.length - 1 || i === 0 ? 0.625 / 2 : 0.625;
-        for (let j = 0; j < numWeeks; j++) {
-          timelineBackgrounds.push(
-            <div
-              key={code + j}
-              style={{ height: `${tracks.length * trackHeight + offset}rem` }}
-              className={timelineBackgroundsClass}
-            ></div>
-          );
-        }
-      }
-    }
-    return [moduleHeadings, timelineBackgrounds];
-  }
-
   render() {
     const termStart = new Date("2020-09-28");
-    const activeDay = new Date("2020-10-23");
+    const activeDay = new Date("2020-10-12");
     const numWeeks = 11;
-    const trackHeight = 4.25;
-    const [moduleHeadings, timelineBackgrounds] = this.generateGridItems(
-      numWeeks,
-      trackHeight
-    );
-    const activeColumn =
-      Math.ceil(
-        ((activeDay.getTime() - termStart.getTime()) / 86400000 / 7) * 6
-      ) + 1;
-    console.log(activeColumn);
+    const trackHeight = 4;
+
     return (
       <div className={styles.timelineContainer}>
         <MyBreadcrumbs />
         <div className={styles.timelineGrid}>
-          <div className={styles.timelineTermSwitcher}>
-            <TermSwitcher />
-          </div>
-          <div
-            className={styles.timelineWeekRow}
-            style={{ gridTemplateColumns: `repeat(${numWeeks}, 15rem)` }}
-          >
-            {[...Array(numWeeks)].map((_, i) => (
-              <div className={styles.weekHeading} key={i}>
-                <WeekHeading
-                  weekNumber={i + 1}
-                  dateRangeStart={addDays(termStart, i * 7)}
-                  dateRangeEnd={addDays(termStart, i * 7 + 4)}
-                  activeDay={activeDay}
-                />
-              </div>
-            ))}
-          </div>
-          <div className={styles.timelineModuleColumn}>{moduleHeadings}</div>
-          <div
-            className={styles.timelineWeekBackground}
-            style={{ gridTemplateColumns: `repeat(${numWeeks}, 15rem)` }}
-          >
-            {timelineBackgrounds}
-          </div>
-          <div
-            className={styles.dayIndicatorGrid}
-            style={{
-              gridTemplateColumns: `repeat(${numWeeks}, 3rem 3rem 3rem 3rem 3rem 0.625rem`,
-            }}
-          >
-            <div
-              className={styles.dayIndicatorColumn}
-              style={{
-                visibility:
-                  activeDay.getDay() === 6 || activeDay.getDay() == 0
-                    ? "hidden"
-                    : "visible",
-                gridColumn: `${activeColumn} / ${activeColumn + 1}`,
-              }}
-            ></div>
-          </div>
-          <div className={styles.timelineCardGrid} style={{
-              gridTemplateColumns: `repeat(${numWeeks}, 3rem 3rem 3rem 3rem 3rem 0.625rem`,
-              gridTemplateRows: `4.25rem 4.25rem 0.3125rem repeat(${7}, 4.25rem 4.25rem 0.625rem) 4.25rem 4.25rem 0.3125rem`
-            }}>
-            <div className={styles.timelineEvent} style={{ gridColumn: `1 / 9`}}>
-              <span className={styles.eventTitle}>Title of the first event</span>
-            </div>
-            <div className={styles.timelineEvent} style={{ gridColumn: `3 / 24`, gridRow: `2`}}>
-              <span className={styles.eventTitle}>Title of the second event</span>
-            </div>
-          </div>
+          <TermSwitcher />
+          <WeekRow
+            numWeeks={numWeeks}
+            termStart={termStart}
+            activeDay={activeDay}
+          />
+          <ModuleRows
+            numWeeks={numWeeks}
+            trackHeight={trackHeight}
+            modulesList={modulesList}
+            moduleTracks={this.state.moduleTracks}
+          />
+
+          <DayIndicatorGrid
+            numWeeks={numWeeks}
+            activeDay={activeDay}
+            termStart={termStart}
+          />
+
+          <EventGrid numWeeks={numWeeks} trackHeight={trackHeight} />
         </div>
       </div>
     );
