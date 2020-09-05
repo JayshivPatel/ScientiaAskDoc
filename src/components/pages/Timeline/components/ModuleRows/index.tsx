@@ -8,21 +8,21 @@ export interface ModuleRowsProps {
   numWeeks: number;
   trackHeight: number;
   modulesList: any[];
-  moduleTracks: ModuleTracks;
+  modulesTracks: ModuleTracks;
 }
 
 const ModuleRows: React.FC<ModuleRowsProps> = ({
   numWeeks,
   trackHeight,
   modulesList,
-  moduleTracks,
+  modulesTracks,
 }) => {
   let timelineBackgrounds: ReactElement[] = [];
   let moduleHeadings: ReactElement[] = [];
 
   for (let i = 0; i < modulesList.length; i++) {
     const code = modulesList[i].code;
-    const tracks = moduleTracks[code];
+    const tracks = modulesTracks[code];
     moduleHeadings.push(
       <ModuleHeading
         key={code}

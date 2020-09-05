@@ -28,27 +28,27 @@ export type ModuleTracks = {
 };
 
 interface TimelineState {
-  moduleTracks: ModuleTracks;
+  modulesTracks: ModuleTracks;
   isLoaded: boolean;
 }
 
 class Timeline extends React.Component<TimelineProps, TimelineState> {
   constructor(props: TimelineProps) {
     super(props);
-    this.state = { moduleTracks: {}, isLoaded: false };
+    this.state = { modulesTracks: {}, isLoaded: false };
   }
 
   componentDidMount() {
     this.props.initSideBar();
-    let moduleTracks: ModuleTracks = {};
+    let modulesTracks: ModuleTracks = {};
     modulesList.forEach(({ code }) => {
-      moduleTracks[code] = [[], []];
+      modulesTracks[code] = [[], []];
     });
 
     let timelineEvents = eventsData;
     for (let i = 0; i < timelineEvents.length; i++) {
       const event = timelineEvents[i];
-      let tracks: TimelineEvent[][] = moduleTracks[event.moduleCode];
+      let tracks: TimelineEvent[][] = modulesTracks[event.moduleCode];
       let isPlaced = false;
       for (const track of tracks) {
         if (track.every((te) => !eventsOverlaps(te, event))) {
@@ -56,14 +56,14 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
           track.push(event);
           break;
         }
-			}
-			if (!isPlaced){
-				tracks.push([event]);
-			}
-		}
-		
+      }
+      if (!isPlaced) {
+        tracks.push([event]);
+      }
+    }
+
     this.setState({
-      moduleTracks: moduleTracks,
+      modulesTracks: modulesTracks,
       isLoaded: true,
     });
   }
@@ -100,7 +100,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
             numWeeks={numWeeks}
             trackHeight={trackHeight}
             modulesList={modulesList}
-            moduleTracks={this.state.moduleTracks}
+            modulesTracks={this.state.modulesTracks}
           />
 
           <DayIndicatorGrid
@@ -113,7 +113,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
             numWeeks={numWeeks}
             trackHeight={trackHeight}
             modulesList={modulesList}
-            moduleTracks={this.state.moduleTracks}
+            modulesTracks={this.state.modulesTracks}
+            dateToColumn={(date) => this.dateToColumn(date, termStart) }
           />
         </div>
       </div>

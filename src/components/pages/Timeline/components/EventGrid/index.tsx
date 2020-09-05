@@ -6,12 +6,13 @@ export interface EventGridProps {
   numWeeks: number;
   trackHeight: number;
   modulesList: any[];
-  moduleTracks: ModuleTracks;
+  modulesTracks: ModuleTracks;
+  dateToColumn: (date: Date) => number;
 }
 
 interface EventDisplay {
-	title: string;
-	id: number;
+  title: string;
+  id: number;
   startColumn: number;
   endColumn: number;
   rowNumber: number;
@@ -21,19 +22,32 @@ const EventGrid: React.FC<EventGridProps> = ({
   numWeeks,
   trackHeight,
   modulesList,
-  moduleTracks,
-}) => {		
-	//calculate event positions
-	let eventPositions: EventDisplay[] = [];
-
-	// Generates template for rows
+  modulesTracks,
+  dateToColumn,
+}) => {
+  let eventPositions: EventDisplay[] = [];
   let gridTemplateRows: string = "";
+  let currRow = 1;
   for (let i = 0; i < modulesList.length; i++) {
     const code = modulesList[i].code;
-    const moduleTrack = moduleTracks[code];
-    moduleTrack.forEach(() => (gridTemplateRows += `${trackHeight}rem `));
+    const moduleTracks = modulesTracks[code];
+
+    for (const moduleTrack of moduleTracks) {
+      for (const event of moduleTrack) {
+        eventPositions.push({
+          title: event.title,
+          id: event.id,
+          startColumn: dateToColumn(event.startDate),
+          endColumn: dateToColumn(event.endDate) + 1,
+          rowNumber: currRow,
+        });
+      }
+      gridTemplateRows += `${trackHeight}rem `;
+      currRow += 1;
+    }
     gridTemplateRows +=
       i === 0 || i === modulesList.length - 1 ? "0.3125rem " : "0.625rem ";
+    currRow += 1;
   }
 
   return (
@@ -44,14 +58,17 @@ const EventGrid: React.FC<EventGridProps> = ({
         gridTemplateRows: gridTemplateRows,
       }}
     >
-      {eventPositions.map(({ title, startColumn, endColumn, rowNumber }) => (
-        <TimelineEventCard
-          title={title}
-          startColumn={startColumn}
-          endColumn={endColumn}
-          rowNumber={rowNumber}
-        />
-      ))}
+      {eventPositions.map(
+        ({ title, startColumn, id, endColumn, rowNumber }) => (
+          <TimelineEventCard
+            title={title}
+            key={id}
+            startColumn={startColumn}
+            endColumn={endColumn}
+            rowNumber={rowNumber}
+          />
+        )
+      )}
     </div>
   );
 };

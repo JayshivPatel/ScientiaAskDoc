@@ -11,9 +11,9 @@ export const eventsData : TimelineEvent[] = [
 	},
 	{
 		title: "Circuit Analysis",
-		id: 0,
-		startDate: new Date("2020-10-04"),
-		endDate: new Date("2020-10-09"),
+		id: 1,
+		startDate: new Date("2020-10-05"),
+		endDate: new Date("2020-10-12"),
 		moduleCode: "CO112"
 	}
 ]
