@@ -98,8 +98,9 @@
   grid-area: background;
   grid-template-columns: repeat(12, 15rem);
   grid-template-rows: auto;
-  grid-gap: 0.625rem;
-  padding-bottom: 0.625rem;
+	column-gap: 0.625rem;
+  row-gap: 0;
+  margin-bottom: 0.625rem;
 }
 
 .timelineBackgroundEven {

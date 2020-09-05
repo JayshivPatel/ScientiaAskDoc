@@ -61,7 +61,15 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       const code = modulesList[i].code;
       const tracks = this.state.moduleTracks[code];
       if (tracks) {
-        const height = tracks.length * trackHeight;
+        moduleHeadings.push(
+          <div
+            key={code}
+            className={styles.moduleHeading}
+            style={{ height: `${tracks.length * trackHeight}rem` }}
+          >
+            <ModuleHeading moduleCode={code} title={modulesList[i].title} />
+          </div>
+        );
         const timelineBackgroundsClass = classNames(
           i % 2 === 0
             ? styles.timelineBackgroundEven
@@ -69,20 +77,13 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
           i === 0 ? styles.timelineBackgroundFirst : "",
           i === modulesList.length - 1 ? styles.timelineBackgroundLast : ""
         );
-        moduleHeadings.push(
-          <div
-            key={code}
-            className={styles.moduleHeading}
-            style={{ height: `${height}rem` }}
-          >
-            <ModuleHeading moduleCode={code} title={modulesList[i].title} />
-          </div>
-        );
+        const offset =
+          i === modulesList.length - 1 || i === 0 ? 0.625 / 2 : 0.625;
         for (let j = 0; j < numWeeks; j++) {
           timelineBackgrounds.push(
             <div
               key={code + j}
-              style={{ height: `${height}rem` }}
+              style={{ height: `${tracks.length * trackHeight + offset}rem` }}
               className={timelineBackgroundsClass}
             ></div>
           );
