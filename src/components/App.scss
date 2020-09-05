@@ -80,7 +80,7 @@ code {
 	--secondary-background-color: #{$gray-800};
 	
 	--checker-even-color: #{$gray-800};
-	--checker-odd-color: #{$gray-700};
+	--checker-odd-color: #{rgba($gray-800, 0.5)};
 
   --primary-text-color: #{$white};
   --secondary-text-color: #{$gray-300};
