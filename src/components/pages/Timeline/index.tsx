@@ -85,13 +85,17 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 
   render() {
     const termStart = new Date("2020-09-28");
-    const activeDay = new Date("2020-10-07");
+    const activeDay = new Date("2020-10-01");
     const numWeeks = 11;
     const trackHeight = 4.25;
     const [moduleHeadings, timelineBackgrounds] = this.generateGridItems(
       numWeeks,
       trackHeight
     );
+    const activeColumn =
+      Math.ceil(
+        ((activeDay.getTime() - termStart.getTime()) / 86400000 / 7) * 6
+      ) + 1;
     return (
       <div className={styles.timelineContainer}>
         <MyBreadcrumbs />
@@ -124,14 +128,15 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
           <div
             className={styles.dayIndicatorGrid}
             style={{
-              gridTemplateColumns: `repeat(${numWeeks}, 3rem 3rem 3rem 3rem 3rem 0.625rem`
+              gridTemplateColumns: `repeat(${numWeeks}, 3rem 3rem 3rem 3rem 3rem 0.625rem`,
             }}
           >
             <div
               className={styles.dayIndicatorColumn}
-            >
-              &nbsp;
-            </div>
+              style={{
+                gridColumn: `${activeColumn} / ${activeColumn + 1}`,
+              }}
+            ></div>
           </div>
         </div>
       </div>

@@ -27,14 +27,13 @@ const WeekHeading: React.FC<WeekHeadingProps> = ({
       </Card.Header>
       <Card.Body>
         {days.map((day, i) => {
+          let timeDifference =
+            dateRangeStart.getTime() + i * 86400000 - activeDay.getTime();
+          let isActive = timeDifference < 86400000 && timeDifference >= 0;
           return (
             <div
               key={day}
-              className={
-                activeDay.getDate() === dateRangeStart.getDate() + i
-                  ? styles.activeDay
-                  : styles.dayIndicator
-              }
+              className={isActive ? styles.activeDay : styles.dayIndicator}
             >
               {day}
             </div>
