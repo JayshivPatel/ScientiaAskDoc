@@ -46,6 +46,7 @@ const WeekHeading: React.FC<WeekHeadingProps> = ({
               activeDay.getTime() === dateRangeStart.getTime() + i * 86400000;
             return (
               <div
+							key={day}
                 className={isActive ? styles.activeDay : styles.dayIndicator}
               >
                 {day}

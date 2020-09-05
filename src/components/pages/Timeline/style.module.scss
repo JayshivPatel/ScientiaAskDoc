@@ -71,7 +71,7 @@
   grid-auto-flow: row; 
   grid-template-columns: repeat(12, 15rem);
   grid-gap: 0.625rem;
-  padding-right: 0.625rem;
+	padding-right: 0.625rem;
   top: 0;
   position: sticky;
 }
@@ -104,5 +104,5 @@
 
 .timelineBackground {
   background-color: var(--primary-button);
-  border-radius: 0.5rem;
+	border-radius: 0.5rem;
 }
