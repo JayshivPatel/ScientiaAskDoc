@@ -1,7 +1,7 @@
 export enum Term {
   AUTUMN,
   SPRING,
-  SUMMER
+  SUMMER,
 }
 
 export interface Folder {
@@ -17,4 +17,20 @@ export interface Resource {
   id: number;
   path?: string;
   thumbnail?: string;
+}
+
+export interface Module {
+  title: string;
+  code: string;
+  image: string;
+  terms: Term[];
+  progressStatus: ProgressStatus;
+  progressPercent: number;
+  content: string;
+};
+
+export enum ProgressStatus {
+  NOT_STARTED = "Not Started",
+  IN_PROGRESS = "In Progress",
+  COMPLETED = "Completed"
 }

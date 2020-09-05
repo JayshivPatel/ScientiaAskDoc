@@ -5,8 +5,8 @@ export const eventsData : TimelineEvent[] = [
 	{
 		title: "Logic Exercise",
 		id: 0,
-		startDate: new Date("2020-10-01"),
-		endDate: new Date("2020-10-08"),
+		startDate: new Date("2020-10-07"),
+		endDate: new Date("2020-10-19"),
 		moduleCode: "CO140"
 	},
 	{
@@ -15,5 +15,12 @@ export const eventsData : TimelineEvent[] = [
 		startDate: new Date("2020-10-05"),
 		endDate: new Date("2020-10-12"),
 		moduleCode: "CO112"
+	},
+	{
+		title: "Practical 1",
+		id: 2,
+		startDate: new Date("2020-10-05"),
+		endDate: new Date("2020-10-16"),
+		moduleCode: "CO120.2"
 	}
 ]

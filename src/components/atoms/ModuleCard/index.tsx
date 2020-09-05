@@ -6,13 +6,9 @@ import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import { faSun, faLeaf, faSeedling } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Term } from "constants/types";
+import { Term, ProgressStatus } from "constants/types";
 
-export enum ProgressStatus {
-  NOT_STARTED = "Not Started",
-  IN_PROGRESS = "In Progress",
-  COMPLETED = "Completed"
-}
+
 
 export interface ModuleCardProps {
   module: {

@@ -18,6 +18,7 @@ import ExamGrading from "../Exams/Grading";
 import ExamPastPapers from "../Exams/PastPapers";
 import ModuleOverview from "../ModuleOverview";
 import LeftBar from "components/organisms/LeftBar";
+import { Term } from "constants/types";
 
 interface StandardViewProps {
   toggledLeft: boolean;
@@ -39,7 +40,7 @@ const StandardView: React.FC<StandardViewProps> = ({
 	initTimelineSideBar,
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
-  const [timelineTerm, setTimelineTerm] = useState("In Progress");
+  const [timelineTerm, setTimelineTerm] = useState(Term.AUTUMN);
 
   return (
     <div
@@ -51,7 +52,9 @@ const StandardView: React.FC<StandardViewProps> = ({
     >
       <LeftBar
         modulesFilter={modulesFilter}
-        setModulesFilter={setModulesFilter}
+				setModulesFilter={setModulesFilter}
+				timelineTerm={timelineTerm}
+				setTimelineTerm={setTimelineTerm}
       />
       <RightBar onSettingsClick={onSettingsClick} />
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
@@ -107,6 +110,8 @@ const StandardView: React.FC<StandardViewProps> = ({
           <Timeline
             initSideBar={initTimelineSideBar}
 						revertSideBar={revertTimelineSideBar}
+						term={timelineTerm}
+						setTerm={setTimelineTerm}
           />
         </Route>
 

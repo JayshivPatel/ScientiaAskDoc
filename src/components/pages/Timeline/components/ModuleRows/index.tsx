@@ -3,11 +3,12 @@ import styles from "./style.module.scss";
 import { ModuleTracks } from "../..";
 import ModuleHeading from "../ModuleHeading";
 import classNames from "classnames";
+import { Module } from "constants/types";
 
 export interface ModuleRowsProps {
   numWeeks: number;
   trackHeight: number;
-  modulesList: any[];
+  modulesList: Module[];
   modulesTracks: ModuleTracks;
 }
 

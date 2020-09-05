@@ -5,12 +5,14 @@ export interface DayIndicatorGridProps {
 	numWeeks: number;
 	activeDay: Date;
 	activeColumn: number;
+	isInTerm: (date: Date) => boolean;
 }
 
 const DayIndicatorGrid: React.FC<DayIndicatorGridProps> = ({
 	numWeeks,
 	activeDay,
-  activeColumn,
+	activeColumn,
+	isInTerm,
 }) => {
   return (
     <div
@@ -23,7 +25,7 @@ const DayIndicatorGrid: React.FC<DayIndicatorGridProps> = ({
         className={styles.dayIndicatorColumn}
         style={{
           visibility:
-            activeDay.getDay() === 6 || activeDay.getDay() === 0
+            activeDay.getDay() === 6 || activeDay.getDay() === 0 || !isInTerm(activeDay)
               ? "hidden"
               : "visible",
           gridColumn: `${activeColumn} / ${activeColumn + 1}`,

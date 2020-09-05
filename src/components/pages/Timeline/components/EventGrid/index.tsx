@@ -2,12 +2,14 @@ import React from "react";
 import styles from "./style.module.scss";
 import { ModuleTracks } from "../..";
 import TimelineEventCard from "../TimelineEventCard";
+import { Module } from "constants/types";
 export interface EventGridProps {
   numWeeks: number;
   trackHeight: number;
-  modulesList: any[];
+  modulesList: Module[];
   modulesTracks: ModuleTracks;
-  dateToColumn: (date: Date) => number;
+	dateToColumn: (date: Date) => number;
+	isInTerm: (date: Date) => boolean;
 }
 
 interface EventDisplay {
@@ -23,7 +25,8 @@ const EventGrid: React.FC<EventGridProps> = ({
   trackHeight,
   modulesList,
   modulesTracks,
-  dateToColumn,
+	dateToColumn,
+	isInTerm,
 }) => {
   let eventPositions: EventDisplay[] = [];
   let gridTemplateRows: string = "";
@@ -34,11 +37,12 @@ const EventGrid: React.FC<EventGridProps> = ({
 
     for (const moduleTrack of moduleTracks) {
       for (const event of moduleTrack) {
+				if (!isInTerm(event.startDate) && !isInTerm(event.endDate)) continue;
         eventPositions.push({
           title: event.title,
           id: event.id,
-          startColumn: dateToColumn(event.startDate),
-          endColumn: dateToColumn(event.endDate) + 1,
+          startColumn: dateToColumn(event.startDate) - 1,
+          endColumn: dateToColumn(event.endDate),
           rowNumber: currRow,
         });
       }

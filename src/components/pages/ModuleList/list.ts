@@ -8,7 +8,7 @@ import reasoningIllustration from "assets/images/reasoning-illustration.png";
 import architectureIllustration from "assets/images/architecture-illustration.png";
 import databaseIllustration from "assets/images/database-illustration.png";
 
-import { ProgressStatus } from "components/atoms/ModuleCard";
+import { ProgressStatus } from "constants/types";
 import { Term } from "constants/types";
 
 export const modulesList = [
