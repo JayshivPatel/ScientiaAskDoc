@@ -136,9 +136,9 @@
 .dayIndicatorColumn {
   grid-row: 1;
   grid-column: 9 / 10;
-  margin-top: 0.5rem;
-  margin-bottom: 1.125rem;
-  border-radius: 0.5rem;
-  background-color: var(--background-color);
-  border: 1px solid var(--border-color);
+  margin-right: 0.75rem;
+  margin-bottom: 0.625rem;
+  margin-left: 0.75rem;
+  background-color: var(--day-indicator-column);
+  border: 0.0625rem solid var(--border-color);
 }
