@@ -102,7 +102,20 @@
   padding-bottom: 0.625rem;
 }
 
-.timelineBackground {
-  background-color: var(--primary-button);
-	border-radius: 0.5rem;
+.timelineBackgroundEven {
+  background-color: var(--checker-even-color);
+}
+
+.timelineBackgroundOdd {
+  background-color: var(--checker-odd-color);
+}
+
+.timelineBackgroundFirst {
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+}
+
+.timelineBackgroundLast {
+	border-bottom-left-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
 }

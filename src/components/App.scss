@@ -18,7 +18,10 @@ code {
 
 :root {
   --background-color: #{$white};
-  --secondary-background-color: #{$gray-100};
+	--secondary-background-color: #{$gray-100};
+	
+	--checker-even-color: #{$gray-100};
+	--checker-odd-color: #{$gray-200};
 
   --primary-text-color: #{$black};
   --secondary-text-color: #{$gray-700};
@@ -74,7 +77,10 @@ code {
 
 [data-theme="dark"] {
   --background-color: #{$gray-900};
-  --secondary-background-color: #{$gray-800};
+	--secondary-background-color: #{$gray-800};
+	
+	--checker-even-color: #{$gray-800};
+	--checker-odd-color: #{$gray-700};
 
   --primary-text-color: #{$white};
   --secondary-text-color: #{$gray-300};

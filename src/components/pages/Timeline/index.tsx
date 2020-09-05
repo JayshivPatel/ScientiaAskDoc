@@ -5,6 +5,7 @@ import TermSwitcher from "./components/TermSwitcher";
 import ModuleHeading from "./components/ModuleHeading";
 import WeekHeading from "./components/WeekHeading";
 import { modulesList } from "../ModuleList/list";
+import classNames from "classnames";
 
 interface TimelineProps {
   initSideBar: () => void;
@@ -61,26 +62,31 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       const tracks = this.state.moduleTracks[code];
       if (tracks) {
         const height = tracks.length * trackHeight;
-        for (let j = 0; j < numWeeks; j++) {
-          timelineBackgrounds.push(
-            <div
-							key={code + j}
-              style={{ height: `${height}rem` }}
-              className={styles.timelineBackground}
-            >
-              &nbsp;
-            </div>
-          );
-        }
+        const timelineBackgroundsClass = classNames(
+          i % 2 === 0
+            ? styles.timelineBackgroundEven
+            : styles.timelineBackgroundOdd,
+          i === 0 ? styles.timelineBackgroundFirst : "",
+          i === modulesList.length - 1 ? styles.timelineBackgroundLast : ""
+        );
         moduleHeadings.push(
           <div
-						key={code}
+            key={code}
             className={styles.moduleHeading}
             style={{ height: `${height}rem` }}
           >
             <ModuleHeading moduleCode={code} title={modulesList[i].title} />
           </div>
         );
+        for (let j = 0; j < numWeeks; j++) {
+          timelineBackgrounds.push(
+            <div
+              key={code + j}
+              style={{ height: `${height}rem` }}
+              className={timelineBackgroundsClass}
+            ></div>
+          );
+        }
       }
     }
     return (
