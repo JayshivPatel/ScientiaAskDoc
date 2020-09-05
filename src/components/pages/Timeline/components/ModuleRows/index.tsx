@@ -23,33 +23,30 @@ const ModuleRows: React.FC<ModuleRowsProps> = ({
   for (let i = 0; i < modulesList.length; i++) {
     const code = modulesList[i].code;
     const tracks = moduleTracks[code];
-    if (tracks) {
-      moduleHeadings.push(
-        <ModuleHeading
-          key={code}
-          style={{ height: `${tracks.length * trackHeight}rem` }}
-          moduleCode={code}
-          title={modulesList[i].title}
-        />
+    moduleHeadings.push(
+      <ModuleHeading
+        key={code}
+        style={{ height: `${tracks.length * trackHeight}rem` }}
+        moduleCode={code}
+        title={modulesList[i].title}
+      />
+    );
+    const timelineBackgroundsClass = classNames(
+      i % 2 === 0
+        ? styles.timelineBackgroundEven
+        : styles.timelineBackgroundOdd,
+      i === 0 ? styles.timelineBackgroundFirst : "",
+      i === modulesList.length - 1 ? styles.timelineBackgroundLast : ""
+    );
+    const offset = i === modulesList.length - 1 || i === 0 ? 0.625 / 2 : 0.625;
+    for (let j = 0; j < numWeeks; j++) {
+      timelineBackgrounds.push(
+        <div
+          key={code + j}
+          style={{ height: `${tracks.length * trackHeight + offset}rem` }}
+          className={timelineBackgroundsClass}
+        ></div>
       );
-      const timelineBackgroundsClass = classNames(
-        i % 2 === 0
-          ? styles.timelineBackgroundEven
-          : styles.timelineBackgroundOdd,
-        i === 0 ? styles.timelineBackgroundFirst : "",
-        i === modulesList.length - 1 ? styles.timelineBackgroundLast : ""
-      );
-      const offset =
-        i === modulesList.length - 1 || i === 0 ? 0.625 / 2 : 0.625;
-      for (let j = 0; j < numWeeks; j++) {
-        timelineBackgrounds.push(
-          <div
-            key={code + j}
-            style={{ height: `${tracks.length * trackHeight + offset}rem` }}
-            className={timelineBackgroundsClass}
-          ></div>
-        );
-      }
     }
   }
 

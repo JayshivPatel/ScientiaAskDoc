@@ -1,32 +1,55 @@
 import React from "react";
 import styles from "./style.module.scss";
-import { TimelineEvent } from "../..";
+import { TimelineEvent, ModuleTracks } from "../..";
 import TimelineEventCard from "../TimelineEventCard";
 export interface EventGridProps {
   numWeeks: number;
   trackHeight: number;
-  events: TimelineEvent[];
+  modulesList: any[];
+  moduleTracks: ModuleTracks;
+}
+
+interface EventDisplay {
+	title: string;
+	id: number;
+  startColumn: number;
+  endColumn: number;
+  rowNumber: number;
 }
 
 const EventGrid: React.FC<EventGridProps> = ({
   numWeeks,
   trackHeight,
-  events,
-}) => {
+  modulesList,
+  moduleTracks,
+}) => {		
+	//calculate event positions
+	let eventPositions: EventDisplay[] = [];
+
+	// Generates template for rows
+  let gridTemplateRows: string = "";
+  for (let i = 0; i < modulesList.length; i++) {
+    const code = modulesList[i].code;
+    const moduleTrack = moduleTracks[code];
+    moduleTrack.forEach(() => (gridTemplateRows += `${trackHeight}rem `));
+    gridTemplateRows +=
+      i === 0 || i === modulesList.length - 1 ? "0.3125rem " : "0.625rem ";
+  }
+
   return (
     <div
       className={styles.timelineCardGrid}
       style={{
         gridTemplateColumns: `repeat(${numWeeks}, 3rem 3rem 3rem 3rem 3rem 0.625rem)`,
-        gridTemplateRows: `${trackHeight}rem ${trackHeight}rem 0.3125rem repeat(${7}, ${trackHeight}rem ${trackHeight}rem 0.625rem) ${trackHeight}rem ${trackHeight}rem 0.3125rem`,
+        gridTemplateRows: gridTemplateRows,
       }}
     >
-      {events.map(({ title }, i) => (
+      {eventPositions.map(({ title, startColumn, endColumn, rowNumber }) => (
         <TimelineEventCard
           title={title}
-          startColumn={i + 1}
-          endColumn={i + 8}
-          rowNumber={2 * i}
+          startColumn={startColumn}
+          endColumn={endColumn}
+          rowNumber={rowNumber}
         />
       ))}
     </div>

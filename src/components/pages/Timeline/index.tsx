@@ -8,6 +8,7 @@ import ModuleRows from "./components/ModuleRows";
 import DayIndicatorGrid from "./components/DayIndicatorGrid";
 import EventGrid from "./components/EventGrid";
 import { eventsData } from "./eventsData";
+import LoadingScreen from "components/molecules/LoadingScreen";
 
 interface TimelineProps {
   initSideBar: () => void;
@@ -15,11 +16,11 @@ interface TimelineProps {
 }
 
 export interface TimelineEvent {
-	title: string;
-	id: number;
-	moduleCode: string;
-	startDate: Date;
-	endDate: Date;
+  title: string;
+  id: number;
+  moduleCode: string;
+  startDate: Date;
+  endDate: Date;
 }
 
 export type ModuleTracks = {
@@ -28,12 +29,13 @@ export type ModuleTracks = {
 
 interface TimelineState {
   moduleTracks: ModuleTracks;
+  isLoaded: boolean;
 }
 
 class Timeline extends React.Component<TimelineProps, TimelineState> {
   constructor(props: TimelineProps) {
     super(props);
-    this.state = { moduleTracks: {} };
+    this.state = { moduleTracks: {}, isLoaded: false };
   }
 
   componentDidMount() {
@@ -42,7 +44,28 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     modulesList.forEach(({ code }) => {
       moduleTracks[code] = [[], []];
     });
-    this.setState({ moduleTracks: moduleTracks });
+
+    let timelineEvents = eventsData;
+    for (let i = 0; i < timelineEvents.length; i++) {
+      const event = timelineEvents[i];
+      let tracks: TimelineEvent[][] = moduleTracks[event.moduleCode];
+      let isPlaced = false;
+      for (const track of tracks) {
+        if (track.every((te) => !eventsOverlaps(te, event))) {
+          isPlaced = true;
+          track.push(event);
+          break;
+        }
+			}
+			if (!isPlaced){
+				tracks.push([event]);
+			}
+		}
+		
+    this.setState({
+      moduleTracks: moduleTracks,
+      isLoaded: true,
+    });
   }
 
   componentWillUnmount() {
@@ -60,7 +83,9 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     const activeDay = new Date("2020-10-12");
     const numWeeks = 11;
     const trackHeight = 4;
-
+    if (!this.state.isLoaded) {
+      return <LoadingScreen successful={<></>} />;
+    }
     return (
       <div className={styles.timelineContainer}>
         <MyBreadcrumbs />
@@ -79,16 +104,25 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
           />
 
           <DayIndicatorGrid
-						numWeeks={numWeeks}
-						activeDay={activeDay}
+            numWeeks={numWeeks}
+            activeDay={activeDay}
             activeColumn={this.dateToColumn(activeDay, termStart)}
           />
 
-          <EventGrid numWeeks={numWeeks} trackHeight={trackHeight} events={eventsData}/>
+          <EventGrid
+            numWeeks={numWeeks}
+            trackHeight={trackHeight}
+            modulesList={modulesList}
+            moduleTracks={this.state.moduleTracks}
+          />
         </div>
       </div>
     );
   }
+}
+
+function eventsOverlaps(e1: TimelineEvent, e2: TimelineEvent) {
+  return e1.startDate <= e2.endDate && e1.endDate >= e2.startDate;
 }
 
 export default Timeline;
