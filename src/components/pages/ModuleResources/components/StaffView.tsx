@@ -9,12 +9,12 @@ import { faDownload, faTrash, faUpload } from "@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UploadModal from "./UploadModal"
 import AlertModal from "../../../atoms/AlertModal"
-import { Resource, Folder } from "../utils";
 import CategoryList from "components/molecules/CategoryList";
 import CategoryHeader from "components/molecules/CategoryHeader";
 
 import { staffRequest, download } from "utils/api"
 import { api, methods } from "constants/routes"
+import { Folder, Resource } from "constants/types";
 
 export interface StaffViewProps {
 	year: string;

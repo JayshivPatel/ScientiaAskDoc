@@ -1,10 +1,10 @@
 import React from "react";
-import { Folder } from "../utils";
 import SelectionView, {
   SelectionProps
 } from "components/molecules/SelectionView";
 import FoldersRow from "components/molecules/FoldersRow";
 import { useHistory, useLocation } from "react-router-dom";
+import { Folder } from "constants/types";
 
 export interface FoldersViewProps {
   folders: Folder[];

@@ -10,12 +10,12 @@ import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import FileListItem from "components/atoms/FileListItem";
 import {
   resourceTypeToIcon,
-  Resource,
   openResource,
   tags,
 } from "../ModuleResources/utils";
 import LoadingScreen from "components/molecules/LoadingScreen";
 import { titleCase } from "utils/functions";
+import { Resource } from "constants/types";
 
 export interface ModuleOverviewProps {
   year: string;

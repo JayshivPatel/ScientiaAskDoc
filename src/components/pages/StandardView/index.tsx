@@ -39,6 +39,7 @@ const StandardView: React.FC<StandardViewProps> = ({
 	initTimelineSideBar,
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
+  const [timelineTerm, setTimelineTerm] = useState("In Progress");
 
   return (
     <div

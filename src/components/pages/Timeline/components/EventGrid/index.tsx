@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./style.module.scss";
-import { TimelineEvent, ModuleTracks } from "../..";
+import { ModuleTracks } from "../..";
 import TimelineEventCard from "../TimelineEventCard";
 export interface EventGridProps {
   numWeeks: number;

@@ -1,9 +1,9 @@
 import React from "react";
-import { Resource } from "../utils";
 import SelectionView, {
   SelectionProps,
 } from "components/molecules/SelectionView";
 import QuickAccessRow from "components/molecules/QuickAccessRow";
+import { Resource } from "constants/types";
 
 export interface QuickAccessViewProps {
   resources: Resource[];

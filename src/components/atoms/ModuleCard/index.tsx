@@ -6,12 +6,7 @@ import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import { faSun, faLeaf, faSeedling } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-export enum Term {
-  AUTUMN,
-  SPRING,
-  SUMMER
-}
+import { Term } from "constants/types";
 
 export enum ProgressStatus {
   NOT_STARTED = "Not Started",
