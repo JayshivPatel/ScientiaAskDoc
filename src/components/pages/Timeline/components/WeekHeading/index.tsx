@@ -17,46 +17,48 @@ const WeekHeading: React.FC<WeekHeadingProps> = ({
   dateRangeEnd,
   activeDay,
 }) => {
-  const dateRangeStartMonth = new Intl.DateTimeFormat("en", {
-    month: "2-digit",
-  }).format(dateRangeStart);
-  const dateRangeStartDay = new Intl.DateTimeFormat("en", {
-    day: "2-digit",
-  }).format(dateRangeStart);
-  const dateRangeEndMonth = new Intl.DateTimeFormat("en", {
-    month: "2-digit",
-  }).format(dateRangeEnd);
-  const dateRangeEndDay = new Intl.DateTimeFormat("en", {
-    day: "2-digit",
-  }).format(dateRangeEnd);
-
   return (
-    <>
-      <Card className={styles.weekCard}>
-        <Card.Header>
-          <div className={styles.weekHeading}>Week {weekNumber}</div>
-          <div className={styles.weekDateRange}>
-            {dateRangeStartDay}/{dateRangeStartMonth} - {dateRangeEndDay}/
-            {dateRangeEndMonth}
-          </div>
-        </Card.Header>
-        <Card.Body>
-          {days.map((day, i) => {
-            let isActive =
-              activeDay.getTime() === dateRangeStart.getTime() + i * 86400000;
-            return (
-              <div
-							key={day}
-                className={isActive ? styles.activeDay : styles.dayIndicator}
-              >
-                {day}
-              </div>
-            );
-          })}
-        </Card.Body>
-      </Card>
-    </>
+    <Card className={styles.weekCard}>
+      <Card.Header>
+        <div className={styles.weekHeading}>Week {weekNumber}</div>
+        <div className={styles.weekDateRange}>
+          {formatDate(dateRangeStart, dateRangeEnd)}
+        </div>
+      </Card.Header>
+      <Card.Body>
+        {days.map((day, i) => {
+          return (
+            <div
+              key={day}
+              className={
+                activeDay.getDate() === dateRangeStart.getDate() + i
+                  ? styles.activeDay
+                  : styles.dayIndicator
+              }
+            >
+              {day}
+            </div>
+          );
+        })}
+      </Card.Body>
+    </Card>
   );
 };
 
 export default WeekHeading;
+
+function formatDate(dateRangeStart: Date, dateRangeEnd: Date) {
+  const startMonth = new Intl.DateTimeFormat("en", {
+    month: "2-digit",
+  }).format(dateRangeStart);
+  const startDay = new Intl.DateTimeFormat("en", {
+    day: "2-digit",
+  }).format(dateRangeStart);
+  const endMonth = new Intl.DateTimeFormat("en", {
+    month: "2-digit",
+  }).format(dateRangeEnd);
+  const endDay = new Intl.DateTimeFormat("en", {
+    day: "2-digit",
+  }).format(dateRangeEnd);
+  return `${startDay}/${startMonth} - ${endDay}/${endMonth}`;
+}

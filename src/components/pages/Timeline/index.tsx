@@ -33,7 +33,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     this.props.initSideBar();
     let moduleTracks: ModuleTracks = {};
     modulesList.forEach(({ code }) => {
-      moduleTracks[code] = [[], []];
+			moduleTracks[code] = [[], []];			
     });
     this.setState({ moduleTracks: moduleTracks });
   }
