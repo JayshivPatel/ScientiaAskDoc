@@ -41,8 +41,8 @@ const EventGrid: React.FC<EventGridProps> = ({
         eventPositions.push({
           title: event.title,
           id: event.id,
-          startColumn: dateToColumn(event.startDate) - 1,
-          endColumn: dateToColumn(event.endDate),
+          startColumn: dateToColumn(event.startDate),
+          endColumn: dateToColumn(event.endDate) + 1,
           rowNumber: currRow,
         });
       }

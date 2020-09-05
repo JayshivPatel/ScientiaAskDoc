@@ -136,7 +136,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
             trackHeight={trackHeight}
             modulesList={currModules}
             modulesTracks={this.state.modulesTracks}
-            dateToColumn={(date) => this.dateToColumn(date, termStart) + 1}
+            dateToColumn={(date) => this.dateToColumn(date, termStart)}
             isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
           />
         </div>
