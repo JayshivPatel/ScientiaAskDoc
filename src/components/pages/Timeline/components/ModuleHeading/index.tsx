@@ -1,7 +1,7 @@
 import React, { CSSProperties } from "react";
 import Card from "react-bootstrap/Card";
 import styles from "./style.module.scss";
-
+import { Link } from "react-router-dom";
 export interface ModuleHeadingprops {
   moduleCode: string;
   title: string;
@@ -14,7 +14,12 @@ const ModuleHeading: React.FC<ModuleHeadingprops> = ({
   style,
 }) => {
   return (
-    <Card style={style} className={styles.moduleCard}>
+    <Card
+      style={style}
+      className={styles.moduleCard}
+      as={Link}
+      to={`modules/${moduleCode}`}
+    >
       <Card.Header>
         <span>{moduleCode}</span>
       </Card.Header>
