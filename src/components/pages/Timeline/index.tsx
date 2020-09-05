@@ -7,18 +7,23 @@ import WeekRow from "./components/WeekRow";
 import ModuleRows from "./components/ModuleRows";
 import DayIndicatorGrid from "./components/DayIndicatorGrid";
 import EventGrid from "./components/EventGrid";
+import { eventsData } from "./eventsData";
 
 interface TimelineProps {
   initSideBar: () => void;
   revertSideBar: () => void;
 }
 
-interface Event {
-  title: string;
+export interface TimelineEvent {
+	title: string;
+	id: number;
+	moduleCode: string;
+	startDate: Date;
+	endDate: Date;
 }
 
 export type ModuleTracks = {
-  [index: string]: Event[][];
+  [index: string]: TimelineEvent[][];
 };
 
 interface TimelineState {
@@ -42,6 +47,12 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 
   componentWillUnmount() {
     this.props.revertSideBar();
+  }
+
+  dateToColumn(day: Date, termStart: Date) {
+    return (
+      Math.ceil(((day.getTime() - termStart.getTime()) / 86400000 / 7) * 6) + 1
+    );
   }
 
   render() {
@@ -68,12 +79,12 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
           />
 
           <DayIndicatorGrid
-            numWeeks={numWeeks}
-            activeDay={activeDay}
-            termStart={termStart}
+						numWeeks={numWeeks}
+						activeDay={activeDay}
+            activeColumn={this.dateToColumn(activeDay, termStart)}
           />
 
-          <EventGrid numWeeks={numWeeks} trackHeight={trackHeight} />
+          <EventGrid numWeeks={numWeeks} trackHeight={trackHeight} events={eventsData}/>
         </div>
       </div>
     );

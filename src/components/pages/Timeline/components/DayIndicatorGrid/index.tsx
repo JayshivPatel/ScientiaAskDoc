@@ -1,21 +1,17 @@
 import React from "react";
 import styles from "./style.module.scss";
-export interface ModuleHeadingprops {
-  numWeeks: number;
-  activeDay: Date;
-  termStart: Date;
+
+export interface DayIndicatorGridProps {
+	numWeeks: number;
+	activeDay: Date;
+	activeColumn: number;
 }
 
-const DayIndicatorGrid: React.FC<ModuleHeadingprops> = ({
-  numWeeks,
-  activeDay,
-  termStart,
+const DayIndicatorGrid: React.FC<DayIndicatorGridProps> = ({
+	numWeeks,
+	activeDay,
+  activeColumn,
 }) => {
-  const activeColumn =
-    Math.ceil(
-      ((activeDay.getTime() - termStart.getTime()) / 86400000 / 7) * 6
-    ) + 1;
-
   return (
     <div
       className={styles.dayIndicatorGrid}
