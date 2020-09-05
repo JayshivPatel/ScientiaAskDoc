@@ -121,6 +121,18 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
           >
             {timelineBackgrounds}
           </div>
+          <div
+            className={styles.dayIndicatorGrid}
+            style={{
+              gridTemplateColumns: `repeat(${numWeeks}, 3rem 3rem 3rem 3rem 3rem 0.625rem`
+            }}
+          >
+            <div
+              className={styles.dayIndicatorColumn}
+            >
+              &nbsp;
+            </div>
+          </div>
         </div>
       </div>
     );

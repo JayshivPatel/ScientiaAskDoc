@@ -8,7 +8,6 @@
   display: grid;
   grid-template-areas: "switcher weeks" "modules background";
   grid-template-rows: auto;
-  row-gap: 0.625rem;
   margin-bottom: 1.25rem;
   margin-left: -0.625rem;
   grid-template-columns: 16.875rem auto;
@@ -53,12 +52,12 @@
   top: 0;
   left: 0;
   position: sticky;
-  z-index: 1;
+  z-index: 3;
   background: var(--background-color);
   padding-right: 1.25rem;
   padding-left: 0.625rem;
-  box-sizing: border-box;
-  height: 4.25rem !important;
+  height: 5.5rem !important;
+  padding-bottom: 0.625rem;
 }
 
 .timelineTermSwitcher > * {
@@ -73,6 +72,10 @@
 	padding-right: 0.625rem;
   top: 0;
   position: sticky;
+  background: var(--background-color);
+  padding-bottom: 0.625rem;
+  height: 5.5rem !important;
+  z-index: 2;
 }
 
 .timelineModuleColumn {
@@ -86,6 +89,8 @@
   padding-left: 0.625rem;
   margin-bottom: 0.625rem;
   background: var(--background-color);
+  padding-top: 0.625rem;
+  z-index: 2;
 }
 
 .weekHeading {
@@ -93,6 +98,7 @@
 }
 
 .timelineWeekBackground {
+  padding-top: 0.625rem;
   display: grid;
   grid-area: background;
   grid-template-rows: auto;
@@ -117,4 +123,22 @@
 .timelineBackgroundLast {
 	border-bottom-left-radius: 0.5rem;
 	border-bottom-right-radius: 0.5rem;
+}
+
+.dayIndicatorGrid {
+  grid-area: background; 
+  padding-top: 0.625rem;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto;
+}
+
+.dayIndicatorColumn {
+  grid-row: 1;
+  grid-column: 9 / 10;
+  margin-top: 0.5rem;
+  margin-bottom: 1.125rem;
+  border-radius: 0.5rem;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
 }
