@@ -12,11 +12,12 @@ import LoadingScreen from "components/molecules/LoadingScreen";
 import { Term, Module } from "constants/types";
 import { addDays } from "utils/functions";
 import EventModal from "./components/EventModal";
+import TimelineMobile from "./components/TimelineMobile";
 
 export interface TimelineEvent {
   title: string;
-	id: number;
-	type: string;
+  id: number;
+  type: string;
   moduleCode: string;
   startDate: Date;
   endDate: Date;
@@ -119,6 +120,17 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     let currModules = this.state.modulesList.filter(({ terms }) =>
       terms.includes(this.props.term)
     );
+
+    if (window.innerWidth <= 760) {
+      return (
+        <TimelineMobile
+          term={this.props.term}
+          setTerm={this.props.setTerm}
+          modulesList={currModules}
+        />
+      );
+    }
+
     return (
       <>
         <EventModal
