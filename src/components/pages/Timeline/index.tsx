@@ -15,7 +15,8 @@ import EventModal from "./components/EventModal";
 
 export interface TimelineEvent {
   title: string;
-  id: number;
+	id: number;
+	type: string;
   moduleCode: string;
   startDate: Date;
   endDate: Date;

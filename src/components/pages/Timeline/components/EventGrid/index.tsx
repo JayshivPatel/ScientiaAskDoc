@@ -15,7 +15,8 @@ export interface EventGridProps {
 
 interface EventDisplay {
   title: string;
-  id: number;
+	id: number;
+	type: string;
   startColumn: number;
   endColumn: number;
   rowNumber: number;
@@ -42,7 +43,8 @@ const EventGrid: React.FC<EventGridProps> = ({
         if (!isInTerm(event.startDate) && !isInTerm(event.endDate)) continue;
         eventPositions.push({
           title: event.title,
-          id: event.id,
+					id: event.id,
+					type: event.type,
           startColumn: dateToColumn(event.startDate),
           endColumn: dateToColumn(event.endDate) + 1,
           rowNumber: currRow,
@@ -65,10 +67,11 @@ const EventGrid: React.FC<EventGridProps> = ({
       }}
     >
       {eventPositions.map(
-        ({ title, startColumn, id, endColumn, rowNumber }) => (
+        ({ title, startColumn, id, endColumn, type, rowNumber }) => (
           <TimelineEventCard
             title={title}
-            key={id}
+						key={id}
+						type={type}
             startColumn={startColumn}
             endColumn={endColumn}
             rowNumber={rowNumber}
