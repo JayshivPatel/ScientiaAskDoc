@@ -40,6 +40,7 @@ interface TimelineState {
   isLoaded: boolean;
   activeEvent?: TimelineEvent;
   showEventModal: boolean;
+  showMobileOnSmallScreens: boolean;
   eventsData: TimelineEvent[];
 }
 
@@ -51,6 +52,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       isLoaded: false,
       modulesList: [],
       showEventModal: false,
+      showMobileOnSmallScreens: true,
       eventsData: [],
     };
   }
@@ -90,6 +92,9 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 
   componentWillUnmount() {
     this.props.revertSideBar();
+    document.documentElement.style.fontSize = `${
+      localStorage.getItem("interfaceSize") || "90"
+    }%`;
   }
 
   dateToColumn(day: Date, termStart: Date) {
@@ -121,12 +126,16 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       terms.includes(this.props.term)
     );
 
-    if (window.innerWidth <= 760) {
+    if (window.innerWidth <= 760 && this.state.showMobileOnSmallScreens) {
       return (
         <TimelineMobile
           term={this.props.term}
           setTerm={this.props.setTerm}
           modulesList={currModules}
+          openDesktopSite={() => {
+            this.setState({ showMobileOnSmallScreens: false });
+            document.documentElement.style.fontSize = "40%";
+          }}
         />
       );
     }
