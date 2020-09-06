@@ -18,7 +18,7 @@ const ModuleHeading: React.FC<ModuleHeadingprops> = ({
       style={style}
       className={styles.moduleCard}
       as={Link}
-      to={`modules/${moduleCode}`}
+      to={`modules/${moduleCode}/submissions`}
     >
       <Card.Header>
         <span>{moduleCode}</span>

@@ -1,6 +1,13 @@
 import React from "react";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
-import { faUserFriends, faList, faArchive, faHighlighter, faHome } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUserFriends,
+  faList,
+  faArchive,
+  faHighlighter,
+  faHome,
+  faUpload,
+} from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import WorkDueGroup from "components/molecules/WorkDueGroup";
 
@@ -18,7 +25,7 @@ const LeftBarModule: React.FC = () => {
     CO150: "k0r3c1t4x8k6l",
     CO113: "k0r3byq0f68t",
     CO141: "k0r3c0t7dak4o",
-    CO130: "k0r3bzsith2r"
+    CO130: "k0r3bzsith2r",
   };
 
   let piazzaLink = "https://piazza.com/class/";
@@ -29,29 +36,34 @@ const LeftBarModule: React.FC = () => {
   let outlineButtons = [
     {
       title: "Dashboard",
-			activeURL: `/modules/${id}/dashboard`,
-			icon: faHome,
-		},
-		{
+      activeURL: `/modules/${id}/dashboard`,
+      icon: faHome,
+    },
+    {
       title: "Overview",
-			activeURL: `/modules/${id}/overview`,
-			icon: faList,
+      activeURL: `/modules/${id}/overview`,
+      icon: faList,
     },
     {
       title: "Resources",
-			activeURL: `/modules/${id}/resources`,
-			icon: faArchive,
-		},
-		{
+      activeURL: `/modules/${id}/resources`,
+      icon: faArchive,
+    },
+    {
+      title: "Submissions",
+      activeURL: `/modules/${id}/submissions`,
+      icon: faUpload,
+    },
+    {
       title: "Feedback",
-			activeURL: `/modules/${id}/feedback`,
-			icon: faHighlighter,
+      activeURL: `/modules/${id}/feedback`,
+      icon: faHighlighter,
     },
     {
       title: "Piazza",
       icon: faUserFriends,
-      externalURL: piazzaLink
-    }
+      externalURL: piazzaLink,
+    },
   ];
 
   return (
