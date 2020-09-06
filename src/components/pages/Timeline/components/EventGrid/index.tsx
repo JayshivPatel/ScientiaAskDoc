@@ -8,8 +8,9 @@ export interface EventGridProps {
   trackHeight: number;
   modulesList: Module[];
   modulesTracks: ModuleTracks;
-	dateToColumn: (date: Date) => number;
-	isInTerm: (date: Date) => boolean;
+  dateToColumn: (date: Date) => number;
+  isInTerm: (date: Date) => boolean;
+  onEventClick: (id: number) => void;
 }
 
 interface EventDisplay {
@@ -25,8 +26,9 @@ const EventGrid: React.FC<EventGridProps> = ({
   trackHeight,
   modulesList,
   modulesTracks,
-	dateToColumn,
-	isInTerm,
+  dateToColumn,
+  isInTerm,
+  onEventClick,
 }) => {
   let eventPositions: EventDisplay[] = [];
   let gridTemplateRows: string = "";
@@ -37,7 +39,7 @@ const EventGrid: React.FC<EventGridProps> = ({
 
     for (const moduleTrack of moduleTracks) {
       for (const event of moduleTrack) {
-				if (!isInTerm(event.startDate) && !isInTerm(event.endDate)) continue;
+        if (!isInTerm(event.startDate) && !isInTerm(event.endDate)) continue;
         eventPositions.push({
           title: event.title,
           id: event.id,
@@ -70,6 +72,10 @@ const EventGrid: React.FC<EventGridProps> = ({
             startColumn={startColumn}
             endColumn={endColumn}
             rowNumber={rowNumber}
+            onClick={(e) => {
+              e.preventDefault();
+              onEventClick(id);
+            }}
           />
         )
       )}

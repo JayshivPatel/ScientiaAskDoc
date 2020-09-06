@@ -69,12 +69,15 @@ code {
   --lecture-background: #{rgba($blue-100, 0.5)}; 
   --labs-background: #{rgba($pink-100, 0.5)};
   --deadline-background: #{rgba($teal-100, 0.5)};
-
+	--tutorial-background: #{scale-color($blue-100, $lightness: +50%)}; 
   --lecture-text: #{$blue-700};
   --labs-text: #{$pink-700};
   --deadline-text: #{$teal-700};
+	--tutorial-text: #{$blue-700}; 
 
-  --day-indicator-column: #{rgba($gray-500, 0.25)};
+	--day-indicator-column: #{rgba($gray-500, 0.25)};
+	
+	
 }
 
 [data-theme="dark"] {
@@ -135,7 +138,7 @@ code {
   --labs-text: #{$pink-300};
   --deadline-text: #{$teal-300};
 
-  --day-indicator-column: #{rgba($gray-500, 0.25)}
+  --day-indicator-column: #{rgba($gray-500, 0.25)};
 }
 
 .btn-primary.focus,

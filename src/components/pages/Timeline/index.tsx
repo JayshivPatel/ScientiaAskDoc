@@ -11,13 +11,7 @@ import { eventsData } from "./eventsData";
 import LoadingScreen from "components/molecules/LoadingScreen";
 import { Term, Module } from "constants/types";
 import { addDays } from "utils/functions";
-
-interface TimelineProps {
-  initSideBar: () => void;
-  revertSideBar: () => void;
-  term: Term;
-  setTerm: React.Dispatch<React.SetStateAction<Term>>;
-}
+import EventModal from "./components/EventModal";
 
 export interface TimelineEvent {
   title: string;
@@ -31,10 +25,20 @@ export type ModuleTracks = {
   [index: string]: TimelineEvent[][];
 };
 
+interface TimelineProps {
+  initSideBar: () => void;
+  revertSideBar: () => void;
+  term: Term;
+  setTerm: React.Dispatch<React.SetStateAction<Term>>;
+}
+
 interface TimelineState {
   modulesTracks: ModuleTracks;
   modulesList: Module[];
   isLoaded: boolean;
+  activeEvent?: TimelineEvent;
+  showEventModal: boolean;
+  eventsData: TimelineEvent[];
 }
 
 class Timeline extends React.Component<TimelineProps, TimelineState> {
@@ -44,6 +48,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       modulesTracks: {},
       isLoaded: false,
       modulesList: [],
+      showEventModal: false,
+      eventsData: [],
     };
   }
 
@@ -76,6 +82,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       modulesTracks: modulesTracks,
       isLoaded: true,
       modulesList: modulesList,
+      eventsData: eventsData,
     });
   }
 
@@ -96,6 +103,11 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     );
   }
 
+  handleEventClick(id: number) {
+    const event = this.state.eventsData.find((e) => e.id === id);
+    this.setState({ activeEvent: event, showEventModal: true });
+  }
+
   render() {
     const [termStart, numWeeks] = getTermDates(this.props.term);
     const activeDay = new Date("2020-10-12");
@@ -106,41 +118,48 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     let currModules = this.state.modulesList.filter(({ terms }) =>
       terms.includes(this.props.term)
     );
-    // currModules = this.state.modulesList;
     return (
-      <div className={styles.timelineContainer}>
-        <MyBreadcrumbs />
-        <div className={styles.timelineGrid}>
-          <TermSwitcher term={this.props.term} setTerm={this.props.setTerm} />
-          <WeekRow
-            numWeeks={numWeeks}
-            termStart={termStart}
-            activeDay={activeDay}
-          />
-          <ModuleRows
-            numWeeks={numWeeks}
-            trackHeight={trackHeight}
-            modulesList={currModules}
-            modulesTracks={this.state.modulesTracks}
-          />
+      <>
+        <EventModal
+          show={this.state.showEventModal}
+          onHide={() => this.setState({ showEventModal: false })}
+          event={this.state.activeEvent}
+        />
+        <div className={styles.timelineContainer}>
+          <MyBreadcrumbs />
+          <div className={styles.timelineGrid}>
+            <TermSwitcher term={this.props.term} setTerm={this.props.setTerm} />
+            <WeekRow
+              numWeeks={numWeeks}
+              termStart={termStart}
+              activeDay={activeDay}
+            />
+            <ModuleRows
+              numWeeks={numWeeks}
+              trackHeight={trackHeight}
+              modulesList={currModules}
+              modulesTracks={this.state.modulesTracks}
+            />
 
-          <DayIndicatorGrid
-            numWeeks={numWeeks}
-            activeDay={activeDay}
-            activeColumn={this.dateToColumn(activeDay, termStart)}
-            isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
-          />
+            <DayIndicatorGrid
+              numWeeks={numWeeks}
+              activeDay={activeDay}
+              activeColumn={this.dateToColumn(activeDay, termStart)}
+              isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
+            />
 
-          <EventGrid
-            numWeeks={numWeeks}
-            trackHeight={trackHeight}
-            modulesList={currModules}
-            modulesTracks={this.state.modulesTracks}
-            dateToColumn={(date) => this.dateToColumn(date, termStart)}
-            isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
-          />
+            <EventGrid
+              numWeeks={numWeeks}
+              trackHeight={trackHeight}
+              modulesList={currModules}
+              modulesTracks={this.state.modulesTracks}
+              dateToColumn={(date) => this.dateToColumn(date, termStart)}
+              isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
+              onEventClick={(id) => this.handleEventClick(id)}
+            />
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }

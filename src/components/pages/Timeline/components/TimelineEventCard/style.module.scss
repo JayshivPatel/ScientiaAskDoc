@@ -1,5 +1,9 @@
+@import "assets/scss/custom";
+
+
 .timelineEvent {
-  background: red;
+	background: var(--tutorial-background);
+	
   margin: 0.5rem;
   border-radius: 0.5rem;
   padding: 0.5rem;
@@ -8,6 +12,6 @@
 }
 
 .eventTitle {
-  color: var(--primary-text-color);
+  color: var(--tutorial-text);
   font-size: 1rem;
 }
