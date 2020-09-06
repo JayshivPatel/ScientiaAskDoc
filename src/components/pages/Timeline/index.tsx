@@ -126,7 +126,11 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       terms.includes(this.props.term)
     );
 
-    if (window.innerWidth <= 760 && this.state.showMobileOnSmallScreens) {
+    if (
+      window.innerWidth <= 700 &&
+      window.innerHeight <= 900 &&
+      this.state.showMobileOnSmallScreens
+    ) {
       return (
         <TimelineMobile
           term={this.props.term}
