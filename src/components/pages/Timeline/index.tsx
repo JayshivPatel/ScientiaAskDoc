@@ -108,7 +108,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 
   render() {
     const [termStart, numWeeks] = getTermDates(this.props.term);
-    const activeDay = new Date("2020-10-12");
+    const activeDay = new Date("2020-10-13");
     const trackHeight = 3.25;
     if (!this.state.isLoaded) {
       return <LoadingScreen successful={<></>} />;
@@ -140,7 +140,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         <EventModal
           show={this.state.showEventModal}
           onHide={() => this.setState({ showEventModal: false })}
-          event={this.state.activeEvent}
+					event={this.state.activeEvent}
+					activeDay={activeDay}
         />
         <div className={styles.timelineContainer}>
           <MyBreadcrumbs />

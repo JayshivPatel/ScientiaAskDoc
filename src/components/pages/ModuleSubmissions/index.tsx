@@ -12,7 +12,6 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
   let [activeEvent, setActiveEvent] = useState<TimelineEvent | undefined>(
     undefined
   );
-
   return (
     <>
       <Dandruff heading="Submissions" />
@@ -20,6 +19,7 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
         event={activeEvent}
         show={showModal}
         onHide={() => setShowModal(false)}
+        activeDay={new Date("2020-10-12")}
       />
       {eventsData
         .filter(({ moduleCode }) => moduleCode === moduleID)

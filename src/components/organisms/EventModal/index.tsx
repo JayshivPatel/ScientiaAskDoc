@@ -17,10 +17,12 @@ interface Props {
   event?: TimelineEvent;
   show: boolean;
   onHide: any;
+  activeDay: Date;
 }
 
-const EventModal: React.FC<Props> = ({ event, show, onHide }) => {
+const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
   if (!event) return null;
+  const timeLeft = event.endDate.getTime() - activeDay.getTime();
   let assessmentStyle = styles.unassessedSubmission;
   let icon = undefined;
   let borderColour = "transparent";
@@ -90,7 +92,10 @@ const EventModal: React.FC<Props> = ({ event, show, onHide }) => {
         <span className={styles.eventTitle}>{event.title}</span>
         <div className={styles.eventInfo}>
           <div className={assessmentStyle}>{event.assessment}</div>
-          <div className={styles.eventInfoElement} style={{borderColor:borderColour}}>
+          <div
+            className={styles.eventInfoElement}
+            style={{ borderColor: borderColour }}
+          >
             {event.status}
             {icon && <FontAwesomeIcon className={styles.icon} icon={icon} />}
           </div>
@@ -104,6 +109,14 @@ const EventModal: React.FC<Props> = ({ event, show, onHide }) => {
           <span className={styles.endDate}>
             {event.endDate.toLocaleDateString()}
           </span>
+          {timeLeft >= 0 && (
+            <>
+              <span className={styles.daysHeading}>Due In:</span>
+              <span className={styles.daysLeft}>
+                {`${Math.floor(timeLeft / 86400000)} days`}
+              </span>
+            </>
+          )}
         </div>
         <div className={styles.sectionHeaderContainer}>
           <span className={styles.sectionHeader}>Given</span>
@@ -118,11 +131,13 @@ const EventModal: React.FC<Props> = ({ event, show, onHide }) => {
           />
         ))}
       </Modal.Body>
-      <Modal.Footer className={styles.modalFooter}>
-        <Button variant="secondary" className={styles.submitButton}>
-          Submit
-        </Button>
-      </Modal.Footer>
+      {event.status !== "unreleased" && timeLeft >= -86400000 && (
+        <Modal.Footer className={styles.modalFooter}>
+          <Button variant="secondary" className={styles.submitButton}>
+            Submit
+          </Button>
+        </Modal.Footer>
+      )}
     </Modal>
   );
 };

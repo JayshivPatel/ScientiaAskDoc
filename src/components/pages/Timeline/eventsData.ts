@@ -50,7 +50,7 @@ export const eventsData : TimelineEvent[] = [
 		title: "Coursework 1",
 		id: 4,
 		startDate: new Date("2020-10-05"),
-		endDate: new Date("2020-10-09"),
+		endDate: new Date("2020-10-12"),
 		moduleCode: "CO112",
 		owner: "ip914",
 		prefix: "CW",
@@ -67,5 +67,16 @@ export const eventsData : TimelineEvent[] = [
 		prefix: "PPT",
 		assessment: "group assessed",
 		status: "complete",
+	},
+	{
+		title: "Worksheet 1",
+		id: 6,
+		startDate: new Date("2020-10-12"),
+		endDate: new Date("2020-11-06"),
+		moduleCode: "CO145",
+		owner: "ip914",
+		prefix: "MMT",
+		assessment: "individual assessed",
+		status: "due",
 	}
 ]

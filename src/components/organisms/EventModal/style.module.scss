@@ -6,10 +6,15 @@
   font-weight: 500;
 }
 
+
+.icon {
+  margin-left: 0.625rem;
+}
+
 .eventTimeInfo {
   margin-top: 1.875rem;
   display: grid;
-  grid-template-areas: "startHeading start" "endHeading end";
+  grid-template-areas: "startHeading start" "endHeading end" "daysHeading daysLeft";
   width: 25%;
 }
 
@@ -23,9 +28,16 @@
   font-weight: 500;
 }
 
-.icon {
-  margin-left: 0.625rem;
+.daysHeading {
+  grid-area: daysHeading;
+  font-weight: 500;
 }
+
+.daysLeft {
+  grid-area: daysLeft;
+  padding-left: 0.625rem;
+}
+
 
 .endDate {
   grid-area: end;
