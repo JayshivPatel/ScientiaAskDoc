@@ -16,13 +16,13 @@ export const eventsData : TimelineEvent[] = [
 	{
 		title: "Introduction to First Order Logic",
 		id: 1,
-		startDate: new Date("2020-10-14"),
-		endDate: new Date("2020-10-21"),
+		startDate: new Date("2020-10-13"),
+		endDate: new Date("2020-10-20"),
 		moduleCode: "CO140",
 		prefix: "PMT",
 		owner: "ip914",
 		assessment: "written exam",
-		status: "unreleased",
+		status: "complete",
 	},
 	{
 		title: "Semantics of First Order Logic",

@@ -72,6 +72,7 @@ const EventCard: React.FC<TimelineEventProps> = ({
       break;
   }
   let marginX = isSingleDay ? (icon ? ".4rem" : ".1rem") : ".5rem";
+  let paddingX = isSingleDay ? (icon ? ".5rem" : ".3rem") : ".5rem";
   return (
     <div
       className={classNames(styles.timelineEvent)}
@@ -81,18 +82,25 @@ const EventCard: React.FC<TimelineEventProps> = ({
         gridRow: `${rowNumber}`,
         marginLeft: marginX,
         marginRight: marginX,
+        paddingLeft: paddingX,
+        paddingRight: paddingX,
         backgroundColor: `var(--${cardColour}-background)`,
         color: `var(--${cardColour}-text)`,
         borderColor: `var(--${cardColour}-${borderColour})`,
       }}
     >
       {(!isSingleDay || !icon) && (
-        <span className={styles.eventTitle}>
+        <span
+          className={styles.eventTitle}
+          style={{
+            fontSize: isSingleDay ? "0rem" : "1rem",
+            width: icon ? "90%" : "100%",
+          }}
+        >
           <span
             className={styles.eventPrefix}
             style={{
-              fontSize: isSingleDay ? ".9rem" : "1rem",
-              width: icon ? "90%" : "100%",
+              fontSize: isSingleDay ? "0.9rem" : "1rem",
             }}
           >
             {prefix}&nbsp;
