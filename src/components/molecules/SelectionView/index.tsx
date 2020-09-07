@@ -146,7 +146,7 @@ class SelectionView extends React.Component<MyProps, MyState> {
           checkBoxColur={
             this.isAnySelected()
               ? "var(--secondary-text-color)"
-              : "var(--secondary-button-active)"
+              : "var(--secondary-button-text)"
           }
         />
 
