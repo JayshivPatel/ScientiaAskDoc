@@ -39,7 +39,7 @@ const TimelineEventCard: React.FC<TimelineEventProps> = ({
 			onClick={onClick}
       style={{ gridColumn: `${startColumn} / ${endColumn}`, gridRow: `${rowNumber}` }}
     >
-			<span className={styles.eventPrefix}>{prefix}:&nbsp;</span>
+			<span className={styles.eventPrefix}>{prefix}&nbsp;</span>
       <span className={styles.eventTitle}>{title}</span>
     </div>
   );
