@@ -5,8 +5,8 @@ import {
   faLink,
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
-import { request } from "../../../utils/api";
-import { api, methods } from "../../../constants/routes";
+import { request } from "utils/api";
+import { api, methods } from "constants/routes";
 
 export interface Folder {
   title: string;
@@ -19,7 +19,9 @@ export interface Resource {
   tags: string[];
   folder: string;
   id: number;
-  path?: string;
+  index: number;
+  path: string;
+  visible_after: Date;
   thumbnail?: string;
 }
 

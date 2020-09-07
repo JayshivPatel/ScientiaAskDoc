@@ -4,20 +4,28 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import CreatableSelect from "react-select/creatable";
-import DatePicker, { registerLocale } from "react-datepicker";
-import { ResourceDetails } from "../../pages/ModuleResources/components/UploadModal"
+import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-import enGB from "date-fns/locale/en-GB";
-registerLocale("en-GB", enGB);
-
 
 interface ResourceDetailFormProps {
 	id: number;
-	categories: string[];
+	categories?: string[];
 	tagList: string[];
+	isLink: boolean;
 	defaultTitle?: string;
-	setResourceDetails: (id: number, details: ResourceDetails) => void;
+	defaultURL?: string;
+	defaultTags?: string[];
+	defaultVisibleAfter?: Date;
+	setResourceDetails: (details: ResourceDetails) => void;
+}
+
+export interface ResourceDetails {
+	title: string;
+	category: string;
+	tags: string[];
+	visibleAfter?: Date;
+	url: string;
 }
 
 interface Option {
@@ -29,27 +37,59 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 	id,
 	categories,
 	tagList,
+	isLink,
 	defaultTitle,
+	defaultURL,
+	defaultTags,
+	defaultVisibleAfter,
 	setResourceDetails,
 }) => {
 	const [showPicker, setShowPicker] = useState(false);
-	const [startDate, setStartDate] = useState(new Date());
+	const [startDate, setStartDate] = useState(defaultVisibleAfter || new Date());
 
 	const [title, setTitle] = useState<string>(defaultTitle || "");
-	const [category, setCategory] = useState(categories[0] || "");
-	const [tags, setTags] = useState<string[]>([]);
-	const [visibleAfter, setVisibleAfter] = useState("");
+	const [category, setCategory] = useState((categories && categories[0]) || "");
+	const [tags, setTags] = useState<string[]>(defaultTags || []);
+	const [visibleAfter, setVisibleAfter] = useState<Date>();
+	const [url, setURL] = useState(defaultURL || "");
 
 	useEffect(() => {
-		setResourceDetails(id, {
+		setResourceDetails({
 			title,
 			category,
 			tags,
-			visibleAfter
+			visibleAfter,
+			url
 		})
-	}, [id, title, category, tags, visibleAfter, setResourceDetails])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [title, category, tags, visibleAfter, url])
+
+	const datepicker = (
+		<DatePicker
+			selected={startDate}
+			onChange={(date: Date) => {
+				setStartDate(date);
+				setVisibleAfter(date);
+			}}
+			showTimeInput
+			timeFormat="HH:mm"
+			dateFormat="MMMM d, yyyy HH:mm 'UTC'"
+		/>
+	);
 
 	return (<>
+		{isLink &&
+		<Form.Group style={{ paddingTop: "20px" }}>
+			<Form.Label>URL</Form.Label>
+			<Form.Control
+				type="text"
+				placeholder="Paste link here."
+				defaultValue={defaultURL}
+				onChange={event => setURL(event.target.value)}
+			/>
+		</Form.Group>
+		}
+
 		<Form.Group>
 			<Form.Label>Title</Form.Label>
 			<Form.Control
@@ -60,6 +100,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 			/>
 		</Form.Group>
 
+		{ categories &&
 		<Form.Group>
 			<Form.Label>Category</Form.Label>
 			<CreatableSelect
@@ -73,11 +114,19 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 				}))}
 				onChange={selectedCategory => setCategory(selectedCategory ? (selectedCategory as Option).value : "")}
 			/>
+			<Form.Text muted>
+				Category cannot be changed afterwards.
+  			</Form.Text>
 		</Form.Group>
+		}
 
 		<Form.Group>
 			<Form.Label>Tags</Form.Label>
 			<CreatableSelect
+				defaultValue={defaultTags ? defaultTags.map(tag => ({
+					value: tag,
+					label: tag,
+				})) : []}
 				isClearable
 				isMulti
 				menuPortalTarget={document.body}
@@ -91,6 +140,16 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 		</Form.Group>
 
 		<Form.Group>
+			{defaultVisibleAfter ?
+			<Row>
+				<Col md="auto">
+					<Form.Label>Visible after</Form.Label>
+				</Col>
+				<Col>
+					{ datepicker }
+				</Col>
+			</Row>
+			:
 			<Row>
 				<Col md="auto">
 					<Form.Switch
@@ -102,16 +161,13 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 				</Col>
 				{showPicker &&
 				<Col>
-					<DatePicker
-						selected={startDate}
-						onChange={(date: Date) => setStartDate(date)}
-						onChangeRaw={event => setVisibleAfter(event.target.value)}
-						locale="en-GB"
-						showTimeInput
-						dateFormat="dd/MM/yyyy hh:mm"
-					/>
-				</Col>}
-			</Row>
+					{ datepicker }
+					<Form.Text muted>
+						Course managers will still be able to view all "invisible" resources.
+  					</Form.Text>
+				</Col>
+				}
+			</Row>}
   		</Form.Group>
 	</>);
 };

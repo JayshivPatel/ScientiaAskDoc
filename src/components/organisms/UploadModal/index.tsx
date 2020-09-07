@@ -21,9 +21,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./style.module.scss";
-import ResourceDetailForm from "../../../../molecules/ResourceDetailForm"
-import { staffRequest } from "../../../../../utils/api"
-import { api, methods } from "../../../../../constants/routes"
+import ResourceDetailForm, { ResourceDetails } from "components/molecules/ResourceDetailForm"
+import { staffRequest } from "utils/api"
+import { api, methods } from "constants/routes"
 
 interface UploadModalProps {
 	show: boolean;
@@ -33,13 +33,6 @@ interface UploadModalProps {
 	course: string;
 	categories: string[];
 	tags: string[];
-}
-
-export interface ResourceDetails {
-	title: string;
-	category: string;
-	tags: string[];
-	visibleAfter: string;
 }
 
 const UploadModal: React.FC<UploadModalProps> = ({
@@ -52,7 +45,6 @@ const UploadModal: React.FC<UploadModalProps> = ({
 	tags,
 }) => {
 	const [tab, setTab] = useState("file");
-	const [url, setURL] = useState("");
 	const [rejectedFiles, setRejectedFiles] = useState<File[]>([]);
 	const [resourceDetails, setResourceDetails] = useState<{[id: number] : ResourceDetails}>({});
 	const maxSize =  26214400; // 25mb, TODO: lift to constants
@@ -75,10 +67,12 @@ const UploadModal: React.FC<UploadModalProps> = ({
 		setRejectedFiles(newFiles);
 	}
 
-	const updateResourceDetails = (id: number, details: ResourceDetails) => {
-		resourceDetails[id] = details;
-		setResourceDetails({...resourceDetails});
-	}
+	const updateResourceDetails = (id: number) => {
+		return (details: ResourceDetails) => {
+			resourceDetails[id] = details;
+			setResourceDetails({...resourceDetails});
+		};
+	};
 
 	const submitFileForResource = (file: File) => {
 		let formData = new FormData()
@@ -92,6 +86,23 @@ const UploadModal: React.FC<UploadModalProps> = ({
 
 	const handleSubmit = async (event: any) => {
 		event.preventDefault();
+
+		const makePayload = (details: ResourceDetails) => {
+			let payload: {[key: string]: any} = {
+				year: year,
+				course: course,
+				type: tab,
+				title: details.title,
+				category: details.category,
+				tags: details.tags,
+				path: details.url,
+			};
+			if (details.visibleAfter) {
+				payload.visible_after = details.visibleAfter;
+			}
+			return payload;
+		}
+
 		switch (tab) {
 			case "file": {
 				await Promise.all(acceptedFiles.map((file, index) => {
@@ -99,20 +110,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
 						// Empty promise i.e. do nothing
 						return Promise.resolve();
 					}
-		
-					let details: ResourceDetails = resourceDetails[index];
-					let payload: {[key: string]: any} = {
-						type: "file",
-						category: details.category,
-						course: course,
-						title: details.title,
-						year: year,
-						tags: details.tags,
-						path: "",
-					};
-					if (details.visibleAfter !== "") {
-						payload.visible_after = details.visibleAfter;
-					}
+					let payload = makePayload(resourceDetails[index]);
 					return staffRequest(api.MATERIALS_RESOURCES, methods.POST, submitFileForResource(file), () => {}, payload);
 				}));
 		
@@ -120,20 +118,8 @@ const UploadModal: React.FC<UploadModalProps> = ({
 				break;
 			}
 			case "link": {
-				let details: ResourceDetails = resourceDetails[-1];
-				let payload: {[key: string]: any} = {
-					type: "link",
-					category: details.category,
-					course: course,
-					title: details.title,
-					year: year,
-					tags: details.tags,
-					path: url,
-				};
-				if (details.visibleAfter !== "") {
-					payload.visible_after = details.visibleAfter;
-				}
-				staffRequest(api.MATERIALS_RESOURCES, methods.POST, hideAndReload, () => {}, payload);
+				let payload = makePayload(resourceDetails[-1]);
+				await staffRequest(api.MATERIALS_RESOURCES, methods.POST, hideAndReload, () => {}, payload);
 				break;
 			}
 		}
@@ -203,8 +189,9 @@ const UploadModal: React.FC<UploadModalProps> = ({
 													key={index}
 													categories={categories}
 													tagList={tags}
+													isLink={false}
 													defaultTitle={file.name}
-													setResourceDetails={updateResourceDetails}
+													setResourceDetails={updateResourceDetails(index)}
 												/>
 											</Card.Body>
 										</Accordion.Collapse>
@@ -214,20 +201,12 @@ const UploadModal: React.FC<UploadModalProps> = ({
 						</Tab>
 
 						<Tab eventKey="link" title="Link">
-							<Form.Group className={styles.tabFirstFormGroup}>
-								<Form.Label>URL</Form.Label>
-								<Form.Control
-									type="text"
-									placeholder="Paste link here."
-									onChange={e => setURL(e.target.value)}
-								/>
-							</Form.Group>
-
 							<ResourceDetailForm
 								id={-1}
 								categories={categories}
 								tagList={tags}
-								setResourceDetails={updateResourceDetails}
+								isLink={true}
+								setResourceDetails={updateResourceDetails(-1)}
 							/>
 						</Tab>
 					</Tabs>

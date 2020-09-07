@@ -1,0 +1,1 @@
+export type idBooleanMap = { [key: number]: boolean };

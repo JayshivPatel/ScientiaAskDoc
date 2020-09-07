@@ -1,40 +1,91 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 import classNames from "classnames";
 
 import Row from "react-bootstrap/esm/Row";
 import Badge from "react-bootstrap/Badge";
 import { IconDefinition } from "@fortawesome/free-regular-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SortableHandle } from "react-sortable-hoc";
 
 export interface FileListItemProps {
   title: string;
   icon: IconDefinition;
   tags: string[];
+  resourceActions?: any
+  showMenu?: boolean,
+  setShowMenu?: (show: boolean) => void,
   onIconClick?: (event: React.MouseEvent) => void;
   onClick?: (event: React.MouseEvent) => void;
   onMouseOver?: (event: React.MouseEvent) => void;
   onMouseOut?: (event: React.MouseEvent) => void;
 }
 
+const DragHandle = SortableHandle(() => <FontAwesomeIcon icon={faBars}/>);
+
 const FileListItem: React.FC<FileListItemProps> = ({
   title,
   icon,
   tags,
+  resourceActions,
+  showMenu,
+  setShowMenu,
   onIconClick,
   onClick,
   onMouseOver,
   onMouseOut
 }) => {
+  const [xPos, setXPos] = useState("0px");
+  const [yPos, setYPos] = useState("0px");
+
+  const handleClick = () => {
+    setShowMenu && showMenu && setShowMenu(false);
+  }
+
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setXPos(`${e.pageX - 5}px`);
+    setYPos(`${e.pageY - 5}px`);
+    setShowMenu && setShowMenu(true);
+  }
+
+  useEffect(() => {
+    document.addEventListener("click", handleClick);
+  });
+
   return (
-    <div
-      className={styles.listItem}
-      onClick={onClick}
-      onMouseOut={onMouseOut}
-      onMouseOver={onMouseOver}
-    >
-      <Row className={styles.listRow}>
-        <div className={styles.listItemTitle}>{title}</div>
+    <>
+      {showMenu && resourceActions &&
+        <div
+          style={{
+            top: yPos,
+            left: xPos,
+            position: "absolute",
+            boxShadow: "0px 8px 10px #999999",
+            borderRadius: "8px",
+            zIndex: 10000
+          }}
+        >
+          { resourceActions }
+        </div>
+      }
+      <Row
+        className={styles.listRow}
+        onClick={onClick}
+        onMouseOver={onMouseOver}
+        onMouseOut={onMouseOut}
+        onContextMenu={handleContextMenu}
+      >
+        <div className={styles.listItemTitle}>
+          { resourceActions ?
+            <div style={{ padding: 0, display: "flex", alignItems: "center" }}>
+              <DragHandle />
+              { title }
+            </div> :
+            title
+          }
+        </div>
         <div style={{ padding: 0, display: "flex", alignItems: "center" }}>
           {tags.map(tag => (
             <Badge
@@ -59,7 +110,7 @@ const FileListItem: React.FC<FileListItemProps> = ({
           />
         </div>
       </Row>
-    </div>
+    </>
   );
 };
 

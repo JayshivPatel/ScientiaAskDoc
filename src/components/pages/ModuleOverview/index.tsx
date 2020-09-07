@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./style.module.scss";
 
-import { request } from "../../../utils/api";
-import { api, methods } from "../../../constants/routes";
+import { request } from "utils/api";
+import { api, methods } from "constants/routes";
 
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
