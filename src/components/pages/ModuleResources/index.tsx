@@ -42,7 +42,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       isLoaded: false,
       resources: [],
       searchText: "",
-      // change this value to switch between staff and student for testing
       isStaff: false,
     };
   }
@@ -57,6 +56,9 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
           let resource = json[key];
 
           let resourceURL = queryString.parseUrl(resource.path);
+          let extension = resource.path.substr(
+            resource.path.lastIndexOf(".") + 1
+          );
           let thumbnail = undefined;
           let altType = undefined;
           if (
@@ -65,6 +67,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
           ) {
             altType = "video";
             thumbnail = `https://imperial.cloud.panopto.eu/Panopto/Services/FrameGrabber.svc/FrameRedirect?objectId=${resourceURL.query.id}&mode=Delivery`;
+          } else if (extension === "pdf") {
+            altType = "pdf";
           }
           resourceArr.push({
             title: resource.title,
@@ -138,7 +142,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
   }
 
   includeInSearchResult(item: Resource, searchText: string) {
-    let rx = /([a-z]+)\(([^)]+)\)/gi;
+    const rx = /([a-z]+)\(([^)]+)\)/gi;
     let match: RegExpExecArray | null;
     let title = item.title.toLowerCase();
     let tags = item.tags.map((tag) => tag.toLowerCase());
