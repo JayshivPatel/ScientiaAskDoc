@@ -101,11 +101,11 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
           </div>
         </div>
         <div className={styles.eventTimeInfo}>
-          <span className={styles.startDateHeading}>Issued:</span>
+          <span className={styles.startDateHeading}>Start:</span>
           <span className={styles.startDate}>
             {event.startDate.toLocaleDateString()}
           </span>
-          <span className={styles.endDateHeading}>Due:</span>
+          <span className={styles.endDateHeading}>End:</span>
           <span className={styles.endDate}>
             {event.endDate.toLocaleDateString()}
           </span>
