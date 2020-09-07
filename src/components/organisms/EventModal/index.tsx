@@ -3,7 +3,13 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import styles from "./style.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faEnvelope, faCheese } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTimes,
+  faEnvelope,
+  faBullhorn,
+  faExclamationCircle,
+  faCheckCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import FileListItem from "components/atoms/FileListItem";
 import { resourceTypeToIcon } from "components/pages/ModuleResources/utils";
 import { TimelineEvent } from "constants/types";
@@ -16,6 +22,8 @@ interface Props {
 const EventModal: React.FC<Props> = ({ event, show, onHide }) => {
   if (!event) return null;
   let assessmentStyle = styles.unassessedSubmission;
+  let icon = undefined;
+  let borderColour = "transparent";
   switch (event.assessment) {
     case "unassessed submission":
       assessmentStyle = styles.unassessedSubmission;
@@ -31,6 +39,23 @@ const EventModal: React.FC<Props> = ({ event, show, onHide }) => {
       break;
     case "written exam":
       assessmentStyle = styles.writtenExam;
+      break;
+  }
+  switch (event.status) {
+    case "due":
+      borderColour = "var(--primary-text-color)";
+      break;
+    case "unreleased":
+      break;
+    case "late":
+      borderColour = "var(--primary-text-color)";
+      icon = faBullhorn;
+      break;
+    case "missed":
+      icon = faExclamationCircle;
+      break;
+    case "complete":
+      icon = faCheckCircle;
       break;
   }
   return (
@@ -65,24 +90,24 @@ const EventModal: React.FC<Props> = ({ event, show, onHide }) => {
         <span className={styles.eventTitle}>{event.title}</span>
         <div className={styles.eventInfo}>
           <div className={assessmentStyle}>{event.assessment}</div>
-          <div className={styles.eventInfoElement}>{event.status}<FontAwesomeIcon
-                className={styles.icon}
-                icon={faCheese}
-                />
-            </div>
+          <div className={styles.eventInfoElement} style={{borderColor:borderColour}}>
+            {event.status}
+            {icon && <FontAwesomeIcon className={styles.icon} icon={icon} />}
+          </div>
         </div>
         <div className={styles.eventTimeInfo}>
-          <span className={styles.startDateHeading}>
-            Issued: 
-            </span>
-            <span className={styles.startDate}>{event.startDate.toLocaleDateString()}
+          <span className={styles.startDateHeading}>Issued:</span>
+          <span className={styles.startDate}>
+            {event.startDate.toLocaleDateString()}
           </span>
-          <span className={styles.endDateHeading}>
-            Due: 
-            </span><span className={styles.endDate}>{event.endDate.toLocaleDateString()}
+          <span className={styles.endDateHeading}>Due:</span>
+          <span className={styles.endDate}>
+            {event.endDate.toLocaleDateString()}
           </span>
         </div>
-        <div className={styles.sectionHeaderContainer}><span className={styles.sectionHeader}>Given</span></div>
+        <div className={styles.sectionHeaderContainer}>
+          <span className={styles.sectionHeader}>Given</span>
+        </div>
         {dummy.map(({ title, type, tags, id }: any) => (
           <FileListItem
             title={title}

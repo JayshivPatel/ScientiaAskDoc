@@ -3,7 +3,6 @@ import styles from "./style.module.scss";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faEnvelope,
   faBullhorn,
   faExclamationCircle,
   faCheckCircle,
@@ -45,7 +44,7 @@ const EventCard: React.FC<TimelineEventProps> = ({
       cardColour = "pink";
       break;
     case "unassessed":
-      cardColour = "teal";
+      cardColour = "cyan";
       break;
     case "written exam":
       cardColour = "indigo";

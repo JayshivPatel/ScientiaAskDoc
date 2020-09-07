@@ -1,7 +1,6 @@
 @import "assets/scss/custom";
 @import "assets/scss/global";
 
-
 .eventTitle {
   font-size: 1.25rem;
   font-weight: 500;
@@ -40,14 +39,14 @@
 
 .eventInfoElement {
   text-transform: capitalize;
-	font-weight: 500;
-	font-size: 0.9rem;
-  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+	border-radius: 0.5rem;
+	border: 2px solid black;
   background: var(--secondary-background-color);
-  padding: 0.25rem 0.5rem;
+  padding: calc(0.25rem - 2px) 0.5rem;
   margin-left: 0.625rem;
 }
-
 
 .eventInfo {
   margin-top: 0.625rem;
@@ -72,7 +71,7 @@
 
 .sectionHeaderContainer {
   padding: 0.25rem 0rem;
-	margin-top: 1.25rem;
+  margin-top: 1.25rem;
   border-bottom: 1px solid var(--border-color);
   margin-bottom: 1rem;
 }
@@ -195,40 +194,40 @@ $button-border: transparentize($gray-300, 1);
   box-shadow: none !important;
 }
 
-.unassessed, .unassessedSubmission, .individualAssessed, .groupAssessed, .writtenExam {
+.unassessed,
+.unassessedSubmission,
+.individualAssessed,
+.groupAssessed,
+.writtenExam {
   text-transform: capitalize;
-	font-weight: 500;
-	font-size: 0.9rem;
+  font-weight: 500;
+  font-size: 0.9rem;
   border-radius: 0.5rem;
-  padding: 0.25rem 0.5rem;
+	padding: 0.25rem 0.5rem;
 }
 
 .unassessedSubmission {
-	background: var(--blue-background);
+  background: var(--blue-background);
   color: var(--blue-text);
   border-color: var(--blue-background);
-}  
+}
 
 .individualAssessed {
-	background: var(--teal-background);
-	color: var(--teal-text);
-	border-color: var(--teal-background);
+  background: var(--teal-background);
+  color: var(--teal-text);
 }
 
 .groupAssessed {
-	background: var(--pink-background);
-	color: var(--pink-text);
-	border-color: var(--pink-background);
+  background: var(--pink-background);
+  color: var(--pink-text);
 }
 
 .unassessed {
-	background: var(--cyan-background);
-	color: var(--cyan-text);
-	border-color: var(--cyan-background);
+  background: var(--cyan-background);
+  color: var(--cyan-text);
 }
 
 .writtenExam {
-	background: var(--indigo-background);
-	color: var(--indigo-text);
-	border-color: var(--indigo-background);
+  background: var(--indigo-background);
+  color: var(--indigo-text);
 }
