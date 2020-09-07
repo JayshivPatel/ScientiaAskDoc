@@ -1,18 +1,23 @@
 import React from "react";
 import styles from "./style.module.scss";
 import classNames from "classnames";
+
 export interface TimelineEventProps {
   title: string;
+	prefix: string; 
+	type: string;
+	status: string;
   startColumn: number;
   endColumn: number;
 	rowNumber: number;
-	type: string;
 	onClick: (event: React.MouseEvent) => void;
 }
 
 const TimelineEventCard: React.FC<TimelineEventProps> = ({
 	title,
+	prefix,
 	type,
+	status,
   startColumn,
   endColumn,
 	rowNumber,
@@ -20,10 +25,10 @@ const TimelineEventCard: React.FC<TimelineEventProps> = ({
 }) => {
 	let typeStyle = styles.tutorialEvent;
 	switch (type) {
-		case "tutorial":
+		case "unassessed_submission":
 			typeStyle = styles.tutorialEvent;
 			break;
-		case "coursework":
+		case "individual_assessed":
 			typeStyle = styles.courseworkEvent;
 			break;
 	}
@@ -34,6 +39,7 @@ const TimelineEventCard: React.FC<TimelineEventProps> = ({
 			onClick={onClick}
       style={{ gridColumn: `${startColumn} / ${endColumn}`, gridRow: `${rowNumber}` }}
     >
+			<span className={styles.eventPrefix}>{prefix}:&nbsp;</span>
       <span className={styles.eventTitle}>{title}</span>
     </div>
   );

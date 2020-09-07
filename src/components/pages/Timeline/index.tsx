@@ -17,7 +17,9 @@ import TimelineMobile from "./components/TimelineMobile";
 export interface TimelineEvent {
   title: string;
   id: number;
-  type: string;
+  prefix: string; 
+	type: string;
+	status: string;
   moduleCode: string;
   startDate: Date;
   endDate: Date;

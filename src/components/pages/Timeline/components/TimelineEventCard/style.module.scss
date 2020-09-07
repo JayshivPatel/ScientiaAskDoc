@@ -19,11 +19,17 @@
   overflow: hidden;
 }
 
+.eventPrefix {
+  color: var(--tutorial-text);
+  font-weight: 500;
+  font-size: 1rem;
+}
+
 .tutorialEvent {
 	background: var(--tutorial-background);
 }
 
-.tutorialEvent .eventTitle{
+.tutorialEvent .eventTitle, .tutorialEvent .eventPrefix  {
 	color: var(--tutorial-text);
 }
 
@@ -31,6 +37,6 @@
 	background: var(--coursework-background);
 }
 
-.courseworkEvent .eventTitle{
+.courseworkEvent .eventTitle, .courseworkEvent .eventPrefix {
 	color: var(--coursework-text);
 }

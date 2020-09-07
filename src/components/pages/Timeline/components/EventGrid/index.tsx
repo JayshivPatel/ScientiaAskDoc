@@ -3,6 +3,7 @@ import styles from "./style.module.scss";
 import { ModuleTracks } from "../..";
 import TimelineEventCard from "../TimelineEventCard";
 import { Module } from "constants/types";
+import { prefix } from "@fortawesome/free-brands-svg-icons";
 export interface EventGridProps {
   numWeeks: number;
   trackHeight: number;
@@ -15,7 +16,9 @@ export interface EventGridProps {
 
 interface EventDisplay {
   title: string;
-	id: number;
+  id: number;
+  prefix: string;
+  status: string;
 	type: string;
   startColumn: number;
   endColumn: number;
@@ -43,7 +46,9 @@ const EventGrid: React.FC<EventGridProps> = ({
         if (!isInTerm(event.startDate) && !isInTerm(event.endDate)) continue;
         eventPositions.push({
           title: event.title,
-					id: event.id,
+          id: event.id,
+          prefix: event.prefix,
+          status: event.status,
 					type: event.type,
           startColumn: dateToColumn(event.startDate),
           endColumn: dateToColumn(event.endDate) + 1,
@@ -67,11 +72,13 @@ const EventGrid: React.FC<EventGridProps> = ({
       }}
     >
       {eventPositions.map(
-        ({ title, startColumn, id, endColumn, type, rowNumber }) => (
+        ({ title, startColumn, prefix, status, id, endColumn, type, rowNumber }) => (
           <TimelineEventCard
             title={title}
 						key={id}
-						type={type}
+            type={type}
+            prefix={prefix}
+            status={status}
             startColumn={startColumn}
             endColumn={endColumn}
             rowNumber={rowNumber}

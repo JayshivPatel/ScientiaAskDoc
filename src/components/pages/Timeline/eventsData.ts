@@ -3,51 +3,63 @@ import { TimelineEvent } from ".";
 
 export const eventsData : TimelineEvent[] = [
 	{
-		title: "PMT: Syntax and Semantics of Propositional Logic",
+		title: "Syntax and Semantics of Propositional Logic",
 		id: 0,
 		startDate: new Date("2020-10-07"),
 		endDate: new Date("2020-10-14"),
-		type: "tutorial",
+		prefix: "PMT",
+		type: "individual_assessed",
+		status: "unreleased",
 		moduleCode: "CO140"
 	},
 	{
-		title: "PMT: Introduction to First Order Logic",
+		title: "Introduction to First Order Logic",
 		id: 1,
 		startDate: new Date("2020-10-14"),
 		endDate: new Date("2020-10-21"),
-		type: "coursework",
-		moduleCode: "CO140"
+		moduleCode: "CO140",
+		prefix: "PMT",
+		type: "unassessed_submission",
+		status: "unreleased",
 	},
 	{
-		title: "PMT: Semantics of First Order Logic",
+		title: "Semantics of First Order Logic",
 		id: 2,
 		startDate: new Date("2020-10-21"),
 		endDate: new Date("2020-10-28"),
-		type: "tutorial",
-		moduleCode: "CO140"
+		moduleCode: "CO140",
+		prefix: "PMT",
+		type: "individual_assessed",
+		status: "unreleased",
 	},
 	{
-		title: "PMT: Semantics of FOL and Translation",
+		title: "Semantics of FOL and Translation",
 		id: 3,
 		startDate: new Date("2020-10-28"),
 		endDate: new Date("2020-11-04"),
-		type: "coursework",
-		moduleCode: "CO140"
+		moduleCode: "CO140",
+		prefix: "PMT",
+		type: "unassessed_submission",
+		status: "unreleased",
 	},
 	{
 		title: "Coursework 1",
 		id: 4,
 		startDate: new Date("2020-10-05"),
 		endDate: new Date("2020-10-12"),
-		type: "coursework",
-		moduleCode: "CO112"
+		moduleCode: "CO112",
+		prefix: "CW",
+		type: "individual_assessed",
+		status: "unreleased",
 	},
 	{
 		title: "Practical 1",
 		id: 5,
 		startDate: new Date("2020-10-05"),
 		endDate: new Date("2020-10-16"),
-		type: "tutorial",
-		moduleCode: "CO120.2"
+		moduleCode: "CO120.2",
+		prefix: "PPT",
+		type: "unassessed_submission",
+		status: "unreleased",
 	}
 ]
