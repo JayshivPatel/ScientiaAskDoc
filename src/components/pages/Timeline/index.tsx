@@ -118,7 +118,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     );
 
     if (
-      window.innerWidth <= 700 &&
+      window.innerWidth <= 550 &&
       window.innerHeight <= 900 &&
       this.state.showMobileOnSmallScreens
     ) {

@@ -6,7 +6,7 @@ export const eventsData : TimelineEvent[] = [
 		title: "Syntax and Semantics of Propositional Logic",
 		id: 0,
 		startDate: new Date("2020-10-07"),
-		endDate: new Date("2020-10-14"),
+		endDate: new Date("2020-10-07"),
 		prefix: "PMT",
 		assessment: "individual_assessed",
 		owner: "ip914",
