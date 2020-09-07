@@ -4,9 +4,9 @@ import Button from "react-bootstrap/Button";
 import styles from "./style.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { TimelineEvent } from "../..";
 import FileListItem from "components/atoms/FileListItem";
 import { resourceTypeToIcon } from "components/pages/ModuleResources/utils";
+import { TimelineEvent } from "constants/types";
 interface Props {
   event?: TimelineEvent;
   show: boolean;
@@ -28,10 +28,11 @@ const EventModal: React.FC<Props> = ({ event, show, onHide }) => {
         <div style={{ display: "flex" }}>
         <Button
           variant="secondary"
-          className={styles.sectionHeaderButton}
-          onClick={onHide}
+					className={styles.sectionHeaderButton}
+					href={`mailto:${event.owner}@ic.ac.uk?subject=Regarding ${event.title}`}
+					target="_blank"
         >
-          <FontAwesomeIcon className={styles.buttonIcon} icon={faEnvelope} />
+          <FontAwesomeIcon className={styles.buttonIcon}  icon={faEnvelope} />
         </Button>
         <Button
           variant="secondary"
@@ -75,12 +76,12 @@ const EventModal: React.FC<Props> = ({ event, show, onHide }) => {
 const dummy = [ 
   { 
     title: "Problem Specification",
-    type: "file",
+    type: "pdf",
     id: 1
   },
   { 
     title: "Model Answer",
-    type: "file",
+    type: "pdf",
     id: 2
   }
 ]

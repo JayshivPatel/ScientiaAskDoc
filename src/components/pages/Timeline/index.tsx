@@ -9,21 +9,10 @@ import DayIndicatorGrid from "./components/DayIndicatorGrid";
 import EventGrid from "./components/EventGrid";
 import { eventsData } from "./eventsData";
 import LoadingScreen from "components/molecules/LoadingScreen";
-import { Term, Module } from "constants/types";
+import { Term, Module, TimelineEvent } from "constants/types";
 import { addDays } from "utils/functions";
-import EventModal from "./components/EventModal";
+import EventModal from "../../organisms/EventModal";
 import TimelineMobile from "./components/TimelineMobile";
-
-export interface TimelineEvent {
-  title: string;
-  id: number;
-  prefix: string; 
-	assessment: string;
-	status: string;
-  moduleCode: string;
-  startDate: Date;
-  endDate: Date;
-}
 
 export type ModuleTracks = {
   [index: string]: TimelineEvent[][];

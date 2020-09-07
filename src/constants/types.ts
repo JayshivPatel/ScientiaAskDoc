@@ -29,6 +29,18 @@ export interface Module {
   content: string;
 };
 
+export interface TimelineEvent {
+  title: string;
+  id: number;
+  prefix: string; 
+	assessment: string;
+	status: string;
+	owner: string;
+  moduleCode: string;
+  startDate: Date;
+  endDate: Date;
+}
+
 export enum ProgressStatus {
   NOT_STARTED = "Not Started",
   IN_PROGRESS = "In Progress",

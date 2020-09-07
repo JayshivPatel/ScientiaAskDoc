@@ -1,4 +1,4 @@
-import { TimelineEvent } from ".";
+import { TimelineEvent } from "constants/types";
 
 
 export const eventsData : TimelineEvent[] = [
@@ -9,6 +9,7 @@ export const eventsData : TimelineEvent[] = [
 		endDate: new Date("2020-10-14"),
 		prefix: "PMT",
 		assessment: "individual_assessed",
+		owner: "ip914",
 		status: "unreleased",
 		moduleCode: "CO140"
 	},
@@ -19,6 +20,7 @@ export const eventsData : TimelineEvent[] = [
 		endDate: new Date("2020-10-21"),
 		moduleCode: "CO140",
 		prefix: "PMT",
+		owner: "ip914",
 		assessment: "unassessed_submission",
 		status: "unreleased",
 	},
@@ -28,6 +30,7 @@ export const eventsData : TimelineEvent[] = [
 		startDate: new Date("2020-10-21"),
 		endDate: new Date("2020-10-28"),
 		moduleCode: "CO140",
+		owner: "ip914",
 		prefix: "PMT",
 		assessment: "individual_assessed",
 		status: "unreleased",
@@ -38,6 +41,7 @@ export const eventsData : TimelineEvent[] = [
 		startDate: new Date("2020-10-28"),
 		endDate: new Date("2020-11-04"),
 		moduleCode: "CO140",
+		owner: "ip914",
 		prefix: "PMT",
 		assessment: "unassessed_submission",
 		status: "unreleased",
@@ -48,6 +52,7 @@ export const eventsData : TimelineEvent[] = [
 		startDate: new Date("2020-10-05"),
 		endDate: new Date("2020-10-12"),
 		moduleCode: "CO112",
+		owner: "ip914",
 		prefix: "CW",
 		assessment: "individual_assessed",
 		status: "unreleased",
@@ -58,6 +63,7 @@ export const eventsData : TimelineEvent[] = [
 		startDate: new Date("2020-10-05"),
 		endDate: new Date("2020-10-16"),
 		moduleCode: "CO120.2",
+		owner: "ip914",
 		prefix: "PPT",
 		assessment: "unassessed_submission",
 		status: "unreleased",

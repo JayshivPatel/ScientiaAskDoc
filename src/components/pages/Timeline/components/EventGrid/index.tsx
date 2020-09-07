@@ -3,7 +3,7 @@ import styles from "./style.module.scss";
 import { ModuleTracks } from "../..";
 import TimelineEventCard from "../TimelineEventCard";
 import { Module } from "constants/types";
-import { prefix } from "@fortawesome/free-brands-svg-icons";
+
 export interface EventGridProps {
   numWeeks: number;
   trackHeight: number;
