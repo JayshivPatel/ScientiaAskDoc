@@ -19,7 +19,7 @@ interface EventDisplay {
   id: number;
   prefix: string;
   status: string;
-	type: string;
+	assessment: string;
   startColumn: number;
   endColumn: number;
   rowNumber: number;
@@ -49,7 +49,7 @@ const EventGrid: React.FC<EventGridProps> = ({
           id: event.id,
           prefix: event.prefix,
           status: event.status,
-					type: event.type,
+					assessment: event.assessment,
           startColumn: dateToColumn(event.startDate),
           endColumn: dateToColumn(event.endDate) + 1,
           rowNumber: currRow,
@@ -72,11 +72,11 @@ const EventGrid: React.FC<EventGridProps> = ({
       }}
     >
       {eventPositions.map(
-        ({ title, startColumn, prefix, status, id, endColumn, type, rowNumber }) => (
+        ({ title, startColumn, prefix, status, id, endColumn, assessment, rowNumber }) => (
           <TimelineEventCard
             title={title}
 						key={id}
-            type={type}
+            assessment={assessment}
             prefix={prefix}
             status={status}
             startColumn={startColumn}

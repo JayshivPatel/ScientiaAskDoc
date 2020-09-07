@@ -5,7 +5,7 @@ import classNames from "classnames";
 export interface TimelineEventProps {
   title: string;
 	prefix: string; 
-	type: string;
+	assessment: string;
 	status: string;
   startColumn: number;
   endColumn: number;
@@ -16,26 +16,26 @@ export interface TimelineEventProps {
 const TimelineEventCard: React.FC<TimelineEventProps> = ({
 	title,
 	prefix,
-	type,
+	assessment,
 	status,
   startColumn,
   endColumn,
 	rowNumber,
 	onClick,
 }) => {
-	let typeStyle = styles.tutorialEvent;
-	switch (type) {
+	let assessmentStyle = styles.tutorialEvent;
+	switch (assessment) {
 		case "unassessed_submission":
-			typeStyle = styles.tutorialEvent;
+			assessmentStyle = styles.tutorialEvent;
 			break;
 		case "individual_assessed":
-			typeStyle = styles.courseworkEvent;
+			assessmentStyle = styles.courseworkEvent;
 			break;
 	}
 
   return (
     <div
-			className={classNames(styles.timelineEvent, typeStyle)}
+			className={classNames(styles.timelineEvent, assessmentStyle)}
 			onClick={onClick}
       style={{ gridColumn: `${startColumn} / ${endColumn}`, gridRow: `${rowNumber}` }}
     >

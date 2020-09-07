@@ -8,7 +8,7 @@ export const eventsData : TimelineEvent[] = [
 		startDate: new Date("2020-10-07"),
 		endDate: new Date("2020-10-14"),
 		prefix: "PMT",
-		type: "individual_assessed",
+		assessment: "individual_assessed",
 		status: "unreleased",
 		moduleCode: "CO140"
 	},
@@ -19,7 +19,7 @@ export const eventsData : TimelineEvent[] = [
 		endDate: new Date("2020-10-21"),
 		moduleCode: "CO140",
 		prefix: "PMT",
-		type: "unassessed_submission",
+		assessment: "unassessed_submission",
 		status: "unreleased",
 	},
 	{
@@ -29,7 +29,7 @@ export const eventsData : TimelineEvent[] = [
 		endDate: new Date("2020-10-28"),
 		moduleCode: "CO140",
 		prefix: "PMT",
-		type: "individual_assessed",
+		assessment: "individual_assessed",
 		status: "unreleased",
 	},
 	{
@@ -39,7 +39,7 @@ export const eventsData : TimelineEvent[] = [
 		endDate: new Date("2020-11-04"),
 		moduleCode: "CO140",
 		prefix: "PMT",
-		type: "unassessed_submission",
+		assessment: "unassessed_submission",
 		status: "unreleased",
 	},
 	{
@@ -49,7 +49,7 @@ export const eventsData : TimelineEvent[] = [
 		endDate: new Date("2020-10-12"),
 		moduleCode: "CO112",
 		prefix: "CW",
-		type: "individual_assessed",
+		assessment: "individual_assessed",
 		status: "unreleased",
 	},
 	{
@@ -59,7 +59,7 @@ export const eventsData : TimelineEvent[] = [
 		endDate: new Date("2020-10-16"),
 		moduleCode: "CO120.2",
 		prefix: "PPT",
-		type: "unassessed_submission",
+		assessment: "unassessed_submission",
 		status: "unreleased",
 	}
 ]

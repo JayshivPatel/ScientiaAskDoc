@@ -18,7 +18,7 @@ export interface TimelineEvent {
   title: string;
   id: number;
   prefix: string; 
-	type: string;
+	assessment: string;
 	status: string;
   moduleCode: string;
   startDate: Date;
