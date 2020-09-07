@@ -11,8 +11,7 @@ import { resourceTypeToIcon } from "../../pages/ModuleResources/utils";
 import { idBooleanMap, Resource } from "constants/types";
 import { staffRequest } from "utils/api";
 import { api, methods } from "constants/routes";
-
-const arrayMove = require('array-move');
+import arrayMove from "array-move";
 
 export interface CategoryListProps {
   categoryItems: Resource[];
