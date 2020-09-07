@@ -1,11 +1,11 @@
 import React from "react";
-import { Resource, Folder } from "../utils";
 import SelectionView, {
   SelectionProps
 } from "components/molecules/SelectionView";
 import CategoryList from "components/molecules/CategoryList";
 import CategoryHeader from "components/molecules/CategoryHeader";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
+import { Folder, Resource } from "constants/types";
 
 export interface ListViewProps {
   folders: Folder[];

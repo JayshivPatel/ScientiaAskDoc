@@ -6,19 +6,25 @@ import LeftBarModuleList from "components/organisms/LeftBarModuleList";
 import LeftBarModule from "components/organisms/LeftBarModule";
 import LeftBarExams from "components/organisms/LeftBarExams";
 import LeftBarTimeline from "components/organisms/LeftBarTimeline";
+import { Term } from "constants/types";
 
 interface LeftBarProps {
-	modulesFilter: string;
-	setModulesFilter: Function;
+  modulesFilter: string;
+  setModulesFilter: Function;
+  timelineTerm: Term;
+  setTimelineTerm: React.Dispatch<React.SetStateAction<Term>>;
 }
 
-const LeftBar: React.FC<LeftBarProps> = ({modulesFilter, setModulesFilter}) => {
+const LeftBar: React.FC<LeftBarProps> = ({
+  modulesFilter,
+	setModulesFilter,
+	timelineTerm,
+	setTimelineTerm,
+}) => {
   return (
     <div id={styles.leftbarWrapper}>
-      <p className={styles.leftbarStatus}>
-        2020 - 2021
-      </p>
-			<Switch>
+      <p className={styles.leftbarStatus}>2020 - 2021</p>
+      <Switch>
         <Route path="/modules/:id">
           <LeftBarModule />
         </Route>
@@ -34,8 +40,11 @@ const LeftBar: React.FC<LeftBarProps> = ({modulesFilter, setModulesFilter}) => {
           <LeftBarExams />
         </Route>
 
-				<Route path="/timeline">
-          <LeftBarTimeline />
+        <Route path="/timeline">
+          <LeftBarTimeline
+            term={timelineTerm}
+            setTerm={setTimelineTerm}
+          />
         </Route>
 
         <Route path="/">

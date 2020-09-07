@@ -2,6 +2,7 @@ import React from "react";
 import TutorCard from "components/atoms/TutorCard";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/esm/Row";
+import styles from "./style.module.scss";
 
 export interface TutorCardGroupProps {
 	title: string;
@@ -30,7 +31,7 @@ const TutorCardGroup: React.FC<TutorCardGroupProps> = ({title
 
   return (
     <>
-      <h4>{title}</h4>
+      <h4 className={styles.groupTitle}>{title}</h4>
       <Row>{tutorCards}</Row>
     </>
   );

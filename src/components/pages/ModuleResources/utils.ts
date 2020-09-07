@@ -7,21 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { request } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
-
-export interface Folder {
-  title: string;
-  id: number;
-}
-
-export interface Resource {
-  title: string;
-  type: string;
-  tags: string[];
-  folder: string;
-  id: number;
-  path?: string;
-  thumbnail?: string;
-}
+import { Resource, Folder } from "constants/types";
 
 export function tags(resources: Resource[]) {
   let tagSet = new Set<string>();

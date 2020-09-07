@@ -1,8 +1,9 @@
 import React from "react";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
-import { Resource, resourceTypeToIcon } from "../../pages/ModuleResources/utils";
+import { resourceTypeToIcon } from "../../pages/ModuleResources/utils";
 import { SelectionProps } from "components/molecules/SelectionView";
 import FileListItem from "components/atoms/FileListItem";
+import { Resource } from "constants/types";
 
 export interface CategoryListProps {
   categoryItems: Resource[];

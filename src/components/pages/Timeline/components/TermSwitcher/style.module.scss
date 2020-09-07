@@ -1,0 +1,50 @@
+.termSwitch {
+  background-color: var(--primary-button);
+  color: var(--primary-button-text);
+
+  border-width: 0px;
+  border-radius: 8px;
+
+  justify-content: space-between;
+  height: 2.25rem;
+  font-size: 1.05rem;
+
+  transition: 0.2s background-color;
+  -webkit-transition: 0.2s background-color;
+  -moz-transition: 0.2s background-color;
+
+  margin-bottom: 2.5rem;
+}
+
+.termSwitch:active,
+.termSwitch:global(.active) {
+  background: var(--primary-button-active) !important;
+  color: var(--primary-button-text-active) !important;
+  font-weight: 500;
+  border-width: 0rem;
+  height: 2.25rem;
+  line-height: 1.375rem;
+}
+
+.termSwitch:hover {
+  background-color: var(--primary-button-hover);
+  color: var(--primary-button-text);
+  box-shadow: none !important;
+}
+
+.timelineTermSwitcher {
+  grid-area: switcher;
+  top: 0;
+  left: 0;
+  position: sticky;
+  z-index: 5;
+  background: var(--background-color);
+  padding-right: 1.25rem;
+  padding-left: 0.625rem;
+  height: 5.5rem !important;
+  padding-bottom: 0.625rem;
+}
+
+.timelineTermSwitcher > * {
+  width: 100%;
+}

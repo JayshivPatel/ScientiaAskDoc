@@ -1,0 +1,48 @@
+.timelineContainer {
+  margin-top: 1.875rem;
+  margin-left: 1.875rem;
+  margin-right: 1.875rem;
+}
+
+.timelineGrid {
+  display: grid;
+  grid-template-areas: "switcher weeks" "modules background";
+  grid-template-rows: auto;
+  margin-bottom: 1.25rem;
+  margin-left: -0.625rem;
+  grid-template-columns: 16.875rem auto;
+  overflow: scroll;
+	scrollbar-width: thin;
+	max-height: calc(99vh - 11rem);
+  scrollbar-color: var(--background-color) var(--background-color);
+}
+
+.timelineGrid::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.timelineGrid::-webkit-scrollbar-corner {
+  background: var(--background-color);
+}
+
+.timelineGrid::-webkit-scrollbar-track {
+  background: var(--background-color);
+  margin-left: 16.875rem;
+  margin-top: 6.125rem;
+  margin-right: 0.625rem;
+  margin-bottom: 0.625rem;
+}
+
+.timelineGrid::-webkit-scrollbar-thumb {
+  background-color: var(--background-color);
+  border-radius: 0.5rem;
+}
+
+.timelineGrid:hover {
+  scrollbar-color: var(--scrollbar) var(--background-color);
+}
+
+.timelineGrid:hover::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar);
+}

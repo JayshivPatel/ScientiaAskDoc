@@ -12,7 +12,8 @@ import StaffView from "./components/StaffView";
 
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import LoadingScreen from "components/molecules/LoadingScreen";
-import { Resource, openResource, tags, folders } from "./utils";
+import { openResource, tags, folders } from "./utils";
+import { Resource } from "constants/types";
 
 export interface ResourcesProps {
   year: string;

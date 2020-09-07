@@ -18,15 +18,17 @@ import ExamGrading from "../Exams/Grading";
 import ExamPastPapers from "../Exams/PastPapers";
 import ModuleOverview from "../ModuleOverview";
 import LeftBar from "components/organisms/LeftBar";
+import { Term } from "constants/types";
+import ModuleSubmissions from "../ModuleSubmissions";
 
 interface StandardViewProps {
   toggledLeft: boolean;
   toggledRight: boolean;
-	fileView: string;
-	initTimelineSideBar: () => void;
-	revertTimelineSideBar: () => void;
+  fileView: string;
+  initTimelineSideBar: () => void;
+  revertTimelineSideBar: () => void;
   onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
-	onSettingsClick: (event: React.MouseEvent) => void;
+  onSettingsClick: (event: React.MouseEvent) => void;
 }
 
 const StandardView: React.FC<StandardViewProps> = ({
@@ -34,11 +36,12 @@ const StandardView: React.FC<StandardViewProps> = ({
   toggledRight,
   onOverlayClick,
   onSettingsClick,
-	fileView,
-	revertTimelineSideBar,
-	initTimelineSideBar,
+  fileView,
+  revertTimelineSideBar,
+  initTimelineSideBar,
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
+  const [timelineTerm, setTimelineTerm] = useState(Term.AUTUMN);
 
   return (
     <div
@@ -51,6 +54,8 @@ const StandardView: React.FC<StandardViewProps> = ({
       <LeftBar
         modulesFilter={modulesFilter}
         setModulesFilter={setModulesFilter}
+        timelineTerm={timelineTerm}
+        setTimelineTerm={setTimelineTerm}
       />
       <RightBar onSettingsClick={onSettingsClick} />
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
@@ -96,6 +101,15 @@ const StandardView: React.FC<StandardViewProps> = ({
           )}
         />
 
+        <Route
+          path="/modules/:id/submissions"
+          render={(props) => (
+            <Container className={classNames("pageContainer")}>
+              <ModuleSubmissions moduleID={props.match.params.id} />
+            </Container>
+          )}
+        ></Route>
+
         <Route path="/modules/:id/feedback">
           <Container className={classNames("pageContainer")}>
             <ModuleFeedback />
@@ -105,7 +119,9 @@ const StandardView: React.FC<StandardViewProps> = ({
         <Route path="/timeline">
           <Timeline
             initSideBar={initTimelineSideBar}
-						revertSideBar={revertTimelineSideBar}
+            revertSideBar={revertTimelineSideBar}
+            term={timelineTerm}
+            setTerm={setTimelineTerm}
           />
         </Route>
 
