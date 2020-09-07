@@ -1,18 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Dandruff from "components/molecules/Dandruff";
-import CalendarGroup from "components/molecules/CalendarGroup";
+import EventModal from "components/organisms/EventModal";
+import { TimelineEvent } from "constants/types";
+import { eventsData } from "../Timeline/eventsData";
 
 interface Props {
-	moduleID: string;
+  moduleID: string;
 }
-const ModuleSubmissions: React.FC<Props> = ({moduleID}) => {
-
-  let moduleCode = moduleID.startsWith("CO") ? moduleID.slice(2) : moduleID;
+const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
+  let [showModal, setShowModal] = useState(false);
+  let [activeEvent, setActiveEvent] = useState<TimelineEvent | undefined>(
+    undefined
+  );
 
   return (
     <>
       <Dandruff heading="Submissions" />
-			<span>Something that looks like the cards in timeline view (maybe grouped by week like overview)? </span>
+      <EventModal
+        event={activeEvent}
+        show={showModal}
+        onHide={() => setShowModal(false)}
+      />
+      {eventsData
+        .filter((e) => e.moduleCode === moduleID)
+        .map((e) => (
+          <p
+            onClick={() => {
+              setActiveEvent(e);
+              setShowModal(true);
+            }}
+          >
+            {e.title}
+          </p>
+        ))}
     </>
   );
 };
