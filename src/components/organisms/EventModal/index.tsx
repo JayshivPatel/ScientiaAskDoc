@@ -109,7 +109,7 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
           <span className={styles.endDate}>
             {event.endDate.toLocaleDateString()}
           </span>
-          {timeLeft >= 0 && (
+          {event.status !== "unreleased" && timeLeft >= 0 && (
             <>
               <span className={styles.daysHeading}>Due In:</span>
               <span className={styles.daysLeft}>
