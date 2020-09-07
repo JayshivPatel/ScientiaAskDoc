@@ -1,0 +1,36 @@
+@import "assets/scss/custom";
+
+
+.timelineEvent {
+
+	cursor: pointer;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.eventTitle {
+  color: var(--tutorial-text);
+  font-size: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.tutorialEvent {
+	background: var(--tutorial-background);
+}
+
+.tutorialEvent .eventTitle{
+	color: var(--tutorial-text);
+}
+
+.courseworkEvent {
+	background: var(--coursework-background);
+}
+
+.courseworkEvent .eventTitle{
+	color: var(--coursework-text);
+}

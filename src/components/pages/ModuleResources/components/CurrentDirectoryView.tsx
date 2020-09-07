@@ -1,9 +1,9 @@
 import React from "react";
-import { Resource } from "../utils";
 import SelectionView, {
   SelectionProps
 } from "components/molecules/SelectionView";
 import CurrentDirectoryRow from "components/molecules/CurrentDirectoryRow";
+import { Resource } from "constants/types";
 
 export interface CurrentDirectoryViewProps {
   resources: Resource[];

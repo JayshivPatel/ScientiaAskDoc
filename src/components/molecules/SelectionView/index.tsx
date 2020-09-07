@@ -1,15 +1,15 @@
 import React from "react";
 import ResourceSectionHeader from "./components/SectionHeader";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
-import { idBooleanMap } from "utils/types"
+import { idBooleanMap } from "constants/types"
 
 export interface SelectionItem {
   title: string;
   id: number;
   folder?: string;
   type?: string;
-	tags?: string[];
-	thumbnail?: string;
+  tags?: string[];
+  thumbnail?: string;
 }
 
 export interface SelectionProps {
@@ -127,23 +127,27 @@ class SelectionView extends React.Component<MyProps, MyState> {
     let selection: SelectionProps = {
       selectionItems: this.props.selectionItems,
       state: this.state,
-      setIsSelected: selection => this.setState({ isSelected: selection }),
+      setIsSelected: (selection) => this.setState({ isSelected: selection }),
       isAnySelected: () => this.isAnySelected(),
       handleCardClick: (id: number) => this.handleCardClick(id),
       handleIconClick: (id: number) => this.handleIconClick(id),
       handleMouseOver: (id: number) => this.handleMouseOver(id),
-      handleMouseOut: (id: number) => this.handleMouseOut(id)
+      handleMouseOut: (id: number) => this.handleMouseOut(id),
     };
 
     return (
       <>
         <ResourceSectionHeader
           heading={this.props.heading}
-          onDownloadClick={e => this.handleDownloadClick(e)}
+          onDownloadClick={(e) => this.handleDownloadClick(e)}
           showDownload={this.isAnySelected()}
           onSelectAllClick={() => this.handleSelectAllClick()}
           selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
-          checkBoxColur={this.isAnySelected() ? "#495057" : "#e9ecef"}
+          checkBoxColur={
+            this.isAnySelected()
+              ? "var(--secondary-text-color)"
+              : "var(--secondary-button-active)"
+          }
         />
 
         {this.props.render(selection)}

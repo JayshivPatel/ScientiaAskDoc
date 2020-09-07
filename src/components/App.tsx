@@ -22,6 +22,8 @@ type AppState = {
 
 class App extends React.Component<{}, AppState> {
   width = window.innerWidth;
+	isTimelineView = false;
+	
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -38,7 +40,7 @@ class App extends React.Component<{}, AppState> {
     }%`;
 
     const currentTheme = localStorage.getItem("theme");
-    if (currentTheme == "light" || currentTheme == "dark") {
+    if (currentTheme === "light" || currentTheme === "dark") {
       document.documentElement.setAttribute("data-theme", currentTheme);
     } else {
       let mq = window.matchMedia("(prefers-color-scheme: dark)");
@@ -52,7 +54,7 @@ class App extends React.Component<{}, AppState> {
         this.showOrHideSideBars();
       }
     });
-    this.showOrHideSideBars();
+		this.showOrHideSideBars();
   }
 
   setDarkTheme(toSet: boolean) {
@@ -85,7 +87,7 @@ class App extends React.Component<{}, AppState> {
   }
 
   showOrHideSideBars() {
-    if (window.innerWidth <= 1024) {
+    if (window.innerWidth <= 1024 || this.isTimelineView) {
       this.setState({
         toggledLeft: false,
         toggledRight: false,
@@ -144,10 +146,22 @@ class App extends React.Component<{}, AppState> {
               onSettingsClick={() => this.setState({ showSettings: true })}
               toggledLeft={this.state.toggledLeft}
               toggledRight={this.state.toggledRight}
+              initTimelineSideBar={() => {
+								this.isTimelineView = true;
+                this.showOrHideSideBars();
+							}}
+							revertTimelineSideBar={() => {
+                this.isTimelineView = false;
+                this.showOrHideSideBars();
+              }}
               onOverlayClick={(e) => {
                 e.preventDefault();
-                this.setState({ toggledLeft: false, toggledRight: false });
+                this.setState({
+                  toggledLeft: false,
+                  toggledRight: false,
+                });
               }}
+
               fileView={this.state.fileView}
             />
 

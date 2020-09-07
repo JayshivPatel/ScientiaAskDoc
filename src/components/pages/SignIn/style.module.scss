@@ -2,8 +2,20 @@
 
 .navBar {
   padding: 0.75rem 1rem;
-  background: #fff;
-  border-bottom: 1px solid #cdd4db;
+  background: var(--backgound-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.brandLogo {
+  filter: Invert(var(--image-invert));
+}
+
+.brandName {
+  color: var(--primary-text-color);
+}
+
+.tagLine {
+  color: var(--tertiary-text-color);
 }
 
 .centered {
@@ -15,32 +27,35 @@
   width: 90%;
 }
 
-$button-background: transparentize($gray-200, 0.75);
-$button-border: transparentize($gray-300, 1);
-
 .inputBar {
   border-radius: 0.5rem;
   border-width: 1px;
-  background-color: $button-background;
-  border-color: $button-background;
+  border-color: var(--input-bar);
+
+  background-color: var(--input-bar);
+  color: var(--primary-text-color);
+
+  text-align: left;
+
   transition: 0.2s background-color;
   -webkit-transition: 0.2s background-color;
   -moz-transition: 0.2s back-ground-color;
 }
 
 .inputBar::placeholder {
-  color: #acb5bd;
+  color: var(--input-bar-placeholder);
   opacity: 1;
 }
 
 .inputBar:focus {
   box-shadow: none !important;
-  border-color: $gray-300;
-  background-color: $white;
+  border-color: var(--border-color-focus);
+  background-color: var(--backgound-color);
+  color: var(--primary-text-color);
 }
 
 .inputBarHeading {
-  color: $black;
+  color: var(--primary-text-color);
   font-size: 1.125rem;
   font-weight: 500;
   margin-bottom: 0.625rem;
@@ -48,16 +63,15 @@ $button-border: transparentize($gray-300, 1);
 
 .inputButton.focus,
 .inputButton:focus {
-  color: #000;
-  background-color: #f8f9fa;
-  border-color: #0062cc;
+  background: var(--primary-button);
+  color: var(--primary-button-text);
   box-shadow: none;
 }
 
 .inputButton {
   margin-bottom: 0.625rem;
-  color: #fff;
-  background: $black;
+  color: var(--primary-button-text);
+  background: var(--primary-button);
   font-weight: 500;
   font-size: 1.05rem;
   letter-spacing: 0;
@@ -75,8 +89,8 @@ $button-border: transparentize($gray-300, 1);
 
 .inputButton.active,
 .inputButton:active {
-  color: #fff;
-  background: #000 !important;
+  background: var(--primary-button-active) !important;
+  color: var(--primary-button-text-active) !important;
   font-weight: 500;
   border-width: 0rem;
   height: 2.25rem;
@@ -84,7 +98,7 @@ $button-border: transparentize($gray-300, 1);
 }
 
 .inputButton:hover {
-  background: $gray-800;
-  border-color: #fff;
-  color: $white;
+  background-color: var(--primary-button-hover);
+  color: var(--primary-button-text);
+  box-shadow: none !important;
 }

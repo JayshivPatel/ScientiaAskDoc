@@ -1,11 +1,11 @@
 import React from "react";
-import { Resource, Folder } from "../utils";
 import SelectionView, {
-  SelectionProps
+  SelectionProps,
 } from "components/molecules/SelectionView";
 import CategoryList from "components/molecules/CategoryList";
 import CategoryHeader from "components/molecules/CategoryHeader";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
+import { Folder, Resource } from "constants/types";
 
 export interface ListViewProps {
   folders: Folder[];
@@ -23,11 +23,11 @@ const ListView: React.FC<ListViewProps> = ({
   searchText,
   onDownloadClick,
   onItemClick,
-  includeInSearchResult
+  includeInSearchResult,
 }) => {
   let filesContent: Resource[] = resources;
   if (searchText !== "") {
-    filesContent = filesContent.filter(item =>
+    filesContent = filesContent.filter((item) =>
       includeInSearchResult(item, searchText.toLowerCase())
     );
   }
@@ -42,13 +42,11 @@ const ListView: React.FC<ListViewProps> = ({
         <>
           {folders.map(({ title, id }) => {
             let categoryItems = filesContent.filter(
-              res => res.folder === title
+              (res) => res.folder === title
             );
             function isAllSelected(): boolean {
               let isSelected = select.state.isSelected;
-              return categoryItems.every(
-                item => isSelected[item.id]
-              );
+              return categoryItems.every((item) => isSelected[item.id]);
             }
 
             function onSelectAllClick() {
@@ -68,7 +66,11 @@ const ListView: React.FC<ListViewProps> = ({
                   heading={title}
                   onSelectAllClick={onSelectAllClick}
                   selectAllIcon={isAllSelected() ? faCheckSquare : faSquare}
-                  checkBoxColor={select.isAnySelected() ? "#495057" : "#e9ecef"}
+                  checkBoxColor={
+                    select.isAnySelected()
+                      ? "var(--secondary-text-color)"
+                      : "var(--secondary-button-active)"
+                  }
                 />
                 <CategoryList
                   categoryItems={categoryItems}

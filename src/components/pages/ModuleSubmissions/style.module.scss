@@ -1,0 +1,20 @@
+@import "assets/scss/custom";
+
+.moduleSectionHeader {
+  margin-top: 1.875rem;
+  color: var(--primary-text-color);
+}
+
+.moduleParagraph {
+  margin-top: 1rem;
+}
+
+.moduleDashboardText {
+  color: var(--primary-text-color);
+}
+
+@media (max-width: 62rem) {
+}
+
+@media (min-width: 62rem) {
+}

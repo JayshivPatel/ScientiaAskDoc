@@ -5,25 +5,9 @@ import {
   faLink,
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
-import { request } from "utils/api";
-import { api, methods } from "constants/routes";
-
-export interface Folder {
-  title: string;
-  id: number;
-}
-
-export interface Resource {
-  title: string;
-  type: string;
-  tags: string[];
-  folder: string;
-  id: number;
-  index: number;
-  path: string;
-  visible_after: Date;
-  thumbnail?: string;
-}
+import { request } from "../../../utils/api";
+import { api, methods } from "../../../constants/routes";
+import { Resource, Folder } from "constants/types";
 
 export function tags(resources: Resource[]) {
   let tagSet = new Set<string>();

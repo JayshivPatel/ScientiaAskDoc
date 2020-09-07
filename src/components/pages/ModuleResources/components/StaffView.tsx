@@ -11,13 +11,12 @@ import AlertModal from "components/atoms/AlertModal"
 import IconButton from "components/atoms/IconButton"
 import EditModal from "components/organisms/EditModal"
 import UploadModal from "components/organisms/UploadModal"
-import { Resource, Folder } from "../utils";
 import CategoryList from "components/molecules/CategoryList";
 import CategoryHeader from "components/molecules/CategoryHeader";
 
-import { idBooleanMap } from "utils/types"
 import { staffRequest, download } from "utils/api"
 import { api, methods } from "constants/routes"
+import { Folder, Resource, idBooleanMap } from "constants/types";
 
 export interface StaffViewProps {
 	year: string;

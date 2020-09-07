@@ -30,7 +30,8 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
             variant="secondary"
           >
             <FontAwesomeIcon
-              icon={selectAllIcon}
+							icon={selectAllIcon}
+							style={{color: checkBoxColor}}
             />
           </Button>
         </div>

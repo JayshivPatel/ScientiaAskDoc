@@ -5,6 +5,7 @@ import classNames from "classnames";
 
 import applicationPDF from "assets/images/pdf-banner.png";
 import applicationDocument from "assets/images/document-banner.png";
+import applicationLink from "assets/images/link-banner.png";
 import applicationVideo from "assets/images/video-banner.png";
 
 import Badge from "react-bootstrap/Badge";
@@ -42,7 +43,10 @@ const FileCard: React.FC<FileCardProps> = ({
       break;
     case "video":
 			banner = applicationVideo;
-      break;
+			break;
+		case "link":
+			banner = applicationLink;
+			break;
     default:
       banner = applicationDocument;
       break;

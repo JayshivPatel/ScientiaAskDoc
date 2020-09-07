@@ -1,0 +1,16 @@
+.dayIndicatorGrid {
+  grid-area: background; 
+  padding-top: 0.625rem;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: auto;
+}
+
+.dayIndicatorColumn {
+  grid-row: 1;
+  margin-right: 0.75rem;
+  margin-bottom: 0.625rem;
+  margin-left: 0.75rem;
+  background-color: var(--day-indicator-column);
+  border: 0.0625rem solid var(--border-color);
+}

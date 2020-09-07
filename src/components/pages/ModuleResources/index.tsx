@@ -12,7 +12,8 @@ import StaffView from "./components/StaffView";
 
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import LoadingScreen from "components/molecules/LoadingScreen";
-import { Resource, openResource, tags, folders } from "./utils";
+import { openResource, tags, folders } from "./utils";
+import { Resource } from "constants/types";
 
 export interface ResourcesProps {
   year: string;
@@ -53,17 +54,23 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
           let resource = json[key];
 
           let resourceURL = queryString.parseUrl(resource.path);
+          let extension = resource.path.substr(
+            resource.path.lastIndexOf(".") + 1
+          );
           let thumbnail = undefined;
+          let altType = undefined;
           if (
-            resource.type === "video" &&
             resourceURL.url ===
-              "https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx"
+            "https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx"
           ) {
+            altType = "video";
             thumbnail = `https://imperial.cloud.panopto.eu/Panopto/Services/FrameGrabber.svc/FrameRedirect?objectId=${resourceURL.query.id}&mode=Delivery`;
+          } else if (extension === "pdf") {
+            altType = "pdf";
           }
           resourceArr.push({
             title: resource.title,
-            type: resource.type,
+            type: altType || resource.type,
             tags: resource.tags,
             folder: resource.category.toLowerCase(),
             thumbnail: thumbnail,
@@ -78,11 +85,12 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
         this.setState({ resources: resourceArr, isLoaded: true });
       });
     };
-    const onFailure = (error: any) => {
-      console.log(error);
-      error.text().then((errorText: any) => {
-        this.setState({ error: errorText, isLoaded: true });
-      });
+    const onFailure = (error: { text: () => Promise<any> }) => {
+      if (error.text) {
+        error.text().then((errorText) => {
+          this.setState({ error: errorText, isLoaded: true });
+        });
+      }
     };
 
     request(api.MATERIALS_RESOURCES, methods.GET, onSuccess, onFailure, {
@@ -136,7 +144,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
   }
 
   includeInSearchResult(item: Resource, searchText: string) {
-    let rx = /([a-z]+)\(([^)]+)\)/gi;
+    const rx = /([a-z]+)\(([^)]+)\)/gi;
     let match: RegExpExecArray | null;
     let title = item.title.toLowerCase();
     let tags = item.tags.map((tag) => tag.toLowerCase());

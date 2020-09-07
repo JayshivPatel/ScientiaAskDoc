@@ -1,0 +1,42 @@
+.moduleCard {
+  background: var(--background-color);
+  height: 100%;
+  border-width: 0rem;
+  border-radius: 0.5rem !important;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--border-color);
+}
+
+.moduleCard:hover {
+  transform: scale(1.03);
+  text-decoration: none;
+  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
+  border-color: var(--border-color-hover);
+}
+
+.moduleCard :global(.card-header) {
+  background: var(--background-color);
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  border-width: 0rem;
+  color: var(--primary-text-color);
+  font-weight: 500;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  text-align: right;
+  padding: 0.5rem;
+  padding-bottom: 0rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.moduleCard :global(.card-body) {
+  padding: 0.5rem;
+  padding-top: 0rem;
+  font-size: 1rem;
+  color: var(--primary-text-color);
+}
+
+.moduleCard :global(.card-title) {
+  margin-bottom: 0;
+}

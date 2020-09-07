@@ -7,15 +7,16 @@ import { api, methods } from "constants/routes";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
+import queryString from "query-string";
 import FileListItem from "components/atoms/FileListItem";
 import {
   resourceTypeToIcon,
-  Resource,
   openResource,
   tags,
 } from "../ModuleResources/utils";
 import LoadingScreen from "components/molecules/LoadingScreen";
 import { titleCase } from "utils/functions";
+import { Resource } from "constants/types";
 
 export interface ModuleOverviewProps {
   year: string;
@@ -53,9 +54,24 @@ class ModuleOverview extends React.Component<
       data.json().then((json) => {
         for (const key in json) {
           let resource = json[key];
+
+          let resourceURL = queryString.parseUrl(resource.path);
+          let extension = resource.path.substr(
+            resource.path.lastIndexOf(".") + 1
+          );
+          let altType = undefined;
+          if (
+            resourceURL.url ===
+            "https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx"
+          ) {
+            altType = "video";
+          } else if (extension === "pdf") {
+            altType = "pdf";
+          }
+
           resourceArr.push({
             title: resource.title,
-            type: resource.type,
+            type: altType || resource.type,
             tags: resource.tags,
             folder: resource.category,
             id: resource.id,

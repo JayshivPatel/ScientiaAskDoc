@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 import ResourceDetailForm, { ResourceDetails } from "components/molecules/ResourceDetailForm"
-import { Resource } from "components/pages/ModuleResources/utils";
+import { Resource } from "constants/types";
 import { staffRequest } from "utils/api"
 import { api, methods } from "constants/routes"
 

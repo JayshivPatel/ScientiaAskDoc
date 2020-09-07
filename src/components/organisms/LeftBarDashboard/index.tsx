@@ -1,5 +1,4 @@
 import React from "react";
-import LeftBar from "components/organisms/LeftBar";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
 import { faGitlab } from "@fortawesome/free-brands-svg-icons";
 import {
@@ -46,10 +45,10 @@ const LeftBarDashboard: React.FC = () => {
   ];
 
   return (
-    <LeftBar>
+    <>
       <SideBarTabGroup title="Links" buttons={linkButtons} />
       <WorkDueGroup />
-    </LeftBar>
+    </>
   );
 };
 

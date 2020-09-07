@@ -54,7 +54,7 @@
 
 .sectionHeaderButton:global(.active),
 .sectionHeaderButton:active {
-  background: $gray-400 !important;
+  background:var(--secondary-text-color) !important;
   font-weight: 500;
   text-align: left;
   border-width: 0rem;
@@ -63,7 +63,7 @@
 }
 
 .sectionHeaderButton:hover, .sectionHeaderButton:focus {
-  color: var(--tertiary-text-color) !important;
+	color: var(--secondary-text-color) !important;
   background-color: var(--secondary-background-color) !important;
 	box-shadow: none !important;
 }

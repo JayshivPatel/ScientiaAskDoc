@@ -5,8 +5,8 @@ import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 
 import FileListItem from "components/atoms/FileListItem";
 import { SelectionProps } from "components/molecules/SelectionView";
-import { Resource, resourceTypeToIcon } from "../../pages/ModuleResources/utils";
-import { idBooleanMap } from "utils/types";
+import { resourceTypeToIcon } from "../../pages/ModuleResources/utils";
+import { idBooleanMap, Resource } from "constants/types";
 import { staffRequest } from "utils/api";
 import { api, methods } from "constants/routes";
 

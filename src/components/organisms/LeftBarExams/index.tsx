@@ -1,5 +1,4 @@
 import React from "react";
-import LeftBar from "components/organisms/LeftBar";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
 import {
   faCalendarAlt,
@@ -45,9 +44,9 @@ const LeftBarExams: React.FC = () => {
   ];
 
   return (
-    <LeftBar>
+    <>
       <SideBarTabGroup title="Pages" buttons={examButtons} />
-    </LeftBar>
+    </>
   );
 };
 

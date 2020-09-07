@@ -1,5 +1,5 @@
 const dev = {
-  MATERIALS_URL: "http://localhost:5000"
+  MATERIALS_URL: `http://${window.location.hostname}:5000`
 }
 
 const prod = {
