@@ -52,6 +52,12 @@ const SearchBox: React.FC<SearchBoxProps> = ({
             >
               Video
             </Dropdown.Item>
+						<Dropdown.Item
+              className={styles.dropdownItem}
+              onClick={() => onSearchTextChange(`${searchText} type(link) `)}
+            >
+              Link
+            </Dropdown.Item>
             <Dropdown.Item
               className={styles.dropdownItem}
               onClick={() => onSearchTextChange(`${searchText} type(file) `)}
