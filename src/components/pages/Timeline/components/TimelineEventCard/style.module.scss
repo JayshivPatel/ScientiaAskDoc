@@ -2,13 +2,13 @@
 
 
 .timelineEvent {
-
 	cursor: pointer;
   margin: 0.5rem;
   border-radius: 0.5rem;
   padding: 0.5rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .eventTitle {
@@ -16,6 +16,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  width: 90%;
 }
 
 .eventPrefix {
@@ -24,10 +25,11 @@
 }
 
 .unassessedSubmission {
-	background: var(--blue-background);
+  background: var(--blue-background);
+  border: 2px solid var(--blue-background);
 }
 
-.unassessedSubmission .eventTitle, .unassessedSubmission .eventPrefix  {
+.unassessedSubmission > * {
 	color: var(--blue-text);
 }
 
@@ -35,7 +37,7 @@
 	background: var(--teal-background);
 }
 
-.individualAssessed .eventTitle, .individualAssessed .eventPrefix {
+.individualAssessed > * {
 	color: var(--teal-text);
 }
 
@@ -43,7 +45,7 @@
 	background: var(--pink-background);
 }
 
-.groupAssessed .eventTitle, .groupAssessed .eventPrefix {
+.groupAssessed > * {
 	color: var(--pink-text);
 }
 
@@ -51,7 +53,7 @@
 	background: var(--cyan-background);
 }
 
-.unassessed .eventTitle, .unassessed .eventPrefix {
+.unassessed > * {
 	color: var(--cyan-text);
 }
 
@@ -59,6 +61,10 @@
 	background: var(--indigo-background);
 }
 
-.writtenExam .eventTitle, .writtenExam .eventPrefix {
+.writtenExam > * {
 	color: var(--indigo-text);
+}
+
+.icon {
+  float: right;
 }

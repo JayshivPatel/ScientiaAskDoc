@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import styles from "./style.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faEnvelope, faCheese } from "@fortawesome/free-solid-svg-icons";
 import FileListItem from "components/atoms/FileListItem";
 import { resourceTypeToIcon } from "components/pages/ModuleResources/utils";
 import { TimelineEvent } from "constants/types";
@@ -15,6 +15,24 @@ interface Props {
 
 const EventModal: React.FC<Props> = ({ event, show, onHide }) => {
   if (!event) return null;
+  let assessmentStyle = styles.unassessedSubmission;
+  switch (event.assessment) {
+    case "unassessed submission":
+      assessmentStyle = styles.unassessedSubmission;
+      break;
+    case "individual assessed":
+      assessmentStyle = styles.individualAssessed;
+      break;
+    case "group assessed":
+      assessmentStyle = styles.groupAssessed;
+      break;
+    case "unassessed":
+      assessmentStyle = styles.unassessed;
+      break;
+    case "written exam":
+      assessmentStyle = styles.writtenExam;
+      break;
+  }
   return (
     <Modal
       className={styles.eventModal}
@@ -46,18 +64,25 @@ const EventModal: React.FC<Props> = ({ event, show, onHide }) => {
       <Modal.Body className={styles.modalBody}>
         <span className={styles.eventTitle}>{event.title}</span>
         <div className={styles.eventInfo}>
-          <span className={styles.eventAssessment}>{event.assessment}</span>
-          <span className={styles.eventStatus}>{event.status}</span>
+          <div className={assessmentStyle}>{event.assessment}</div>
+          <div className={styles.eventInfoElement}>{event.status}<FontAwesomeIcon
+                className={styles.icon}
+                icon={faCheese}
+                />
+            </div>
         </div>
         <div className={styles.eventTimeInfo}>
-          <span className={styles.eventTime}>
-            Issued: {event.startDate.toLocaleDateString()}
+          <span className={styles.startDateHeading}>
+            Issued: 
+            </span>
+            <span className={styles.startDate}>{event.startDate.toLocaleDateString()}
           </span>
-          <span className={styles.eventTime}>
-            Due: {event.endDate.toLocaleDateString()}
+          <span className={styles.endDateHeading}>
+            Due: 
+            </span><span className={styles.endDate}>{event.endDate.toLocaleDateString()}
           </span>
         </div>
-        <h4>Given</h4>
+        <div className={styles.sectionHeaderContainer}><span className={styles.sectionHeader}>Given</span></div>
         {dummy.map(({ title, type, tags, id }: any) => (
           <FileListItem
             title={title}

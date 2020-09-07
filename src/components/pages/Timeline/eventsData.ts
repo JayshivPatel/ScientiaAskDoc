@@ -8,9 +8,9 @@ export const eventsData : TimelineEvent[] = [
 		startDate: new Date("2020-10-07"),
 		endDate: new Date("2020-10-07"),
 		prefix: "PMT",
-		assessment: "individual_assessed",
+		assessment: "individual assessed",
 		owner: "ip914",
-		status: "unreleased",
+		status: "missed",
 		moduleCode: "CO140"
 	},
 	{
@@ -21,7 +21,7 @@ export const eventsData : TimelineEvent[] = [
 		moduleCode: "CO140",
 		prefix: "PMT",
 		owner: "ip914",
-		assessment: "written_exam",
+		assessment: "written exam",
 		status: "unreleased",
 	},
 	{
@@ -43,19 +43,19 @@ export const eventsData : TimelineEvent[] = [
 		moduleCode: "CO140",
 		owner: "ip914",
 		prefix: "PMT",
-		assessment: "unassessed_submission",
+		assessment: "unassessed submission",
 		status: "unreleased",
 	},
 	{
 		title: "Coursework 1",
 		id: 4,
 		startDate: new Date("2020-10-05"),
-		endDate: new Date("2020-10-12"),
+		endDate: new Date("2020-10-09"),
 		moduleCode: "CO112",
 		owner: "ip914",
 		prefix: "CW",
-		assessment: "individual_assessed",
-		status: "unreleased",
+		assessment: "individual assessed",
+		status: "late",
 	},
 	{
 		title: "Practical 1",
@@ -65,7 +65,7 @@ export const eventsData : TimelineEvent[] = [
 		moduleCode: "CO120.2",
 		owner: "ip914",
 		prefix: "PPT",
-		assessment: "group_assessed",
-		status: "unreleased",
+		assessment: "group assessed",
+		status: "complete",
 	}
 ]

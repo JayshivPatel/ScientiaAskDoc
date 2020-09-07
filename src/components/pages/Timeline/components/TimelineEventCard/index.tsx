@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./style.module.scss";
 import classNames from "classnames";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faBullhorn, faExclamationCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 export interface TimelineEventProps {
   title: string;
@@ -23,23 +25,43 @@ const TimelineEventCard: React.FC<TimelineEventProps> = ({
   rowNumber,
   onClick,
 }) => {
-	let assessmentStyle = styles.unassessedSubmission;
+  let assessmentStyle = styles.unassessedSubmission;
+  let icon = faEnvelope;
+  let borderColor = "var(--blue-text)";
 	let isSingleDay = endColumn - startColumn < 2;
   switch (assessment) {
-    case "unassessed_submission":
+    case "unassessed submission":
       assessmentStyle = styles.unassessedSubmission;
       break;
-    case "individual_assessed":
+    case "individual assessed":
       assessmentStyle = styles.individualAssessed;
       break;
-    case "group_assessed":
+    case "group assessed":
       assessmentStyle = styles.groupAssessed;
       break;
     case "unassessed":
       assessmentStyle = styles.unassessed;
       break;
-    case "written_exam":
+    case "written exam":
       assessmentStyle = styles.writtenExam;
+      break;
+  }
+
+  switch (status) {
+    case "due": 
+      icon = faEnvelope;
+      break;
+    case "unreleased": 
+      icon = faEnvelope;
+      break;
+    case "late":
+      icon = faBullhorn;
+      break;
+    case "missed":
+      icon = faExclamationCircle;
+      break;
+    case "complete":
+      icon = faCheckCircle;
       break;
   }
 
@@ -54,15 +76,19 @@ const TimelineEventCard: React.FC<TimelineEventProps> = ({
         marginRight: isSingleDay ? ".1rem" : ".5rem",
       }}
     >
-      <span
+      <span className={styles.eventTitle}>
+        <span
         className={styles.eventPrefix}
         style={{
           fontSize: isSingleDay ? ".9rem" : "1rem",
         }}
       >
         {prefix}&nbsp;
-      </span>
-      <span className={styles.eventTitle}>{title}</span>
+      </span>{title}</span>
+      <FontAwesomeIcon
+                className={styles.icon}
+                icon={icon}
+            />
     </div>
   );
 };

@@ -10,6 +10,63 @@
   }
 }
 
+.eventTitle {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.eventTimeInfo {
+  margin-top: 1.875rem;
+  display: grid;
+  grid-template-areas: "startHeading start" "endHeading end";
+  width: 25%;
+}
+
+.startDate, .endDate, .startDateHeading, .endDateHeading {
+  font-size: 1.125rem;
+}
+
+.startDate {
+  grid-area: start;
+  padding-left: 0.625rem;
+}
+
+.startDateHeading {
+  grid-area: startHeading;
+  font-weight: 500;
+}
+
+.icon {
+  margin-left: 0.625rem;
+}
+
+.endDate {
+  grid-area: end;
+  padding-left: 0.625rem;
+}
+
+.endDateHeading {
+  grid-area: endHeading;
+  font-weight: 500;
+}
+
+.eventInfoElement {
+  text-transform: capitalize;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  background: var(--secondary-background-color);
+  padding: 0.25rem 0.5rem;
+  margin-left: 0.625rem;
+}
+
+
+.eventInfo {
+  margin-top: 0.625rem;
+  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+}
+
 .sectionHeaderButton {
   color: var(--tertiary-text-color);
   background-color: var(--background-color);
@@ -18,6 +75,19 @@
 .sectionHeaderButton:hover {
   color: var(--tertiary-text-color);
   background-color: var(--secondary-background-color);
+}
+
+.sectionHeader {
+  font-size: 1.25rem;
+  text-transform: capitalize;
+  color: var(--primary-text-color);
+}
+
+.sectionHeaderContainer {
+  padding: 0.25rem 0rem;
+	margin-top: 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 1rem;
 }
 
 .modalHeader {
@@ -138,4 +208,41 @@ $button-border: transparentize($gray-300, 1);
   background-color: var(--primary-button-hover);
   color: var(--primary-button-text);
   box-shadow: none !important;
+}
+
+.unassessed, .unassessedSubmission, .individualAssessed, .groupAssessed, .writtenExam {
+  text-transform: capitalize;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.unassessedSubmission {
+	background: var(--blue-background);
+  color: var(--blue-text);
+  border-color: var(--blue-background);
+}  
+
+.individualAssessed {
+	background: var(--teal-background);
+	color: var(--teal-text);
+	border-color: var(--teal-background);
+}
+
+.groupAssessed {
+	background: var(--pink-background);
+	color: var(--pink-text);
+	border-color: var(--pink-background);
+}
+
+.unassessed {
+	background: var(--cyan-background);
+	color: var(--cyan-text);
+	border-color: var(--cyan-background);
+}
+
+.writtenExam {
+	background: var(--indigo-background);
+	color: var(--indigo-text);
+	border-color: var(--indigo-background);
 }
