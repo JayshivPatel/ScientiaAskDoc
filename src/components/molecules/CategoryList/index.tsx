@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
+import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 import FileListItem from "components/atoms/FileListItem";
 import { SelectionProps } from "components/molecules/SelectionView";
@@ -9,6 +11,8 @@ import { resourceTypeToIcon } from "../../pages/ModuleResources/utils";
 import { idBooleanMap, Resource } from "constants/types";
 import { staffRequest } from "utils/api";
 import { api, methods } from "constants/routes";
+
+const arrayMove = require('array-move');
 
 export interface CategoryListProps {
   categoryItems: Resource[];
@@ -21,6 +25,8 @@ export interface CategoryListProps {
   handleMouseOver: (id: number) => void;
   handleMouseOut: (id: number) => void;
 }
+
+export const DragHandle = SortableHandle(() => <FontAwesomeIcon style={{ marginRight: "1rem" }} icon={faBars}/>);
 
 const SortableItem = SortableElement(({children}: {children: any}) =>
   <div>{children}</div>
@@ -88,7 +94,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
 
   const onSortEnd = ({ oldIndex, newIndex }: { oldIndex : number, newIndex: number }) => {
     setListItems(arrayMove(listItems, oldIndex, newIndex));
-    // Save reordered array as local var since state will not update immediately
+    // Since state does not update immediately, save reordered array as a local variable
     let newResources = arrayMove(resources, oldIndex, newIndex);
     setResources(newResources);
     // Only need to modify array subset between target indices

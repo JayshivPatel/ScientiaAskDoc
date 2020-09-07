@@ -5,9 +5,9 @@ import classNames from "classnames";
 import Row from "react-bootstrap/esm/Row";
 import Badge from "react-bootstrap/Badge";
 import { IconDefinition } from "@fortawesome/free-regular-svg-icons";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SortableHandle } from "react-sortable-hoc";
+
+import { DragHandle } from "components/molecules/CategoryList";
 
 export interface FileListItemProps {
   title: string;
@@ -21,8 +21,6 @@ export interface FileListItemProps {
   onMouseOver?: (event: React.MouseEvent) => void;
   onMouseOut?: (event: React.MouseEvent) => void;
 }
-
-const DragHandle = SortableHandle(() => <FontAwesomeIcon icon={faBars}/>);
 
 const FileListItem: React.FC<FileListItemProps> = ({
   title,
@@ -58,58 +56,57 @@ const FileListItem: React.FC<FileListItemProps> = ({
     <>
       {showMenu && resourceActions &&
         <div
+          className={styles.resourceMenu}
           style={{
             top: yPos,
             left: xPos,
-            position: "absolute",
-            boxShadow: "0px 8px 10px #999999",
-            borderRadius: "8px",
-            zIndex: 10000
           }}
         >
           { resourceActions }
         </div>
       }
-      <Row
-        className={styles.listRow}
+      <div
+        className={styles.listItem}
         onClick={onClick}
-        onMouseOver={onMouseOver}
         onMouseOut={onMouseOut}
+        onMouseOver={onMouseOver}
         onContextMenu={handleContextMenu}
       >
-        <div className={styles.listItemTitle}>
-          { resourceActions ?
-            <div style={{ padding: 0, display: "flex", alignItems: "center" }}>
-              <DragHandle />
-              { title }
-            </div> :
-            title
-          }
-        </div>
-        <div style={{ padding: 0, display: "flex", alignItems: "center" }}>
-          {tags.map(tag => (
-            <Badge
-              pill
-              key={tag}
-              className={classNames(
-                styles.fileTag,
-                tag === "new" ? styles.tagTeal : styles.tagBlue
-              )}
-            >
-              {tag}
-            </Badge>
-          ))}
-          <FontAwesomeIcon
-            style={{ fontSize: "1.125rem" }}
-            icon={icon}
-            onClick={e => {
-              e.stopPropagation();
-              if (onIconClick !== undefined) onIconClick(e);
-            }}
-            fixedWidth
-          />
-        </div>
-      </Row>
+        <Row className={styles.listRow}>
+          <div className={styles.listItemTitle}>
+            { resourceActions ?
+              <div style={{ padding: 0, display: "flex", alignItems: "center" }}>
+                <DragHandle />
+                { title }
+              </div> :
+              title
+            }
+          </div>
+          <div style={{ padding: 0, display: "flex", alignItems: "center" }}>
+            {tags.map(tag => (
+              <Badge
+                pill
+                key={tag}
+                className={classNames(
+                  styles.fileTag,
+                  tag === "new" ? styles.tagTeal : styles.tagBlue
+                )}
+              >
+                {tag}
+              </Badge>
+            ))}
+            <FontAwesomeIcon
+              style={{ fontSize: "1.125rem" }}
+              icon={icon}
+              onClick={e => {
+                e.stopPropagation();
+                if (onIconClick !== undefined) onIconClick(e);
+              }}
+              fixedWidth
+            />
+          </div>
+        </Row>
+      </div>
     </>
   );
 };
