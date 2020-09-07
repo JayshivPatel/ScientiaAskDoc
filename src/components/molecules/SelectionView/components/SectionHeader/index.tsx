@@ -39,7 +39,8 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
                 onClick={onDownloadClick}
               >
                 <FontAwesomeIcon
-                  className={styles.buttonIcon}
+									className={styles.buttonIcon}
+									style={{color: checkBoxColur}}
                   icon={faDownload}
                 />
               </Button>
@@ -53,7 +54,8 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
             aria-expanded={show}
           >
             <FontAwesomeIcon
-              className={styles.buttonIcon}
+							className={styles.buttonIcon}
+							style={{color: checkBoxColur}}
               icon={selectAllIcon}
             />
           </Button>
