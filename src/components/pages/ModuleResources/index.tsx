@@ -58,16 +58,17 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
           let resourceURL = queryString.parseUrl(resource.path);
           let thumbnail = undefined;
+          let altType = undefined;
           if (
-            resource.type === "video" &&
             resourceURL.url ===
-              "https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx"
+            "https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx"
           ) {
+            altType = "video";
             thumbnail = `https://imperial.cloud.panopto.eu/Panopto/Services/FrameGrabber.svc/FrameRedirect?objectId=${resourceURL.query.id}&mode=Delivery`;
           }
           resourceArr.push({
             title: resource.title,
-            type: resource.type,
+            type: altType || resource.type,
             tags: resource.tags,
             folder: resource.category.toLowerCase(),
             thumbnail: thumbnail,
@@ -79,12 +80,11 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       });
     };
     const onFailure = (error: { text: () => Promise<any> }) => {
-			if (error.text){
-				error.text().then((errorText) => {
-					this.setState({ error: errorText, isLoaded: true });
-				});
-			}
-
+      if (error.text) {
+        error.text().then((errorText) => {
+          this.setState({ error: errorText, isLoaded: true });
+        });
+      }
     };
 
     request(api.MATERIALS_RESOURCES, methods.GET, onSuccess, onFailure, {

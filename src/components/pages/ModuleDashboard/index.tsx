@@ -5,6 +5,7 @@ import styles from "./style.module.scss";
 import classNames from "classnames";
 import { faGlobe, faLink } from "@fortawesome/free-solid-svg-icons";
 import PageButtonGroup from "components/molecules/PageButtonGroup";
+import queryString from "query-string";
 
 import { request } from "../../../utils/api";
 import { api, methods } from "../../../constants/routes";
@@ -33,13 +34,19 @@ const ModuleDashboard: React.FC = () => {
       data.json().then((json) => {
         for (const key in json) {
           let resource = json[key];
-          if (resource.type !== "link") continue;
+          let resourceURL = queryString.parseUrl(resource.path);
 
-          newButtons.push({
-            title: resource.title,
-            icon: faLink,
-            url: resource.path,
-          });
+          if (
+            resource.type === "link" &&
+            resourceURL.url !==
+              "https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx"
+          ) {
+            newButtons.push({
+              title: resource.title,
+              icon: faLink,
+              url: resource.path,
+            });
+          }
         }
         setButtons((b) => b.concat(newButtons));
       });
@@ -63,7 +70,10 @@ const ModuleDashboard: React.FC = () => {
       <Dandruff heading={generateHeading(id)} />
 
       <h4 className={classNames(styles.moduleSectionHeader)}>Module Aims</h4>
-      <div className={styles.moduleDashboardText} style={{ paddingTop: "0.75rem" }}>
+      <div
+        className={styles.moduleDashboardText}
+        style={{ paddingTop: "0.75rem" }}
+      >
         <span>In this module you will have the opportunity to:</span>
         <ul>
           <li>
