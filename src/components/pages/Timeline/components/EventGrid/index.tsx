@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./style.module.scss";
 import { ModuleTracks } from "../..";
-import TimelineEventCard from "../TimelineEventCard";
+import EventCard from "../EventCard";
 import { Module } from "constants/types";
 
 export interface EventGridProps {
@@ -73,7 +73,7 @@ const EventGrid: React.FC<EventGridProps> = ({
     >
       {eventPositions.map(
         ({ title, startColumn, prefix, status, id, endColumn, assessment, rowNumber }) => (
-          <TimelineEventCard
+          <EventCard
             title={title}
 						key={id}
             assessment={assessment}
