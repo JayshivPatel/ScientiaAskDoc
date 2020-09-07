@@ -22,9 +22,10 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
         onHide={() => setShowModal(false)}
       />
       {eventsData
-        .filter((e) => e.moduleCode === moduleID)
+        .filter(({ moduleCode }) => moduleCode === moduleID)
         .map((e) => (
           <p
+            key={e.id}
             onClick={() => {
               setActiveEvent(e);
               setShowModal(true);
