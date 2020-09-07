@@ -12,7 +12,6 @@
 }
 
 .eventTitle {
-  color: var(--tutorial-text);
   font-size: 1rem;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -20,23 +19,46 @@
 }
 
 .eventPrefix {
-  color: var(--tutorial-text);
   font-weight: 500;
   font-size: 1rem;
 }
 
-.tutorialEvent {
-	background: var(--tutorial-background);
+.unassessedSubmission {
+	background: var(--blue-background);
 }
 
-.tutorialEvent .eventTitle, .tutorialEvent .eventPrefix  {
-	color: var(--tutorial-text);
+.unassessedSubmission .eventTitle, .unassessedSubmission .eventPrefix  {
+	color: var(--blue-text);
 }
 
-.courseworkEvent {
-	background: var(--coursework-background);
+.individualAssessed {
+	background: var(--teal-background);
 }
 
-.courseworkEvent .eventTitle, .courseworkEvent .eventPrefix {
-	color: var(--coursework-text);
+.individualAssessed .eventTitle, .individualAssessed .eventPrefix {
+	color: var(--teal-text);
+}
+
+.groupAssessed {
+	background: var(--pink-background);
+}
+
+.groupAssessed .eventTitle, .groupAssessed .eventPrefix {
+	color: var(--pink-text);
+}
+
+.unassessed {
+	background: var(--cyan-background);
+}
+
+.unassessed .eventTitle, .unassessed .eventPrefix {
+	color: var(--cyan-text);
+}
+
+.writtenExam {
+	background: var(--indigo-background);
+}
+
+.writtenExam .eventTitle, .writtenExam .eventPrefix {
+	color: var(--indigo-text);
 }

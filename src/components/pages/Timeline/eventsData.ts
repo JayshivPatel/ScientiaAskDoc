@@ -21,7 +21,7 @@ export const eventsData : TimelineEvent[] = [
 		moduleCode: "CO140",
 		prefix: "PMT",
 		owner: "ip914",
-		assessment: "unassessed_submission",
+		assessment: "written_exam",
 		status: "unreleased",
 	},
 	{
@@ -32,7 +32,7 @@ export const eventsData : TimelineEvent[] = [
 		moduleCode: "CO140",
 		owner: "ip914",
 		prefix: "PMT",
-		assessment: "individual_assessed",
+		assessment: "unassessed",
 		status: "unreleased",
 	},
 	{
@@ -65,7 +65,7 @@ export const eventsData : TimelineEvent[] = [
 		moduleCode: "CO120.2",
 		owner: "ip914",
 		prefix: "PPT",
-		assessment: "unassessed_submission",
+		assessment: "group_assessed",
 		status: "unreleased",
 	}
 ]

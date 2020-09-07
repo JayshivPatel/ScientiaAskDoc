@@ -23,14 +23,23 @@ const TimelineEventCard: React.FC<TimelineEventProps> = ({
   rowNumber,
   onClick,
 }) => {
-	let assessmentStyle = styles.tutorialEvent;
+	let assessmentStyle = styles.unassessedSubmission;
 	let isSingleDay = endColumn - startColumn < 2;
   switch (assessment) {
     case "unassessed_submission":
-      assessmentStyle = styles.tutorialEvent;
+      assessmentStyle = styles.unassessedSubmission;
       break;
     case "individual_assessed":
-      assessmentStyle = styles.courseworkEvent;
+      assessmentStyle = styles.individualAssessed;
+      break;
+    case "group_assessed":
+      assessmentStyle = styles.groupAssessed;
+      break;
+    case "unassessed":
+      assessmentStyle = styles.unassessed;
+      break;
+    case "written_exam":
+      assessmentStyle = styles.writtenExam;
       break;
   }
 
