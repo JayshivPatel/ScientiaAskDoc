@@ -108,7 +108,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 
   render() {
     const [termStart, numWeeks] = getTermDates(this.props.term);
-    const activeDay = new Date("2020-10-13");
+    const activeDay = new Date("2020-10-21");
     const trackHeight = 3.25;
     if (!this.state.isLoaded) {
       return <LoadingScreen successful={<></>} />;
