@@ -10,7 +10,7 @@ import EventGrid from "./components/EventGrid";
 import { eventsData } from "./eventsData";
 import LoadingScreen from "components/molecules/LoadingScreen";
 import { Term, Module, TimelineEvent } from "constants/types";
-import { addDays } from "utils/functions";
+import { addDays, toDayCount } from "utils/functions";
 import TimelineMobile from "./components/TimelineMobile";
 
 export type ModuleTracks = {
@@ -86,13 +86,9 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
   }
 
   dateToColumn(day: Date, termStart: Date) {
-    let dayTime = Math.floor(day.getTime() / 86400000);
-    let termStartTime = Math.floor(termStart.getTime() / 86400000);
-    return (
-      Math.ceil(
-        ((dayTime - termStartTime) / 7) * 6
-      ) + 1
-    );
+    const dayTime = toDayCount(day);
+    const termStartTime = toDayCount(termStart);
+    return Math.ceil(((dayTime - termStartTime) / 7) * 6) + 1;
   }
 
   isInTerm(date: Date, termStart: Date, numWeeks: number) {
@@ -178,12 +174,10 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 }
 
 function eventsOverlaps(e1: TimelineEvent, e2: TimelineEvent) {
-  let start1 = Math.floor(e1.startDate.getTime() / 86400000);
-  let start2 = Math.floor(e2.startDate.getTime() / 86400000);
-  let end1 = Math.ceil(e1.endDate.getTime() / 86400000);
-  let end2 = Math.ceil(e2.endDate.getTime() / 86400000);
-
-  return start1 <= end2 && end1 >= start2;
+  return (
+    toDayCount(e1.startDate) <= toDayCount(e2.endDate) &&
+    toDayCount(e1.endDate) >= toDayCount(e2.startDate)
+  );
 }
 
 function getTermDates(term: Term): [Date, number] {

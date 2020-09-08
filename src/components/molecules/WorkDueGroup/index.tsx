@@ -60,7 +60,7 @@ const WorkDueGroup: React.FC<WorkDueGroupProps> = ({
               break;
           }
           return {
-            title: `${prefix} : ${moduleCode}`,
+            title: `${prefix}: ${moduleCode}`,
             subtitle: title,
 						content: endDate.toLocaleString("en-GB", timeOptions),
 						id: id,

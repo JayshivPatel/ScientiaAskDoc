@@ -13,6 +13,7 @@ import {
 import FileListItem from "components/atoms/FileListItem";
 import { resourceTypeToIcon } from "components/pages/ModuleResources/utils";
 import { TimelineEvent } from "constants/types";
+import { toDayCount } from "utils/functions";
 interface Props {
   event?: TimelineEvent;
   show: boolean;
@@ -22,7 +23,7 @@ interface Props {
 
 const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
   if (!event) return null;
-  const timeLeft = event.endDate.getTime() - activeDay.getTime();
+  const timeLeft = toDayCount(event.endDate) - toDayCount(activeDay);
   let assessmentStyle = styles.unassessedSubmission;
   let icon = undefined;
   let borderColour = "transparent";
@@ -127,7 +128,7 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
             <>
               <span className={styles.daysHeading}>Due In:</span>
               <span className={styles.daysLeft}>
-                {`${Math.floor(timeLeft / 86400000)} days`}
+                {`${timeLeft} days`}
               </span>
             </>
           )}
@@ -145,7 +146,7 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
           />
         ))}
       </Modal.Body>
-      {event.status !== "unreleased" && timeLeft >= -86400000 && (
+      {event.status !== "unreleased" && timeLeft >= -1 && (
         <Modal.Footer className={styles.modalFooter}>
           <Button variant="secondary" className={styles.submitButton}>
             Submit

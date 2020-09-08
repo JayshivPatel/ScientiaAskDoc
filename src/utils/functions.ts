@@ -11,3 +11,7 @@ export function addDays(date: Date, days: number) {
   result.setDate(result.getDate() + days);
   return result;
 }
+
+export function toDayCount(date: Date) {
+  return Math.floor(date.getTime() / 86400000);
+}

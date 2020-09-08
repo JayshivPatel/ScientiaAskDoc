@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import styles from "./style.module.scss";
+import { toDayCount } from "utils/functions";
 
 export interface WeekHeadingProps {
   weekNumber: number;
@@ -27,9 +28,7 @@ const WeekHeading: React.FC<WeekHeadingProps> = ({
       </Card.Header>
       <Card.Body>
         {days.map((day, i) => {
-          let timeDifference =
-            dateRangeStart.getTime() + i * 86400000 - activeDay.getTime();
-          let isActive = timeDifference < 86400000 && timeDifference >= 0;
+          let isActive = toDayCount(dateRangeStart) + i === toDayCount(activeDay);
           return (
             <div
               key={day}

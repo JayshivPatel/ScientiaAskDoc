@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import EventModal from "components/organisms/EventModal";
 import { TimelineEvent } from "constants/types";
 import { eventsData } from "../Timeline/eventsData";
 import Row from "react-bootstrap/esm/Row";
@@ -15,7 +14,7 @@ interface Props {
 const ModuleSubmissions: React.FC<Props> = ({ moduleID, onEventClick }) => {
   let [searchText, setSearchText] = useState("");
 
-  const activeDay = new Date("2020-10-12");
+  const activeDay = new Date("2020-10-21");
   return (
     <>
       <MyBreadcrumbs />

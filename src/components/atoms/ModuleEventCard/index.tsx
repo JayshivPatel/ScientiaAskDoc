@@ -1,15 +1,14 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 import styles from "./style.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faEnvelope,
   faBullhorn,
   faExclamationCircle,
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { TimelineEvent } from "constants/types";
 import Card from "react-bootstrap/esm/Card";
+import { toDayCount } from "utils/functions";
 interface Props {
   event?: TimelineEvent;
   activeDay: Date;
@@ -17,7 +16,7 @@ interface Props {
 
 const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
   if (!event) return null;
-  const timeLeft = (event.endDate.getTime() - activeDay.getTime()) / 86400000;
+  const timeLeft = toDayCount(event.endDate) - toDayCount(activeDay);
   let assessmentStyle = styles.unassessedSubmission;
   let icon = undefined;
   let borderColour = "transparent";
@@ -41,7 +40,7 @@ const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
   }
   switch (event.status) {
     case "due":
-      dateElements = ["Due In:", `${Math.floor(timeLeft)} days`];
+      dateElements = ["Due In:", `${timeLeft} days`];
       borderColour = "var(--primary-text-color)";
       break;
     case "unreleased":

@@ -138,7 +138,7 @@ class App extends React.Component<{}, AppState> {
           show={this.state.showEventModal}
           onHide={() => this.setState({ showEventModal: false })}
           event={this.state.activeModalEvent}
-          activeDay={new Date("2020-10-12")}
+          activeDay={new Date("2020-10-21")}
         />
 
         <Switch>
