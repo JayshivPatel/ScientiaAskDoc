@@ -27,7 +27,8 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
       />
       <Row >
         {eventsData
-          .filter(({ moduleCode }) => moduleCode === moduleID)
+					.filter(({ moduleCode }) => moduleCode === moduleID)
+          // .filter(({ status }) => status === "due" || status === "late")
           .map((e) => (
             <Col
 							xs={12}

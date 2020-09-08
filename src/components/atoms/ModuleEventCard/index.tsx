@@ -67,7 +67,8 @@ const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
         <Card.Title>{event.prefix}</Card.Title>
         <div style={{ display: "flex" }}>
           <Button
-            variant="secondary"
+						variant="secondary"
+						onClick={e => e.stopPropagation()}
             className={styles.sectionHeaderButton}
             href={`mailto:${event.owner}@ic.ac.uk?subject=Regarding ${event.title}`}
             target="_blank"
