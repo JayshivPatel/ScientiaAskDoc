@@ -95,6 +95,7 @@
 .modalHeader {
   padding: 0.5rem 0.5rem;
   padding-left: 0.75rem;
+  padding-bottom: 0rem;
   background-color: var(--background-color);
   color: var(--primary-text-color);
   border-top-right-radius: 0.5rem !important;
@@ -127,6 +128,7 @@
   color: var(--primary-text-color);
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
+  padding: 0.75rem;
   padding-top: 0rem;
 }
 

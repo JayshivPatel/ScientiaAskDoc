@@ -25,28 +25,28 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
   const timeLeft = event.endDate.getTime() - activeDay.getTime();
   let assessmentStyle = styles.unassessedSubmission;
   let icon = undefined;
-	let borderColour = "transparent";
-	let displayText : string; 
+  let borderColour = "transparent";
+  let displayText: string;
   switch (event.assessment) {
     case "required":
-			assessmentStyle = styles.unassessedSubmission;
-			displayText = "Unassessed Submission";
+      assessmentStyle = styles.unassessedSubmission;
+      displayText = "Unassessed Submission";
       break;
     case "assessed":
-			assessmentStyle = styles.individualAssessed;
-			displayText = "Individual Assessed";
+      assessmentStyle = styles.individualAssessed;
+      displayText = "Individual Assessed";
       break;
     case "group":
-			assessmentStyle = styles.groupAssessed;
-			displayText = "Group Assessed";
+      assessmentStyle = styles.groupAssessed;
+      displayText = "Group Assessed";
       break;
     case "unassessed":
-			assessmentStyle = styles.unassessed;
-			displayText = "Unassessed";
+      assessmentStyle = styles.unassessed;
+      displayText = "Unassessed";
       break;
     case "exam":
-			assessmentStyle = styles.writtenExam;
-			displayText = "Written Exam";
+      assessmentStyle = styles.writtenExam;
+      displayText = "Written Exam";
       break;
   }
   switch (event.status) {
@@ -75,21 +75,21 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
       centered
     >
       <Modal.Header className={styles.modalHeader}>
-          <Button
-            variant="secondary"
-            className={styles.sectionHeaderButton}
-            href={`mailto:${event.owner}@ic.ac.uk?subject=Regarding ${event.title}`}
-            target="_blank"
-          >
-            <FontAwesomeIcon className={styles.buttonIcon} icon={faEnvelope} />
-          </Button>
-          <Button
-            variant="secondary"
-            className={styles.sectionHeaderButton}
-            onClick={onHide}
-          >
-            <FontAwesomeIcon className={styles.buttonIcon} icon={faTimes} />
-          </Button>
+        <Button
+          variant="secondary"
+          className={styles.sectionHeaderButton}
+          href={`mailto:${event.owner}@ic.ac.uk?subject=Regarding ${event.title}`}
+          target="_blank"
+        >
+          <FontAwesomeIcon className={styles.buttonIcon} icon={faEnvelope} />
+        </Button>
+        <Button
+          variant="secondary"
+          className={styles.sectionHeaderButton}
+          onClick={onHide}
+        >
+          <FontAwesomeIcon className={styles.buttonIcon} icon={faTimes} />
+        </Button>
       </Modal.Header>
       <Modal.Body className={styles.modalBody}>
         <span className={styles.eventPrefix}>{event.prefix}</span>
