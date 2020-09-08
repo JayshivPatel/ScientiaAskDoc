@@ -16,7 +16,7 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
   let [activeEvent, setActiveEvent] = useState<TimelineEvent | undefined>(
     undefined
   );
-  let [searchText, setSearchText] = useState("status(due) ");
+  let [searchText, setSearchText] = useState("");
 
   const activeDay = new Date("2020-10-12");
   return (
@@ -27,7 +27,7 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
         onSearchTextChange={setSearchText}
         prompts={getSearchPrompts()}
       />
-			<EventModal
+      <EventModal
         event={activeEvent}
         show={showModal}
         onHide={() => setShowModal(false)}
@@ -37,6 +37,7 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
         {eventsData
           .filter(({ moduleCode }) => moduleCode === moduleID)
           .filter((e) => includeInSearchResult(e, searchText))
+          .sort((e1, e2) => getIndex(e1) - getIndex(e2))
           .map((e) => (
             <Col
               xs={12}
@@ -92,31 +93,45 @@ function includeInSearchResult(item: TimelineEvent, searchText: string) {
   return title.toLowerCase().indexOf(rest) !== -1;
 }
 
+function getIndex(event: TimelineEvent) {
+  const statusOrder = ["late", "due", "missed", "unreleased", "complete"];
+  const assessmentOrder = [
+    "exam",
+    "assessed",
+    "group",
+    "required",
+    "unassessed",
+  ];
+  return (
+    (statusOrder.indexOf(event.status) + 1) * 5 +
+    assessmentOrder.indexOf(event.assessment)
+  );
+}
+
 function getSearchPrompts() {
-	const assessmentList = [
-		{ name: "Assessed", value: "assessment(assessed)" },
-		{ name: "Unassessed", value: "assessment(unassessed)" },
-		{ name: "Required", value: "assessment(required)" },
-		{ name: "Group", value: "assessment(group)" },
-		{ name: "Exam", value: "assessment(exam)" },
-	];
-	const statusList = [
-		{ name: "Due", value: "status(due)" },
-		{ name: "Late", value: "status(late)" },
-		{ name: "Missed", value: "status(missed)" },
-		{ name: "Complete", value: "status(complete)" },
-		{ name: "Unreleased", value: "status(unreleased)" },
-	];
-	const prefixList = [
-		{ name: "TUT", value: "prefix(tut)" },
-		{ name: "CW", value: "prefix(cw)" },
-	];
-	const prompts = [
-		{ title: "Assessment", list: assessmentList },
-		{ title: "Status", list: statusList },
-		{ title: "Prefixes", list: prefixList },
+  const assessmentList = [
+    { name: "Assessed", value: "assessment(assessed)" },
+    { name: "Unassessed", value: "assessment(unassessed)" },
+    { name: "Required", value: "assessment(required)" },
+    { name: "Group", value: "assessment(group)" },
+    { name: "Exam", value: "assessment(exam)" },
+  ];
+  const statusList = [
+    { name: "Due", value: "status(due)" },
+    { name: "Late", value: "status(late)" },
+    { name: "Missed", value: "status(missed)" },
+    { name: "Complete", value: "status(complete)" },
+    { name: "Unreleased", value: "status(unreleased)" },
+  ];
+  const prefixList = [
+    { name: "TUT", value: "prefix(tut)" },
+    { name: "CW", value: "prefix(cw)" },
+  ];
+  const prompts = [
+    { title: "Assessment", list: assessmentList },
+    { title: "Status", list: statusList },
+    { title: "Prefixes", list: prefixList },
+  ];
 
-	];
-
-	return prompts;
+  return prompts;
 }
