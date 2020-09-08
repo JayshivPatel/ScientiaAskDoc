@@ -11,15 +11,24 @@ import Button from "react-bootstrap/esm/Button";
 export interface Props {
   modulesList: Module[];
   term: Term;
-	setTerm: React.Dispatch<React.SetStateAction<Term>>;
-	openDesktopSite: () => void;
+  setTerm: React.Dispatch<React.SetStateAction<Term>>;
+  openDesktopSite: () => void;
 }
 
-const TimelineMobile: React.FC<Props> = ({ modulesList, term, setTerm, openDesktopSite }) => {
+const TimelineMobile: React.FC<Props> = ({
+  modulesList,
+  term,
+  setTerm,
+  openDesktopSite,
+}) => {
   return (
     <Container className={classNames("pageContainer")}>
       <MyBreadcrumbs />
-      <TermSwitcher term={term} setTerm={setTerm} />
+      <TermSwitcher
+        term={term}
+        setTerm={setTerm}
+        style={{ paddingLeft: "0rem", paddingRight: "0rem" }}
+      />
       {modulesList.map(({ code, title }) => (
         <ModuleHeading
           moduleCode={code}
@@ -28,7 +37,11 @@ const TimelineMobile: React.FC<Props> = ({ modulesList, term, setTerm, openDeskt
           title={title}
         />
       ))}
-      <Button variant="secondary" onClick={openDesktopSite} className={styles.inputButton}>
+      <Button
+        variant="secondary"
+        onClick={openDesktopSite}
+        className={styles.inputButton}
+      >
         Desktop Site
       </Button>
     </Container>
