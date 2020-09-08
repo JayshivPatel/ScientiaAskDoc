@@ -20,27 +20,27 @@ const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
   const timeLeft = event.endDate.getTime() - activeDay.getTime();
   let assessmentStyle = styles.unassessedSubmission;
   let icon = undefined;
-	let borderColour = "transparent";
-	let displayText = event.assessment;
+  let borderColour = "transparent";
+  let displayText = event.assessment;
   switch (event.assessment) {
     case "unassessed submission":
-			assessmentStyle = styles.unassessedSubmission;
-			displayText = "submission";
+      assessmentStyle = styles.unassessedSubmission;
+      displayText = "submission";
       break;
     case "individual assessed":
-			assessmentStyle = styles.individualAssessed;
-			displayText = "assessed";
+      assessmentStyle = styles.individualAssessed;
+      displayText = "assessed";
       break;
     case "group assessed":
-			assessmentStyle = styles.groupAssessed;
-			displayText = "group";
+      assessmentStyle = styles.groupAssessed;
+      displayText = "group";
       break;
     case "unassessed":
       assessmentStyle = styles.unassessed;
       break;
     case "written exam":
-			assessmentStyle = styles.writtenExam;
-			displayText = "exam";
+      assessmentStyle = styles.writtenExam;
+      displayText = "exam";
       break;
   }
   switch (event.status) {
@@ -61,14 +61,16 @@ const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
       break;
   }
   return (
-    <Card style={{height: "100%", cursor: "pointer"}}
+    <Card
+      className={styles.submissionCard}
+      style={{ height: "100%", cursor: "pointer" }}
     >
-      <Card.Header className={styles.modalHeader}>
-        <Card.Title>{event.prefix}</Card.Title>
+      <Card.Header>
+        <Card.Title className={styles.cardTitle}>{event.prefix}</Card.Title>
         <div style={{ display: "flex" }}>
           <Button
-						variant="secondary"
-						onClick={e => e.stopPropagation()}
+            variant="secondary"
+            onClick={(e) => e.stopPropagation()}
             className={styles.sectionHeaderButton}
             href={`mailto:${event.owner}@ic.ac.uk?subject=Regarding ${event.title}`}
             target="_blank"

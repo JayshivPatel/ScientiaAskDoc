@@ -6,13 +6,12 @@
   font-weight: 500;
 }
 
-
 .icon {
   margin-left: 0.625rem;
 }
 
 .eventTimeInfo {
-  margin-top: 1.875rem;
+  margin-top: 1.25rem;
   display: grid;
   grid-template-areas: "startHeading start" "endHeading end" "daysHeading daysLeft";
   width: 70%;
@@ -88,29 +87,43 @@
   margin-bottom: 1rem;
 }
 
-.modalHeader {
-  padding: 0.5rem 0.5rem;
-  padding-left: 0.75rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--background-color);
-  border-bottom: 1px solid var(--border-color);
-  color: var(--primary-text-color);
-  border-top-right-radius: 0.5rem !important;
-  border-top-left-radius: 0.5rem !important;
+.submissionCard {
+  background: var(--background-color);
+  height: 100%;
+  border-width: 0rem;
+  border-radius: 0.5rem !important;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--border-color);
 }
 
-.modalFooter {
-  padding: 0.5rem 0.5rem;
+.submissionCard:hover {
+  transform: scale(1.03);
+  text-decoration: none;
+  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
+  border-color: var(--border-color-hover);
+}
+
+.cardTitle {
+  margin: 0rem;
+}
+
+.submissionCard :global(.card-header) {
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+
+  border-top-left-radius: 0.5rem !important;
+  border-top-right-radius: 0.5rem !important;
+  border-width: 0rem;
+
+  padding: 0.5rem;
+  padding-left: 0.75rem;
+  margin: 0rem;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--background-color);
-  border-top: 1px solid var(--border-color);
-  color: var(--primary-text-color);
-  border-bottom-right-radius: 0.5rem !important;
-  border-bottom-left-radius: 0.5rem !important;
+
+  border-bottom: 1px solid var(--border-color);
 }
 
 .eventModal :global(.modal-content) {
@@ -118,9 +131,10 @@
   border-radius: 0.5rem;
 }
 
-.modalBody {
+.submissionCard :global(.card-body) {
   background-color: var(--background-color);
   color: var(--primary-text-color);
+  padding: 0.75rem;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
 }
