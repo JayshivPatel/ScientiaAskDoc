@@ -21,8 +21,8 @@ interface TimelineProps {
   initSideBar: () => void;
   revertSideBar: () => void;
   term: Term;
-	setTerm: React.Dispatch<React.SetStateAction<Term>>;
-	onEventClick: (e?: TimelineEvent) => void;
+  setTerm: React.Dispatch<React.SetStateAction<Term>>;
+  onEventClick: (e?: TimelineEvent) => void;
 }
 
 interface TimelineState {
@@ -174,7 +174,12 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 }
 
 function eventsOverlaps(e1: TimelineEvent, e2: TimelineEvent) {
-  return e1.startDate <= e2.endDate && e1.endDate >= e2.startDate;
+  let start1 = Math.floor(e1.startDate.getTime() / 86400000);
+  let start2 = Math.floor(e2.startDate.getTime() / 86400000);
+  let end1 = Math.ceil(e1.endDate.getTime() / 86400000);
+  let end2 = Math.ceil(e2.endDate.getTime() / 86400000);
+
+  return start1 <= end2 && end1 >= start2;
 }
 
 function getTermDates(term: Term): [Date, number] {
