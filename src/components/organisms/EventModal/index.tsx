@@ -25,22 +25,28 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
   const timeLeft = event.endDate.getTime() - activeDay.getTime();
   let assessmentStyle = styles.unassessedSubmission;
   let icon = undefined;
-  let borderColour = "transparent";
+	let borderColour = "transparent";
+	let displayText : string; 
   switch (event.assessment) {
-    case "unassessed submission":
-      assessmentStyle = styles.unassessedSubmission;
+    case "required":
+			assessmentStyle = styles.unassessedSubmission;
+			displayText = "Unassessed Submission";
       break;
-    case "individual assessed":
-      assessmentStyle = styles.individualAssessed;
+    case "assessed":
+			assessmentStyle = styles.individualAssessed;
+			displayText = "Individual Assessed";
       break;
-    case "group assessed":
-      assessmentStyle = styles.groupAssessed;
+    case "group":
+			assessmentStyle = styles.groupAssessed;
+			displayText = "Group Assessed";
       break;
     case "unassessed":
-      assessmentStyle = styles.unassessed;
+			assessmentStyle = styles.unassessed;
+			displayText = "Unassessed";
       break;
-    case "written exam":
-      assessmentStyle = styles.writtenExam;
+    case "exam":
+			assessmentStyle = styles.writtenExam;
+			displayText = "Written Exam";
       break;
   }
   switch (event.status) {
@@ -91,7 +97,7 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
       <Modal.Body className={styles.modalBody}>
         <span className={styles.eventTitle}>{event.title}</span>
         <div className={styles.eventInfo}>
-          <div className={assessmentStyle}>{event.assessment}</div>
+          <div className={assessmentStyle}>{displayText}</div>
           <div
             className={styles.eventInfoElement}
             style={{ borderColor: borderColour }}

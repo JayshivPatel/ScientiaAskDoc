@@ -7,7 +7,7 @@ export const eventsData: TimelineEvent[] = [
     startDate: new Date("2020-10-07"),
     endDate: new Date("2020-10-07"),
     prefix: "CW",
-    assessment: "individual assessed",
+    assessment: "assessed",
     owner: "ip914",
     status: "missed",
     moduleCode: "CO140",
@@ -20,7 +20,7 @@ export const eventsData: TimelineEvent[] = [
     moduleCode: "CO140",
     prefix: "WES",
     owner: "ip914",
-    assessment: "written exam",
+    assessment: "exam",
     status: "complete",
   },
   {
@@ -42,7 +42,7 @@ export const eventsData: TimelineEvent[] = [
     moduleCode: "CO140",
     owner: "ip914",
     prefix: "PMT",
-    assessment: "unassessed submission",
+    assessment: "required",
     status: "unreleased",
   },
   {
@@ -53,7 +53,7 @@ export const eventsData: TimelineEvent[] = [
     moduleCode: "CO112",
     owner: "ip914",
     prefix: "CW",
-    assessment: "individual assessed",
+    assessment: "assessed",
     status: "due",
   },
   {
@@ -64,7 +64,7 @@ export const eventsData: TimelineEvent[] = [
     moduleCode: "CO120.2",
     owner: "ip914",
     prefix: "PPT",
-    assessment: "group assessed",
+    assessment: "group",
     status: "complete",
   },
   {
@@ -75,7 +75,7 @@ export const eventsData: TimelineEvent[] = [
     moduleCode: "CO145",
     owner: "ip914",
     prefix: "MMT",
-    assessment: "individual assessed",
+    assessment: "assessed",
     status: "due",
   },
   {
@@ -97,7 +97,7 @@ export const eventsData: TimelineEvent[] = [
     moduleCode: "CO112",
     owner: "ip914",
     prefix: "CW",
-    assessment: "individual assessed",
+    assessment: "assessed",
     status: "unreleased",
   },
   {
@@ -141,7 +141,7 @@ export const eventsData: TimelineEvent[] = [
     moduleCode: "CO112",
     owner: "ip914",
     prefix: "CW",
-    assessment: "individual assessed",
+    assessment: "assessed",
     status: "unreleased",
   },
   {
@@ -196,7 +196,7 @@ export const eventsData: TimelineEvent[] = [
     moduleCode: "CO120.2",
     owner: "ip914",
     prefix: "T",
-    assessment: "individual assessed",
+    assessment: "assessed",
     status: "unreleased",
   },
 ];

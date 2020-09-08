@@ -21,26 +21,22 @@ const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
   let assessmentStyle = styles.unassessedSubmission;
   let icon = undefined;
   let borderColour = "transparent";
-  let displayText = event.assessment;
+
   switch (event.assessment) {
-    case "unassessed submission":
+    case "required":
       assessmentStyle = styles.unassessedSubmission;
-      displayText = "submission";
       break;
-    case "individual assessed":
+    case "assessed":
       assessmentStyle = styles.individualAssessed;
-      displayText = "assessed";
       break;
-    case "group assessed":
+    case "group":
       assessmentStyle = styles.groupAssessed;
-      displayText = "group";
       break;
     case "unassessed":
       assessmentStyle = styles.unassessed;
       break;
-    case "written exam":
+    case "exam":
       assessmentStyle = styles.writtenExam;
-      displayText = "exam";
       break;
   }
   switch (event.status) {
@@ -82,7 +78,7 @@ const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
       <Card.Body className={styles.modalBody}>
         <span className={styles.eventTitle}>{event.title}</span>
         <div className={styles.eventInfo}>
-          <div className={assessmentStyle}>{displayText}</div>
+          <div className={assessmentStyle}>{event.assessment}</div>
           <div
             className={styles.eventInfoElement}
             style={{ borderColor: borderColour }}

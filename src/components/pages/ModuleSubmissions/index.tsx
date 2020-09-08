@@ -104,7 +104,7 @@ function getSearchPrompts() {
 	];
 	const prompts = [
 		{ title: "Assessment", list: assessmentList },
-		{ title: "StatusList", list: statusList },
+		{ title: "Status", list: statusList },
 		{ title: "Prefix", list: prefixList },
 
 	];

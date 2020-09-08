@@ -34,19 +34,19 @@ const EventCard: React.FC<TimelineEventProps> = ({
   let borderColour = "";
   let isSingleDay = endColumn - startColumn < 2;
   switch (assessment) {
-    case "unassessed submission":
+    case "required":
       cardColour = "blue";
       break;
-    case "individual assessed":
+    case "assessed":
       cardColour = "teal";
       break;
-    case "group assessed":
+    case "group":
       cardColour = "pink";
       break;
     case "unassessed":
       cardColour = "cyan";
       break;
-    case "written exam":
+    case "exam":
       cardColour = "indigo";
       break;
   }

@@ -30,7 +30,7 @@ const WorkDueGroup: React.FC<WorkDueGroupProps> = ({
         .map(({ title, moduleCode, id, endDate, prefix, assessment}) => {
           let colorType: eventTypes;
           switch (assessment) {
-            case "unassessed submission":
+            case "required":
               colorType = eventTypes.BlueCard;
               break;
             default:
