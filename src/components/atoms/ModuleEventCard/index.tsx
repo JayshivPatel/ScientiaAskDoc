@@ -17,11 +17,11 @@ interface Props {
 
 const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
   if (!event) return null;
-  const timeLeft = event.endDate.getTime() - activeDay.getTime();
+  const timeLeft = (event.endDate.getTime() - activeDay.getTime()) / 86400000;
   let assessmentStyle = styles.unassessedSubmission;
   let icon = undefined;
   let borderColour = "transparent";
-
+  let dateElements: string[] = ["End: ", event.endDate.toLocaleDateString()];
   switch (event.assessment) {
     case "required":
       assessmentStyle = styles.unassessedSubmission;
@@ -41,9 +41,11 @@ const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
   }
   switch (event.status) {
     case "due":
+      dateElements = ["Due In:", `${Math.floor(timeLeft)} days`];
       borderColour = "var(--primary-text-color)";
       break;
     case "unreleased":
+      dateElements = ["Start: ", event.startDate.toLocaleDateString()];
       break;
     case "late":
       borderColour = "var(--primary-text-color)";
@@ -61,22 +63,9 @@ const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
       className={styles.submissionCard}
       style={{ height: "100%", cursor: "pointer" }}
     >
-      <Card.Header>
-        <Card.Title className={styles.cardTitle}>{event.prefix}</Card.Title>
-        <div style={{ display: "flex" }}>
-          <Button
-            variant="secondary"
-            onClick={(e) => e.stopPropagation()}
-            className={styles.sectionHeaderButton}
-            href={`mailto:${event.owner}@ic.ac.uk?subject=Regarding ${event.title}`}
-            target="_blank"
-          >
-            <FontAwesomeIcon className={styles.buttonIcon} icon={faEnvelope} />
-          </Button>
-        </div>
-      </Card.Header>
       <Card.Body className={styles.modalBody}>
-        <span className={styles.eventTitle}>{event.title}</span>
+        <span className={styles.eventPrefix}>{event.prefix}</span>
+        <span className={styles.eventTitle}>&nbsp;{event.title}</span>
         <div className={styles.eventInfo}>
           <div className={assessmentStyle}>{event.assessment}</div>
           <div
@@ -87,23 +76,9 @@ const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
             {icon && <FontAwesomeIcon className={styles.icon} icon={icon} />}
           </div>
         </div>
-        <div className={styles.eventTimeInfo}>
-          <span className={styles.startDateHeading}>Start:</span>
-          <span className={styles.startDate}>
-            {event.startDate.toLocaleDateString()}
-          </span>
-          <span className={styles.endDateHeading}>End:</span>
-          <span className={styles.endDate}>
-            {event.endDate.toLocaleDateString()}
-          </span>
-          {event.status !== "unreleased" && timeLeft >= 0 && (
-            <>
-              <span className={styles.daysHeading}>Due In:</span>
-              <span className={styles.daysLeft}>
-                {`${Math.floor(timeLeft / 86400000)} days`}
-              </span>
-            </>
-          )}
+        <div style={{marginTop: "1.25rem"}}>
+          <span className={styles.dateHeading}>{dateElements[0]}</span>
+          <span className={styles.date}>{dateElements[1]}</span>
         </div>
       </Card.Body>
     </Card>
