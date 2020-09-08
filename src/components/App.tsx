@@ -12,24 +12,30 @@ import StandardView from "./pages/StandardView";
 import { Switch, Route } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import SettingsModal from "./organisms/SettingsModal";
+import EventModal from "./organisms/EventModal";
+import { TimelineEvent } from "constants/types";
 
 type AppState = {
   toggledLeft: boolean;
   toggledRight: boolean;
   showSettings: boolean;
   fileView: string;
+  showEventModal: boolean;
+  activeModalEvent?: TimelineEvent;
 };
 
 class App extends React.Component<{}, AppState> {
   width = window.innerWidth;
-	isTimelineView = false;
-	
+  isTimelineView = false;
+
   constructor(props: {}) {
     super(props);
     this.state = {
       toggledLeft: false,
       toggledRight: false,
       showSettings: false,
+      showEventModal: false,
+      activeModalEvent: undefined,
       fileView: localStorage.getItem("fileView") || "card",
     };
   }
@@ -54,7 +60,7 @@ class App extends React.Component<{}, AppState> {
         this.showOrHideSideBars();
       }
     });
-		this.showOrHideSideBars();
+    this.showOrHideSideBars();
   }
 
   setDarkTheme(toSet: boolean) {
@@ -105,6 +111,10 @@ class App extends React.Component<{}, AppState> {
     localStorage.setItem("fileView", view);
   }
 
+  showEventModal(e?: TimelineEvent) {
+    this.setState({ showEventModal: true, activeModalEvent: e });
+  }
+
   render() {
     const horizontalBarPages = [
       { name: "Dashboard", path: "/dashboard", icon: faHome },
@@ -122,6 +132,13 @@ class App extends React.Component<{}, AppState> {
           onCardViewClick={() => this.setFileView("card")}
           onListViewClick={() => this.setFileView("list")}
           setDarkTheme={(b) => this.setDarkTheme(b)}
+        />
+
+        <EventModal
+          show={this.state.showEventModal}
+          onHide={() => this.setState({ showEventModal: false })}
+          event={this.state.activeModalEvent}
+          activeDay={new Date("2020-10-12")}
         />
 
         <Switch>
@@ -143,14 +160,15 @@ class App extends React.Component<{}, AppState> {
             />
 
             <StandardView
-              onSettingsClick={() => this.setState({ showSettings: true })}
+							onSettingsClick={() => this.setState({ showSettings: true })}
+							onEventClick={(e?: TimelineEvent) => this.showEventModal(e)}
               toggledLeft={this.state.toggledLeft}
               toggledRight={this.state.toggledRight}
               initTimelineSideBar={() => {
-								this.isTimelineView = true;
+                this.isTimelineView = true;
                 this.showOrHideSideBars();
-							}}
-							revertTimelineSideBar={() => {
+              }}
+              revertTimelineSideBar={() => {
                 this.isTimelineView = false;
                 this.showOrHideSideBars();
               }}
@@ -161,7 +179,6 @@ class App extends React.Component<{}, AppState> {
                   toggledRight: false,
                 });
               }}
-
               fileView={this.state.fileView}
             />
 

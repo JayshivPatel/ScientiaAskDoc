@@ -11,7 +11,6 @@ import { eventsData } from "./eventsData";
 import LoadingScreen from "components/molecules/LoadingScreen";
 import { Term, Module, TimelineEvent } from "constants/types";
 import { addDays } from "utils/functions";
-import EventModal from "../../organisms/EventModal";
 import TimelineMobile from "./components/TimelineMobile";
 
 export type ModuleTracks = {
@@ -22,15 +21,14 @@ interface TimelineProps {
   initSideBar: () => void;
   revertSideBar: () => void;
   term: Term;
-  setTerm: React.Dispatch<React.SetStateAction<Term>>;
+	setTerm: React.Dispatch<React.SetStateAction<Term>>;
+	onEventClick: (e?: TimelineEvent) => void;
 }
 
 interface TimelineState {
   modulesTracks: ModuleTracks;
   modulesList: Module[];
   isLoaded: boolean;
-  activeEvent?: TimelineEvent;
-  showEventModal: boolean;
   showMobileOnSmallScreens: boolean;
   eventsData: TimelineEvent[];
 }
@@ -42,7 +40,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       modulesTracks: {},
       isLoaded: false,
       modulesList: [],
-      showEventModal: false,
       showMobileOnSmallScreens: true,
       eventsData: [],
     };
@@ -103,7 +100,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 
   handleEventClick(id: number) {
     const event = this.state.eventsData.find((e) => e.id === id);
-    this.setState({ activeEvent: event, showEventModal: true });
+    this.props.onEventClick(event);
   }
 
   render() {
@@ -137,12 +134,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 
     return (
       <>
-        <EventModal
-          show={this.state.showEventModal}
-          onHide={() => this.setState({ showEventModal: false })}
-					event={this.state.activeEvent}
-					activeDay={activeDay}
-        />
         <div className={styles.timelineContainer}>
           <MyBreadcrumbs />
           <div className={styles.timelineGrid}>

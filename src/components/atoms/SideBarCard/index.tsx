@@ -7,7 +7,9 @@ export interface SideBarCardProps {
   type: eventTypes;
   title?: string;
   subtitle?: string;
-  content?: string;
+	content?: string;
+	id?: number;
+	onClick?: (event: React.MouseEvent) => void;
 }
 
 export enum eventTypes {
@@ -22,10 +24,12 @@ const SideBarCard: React.FC<SideBarCardProps> = ({
   type,
   title,
   subtitle,
-  content,
+	content,
+	onClick,
 }: SideBarCardProps) => {
   return (
     <Card
+			onClick={onClick}
       className={classNames(
         styles.sideBarCard,
         getStyle(type),
