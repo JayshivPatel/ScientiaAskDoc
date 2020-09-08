@@ -11,7 +11,7 @@ import {
 import StandardView from "./pages/StandardView";
 import { Switch, Route } from "react-router-dom";
 import SignIn from "./pages/SignIn";
-import SettingsModal from "./pages/SettingsModal";
+import SettingsModal from "./organisms/SettingsModal";
 
 type AppState = {
   toggledLeft: boolean;

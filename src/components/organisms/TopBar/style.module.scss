@@ -3,5 +3,6 @@
 .navBar {
   padding: 0.75rem 1rem;
   background: var(--background-color);
-  border-bottom: 1px solid var(--border-color);
+	border-bottom: 1px solid var(--border-color);
+	z-index: 5020 !important;
 }

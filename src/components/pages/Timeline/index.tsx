@@ -9,19 +9,10 @@ import DayIndicatorGrid from "./components/DayIndicatorGrid";
 import EventGrid from "./components/EventGrid";
 import { eventsData } from "./eventsData";
 import LoadingScreen from "components/molecules/LoadingScreen";
-import { Term, Module } from "constants/types";
+import { Term, Module, TimelineEvent } from "constants/types";
 import { addDays } from "utils/functions";
-import EventModal from "./components/EventModal";
+import EventModal from "../../organisms/EventModal";
 import TimelineMobile from "./components/TimelineMobile";
-
-export interface TimelineEvent {
-  title: string;
-  id: number;
-  type: string;
-  moduleCode: string;
-  startDate: Date;
-  endDate: Date;
-}
 
 export type ModuleTracks = {
   [index: string]: TimelineEvent[][];
@@ -117,7 +108,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 
   render() {
     const [termStart, numWeeks] = getTermDates(this.props.term);
-    const activeDay = new Date("2020-10-12");
+    const activeDay = new Date("2020-10-21");
     const trackHeight = 3.25;
     if (!this.state.isLoaded) {
       return <LoadingScreen successful={<></>} />;
@@ -127,7 +118,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     );
 
     if (
-      window.innerWidth <= 700 &&
+      window.innerWidth <= 550 &&
       window.innerHeight <= 900 &&
       this.state.showMobileOnSmallScreens
     ) {
@@ -149,7 +140,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         <EventModal
           show={this.state.showEventModal}
           onHide={() => this.setState({ showEventModal: false })}
-          event={this.state.activeEvent}
+					event={this.state.activeEvent}
+					activeDay={activeDay}
         />
         <div className={styles.timelineContainer}>
           <MyBreadcrumbs />

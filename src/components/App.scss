@@ -74,14 +74,22 @@ code {
   --lecture-background: #{rgba($blue-100, 0.5)};
   --labs-background: #{rgba($pink-100, 0.5)};
   --deadline-background: #{rgba($teal-100, 0.5)};
-  --tutorial-background: #{scale-color($blue-100, $lightness: +50%)};
-  --coursework-background: #{scale-color($teal-100, $lightness: +50%)};
 
   --lecture-text: #{$blue-700};
   --labs-text: #{$pink-700};
   --deadline-text: #{$teal-700};
-  --tutorial-text: #{$blue-700};
-  --coursework-text: #{$teal-700};
+
+  --blue-background: #{scale-color($blue-100, $lightness: +50%)};
+  --teal-background: #{scale-color($teal-100, $lightness: +50%)};
+  --pink-background: #{scale-color($pink-100, $lightness: +50%)};
+  --cyan-background: #{scale-color($cyan-100, $lightness: +50%)};
+  --indigo-background: #{scale-color($indigo-100, $lightness: +50%)};
+
+  --blue-text: #{$blue-700};
+  --teal-text: #{$teal-700};
+  --pink-text: #{$pink-700};
+  --cyan-text: #{$cyan-700};
+  --indigo-text: #{$indigo-700};
 
   --day-indicator-column: #{rgba($gray-500, 0.25)};
 }
@@ -144,14 +152,22 @@ code {
   --lecture-background: #{rgba($blue-800, 0.5)};
   --labs-background: #{rgba($pink-800, 0.5)};
   --deadline-background: #{rgba($teal-800, 0.5)};
-  --tutorial-background: #{scale-color($blue-800, $lightness: -10%)};
-  --coursework-background: #{scale-color($teal-800, $lightness: -10%)};
+
+  --blue-background: #{scale-color($blue-800, $lightness: -15%)};
+  --teal-background: #{scale-color($teal-800, $lightness: -15%)};
+  --pink-background: #{scale-color($pink-800, $lightness: -15%)};
+  --cyan-background: #{scale-color($cyan-800, $lightness: -15%)};
+  --indigo-background: #{scale-color($indigo-800, $lightness: -15%)};
+
+  --blue-text: #{$blue-200};
+  --teal-text: #{$teal-200};
+  --pink-text: #{$pink-200};
+  --cyan-text: #{$cyan-200};
+  --indigo-text: #{$indigo-200};
 
   --lecture-text: #{$blue-300};
   --labs-text: #{$pink-300};
   --deadline-text: #{$teal-300};
-  --tutorial-text: #{$blue-300};
-  --coursework-text: #{$teal-300};
 
   --day-indicator-column: #{rgba($gray-500, 0.25)};
 }

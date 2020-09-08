@@ -1,6 +1,5 @@
 import React from "react";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
-import WorkDueGroup from "components/molecules/WorkDueGroup";
 
 export interface LeftBarModuleListProps {
   setModulesFilter: any;
@@ -14,27 +13,27 @@ const LeftBarModuleList: React.FC<LeftBarModuleListProps> = ({
   let sortButtons = [
     {
       title: "All",
-      active: modulesFilter === "",
+			active: modulesFilter === "",
       onClick: () => {
         setModulesFilter("");
       }
-    },
-    {
+		},
+		{
       title: "In Progress",
-      active: modulesFilter === "In Progress",
+			active: modulesFilter === "In Progress",
       onClick: () => {
         setModulesFilter("In Progress");
       }
     },
-    {
+		{
       title: "Not Started",
-      active: modulesFilter === "Not Started",
+			active: modulesFilter === "Not Started",
       onClick: () => {
         setModulesFilter("Not Started");
       }
     },
     {
-      title: "Completed",
+			title: "Completed",
       active: modulesFilter === "Completed",
       onClick: () => {
         setModulesFilter("Completed");
@@ -45,7 +44,6 @@ const LeftBarModuleList: React.FC<LeftBarModuleListProps> = ({
   return (
     <>
       <SideBarTabGroup title="Filter" buttons={sortButtons} />
-      <WorkDueGroup />
     </>
   );
 };

@@ -60,7 +60,7 @@ const FileCard: React.FC<FileCardProps> = ({
     >
       <Card.Img variant="top"  src={thumbnail || banner} />
       <Card.Body>
-        <Card.Title style={{ wordWrap: "break-word" }}>{title}</Card.Title>
+        <Card.Title>{title}</Card.Title>
         <FontAwesomeIcon
           style={{
             marginLeft: "0.5rem",
