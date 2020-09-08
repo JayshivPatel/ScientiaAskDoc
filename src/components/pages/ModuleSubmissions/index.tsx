@@ -16,7 +16,7 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
   let [activeEvent, setActiveEvent] = useState<TimelineEvent | undefined>(
     undefined
   );
-  let [searchText, setSearchText] = useState("");
+  let [searchText, setSearchText] = useState("status(due) ");
 
   const activeDay = new Date("2020-10-12");
   return (
@@ -94,18 +94,27 @@ function includeInSearchResult(item: TimelineEvent, searchText: string) {
 
 function getSearchPrompts() {
 	const assessmentList = [
-		{ name: "PDF", value: "assessment(pdf)" },
+		{ name: "Assessed", value: "assessment(assessed)" },
+		{ name: "Unassessed", value: "assessment(unassessed)" },
+		{ name: "Required", value: "assessment(required)" },
+		{ name: "Group", value: "assessment(group)" },
+		{ name: "Exam", value: "assessment(exam)" },
 	];
 	const statusList = [
-		{ name: "New", value: "status(new)" },
+		{ name: "Due", value: "status(due)" },
+		{ name: "Late", value: "status(late)" },
+		{ name: "Missed", value: "status(missed)" },
+		{ name: "Complete", value: "status(complete)" },
+		{ name: "Unreleased", value: "status(unreleased)" },
 	];
 	const prefixList = [
-		{ name: "New", value: "prefix(new)" },
+		{ name: "TUT", value: "prefix(tut)" },
+		{ name: "CW", value: "prefix(cw)" },
 	];
 	const prompts = [
 		{ title: "Assessment", list: assessmentList },
 		{ title: "Status", list: statusList },
-		{ title: "Prefix", list: prefixList },
+		{ title: "Prefixes", list: prefixList },
 
 	];
 

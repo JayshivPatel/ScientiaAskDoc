@@ -1,7 +1,6 @@
 import React from "react";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
 import {
-  faUserFriends,
   faList,
   faArchive,
   faHighlighter,
