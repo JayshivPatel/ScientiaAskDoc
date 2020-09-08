@@ -61,7 +61,7 @@ const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
       break;
   }
   return (
-    <Card style={{height: "100%"}}
+    <Card style={{height: "100%", cursor: "pointer"}}
     >
       <Card.Header className={styles.modalHeader}>
         <Card.Title>{event.prefix}</Card.Title>
