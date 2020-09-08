@@ -71,8 +71,6 @@ const EventCard: React.FC<TimelineEventProps> = ({
       icon = faCheckCircle;
       break;
   }
-  let marginX = isSingleDay ? (icon ? ".4rem" : ".1rem") : ".5rem";
-  let paddingX = isSingleDay ? (icon ? ".5rem" : ".3rem") : ".5rem";
   return (
     <div
       className={classNames(styles.timelineEvent)}
@@ -80,10 +78,9 @@ const EventCard: React.FC<TimelineEventProps> = ({
       style={{
         gridColumn: `${startColumn} / ${endColumn}`,
         gridRow: `${rowNumber}`,
-        marginLeft: marginX,
-        marginRight: marginX,
-        paddingLeft: paddingX,
-        paddingRight: paddingX,
+        justifyContent: isSingleDay ? "center" : "space-between",
+        padding: isSingleDay ? "0.25rem" : "0.5rem",
+        textAlign: isSingleDay ? "center" : "left",
         backgroundColor: `var(--${cardColour}-background)`,
         color: `var(--${cardColour}-text)`,
         borderColor: `var(--${cardColour}-${borderColour})`,
@@ -94,7 +91,6 @@ const EventCard: React.FC<TimelineEventProps> = ({
           className={styles.eventTitle}
           style={{
             fontSize: isSingleDay ? "0rem" : "1rem",
-            width: icon ? "90%" : "100%",
           }}
         >
           <span
@@ -103,12 +99,20 @@ const EventCard: React.FC<TimelineEventProps> = ({
               fontSize: isSingleDay ? "0.9rem" : "1rem",
             }}
           >
-            {prefix}&nbsp;
+            {prefix}
           </span>
-          {title}
+          &nbsp;{title}
         </span>
       )}
-      {icon && <FontAwesomeIcon className={styles.icon} icon={icon} />}
+      {icon && (
+        <FontAwesomeIcon
+          style={{
+            marginLeft: isSingleDay ? "0rem" : "0.625rem",
+          }}
+          className={styles.icon}
+          icon={icon}
+        />
+      )}
     </div>
   );
 };
