@@ -54,9 +54,9 @@
   font-weight: 500;
   font-size: 0.9rem;
 	border-radius: 0.5rem;
-	border: 2px solid black;
+	border: 0.125rem solid black;
   background: var(--secondary-background-color);
-  padding: calc(0.25rem - 2px) 0.5rem;
+  padding: calc(0.25rem - 0.125rem) 0.5rem;
   margin-left: 0.625rem;
 }
 
@@ -136,10 +136,10 @@ $button-border: transparentize($gray-300, 1);
   background-color: var(--primary-button);
   color: var(--primary-button-text);
 
-  border-width: 0px;
-  border-radius: 8px;
+  border-width: 0;
+  border-radius: .5rem;
 
-  margin-left: 20px;
+  margin-left: 1.25rem;
   justify-content: space-between;
   height: 2.25rem;
 
