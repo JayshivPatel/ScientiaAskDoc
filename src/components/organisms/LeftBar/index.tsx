@@ -7,6 +7,7 @@ import LeftBarModule from "components/organisms/LeftBarModule";
 import LeftBarExams from "components/organisms/LeftBarExams";
 import LeftBarTimeline from "components/organisms/LeftBarTimeline";
 import { Term } from "constants/types";
+import WorkDueGroup from "components/molecules/WorkDueGroup";
 
 interface LeftBarProps {
   modulesFilter: string;
@@ -51,6 +52,8 @@ const LeftBar: React.FC<LeftBarProps> = ({
           <LeftBarDashboard />
         </Route>
       </Switch>
+
+			<WorkDueGroup />
     </div>
   );
 };

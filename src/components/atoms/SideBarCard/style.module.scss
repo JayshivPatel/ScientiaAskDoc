@@ -15,27 +15,43 @@
 }
 
 .sideBarRedCard * {
-  color: var(--labs-text);
+  color: var(--pink-text);
 }
 
 .sideBarRedCard {
-  background: var(--labs-background);
+  background: var(--pink-background);
 }
 
 .sideBarBlueCard * {
-  color: var(--lecture-text);
+  color: var(--blue-text);
 }
 
 .sideBarBlueCard {
-  background: var(--lecture-background);
+  background: var(--blue-background);
 }
 
 .sideBarGreenCard * {
-  color: var(--deadline-text);
+  color: var(--teal-text);
 }
 
 .sideBarGreenCard {
-  background: var(--deadline-background);
+  background: var(--teal-background);
+}
+
+.sideBarIndigoCard * {
+  color: var(--indigo-text);
+}
+
+.sideBarIndigoCard {
+  background: var(--indigo-background);
+}
+
+.sideBarCyanCard * {
+  color: var(--cyan-text);
+}
+
+.sideBarCyanCard {
+  background: var(--cyan-background);
 }
 
 .sideBarCard :global(.card-body) {

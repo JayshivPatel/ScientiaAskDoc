@@ -10,37 +10,49 @@ export interface WorkDueGroupProps {
 const WorkDueGroup: React.FC<WorkDueGroupProps> = ({
   filter,
 }: WorkDueGroupProps) => {
-	let timeOptions = {
-		timeZone: "Europe/London",
-		hourCycle: "h23",
-		hour: "2-digit",
-		minute: "2-digit",
-		second: "2-digit",
-		weekday: "short",
-		day: "2-digit",
-		month: "short"
-	};
+  let timeOptions = {
+    timeZone: "Europe/London",
+    hourCycle: "h23",
+    hour: "2-digit",
+    minute: "2-digit",
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+  };
 
   return (
     <SideBarCardGroup
       title="Work Due"
-			events={eventsData
+      events={eventsData
         .filter(({ status }) => status === "due" || status === "late")
-        .filter(({ moduleCode }) => filter === undefined || moduleCode === filter)
-        .map(({ title, moduleCode, id, endDate, prefix, assessment}) => {
+        .filter(
+          ({ moduleCode }) => filter === undefined || moduleCode === filter
+        )
+        .map(({ title, moduleCode, id, endDate, prefix, assessment }) => {
           let colorType: eventTypes;
           switch (assessment) {
             case "required":
               colorType = eventTypes.BlueCard;
               break;
+            case "assessed":
+              colorType = eventTypes.GreenCard;
+              break;
+            case "exam":
+              colorType = eventTypes.IndigoCard;
+              break;
+            case "unassessed":
+              colorType = eventTypes.CyanCard;
+              break;
+            case "group":
+              colorType = eventTypes.RedCard;
+              break;
             default:
               colorType = eventTypes.GreenCard;
               break;
           }
-					let task = `${prefix} ${title}`;
           return {
-            title: filter === undefined ? moduleCode : undefined,
-            subtitle:  task,
+            title: `${prefix} : ${moduleCode}`,
+            subtitle: title,
             content: endDate.toLocaleString("en-GB", timeOptions),
             type: colorType,
           };

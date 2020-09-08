@@ -8,6 +8,7 @@ import {
   faPlay,
   faStarHalfAlt
 } from "@fortawesome/free-solid-svg-icons";
+import WorkDueGroup from "components/molecules/WorkDueGroup";
 
 const LeftBarDashboard: React.FC = () => {
   let linkButtons = [
