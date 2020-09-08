@@ -66,11 +66,11 @@ const ListView: React.FC<ListViewProps> = ({
                   heading={title}
                   onSelectAllClick={onSelectAllClick}
                   selectAllIcon={isAllSelected() ? faCheckSquare : faSquare}
-                  checkBoxColor={
-                    select.isAnySelected()
-                      ? "var(--secondary-text-color)"
-                      : "var(--secondary-button-active)"
-                  }
+									checkBoxColor={
+										select.isAnySelected()
+											? "var(--secondary-text-color)"
+											: "var(--secondary-button-text)"
+									}
                 />
                 <CategoryList
                   categoryItems={categoryItems}

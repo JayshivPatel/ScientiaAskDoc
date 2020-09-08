@@ -1,6 +1,7 @@
 import React from "react";
 import ResourceSectionHeader from "./components/SectionHeader";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
+import { idBooleanMap } from "constants/types"
 
 export interface SelectionItem {
   title: string;
@@ -10,8 +11,6 @@ export interface SelectionItem {
   tags?: string[];
   thumbnail?: string;
 }
-
-type idBooleanMap = { [key: number]: boolean };
 
 export interface SelectionProps {
   selectionItems: SelectionItem[];
@@ -147,7 +146,7 @@ class SelectionView extends React.Component<MyProps, MyState> {
           checkBoxColur={
             this.isAnySelected()
               ? "var(--secondary-text-color)"
-              : "var(--secondary-button-active)"
+              : "var(--secondary-button-text)"
           }
         />
 

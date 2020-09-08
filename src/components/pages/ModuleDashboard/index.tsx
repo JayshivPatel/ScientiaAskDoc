@@ -7,8 +7,8 @@ import { faGlobe, faLink, faUserFriends } from "@fortawesome/free-solid-svg-icon
 import PageButtonGroup from "components/molecules/PageButtonGroup";
 import queryString from "query-string";
 
-import { request } from "../../../utils/api";
-import { api, methods } from "../../../constants/routes";
+import { request } from "utils/api";
+import { api, methods } from "constants/routes";
 
 import tutorImage1 from "assets/images/tutor-1.png";
 import tutorImage2 from "assets/images/tutor-2.png";

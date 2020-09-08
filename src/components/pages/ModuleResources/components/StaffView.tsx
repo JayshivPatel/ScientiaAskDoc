@@ -1,29 +1,32 @@
 import React, { useState } from "react";
 
 import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import { faDownload, faTrash, faUpload } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import UploadModal from "./UploadModal"
-import AlertModal from "../../../atoms/AlertModal"
+import AlertModal from "components/atoms/AlertModal"
+import IconButton from "components/atoms/IconButton"
+import EditModal from "components/organisms/EditModal"
+import UploadModal from "components/organisms/UploadModal"
 import CategoryList from "components/molecules/CategoryList";
 import CategoryHeader from "components/molecules/CategoryHeader";
 
 import { staffRequest, download } from "utils/api"
 import { api, methods } from "constants/routes"
-import { Folder, Resource } from "constants/types";
+import { Folder, Resource, idBooleanMap } from "constants/types";
 
 export interface StaffViewProps {
 	year: string;
 	course: string;
 	folders: Folder[];
 	reload: () => void;
-  	resources: Resource[];
-  	searchText: string;
-  	includeInSearchResult: (item: Resource, searchText: string) => boolean;
+	resources: Resource[];
+	searchText: string;
+	includeInSearchResult: (item: Resource, searchText: string) => boolean;
+	onRowClick: (id: number) => void;
 }
 
 const StaffView: React.FC<StaffViewProps> = ({
@@ -31,12 +34,21 @@ const StaffView: React.FC<StaffViewProps> = ({
 	course,
 	folders,
 	reload,
-  	resources,
-  	searchText,
-  	includeInSearchResult
+	resources,
+	searchText,
+	includeInSearchResult,
+	onRowClick
 }) => {
 	const [modal, setModal] = useState("");
 	const [resourceID, setResourceID] = useState(-1);
+	const [editResource, setEditResource] = useState<Resource>(resources[0]);
+	const allClosed = () => resources.reduce((map, resource) => {
+		return {
+			...map,
+			[resource.id]: false
+		};
+	}, {});
+	const [showMenus, setShowMenus] = useState<idBooleanMap>(allClosed());
 	const closeModal = () => setModal("");
 
 	let filesContent: Resource[] = resources;
@@ -49,8 +61,8 @@ const StaffView: React.FC<StaffViewProps> = ({
 	// Get existing tags for selection upon new resource creation
 	let tags: string[] = resources.flatMap(resource => resource.tags)
 	tags = Array.from(new Set(tags))
-	// "new" tag is determined by backend, remove it from selection pool
-	tags = tags.filter(tag => tag !== "new" && tag !== "");
+	// Remove reserved tag `new` from selection pool, then arrange alphabetically
+	tags = tags.filter(tag => tag !== "new").sort();
 
 	const hiddenFileInput = React.createRef<HTMLInputElement>()
 	const handleReuploadClick = (id: number) => {
@@ -59,28 +71,48 @@ const StaffView: React.FC<StaffViewProps> = ({
 			hiddenFileInput.current.click();
 		}
 	};
-	const reuploadFile = (event: any) => {
+	const reuploadFile = async (event: any) => {
 		const fileUploaded = event.target.files[0];
 		let formData = new FormData();
 		formData.append("file", fileUploaded);
 
-		staffRequest(api.MATERIALS_RESOURCES_FILE(resourceID), methods.PUT,
+		await staffRequest(api.MATERIALS_RESOURCES_FILE(resourceID), methods.PUT,
 			() => {}, () => {}, formData, true
-		)
+		);
+		reload();
 	};
 
-	const fileDropdown = (id: number, filename: string) => {
-		return (
-			<>
-				<FontAwesomeIcon onClick={() => {}} icon={faEdit} />
-				<FontAwesomeIcon onClick={() => staffRequest(api.MATERIALS_RESOURCES_ID(id), methods.DELETE, () => {}, () => {})} icon={faTrash}/>
-				{filename && <>
-				<FontAwesomeIcon onClick={() => download(api.MATERIALS_RESOURCES_FILE(id), methods.GET, filename)} icon={faDownload} />
-				<FontAwesomeIcon onClick={() => handleReuploadClick(id)} icon={faUpload}/>
-				</>}
-			</>
-		);
-	}
+	const resourceActions = (id: number, filename: string) => (
+		<ButtonGroup>
+			<IconButton
+				tooltip="Edit"
+				onClick={() => {
+					setEditResource(resources.find(res => res.id === id) || resources[0]);
+					setModal("edit");
+				}}
+				icon={faEdit}
+			/>
+			<IconButton
+				tooltip="Delete"
+				onClick={async () => {
+					await staffRequest(api.MATERIALS_RESOURCES_ID(id), methods.DELETE, () => {}, () => {});
+					reload();
+				}}
+				icon={faTrash}
+			/>
+			{filename && <>
+			<IconButton
+				tooltip="Download"
+				onClick={() => download(api.MATERIALS_RESOURCES_FILE(id), methods.GET, filename)}
+				icon={faDownload} />
+			<IconButton
+				tooltip="Reupload"
+				onClick={() => handleReuploadClick(id)}
+				icon={faUpload}
+			/>
+			</>}
+		</ButtonGroup>
+	)
 
 	return (
     <>
@@ -100,7 +132,39 @@ const StaffView: React.FC<StaffViewProps> = ({
 			year={year}
 			course={course}
 			categories={folders.map(folder => folder.title).sort() || ["Lecture notes"]}
-			tags={tags.sort()}
+			tags={tags}
+		/>
+
+		<EditModal
+			show={modal === "edit"}
+			onHide={closeModal}
+			hideAndReload={() => {
+				closeModal();
+				reload();
+			}}
+			tags={tags}
+			resource={editResource}
+		/>
+
+		<AlertModal
+			show={modal === "alert"}
+			onHide={closeModal}
+			title="Remove All Warning"
+			message="This will irreversibly delete all course resources and associated files."
+			confirmLabel="Delete All Resources"
+			confirmOnClick={() => staffRequest(
+				api.MATERIALS_RESOURCES,
+				methods.DELETE,
+				() => {
+					closeModal();
+					reload();
+				},
+				() => {},
+				{
+					year: year,
+					course: course
+				}
+			)}
 		/>
 
 		{folders.map(({ title, id }) => {
@@ -110,8 +174,16 @@ const StaffView: React.FC<StaffViewProps> = ({
 				/>
 				<CategoryList 
 					categoryItems={filesContent.filter(res => res.folder === title)}
-					fileDropdown={fileDropdown}
-					handleRowClick={(id) => {}}
+					resourceActions={resourceActions}
+					showMenus={showMenus}
+					setShowMenus={(id) => {
+						return (show: boolean) => {
+							let newShowMenus: idBooleanMap = allClosed();
+							newShowMenus[id] = show;
+							setShowMenus(newShowMenus);
+						};
+					}}
+					handleRowClick={onRowClick}
 					handleIconClick={(id) => {}}
 					handleMouseOver={(id) => {}}
 					handleMouseOut={(id) => {}}
@@ -136,27 +208,6 @@ const StaffView: React.FC<StaffViewProps> = ({
 				</Button>
 			</Col>
 		</Row>
-
-		<AlertModal
-			show={modal === "alert"}
-			onHide={closeModal}
-			title="Remove All Warning"
-			message="This will irreversibly delete all course resources and associated files."
-			confirmLabel="Delete All Resources"
-			confirmOnClick={() => staffRequest(
-				api.MATERIALS_RESOURCES,
-				methods.DELETE,
-				() => {
-					closeModal();
-					reload();
-				},
-				() => {},
-				{
-					year: year,
-					course: course
-				}
-			)}
-		/>
     </>
 	);
 };

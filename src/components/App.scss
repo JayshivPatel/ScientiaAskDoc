@@ -58,8 +58,13 @@ code {
 
   --input-bar: #{$gray-100};
   --input-bar-placeholder: #{$gray-400};
-  --input-bar-focus: #{$white};
-
+	--input-bar-focus: #{$white};
+	
+	--inverted-button: #{black};
+  --inverted-button-hover: #{$gray-900};
+  --inverted-button-active: #{$gray-800};
+	--inverted-button-text: #{white};
+	
   --image-invert: 0%;
   --box-shadow-color: rgba(0, 0, 0, 0.1);
 
@@ -127,7 +132,12 @@ code {
   --tertiary-button-active: #{$gray-600};
 
   --tertiary-button-text: #{$gray-600};
-  --tertiary-button-text-hover: #{$gray-500};
+	--tertiary-button-text-hover: #{$gray-500};
+	
+	--inverted-button: #{$gray-400};
+  --inverted-button-hover: #{$gray-500};
+  --inverted-button-active: #{$gray-600};
+	--inverted-button-text: #{black};
 
   --input-bar: #{$gray-800};
   --input-bar-placeholder: #{$gray-600};

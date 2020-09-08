@@ -15,7 +15,9 @@ export interface Resource {
   tags: string[];
   folder: string;
   id: number;
-  path?: string;
+  index: number;
+  path: string;
+  visible_after: Date;
   thumbnail?: string;
 }
 
@@ -44,5 +46,7 @@ export interface TimelineEvent {
 export enum ProgressStatus {
   NOT_STARTED = "Not Started",
   IN_PROGRESS = "In Progress",
-  COMPLETED = "Completed",
+  COMPLETED = "Completed"
 }
+
+export type idBooleanMap = { [key: number]: boolean };
