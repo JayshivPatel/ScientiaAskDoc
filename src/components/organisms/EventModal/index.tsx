@@ -75,8 +75,6 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
       centered
     >
       <Modal.Header className={styles.modalHeader}>
-        <Modal.Title>{event.prefix}</Modal.Title>
-        <div style={{ display: "flex" }}>
           <Button
             variant="secondary"
             className={styles.sectionHeaderButton}
@@ -92,10 +90,10 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
           >
             <FontAwesomeIcon className={styles.buttonIcon} icon={faTimes} />
           </Button>
-        </div>
       </Modal.Header>
       <Modal.Body className={styles.modalBody}>
-        <span className={styles.eventTitle}>{event.title}</span>
+        <span className={styles.eventPrefix}>{event.prefix}</span>
+        <span className={styles.eventTitle}>&nbsp;{event.title}</span>
         <div className={styles.eventInfo}>
           <div className={assessmentStyle}>{displayText}</div>
           <div

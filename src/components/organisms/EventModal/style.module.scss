@@ -3,9 +3,12 @@
 
 .eventTitle {
   font-size: 1.25rem;
-  font-weight: 500;
 }
 
+.eventPrefix {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
 
 .icon {
   margin-left: 0.625rem;
@@ -69,6 +72,7 @@
 .sectionHeaderButton {
   color: var(--tertiary-text-color);
   background-color: var(--background-color);
+  margin-right: 0rem !important;
 }
 
 .sectionHeaderButton:hover {
@@ -91,14 +95,14 @@
 .modalHeader {
   padding: 0.5rem 0.5rem;
   padding-left: 0.75rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   background-color: var(--background-color);
-  border-bottom: 1px solid var(--border-color);
   color: var(--primary-text-color);
   border-top-right-radius: 0.5rem !important;
   border-top-left-radius: 0.5rem !important;
+  border-width: 0rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .modalFooter {
@@ -123,6 +127,7 @@
   color: var(--primary-text-color);
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
+  padding-top: 0rem;
 }
 
 $button-background: transparentize($gray-200, 0.75);

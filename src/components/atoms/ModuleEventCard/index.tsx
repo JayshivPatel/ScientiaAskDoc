@@ -63,9 +63,12 @@ const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
       className={styles.submissionCard}
       style={{ height: "100%", cursor: "pointer" }}
     >
-      <Card.Body className={styles.modalBody}>
-        <span className={styles.eventPrefix}>{event.prefix}</span>
-        <span className={styles.eventTitle}>&nbsp;{event.title}</span>
+      <Card.Body>
+        <div>
+        <span className={styles.eventTitle}>
+          <span className={styles.eventPrefix}>{event.prefix}</span>
+          &nbsp;{event.title}
+        </span>
         <div className={styles.eventInfo}>
           <div className={assessmentStyle}>{event.assessment}</div>
           <div
@@ -76,7 +79,8 @@ const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
             {icon && <FontAwesomeIcon className={styles.icon} icon={icon} />}
           </div>
         </div>
-        <div style={{marginTop: "1.25rem"}}>
+        </div>
+        <div style={{ marginTop: "1.25rem" }}>
           <span className={styles.dateHeading}>{dateElements[0]}</span>
           <span className={styles.date}>{dateElements[1]}</span>
         </div>
