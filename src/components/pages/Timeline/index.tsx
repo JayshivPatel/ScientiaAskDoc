@@ -86,8 +86,12 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
   }
 
   dateToColumn(day: Date, termStart: Date) {
+    let dayTime = Math.floor(day.getTime() / 86400000);
+    let termStartTime = Math.floor(termStart.getTime() / 86400000);
     return (
-      Math.ceil(((day.getTime() - termStart.getTime()) / 86400000 / 7) * 6) + 1
+      Math.ceil(
+        ((dayTime - termStartTime) / 7) * 6
+      ) + 1
     );
   }
 

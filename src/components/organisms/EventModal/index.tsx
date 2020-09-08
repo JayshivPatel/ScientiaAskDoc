@@ -107,11 +107,21 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
         <div className={styles.eventTimeInfo}>
           <span className={styles.startDateHeading}>Start:</span>
           <span className={styles.startDate}>
-            {event.startDate.toLocaleString()}
+            {event.startDate.toLocaleDateString() +
+              ", " +
+              event.startDate.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
           </span>
           <span className={styles.endDateHeading}>End:</span>
           <span className={styles.endDate}>
-            {event.endDate.toLocaleString()}
+            {event.endDate.toLocaleDateString() +
+              ", " +
+              event.endDate.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
           </span>
           {event.status !== "unreleased" && timeLeft >= 0 && (
             <>
