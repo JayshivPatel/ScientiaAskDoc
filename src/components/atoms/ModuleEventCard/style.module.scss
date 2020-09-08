@@ -1,50 +1,24 @@
 @import "assets/scss/custom";
 @import "assets/scss/global";
 
-.eventTitle {
+.eventPrefix {
   font-size: 1.25rem;
   font-weight: 500;
+}
+
+.eventTitle {
+  font-size: 1.25rem;
 }
 
 .icon {
   margin-left: 0.625rem;
 }
 
-.eventTimeInfo {
-  margin-top: 1.25rem;
-  display: grid;
-  grid-template-areas: "startHeading start" "endHeading end" "daysHeading daysLeft";
-  width: 70%;
-}
-
-.startDate {
-  grid-area: start;
+.date {
   padding-left: 0.625rem;
 }
 
-.startDateHeading {
-  grid-area: startHeading;
-  font-weight: 500;
-}
-
-.daysHeading {
-  grid-area: daysHeading;
-  font-weight: 500;
-}
-
-.daysLeft {
-  grid-area: daysLeft;
-  padding-left: 0.625rem;
-}
-
-
-.endDate {
-  grid-area: end;
-  padding-left: 0.625rem;
-}
-
-.endDateHeading {
-  grid-area: endHeading;
+.dateHeading {
   font-weight: 500;
 }
 
