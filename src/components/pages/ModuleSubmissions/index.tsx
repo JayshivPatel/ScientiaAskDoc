@@ -37,7 +37,7 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
         {eventsData
           .filter(({ moduleCode }) => moduleCode === moduleID)
           .filter((e) => includeInSearchResult(e, searchText))
-          .sort((e1, e2) => getIndex(e1) - getIndex(e2))
+          .sort((e1, e2) => sortEvents(e1, e2))
           .map((e) => (
             <Col
               xs={12}
@@ -93,19 +93,19 @@ function includeInSearchResult(item: TimelineEvent, searchText: string) {
   return title.toLowerCase().indexOf(rest) !== -1;
 }
 
-function getIndex(event: TimelineEvent) {
-  const statusOrder = ["late", "due", "missed", "unreleased", "complete"];
-  const assessmentOrder = [
-    "exam",
-    "assessed",
-    "group",
-    "required",
-    "unassessed",
-  ];
-  return (
-    (statusOrder.indexOf(event.status) + 1) * 5 +
-    assessmentOrder.indexOf(event.assessment)
-  );
+function sortEvents(e1: TimelineEvent, e2: TimelineEvent) {
+  function getIndex(event: TimelineEvent) {
+    const statusOrder = ["late", "due", "unreleased", "complete", "missed"];
+    return statusOrder.indexOf(event.status);
+  }
+
+  if (getIndex(e1) !== getIndex(e2)) {
+    return getIndex(e1) - getIndex(e2);
+  }
+  if (e1.startDate.getTime() !== e2.startDate.getTime()) {
+    return e1.startDate.getTime() - e2.startDate.getTime();
+  }
+  return e2.endDate.getTime() - e1.endDate.getTime();
 }
 
 function getSearchPrompts() {
