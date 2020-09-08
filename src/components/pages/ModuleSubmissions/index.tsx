@@ -40,11 +40,11 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
           .sort((e1, e2) => sortEvents(e1, e2))
           .map((e) => (
             <Col
-              xs={6}
+              xs={12}
               sm={6}
-              md={4}
-              lg={4}
-              xl={3}
+              md={6}
+              lg={6}
+              xl={4}
               key={e.id}
               onClick={() => {
                 setActiveEvent(e);
