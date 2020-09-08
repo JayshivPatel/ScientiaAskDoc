@@ -16,7 +16,7 @@ import CategoryHeader from "components/molecules/CategoryHeader";
 
 import { staffRequest, download } from "utils/api"
 import { api, methods } from "constants/routes"
-import { Folder, Resource, idBooleanMap } from "constants/types";
+import { Folder, Resource, IdBooleanMap } from "constants/types";
 
 export interface StaffViewProps {
 	year: string;
@@ -48,7 +48,7 @@ const StaffView: React.FC<StaffViewProps> = ({
 			[resource.id]: false
 		};
 	}, {});
-	const [showMenus, setShowMenus] = useState<idBooleanMap>(allClosed());
+	const [showMenus, setShowMenus] = useState<IdBooleanMap>(allClosed());
 	const closeModal = () => setModal("");
 
 	let filesContent: Resource[] = resources;
@@ -178,7 +178,7 @@ const StaffView: React.FC<StaffViewProps> = ({
 					showMenus={showMenus}
 					setShowMenus={(id) => {
 						return (show: boolean) => {
-							let newShowMenus: idBooleanMap = allClosed();
+							let newShowMenus: IdBooleanMap = allClosed();
 							newShowMenus[id] = show;
 							setShowMenus(newShowMenus);
 						};

@@ -49,4 +49,4 @@ export enum ProgressStatus {
   COMPLETED = "Completed"
 }
 
-export type idBooleanMap = { [key: number]: boolean };
+export type IdBooleanMap = { [key: number]: boolean };

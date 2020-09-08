@@ -8,7 +8,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import FileListItem from "components/atoms/FileListItem";
 import { SelectionProps } from "components/molecules/SelectionView";
 import { resourceTypeToIcon } from "../../pages/ModuleResources/utils";
-import { idBooleanMap, Resource } from "constants/types";
+import { IdBooleanMap, Resource } from "constants/types";
 import { staffRequest } from "utils/api";
 import { api, methods } from "constants/routes";
 import arrayMove from "array-move";
@@ -16,7 +16,7 @@ import arrayMove from "array-move";
 export interface CategoryListProps {
   categoryItems: Resource[];
   select?: SelectionProps;
-  showMenus?: idBooleanMap,
+  showMenus?: IdBooleanMap,
   setShowMenus?: (id: number) => (show: boolean) => void,
   resourceActions?: (id: number, filename: string) => any;
   handleRowClick: (id: number) => void;

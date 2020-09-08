@@ -1,7 +1,7 @@
 import React from "react";
 import ResourceSectionHeader from "./components/SectionHeader";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
-import { idBooleanMap } from "constants/types"
+import { IdBooleanMap } from "constants/types";
 
 export interface SelectionItem {
   title: string;
@@ -15,7 +15,7 @@ export interface SelectionItem {
 export interface SelectionProps {
   selectionItems: SelectionItem[];
   state: MyState;
-  setIsSelected: (selection: idBooleanMap) => void;
+  setIsSelected: (selection: IdBooleanMap) => void;
   isAnySelected: () => boolean;
   handleCardClick: (id: number) => void;
   handleIconClick: (id: number) => void;
@@ -32,8 +32,8 @@ export interface MyProps {
 }
 
 interface MyState {
-  isSelected: idBooleanMap;
-  isHoveringOver: idBooleanMap;
+  isSelected: IdBooleanMap;
+  isHoveringOver: IdBooleanMap;
 }
 
 class SelectionView extends React.Component<MyProps, MyState> {
@@ -43,8 +43,8 @@ class SelectionView extends React.Component<MyProps, MyState> {
   }
 
   componentDidMount() {
-    let isSelected: idBooleanMap = [];
-    let isHoveringOver: idBooleanMap = [];
+    let isSelected: IdBooleanMap = [];
+    let isHoveringOver: IdBooleanMap = [];
     this.props.selectionItems.forEach(({ id }: { id: number }) => {
       isSelected[id] = false;
       isHoveringOver[id] = false;
