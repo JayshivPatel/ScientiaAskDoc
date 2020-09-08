@@ -1,35 +1,48 @@
 import React from "react";
 import SideBarCardGroup from "../SideBarCardGroup";
 import { eventTypes } from "components/atoms/SideBarCard";
+import { eventsData } from "components/pages/Timeline/eventsData";
 
 export interface WorkDueGroupProps {
   filter?: String;
 }
 
 const WorkDueGroup: React.FC<WorkDueGroupProps> = ({
-  filter
+  filter,
 }: WorkDueGroupProps) => {
+	let timeOptions = {
+		timeZone: "Europe/London",
+		hourCycle: "h23",
+		hour: "2-digit",
+		minute: "2-digit",
+		second: "2-digit",
+		weekday: "short",
+		day: "2-digit",
+		month: "short"
+	};
+
   return (
     <SideBarCardGroup
       title="Work Due"
-      events={events
-        .filter(({ module }) => filter === undefined || module === filter)
-        .map(({ type, module, task, content }) => {
+			events={eventsData
+        .filter(({ status }) => status === "due" || status === "late")
+        .filter(({ moduleCode }) => filter === undefined || moduleCode === filter)
+        .map(({ title, moduleCode, id, endDate, prefix, assessment}) => {
           let colorType: eventTypes;
-          switch (type) {
-            case "tutorial":
+          switch (assessment) {
+            case "unassessed submission":
               colorType = eventTypes.BlueCard;
               break;
             default:
               colorType = eventTypes.GreenCard;
               break;
           }
-
+					let task = `${prefix} ${title}`;
           return {
-            title: filter === undefined ? module : task,
-            subtitle: filter === undefined ? task : undefined,
-            content,
-            type: colorType
+            title: filter === undefined ? moduleCode : undefined,
+            subtitle:  task,
+            content: endDate.toLocaleString("en-GB", timeOptions),
+            type: colorType,
           };
         })}
     />
@@ -43,30 +56,6 @@ let events = [
     type: "tutorial",
     module: "CO112",
     task: "Tutorial 1",
-    content: "Fri 14 Aug, 19:30"
+    content: "Fri 14 Aug, 19:30",
   },
-  {
-    type: "coursework",
-    module: "CO112",
-    task: "Coursework 1",
-    content: "Mon 17 Aug, 17:00"
-  },
-  {
-    type: "coursework",
-    module: "CO140",
-    task: "Coursework 2",
-    content: "Tue 18 Aug, 12:30"
-  },
-  {
-    type: "tutorial",
-    module: "CO142",
-    task: "PPT2",
-    content: "Fri 21 Aug, 19:30"
-  },
-  {
-    type: "tutorial",
-    module: "CO120.2",
-    task: "PMT3",
-    content: "Mon 24 Aug, 12:30"
-  }
 ];

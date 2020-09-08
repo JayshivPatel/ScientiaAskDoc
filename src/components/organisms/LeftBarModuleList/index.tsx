@@ -1,6 +1,5 @@
 import React from "react";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
-import WorkDueGroup from "components/molecules/WorkDueGroup";
 
 export interface LeftBarModuleListProps {
   setModulesFilter: any;
@@ -45,7 +44,6 @@ const LeftBarModuleList: React.FC<LeftBarModuleListProps> = ({
   return (
     <>
       <SideBarTabGroup title="Filter" buttons={sortButtons} />
-      <WorkDueGroup />
     </>
   );
 };

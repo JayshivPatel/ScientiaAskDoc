@@ -25,7 +25,7 @@ const SideBarCardGroup: React.FC<SideBarCardGroupProps> = ({
             type={type}
             subtitle={subtitle}
             content={content}
-            key={title + type + subtitle}
+            key={"" + title + type + subtitle}
           />
         ))}
       </div>

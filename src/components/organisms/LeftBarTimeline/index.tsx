@@ -1,7 +1,6 @@
 import React from "react";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
 import { faSun, faLeaf, faSeedling } from "@fortawesome/free-solid-svg-icons";
-import WorkDueGroup from "components/molecules/WorkDueGroup";
 import { Term } from "constants/types";
 
 interface Props {
@@ -33,7 +32,6 @@ const LeftBarTimeline: React.FC<Props> = ({ term, setTerm }) => {
   return (
     <>
       <SideBarTabGroup title="Terms" buttons={termButtons} />
-      <WorkDueGroup />
     </>
   );
 };
