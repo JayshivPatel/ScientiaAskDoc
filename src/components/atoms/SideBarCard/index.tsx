@@ -5,7 +5,7 @@ import classNames from "classnames";
 
 export interface SideBarCardProps {
   type: eventTypes;
-  title: string;
+  title?: string;
   subtitle?: string;
   content?: string;
 }
@@ -13,14 +13,14 @@ export interface SideBarCardProps {
 export enum eventTypes {
   BlueCard,
   RedCard,
-  GreenCard
+  GreenCard,
 }
 
 const SideBarCard: React.FC<SideBarCardProps> = ({
   type,
   title,
   subtitle,
-  content
+  content,
 }: SideBarCardProps) => {
   return (
     <Card
@@ -33,11 +33,9 @@ const SideBarCard: React.FC<SideBarCardProps> = ({
       )}
     >
       <Card.Body>
-        <Card.Title>{title}</Card.Title>
-        {subtitle !== undefined ? (
-          <Card.Subtitle>{subtitle}</Card.Subtitle>
-        ) : null}
-        {content !== undefined ? <Card.Text>{content}</Card.Text> : null}
+        {title && <Card.Title>{title}</Card.Title>}
+        {subtitle && <Card.Subtitle>{subtitle}</Card.Subtitle>}
+        {content && <Card.Text>{content}</Card.Text>}
       </Card.Body>
     </Card>
   );
