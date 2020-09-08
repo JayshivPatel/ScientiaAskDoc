@@ -1,20 +1,11 @@
 import React, { useState } from "react";
-import Dandruff from "components/molecules/Dandruff";
 import EventModal from "components/organisms/EventModal";
 import { TimelineEvent } from "constants/types";
 import { eventsData } from "../Timeline/eventsData";
-import styles from "./style.module.scss";
 import Row from "react-bootstrap/esm/Row";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBullhorn,
-  faExclamationCircle,
-  faCheckCircle,
-} from "@fortawesome/free-solid-svg-icons";
 import ModuleEventCard from "components/atoms/ModuleEventCard";
 import Col from "react-bootstrap/esm/Col";
-import classNames from "classnames";
 
 interface Props {
   moduleID: string;
@@ -34,15 +25,22 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
         onHide={() => setShowModal(false)}
         activeDay={activeDay}
       />
-      <Row>
+      <Row >
         {eventsData
           .filter(({ moduleCode }) => moduleCode === moduleID)
           .map((e) => (
             <Col
+							xs={12}
+							sm={12}
+							md={6}
+							lg={6}
+							xl={4}
+							key={e.id}
               onClick={() => {
                 setActiveEvent(e);
                 setShowModal(true);
-              }}
+							}}
+							style={{marginTop: "1.25rem"}}
             >
               <ModuleEventCard event={e} activeDay={activeDay} />
             </Col>
