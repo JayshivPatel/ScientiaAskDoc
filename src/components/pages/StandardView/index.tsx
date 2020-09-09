@@ -30,6 +30,7 @@ interface StandardViewProps {
   onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
   onSettingsClick: (event: React.MouseEvent) => void;
   onEventClick: (e?: TimelineEvent) => void;
+  year: string;
 }
 
 const StandardView: React.FC<StandardViewProps> = ({
@@ -41,6 +42,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   revertTimelineSideBar,
   initTimelineSideBar,
   onEventClick,
+  year,
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
   const [timelineTerm, setTimelineTerm] = useState(Term.AUTUMN);
@@ -58,7 +60,8 @@ const StandardView: React.FC<StandardViewProps> = ({
         setModulesFilter={setModulesFilter}
         timelineTerm={timelineTerm}
         setTimelineTerm={setTimelineTerm}
-        onEventClick={onEventClick}
+				onEventClick={onEventClick}
+				year={year}
       />
       <RightBar onSettingsClick={onSettingsClick} />
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
@@ -77,7 +80,7 @@ const StandardView: React.FC<StandardViewProps> = ({
 
         <Route path="/modules/:id/dashboard">
           <Container className={classNames("pageContainer")}>
-            <ModuleDashboard />
+            <ModuleDashboard year={year}/>
           </Container>
         </Route>
 
@@ -85,7 +88,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           path="/modules/:id/overview"
           render={(props) => (
             <Container className={classNames("pageContainer")}>
-              <ModuleOverview year="2021" moduleID={props.match.params.id} />
+              <ModuleOverview year={year} moduleID={props.match.params.id} />
             </Container>
           )}
         ></Route>
@@ -95,7 +98,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           render={(props) => (
             <Container className={classNames("pageContainer")}>
               <ModuleResources
-                year="2021"
+                year={year}
                 moduleID={props.match.params.id}
                 scope={props.match.params.scope}
                 view={fileView}
@@ -109,7 +112,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           render={(props) => (
             <Container className={classNames("pageContainer")}>
               <ModuleResources
-                year="2021"
+                year={year}
                 moduleID={props.match.params.id}
                 scope={props.match.params.scope}
                 view="staff"

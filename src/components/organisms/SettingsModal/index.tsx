@@ -16,6 +16,8 @@ interface Props {
   setDarkTheme: (toSet: boolean) => any;
   onCardViewClick: (event: React.MouseEvent) => void;
   onListViewClick: (event: React.MouseEvent) => void;
+  year: string;
+  setYear: Function;
 }
 
 const SettingsModal: React.FC<Props> = ({
@@ -25,6 +27,8 @@ const SettingsModal: React.FC<Props> = ({
   setDarkTheme,
   onCardViewClick,
   onListViewClick,
+  year,
+  setYear,
 }) => {
   const [interfaceSize, setInterfaceSize] = useLocalStorage(
     "interfaceSize",
@@ -132,6 +136,31 @@ const SettingsModal: React.FC<Props> = ({
                 List
               </Button>
             </ButtonGroup>
+          </Form.Group>
+        </Form>
+
+        <h5 style={{ marginTop: "1.25rem" }} className={styles.modalSubHeading}>
+          Data
+        </h5>
+
+        <Form className={styles.interfaceGroup}>
+          <Form.Group style={{ alignItems: "center" }} as={Row}>
+            <Form.Label column xs="8" sm="8" lg="9">
+              Year
+            </Form.Label>
+            <Col xs="4" sm="4" lg="3">
+              <Form.Control
+                as="select"
+                onChange={(e) => {
+                  setYear(e.target.value);
+                }}
+              >
+                <option value="2021">2020 - 2021</option>
+                <option value="1920">2019 - 2020</option>
+                <option value="1819">2018 - 2019</option>
+                <option value="1718">2017 - 2018</option>
+              </Form.Control>
+            </Col>
           </Form.Group>
         </Form>
       </Modal.Body>

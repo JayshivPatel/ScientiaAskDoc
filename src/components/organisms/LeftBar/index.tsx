@@ -13,20 +13,23 @@ interface LeftBarProps {
   modulesFilter: string;
   setModulesFilter: Function;
   timelineTerm: Term;
-	setTimelineTerm: React.Dispatch<React.SetStateAction<Term>>;
-	onEventClick: (e?: TimelineEvent) => void;
+  setTimelineTerm: React.Dispatch<React.SetStateAction<Term>>;
+  onEventClick: (e?: TimelineEvent) => void;
+  year: string;
 }
 
 const LeftBar: React.FC<LeftBarProps> = ({
   modulesFilter,
-	setModulesFilter,
-	timelineTerm,
-	setTimelineTerm,
-	onEventClick,
+  setModulesFilter,
+  timelineTerm,
+  setTimelineTerm,
+  onEventClick,
+  year,
 }) => {
+  const displayYear = `20${year.substring(0, 2)} - 20${year.substring(2, 4)}`;
   return (
     <div id={styles.leftbarWrapper}>
-      <p className={styles.leftbarStatus}>2020 - 2021</p>
+      <p className={styles.leftbarStatus}>{displayYear}</p>
       <Switch>
         <Route path="/modules/:id">
           <LeftBarModule />
@@ -44,10 +47,7 @@ const LeftBar: React.FC<LeftBarProps> = ({
         </Route>
 
         <Route path="/timeline">
-          <LeftBarTimeline
-            term={timelineTerm}
-            setTerm={setTimelineTerm}
-          />
+          <LeftBarTimeline term={timelineTerm} setTerm={setTimelineTerm} />
         </Route>
 
         <Route path="/">
@@ -55,7 +55,7 @@ const LeftBar: React.FC<LeftBarProps> = ({
         </Route>
       </Switch>
 
-			<WorkDueGroup onEventClick={onEventClick}/>
+      <WorkDueGroup onEventClick={onEventClick} />
     </div>
   );
 };

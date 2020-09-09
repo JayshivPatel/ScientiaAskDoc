@@ -21,7 +21,8 @@ type AppState = {
   showSettings: boolean;
   fileView: string;
   showEventModal: boolean;
-  activeModalEvent?: TimelineEvent;
+	activeModalEvent?: TimelineEvent;
+	year: string;
 };
 
 class App extends React.Component<{}, AppState> {
@@ -36,7 +37,8 @@ class App extends React.Component<{}, AppState> {
       showSettings: false,
       showEventModal: false,
       activeModalEvent: undefined,
-      fileView: localStorage.getItem("fileView") || "card",
+			fileView: localStorage.getItem("fileView") || "card",
+			year: "2021",
     };
   }
 
@@ -131,7 +133,9 @@ class App extends React.Component<{}, AppState> {
           fileView={this.state.fileView}
           onCardViewClick={() => this.setFileView("card")}
           onListViewClick={() => this.setFileView("list")}
-          setDarkTheme={(b) => this.setDarkTheme(b)}
+					setDarkTheme={(b) => this.setDarkTheme(b)}
+					year={this.state.year}
+					setYear={(year: string) => this.setState({year: year})}
         />
 
         <EventModal
@@ -179,7 +183,8 @@ class App extends React.Component<{}, AppState> {
                   toggledRight: false,
                 });
               }}
-              fileView={this.state.fileView}
+							fileView={this.state.fileView}
+							year={this.state.year}
             />
 
             <BottomBar pages={horizontalBarPages} />

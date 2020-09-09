@@ -16,7 +16,11 @@ import { api, methods } from "constants/routes";
 
 import TutorCardGroup from "components/molecules/TutorCardGroup";
 
-const ModuleDashboard: React.FC = () => {
+interface Props {
+  year: string;
+}
+
+const ModuleDashboard: React.FC<Props> = ({ year }) => {
   let { id } = useParams();
   let moduleCode = id.startsWith("CO") ? id.slice(2) : id;
   let piazzaLink = "https://piazza.com/class/";
@@ -67,7 +71,7 @@ const ModuleDashboard: React.FC = () => {
         console.log("fail");
       },
       body: {
-        year: "2021",
+        year: year,
         course: moduleCode,
       },
     });
