@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
-import logo from "assets/images/logo.svg";
 import { Link } from "react-router-dom";
 import styles from "./style.module.scss";
 import cx from "classnames";
@@ -48,7 +47,7 @@ class NavBarBrand extends React.Component<NavBarBrandProps, NavBarBrandState> {
     return (
       <Navbar.Brand className={styles.brandContainer}>
         <img
-          src={logo}
+          src="images/logo.svg"
           className={cx("d-inline-block", "align-center", styles.brandImage, {
             rotate: this.state.iconRotate
           })}
