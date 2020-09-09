@@ -9,7 +9,7 @@ import FileListItem from "components/atoms/FileListItem";
 import { SelectionProps } from "components/molecules/SelectionView";
 import { resourceTypeToIcon } from "../../pages/ModuleResources/utils";
 import { IdBooleanMap, Resource } from "constants/types";
-import { staffRequest } from "utils/api";
+import { request } from "utils/api";
 import { api, methods } from "constants/routes";
 import arrayMove from "array-move";
 
@@ -103,7 +103,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
     let indexes = oldIndexes.slice(minIndex, maxIndex);
 
     newResources.slice(minIndex, maxIndex).forEach((resource, i) => {
-      staffRequest({
+      request({
         url: api.MATERIALS_RESOURCES_ID(resource.id),
         method: methods.PUT,
         onSuccess: () => {},

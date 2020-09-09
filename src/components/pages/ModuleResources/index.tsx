@@ -94,7 +94,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     };
 
     const onError = (message: string) => {
-      console.log("ERROR");
       this.setState({ error: message, isLoaded: true });
     };
 

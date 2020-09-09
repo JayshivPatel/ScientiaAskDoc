@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { StaticContext } from 'react-router';
+import { RouteComponentProps, Redirect } from "react-router-dom";
+
 import styles from "./style.module.scss";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
@@ -6,7 +9,29 @@ import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 
-const SignIn: React.FC = () => {
+import authenticationService from "utils/auth";
+import { api } from "constants/routes"
+
+type Props = RouteComponentProps<{}, StaticContext, { from: { pathname: string; }; }>;
+
+const SignIn: React.FC<Props> = ({ location }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [redirect, setRedirect] = useState(false);
+
+  const { from } = (location && location.state) || { from: { pathname: "/" } };
+
+  const handleSubmit = async () => {
+    // Pending SSO reimplementation of EdTech services authentication
+    if (await authenticationService.login(username, password, api.MATERIALS_LOGIN)) {
+      setRedirect(true);
+    } else {
+      // TODO: Deal with failed login
+      alert("Login failed.");
+    }
+  }
+
+  if (redirect) return <Redirect to={from}/>;
   return (
     <>
       <Navbar
@@ -51,6 +76,7 @@ const SignIn: React.FC = () => {
             <FormControl
               className={styles.inputBar}
               placeholder="Enter your username"
+              onChange={e => setUsername(e.target.value)}
               aria-label="Username"
               aria-describedby="basic-addon1"
             />
@@ -60,12 +86,13 @@ const SignIn: React.FC = () => {
             <FormControl
               className={styles.inputBar}
               placeholder="Enter your password"
+              onChange={e => setPassword(e.target.value)}
               type="password"
               aria-label="Password"
               aria-describedby="basic-addon1"
             />
           </InputGroup>
-          <Button variant="secondary" className={styles.inputButton}>
+          <Button variant="secondary" className={styles.inputButton} onClick={() => handleSubmit()}>
             Sign In
           </Button>
         </div>

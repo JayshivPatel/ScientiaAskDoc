@@ -9,11 +9,12 @@ import {
   faChalkboardTeacher,
 } from "@fortawesome/free-solid-svg-icons";
 import StandardView from "./pages/StandardView";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import SettingsModal from "./organisms/SettingsModal";
 import EventModal from "./organisms/EventModal";
 import { TimelineEvent } from "constants/types";
+import authenticationService from "../utils/auth";
 
 type AppState = {
   toggledLeft: boolean;
@@ -24,6 +25,29 @@ type AppState = {
 	activeModalEvent?: TimelineEvent;
 	year: string;
 };
+
+const PrivateRoute: React.ComponentType<any> = ({
+  component: Component,
+  ...rest
+}) => {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        authenticationService.userIsLoggedIn() ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/signin",
+              state: { from: props.location }
+            }}
+          />
+        )
+      }
+    />
+  )
+}
 
 class App extends React.Component<{}, AppState> {
   width = window.innerWidth;
@@ -146,11 +170,9 @@ class App extends React.Component<{}, AppState> {
         />
 
         <Switch>
-          <Route path="/signin">
-            <SignIn />
-          </Route>
+          <Route path="/signin" component={SignIn}/>
 
-          <Route path="/">
+          <PrivateRoute path="/" component={() => (<>
             <TopBar
               pages={horizontalBarPages}
               onFavIconClick={(e) => {
@@ -188,7 +210,7 @@ class App extends React.Component<{}, AppState> {
             />
 
             <BottomBar pages={horizontalBarPages} />
-          </Route>
+          </>)}/>
         </Switch>
       </>
     );

@@ -6,7 +6,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 import ResourceDetailForm, { ResourceDetails } from "components/molecules/ResourceDetailForm"
 import { Resource } from "constants/types";
-import { staffRequest } from "utils/api"
+import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 
 interface EditModalProps {
@@ -45,7 +45,7 @@ const EditModal: React.FC<EditModalProps> = ({
 			if (details.visibleAfter) {
 				payload.visible_after = details.visibleAfter;
 			}
-			staffRequest({
+			request({
 				url: api.MATERIALS_RESOURCES_ID(resource.id),
 				method: methods.PUT,
 				onSuccess: hideAndReload,
