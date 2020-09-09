@@ -4,7 +4,7 @@ import styles from "./style.module.scss";
 import classNames from "classnames";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
-import graphIllustration from "assets/images/graph-illustration.svg";
+import graphIllustration from "assets/images/graph-illustration.png";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";

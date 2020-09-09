@@ -24,7 +24,8 @@ export interface Resource {
 export interface Module {
   title: string;
   code: string;
-  image: string;
+  imageLight: string;
+  imageDark: string;
   terms: Term[];
   progressStatus: ProgressStatus;
   progressPercent: number;

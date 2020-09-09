@@ -8,13 +8,12 @@ import { faSun, faLeaf, faSeedling } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Term, ProgressStatus } from "constants/types";
 
-
-
 export interface ModuleCardProps {
   module: {
     title: string;
     code: string;
-    image: string;
+    imageLight: string;
+    imageDark: string;
     content: string;
     terms: Term[];
     progressStatus?: ProgressStatus;
@@ -44,7 +43,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
       style={{
         marginTop: "1.875rem",
         paddingLeft: "0.625rem",
-        paddingRight: "0.625rem"
+        paddingRight: "0.625rem",
       }}
     >
       <Card
@@ -74,7 +73,11 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
         <Card.Img
           style={{ borderRadius: 0 }}
           variant="top"
-          src={module.image}
+          src={
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? module.imageDark
+              : module.imageLight
+          }
         />
         <Card.Body>
           <Card.Title>{module.title}</Card.Title>
