@@ -18,7 +18,7 @@ import ExamGrading from "../Exams/Grading";
 import ExamPastPapers from "../Exams/PastPapers";
 import ModuleOverview from "../ModuleOverview";
 import LeftBar from "components/organisms/LeftBar";
-import { Term } from "constants/types";
+import { Term, TimelineEvent } from "constants/types";
 import ModuleSubmissions from "../ModuleSubmissions";
 
 interface StandardViewProps {
@@ -29,6 +29,7 @@ interface StandardViewProps {
   revertTimelineSideBar: () => void;
   onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
   onSettingsClick: (event: React.MouseEvent) => void;
+  onEventClick: (e?: TimelineEvent) => void;
 }
 
 const StandardView: React.FC<StandardViewProps> = ({
@@ -39,6 +40,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   fileView,
   revertTimelineSideBar,
   initTimelineSideBar,
+  onEventClick,
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
   const [timelineTerm, setTimelineTerm] = useState(Term.AUTUMN);
@@ -56,6 +58,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         setModulesFilter={setModulesFilter}
         timelineTerm={timelineTerm}
         setTimelineTerm={setTimelineTerm}
+        onEventClick={onEventClick}
       />
       <RightBar onSettingsClick={onSettingsClick} />
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
@@ -119,7 +122,10 @@ const StandardView: React.FC<StandardViewProps> = ({
           path="/modules/:id/submissions"
           render={(props) => (
             <Container className={classNames("pageContainer")}>
-              <ModuleSubmissions moduleID={props.match.params.id} />
+              <ModuleSubmissions
+                moduleID={props.match.params.id}
+                onEventClick={onEventClick}
+              />
             </Container>
           )}
         ></Route>
@@ -136,6 +142,7 @@ const StandardView: React.FC<StandardViewProps> = ({
             revertSideBar={revertTimelineSideBar}
             term={timelineTerm}
             setTerm={setTimelineTerm}
+            onEventClick={onEventClick}
           />
         </Route>
 

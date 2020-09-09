@@ -7,23 +7,29 @@ export interface SideBarCardProps {
   type: eventTypes;
   title?: string;
   subtitle?: string;
-  content?: string;
+	content?: string;
+	id?: number;
+	onClick?: (event: React.MouseEvent) => void;
 }
 
 export enum eventTypes {
   BlueCard,
   RedCard,
   GreenCard,
+  IndigoCard,
+  CyanCard,
 }
 
 const SideBarCard: React.FC<SideBarCardProps> = ({
   type,
   title,
   subtitle,
-  content,
+	content,
+	onClick,
 }: SideBarCardProps) => {
   return (
     <Card
+			onClick={onClick}
       className={classNames(
         styles.sideBarCard,
         getStyle(type),
@@ -49,6 +55,10 @@ function getStyle(type: eventTypes): String {
       return styles.sideBarRedCard;
     case eventTypes.GreenCard:
       return styles.sideBarGreenCard;
+    case eventTypes.IndigoCard:
+      return styles.sideBarIndigoCard;
+    case eventTypes.CyanCard:
+      return styles.sideBarCyanCard;
     default:
       return styles.sideBarBlueCard;
   }

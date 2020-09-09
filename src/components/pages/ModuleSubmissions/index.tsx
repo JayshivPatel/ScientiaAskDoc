@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import EventModal from "components/organisms/EventModal";
 import { TimelineEvent } from "constants/types";
 import { eventsData } from "../Timeline/eventsData";
 import Row from "react-bootstrap/esm/Row";
@@ -10,15 +9,12 @@ import SearchBox from "components/molecules/SearchBox";
 
 interface Props {
   moduleID: string;
+  onEventClick: (e: TimelineEvent) => void;
 }
-const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
-  let [showModal, setShowModal] = useState(false);
-  let [activeEvent, setActiveEvent] = useState<TimelineEvent | undefined>(
-    undefined
-  );
+const ModuleSubmissions: React.FC<Props> = ({ moduleID, onEventClick }) => {
   let [searchText, setSearchText] = useState("");
 
-  const activeDay = new Date("2020-10-12");
+  const activeDay = new Date("2020-10-21");
   return (
     <>
       <MyBreadcrumbs />
@@ -26,12 +22,6 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
         searchText={searchText}
         onSearchTextChange={setSearchText}
         prompts={getSearchPrompts()}
-      />
-      <EventModal
-        event={activeEvent}
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        activeDay={activeDay}
       />
       <Row style={{ marginTop: "1.25rem" }}>
         {eventsData
@@ -46,10 +36,7 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID }) => {
               lg={6}
               xl={4}
               key={e.id}
-              onClick={() => {
-                setActiveEvent(e);
-                setShowModal(true);
-              }}
+              onClick={() => onEventClick(e)}
               style={{ marginTop: "1.25rem" }}
             >
               <ModuleEventCard event={e} activeDay={activeDay} />
