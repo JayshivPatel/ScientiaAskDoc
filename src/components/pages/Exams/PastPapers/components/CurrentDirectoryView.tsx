@@ -38,7 +38,8 @@ const CurrentDirectoryView: React.FC<CurrentDirectoryViewProps> = ({
         heading="Files"
         onItemClick={onItemClick}
         onDownloadClick={onDownloadClick}
-        selectionItems={filesContent}
+				selectionItems={filesContent}
+				disableSelection={true}
         render={(select: SelectionProps) => (
           <CurrentDirectoryRow select={select} />
         )}

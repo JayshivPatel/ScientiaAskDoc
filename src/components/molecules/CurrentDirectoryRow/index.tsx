@@ -42,7 +42,8 @@ const CurrentDirectoryRow: React.FC<{ select: SelectionProps }> = ({
               tags={tags}
               thumbnail={thumbnail}
               icon={
-                select.isAnySelected() || select.state.isHoveringOver[id]
+								!select.disableSelection &&
+                (select.isAnySelected() || select.state.isHoveringOver[id])
                   ? select.state.isSelected[id]
                     ? faCheckSquare
                     : faSquare

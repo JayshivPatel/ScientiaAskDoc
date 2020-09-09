@@ -34,7 +34,7 @@ const QuickAccessRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
               marginBottom: ".5rem",
               marginTop: ".5rem",
               paddingLeft: "0.625rem",
-              paddingRight: "0.625rem"
+              paddingRight: "0.625rem",
             }}
           >
             <FileCard
@@ -42,17 +42,18 @@ const QuickAccessRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
               type={type}
               tags={tags}
               icon={
-                select.isAnySelected() || select.state.isHoveringOver[id]
+                !select.disableSelection &&
+                (select.isAnySelected() || select.state.isHoveringOver[id])
                   ? select.state.isSelected[id]
                     ? faCheckSquare
                     : faSquare
                   : resourceTypeToIcon(type)
               }
               onClick={() => select.handleCardClick(id)}
-              onIconClick={e => {
+              onIconClick={(e) => {
                 e.stopPropagation();
                 select.handleIconClick(id);
-							}}
+              }}
               thumbnail={thumbnail}
               onMouseOver={() => select.handleMouseOver(id)}
               onMouseOut={() => select.handleMouseOut(id)}

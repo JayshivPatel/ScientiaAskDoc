@@ -4,6 +4,7 @@ import SelectionView, {
 } from "components/molecules/SelectionView";
 import QuickAccessRow from "components/molecules/QuickAccessRow";
 import { BasicResource } from "constants/types";
+import { modulesList } from "components/pages/ModuleList/list";
 
 export interface QuickAccessViewProps {
   resources: BasicResource[];
@@ -20,17 +21,20 @@ const QuickAccessView: React.FC<QuickAccessViewProps> = ({
   onDownloadClick,
   onItemClick,
 }) => {
-  let quickAccessItems = resources.filter(
-    ({ tags, folder }) =>
-      tags.includes("new") && (scope === "" || scope === folder)
-  );
+  let quickAccessItems = resources.filter(({ title }) => {
+    return modulesList.some(({ code }) => {
+      const moduleCode = code.startsWith("CO") ? code.slice(2) : code;
+      return title.startsWith(`C${moduleCode}`);
+    });
+  });
 
   if (searchText === "" && scope === "" && quickAccessItems.length > 0) {
     return (
       <SelectionView
         heading="Quick Access"
         onItemClick={onItemClick}
-        onDownloadClick={onDownloadClick}
+				onDownloadClick={onDownloadClick}
+				disableSelection={true}
         selectionItems={quickAccessItems}
         render={(select: SelectionProps) => <QuickAccessRow select={select} />}
       />

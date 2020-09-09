@@ -61,8 +61,6 @@ class PastPapers extends React.Component<ResourcesProps, ResourceState> {
     this.loadResources();
   }
 
-  handleFileDownload(indices: number[]) {}
-
   includeInSearchResult(item: BasicResource, searchText: string) {
     const rx = /([a-z]+)\(([^)]+)\)/gi;
     let match: RegExpExecArray | null;
@@ -132,7 +130,7 @@ class PastPapers extends React.Component<ResourcesProps, ResourceState> {
                 resources={this.state.resources}
                 scope={scope}
                 searchText={this.state.searchText}
-                onDownloadClick={(ids) => this.handleFileDownload(ids)}
+                onDownloadClick={() => {}}
                 onItemClick={(id) => this.handleResourceClick(id)}
                 includeInSearchResult={this.includeInSearchResult}
               />
@@ -141,7 +139,7 @@ class PastPapers extends React.Component<ResourcesProps, ResourceState> {
                 resources={this.state.resources}
                 scope={scope}
                 searchText={this.state.searchText}
-                onDownloadClick={(ids) => this.handleFileDownload(ids)}
+                onDownloadClick={() => {}}
                 onItemClick={(id) => this.handleResourceClick(id)}
               />
             </>
