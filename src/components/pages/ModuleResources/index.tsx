@@ -14,6 +14,7 @@ import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import LoadingScreen from "components/molecules/LoadingScreen";
 import { openResource, tags, folders } from "./utils";
 import { Resource } from "constants/types";
+import { titleCase } from "utils/functions";
 
 export interface ResourcesProps {
   year: string;
@@ -175,6 +176,32 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     );
   }
 
+  getSearchPrompts() {
+    const typesList = [
+      { name: "PDF", value: "type(pdf)" },
+      { name: "Video", value: "type(video)" },
+      { name: "File", value: "type(file)" },
+      { name: "Link", value: "type(link)" },
+    ];
+    let tagsList = [
+      { name: "New", value: "tag(new)" },
+      { name: "Week 1", value: "tag(week 1)" },
+    ];
+    const prompts = [
+      { title: "Types", list: typesList },
+      { title: "Tags", list: tagsList },
+    ];
+
+    tags(this.state.resources)
+      .filter((tag) => tag.toLowerCase() !== "new")
+      .filter((tag) => !tag.toLowerCase().startsWith("week"))
+      .forEach((tag) => {
+        tagsList.push({ name: titleCase(tag), value: `tag(${tag})` });
+      });
+
+    return prompts;
+  }
+
   handleResourceClick(id: number) {
     openResource(this.state.resources, id);
   }
@@ -246,7 +273,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
         <SearchBox
           searchText={this.state.searchText}
           onSearchTextChange={(text) => this.setState({ searchText: text })}
-          tags={tags(this.state.resources)}
+          prompts={this.getSearchPrompts()}
         />
 
         <LoadingScreen

@@ -21,6 +21,7 @@
     "@types/react-dropzone": "^5.1.0",
     "@types/react-router-dom": "^5.1.5",
     "@types/react-select": "^3.0.19",
+    "array-move": "^3.0.1",
     "bootstrap": "^4.5.0",
     "classnames": "^2.2.6",
     "node-sass": "^4.14.1",

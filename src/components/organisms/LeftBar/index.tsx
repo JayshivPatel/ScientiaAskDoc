@@ -6,13 +6,15 @@ import LeftBarModuleList from "components/organisms/LeftBarModuleList";
 import LeftBarModule from "components/organisms/LeftBarModule";
 import LeftBarExams from "components/organisms/LeftBarExams";
 import LeftBarTimeline from "components/organisms/LeftBarTimeline";
-import { Term } from "constants/types";
+import { Term, TimelineEvent } from "constants/types";
+import WorkDueGroup from "components/molecules/WorkDueGroup";
 
 interface LeftBarProps {
   modulesFilter: string;
   setModulesFilter: Function;
   timelineTerm: Term;
-  setTimelineTerm: React.Dispatch<React.SetStateAction<Term>>;
+	setTimelineTerm: React.Dispatch<React.SetStateAction<Term>>;
+	onEventClick: (e?: TimelineEvent) => void;
 }
 
 const LeftBar: React.FC<LeftBarProps> = ({
@@ -20,6 +22,7 @@ const LeftBar: React.FC<LeftBarProps> = ({
 	setModulesFilter,
 	timelineTerm,
 	setTimelineTerm,
+	onEventClick,
 }) => {
   return (
     <div id={styles.leftbarWrapper}>
@@ -51,6 +54,8 @@ const LeftBar: React.FC<LeftBarProps> = ({
           <LeftBarDashboard />
         </Route>
       </Switch>
+
+			<WorkDueGroup onEventClick={onEventClick}/>
     </div>
   );
 };

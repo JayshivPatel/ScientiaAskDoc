@@ -9,10 +9,11 @@ import { Term } from "constants/types";
 interface Props {
   term: Term;
   setTerm: React.Dispatch<React.SetStateAction<Term>>;
+  style?: React.CSSProperties;
 }
-const TermSwitcher: React.FC<Props> = ({ term, setTerm }) => {
+const TermSwitcher: React.FC<Props> = ({ term, setTerm, style }) => {
   return (
-    <div className={styles.timelineTermSwitcher}>
+    <div style={style} className={styles.timelineTermSwitcher}>
       <ButtonGroup style={{ float: "right" }}>
         <Button
           className={styles.termSwitch}

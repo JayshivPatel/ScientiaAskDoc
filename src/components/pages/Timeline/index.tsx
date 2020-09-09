@@ -9,19 +9,9 @@ import DayIndicatorGrid from "./components/DayIndicatorGrid";
 import EventGrid from "./components/EventGrid";
 import { eventsData } from "./eventsData";
 import LoadingScreen from "components/molecules/LoadingScreen";
-import { Term, Module } from "constants/types";
-import { addDays } from "utils/functions";
-import EventModal from "./components/EventModal";
+import { Term, Module, TimelineEvent } from "constants/types";
+import { addDays, toDayCount } from "utils/functions";
 import TimelineMobile from "./components/TimelineMobile";
-
-export interface TimelineEvent {
-  title: string;
-  id: number;
-  type: string;
-  moduleCode: string;
-  startDate: Date;
-  endDate: Date;
-}
 
 export type ModuleTracks = {
   [index: string]: TimelineEvent[][];
@@ -32,14 +22,13 @@ interface TimelineProps {
   revertSideBar: () => void;
   term: Term;
   setTerm: React.Dispatch<React.SetStateAction<Term>>;
+  onEventClick: (e?: TimelineEvent) => void;
 }
 
 interface TimelineState {
   modulesTracks: ModuleTracks;
   modulesList: Module[];
   isLoaded: boolean;
-  activeEvent?: TimelineEvent;
-  showEventModal: boolean;
   showMobileOnSmallScreens: boolean;
   eventsData: TimelineEvent[];
 }
@@ -51,7 +40,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       modulesTracks: {},
       isLoaded: false,
       modulesList: [],
-      showEventModal: false,
       showMobileOnSmallScreens: true,
       eventsData: [],
     };
@@ -98,9 +86,9 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
   }
 
   dateToColumn(day: Date, termStart: Date) {
-    return (
-      Math.ceil(((day.getTime() - termStart.getTime()) / 86400000 / 7) * 6) + 1
-    );
+    const dayTime = toDayCount(day);
+    const termStartTime = toDayCount(termStart);
+    return Math.ceil(((dayTime - termStartTime) / 7) * 6) + 1;
   }
 
   isInTerm(date: Date, termStart: Date, numWeeks: number) {
@@ -112,12 +100,12 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 
   handleEventClick(id: number) {
     const event = this.state.eventsData.find((e) => e.id === id);
-    this.setState({ activeEvent: event, showEventModal: true });
+    this.props.onEventClick(event);
   }
 
   render() {
     const [termStart, numWeeks] = getTermDates(this.props.term);
-    const activeDay = new Date("2020-10-12");
+    const activeDay = new Date("2020-10-21");
     const trackHeight = 3.25;
     if (!this.state.isLoaded) {
       return <LoadingScreen successful={<></>} />;
@@ -127,7 +115,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     );
 
     if (
-      window.innerWidth <= 700 &&
+      window.innerWidth <= 550 &&
       window.innerHeight <= 900 &&
       this.state.showMobileOnSmallScreens
     ) {
@@ -146,11 +134,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 
     return (
       <>
-        <EventModal
-          show={this.state.showEventModal}
-          onHide={() => this.setState({ showEventModal: false })}
-          event={this.state.activeEvent}
-        />
         <div className={styles.timelineContainer}>
           <MyBreadcrumbs />
           <div className={styles.timelineGrid}>
@@ -191,7 +174,10 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 }
 
 function eventsOverlaps(e1: TimelineEvent, e2: TimelineEvent) {
-  return e1.startDate <= e2.endDate && e1.endDate >= e2.startDate;
+  return (
+    toDayCount(e1.startDate) <= toDayCount(e2.endDate) &&
+    toDayCount(e1.endDate) >= toDayCount(e2.startDate)
+  );
 }
 
 function getTermDates(term: Term): [Date, number] {

@@ -63,15 +63,15 @@
 
 .inputButton.focus,
 .inputButton:focus {
-  background: var(--primary-button);
-  color: var(--primary-button-text);
+  background: var(--inverted-button-hover);
+  color: var(--inverted-button-text);
   box-shadow: none;
 }
 
 .inputButton {
   margin-bottom: 0.625rem;
-  color: var(--primary-button-text);
-  background: var(--primary-button);
+  color: var(--inverted-button-text);
+  background: var(--inverted-button);
   font-weight: 500;
   font-size: 1.05rem;
   letter-spacing: 0;
@@ -89,8 +89,8 @@
 
 .inputButton.active,
 .inputButton:active {
-  background: var(--primary-button-active) !important;
-  color: var(--primary-button-text-active) !important;
+  background: var(--inverted-button-active) !important;
+  color: var(--inverted-button-text) !important;
   font-weight: 500;
   border-width: 0rem;
   height: 2.25rem;
@@ -98,7 +98,7 @@
 }
 
 .inputButton:hover {
-  background-color: var(--primary-button-hover);
-  color: var(--primary-button-text);
+  background-color: var(--inverted-button-hover);
+  color: var(--inverted-button-text);
   box-shadow: none !important;
 }

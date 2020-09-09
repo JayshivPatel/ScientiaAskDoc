@@ -5,25 +5,31 @@ import classNames from "classnames";
 
 export interface SideBarCardProps {
   type: eventTypes;
-  title: string;
+  title?: string;
   subtitle?: string;
-  content?: string;
+	content?: string;
+	id?: number;
+	onClick?: (event: React.MouseEvent) => void;
 }
 
 export enum eventTypes {
   BlueCard,
   RedCard,
-  GreenCard
+  GreenCard,
+  IndigoCard,
+  CyanCard,
 }
 
 const SideBarCard: React.FC<SideBarCardProps> = ({
   type,
   title,
   subtitle,
-  content
+	content,
+	onClick,
 }: SideBarCardProps) => {
   return (
     <Card
+			onClick={onClick}
       className={classNames(
         styles.sideBarCard,
         getStyle(type),
@@ -33,11 +39,9 @@ const SideBarCard: React.FC<SideBarCardProps> = ({
       )}
     >
       <Card.Body>
-        <Card.Title>{title}</Card.Title>
-        {subtitle !== undefined ? (
-          <Card.Subtitle>{subtitle}</Card.Subtitle>
-        ) : null}
-        {content !== undefined ? <Card.Text>{content}</Card.Text> : null}
+        {title && <Card.Title>{title}</Card.Title>}
+        {subtitle && <Card.Subtitle>{subtitle}</Card.Subtitle>}
+        {content && <Card.Text>{content}</Card.Text>}
       </Card.Body>
     </Card>
   );
@@ -51,6 +55,10 @@ function getStyle(type: eventTypes): String {
       return styles.sideBarRedCard;
     case eventTypes.GreenCard:
       return styles.sideBarGreenCard;
+    case eventTypes.IndigoCard:
+      return styles.sideBarIndigoCard;
+    case eventTypes.CyanCard:
+      return styles.sideBarCyanCard;
     default:
       return styles.sideBarBlueCard;
   }

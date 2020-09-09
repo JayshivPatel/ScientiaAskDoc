@@ -1,35 +1,70 @@
 import React from "react";
 import SideBarCardGroup from "../SideBarCardGroup";
 import { eventTypes } from "components/atoms/SideBarCard";
+import { eventsData } from "components/pages/Timeline/eventsData";
+import { TimelineEvent } from "constants/types";
 
 export interface WorkDueGroupProps {
-  filter?: String;
+	filter?: String;
+	onEventClick: (e?: TimelineEvent) => void;
 }
 
 const WorkDueGroup: React.FC<WorkDueGroupProps> = ({
-  filter
+	filter,
+	onEventClick,
 }: WorkDueGroupProps) => {
+  let timeOptions = {
+    timeZone: "Europe/London",
+    hourCycle: "h23",
+    hour: "2-digit",
+    minute: "2-digit",
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+	};
+	
+	function handleEventClick(id?: number) {
+		const event = eventsData.find((e) => e.id === id);
+		onEventClick(event);
+	}
+
   return (
     <SideBarCardGroup
-      title="Work Due"
-      events={events
-        .filter(({ module }) => filter === undefined || module === filter)
-        .map(({ type, module, task, content }) => {
+			title="Work Due"
+			onCardClick={handleEventClick}
+      events={eventsData
+        .filter(({ status }) => status === "due" || status === "late")
+        .filter(
+          ({ moduleCode }) => filter === undefined || moduleCode === filter
+        )
+        .map(({ title, moduleCode, id, endDate, prefix, assessment }) => {
           let colorType: eventTypes;
-          switch (type) {
-            case "tutorial":
+          switch (assessment) {
+            case "required":
               colorType = eventTypes.BlueCard;
+              break;
+            case "assessed":
+              colorType = eventTypes.GreenCard;
+              break;
+            case "exam":
+              colorType = eventTypes.IndigoCard;
+              break;
+            case "unassessed":
+              colorType = eventTypes.CyanCard;
+              break;
+            case "group":
+              colorType = eventTypes.RedCard;
               break;
             default:
               colorType = eventTypes.GreenCard;
               break;
           }
-
           return {
-            title: filter === undefined ? module : task,
-            subtitle: filter === undefined ? task : undefined,
-            content,
-            type: colorType
+            title: `${prefix}: ${moduleCode}`,
+            subtitle: title,
+						content: endDate.toLocaleString("en-GB", timeOptions),
+						id: id,
+            type: colorType,
           };
         })}
     />
@@ -37,36 +72,3 @@ const WorkDueGroup: React.FC<WorkDueGroupProps> = ({
 };
 
 export default WorkDueGroup;
-
-let events = [
-  {
-    type: "tutorial",
-    module: "CO112",
-    task: "Tutorial 1",
-    content: "Fri 14 Aug, 19:30"
-  },
-  {
-    type: "coursework",
-    module: "CO112",
-    task: "Coursework 1",
-    content: "Mon 17 Aug, 17:00"
-  },
-  {
-    type: "coursework",
-    module: "CO140",
-    task: "Coursework 2",
-    content: "Tue 18 Aug, 12:30"
-  },
-  {
-    type: "tutorial",
-    module: "CO142",
-    task: "PPT2",
-    content: "Fri 21 Aug, 19:30"
-  },
-  {
-    type: "tutorial",
-    module: "CO120.2",
-    task: "PMT3",
-    content: "Mon 24 Aug, 12:30"
-  }
-];

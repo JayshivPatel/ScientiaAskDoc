@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "./style.module.scss";
 import { ModuleTracks } from "../..";
-import TimelineEventCard from "../TimelineEventCard";
+import EventCard from "../EventCard";
 import { Module } from "constants/types";
+
 export interface EventGridProps {
   numWeeks: number;
   trackHeight: number;
@@ -15,8 +16,10 @@ export interface EventGridProps {
 
 interface EventDisplay {
   title: string;
-	id: number;
-	type: string;
+  id: number;
+  prefix: string;
+  status: string;
+	assessment: string;
   startColumn: number;
   endColumn: number;
   rowNumber: number;
@@ -43,8 +46,10 @@ const EventGrid: React.FC<EventGridProps> = ({
         if (!isInTerm(event.startDate) && !isInTerm(event.endDate)) continue;
         eventPositions.push({
           title: event.title,
-					id: event.id,
-					type: event.type,
+          id: event.id,
+          prefix: event.prefix,
+          status: event.status,
+					assessment: event.assessment,
           startColumn: dateToColumn(event.startDate),
           endColumn: dateToColumn(event.endDate) + 1,
           rowNumber: currRow,
@@ -67,11 +72,13 @@ const EventGrid: React.FC<EventGridProps> = ({
       }}
     >
       {eventPositions.map(
-        ({ title, startColumn, id, endColumn, type, rowNumber }) => (
-          <TimelineEventCard
+        ({ title, startColumn, prefix, status, id, endColumn, assessment, rowNumber }) => (
+          <EventCard
             title={title}
 						key={id}
-						type={type}
+            assessment={assessment}
+            prefix={prefix}
+            status={status}
             startColumn={startColumn}
             endColumn={endColumn}
             rowNumber={rowNumber}

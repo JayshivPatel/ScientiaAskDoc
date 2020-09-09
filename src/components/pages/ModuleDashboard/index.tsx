@@ -3,7 +3,7 @@ import Dandruff from "components/molecules/Dandruff";
 import { useParams } from "react-router-dom";
 import styles from "./style.module.scss";
 import classNames from "classnames";
-import { faGlobe, faLink } from "@fortawesome/free-solid-svg-icons";
+import { faGlobe, faLink, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import PageButtonGroup from "components/molecules/PageButtonGroup";
 import queryString from "query-string";
 
@@ -17,12 +17,22 @@ import TutorCardGroup from "components/molecules/TutorCardGroup";
 
 const ModuleDashboard: React.FC = () => {
   let { id } = useParams();
-  let moduleCode = id.startsWith("CO") ? id.slice(2) : id;
+	let moduleCode = id.startsWith("CO") ? id.slice(2) : id;
+	let piazzaLink = "https://piazza.com/class/";
+  if (piazzaClasses[id] !== undefined && piazzaClasses[id]) {
+    piazzaLink += piazzaClasses[id];
+	}
+	
   const initialButtons = [
     {
       title: "College Website",
       icon: faGlobe,
       url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
+		},
+		{
+      title: "Piazza",
+      icon: faUserFriends,
+      url: piazzaLink,
     },
   ];
   let [buttons, setButtons] = useState(initialButtons);
@@ -173,3 +183,17 @@ const leaders: {
     image: tutorImage2,
   },
 ];
+
+const piazzaClasses: {
+	[index: string]: string;
+} = {
+	CO140: "k0r3c04qwhj3e",
+	CO142: "k0r3c156mj35b",
+	CO112: "k0r3by316kp6",
+	CO145: "k0r3c1h4zik5y",
+	"CO120.2": "k0r3bzfpcno23",
+	CO150: "k0r3c1t4x8k6l",
+	CO113: "k0r3byq0f68t",
+	CO141: "k0r3c0t7dak4o",
+	CO130: "k0r3bzsith2r",
+};
