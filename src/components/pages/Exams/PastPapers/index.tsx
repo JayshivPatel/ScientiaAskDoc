@@ -119,8 +119,7 @@ class PastPapers extends React.Component<ResourcesProps, ResourceState> {
   }
 
   render() {
-    let scope = this.props.scope || "";
-
+    let scope = this.props.scope || "";		
     const view = () => {
       switch (this.props.view) {
         default:
@@ -148,7 +147,6 @@ class PastPapers extends React.Component<ResourcesProps, ResourceState> {
                 resources={this.state.resources}
                 scope={scope}
                 searchText={this.state.searchText}
-                lastYear={this.state.folders.slice(-1)[0]?.title}
                 onItemClick={(id) => this.handleResourceClick(id)}
               />
             </>

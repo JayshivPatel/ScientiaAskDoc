@@ -11,7 +11,6 @@ export interface QuickAccessViewProps {
   scope: string;
   searchText: string;
   onItemClick: (identifier: number) => void;
-  lastYear: string;
 }
 
 const QuickAccessView: React.FC<QuickAccessViewProps> = ({
@@ -19,17 +18,15 @@ const QuickAccessView: React.FC<QuickAccessViewProps> = ({
   scope,
   searchText,
   onItemClick,
-  lastYear,
 }) => {
-  let quickAccessItems = resources
-    .filter(({ folder }) => folder === lastYear)
-    .filter(({ title }) => {
-      return modulesList.some(({ code }) => {
-        const moduleCode = code.startsWith("CO") ? code.slice(2) : code;
-        return title.startsWith(`C${moduleCode}`);
-      });
+  let quickAccessItems: BasicResource[] = JSON.parse(JSON.stringify(resources));
+  quickAccessItems = quickAccessItems.filter(({ title }) => {
+    return modulesList.some(({ code }) => {
+      const moduleCode = code.startsWith("CO") ? code.slice(2) : code;
+      return title.startsWith(`C${moduleCode}`);
     });
-
+  });
+  quickAccessItems.forEach((i) => i.tags.push(i.folder));
   if (searchText === "" && scope === "" && quickAccessItems.length > 0) {
     return (
       <SelectionView
