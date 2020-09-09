@@ -15,6 +15,7 @@ interface EditModalProps {
 	hideAndReload: () => void;
 	tags: string[];
 	resource: Resource;
+	titleDuplicated: (category: string, title: string) => boolean;
 }
 
 const EditModal: React.FC<EditModalProps> = ({
@@ -22,7 +23,8 @@ const EditModal: React.FC<EditModalProps> = ({
 	onHide,
 	hideAndReload,
 	tags,
-	resource
+	resource,
+	titleDuplicated
 }) => {
     const [details, setDetails] = useState<ResourceDetails>();
     
@@ -43,7 +45,13 @@ const EditModal: React.FC<EditModalProps> = ({
 			if (details.visibleAfter) {
 				payload.visible_after = details.visibleAfter;
 			}
-			staffRequest(api.MATERIALS_RESOURCES_ID(resource.id), methods.PUT, hideAndReload, () => {}, payload);
+			staffRequest({
+				url: api.MATERIALS_RESOURCES_ID(resource.id),
+				method: methods.PUT,
+				onSuccess: hideAndReload,
+				onError: () => {},
+				body: payload
+			});
 		}
 	}
 
@@ -68,8 +76,10 @@ const EditModal: React.FC<EditModalProps> = ({
 						tagList={tags}
 						defaultTitle={resource.title}
 						defaultURL={resource.path}
+						defaultCategory={resource.folder}
 						defaultTags={resource.tags.filter(tag => tag !== "new")}
 						defaultVisibleAfter={resource.visible_after}
+						titleDuplicated={titleDuplicated}
 						setResourceDetails={updateResourceDetails}
 					/>
 				</Modal.Body>

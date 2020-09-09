@@ -57,7 +57,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
 }) => {
   let oldIndexes: number[] = categoryItems.map(resource => resource.index);
 
-  const initListItems = (items: Resource[]) => items.map(({ title, type, tags, id, index }) => {
+  const initListItems = (items: Resource[]) => items.map(({ title, type, tags, downloads, id, index }) => {
     if (type === undefined || tags === undefined) return null;
 
     let icon =
@@ -77,6 +77,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
         setShowMenu={setShowMenus && setShowMenus(id)}
         icon={icon}
         tags={tags}
+        downloads={(type === "link" || type === "video") ? undefined : downloads}
         title={title}
         resourceActions={resourceActions ? resourceActions(id, title) : null}
         key={index}
@@ -95,7 +96,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
   const onSortEnd = ({ oldIndex, newIndex }: { oldIndex : number, newIndex: number }) => {
     setListItems(arrayMove(listItems, oldIndex, newIndex));
     // Since state does not update immediately, save reordered array as a local variable
-    let newResources = arrayMove(resources, oldIndex, newIndex);
+    let newResources: Resource[] = arrayMove(resources, oldIndex, newIndex);
     setResources(newResources);
     // Only need to modify array subset between target indices
     let minIndex = Math.min(oldIndex, newIndex);
@@ -103,8 +104,14 @@ const CategoryList: React.FC<CategoryListProps> = ({
     let indexes = oldIndexes.slice(minIndex, maxIndex);
 
     newResources.slice(minIndex, maxIndex).forEach((resource, i) => {
-      staffRequest(api.MATERIALS_RESOURCES_ID(resource.id), methods.PUT, () => {}, () => {}, {
-        index: indexes[i]
+      staffRequest({
+        url: api.MATERIALS_RESOURCES_ID(resource.id),
+        method: methods.PUT,
+        onSuccess: () => {},
+        onError: () => {},
+        body: {
+          index: indexes[i]
+        }
       });
     })
   }
@@ -118,7 +125,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
           onSortStart={(_, event) => event.preventDefault()}
           useDragHandle
         />
-      : listItems
+      : initListItems(categoryItems)
       }
     </div>
   );

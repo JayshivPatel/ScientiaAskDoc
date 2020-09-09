@@ -15,6 +15,7 @@ export interface Resource {
   tags: string[];
   folder: string;
   id: number;
+  downloads: number;
   index: number;
   path: string;
   visible_after: Date;

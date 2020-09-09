@@ -39,23 +39,25 @@ export function openResource(resources: Resource[], id: number) {
   }
 
   // Resource is of file type, get from Materials
-  const onSuccess = (data: any) => {
+  const onSuccess = (blob: any) => {
     // TODO: Try to navigate straight to the endpoint url instead of creating an object url
-    data.blob().then((blob: any) => {
-      let url = URL.createObjectURL(blob);
-      let a = document.createElement("a");
-      a.target = "_blank";
-      a.href = url;
-      a.click();
-      a.remove();
-    });
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement("a");
+    a.target = "_blank";
+    a.href = url;
+    a.click();
+    a.remove();
   };
-  const onFailure = (error: { text: () => Promise<any> }) => {
-    error.text().then((errorText) => {
-      console.log(errorText);
-    });
+  const onError = (message: string) => {
+    console.log(message);
   };
-  request(api.MATERIALS_RESOURCES_FILE(id), methods.GET, onSuccess, onFailure);
+  request({
+    url: api.MATERIALS_RESOURCES_FILE(id),
+    method: methods.GET,
+    onSuccess,
+    onError,
+    returnBlob: true
+  });
 }
 
 export function resourceTypeToIcon(type: string): IconDefinition {

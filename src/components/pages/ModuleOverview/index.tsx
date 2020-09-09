@@ -48,50 +48,52 @@ class ModuleOverview extends React.Component<
 
   componentDidMount() {
     this.setState({ isLoaded: false });
-    const onSuccess = (data: { json: () => Promise<any> }) => {
+
+    const onSuccess = (data: { [k: string]: any; }) => {
       let resourceArr: Resource[] = [];
+      for (const key in data) {
+        let resource = data[key];
 
-      data.json().then((json) => {
-        for (const key in json) {
-          let resource = json[key];
-
-          let resourceURL = queryString.parseUrl(resource.path);
-          let extension = resource.path.substr(
-            resource.path.lastIndexOf(".") + 1
-          );
-          let altType = undefined;
-          if (
-            resourceURL.url ===
-            "https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx"
-          ) {
-            altType = "video";
-          } else if (extension === "pdf") {
-            altType = "pdf";
-          }
-
-          resourceArr.push({
-            title: resource.title,
-            type: altType || resource.type,
-            tags: resource.tags,
-            folder: resource.category,
-            id: resource.id,
-            path: resource.path,
-          } as Resource);
+        let resourceURL = queryString.parseUrl(resource.path);
+        let extension = resource.path.substr(
+          resource.path.lastIndexOf(".") + 1
+        );
+        let altType = undefined;
+        if (
+          resourceURL.url ===
+          "https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx"
+        ) {
+          altType = "video";
+        } else if (extension === "pdf") {
+          altType = "pdf";
         }
-        this.setState({ resources: resourceArr, isLoaded: true });
-      });
-    };
-    const onFailure = (error: { text: () => Promise<any> }) => {
-      if (error.text) {
-        error.text().then((errorText) => {
-          this.setState({ error: errorText, isLoaded: true });
-        });
+
+        resourceArr.push({
+          title: resource.title,
+          type: altType || resource.type,
+          tags: resource.tags,
+          folder: resource.category,
+          id: resource.id,
+          downloads: resource.downloads,
+          path: resource.path,
+        } as Resource);
       }
+      this.setState({ resources: resourceArr, isLoaded: true });
     };
 
-    request(api.MATERIALS_RESOURCES, methods.GET, onSuccess, onFailure, {
-      year: this.props.year,
-      course: this.moduleCode,
+    const onError = (message: string) => {
+      this.setState({ error: message, isLoaded: true });
+    };
+
+    request({
+      url: api.MATERIALS_RESOURCES,
+      method: methods.GET,
+      onSuccess,
+      onError,
+      body: {
+        year: this.props.year,
+        course: this.moduleCode,
+      }
     });
   }
 
@@ -122,12 +124,13 @@ class ModuleOverview extends React.Component<
                   .filter(({ tags }: any) =>
                     tags.some((tag: string) => tag.toLowerCase() === weekTitle)
                   )
-                  .map(({ title, type, tags, id }: any) => (
+                  .map(({ title, type, tags, id, downloads }: any) => (
                     <FileListItem
                       title={title}
                       tags={tags.filter(
                         (tag: string) => !tag.toLowerCase().startsWith("week")
                       )}
+                      downloads={downloads}
                       icon={resourceTypeToIcon(type)}
                       onClick={() => this.handleResourceClick(id)}
                       key={id}

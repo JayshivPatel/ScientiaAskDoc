@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+import "./styles.css";
 
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -6,7 +8,6 @@ import Form from "react-bootstrap/Form";
 import CreatableSelect from "react-select/creatable";
 import DatePicker from "react-datepicker";
 
-import "react-datepicker/dist/react-datepicker.css";
 
 interface ResourceDetailFormProps {
 	id: number;
@@ -15,8 +16,10 @@ interface ResourceDetailFormProps {
 	isLink: boolean;
 	defaultTitle?: string;
 	defaultURL?: string;
+	defaultCategory?: string,
 	defaultTags?: string[];
 	defaultVisibleAfter?: Date;
+	titleDuplicated: (category: string, title: string) => boolean;
 	setResourceDetails: (details: ResourceDetails) => void;
 }
 
@@ -33,6 +36,11 @@ interface Option {
 	value: string;
 }
 
+const createOption = (label: string): Option => ({
+	label,
+	value: label
+})
+
 const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 	id,
 	categories,
@@ -40,15 +48,17 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 	isLink,
 	defaultTitle,
 	defaultURL,
+	defaultCategory,
 	defaultTags,
 	defaultVisibleAfter,
+	titleDuplicated,
 	setResourceDetails,
 }) => {
 	const [showPicker, setShowPicker] = useState(false);
 	const [startDate, setStartDate] = useState(defaultVisibleAfter || new Date());
 
 	const [title, setTitle] = useState<string>(defaultTitle || "");
-	const [category, setCategory] = useState((categories && categories[0]) || "");
+	const [category, setCategory] = useState((categories && categories[0]) || defaultCategory || "");
 	const [tags, setTags] = useState<string[]>(defaultTags || []);
 	const [visibleAfter, setVisibleAfter] = useState<Date>();
 	const [url, setURL] = useState(defaultURL || "");
@@ -96,22 +106,20 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 				type="text"
 				placeholder="Type a title for this resource here."
 				defaultValue={defaultTitle}
+				isInvalid={titleDuplicated(category, title) && !(defaultCategory && title === defaultTitle)}
 				onChange={event => setTitle(event.target.value)}
 			/>
+			<Form.Control.Feedback type="invalid">
+				A resource with this title already exists under this category. Please choose a different title.
+            </Form.Control.Feedback>
 		</Form.Group>
 
 		{ categories &&
 		<Form.Group>
 			<Form.Label>Category</Form.Label>
 			<CreatableSelect
-				defaultValue={{
-					value: categories[0],
-					label: categories[0],
-				}}
-				options={categories.map(category => ({
-					value: category,
-					label: category,
-				}))}
+				defaultValue={createOption(categories[0])}
+				options={categories.map(createOption)}
 				onChange={selectedCategory => setCategory(selectedCategory ? (selectedCategory as Option).value : "")}
 			/>
 			<Form.Text muted>
@@ -123,20 +131,18 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 		<Form.Group>
 			<Form.Label>Tags</Form.Label>
 			<CreatableSelect
-				defaultValue={defaultTags ? defaultTags.map(tag => ({
-					value: tag,
-					label: tag,
-				})) : []}
+				defaultValue={defaultTags ? defaultTags.map(createOption) : null}
 				isClearable
 				isMulti
+				isValidNewOption={input => input !== "" && !input.includes(";") && input.toLowerCase() !== "new"}
 				menuPortalTarget={document.body}
 				styles={{ menuPortal: styles => ({ ...styles, zIndex: 10001 })}}
-				options={tagList.map(tag => ({
-					value: tag,
-					label: tag,
-				}))}
+				options={tagList.map(createOption)}
 				onChange={selectedTags => setTags(selectedTags ? (selectedTags as Option[]).map(option => option.value) : [])}
 			/>
+			<Form.Text muted>
+				Tags must not include semicolons. The "new" tag is automatically generated and cannot be manually added.
+			</Form.Text>
 		</Form.Group>
 
 		<Form.Group>

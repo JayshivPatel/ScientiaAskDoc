@@ -9,6 +9,7 @@ import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import { faDownload, faTrash, faUpload } from "@fortawesome/free-solid-svg-icons";
 import AlertModal from "components/atoms/AlertModal"
 import IconButton from "components/atoms/IconButton"
+import WarningJumbotron from "components/atoms/WarningJumbotron";
 import EditModal from "components/organisms/EditModal"
 import UploadModal from "components/organisms/UploadModal"
 import CategoryList from "components/molecules/CategoryList";
@@ -76,11 +77,20 @@ const StaffView: React.FC<StaffViewProps> = ({
 		let formData = new FormData();
 		formData.append("file", fileUploaded);
 
-		await staffRequest(api.MATERIALS_RESOURCES_FILE(resourceID), methods.PUT,
-			() => {}, () => {}, formData, true
-		);
+		await staffRequest({
+			url: api.MATERIALS_RESOURCES_FILE(resourceID),
+			method: methods.PUT,
+			onSuccess: () => {},
+			onError: () => {},
+			body: formData,
+			sendFile: true
+		});
 		reload();
 	};
+
+	const titleDuplicated = (category: string, title: string): boolean => {
+		return resources.some(resource => resource.folder === category && resource.title === title);
+	}
 
 	const resourceActions = (id: number, filename: string) => (
 		<ButtonGroup>
@@ -95,7 +105,12 @@ const StaffView: React.FC<StaffViewProps> = ({
 			<IconButton
 				tooltip="Delete"
 				onClick={async () => {
-					await staffRequest(api.MATERIALS_RESOURCES_ID(id), methods.DELETE, () => {}, () => {});
+					await staffRequest({
+						url: api.MATERIALS_RESOURCES_ID(id),
+						method: methods.DELETE,
+						onSuccess: () => {},
+						onError: () => {}
+					});
 					reload();
 				}}
 				icon={faTrash}
@@ -103,7 +118,7 @@ const StaffView: React.FC<StaffViewProps> = ({
 			{filename && <>
 			<IconButton
 				tooltip="Download"
-				onClick={() => download(api.MATERIALS_RESOURCES_FILE(id), methods.GET, filename)}
+				onClick={() => download(api.MATERIALS_RESOURCES_FILE(id), filename)}
 				icon={faDownload} />
 			<IconButton
 				tooltip="Reupload"
@@ -131,19 +146,9 @@ const StaffView: React.FC<StaffViewProps> = ({
 			}}
 			year={year}
 			course={course}
-			categories={folders.map(folder => folder.title).sort() || ["Lecture notes"]}
+			categories={folders.length === 0 ? ["Lecture Notes"] : folders.map(folder => folder.title).sort()}
 			tags={tags}
-		/>
-
-		<EditModal
-			show={modal === "edit"}
-			onHide={closeModal}
-			hideAndReload={() => {
-				closeModal();
-				reload();
-			}}
-			tags={tags}
-			resource={editResource}
+			titleDuplicated={titleDuplicated}
 		/>
 
 		<AlertModal
@@ -152,44 +157,59 @@ const StaffView: React.FC<StaffViewProps> = ({
 			title="Remove All Warning"
 			message="This will irreversibly delete all course resources and associated files."
 			confirmLabel="Delete All Resources"
-			confirmOnClick={() => staffRequest(
-				api.MATERIALS_RESOURCES,
-				methods.DELETE,
-				() => {
+			confirmOnClick={() => staffRequest({
+				url: api.MATERIALS_RESOURCES,
+				method: methods.DELETE,
+				onSuccess: () => {
 					closeModal();
 					reload();
 				},
-				() => {},
-				{
+				onError: () => {},
+				body: {
 					year: year,
 					course: course
 				}
-			)}
+			})}
 		/>
 
-		{folders.map(({ title, id }) => {
-			return (<div key={id}>
-				<CategoryHeader
-					heading={title}
-				/>
-				<CategoryList 
-					categoryItems={filesContent.filter(res => res.folder === title)}
-					resourceActions={resourceActions}
-					showMenus={showMenus}
-					setShowMenus={(id) => {
-						return (show: boolean) => {
-							let newShowMenus: idBooleanMap = allClosed();
-							newShowMenus[id] = show;
-							setShowMenus(newShowMenus);
-						};
+		{resources.length === 0
+			? <WarningJumbotron message="No resources have been uploaded for this course yet." />
+			: <>
+				<EditModal
+					show={modal === "edit"}
+					onHide={closeModal}
+					hideAndReload={() => {
+						closeModal();
+						reload();
 					}}
-					handleRowClick={onRowClick}
-					handleIconClick={(id) => {}}
-					handleMouseOver={(id) => {}}
-					handleMouseOut={(id) => {}}
+					tags={tags}
+					resource={editResource}
+					titleDuplicated={titleDuplicated}
 				/>
-			</div>)
-		})}
+				{folders.map(({ title, id }) => (<div key={id}>
+					<CategoryHeader
+						heading={title}
+					/>
+					<CategoryList
+						categoryItems={filesContent.filter(res => res.folder === title)}
+						resourceActions={resourceActions}
+						showMenus={showMenus}
+						setShowMenus={(id) => {
+							return (show: boolean) => {
+								let newShowMenus: idBooleanMap = allClosed();
+								newShowMenus[id] = show;
+								setShowMenus(newShowMenus);
+							};
+						}}
+						handleRowClick={onRowClick}
+						handleIconClick={(id) => {}}
+						handleMouseOver={(id) => {}}
+						handleMouseOut={(id) => {}}
+					/>
+				</div>))}
+			</>
+		}
+
     	<Row style={{ marginTop: "1rem" }}>
 			<Col>
 				<Button

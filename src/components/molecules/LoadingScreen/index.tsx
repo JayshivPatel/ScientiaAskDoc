@@ -1,6 +1,8 @@
 import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 
+import WarningJumbotron from "components/atoms/WarningJumbotron";
+
 export interface LoadingScreenProps {
 	isLoaded?: Boolean;
 	error?: string;
@@ -21,7 +23,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoaded, error, successf
         <Spinner animation="border" variant={document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark"} />
       </div>
     );
-  if (error) return <> Error retrieving data: {error} </>;
+  if (error) return <WarningJumbotron message={`Error retrieving data: ${error}`} />;
   return successful;
 };
 

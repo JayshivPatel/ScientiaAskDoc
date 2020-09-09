@@ -8,11 +8,13 @@ import { IconDefinition } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { DragHandle } from "components/molecules/CategoryList";
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 export interface FileListItemProps {
   title: string;
   icon: IconDefinition;
   tags: string[];
+  downloads?: number;
   resourceActions?: any
   showMenu?: boolean,
   setShowMenu?: (show: boolean) => void,
@@ -26,6 +28,7 @@ const FileListItem: React.FC<FileListItemProps> = ({
   title,
   icon,
   tags,
+  downloads,
   resourceActions,
   showMenu,
   setShowMenu,
@@ -70,19 +73,19 @@ const FileListItem: React.FC<FileListItemProps> = ({
         onClick={onClick}
         onMouseOut={onMouseOut}
         onMouseOver={onMouseOver}
-        onContextMenu={handleContextMenu}
+        onContextMenu={resourceActions && handleContextMenu}
       >
         <Row className={styles.listRow}>
           <div className={styles.listItemTitle}>
             { resourceActions ?
-              <div style={{ padding: 0, display: "flex", alignItems: "center" }}>
+              <div className={styles.centeredFlex}>
                 <DragHandle />
                 { title }
               </div> :
               title
             }
           </div>
-          <div style={{ padding: 0, display: "flex", alignItems: "center" }}>
+          <div className={styles.centeredFlex}>
             {tags.map(tag => (
               <Badge
                 pill
@@ -95,6 +98,12 @@ const FileListItem: React.FC<FileListItemProps> = ({
                 {tag}
               </Badge>
             ))}
+            {(downloads !== undefined) &&
+              <Badge variant="light" className={styles.fileTag}>
+                <FontAwesomeIcon icon={faArrowDown}/>
+                {downloads}
+              </Badge>
+            }
             <FontAwesomeIcon
               style={{ fontSize: "1.125rem" }}
               icon={icon}

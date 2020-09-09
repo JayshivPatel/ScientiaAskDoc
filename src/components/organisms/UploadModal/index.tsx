@@ -33,6 +33,7 @@ interface UploadModalProps {
 	course: string;
 	categories: string[];
 	tags: string[];
+	titleDuplicated: (category: string, title: string) => boolean;
 }
 
 const UploadModal: React.FC<UploadModalProps> = ({
@@ -43,9 +44,11 @@ const UploadModal: React.FC<UploadModalProps> = ({
 	course,
 	categories,
 	tags,
+	titleDuplicated,
 }) => {
 	const [tab, setTab] = useState("file");
 	const [rejectedFiles, setRejectedFiles] = useState<File[]>([]);
+	const [serverErrors, setServerErrors] = useState<{ details: ResourceDetails, message: string}[]>([]);
 	const [resourceDetails, setResourceDetails] = useState<{[id: number] : ResourceDetails}>({});
 	const maxSize =  26214400; // 25mb, TODO: lift to constants
 	const prettyBytes = require("pretty-bytes");
@@ -77,10 +80,15 @@ const UploadModal: React.FC<UploadModalProps> = ({
 	const submitFileForResource = (file: File) => {
 		let formData = new FormData()
 		formData.append("file", file);
-		return (data: { json: () => Promise<any>; }) => {
-			data.json().then((data) => {
-				staffRequest(api.MATERIALS_RESOURCES_FILE(data["id"]), methods.PUT, () => {}, () => {}, formData, true);
-			})
+		return (data: { [k: string]: number; }) => {
+			staffRequest({
+				url: api.MATERIALS_RESOURCES_FILE(data["id"]),
+				method: methods.PUT,
+				onSuccess: () => removeFile(file),
+				onError: () => {},
+				body: formData,
+				sendFile: true
+			});
 		};
 	}
 
@@ -103,6 +111,15 @@ const UploadModal: React.FC<UploadModalProps> = ({
 			return payload;
 		}
 
+		const onError = (details: ResourceDetails) => {
+			return (message: string) => {
+				setServerErrors([...serverErrors, {
+					details: details,
+					message: message
+				}]);
+			};
+		};
+
 		switch (tab) {
 			case "file": {
 				await Promise.all(acceptedFiles.map((file, index) => {
@@ -110,16 +127,31 @@ const UploadModal: React.FC<UploadModalProps> = ({
 						// Empty promise i.e. do nothing
 						return Promise.resolve();
 					}
-					let payload = makePayload(resourceDetails[index]);
-					return staffRequest(api.MATERIALS_RESOURCES, methods.POST, submitFileForResource(file), () => {}, payload);
+					return staffRequest({
+						url: api.MATERIALS_RESOURCES,
+						method: methods.POST,
+						onSuccess: submitFileForResource(file),
+						onError: onError(resourceDetails[index]),
+						body: makePayload(resourceDetails[index])
+					});
 				}));
-		
-				hideAndReload();
+
+				if (serverErrors.length === 0) {
+					hideAndReload();
+				} else {
+					// TODO: Handle errors
+					console.log(serverErrors);
+				}
 				break;
 			}
 			case "link": {
-				let payload = makePayload(resourceDetails[-1]);
-				await staffRequest(api.MATERIALS_RESOURCES, methods.POST, hideAndReload, () => {}, payload);
+				await staffRequest({
+					url: api.MATERIALS_RESOURCES,
+					method: methods.POST,
+					onSuccess: hideAndReload,
+					onError: onError(resourceDetails[-1]),
+					body: makePayload(resourceDetails[-1])
+				});
 				break;
 			}
 		}
@@ -191,6 +223,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
 													tagList={tags}
 													isLink={false}
 													defaultTitle={file.name}
+													titleDuplicated={titleDuplicated}
 													setResourceDetails={updateResourceDetails(index)}
 												/>
 											</Card.Body>
@@ -206,6 +239,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
 								categories={categories}
 								tagList={tags}
 								isLink={true}
+								titleDuplicated={titleDuplicated}
 								setResourceDetails={updateResourceDetails(-1)}
 							/>
 						</Tab>

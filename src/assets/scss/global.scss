@@ -67,3 +67,9 @@
   background-color: var(--secondary-background-color) !important;
 	box-shadow: none !important;
 }
+
+.centeredFlex {
+  padding: 0;
+  display: flex;
+  align-items: center;
+}

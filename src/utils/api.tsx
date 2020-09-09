@@ -6,11 +6,22 @@ interface RequestOptions {
     [key: string]: any
 }
 
+export interface RequestData {
+  url: string,
+  method: string,
+  onSuccess: any,
+  onError: (message: string) => void,
+  body?: any,
+  sendFile?: boolean,
+  returnBlob?: boolean
+}
+
 // API calling interface. onSuccess and onError are functions that take in data
 // and error parameters respectively. Body is process as query parameters if
 // method is GET
 // Note: will trigger CORS OPTIONS preflight due to the Authorization header
-export async function request(url: string, method: string, onSuccess: any, onError: any, body?: any, username?: string, isFile: boolean = false) {
+// url: string, method: string, onSuccess: any, onError: any, body?: any, username?: string, isFile: boolean = false
+export async function request(data: RequestData, username?: string) {
   if (!authenticationService.userIsLoggedIn() || (username && authenticationService.getUserInfo()["username"] !== username)) {
     // TODO: Credentials should be handled elsewhere
     // TODO: Specific endpoint login route should be passed in
@@ -22,53 +33,74 @@ export async function request(url: string, method: string, onSuccess: any, onErr
     "Access-Control-Allow-Origin": "*",
   };
 
-  if (!isFile) {
+  if (!data.sendFile) {
     headers["Content-Type"] = "application/json";
   }
 
   var options: RequestOptions = {
-    method: method,
+    method: data.method,
     mode: "cors",
     headers: headers
   };
 
-  if (method === methods.GET || method === methods.DELETE) {
-    url = url + "?" + new URLSearchParams(body);
+  if (data.method === methods.GET || data.method === methods.DELETE) {
+    data.url = data.url + "?" + new URLSearchParams(data.body);
   } else {
-    options.body = isFile ? body : JSON.stringify(body);
+    options.body = data.sendFile ? data.body : JSON.stringify(data.body);
   }
 
-  return fetch(url, options)
-    .then((result) => {
-      onSuccess(result);
-    }, (error) => {
-      onError(error);
+  return fetch(data.url, options)
+    .then(response => {
+      if (!response.ok) {
+        throw response;
+      }
+      if (data.returnBlob) {
+        return response.blob();
+      }
+      return response.json();
+    })
+    .then(responseData => {
+      data.onSuccess(responseData);
+    })
+    .catch(error => {
+      // Parse error object if returned by API
+      // Currently follows Materials API error shape
+      try {
+        error.json().then((body: { message: string; }) => {
+          data.onError(body.message);
+        });
+      } catch (e) {
+        data.onError(error);
+      }
     })
 }
 
-export async function staffRequest(url: string, method: string, onSuccess: any, onError: any, body?: any, isFile: boolean = false) {
-  return request(url, method, onSuccess, onError, body, "profx", isFile);
+export async function staffRequest(data: RequestData) {
+  return request(data, "profx");
 }
 
-// Utility that downloads files fetched by request
-export async function download(url: string, method: string, filename: string, body?: any) {
-  const onSuccess = (data: any) => {
+// Utility that downloads files fetched by request (assumes GET)
+export async function download(url: string, filename: string, body?: any) {
+  const onSuccess = (blob: any) => {
     // TODO: Try to navigate straight to the endpoint url instead of creating an object url
-    data.blob().then((blob: any) => {
-      let url = URL.createObjectURL(blob);
-      let a = document.createElement("a");
-      a.href = url;
-      a.download = filename;
-      a.click();
-      a.remove();
-    });
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    a.remove();
   };
 
-  const onFailure = (error: { text: () => Promise<any> }) => {
-    error.text().then((errorText) => {
-      console.log(errorText);
-    });
+  const onError = (message: string) => {
+    console.log(message);
   };
 
-  request(url, method, onSuccess, onFailure, body);
+  request({
+    url: url,
+    method: methods.GET,
+    onSuccess,
+    onError,
+    returnBlob: true,
+    body
+  });
 }

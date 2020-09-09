@@ -28,41 +28,38 @@ const ModuleDashboard: React.FC = () => {
   let [buttons, setButtons] = useState(initialButtons);
 
   useEffect(() => {
-    const onSuccess = (data: { json: () => Promise<any> }) => {
+    const onSuccess = (data: { [k: string]: any; }) => {
       let newButtons: any[] = [];
+      for (const key in data) {
+        let resource = data[key];
+        let resourceURL = queryString.parseUrl(resource.path);
 
-      data.json().then((json) => {
-        for (const key in json) {
-          let resource = json[key];
-          let resourceURL = queryString.parseUrl(resource.path);
-
-          if (
-            resource.type === "link" &&
-            resourceURL.url !==
-              "https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx"
-          ) {
-            newButtons.push({
-              title: resource.title,
-              icon: faLink,
-              url: resource.path,
-            });
-          }
+        if (
+          resource.type === "link" &&
+          resourceURL.url !==
+            "https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx"
+        ) {
+          newButtons.push({
+            title: resource.title,
+            icon: faLink,
+            url: resource.path,
+          });
         }
-        setButtons((b) => b.concat(newButtons));
-      });
+      }
+      setButtons((b) => b.concat(newButtons));
     };
-    request(
-      api.MATERIALS_RESOURCES,
-      methods.GET,
+    request({
+      url: api.MATERIALS_RESOURCES,
+      method: methods.GET,
       onSuccess,
-      () => {
+      onError: () => {
         console.log("fail");
       },
-      {
+      body: {
         year: "2021",
         course: moduleCode,
       }
-    );
+    });
   }, [moduleCode]);
 
   return (

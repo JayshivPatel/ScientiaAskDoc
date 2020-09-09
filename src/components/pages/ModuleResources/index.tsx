@@ -46,56 +46,58 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
   loadResources() {
     this.setState({ isLoaded: false });
-    const onSuccess = (data: { json: () => Promise<any> }) => {
+    const onSuccess = (data: { [k: string]: any; }) => {
       let resourceArr: Resource[] = [];
+      for (const key in data) {
+        let resource = data[key];
 
-      data.json().then((json) => {
-        for (const key in json) {
-          let resource = json[key];
-
-          let resourceURL = queryString.parseUrl(resource.path);
-          let extension = resource.path.substr(
-            resource.path.lastIndexOf(".") + 1
-          );
-          let thumbnail = undefined;
-          let altType = undefined;
-          if (
-            resourceURL.url ===
-            "https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx"
-          ) {
-            altType = "video";
-            thumbnail = `https://imperial.cloud.panopto.eu/Panopto/Services/FrameGrabber.svc/FrameRedirect?objectId=${resourceURL.query.id}&mode=Delivery`;
-          } else if (extension === "pdf") {
-            altType = "pdf";
-          }
-          resourceArr.push({
-            title: resource.title,
-            type: altType || resource.type,
-            tags: resource.tags,
-            folder: resource.category.toLowerCase(),
-            thumbnail: thumbnail,
-            id: resource.id,
-            path: resource.path,
-            index: resource.index,
-            visible_after: new Date(resource.visible_after)
-          } as Resource);
+        let resourceURL = queryString.parseUrl(resource.path);
+        let extension = resource.path.substr(
+          resource.path.lastIndexOf(".") + 1
+        );
+        let thumbnail = undefined;
+        let altType = undefined;
+        if (
+          resourceURL.url ===
+          "https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx"
+        ) {
+          altType = "video";
+          thumbnail = `https://imperial.cloud.panopto.eu/Panopto/Services/FrameGrabber.svc/FrameRedirect?objectId=${resourceURL.query.id}&mode=Delivery`;
+        } else if (extension === "pdf") {
+          altType = "pdf";
         }
-
-        resourceArr = resourceArr.sort((a, b) => a.index > b.index ? 1 : -1);
-        this.setState({ resources: resourceArr, isLoaded: true });
-      });
-    };
-    const onFailure = (error: { text: () => Promise<any> }) => {
-      if (error.text) {
-        error.text().then((errorText) => {
-          this.setState({ error: errorText, isLoaded: true });
-        });
+        resourceArr.push({
+          title: resource.title,
+          type: altType || resource.type,
+          tags: resource.tags,
+          downloads: resource.downloads,
+          folder: resource.category,
+          thumbnail: thumbnail,
+          id: resource.id,
+          path: resource.path,
+          index: resource.index,
+          visible_after: new Date(resource.visible_after)
+        } as Resource);
       }
+
+      resourceArr = resourceArr.sort((a, b) => a.index > b.index ? 1 : -1);
+      this.setState({ resources: resourceArr, isLoaded: true });
     };
 
-    request(api.MATERIALS_RESOURCES, methods.GET, onSuccess, onFailure, {
-      year: this.props.year,
-      course: this.moduleCode,
+    const onError = (message: string) => {
+      console.log("ERROR");
+      this.setState({ error: message, isLoaded: true });
+    };
+
+    request({
+      url: api.MATERIALS_RESOURCES,
+      method: methods.GET,
+      onSuccess,
+      onError,
+      body: {
+        year: this.props.year,
+        course: this.moduleCode,
+      }
     });
   }
 
@@ -109,10 +111,10 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       let filename = this.state.resources.filter(
         (document) => document.id === indices[0]
       )[0].title;
-      download(api.MATERIALS_RESOURCES_FILE(indices[0]), methods.GET, filename);
+      download(api.MATERIALS_RESOURCES_FILE(indices[0]), filename);
     } else {
       // Multiple files to download, call zipped selection endpoint
-      download(api.MATERIALS_ZIPPED_SELECTION, methods.GET, "materials.zip", {
+      download(api.MATERIALS_ZIPPED_SELECTION, "materials.zip", {
         ids: indices,
         course: this.moduleCode,
         year: this.props.year,
@@ -136,7 +138,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
   }
 
   handleSectionDownload(category: string) {
-    download(api.MATERIALS_ZIPPED, methods.GET, category + ".zip", {
+    download(api.MATERIALS_ZIPPED, category + ".zip", {
       year: this.props.year,
       course: this.moduleCode,
       category: category,
