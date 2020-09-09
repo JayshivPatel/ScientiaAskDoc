@@ -10,31 +10,33 @@ export interface QuickAccessViewProps {
   resources: BasicResource[];
   scope: string;
   searchText: string;
-  onDownloadClick: (identifiers: number[]) => void;
   onItemClick: (identifier: number) => void;
+  lastYear: string;
 }
 
 const QuickAccessView: React.FC<QuickAccessViewProps> = ({
   resources,
   scope,
   searchText,
-  onDownloadClick,
   onItemClick,
+  lastYear,
 }) => {
-  let quickAccessItems = resources.filter(({ title }) => {
-    return modulesList.some(({ code }) => {
-      const moduleCode = code.startsWith("CO") ? code.slice(2) : code;
-      return title.startsWith(`C${moduleCode}`);
+  let quickAccessItems = resources
+    .filter(({ folder }) => folder === lastYear)
+    .filter(({ title }) => {
+      return modulesList.some(({ code }) => {
+        const moduleCode = code.startsWith("CO") ? code.slice(2) : code;
+        return title.startsWith(`C${moduleCode}`);
+      });
     });
-  });
 
   if (searchText === "" && scope === "" && quickAccessItems.length > 0) {
     return (
       <SelectionView
         heading="Quick Access"
         onItemClick={onItemClick}
-				onDownloadClick={onDownloadClick}
-				disableSelection={true}
+        onDownloadClick={() => {}}
+        disableSelection={true}
         selectionItems={quickAccessItems}
         render={(select: SelectionProps) => <QuickAccessRow select={select} />}
       />

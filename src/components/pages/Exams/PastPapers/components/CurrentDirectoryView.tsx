@@ -9,7 +9,6 @@ export interface CurrentDirectoryViewProps {
   resources: BasicResource[];
   scope: string;
   searchText: string;
-  onDownloadClick: (identifiers: number[]) => void;
   onItemClick: (identifier: number) => void;
   includeInSearchResult: (item: BasicResource, searchText: string) => boolean;
 }
@@ -18,7 +17,6 @@ const CurrentDirectoryView: React.FC<CurrentDirectoryViewProps> = ({
   resources,
   scope,
   searchText,
-  onDownloadClick,
   onItemClick,
   includeInSearchResult
 }) => {
@@ -37,7 +35,7 @@ const CurrentDirectoryView: React.FC<CurrentDirectoryViewProps> = ({
       <SelectionView
         heading="Files"
         onItemClick={onItemClick}
-        onDownloadClick={onDownloadClick}
+        onDownloadClick={() => {}}
 				selectionItems={filesContent}
 				disableSelection={true}
         render={(select: SelectionProps) => (

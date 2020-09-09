@@ -1,12 +1,13 @@
-import React from "react";
+import React, { Suspense } from "react";
 import SearchBox from "components/molecules/SearchBox";
 import QuickAccessView from "./components/QuickAccessView";
-import CurrentDirectoryView from "./components/CurrentDirectoryView";
 import FoldersView from "./components/FoldersView";
-
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import LoadingScreen from "components/molecules/LoadingScreen";
 import { BasicResource, Folder } from "constants/types";
+const CurrentDirectoryView = React.lazy(
+  () => import("./components/CurrentDirectoryView")
+);
 
 export interface ResourcesProps {
   scope?: string;
@@ -22,6 +23,8 @@ export interface ResourceState {
 }
 
 class PastPapers extends React.Component<ResourcesProps, ResourceState> {
+  rx = /([a-z]+)\(([^)]+)\)/gi;
+
   constructor(props: ResourcesProps) {
     super(props);
     this.state = {
@@ -62,55 +65,58 @@ class PastPapers extends React.Component<ResourcesProps, ResourceState> {
   }
 
   includeInSearchResult(item: BasicResource, searchText: string) {
-    const rx = /([a-z]+)\(([^)]+)\)/gi;
     let match: RegExpExecArray | null;
     let title = item.title.toLowerCase();
     let tags = item.tags.map((tag) => tag.toLowerCase());
-    let type = item.type.toLowerCase();
 
-    while ((match = rx.exec(searchText)) !== null) {
+    while ((match = this.rx.exec(searchText)) !== null) {
       switch (match[1]) {
-        case "type":
-          if (type !== match[2]) {
-            return false;
-          }
-          break;
-        case "tag":
-          let matchSafe = match as RegExpExecArray;
+        case "class":
+          const matchSafe = match as RegExpExecArray;
           if (!tags.some((tag) => tag === matchSafe[2])) {
             return false;
           }
           break;
-        default:
-          break;
       }
     }
-    let rest = searchText.replace(rx, "").trim();
+    let rest = searchText.replace(this.rx, "").trim();
     return (
       tags.some((tag) => tag.indexOf(rest) !== -1) || title.indexOf(rest) !== -1
     );
   }
 
   getSearchPrompts() {
-    const typesList = [
-      { name: "PDF", value: "type(pdf)" },
-      { name: "Video", value: "type(video)" },
-      { name: "File", value: "type(file)" },
-      { name: "Link", value: "type(link)" },
+    let classList = [
+      { name: "b3", value: "class(b3)" },
+      { name: "bm1", value: "class(bm1)" },
+      { name: "ise2", value: "class(ise2)" },
+      { name: "ise3", value: "class(ise3)" },
+      { name: "jmc1", value: "class(jmc1)" },
+      { name: "jmcb3", value: "class(jmcb3)" },
+      { name: "jmcm3", value: "class(jmcm3)" },
+      { name: "m3", value: "class(m3)" },
+      { name: "m4", value: "class(m4)" },
+      { name: "mac", value: "class(mac)" },
+      { name: "mcs", value: "class(mcs)" },
+      { name: "mcss", value: "class(mcss)" },
+      { name: "o1", value: "class(o1)" },
+      { name: "o2", value: "class(o2)" },
+      { name: "phd", value: "class(phd)" },
+      { name: "x1", value: "class(x1)" },
+      { name: "x2", value: "class(x2)" },
     ];
-    let tagsList = [
-      { name: "New", value: "tag(new)" },
-      { name: "Week 1", value: "tag(week 1)" },
-    ];
-    const prompts = [
-      { title: "Types", list: typesList },
-      { title: "Tags", list: tagsList },
-    ];
+    const prompts = [{ title: "Classes", list: classList }];
 
     return prompts;
   }
 
-  handleResourceClick(id: number) {}
+  handleResourceClick(id: number) {
+    let win = window.open(
+      this.state.resources.find((r) => r.id === id)?.path,
+      "_blank"
+    );
+    win?.focus();
+  }
 
   render() {
     let scope = this.props.scope || "";
@@ -125,21 +131,24 @@ class PastPapers extends React.Component<ResourcesProps, ResourceState> {
                 scope={scope}
                 searchText={this.state.searchText}
               />
-
-              <CurrentDirectoryView
-                resources={this.state.resources}
-                scope={scope}
-                searchText={this.state.searchText}
-                onDownloadClick={() => {}}
-                onItemClick={(id) => this.handleResourceClick(id)}
-                includeInSearchResult={this.includeInSearchResult}
-              />
-
+              <Suspense fallback={<LoadingScreen successful={<></>} />}>
+                {scope !== "" && (
+                  <CurrentDirectoryView
+                    resources={this.state.resources}
+                    scope={scope}
+                    searchText={this.state.searchText}
+                    onItemClick={(id) => this.handleResourceClick(id)}
+                    includeInSearchResult={(i, s) =>
+                      this.includeInSearchResult(i, s)
+                    }
+                  />
+                )}
+              </Suspense>
               <QuickAccessView
                 resources={this.state.resources}
                 scope={scope}
                 searchText={this.state.searchText}
-                onDownloadClick={() => {}}
+                lastYear={this.state.folders.slice(-1)[0]?.title}
                 onItemClick={(id) => this.handleResourceClick(id)}
               />
             </>
@@ -150,11 +159,14 @@ class PastPapers extends React.Component<ResourcesProps, ResourceState> {
     return (
       <>
         <MyBreadcrumbs />
-        <SearchBox
-          searchText={this.state.searchText}
-          onSearchTextChange={(text) => this.setState({ searchText: text })}
-          prompts={this.getSearchPrompts()}
-        />
+
+        {scope !== "" && (
+          <SearchBox
+            searchText={this.state.searchText}
+            onSearchTextChange={(text) => this.setState({ searchText: text })}
+            prompts={this.getSearchPrompts()}
+          />
+        )}
 
         <LoadingScreen
           error={this.state.error}

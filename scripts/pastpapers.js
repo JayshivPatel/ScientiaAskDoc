@@ -1,4 +1,5 @@
-//Gathers past paper data, Run from https://exams.doc.ic.ac.uk/
+//Gathers past paper data
+//Enable multiple file download for site and, Run from https://exams.doc.ic.ac.uk/
 //Place downloaded files in public ./public/jsons/
 
 var saveData = (function () {
@@ -56,7 +57,7 @@ function scrapeFolder(title, id, component) {
             tags: [tag],
             folder: title,
             id: `${title}-${i}`,
-            path: `https://exams.doc.ic.ac.uk/${id}${resource.getAttribute(
+            path: `https://exams.doc.ic.ac.uk/${id}/${resource.getAttribute(
               "href"
             )}`,
           });
