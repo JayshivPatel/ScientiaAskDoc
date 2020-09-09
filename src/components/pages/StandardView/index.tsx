@@ -78,11 +78,9 @@ const StandardView: React.FC<StandardViewProps> = ({
           </Container>
         </Route>
 
-        <Route path="/modules/:id/dashboard">
-          <Container className={classNames("pageContainer")}>
-            <ModuleDashboard year={year}/>
-          </Container>
-        </Route>
+        <Route path="/modules/:id/dashboard"  render={(props) => (<Container className={classNames("pageContainer")}>
+            <ModuleDashboard year={year} moduleID={props.match.params.id}/>
+          </Container>)} />
 
         <Route
           path="/modules/:id/overview"

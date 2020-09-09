@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Dandruff from "components/molecules/Dandruff";
-import { useParams } from "react-router-dom";
 import styles from "./style.module.scss";
 import classNames from "classnames";
 import {
@@ -19,33 +18,33 @@ import { modulesList } from "../ModuleList/list";
 
 interface Props {
   year: string;
+  moduleID: string;
 }
 
-const ModuleDashboard: React.FC<Props> = ({ year }) => {
-  let { id } = useParams();
-  let moduleCode = id.startsWith("CO") ? id.slice(2) : id;
-  let piazzaLink = "https://piazza.com/class/";
-  if (piazzaClasses[id] !== undefined && piazzaClasses[id]) {
-    piazzaLink += piazzaClasses[id];
-  }
-
-  const initialButtons = [
-    {
-      title: "College Website",
-      icon: faGlobe,
-      url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
-    },
-    {
-      title: "Piazza",
-      icon: faUserFriends,
-      url: piazzaLink,
-    },
-  ];
-  let [buttons, setButtons] = useState(initialButtons);
+const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
+  let [buttons, setButtons] = useState<any>([]);
 
   useEffect(() => {
+    let moduleCode = moduleID.startsWith("CO") ? moduleID.slice(2) : moduleID;
     const onSuccess = (data: { [k: string]: any }) => {
-      let newButtons: any[] = [];
+      let piazzaLink = "https://piazza.com/class/";
+      if (piazzaClasses[moduleID] !== undefined && piazzaClasses[moduleID]) {
+        piazzaLink += piazzaClasses[moduleID];
+      }
+
+      let newButtons: any[] = [
+        {
+          title: "College Website",
+          icon: faGlobe,
+          url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
+        },
+        {
+          title: "Piazza",
+          icon: faUserFriends,
+          url: piazzaLink,
+        },
+      ];
+
       for (const key in data) {
         let resource = data[key];
         let resourceURL = queryString.parseUrl(resource.path);
@@ -62,7 +61,7 @@ const ModuleDashboard: React.FC<Props> = ({ year }) => {
           });
         }
       }
-      setButtons((b) => b.concat(newButtons));
+      setButtons(newButtons);
     };
     request({
       url: api.MATERIALS_RESOURCES,
@@ -76,12 +75,14 @@ const ModuleDashboard: React.FC<Props> = ({ year }) => {
         course: moduleCode,
       },
     });
-  }, [moduleCode, year]);
+  }, [moduleID, year]);
 
   return (
     <>
       <Dandruff
-        heading={modulesList.find(({ code }) => code === id)?.title || id}
+        heading={
+          modulesList.find(({ code }) => code === moduleID)?.title || moduleID
+        }
       />
 
       <h4 className={classNames(styles.moduleSectionHeader)}>Module Aims</h4>
