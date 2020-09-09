@@ -22,6 +22,15 @@ export interface Resource {
   thumbnail?: string;
 }
 
+export interface BasicResource {
+	title: string;
+  type: "pdf" | "video" | "file" | "link";
+  tags: string[];
+  folder: string;
+	id: number;
+	path: string;
+}
+
 export interface Module {
   title: string;
   code: string;
