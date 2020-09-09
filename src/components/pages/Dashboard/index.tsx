@@ -3,11 +3,7 @@ import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import PersonCard from "components/atoms/PersonCard";
 import PageButtonGroup from "components/molecules/PageButtonGroup";
 import TutorCardGroup from "components/molecules/TutorCardGroup";
-import tutorImage1 from "assets/images/tutor-1.png";
-import tutorImage2 from "assets/images/tutor-2.png";
-import tutorImage3 from "assets/images/tutor-3.png";
-import tutorImage4 from "assets/images/tutor-4.jpeg";
-import tutorImage5 from "assets/images/tutor-5.jpeg";
+
 import {
   faGlobe,
   faFileAlt,
@@ -88,31 +84,31 @@ const tutors: {
     name: "Dr. Zahid Barr",
     email: "zahid.barr@imperial.ac.uk",
     address: "373, Huxley Building",
-    image: tutorImage1,
+    image: "/images/tutors/tutor-1.png",
   },
   {
     name: "Dr. Rosalind Baker",
     email: "rosalind.baker@imperial.ac.uk",
     address: "590, Huxley Building",
-    image: tutorImage2,
+    image: "/images/tutors/tutor-2.png",
   },
   {
     name: "Mr. Subhaan Wicks",
     email: "subhaan.wicks16@imperial.ac.uk",
     address: "Huxley Building",
-    image: tutorImage3,
+    image: "/images/tutors/tutor-3.png",
 	},
 	{
     name: "Mr. Jack Wu",
     email: "jack.wu16@imperial.ac.uk",
     address: "Huxley Building",
-    image: tutorImage4,
+    image: "/images/tutors/tutor-4.jpeg",
   },
   {
     name: "Ms. Sarah Park",
     email: "sarah.park16@imperial.ac.uk",
     address: "Huxley Building",
-    image: tutorImage5,
+    image: "/images/tutors/tutor-5.jpeg",
   },
 ];
 export default Dashboard;

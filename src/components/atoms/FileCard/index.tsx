@@ -3,11 +3,6 @@ import styles from "./style.module.scss";
 
 import classNames from "classnames";
 
-import applicationPDF from "assets/images/pdf-banner.png";
-import applicationDocument from "assets/images/document-banner.png";
-import applicationLink from "assets/images/link-banner.png";
-import applicationVideo from "assets/images/video-banner.png";
-
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -36,21 +31,8 @@ const FileCard: React.FC<FileCardProps> = ({
   onMouseOver,
   onMouseOut
 }: FileCardProps) => {
-  let banner: string;
-  switch (type) {
-    case "pdf":
-      banner = applicationPDF;
-      break;
-    case "video":
-			banner = applicationVideo;
-			break;
-		case "link":
-			banner = applicationLink;
-			break;
-    default:
-      banner = applicationDocument;
-      break;
-  }
+  let banner: string = `public/images/light/banner/${type}.png`;
+
   return (
     <Card
       className={styles.fileCard}

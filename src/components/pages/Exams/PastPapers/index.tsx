@@ -4,7 +4,6 @@ import styles from "./style.module.scss";
 import classNames from "classnames";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 
-import graphIllustration from "assets/images/graph-illustration.png";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
@@ -81,7 +80,7 @@ const PastPapers: React.FC = () => {
               <Card.Header>
                 <span className={styles.assessmentResult}>40 / 50</span>
               </Card.Header>
-              <Card.Img variant="top" src={graphIllustration} />
+              <Card.Img variant="top" src="/images/light/banner/pdf.png" />
               <Card.Body>
                 <Card.Title>Paper {i}</Card.Title>
                 <FontAwesomeIcon

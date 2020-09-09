@@ -2,13 +2,12 @@ import React from "react";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import styles from "./style.module.scss";
-import userImage from "assets/images/user.png";
 
 const PersonCard: React.FC = () => {
   return (
     <>
       <Container className={styles.userCardContainer}>
-        <Image className={styles.userImage} src={userImage} />
+        <Image className={styles.userImage} src="/images/user.png" />
         <div className={styles.userInfoBlock}>
           <p className={styles.userName}>{userInfo.name}</p>
           <p className={styles.userEmail}>{userInfo.email}</p>

@@ -6,23 +6,18 @@ import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import { faSun, faLeaf, faSeedling } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Term, ProgressStatus } from "constants/types";
+import { Term, ProgressStatus, Module } from "constants/types";
 
 export interface ModuleCardProps {
-  module: {
-    title: string;
-    code: string;
-    imageLight: string;
-    imageDark: string;
-    content: string;
-    terms: Term[];
-    progressStatus?: ProgressStatus;
-    progressPercent?: number;
-  };
+  module: Module;
 }
 
 const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
   let textColor: string = "";
+  let moduleCode = module.code.startsWith("CO")
+    ? module.code.slice(2)
+    : module.code;
+  moduleCode = moduleCode.split(".").join("-");
   switch (module.progressStatus) {
     case ProgressStatus.NOT_STARTED:
       textColor = "#ACB5BD";
@@ -73,11 +68,9 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
         <Card.Img
           style={{ borderRadius: 0 }}
           variant="top"
-          src={
-            document.documentElement.getAttribute("data-theme") === "dark"
-              ? module.imageDark
-              : module.imageLight
-          }
+          src={`/images/${document.documentElement.getAttribute(
+            "data-theme"
+          )}/module/${moduleCode}.png`}
         />
         <Card.Body>
           <Card.Title>{module.title}</Card.Title>

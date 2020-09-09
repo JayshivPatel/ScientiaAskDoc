@@ -3,33 +3,34 @@ import Dandruff from "components/molecules/Dandruff";
 import { useParams } from "react-router-dom";
 import styles from "./style.module.scss";
 import classNames from "classnames";
-import { faGlobe, faLink, faUserFriends } from "@fortawesome/free-solid-svg-icons";
+import {
+  faGlobe,
+  faLink,
+  faUserFriends,
+} from "@fortawesome/free-solid-svg-icons";
 import PageButtonGroup from "components/molecules/PageButtonGroup";
 import queryString from "query-string";
 
 import { request } from "utils/api";
 import { api, methods } from "constants/routes";
 
-import tutorImage1 from "assets/images/tutor-1.png";
-import tutorImage2 from "assets/images/tutor-2.png";
-
 import TutorCardGroup from "components/molecules/TutorCardGroup";
 
 const ModuleDashboard: React.FC = () => {
   let { id } = useParams();
-	let moduleCode = id.startsWith("CO") ? id.slice(2) : id;
-	let piazzaLink = "https://piazza.com/class/";
+  let moduleCode = id.startsWith("CO") ? id.slice(2) : id;
+  let piazzaLink = "https://piazza.com/class/";
   if (piazzaClasses[id] !== undefined && piazzaClasses[id]) {
     piazzaLink += piazzaClasses[id];
-	}
-	
+  }
+
   const initialButtons = [
     {
       title: "College Website",
       icon: faGlobe,
       url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
-		},
-		{
+    },
+    {
       title: "Piazza",
       icon: faUserFriends,
       url: piazzaLink,
@@ -38,7 +39,7 @@ const ModuleDashboard: React.FC = () => {
   let [buttons, setButtons] = useState(initialButtons);
 
   useEffect(() => {
-    const onSuccess = (data: { [k: string]: any; }) => {
+    const onSuccess = (data: { [k: string]: any }) => {
       let newButtons: any[] = [];
       for (const key in data) {
         let resource = data[key];
@@ -68,7 +69,7 @@ const ModuleDashboard: React.FC = () => {
       body: {
         year: "2021",
         course: moduleCode,
-      }
+      },
     });
   }, [moduleCode]);
 
@@ -174,26 +175,26 @@ const leaders: {
     name: "Dr. Zahid Barr",
     email: "zahid.barr@imperial.ac.uk",
     address: "373, Huxley Building",
-    image: tutorImage1,
+    image: "/images/tutors/tutor-1.png",
   },
   {
     name: "Dr. Rosalind Baker",
     email: "rosalind.baker@imperial.ac.uk",
     address: "590, Huxley Building",
-    image: tutorImage2,
+    image: "/images/tutors/tutor-2.png",
   },
 ];
 
 const piazzaClasses: {
-	[index: string]: string;
+  [index: string]: string;
 } = {
-	CO140: "k0r3c04qwhj3e",
-	CO142: "k0r3c156mj35b",
-	CO112: "k0r3by316kp6",
-	CO145: "k0r3c1h4zik5y",
-	"CO120.2": "k0r3bzfpcno23",
-	CO150: "k0r3c1t4x8k6l",
-	CO113: "k0r3byq0f68t",
-	CO141: "k0r3c0t7dak4o",
-	CO130: "k0r3bzsith2r",
+  CO140: "k0r3c04qwhj3e",
+  CO142: "k0r3c156mj35b",
+  CO112: "k0r3by316kp6",
+  CO145: "k0r3c1h4zik5y",
+  "CO120.2": "k0r3bzfpcno23",
+  CO150: "k0r3c1t4x8k6l",
+  CO113: "k0r3byq0f68t",
+  CO141: "k0r3c0t7dak4o",
+  CO130: "k0r3bzsith2r",
 };
