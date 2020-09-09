@@ -183,11 +183,17 @@ const StandardView: React.FC<StandardViewProps> = ({
             </Container>
           </Route>
 
-          <Route path="/exams/papers">
-            <Container className={classNames("pageContainer")}>
-              <ExamPastPapers />
-            </Container>
-          </Route>
+          <Route
+            path="/exams/papers/:scope?"
+            render={(props) => (
+              <Container className={classNames("pageContainer")}>
+                <ExamPastPapers
+                  view={fileView}
+                  scope={props.match.params.scope}
+                />
+              </Container>
+            )}
+          />
 
           <Route
             path="/modules/:id"

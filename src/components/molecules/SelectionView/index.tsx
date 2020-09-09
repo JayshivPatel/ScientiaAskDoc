@@ -20,7 +20,8 @@ export interface SelectionProps {
   handleCardClick: (id: number) => void;
   handleIconClick: (id: number) => void;
   handleMouseOver: (id: number) => void;
-  handleMouseOut: (id: number) => void;
+	handleMouseOut: (id: number) => void;
+	disableSelection?: boolean;
 }
 
 export interface MyProps {
@@ -29,6 +30,7 @@ export interface MyProps {
   heading: string;
   onDownloadClick: (identifiers: number[]) => void;
   onItemClick: (identifier: number) => void;
+	disableSelection?: boolean;
 }
 
 interface MyState {
@@ -75,6 +77,10 @@ class SelectionView extends React.Component<MyProps, MyState> {
   }
 
   handleIconClick(id: number) {
+		if (this.props.disableSelection){
+			this.handleCardClick(id);
+			return;
+		}
     let isSelected = JSON.parse(JSON.stringify(this.state.isSelected));
     let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver));
     isSelected[id] = !isSelected[id];
@@ -132,7 +138,8 @@ class SelectionView extends React.Component<MyProps, MyState> {
       handleCardClick: (id: number) => this.handleCardClick(id),
       handleIconClick: (id: number) => this.handleIconClick(id),
       handleMouseOver: (id: number) => this.handleMouseOver(id),
-      handleMouseOut: (id: number) => this.handleMouseOut(id),
+			handleMouseOut: (id: number) => this.handleMouseOut(id),
+			disableSelection: this.props.disableSelection,
     };
 
     return (
@@ -142,7 +149,8 @@ class SelectionView extends React.Component<MyProps, MyState> {
           onDownloadClick={(e) => this.handleDownloadClick(e)}
           showDownload={this.isAnySelected()}
           onSelectAllClick={() => this.handleSelectAllClick()}
-          selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
+					selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
+					disableSelection={this.props.disableSelection}
           checkBoxColur={
             this.isAnySelected()
               ? "var(--secondary-text-color)"

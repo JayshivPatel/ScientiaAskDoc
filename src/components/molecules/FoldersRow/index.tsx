@@ -12,7 +12,7 @@ const FoldersRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
       style={{
         marginTop: "0.625rem",
         marginRight: "-0.625rem",
-        marginLeft: "-0.625rem"
+        marginLeft: "-0.625rem",
       }}
     >
       {select.selectionItems.map(({ title, id }) => (
@@ -26,13 +26,14 @@ const FoldersRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
           <FolderCard
             title={title}
             icon={
-              select.isAnySelected() || select.state.isHoveringOver[id]
+              !select.disableSelection &&
+              (select.isAnySelected() || select.state.isHoveringOver[id])
                 ? select.state.isSelected[id]
                   ? faCheckSquare
                   : faSquare
                 : faFolder
             }
-            onIconClick={e => {
+            onIconClick={(e) => {
               e.stopPropagation();
               select.handleIconClick(id);
             }}

@@ -55,7 +55,7 @@ function scrapeFolder(title, id, component) {
             type: "pdf",
             tags: [tag],
             folder: title,
-            id: i,
+            id: `${title}-${i}`,
             path: `https://exams.doc.ic.ac.uk/${id}${resource.getAttribute(
               "href"
             )}`,

@@ -1,113 +1,171 @@
 import React from "react";
-import styles from "./style.module.scss";
+import SearchBox from "components/molecules/SearchBox";
+import QuickAccessView from "./components/QuickAccessView";
+import CurrentDirectoryView from "./components/CurrentDirectoryView";
+import FoldersView from "./components/FoldersView";
 
-import classNames from "classnames";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
+import LoadingScreen from "components/molecules/LoadingScreen";
+import { BasicResource, Folder } from "constants/types";
 
-import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
-import Badge from "react-bootstrap/Badge";
-import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faInfoCircle,
-  faFile,
-  faFolder
-} from "@fortawesome/free-solid-svg-icons";
+export interface ResourcesProps {
+  scope?: string;
+  view: string;
+}
 
-const PastPapers: React.FC = () => {
-  return (
-    <>
-      <MyBreadcrumbs />
-      <InputGroup>
-        <FormControl
-          className={styles.searchBar}
-          aria-label="Search"
-          placeholder="Search..."
+export interface ResourceState {
+  error: any;
+  isLoaded: Boolean;
+  resources: BasicResource[];
+  searchText: string;
+  folders: Folder[];
+}
+
+class PastPapers extends React.Component<ResourcesProps, ResourceState> {
+  constructor(props: ResourcesProps) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoaded: false,
+      resources: [],
+      folders: [],
+      searchText: "",
+    };
+  }
+
+  loadResources() {
+    fetch("/jsons/folders.json")
+      .then((response) => response.json())
+      .then((f) => {
+        f.forEach((folder: Folder) => this.loadFromFolder(folder.title));
+        this.setState({ folders: f, isLoaded: true });
+      })
+      .catch((error) => {
+        this.setState({ error: error, isLoaded: true });
+      });
+  }
+
+  loadFromFolder(title: string) {
+    fetch(`/jsons/${title.trim()}.json`)
+      .then((response) => response.json())
+      .then((r) => {
+        const resource = this.state.resources.slice();
+        this.setState({ resources: resource.concat(r) });
+      })
+      .catch((error) => {
+        this.setState({ error: title + error });
+      });
+  }
+
+  componentDidMount() {
+    this.loadResources();
+  }
+
+  handleFileDownload(indices: number[]) {}
+
+  includeInSearchResult(item: BasicResource, searchText: string) {
+    const rx = /([a-z]+)\(([^)]+)\)/gi;
+    let match: RegExpExecArray | null;
+    let title = item.title.toLowerCase();
+    let tags = item.tags.map((tag) => tag.toLowerCase());
+    let type = item.type.toLowerCase();
+
+    while ((match = rx.exec(searchText)) !== null) {
+      switch (match[1]) {
+        case "type":
+          if (type !== match[2]) {
+            return false;
+          }
+          break;
+        case "tag":
+          let matchSafe = match as RegExpExecArray;
+          if (!tags.some((tag) => tag === matchSafe[2])) {
+            return false;
+          }
+          break;
+        default:
+          break;
+      }
+    }
+    let rest = searchText.replace(rx, "").trim();
+    return (
+      tags.some((tag) => tag.indexOf(rest) !== -1) || title.indexOf(rest) !== -1
+    );
+  }
+
+  getSearchPrompts() {
+    const typesList = [
+      { name: "PDF", value: "type(pdf)" },
+      { name: "Video", value: "type(video)" },
+      { name: "File", value: "type(file)" },
+      { name: "Link", value: "type(link)" },
+    ];
+    let tagsList = [
+      { name: "New", value: "tag(new)" },
+      { name: "Week 1", value: "tag(week 1)" },
+    ];
+    const prompts = [
+      { title: "Types", list: typesList },
+      { title: "Tags", list: tagsList },
+    ];
+
+    return prompts;
+  }
+
+  handleResourceClick(id: number) {}
+
+  render() {
+    let scope = this.props.scope || "";
+
+    const view = () => {
+      switch (this.props.view) {
+        default:
+          return (
+            <>
+              <FoldersView
+                folders={this.state.folders}
+                scope={scope}
+                searchText={this.state.searchText}
+              />
+
+              <CurrentDirectoryView
+                resources={this.state.resources}
+                scope={scope}
+                searchText={this.state.searchText}
+                onDownloadClick={(ids) => this.handleFileDownload(ids)}
+                onItemClick={(id) => this.handleResourceClick(id)}
+                includeInSearchResult={this.includeInSearchResult}
+              />
+
+              <QuickAccessView
+                resources={this.state.resources}
+                scope={scope}
+                searchText={this.state.searchText}
+                onDownloadClick={(ids) => this.handleFileDownload(ids)}
+                onItemClick={(id) => this.handleResourceClick(id)}
+              />
+            </>
+          );
+      }
+    };
+
+    return (
+      <>
+        <MyBreadcrumbs />
+        <SearchBox
+          searchText={this.state.searchText}
+          onSearchTextChange={(text) => this.setState({ searchText: text })}
+          prompts={this.getSearchPrompts()}
         />
-        <InputGroup.Append>
-          <Button className={styles.searchBarIcon}>
-            <FontAwesomeIcon size="1x" icon={faInfoCircle} />
-          </Button>
-        </InputGroup.Append>
-      </InputGroup>
 
-      <h5
-        style={{ marginTop: "1.875rem", marginBottom: "0.625rem" }}
-        className={classNames(styles.moduleSectionHeader)}
-      >
-        Folders
-      </h5>
-      <Row style={{ marginRight: "-0.625rem", marginLeft: "-0.625rem" }}>
-        {[...Array(3)].map((e, i) => (
-          <Col
-            xs={6}
-            sm={6}
-            md={3}
-            key={i}
-            style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}
-          >
-            <Card className={styles.folderCard}>
-              <Card.Body style={{ padding: ".6rem" }}>
-                <Card.Text style={{ marginBottom: 0 }}>Folder {i}</Card.Text>
-                <FontAwesomeIcon
-                  style={{ fontSize: "1.125rem" }}
-                  icon={faFolder}
-                />
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-
-      <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
-
-      <Row style={{ marginRight: "-0.625rem", marginLeft: "-0.625rem" }}>
-        {[...Array(4)].map((e, i) => (
-          <Col
-            xs={12}
-            sm={6}
-            md={6}
-            lg={4}
-            xl={3}
-            key={i}
-            style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}
-          >
-            <Card className={styles.quickViewCard}>
-              <Card.Header>
-                <span className={styles.assessmentResult}>40 / 50</span>
-              </Card.Header>
-              <Card.Img variant="top" src="/images/light/banner/pdf.png" />
-              <Card.Body>
-                <Card.Title>Paper {i}</Card.Title>
-                <FontAwesomeIcon
-                  style={{ fontSize: "1.125rem" }}
-                  icon={faFile}
-                />
-              </Card.Body>
-              <Card.Footer>
-                <Badge
-                  pill
-                  className={classNames(styles.quickViewTag, styles.tagTeal)}
-                >
-                  New
-                </Badge>
-                <Badge
-                  pill
-                  className={classNames(styles.quickViewTag, styles.tagBlue)}
-                >
-                  Week 1
-                </Badge>
-              </Card.Footer>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </>
-  );
-};
+        <LoadingScreen
+          error={this.state.error}
+          isLoaded={this.state.isLoaded}
+          successful={view()}
+        />
+      </>
+    );
+  }
+}
 
 export default PastPapers;
