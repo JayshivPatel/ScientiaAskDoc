@@ -23,7 +23,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoaded, error, successf
         <Spinner animation="border" variant={document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark"} />
       </div>
     );
-  if (error) return <WarningJumbotron message={`Error retrieving data: ${error}`} />;
+  if (error) return <WarningJumbotron message={`${error}`} />;
   return successful;
 };
 

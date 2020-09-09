@@ -153,7 +153,8 @@ const SettingsModal: React.FC<Props> = ({
                 as="select"
                 onChange={(e) => {
                   setYear(e.target.value);
-                }}
+								}}
+								value={year}
               >
                 <option value="2021">2020 - 2021</option>
                 <option value="1920">2019 - 2020</option>

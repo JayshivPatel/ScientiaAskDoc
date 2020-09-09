@@ -47,9 +47,19 @@ class ModuleOverview extends React.Component<
   }
 
   componentDidMount() {
+    this.loadResources();
+  }
+
+  componentDidUpdate(prevProps: ModuleOverviewProps) {
+    if (prevProps.year !== this.props.year) {
+      this.loadResources();
+    }
+  }
+
+  loadResources() {
     this.setState({ isLoaded: false });
 
-    const onSuccess = (data: { [k: string]: any; }) => {
+    const onSuccess = (data: { [k: string]: any }) => {
       let resourceArr: Resource[] = [];
       for (const key in data) {
         let resource = data[key];
@@ -93,7 +103,7 @@ class ModuleOverview extends React.Component<
       body: {
         year: this.props.year,
         course: this.moduleCode,
-      }
+      },
     });
   }
 

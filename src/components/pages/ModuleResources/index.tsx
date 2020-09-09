@@ -82,6 +82,14 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       }
 
       resourceArr = resourceArr.sort((a, b) => (a.index > b.index ? 1 : -1));
+      if (resourceArr.length === 0) {
+        this.setState({
+          error:
+            this.props.view === "staff"
+              ? undefined
+              : "No resource has been uploaded. ",
+        });
+      }
       this.setState({ resources: resourceArr, isLoaded: true });
     };
 

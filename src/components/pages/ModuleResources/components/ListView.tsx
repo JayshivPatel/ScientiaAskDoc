@@ -1,5 +1,4 @@
 import React from "react";
-import WarningJumbotron from "components/atoms/WarningJumbotron";
 import SelectionView, {
   SelectionProps,
 } from "components/molecules/SelectionView";
@@ -26,9 +25,6 @@ const ListView: React.FC<ListViewProps> = ({
   onItemClick,
   includeInSearchResult,
 }) => {
-  if (resources.length === 0) {
-    return <WarningJumbotron message="No resources have been uploaded for this course yet." />
-  }
 
   let filesContent: Resource[] = resources;
   if (searchText !== "") {
