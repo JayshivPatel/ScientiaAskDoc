@@ -76,7 +76,7 @@ const ModuleDashboard: React.FC<Props> = ({ year }) => {
         course: moduleCode,
       },
     });
-  }, [moduleCode]);
+  }, [moduleCode, year]);
 
   return (
     <>

@@ -47,7 +47,7 @@ class NavBarBrand extends React.Component<NavBarBrandProps, NavBarBrandState> {
     return (
       <Navbar.Brand className={styles.brandContainer}>
         <img
-          src="images/logo.svg"
+          src="/images/logo.svg"
           className={cx("d-inline-block", "align-center", styles.brandImage, {
             rotate: this.state.iconRotate
           })}

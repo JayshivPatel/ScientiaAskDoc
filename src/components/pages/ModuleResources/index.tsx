@@ -47,7 +47,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
   loadResources() {
     this.setState({ isLoaded: false });
-    const onSuccess = (data: { [k: string]: any; }) => {
+    const onSuccess = (data: { [k: string]: any }) => {
       let resourceArr: Resource[] = [];
       for (const key in data) {
         let resource = data[key];
@@ -77,11 +77,11 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
           id: resource.id,
           path: resource.path,
           index: resource.index,
-          visible_after: new Date(resource.visible_after)
+          visible_after: new Date(resource.visible_after),
         } as Resource);
       }
 
-      resourceArr = resourceArr.sort((a, b) => a.index > b.index ? 1 : -1);
+      resourceArr = resourceArr.sort((a, b) => (a.index > b.index ? 1 : -1));
       this.setState({ resources: resourceArr, isLoaded: true });
     };
 
@@ -98,12 +98,18 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       body: {
         year: this.props.year,
         course: this.moduleCode,
-      }
+      },
     });
   }
 
   componentDidMount() {
     this.loadResources();
+  }
+
+  componentDidUpdate(prevProps: ResourcesProps) {
+    if (prevProps.year !== this.props.year) {
+      this.loadResources();
+    }
   }
 
   handleFileDownload(indices: number[]) {
@@ -211,45 +217,47 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
     const view = () => {
       switch (this.props.view) {
-        case "card": return (
-          <>
-            <FoldersView
+        case "card":
+          return (
+            <>
+              <FoldersView
+                folders={folders(this.state.resources)}
+                scope={scope}
+                searchText={this.state.searchText}
+                handleFolderDownload={(ids) => this.handleFolderDownload(ids)}
+              />
+
+              <CurrentDirectoryView
+                resources={this.state.resources}
+                scope={scope}
+                searchText={this.state.searchText}
+                onDownloadClick={(ids) => this.handleFileDownload(ids)}
+                onItemClick={(id) => this.handleResourceClick(id)}
+                includeInSearchResult={this.includeInSearchResult}
+              />
+
+              <QuickAccessView
+                resources={this.state.resources}
+                scope={scope}
+                searchText={this.state.searchText}
+                onDownloadClick={(ids) => this.handleFileDownload(ids)}
+                onItemClick={(id) => this.handleResourceClick(id)}
+              />
+            </>
+          );
+        case "staff":
+          return (
+            <StaffView
+              year={this.props.year}
+              course={this.moduleCode}
               folders={folders(this.state.resources)}
-              scope={scope}
-              searchText={this.state.searchText}
-              handleFolderDownload={(ids) => this.handleFolderDownload(ids)}
-            />
-
-            <CurrentDirectoryView
+              reload={() => this.loadResources()}
               resources={this.state.resources}
-              scope={scope}
               searchText={this.state.searchText}
-              onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onItemClick={(id) => this.handleResourceClick(id)}
               includeInSearchResult={this.includeInSearchResult}
+              onRowClick={(id) => this.handleResourceClick(id)}
             />
-
-            <QuickAccessView
-              resources={this.state.resources}
-              scope={scope}
-              searchText={this.state.searchText}
-              onDownloadClick={(ids) => this.handleFileDownload(ids)}
-              onItemClick={(id) => this.handleResourceClick(id)}
-            />
-          </>
-        );
-        case "staff": return (
-          <StaffView
-            year={this.props.year}
-            course={this.moduleCode}
-            folders={folders(this.state.resources)}
-            reload={() => this.loadResources()}
-            resources={this.state.resources}
-            searchText={this.state.searchText}
-            includeInSearchResult={this.includeInSearchResult}
-            onRowClick={(id) => this.handleResourceClick(id)}
-          />
-        );
+          );
         default:
           return (
             <ListView

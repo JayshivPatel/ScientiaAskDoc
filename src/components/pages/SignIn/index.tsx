@@ -17,7 +17,7 @@ const SignIn: React.FC = () => {
       >
         <Container style={{ display: "flex", justifyContent: "center" }}>
           <img
-            src="images/logo.svg"
+            src="/images/logo.svg"
             width="30"
             height="30"
             className={styles.brandLogo}

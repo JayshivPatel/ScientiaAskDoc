@@ -29,7 +29,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
   let PromptElements: ReactElement[] = [];
   prompts?.forEach(({ title, list }) => {
     PromptElements.push(
-      <Dropdown.Header className={styles.dropdownHeader}>
+      <Dropdown.Header className={styles.dropdownHeader} key={title}>
         {title}:{" "}
       </Dropdown.Header>
     );
@@ -37,7 +37,8 @@ const SearchBox: React.FC<SearchBoxProps> = ({
       PromptElements.push(
         <Dropdown.Item
           className={styles.dropdownItem}
-          onClick={() => onSearchTextChange(`${searchText} ${value} `)}
+					onClick={() => onSearchTextChange(`${searchText} ${value} `)}
+					key={value}
         >
           {name}
         </Dropdown.Item>
