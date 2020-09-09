@@ -31,7 +31,7 @@ const FileCard: React.FC<FileCardProps> = ({
   onMouseOver,
   onMouseOut
 }: FileCardProps) => {
-  let banner: string = `public/images/light/banner/${type}.png`;
+  let banner: string = `/images/light/banner/${type}.png`;
 
   return (
     <Card
