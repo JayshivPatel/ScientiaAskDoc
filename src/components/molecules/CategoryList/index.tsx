@@ -56,7 +56,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
 }) => {
   let oldIndexes: number[] = categoryItems.map(resource => resource.index);
 
-  const initListItems = (items: Resource[]) => items.map(({ title, type, tags, downloads, id, index }) => {
+  const initListItems = (items: Resource[]) => items.map(({ title, type, tags, downloads, visible_after, id, index }) => {
     if (type === undefined || tags === undefined) return null;
 
     let icon =
@@ -77,6 +77,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
         icon={icon}
         tags={tags}
         downloads={(type === "link" || type === "video") ? undefined : downloads}
+        invisible={visible_after.getTime() - Date.now() > 0}
         title={title}
         resourceActions={resourceActions ? resourceActions(id, title) : null}
         key={index}

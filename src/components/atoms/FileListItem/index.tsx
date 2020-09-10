@@ -15,6 +15,7 @@ export interface FileListItemProps {
   icon: IconDefinition;
   tags: string[];
   downloads?: number;
+  invisible?: boolean
   resourceActions?: any
   showMenu?: boolean,
   setShowMenu?: (show: boolean) => void,
@@ -29,6 +30,7 @@ const FileListItem: React.FC<FileListItemProps> = ({
   icon,
   tags,
   downloads,
+  invisible,
   resourceActions,
   showMenu,
   setShowMenu,
@@ -69,6 +71,7 @@ const FileListItem: React.FC<FileListItemProps> = ({
         </div>
       }
       <div
+        style={invisible ? { opacity: "50%"} : {}}
         className={styles.listItem}
         onClick={onClick}
         onMouseOut={onMouseOut}

@@ -12,7 +12,7 @@ import StaffView from "./components/StaffView";
 
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import LoadingScreen from "components/molecules/LoadingScreen";
-import { openResource, tags, folders } from "./utils";
+import { openResource, tags, folders, filterInvisibleResources } from "./utils";
 import { Resource } from "constants/types";
 import { titleCase } from "utils/functions";
 import Button from "react-bootstrap/esm/Button";
@@ -89,7 +89,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       if (resourceArr.length === 0) {
         this.setState({
           error:
-            this.props.view === "staff"
+            this.state.staffView
               ? undefined
               : "No resource has been uploaded. ",
         });
@@ -225,6 +225,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
   render() {
     let scope = this.props.scope || "";
+    let studentViewResources = filterInvisibleResources(this.state.resources);
 
     const view = () => {
       if (this.state.staffView) {
@@ -246,14 +247,14 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
           return (
             <>
               <FoldersView
-                folders={folders(this.state.resources)}
+                folders={folders(studentViewResources)}
                 scope={scope}
                 searchText={this.state.searchText}
                 handleFolderDownload={(ids) => this.handleFolderDownload(ids)}
               />
 
               <CurrentDirectoryView
-                resources={this.state.resources}
+                resources={studentViewResources}
                 scope={scope}
                 searchText={this.state.searchText}
                 onDownloadClick={(ids) => this.handleFileDownload(ids)}
@@ -262,7 +263,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               />
 
               <QuickAccessView
-                resources={this.state.resources}
+                resources={studentViewResources}
                 scope={scope}
                 searchText={this.state.searchText}
                 onDownloadClick={(ids) => this.handleFileDownload(ids)}
@@ -273,8 +274,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
         default:
           return (
             <ListView
-              folders={folders(this.state.resources)}
-              resources={this.state.resources}
+              folders={folders(studentViewResources)}
+              resources={studentViewResources}
               searchText={this.state.searchText}
               onDownloadClick={(ids) => this.handleFileDownload(ids)}
               onSectionDownloadClick={(category) =>

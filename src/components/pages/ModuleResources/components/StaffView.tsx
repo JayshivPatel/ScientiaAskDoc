@@ -65,6 +65,12 @@ const StaffView: React.FC<StaffViewProps> = ({
 	// Remove reserved tag `new` from selection pool, then arrange alphabetically
 	tags = tags.filter(tag => tag !== "new").sort();
 
+	let categories = folders.map(folder => folder.title);
+	if (!categories.includes("Lecture Notes")) {
+		categories.push("Lecture Notes");
+	}
+	categories.sort();
+
 	const hiddenFileInput = React.createRef<HTMLInputElement>()
 	const handleReuploadClick = (id: number) => {
 		if (hiddenFileInput.current) {
@@ -146,7 +152,7 @@ const StaffView: React.FC<StaffViewProps> = ({
 			}}
 			year={year}
 			course={course}
-			categories={folders.length === 0 ? ["Lecture Notes"] : folders.map(folder => folder.title).sort()}
+			categories={categories}
 			tags={tags}
 			titleDuplicated={titleDuplicated}
 		/>

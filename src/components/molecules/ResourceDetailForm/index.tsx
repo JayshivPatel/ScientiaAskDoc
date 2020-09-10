@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import CreatableSelect from "react-select/creatable";
 import DatePicker from "react-datepicker";
 
+import { titleCase } from "utils/functions";
 
 interface ResourceDetailFormProps {
 	id: number;
@@ -54,11 +55,13 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 	titleDuplicated,
 	setResourceDetails,
 }) => {
+	const [categoryOptions, setCategoryOptions] = useState<Option[]>((categories && categories.map(createOption)) || []);
+	const [tagOptions, setTagOptions] = useState<Option[]>(tagList.map(createOption));
 	const [showPicker, setShowPicker] = useState(false);
 	const [startDate, setStartDate] = useState(defaultVisibleAfter || new Date());
 
 	const [title, setTitle] = useState<string>(defaultTitle || "");
-	const [category, setCategory] = useState((categories && categories[0]) || defaultCategory || "");
+	const [category, setCategory] = useState(defaultCategory || "Lecture Notes");
 	const [tags, setTags] = useState<string[]>(defaultTags || []);
 	const [visibleAfter, setVisibleAfter] = useState<Date>();
 	const [url, setURL] = useState(defaultURL || "");
@@ -118,12 +121,18 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 		<Form.Group>
 			<Form.Label>Category</Form.Label>
 			<CreatableSelect
-				defaultValue={createOption(categories[0])}
-				options={categories.map(createOption)}
+				value={createOption(category)}
+				options={categoryOptions}
+				createOptionPosition="first"
+				onCreateOption={inputValue => {
+					let valueToCreate = titleCase(inputValue);
+					setCategory(valueToCreate);
+					setCategoryOptions([...categoryOptions, createOption(valueToCreate)]);
+				}}
 				onChange={selectedCategory => setCategory(selectedCategory ? (selectedCategory as Option).value : "")}
 			/>
 			<Form.Text muted>
-				Category cannot be changed afterwards.
+				Category cannot be changed afterwards. Automatically capitalized.
   			</Form.Text>
 		</Form.Group>
 		}
@@ -131,17 +140,23 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 		<Form.Group>
 			<Form.Label>Tags</Form.Label>
 			<CreatableSelect
-				defaultValue={defaultTags ? defaultTags.map(createOption) : null}
+				value={tags.map(createOption)}
 				isClearable
 				isMulti
 				isValidNewOption={input => input !== "" && !input.includes(";") && input.toLowerCase() !== "new"}
 				menuPortalTarget={document.body}
 				styles={{ menuPortal: styles => ({ ...styles, zIndex: 10001 })}}
-				options={tagList.map(createOption)}
+				options={tagOptions}
+				createOptionPosition="first"
+				onCreateOption={inputValue => {
+					let valueToCreate = inputValue.toLowerCase();
+					setTags([...tags, valueToCreate]);
+					setTagOptions([...tagOptions, createOption(valueToCreate)]);
+				}}
 				onChange={selectedTags => setTags(selectedTags ? (selectedTags as Option[]).map(option => option.value) : [])}
 			/>
 			<Form.Text muted>
-				Tags must not include semicolons. The "new" tag is automatically generated and cannot be manually added.
+				Tags are lowercase and must not include semicolons. The "new" tag is automatically generated and cannot be manually added.
 			</Form.Text>
 		</Form.Group>
 

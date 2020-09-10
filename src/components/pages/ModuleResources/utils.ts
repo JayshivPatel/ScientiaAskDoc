@@ -28,6 +28,10 @@ export function folders(resources: Resource[]): Folder[] {
   ).map((title, id) => ({ title: title, id: id }));
 }
 
+export function filterInvisibleResources(resources: Resource[]): Resource[] {
+  return resources.filter(resource => resource.visible_after.getTime() - Date.now() <= 0);
+}
+
 export function openResource(resources: Resource[], id: number) {
   let resource = resources.find((resource) => resource.id === id);
   if (resource === undefined) {
