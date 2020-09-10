@@ -15,7 +15,7 @@ import UploadModal from "components/organisms/UploadModal"
 import CategoryList from "components/molecules/CategoryList";
 import CategoryHeader from "components/molecules/CategoryHeader";
 
-import { staffRequest, download } from "utils/api"
+import { request, download } from "utils/api"
 import { api, methods } from "constants/routes"
 import { Folder, Resource, IdBooleanMap } from "constants/types";
 
@@ -77,7 +77,7 @@ const StaffView: React.FC<StaffViewProps> = ({
 		let formData = new FormData();
 		formData.append("file", fileUploaded);
 
-		await staffRequest({
+		await request({
 			url: api.MATERIALS_RESOURCES_FILE(resourceID),
 			method: methods.PUT,
 			onSuccess: () => {},
@@ -105,7 +105,7 @@ const StaffView: React.FC<StaffViewProps> = ({
 			<IconButton
 				tooltip="Delete"
 				onClick={async () => {
-					await staffRequest({
+					await request({
 						url: api.MATERIALS_RESOURCES_ID(id),
 						method: methods.DELETE,
 						onSuccess: () => {},
@@ -157,7 +157,7 @@ const StaffView: React.FC<StaffViewProps> = ({
 			title="Remove All Warning"
 			message="This will irreversibly delete all course resources and associated files."
 			confirmLabel="Delete All Resources"
-			confirmOnClick={() => staffRequest({
+			confirmOnClick={() => request({
 				url: api.MATERIALS_RESOURCES,
 				method: methods.DELETE,
 				onSuccess: () => {

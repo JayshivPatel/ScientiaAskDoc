@@ -22,7 +22,7 @@ import {
 
 import styles from "./style.module.scss";
 import ResourceDetailForm, { ResourceDetails } from "components/molecules/ResourceDetailForm"
-import { staffRequest } from "utils/api"
+import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 
 interface UploadModalProps {
@@ -81,7 +81,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
 		let formData = new FormData()
 		formData.append("file", file);
 		return (data: { [k: string]: number; }) => {
-			staffRequest({
+			request({
 				url: api.MATERIALS_RESOURCES_FILE(data["id"]),
 				method: methods.PUT,
 				onSuccess: () => removeFile(file),
@@ -127,7 +127,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
 						// Empty promise i.e. do nothing
 						return Promise.resolve();
 					}
-					return staffRequest({
+					return request({
 						url: api.MATERIALS_RESOURCES,
 						method: methods.POST,
 						onSuccess: submitFileForResource(file),
@@ -145,7 +145,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
 				break;
 			}
 			case "link": {
-				await staffRequest({
+				await request({
 					url: api.MATERIALS_RESOURCES,
 					method: methods.POST,
 					onSuccess: hideAndReload,

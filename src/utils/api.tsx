@@ -1,6 +1,5 @@
-import authConstants from "../constants/auth";
-import authenticationService from "../utils/auth";
-import { api, methods } from "../constants/routes"
+import authConstants from "constants/auth";
+import { methods } from "constants/routes"
 
 interface RequestOptions {
     [key: string]: any
@@ -20,14 +19,7 @@ export interface RequestData {
 // and error parameters respectively. Body is process as query parameters if
 // method is GET
 // Note: will trigger CORS OPTIONS preflight due to the Authorization header
-// url: string, method: string, onSuccess: any, onError: any, body?: any, username?: string, isFile: boolean = false
-export async function request(data: RequestData, username?: string) {
-  if (!authenticationService.userIsLoggedIn() || (username && authenticationService.getUserInfo()["username"] !== username)) {
-    // TODO: Credentials should be handled elsewhere
-    // TODO: Specific endpoint login route should be passed in
-    await authenticationService.login(username ? username : "abc123", "a", api.MATERIALS_LOGIN);
-  }
-
+export async function request(data: RequestData) {
   let headers: { [key: string]: string } = {
     "Authorization": authConstants.ACCESS_TOKEN_HEADER(),
     "Access-Control-Allow-Origin": "*",
@@ -75,10 +67,6 @@ export async function request(data: RequestData, username?: string) {
     })
 }
 
-export async function staffRequest(data: RequestData) {
-  return request(data, "profx");
-}
-
 // Utility that downloads files fetched by request (assumes GET)
 export async function download(url: string, filename: string, body?: any) {
   const onSuccess = (blob: any) => {
@@ -92,6 +80,7 @@ export async function download(url: string, filename: string, body?: any) {
   };
 
   const onError = (message: string) => {
+    // TODO: Deal with download failure (also with openResource)
     console.log(message);
   };
 

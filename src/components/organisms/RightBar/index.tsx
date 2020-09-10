@@ -1,11 +1,14 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import styles from "./style.module.scss";
 import CalendarGroup from "components/molecules/CalendarGroup";
 import SideBarTabGroup from "components/molecules/SideBarTabGroup";
 import { faCog, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import authenticationService from "utils/auth";
 
 export interface RightBarState {
   date: Date;
+  redirect: string | null;
 }
 
 export interface RightBarProps {
@@ -17,7 +20,7 @@ class RightBar extends React.Component<RightBarProps, RightBarState> {
 
   constructor(props: RightBarProps) {
     super(props);
-    this.state = { date: new Date() };
+    this.state = { date: new Date(), redirect: null };
   }
 
   componentDidMount() {
@@ -35,6 +38,7 @@ class RightBar extends React.Component<RightBarProps, RightBarState> {
   }
 
   render() {
+    if (this.state.redirect) return <Redirect to={this.state.redirect}/>;
     let buttons = [
       {
         title: "Settings",
@@ -43,8 +47,11 @@ class RightBar extends React.Component<RightBarProps, RightBarState> {
       },
       {
         title: "Sign Out",
-				icon: faSignOutAlt,
-				activeURL: "/signin",
+        icon: faSignOutAlt,
+        onClick: () => {
+          authenticationService.logout();
+          this.setState({ redirect: "/signin" })
+        },
       }
     ];
 

@@ -6,13 +6,15 @@ import classNames from "classnames";
 
 import ModuleCard from "components/atoms/ModuleCard";
 import Dandruff from "components/molecules/Dandruff";
-import { modulesList } from "./list";
+import { Module } from "constants/types";
 
 export interface ModuleListProps {
+  modules: Module[];
   modulesFilter: String;
 }
 
 const ModuleList: React.FC<ModuleListProps> = ({
+  modules,
   modulesFilter
 }: ModuleListProps) => {
   return (
@@ -29,7 +31,7 @@ const ModuleList: React.FC<ModuleListProps> = ({
       </p>
 
       <Row style={{ marginLeft: "-0.625rem", marginRight: "-0.625rem" }}>
-        {modulesList
+        {modules
           .filter(
             ({ progressStatus }) =>
               modulesFilter === "" || progressStatus === modulesFilter
