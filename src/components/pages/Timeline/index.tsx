@@ -2,6 +2,7 @@ import React from "react";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import styles from "./style.module.scss";
 import TermSwitcher from "./components/TermSwitcher";
+import { modulesList } from "../ModuleList/list";
 import WeekRow from "./components/WeekRow";
 import ModuleRows from "./components/ModuleRows";
 import DayIndicatorGrid from "./components/DayIndicatorGrid";
@@ -21,13 +22,12 @@ interface TimelineProps {
   revertSideBar: () => void;
   term: Term;
   setTerm: React.Dispatch<React.SetStateAction<Term>>;
-  onEventClick: (e?: TimelineEvent) => void;
-  modules: Module[];
+	onEventClick: (e?: TimelineEvent) => void;
+	modules: Module[],
 }
 
 interface TimelineState {
   modulesTracks: ModuleTracks;
-  modulesList: Module[];
   isLoaded: boolean;
   showMobileOnSmallScreens: boolean;
   eventsData: TimelineEvent[];
@@ -39,7 +39,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     this.state = {
       modulesTracks: {},
       isLoaded: false,
-      modulesList: [],
       showMobileOnSmallScreens: true,
       eventsData: [],
     };
@@ -73,7 +72,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     this.setState({
       modulesTracks: modulesTracks,
       isLoaded: true,
-      modulesList: this.props.modules,
       eventsData: eventsData,
     });
   }
@@ -110,7 +108,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     if (!this.state.isLoaded) {
       return <LoadingScreen successful={<></>} />;
     }
-    let currModules = this.state.modulesList.filter(({ terms }) =>
+    let currModules = this.props.modules.filter(({ terms }) =>
       terms.includes(this.props.term)
     );
 

@@ -22,32 +22,9 @@ type AppState = {
   showSettings: boolean;
   fileView: string;
   showEventModal: boolean;
-	activeModalEvent?: TimelineEvent;
-	year: string;
+  activeModalEvent?: TimelineEvent;
+  year: string;
 };
-
-const PrivateRoute: React.ComponentType<any> = ({
-  component: Component,
-  ...rest
-}) => {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        authenticationService.userIsLoggedIn() ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/signin",
-              state: { from: props.location }
-            }}
-          />
-        )
-      }
-    />
-  )
-}
 
 class App extends React.Component<{}, AppState> {
   width = window.innerWidth;
@@ -61,8 +38,8 @@ class App extends React.Component<{}, AppState> {
       showSettings: false,
       showEventModal: false,
       activeModalEvent: undefined,
-			fileView: localStorage.getItem("fileView") || "card",
-			year: "2021",
+      fileView: localStorage.getItem("fileView") || "card",
+      year: "2021",
     };
   }
 
@@ -157,9 +134,9 @@ class App extends React.Component<{}, AppState> {
           fileView={this.state.fileView}
           onCardViewClick={() => this.setFileView("card")}
           onListViewClick={() => this.setFileView("list")}
-					setDarkTheme={(b) => this.setDarkTheme(b)}
-					year={this.state.year}
-					setYear={(year: string) => this.setState({year: year})}
+          setDarkTheme={(b) => this.setDarkTheme(b)}
+          year={this.state.year}
+          setYear={(year: string) => this.setState({ year: year })}
         />
 
         <EventModal
@@ -170,47 +147,63 @@ class App extends React.Component<{}, AppState> {
         />
 
         <Switch>
-          <Route path="/signin" component={SignIn}/>
+					<Route path="/signin" component={SignIn}/>
+					
+          <Route
+            path="/"
+            render={(props) =>
+              authenticationService.userIsLoggedIn() ? (
+                <>
+                  <TopBar
+                    pages={horizontalBarPages}
+                    onFavIconClick={(e) => {
+                      e.preventDefault();
+                      this.toggleLeftBar();
+                    }}
+                    onUserIconClick={(e) => {
+                      e.preventDefault();
+                      this.toggleRightBar();
+                    }}
+                  />
 
-          <PrivateRoute path="/" component={() => (<>
-            <TopBar
-              pages={horizontalBarPages}
-              onFavIconClick={(e) => {
-                e.preventDefault();
-                this.toggleLeftBar();
-              }}
-              onUserIconClick={(e) => {
-                e.preventDefault();
-                this.toggleRightBar();
-              }}
-            />
+                  <StandardView
+                    onSettingsClick={() =>
+                      this.setState({ showSettings: true })
+                    }
+                    onEventClick={(e?: TimelineEvent) => this.showEventModal(e)}
+                    toggledLeft={this.state.toggledLeft}
+                    toggledRight={this.state.toggledRight}
+                    initTimelineSideBar={() => {
+                      this.isTimelineView = true;
+                      this.showOrHideSideBars();
+                    }}
+                    revertTimelineSideBar={() => {
+                      this.isTimelineView = false;
+                      this.showOrHideSideBars();
+                    }}
+                    onOverlayClick={(e) => {
+                      e.preventDefault();
+                      this.setState({
+                        toggledLeft: false,
+                        toggledRight: false,
+                      });
+                    }}
+                    fileView={this.state.fileView}
+                    year={this.state.year}
+                  />
 
-            <StandardView
-							onSettingsClick={() => this.setState({ showSettings: true })}
-							onEventClick={(e?: TimelineEvent) => this.showEventModal(e)}
-              toggledLeft={this.state.toggledLeft}
-              toggledRight={this.state.toggledRight}
-              initTimelineSideBar={() => {
-                this.isTimelineView = true;
-                this.showOrHideSideBars();
-              }}
-              revertTimelineSideBar={() => {
-                this.isTimelineView = false;
-                this.showOrHideSideBars();
-              }}
-              onOverlayClick={(e) => {
-                e.preventDefault();
-                this.setState({
-                  toggledLeft: false,
-                  toggledRight: false,
-                });
-              }}
-							fileView={this.state.fileView}
-							year={this.state.year}
-            />
-
-            <BottomBar pages={horizontalBarPages} />
-          </>)}/>
+                  <BottomBar pages={horizontalBarPages} />
+                </>
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: "/signin",
+                    state: { from: props.location },
+                  }}
+                />
+              )
+            }
+          />
         </Switch>
       </>
     );

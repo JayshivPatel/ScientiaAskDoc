@@ -55,7 +55,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   const [modulesFilter, setModulesFilter] = useState("In Progress");
   const [timelineTerm, setTimelineTerm] = useState(Term.AUTUMN);
   const [modules, setModules] = useState<Module[]>(modulesList);
-
+	// const modules : Module[] = modulesList;
   // useEffect(() => {
   //   const onSuccess = (data: { [k: string]: any }[]) => {
   //     setModules(data.map(({ title, code, has_materials, can_manage }) => ({
