@@ -23,8 +23,6 @@ export interface ResourceState {
 }
 
 class PastPapers extends React.Component<ResourcesProps, ResourceState> {
-  rx = /([a-z]+)\(([^)]+)\)/gi;
-
   constructor(props: ResourcesProps) {
     super(props);
     this.state = {
@@ -65,11 +63,12 @@ class PastPapers extends React.Component<ResourcesProps, ResourceState> {
   }
 
   includeInSearchResult(item: BasicResource, searchText: string) {
+		let rx = /([a-z]+)\(([^)]+)\)/gi;
     let match: RegExpExecArray | null;
     let title = item.title.toLowerCase();
     let tags = item.tags.map((tag) => tag.toLowerCase());
 
-    while ((match = this.rx.exec(searchText)) !== null) {
+    while ((match = rx.exec(searchText)) !== null) {
       switch (match[1]) {
         case "class":
           const matchSafe = match as RegExpExecArray;
@@ -79,7 +78,7 @@ class PastPapers extends React.Component<ResourcesProps, ResourceState> {
           break;
       }
     }
-    let rest = searchText.replace(this.rx, "").trim();
+    let rest = searchText.replace(rx, "").trim();
     return (
       tags.some((tag) => tag.indexOf(rest) !== -1) || title.indexOf(rest) !== -1
     );
