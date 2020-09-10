@@ -25,7 +25,8 @@ const QuickAccessView: React.FC<QuickAccessViewProps> = ({
       const moduleCode = code.startsWith("CO") ? code.slice(2) : code;
       return title.startsWith(`C${moduleCode}`);
     });
-  });
+	});
+	quickAccessItems.reverse();
   quickAccessItems.forEach((i) => i.tags.push(i.folder));
   if (searchText === "" && scope === "" && quickAccessItems.length > 0) {
     return (
