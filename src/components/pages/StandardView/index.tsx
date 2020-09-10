@@ -203,7 +203,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           />
           <Route
             path="/exams"
-            render={() => <Redirect to="/exams/overview" />}
+            render={() => <Redirect to="/exams/papers" />}
           />
           <Route path="/" render={() => <Redirect to="/dashboard" />} />
         </Switch>
