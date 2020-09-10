@@ -29,7 +29,13 @@ const SignIn: React.FC<Props> = ({ location }) => {
       // TODO: Deal with failed login
       alert("Login failed.");
     }
-  }
+	}
+	
+	let handleKeyPress = (event: any) => {
+		if(event.key === 'Enter'){
+			handleSubmit();
+		}
+	}
 
   if (redirect) return <Redirect to={from}/>;
   return (
@@ -86,13 +92,14 @@ const SignIn: React.FC<Props> = ({ location }) => {
             <FormControl
               className={styles.inputBar}
               placeholder="Enter your password"
-              onChange={e => setPassword(e.target.value)}
+							onChange={e => setPassword(e.target.value)}
+							onKeyPress={handleKeyPress}
               type="password"
               aria-label="Password"
               aria-describedby="basic-addon1"
             />
           </InputGroup>
-          <Button variant="secondary" className={styles.inputButton} onClick={() => handleSubmit()}>
+          <Button variant="secondary" className={styles.inputButton} onClick={handleSubmit}>
             Sign In
           </Button>
         </div>
