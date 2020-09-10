@@ -25,6 +25,8 @@ export interface Resource {
 export interface Module {
   title: string;
   code: string;
+  can_manage: boolean;
+  has_materials: boolean;
   terms: Term[];
   progressStatus: ProgressStatus;
   progressPercent: number;

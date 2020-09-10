@@ -2,7 +2,6 @@ import React from "react";
 import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
 import styles from "./style.module.scss";
 import TermSwitcher from "./components/TermSwitcher";
-import { modulesList } from "../ModuleList/list";
 import WeekRow from "./components/WeekRow";
 import ModuleRows from "./components/ModuleRows";
 import DayIndicatorGrid from "./components/DayIndicatorGrid";
@@ -23,6 +22,7 @@ interface TimelineProps {
   term: Term;
   setTerm: React.Dispatch<React.SetStateAction<Term>>;
   onEventClick: (e?: TimelineEvent) => void;
+  modules: Module[];
 }
 
 interface TimelineState {
@@ -49,7 +49,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     this.props.initSideBar();
     let modulesTracks: ModuleTracks = {};
 
-    modulesList.forEach(({ code }) => {
+    this.props.modules.forEach(({ code }) => {
       modulesTracks[code] = [[], []];
     });
 
@@ -73,7 +73,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     this.setState({
       modulesTracks: modulesTracks,
       isLoaded: true,
-      modulesList: modulesList,
+      modulesList: this.props.modules,
       eventsData: eventsData,
     });
   }

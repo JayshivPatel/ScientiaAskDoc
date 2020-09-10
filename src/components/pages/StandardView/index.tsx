@@ -1,10 +1,12 @@
-import React, { useState, Suspense } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import "./style.scss";
 import classNames from "classnames";
-import { Term, TimelineEvent } from "constants/types";
+import { Term, TimelineEvent, ProgressStatus, Module } from "constants/types";
 import Container from "react-bootstrap/esm/Container";
 import LoadingScreen from "components/molecules/LoadingScreen";
+import { request } from "utils/api";
+import { api, methods } from "constants/routes";
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"));
 const ModuleDashboard = React.lazy(
@@ -51,6 +53,30 @@ const StandardView: React.FC<StandardViewProps> = ({
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
   const [timelineTerm, setTimelineTerm] = useState(Term.AUTUMN);
+  const [modules, setModules] = useState<Module[]>([]);
+
+  useEffect(() => {
+    const onSuccess = (data: { [k: string]: any }[]) => {
+      setModules(data.map(({ title, code, has_materials, can_manage }) => ({
+        title,
+        code: `CO${code}`,
+        can_manage,
+        has_materials,
+        // Hardcoded stuff, we don't have this data currently
+        terms: [Term.AUTUMN],
+        progressPercent: Math.floor(Math.random() * 100),
+        progressStatus: ProgressStatus.IN_PROGRESS,
+        content: "",
+      })))
+    };
+
+   request({
+     url: api.MATERIALS_COURSES(year),
+     method: methods.GET,
+     onSuccess: onSuccess,
+     onError: (message) => console.log(`Failed to obtain modules: ${message}`),
+   });
+  }, [year]);
 
   return (
     <div
@@ -81,7 +107,7 @@ const StandardView: React.FC<StandardViewProps> = ({
 
           <Route exact path="/modules">
             <Container className={classNames("pageContainer")}>
-              <ModuleList modulesFilter={modulesFilter} />
+              <ModuleList modules={modules} modulesFilter={modulesFilter}/>
             </Container>
           </Route>
 
@@ -105,30 +131,20 @@ const StandardView: React.FC<StandardViewProps> = ({
 
           <Route
             path="/modules/:id/resources/:scope?"
-            render={(props) => (
-              <Container className={classNames("pageContainer")}>
-                <ModuleResources
-                  year={year}
-                  moduleID={props.match.params.id}
-                  scope={props.match.params.scope}
-                  view={fileView}
-                />
-              </Container>
-            )}
-          />
-
-          <Route
-            path="/modules/:id/resources-staff"
-            render={(props) => (
-              <Container className={classNames("pageContainer")}>
-                <ModuleResources
-                  year={year}
-                  moduleID={props.match.params.id}
-                  scope={props.match.params.scope}
-                  view="staff"
-                />
-              </Container>
-            )}
+            render={(props) => {
+              let can_manage = modules.find(module => module.code === props.match.params.id)?.can_manage || false;
+              return (
+                <Container className={classNames("pageContainer")}>
+                  <ModuleResources
+                    year={year}
+                    moduleID={props.match.params.id}
+                    scope={props.match.params.scope}
+                    view={fileView}
+                    can_manage={can_manage}
+                  />
+                </Container>
+              );
+            }}
           />
 
           <Route
@@ -156,6 +172,7 @@ const StandardView: React.FC<StandardViewProps> = ({
               term={timelineTerm}
               setTerm={setTimelineTerm}
               onEventClick={onEventClick}
+              modules={modules}
             />
           </Route>
 

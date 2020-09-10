@@ -15,17 +15,20 @@ import LoadingScreen from "components/molecules/LoadingScreen";
 import { openResource, tags, folders } from "./utils";
 import { Resource } from "constants/types";
 import { titleCase } from "utils/functions";
+import Button from "react-bootstrap/esm/Button";
 
 export interface ResourcesProps {
   year: string;
   moduleID: string;
   scope?: string;
   view: string;
+  can_manage: boolean;
 }
 
 export interface ResourceState {
   error: any;
   isLoaded: Boolean;
+  staffView: boolean;
   resources: Resource[];
   searchText: string;
 }
@@ -40,6 +43,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     this.state = {
       error: null,
       isLoaded: false,
+      staffView: this.props.can_manage,
       resources: [],
       searchText: "",
     };
@@ -223,6 +227,20 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     let scope = this.props.scope || "";
 
     const view = () => {
+      if (this.state.staffView) {
+        return (
+          <StaffView
+            year={this.props.year}
+            course={this.moduleCode}
+            folders={folders(this.state.resources)}
+            reload={() => this.loadResources()}
+            resources={this.state.resources}
+            searchText={this.state.searchText}
+            includeInSearchResult={this.includeInSearchResult}
+            onRowClick={(id) => this.handleResourceClick(id)}
+          />
+        );
+      }
       switch (this.props.view) {
         case "card":
           return (
@@ -252,19 +270,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               />
             </>
           );
-        case "staff":
-          return (
-            <StaffView
-              year={this.props.year}
-              course={this.moduleCode}
-              folders={folders(this.state.resources)}
-              reload={() => this.loadResources()}
-              resources={this.state.resources}
-              searchText={this.state.searchText}
-              includeInSearchResult={this.includeInSearchResult}
-              onRowClick={(id) => this.handleResourceClick(id)}
-            />
-          );
         default:
           return (
             <ListView
@@ -285,6 +290,12 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     return (
       <>
         <MyBreadcrumbs />
+
+        {this.props.can_manage &&
+        <Button onClick={() => this.setState({ staffView: !this.state.staffView})} block>
+          Switch View
+        </Button>}
+
         <SearchBox
           searchText={this.state.searchText}
           onSearchTextChange={(text) => this.setState({ searchText: text })}
