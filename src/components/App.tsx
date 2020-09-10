@@ -26,8 +26,8 @@ type AppState = {
 	year: string;
 };
 
-const PrivateRoute: React.ComponentType<any> = ({
-  component: Component,
+const PrivateRoute: React.FC<{ path: string }> = ({
+  children,
   ...rest
 }) => {
   return (
@@ -35,7 +35,7 @@ const PrivateRoute: React.ComponentType<any> = ({
       {...rest}
       render={props =>
         authenticationService.userIsLoggedIn() ? (
-          <Component {...props} />
+          children
         ) : (
           <Redirect
             to={{
@@ -172,7 +172,7 @@ class App extends React.Component<{}, AppState> {
         <Switch>
           <Route path="/signin" component={SignIn}/>
 
-          <PrivateRoute path="/" component={() => (<>
+          <PrivateRoute path="/">
             <TopBar
               pages={horizontalBarPages}
               onFavIconClick={(e) => {
@@ -210,7 +210,7 @@ class App extends React.Component<{}, AppState> {
             />
 
             <BottomBar pages={horizontalBarPages} />
-          </>)}/>
+          </PrivateRoute>
         </Switch>
       </>
     );

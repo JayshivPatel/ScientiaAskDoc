@@ -27,7 +27,6 @@ interface TimelineProps {
 
 interface TimelineState {
   modulesTracks: ModuleTracks;
-  modulesList: Module[];
   isLoaded: boolean;
   showMobileOnSmallScreens: boolean;
   eventsData: TimelineEvent[];
@@ -39,7 +38,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     this.state = {
       modulesTracks: {},
       isLoaded: false,
-      modulesList: [],
       showMobileOnSmallScreens: true,
       eventsData: [],
     };
@@ -73,7 +71,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     this.setState({
       modulesTracks: modulesTracks,
       isLoaded: true,
-      modulesList: this.props.modules,
       eventsData: eventsData,
     });
   }
@@ -110,7 +107,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     if (!this.state.isLoaded) {
       return <LoadingScreen successful={<></>} />;
     }
-    let currModules = this.state.modulesList.filter(({ terms }) =>
+    let currModules = this.props.modules.filter(({ terms }) =>
       terms.includes(this.props.term)
     );
 
