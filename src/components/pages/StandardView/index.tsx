@@ -7,6 +7,7 @@ import Container from "react-bootstrap/esm/Container";
 import LoadingScreen from "components/molecules/LoadingScreen";
 import { request } from "utils/api";
 import { api, methods } from "constants/routes";
+import { modulesList } from "../ModuleList/list";
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"));
 const ModuleDashboard = React.lazy(
@@ -53,30 +54,30 @@ const StandardView: React.FC<StandardViewProps> = ({
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
   const [timelineTerm, setTimelineTerm] = useState(Term.AUTUMN);
-  const [modules, setModules] = useState<Module[]>([]);
+  const [modules, setModules] = useState<Module[]>(modulesList);
 
-  useEffect(() => {
-    const onSuccess = (data: { [k: string]: any }[]) => {
-      setModules(data.map(({ title, code, has_materials, can_manage }) => ({
-        title,
-        code: `CO${code}`,
-        can_manage,
-        has_materials,
-        // Hardcoded stuff, we don't have this data currently
-        terms: [Term.AUTUMN],
-        progressPercent: Math.floor(Math.random() * 100),
-        progressStatus: ProgressStatus.IN_PROGRESS,
-        content: "",
-      })))
-    };
+  // useEffect(() => {
+  //   const onSuccess = (data: { [k: string]: any }[]) => {
+  //     setModules(data.map(({ title, code, has_materials, can_manage }) => ({
+  //       title,
+  //       code: `CO${code}`,
+  //       can_manage,
+  //       has_materials,
+  //       // Hardcoded stuff, we don't have this data currently
+  //       terms: [Term.AUTUMN],
+  //       progressPercent: Math.floor(Math.random() * 100),
+  //       progressStatus: ProgressStatus.IN_PROGRESS,
+  //       content: "",
+  //     })))
+  //   };
 
-   request({
-     url: api.MATERIALS_COURSES(year),
-     method: methods.GET,
-     onSuccess: onSuccess,
-     onError: (message) => console.log(`Failed to obtain modules: ${message}`),
-   });
-  }, [year]);
+  //  request({
+  //    url: api.MATERIALS_COURSES(year),
+  //    method: methods.GET,
+  //    onSuccess: onSuccess,
+  //    onError: (message) => console.log(`Failed to obtain modules: ${message}`),
+  //  });
+  // }, [year]);
 
   return (
     <div
