@@ -42,7 +42,6 @@ const CalendarGroup: React.FC = () => {
           data.sort(sortEvents).forEach((element: any) => {
             const timeStart = toShortTimeString(element.start);
             const timeEnd = toShortTimeString(element.end);
-            console.log(element.catorgory);
             currEvents.push({
               type: element.catorgory,
               title: element.summary,
@@ -72,7 +71,7 @@ const CalendarGroup: React.FC = () => {
             break;
         }
         return {
-          title: `${title}`,
+          title,
           subtitle,
           content,
           type: colorType,
