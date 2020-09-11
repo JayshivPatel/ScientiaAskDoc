@@ -4,13 +4,7 @@ import SideBarCardGroup from "../SideBarCardGroup";
 import { addDays } from "utils/functions";
 import useLocalStorage from "react-use-localstorage";
 import { api } from "constants/routes";
-
-type CalendarEvent = {
-  type: string;
-  title: string;
-  subtitle: string;
-  content: string;
-};
+import { CalendarEvent } from "constants/types";
 
 const CalendarGroup: React.FC = () => {
   let [events, setEvents] = useState<CalendarEvent[]>([]);
