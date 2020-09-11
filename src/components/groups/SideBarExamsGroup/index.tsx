@@ -11,7 +11,7 @@ import {
   faEllipsisH,
 } from "@fortawesome/free-solid-svg-icons";
 
-const LeftBarExams: React.FC = () => {
+const SideBarExamsGroup: React.FC = () => {
   let examButtons = [
     // {
     //   title: "Overview",
