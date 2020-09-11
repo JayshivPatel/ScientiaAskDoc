@@ -19,7 +19,6 @@ const CalendarGroup: React.FC = () => {
     Object.keys(timeRange).forEach((key) =>
       url.searchParams.append(key, timeRange[key])
     );
-
     fetch(url.toString(), {
       method: "GET",
       mode: "cors",

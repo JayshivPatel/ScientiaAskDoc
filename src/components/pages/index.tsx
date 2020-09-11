@@ -1,33 +1,32 @@
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useState, Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import "./style.scss";
 import classNames from "classnames";
-import { Term, TimelineEvent, ProgressStatus, Module } from "constants/types";
+import { Term, TimelineEvent, Module } from "constants/types";
 import Container from "react-bootstrap/esm/Container";
 import LoadingScreen from "components/suspense/LoadingScreen";
-import { request } from "utils/api";
-import { api, methods } from "constants/routes";
+// import { request } from "utils/api";
+// import { api, methods } from "constants/routes";
 import { modulesList } from "./ModuleList/list";
+import RightBar from "components/navbars/RightBar";
+import LeftBar from "components/navbars/LeftBar";
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"));
 const ModuleDashboard = React.lazy(
   () => import("components/pages/modulePages/ModuleDashboard")
 );
 const Dashboard = React.lazy(() => import("components/pages/Dashboard"));
-const Exams = React.lazy(() => import("components/pages/Exams"));
-const ExamTimetable = React.lazy(
-  () => import("components/pages/Exams/Timetable")
-);
-const RightBar = React.lazy(() => import("components/navbars/RightBar"));
 const ModuleList = React.lazy(() => import("./ModuleList"));
-const ModuleResources = React.lazy(() => import("./modulePages/ModuleResources"));
+const ModuleResources = React.lazy(
+  () => import("./modulePages/ModuleResources")
+);
 const ModuleFeedback = React.lazy(() => import("./modulePages/ModuleFeedback"));
-const ExamRubrics = React.lazy(() => import("./Exams/Rubrics"));
-const ExamGrading = React.lazy(() => import("./Exams/Grading"));
-const ExamPastPapers = React.lazy(() => import("./Exams/PastPapers"));
+const ExamGrading = React.lazy(() => import("./exams/Grading"));
+const ExamPastPapers = React.lazy(() => import("./exams/PastPapers"));
 const ModuleOverview = React.lazy(() => import("./modulePages/ModuleOverview"));
-const LeftBar = React.lazy(() => import("components/navbars/LeftBar"));
-const ModuleSubmissions = React.lazy(() => import("./modulePages/ModuleSubmissions"));
+const ModuleSubmissions = React.lazy(
+  () => import("./modulePages/ModuleSubmissions")
+);
 
 interface StandardViewProps {
   toggledLeft: boolean;
@@ -54,8 +53,8 @@ const StandardView: React.FC<StandardViewProps> = ({
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
   const [timelineTerm, setTimelineTerm] = useState(Term.AUTUMN);
-  const [modules, setModules] = useState<Module[]>(modulesList);
-	// const modules : Module[] = modulesList;
+  const [modules] = useState<Module[]>(modulesList);
+  // const modules : Module[] = modulesList;
   // useEffect(() => {
   //   const onSuccess = (data: { [k: string]: any }[]) => {
   //     setModules(data.map(({ title, code, has_materials, can_manage }) => ({
@@ -87,18 +86,17 @@ const StandardView: React.FC<StandardViewProps> = ({
         toggledRight: toggledRight,
       })}
     >
+      <LeftBar
+        modulesFilter={modulesFilter}
+        setModulesFilter={setModulesFilter}
+        timelineTerm={timelineTerm}
+        setTimelineTerm={setTimelineTerm}
+        onEventClick={onEventClick}
+        year={year}
+      />
+      <RightBar onSettingsClick={onSettingsClick} />
+      <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
       <Suspense fallback={<LoadingScreen successful={<></>} />}>
-        <LeftBar
-          modulesFilter={modulesFilter}
-          setModulesFilter={setModulesFilter}
-          timelineTerm={timelineTerm}
-          setTimelineTerm={setTimelineTerm}
-          onEventClick={onEventClick}
-          year={year}
-        />
-        <RightBar onSettingsClick={onSettingsClick} />
-        <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
-
         <Switch>
           <Route path="/dashboard">
             <Container className={classNames("pageContainer")}>
@@ -108,7 +106,7 @@ const StandardView: React.FC<StandardViewProps> = ({
 
           <Route exact path="/modules">
             <Container className={classNames("pageContainer")}>
-              <ModuleList modules={modules} modulesFilter={modulesFilter}/>
+              <ModuleList modules={modules} modulesFilter={modulesFilter} />
             </Container>
           </Route>
 
@@ -133,7 +131,9 @@ const StandardView: React.FC<StandardViewProps> = ({
           <Route
             path="/modules/:id/resources/:scope?"
             render={(props) => {
-              let can_manage = modules.find(module => module.code === props.match.params.id)?.can_manage || false;
+              let can_manage =
+                modules.find((module) => module.code === props.match.params.id)
+                  ?.can_manage || false;
               return (
                 <Container className={classNames("pageContainer")}>
                   <ModuleResources
@@ -177,27 +177,9 @@ const StandardView: React.FC<StandardViewProps> = ({
             />
           </Route>
 
-          <Route path="/exams/overview">
-            <Container className={classNames("pageContainer")}>
-              <Exams />
-            </Container>
-          </Route>
-
-          <Route path="/exams/timetable">
-            <Container className={classNames("pageContainer")}>
-              <ExamTimetable />
-            </Container>
-          </Route>
-
           <Route path="/exams/grading">
             <Container className={classNames("pageContainer")}>
               <ExamGrading />
-            </Container>
-          </Route>
-
-          <Route path="/exams/rubrics">
-            <Container className={classNames("pageContainer")}>
-              <ExamRubrics />
             </Container>
           </Route>
 
@@ -207,7 +189,8 @@ const StandardView: React.FC<StandardViewProps> = ({
               <Container className={classNames("pageContainer")}>
                 <ExamPastPapers
                   view={fileView}
-                  scope={props.match.params.scope}
+									scope={props.match.params.scope}
+									modules={modules}
                 />
               </Container>
             )}
@@ -219,10 +202,7 @@ const StandardView: React.FC<StandardViewProps> = ({
               <Redirect to={`/modules/${props.match.params.id}/dashboard`} />
             )}
           />
-          <Route
-            path="/exams"
-            render={() => <Redirect to="/exams/papers" />}
-          />
+          <Route path="/exams" render={() => <Redirect to="/exams/papers" />} />
           <Route path="/" render={() => <Redirect to="/dashboard" />} />
         </Switch>
       </Suspense>

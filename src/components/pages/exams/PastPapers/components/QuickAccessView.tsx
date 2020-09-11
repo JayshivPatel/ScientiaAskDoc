@@ -3,25 +3,26 @@ import SelectionView, {
   SelectionProps,
 } from "components/pages/SelectionView";
 import QuickAccessRow from "components/rows/QuickAccessRow";
-import { BasicResource } from "constants/types";
-import { modulesList } from "components/pages/ModuleList/list";
+import { BasicResource, Module } from "constants/types";
 
 export interface QuickAccessViewProps {
   resources: BasicResource[];
   scope: string;
   searchText: string;
-  onItemClick: (identifier: number) => void;
+	onItemClick: (identifier: number) => void;
+	modules: Module[];
 }
 
 const QuickAccessView: React.FC<QuickAccessViewProps> = ({
   resources,
   scope,
   searchText,
-  onItemClick,
+	onItemClick,
+	modules,
 }) => {
   let quickAccessItems: BasicResource[] = JSON.parse(JSON.stringify(resources));
   quickAccessItems = quickAccessItems.filter(({ title }) => {
-    return modulesList.some(({ code }) => {
+    return modules.some(({ code }) => {
       const moduleCode = code.startsWith("CO") ? code.slice(2) : code;
       return title.startsWith(`C${moduleCode}`);
     });

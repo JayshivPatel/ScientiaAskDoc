@@ -4,14 +4,15 @@ import QuickAccessView from "./components/QuickAccessView";
 import FoldersView from "./components/FoldersView";
 import MyBreadcrumbs from "components/headings/MyBreadcrumbs";
 import LoadingScreen from "components/suspense/LoadingScreen";
-import { BasicResource, Folder } from "constants/types";
+import { BasicResource, Folder, Module } from "constants/types";
 const CurrentDirectoryView = React.lazy(
   () => import("./components/CurrentDirectoryView")
 );
 
 export interface ResourcesProps {
   scope?: string;
-  view: string;
+	view: string;
+	modules: Module[];
 }
 
 export interface ResourceState {
@@ -146,7 +147,8 @@ class PastPapers extends React.Component<ResourcesProps, ResourceState> {
                 resources={this.state.resources}
                 scope={scope}
                 searchText={this.state.searchText}
-                onItemClick={(id) => this.handleResourceClick(id)}
+								onItemClick={(id) => this.handleResourceClick(id)}
+								modules={this.props.modules}
               />
             </>
           );

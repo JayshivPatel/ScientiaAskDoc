@@ -18,7 +18,7 @@ import { titleCase } from "utils/functions";
 import Button from "react-bootstrap/esm/Button";
 import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import IconButton from "components/buttons/IconButton";
+// import IconButton from "components/buttons/IconButton";
 import styles from "./style.module.scss";
 
 export interface ResourcesProps {

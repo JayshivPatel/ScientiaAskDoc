@@ -2,7 +2,6 @@ import React from "react";
 import MyBreadcrumbs from "components/headings/MyBreadcrumbs";
 import styles from "./style.module.scss";
 import TermSwitcher from "./components/TermSwitcher";
-import { modulesList } from "../ModuleList/list";
 import WeekRow from "./components/WeekRow";
 import ModuleRows from "./components/ModuleRows";
 import DayIndicatorGrid from "./components/DayIndicatorGrid";
