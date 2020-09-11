@@ -1,5 +1,5 @@
 import React from "react";
-import Dandruff from "components/molecules/Dandruff";
+import Dandruff from "components/headings/Dandruff";
 
 const ExamRubrics: React.FC = () => {
   return (

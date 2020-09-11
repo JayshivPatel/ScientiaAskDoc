@@ -10,12 +10,14 @@ export interface FoldersViewProps {
   folders: Folder[];
   scope: string;
   searchText: string;
+  handleFolderDownload: (ids: number[]) => void;
 }
 
 const FoldersView: React.FC<FoldersViewProps> = ({
   folders,
   scope,
-  searchText
+  searchText,
+  handleFolderDownload
 }) => {
   let history = useHistory();
   let location = useLocation();
@@ -29,11 +31,10 @@ const FoldersView: React.FC<FoldersViewProps> = ({
     return (
       <SelectionView
         heading="Folders"
-        onDownloadClick={() => {}}
+        onDownloadClick={handleFolderDownload}
         onItemClick={handleFolderClick}
         selectionItems={folders}
-				render={(select: SelectionProps) => <FoldersRow select={select} />}
-				disableSelection={true}
+        render={(select: SelectionProps) => <FoldersRow select={select} />}
       />
     );
   }

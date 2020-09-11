@@ -1,18 +1,18 @@
 import React from "react";
 import "./App.scss";
-import TopBar from "./organisms/TopBar";
-import BottomBar from "./organisms/BottomBar";
+import TopBar from "./navbars/TopBar";
+import BottomBar from "./navbars/BottomBar";
 import {
   faBookOpen,
   faHome,
   faCalendarWeek,
   faChalkboardTeacher,
 } from "@fortawesome/free-solid-svg-icons";
-import StandardView from "./pages/StandardView";
+import StandardView from "./pages";
 import { Switch, Route, Redirect } from "react-router-dom";
 import SignIn from "./pages/SignIn";
-import SettingsModal from "./organisms/SettingsModal";
-import EventModal from "./organisms/EventModal";
+import SettingsModal from "./modals/SettingsModal";
+import EventModal from "./modals/EventModal";
 import { TimelineEvent } from "constants/types";
 import authenticationService from "../utils/auth";
 

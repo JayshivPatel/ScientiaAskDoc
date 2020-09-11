@@ -3,24 +3,26 @@ import SelectionView, {
   SelectionProps
 } from "components/pages/SelectionView";
 import CurrentDirectoryRow from "components/rows/CurrentDirectoryRow";
-import { BasicResource } from "constants/types";
+import { Resource } from "constants/types";
 
 export interface CurrentDirectoryViewProps {
-  resources: BasicResource[];
+  resources: Resource[];
   scope: string;
   searchText: string;
+  onDownloadClick: (identifiers: number[]) => void;
   onItemClick: (identifier: number) => void;
-  includeInSearchResult: (item: BasicResource, searchText: string) => boolean;
+  includeInSearchResult: (item: Resource, searchText: string) => boolean;
 }
 
 const CurrentDirectoryView: React.FC<CurrentDirectoryViewProps> = ({
   resources,
   scope,
   searchText,
+  onDownloadClick,
   onItemClick,
   includeInSearchResult
 }) => {
-  let filesContent: BasicResource[] = resources;
+  let filesContent: Resource[] = resources;
   if (scope !== "") {
     filesContent = filesContent.filter(({ folder }) => folder === scope);
   }
@@ -35,9 +37,8 @@ const CurrentDirectoryView: React.FC<CurrentDirectoryViewProps> = ({
       <SelectionView
         heading="Files"
         onItemClick={onItemClick}
-        onDownloadClick={() => {}}
-				selectionItems={filesContent}
-				disableSelection={true}
+        onDownloadClick={onDownloadClick}
+        selectionItems={filesContent}
         render={(select: SelectionProps) => (
           <CurrentDirectoryRow select={select} />
         )}

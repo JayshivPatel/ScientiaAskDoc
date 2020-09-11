@@ -5,7 +5,7 @@ import { Term, Module } from "constants/types";
 import Container from "react-bootstrap/esm/Container";
 import classNames from "classnames";
 import ModuleHeading from "../ModuleHeading";
-import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
+import MyBreadcrumbs from "components/headings/MyBreadcrumbs";
 import Button from "react-bootstrap/esm/Button";
 
 export interface Props {

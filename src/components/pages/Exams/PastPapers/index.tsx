@@ -1,9 +1,9 @@
 import React, { Suspense } from "react";
-import SearchBox from "components/molecules/SearchBox";
+import SearchBox from "components/headings/SearchBox";
 import QuickAccessView from "./components/QuickAccessView";
 import FoldersView from "./components/FoldersView";
-import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
-import LoadingScreen from "components/molecules/LoadingScreen";
+import MyBreadcrumbs from "components/headings/MyBreadcrumbs";
+import LoadingScreen from "components/suspense/LoadingScreen";
 import { BasicResource, Folder } from "constants/types";
 const CurrentDirectoryView = React.lazy(
   () => import("./components/CurrentDirectoryView")

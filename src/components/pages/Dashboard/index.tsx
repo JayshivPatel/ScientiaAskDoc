@@ -1,8 +1,8 @@
 import React from "react";
-import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
-import PersonCard from "components/atoms/PersonCard";
-import PageButtonGroup from "components/molecules/PageButtonGroup";
-import TutorCardGroup from "components/molecules/TutorCardGroup";
+import MyBreadcrumbs from "components/headings/MyBreadcrumbs";
+import PersonCard from "components/cards/PersonCard";
+import PageButtonGroup from "components/groups/PageButtonGroup";
+import TutorCardGroup from "components/groups/TutorCardGroup";
 
 import {
   faGlobe,
