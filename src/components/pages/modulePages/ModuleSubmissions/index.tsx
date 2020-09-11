@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TimelineEvent } from "constants/types";
-import { eventsData } from "../../pages/Timeline/eventsData";
+import { eventsData } from "../../Timeline/eventsData";
 import Row from "react-bootstrap/esm/Row";
 import MyBreadcrumbs from "components/headings/MyBreadcrumbs";
 import ModuleEventCard from "components/cards/ModuleEventCard";

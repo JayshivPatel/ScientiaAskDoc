@@ -5,8 +5,8 @@ import {
   faLink,
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
-import { request } from "../../../utils/api";
-import { api, methods } from "../../../constants/routes";
+import { request } from "../../../../utils/api";
+import { api, methods } from "../../../../constants/routes";
 import { Resource, Folder } from "constants/types";
 
 export function tags(resources: Resource[]) {

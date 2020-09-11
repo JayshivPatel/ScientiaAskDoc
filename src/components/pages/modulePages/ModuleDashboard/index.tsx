@@ -14,7 +14,7 @@ import { request } from "utils/api";
 import { api, methods } from "constants/routes";
 
 import TutorCardGroup from "components/groups/TutorCardGroup";
-import { modulesList } from "../../pages/ModuleList/list";
+import { modulesList } from "../../ModuleList/list";
 
 interface Props {
   year: string;

@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
-import FileListItem from "components/rows/FileListItem";
+import FileItemRow from "components/rows/FileItemRow";
 import { SelectionProps } from "components/pages/SelectionView";
-import { resourceTypeToIcon } from "../../modulePages/ModuleResources/utils";
+import { resourceTypeToIcon } from "../../pages/modulePages/ModuleResources/utils";
 import { IdBooleanMap, Resource } from "constants/types";
 import { request } from "utils/api";
 import { api, methods } from "constants/routes";
@@ -67,7 +67,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
         : resourceTypeToIcon(type);
 
     return (
-      <FileListItem
+      <FileItemRow
         onClick={() => handleRowClick(id)}
         onMouseOver={() => handleMouseOver(id)}
         onMouseOut={() => handleMouseOut(id)}

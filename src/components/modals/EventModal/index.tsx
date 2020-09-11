@@ -10,8 +10,8 @@ import {
   faExclamationCircle,
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import FileListItem from "components/rows/FileListItem";
-import { resourceTypeToIcon } from "components/modulePages/ModuleResources/utils";
+import FileItemRow from "components/rows/FileItemRow";
+import { resourceTypeToIcon } from "components/pages/modulePages/ModuleResources/utils";
 import { TimelineEvent } from "constants/types";
 import { toDayCount } from "utils/functions";
 interface Props {
@@ -137,7 +137,7 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
           <span className={styles.sectionHeader}>Given</span>
         </div>
         {dummy.map(({ title, type, tags, id }: any) => (
-          <FileListItem
+          <FileItemRow
             title={title}
             tags={tags}
             icon={resourceTypeToIcon(type)}

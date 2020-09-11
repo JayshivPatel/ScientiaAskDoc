@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./style.module.scss";
 import { Route, Switch } from "react-router-dom";
-import LeftBarDashboard from "components/groups/LeftBarDashboard";
-import LeftBarModuleList from "components/groups/LeftBarModuleList";
-import LeftBarModule from "components/groups/LeftBarModule";
-import LeftBarExams from "components/groups/LeftBarExams";
-import LeftBarTimeline from "components/groups/LeftBarTimeline";
+import SideBarLinkGroup from "components/groups/SideBarLinkGroup";
+import SideBarFilterGroup from "components/groups/SideBarFilterGroup";
+import SideBarOutlineGroup from "components/groups/SideBarOutlineGroup";
+import SideBarExamsGroup from "components/groups/SideBarExamsGroup";
+import SideBarTermsGroup from "components/groups/SideBarTermsGroup";
 import { Term, TimelineEvent } from "constants/types";
 import WorkDueGroup from "components/groups/WorkDueGroup";
 
@@ -32,26 +32,26 @@ const LeftBar: React.FC<LeftBarProps> = ({
       <p className={styles.leftbarStatus}>{displayYear}</p>
       <Switch>
         <Route path="/modules/:id">
-          <LeftBarModule />
+          <SideBarOutlineGroup />
         </Route>
 
         <Route exact path="/modules">
-          <LeftBarModuleList
+          <SideBarFilterGroup
             modulesFilter={modulesFilter}
             setModulesFilter={setModulesFilter}
           />
         </Route>
 
         <Route path="/exams">
-          <LeftBarExams />
+          <SideBarExamsGroup />
         </Route>
 
         <Route path="/timeline">
-          <LeftBarTimeline term={timelineTerm} setTerm={setTimelineTerm} />
+          <SideBarTermsGroup term={timelineTerm} setTerm={setTimelineTerm} />
         </Route>
 
         <Route path="/">
-          <LeftBarDashboard />
+          <SideBarLinkGroup />
         </Route>
       </Switch>
 

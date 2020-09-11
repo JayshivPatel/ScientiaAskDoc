@@ -8,7 +8,7 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import MyBreadcrumbs from "components/headings/MyBreadcrumbs";
 import queryString from "query-string";
-import FileListItem from "components/rows/FileListItem";
+import FileItemRow from "components/rows/FileItemRow";
 import {
   resourceTypeToIcon,
   openResource,
@@ -135,7 +135,7 @@ class ModuleOverview extends React.Component<
                     tags.some((tag: string) => tag.toLowerCase() === weekTitle)
                   )
                   .map(({ title, type, tags, id, downloads }: any) => (
-                    <FileListItem
+                    <FileItemRow
                       title={title}
                       tags={tags.filter(
                         (tag: string) => !tag.toLowerCase().startsWith("week")

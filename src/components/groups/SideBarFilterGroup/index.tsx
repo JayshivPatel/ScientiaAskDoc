@@ -6,7 +6,7 @@ export interface LeftBarModuleListProps {
   modulesFilter: String;
 }
 
-const LeftBarModuleList: React.FC<LeftBarModuleListProps> = ({
+const SideBarFilterGroup: React.FC<LeftBarModuleListProps> = ({
   modulesFilter,
   setModulesFilter
 }: LeftBarModuleListProps) => {
@@ -42,10 +42,8 @@ const LeftBarModuleList: React.FC<LeftBarModuleListProps> = ({
   ];
 
   return (
-    <>
       <SideBarTabGroup title="Filter" buttons={sortButtons} />
-    </>
   );
 };
 
-export default LeftBarModuleList;
+export default SideBarFilterGroup;

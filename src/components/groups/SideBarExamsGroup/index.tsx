@@ -56,10 +56,8 @@ const LeftBarExams: React.FC = () => {
   ];
 
   return (
-    <>
       <SideBarTabGroup title="Pages" buttons={examButtons} />
-    </>
   );
 };
 
-export default LeftBarExams;
+export default SideBarExamsGroup;

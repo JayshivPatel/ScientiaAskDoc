@@ -44,9 +44,7 @@ const LeftBarDashboard: React.FC = () => {
   ];
 
   return (
-    <>
       <SideBarTabGroup title="Links" buttons={linkButtons} />
-    </>
   );
 };
 

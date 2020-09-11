@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 
-const LeftBarModule: React.FC = () => {
+const SideBarOutlineGroup: React.FC = () => {
   let { id } = useParams();
 
 
@@ -42,10 +42,8 @@ const LeftBarModule: React.FC = () => {
   ];
 
   return (
-    <>
       <SideBarTabGroup title="Outline" buttons={outlineButtons} />
-    </>
   );
 };
 
-export default LeftBarModule;
+export default SideBarOutlineGroup;

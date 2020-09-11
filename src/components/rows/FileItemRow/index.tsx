@@ -25,7 +25,7 @@ export interface FileListItemProps {
   onMouseOut?: (event: React.MouseEvent) => void;
 }
 
-const FileListItem: React.FC<FileListItemProps> = ({
+const FileItemRow: React.FC<FileListItemProps> = ({
   title,
   icon,
   tags,
@@ -123,4 +123,4 @@ const FileListItem: React.FC<FileListItemProps> = ({
   );
 };
 
-export default FileListItem;
+export default FileItemRow;

@@ -11,7 +11,7 @@ import { modulesList } from "./ModuleList/list";
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"));
 const ModuleDashboard = React.lazy(
-  () => import("components/modulePages/ModuleDashboard")
+  () => import("components/pages/modulePages/ModuleDashboard")
 );
 const Dashboard = React.lazy(() => import("components/pages/Dashboard"));
 const Exams = React.lazy(() => import("components/pages/Exams"));
@@ -20,14 +20,14 @@ const ExamTimetable = React.lazy(
 );
 const RightBar = React.lazy(() => import("components/navbars/RightBar"));
 const ModuleList = React.lazy(() => import("./ModuleList"));
-const ModuleResources = React.lazy(() => import("../modulePages/ModuleResources"));
-const ModuleFeedback = React.lazy(() => import("../modulePages/ModuleFeedback"));
+const ModuleResources = React.lazy(() => import("./modulePages/ModuleResources"));
+const ModuleFeedback = React.lazy(() => import("./modulePages/ModuleFeedback"));
 const ExamRubrics = React.lazy(() => import("./Exams/Rubrics"));
 const ExamGrading = React.lazy(() => import("./Exams/Grading"));
 const ExamPastPapers = React.lazy(() => import("./Exams/PastPapers"));
-const ModuleOverview = React.lazy(() => import("../modulePages/ModuleOverview"));
+const ModuleOverview = React.lazy(() => import("./modulePages/ModuleOverview"));
 const LeftBar = React.lazy(() => import("components/navbars/LeftBar"));
-const ModuleSubmissions = React.lazy(() => import("../modulePages/ModuleSubmissions"));
+const ModuleSubmissions = React.lazy(() => import("./modulePages/ModuleSubmissions"));
 
 interface StandardViewProps {
   toggledLeft: boolean;

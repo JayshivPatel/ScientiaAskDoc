@@ -6,7 +6,7 @@ interface Props {
   term: Term;
   setTerm: React.Dispatch<React.SetStateAction<Term>>;
 }
-const LeftBarTimeline: React.FC<Props> = ({ term, setTerm }) => {
+const SideBarTermsGroup: React.FC<Props> = ({ term, setTerm }) => {
   let termButtons = [
     {
       title: "Autumn",
@@ -26,10 +26,8 @@ const LeftBarTimeline: React.FC<Props> = ({ term, setTerm }) => {
   ];
 
   return (
-    <>
       <SideBarTabGroup title="Terms" buttons={termButtons} />
-    </>
   );
 };
 
-export default LeftBarTimeline;
+export default SideBarTermsGroup;

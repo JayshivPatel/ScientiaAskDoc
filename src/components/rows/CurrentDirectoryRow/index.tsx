@@ -5,7 +5,7 @@ import Col from "react-bootstrap/esm/Col";
 import FileCard from "components/cards/FileCard";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import { SelectionProps } from "components/pages/SelectionView";
-import { resourceTypeToIcon } from "../../modulePages/ModuleResources/utils";
+import { resourceTypeToIcon } from "../../pages/modulePages/ModuleResources/utils";
 
 const CurrentDirectoryRow: React.FC<{ select: SelectionProps }> = ({
   select,
