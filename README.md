@@ -23,8 +23,27 @@ python3 -m venv venv
 ./scripts/start_scientia_dev.sh
 ```
 
+### 2. scientia-calendar
+```shell
+# Clone the repository
+git clone https://gitlab.doc.ic.ac.uk/zd419/scientia-calendar.git
 
-## To run
+# Setup and run the server on port 4000
+npm install -g nodemon
+npm install
+nodemon index.js
+```
+
+### 3. Gather past paper data
+The jsons containing past exam papers exists in `public/jsons`, but the information might be outdated when you're running the project. To refresh the data:
+1. Delete `20XX-20XX.json` and `folders.json` from `public/jsons`. 
+2. Open [https://exams.doc.ic.ac.uk/](https://exams.doc.ic.ac.uk/). 
+3. Copy `scripts/pastpapers.js` into the browser console, and press enter to run. 
+4. Remember to enable multiple file download for the site. 
+5. Copy the downloaded jsons back to `public/jsons`. 
+6. Profit. 
+
+## To run frontend
 
 In the project directory, you can run:
 

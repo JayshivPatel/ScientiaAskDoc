@@ -3,6 +3,7 @@ import { eventTypes } from "components/cards/SideBarCard";
 import SideBarCardGroup from "../SideBarCardGroup";
 import { addDays } from "utils/functions";
 import useLocalStorage from "react-use-localstorage";
+import { api } from "constants/routes";
 
 type CalendarEvent = {
   type: string;
@@ -20,7 +21,7 @@ const CalendarGroup: React.FC = () => {
     timeRange.intervalStart = new Date("2020-03-13");
     timeRange.intervalEnd = addDays(timeRange.intervalStart, 1);
 
-    let url: URL = new URL(`http://localhost:4000/${calendarID}`);
+    let url: URL = new URL(api.CALENDAR_EVENTS(calendarID));
     Object.keys(timeRange).forEach((key) =>
       url.searchParams.append(key, timeRange[key])
     );
