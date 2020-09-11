@@ -36,6 +36,7 @@ const SettingsModal: React.FC<Props> = ({
   );
 
   const [theme, setTheme] = useLocalStorage("theme", "default");
+  const [calendarID, setCalendarID] = useLocalStorage("calendarID", "");
 
   return (
     <Modal
@@ -153,8 +154,8 @@ const SettingsModal: React.FC<Props> = ({
                 as="select"
                 onChange={(e) => {
                   setYear(e.target.value);
-								}}
-								value={year}
+                }}
+                value={year}
               >
                 <option value="2021">2020 - 2021</option>
                 <option value="1920">2019 - 2020</option>
@@ -163,6 +164,37 @@ const SettingsModal: React.FC<Props> = ({
               </Form.Control>
             </Col>
           </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column xs="9" sm="10">
+              Calendar ID:
+            </Form.Label>
+            <Col xs="3" sm="2">
+              <Form.Control
+                className={styles.inputBar}
+                value={calendarID}
+                onChange={(e) => setCalendarID(e.target.value)}
+                onBlur={() =>
+                  (document.documentElement.style.fontSize = `${interfaceSize}%`)
+                }
+              />
+            </Col>
+          </Form.Group>
+          <p>
+            To get calendar ID: open{" "}
+            <a
+							href="https://www.imperial.ac.uk/timetabling/mytimetable/"
+							rel="noopener noreferrer"
+              target="_blank"
+            >
+              this
+            </a>
+            , and enter your long email.
+          </p>
+          <p>
+            You should receive an email containing:
+            webcal://www.imperial.ac.uk/timetabling/mytimetable/ical/XXXXXXXXXXXXXXX/schedule.ics
+          </p>
+          <p>Enter XXXXXXXXXXXXXXX into the box above. </p>
         </Form>
       </Modal.Body>
     </Modal>

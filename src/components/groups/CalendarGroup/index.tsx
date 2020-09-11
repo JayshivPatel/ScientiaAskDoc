@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { eventTypes } from "components/cards/SideBarCard";
 import SideBarCardGroup from "../SideBarCardGroup";
 import { addDays } from "utils/functions";
+import useLocalStorage from "react-use-localstorage";
 
 type CalendarEvent = {
   type: string;
@@ -12,13 +13,14 @@ type CalendarEvent = {
 
 const CalendarGroup: React.FC = () => {
   let [events, setEvents] = useState<CalendarEvent[]>([]);
-  let id = "XK9FBCJB1848503";
+  const [calendarID] = useLocalStorage("calendarID", "");
+
   useEffect(() => {
     const timeRange: any = {};
     timeRange.intervalStart = new Date("2020-03-13");
     timeRange.intervalEnd = addDays(timeRange.intervalStart, 1);
 
-    let url: URL = new URL(`http://localhost:4000/${id}`);
+    let url: URL = new URL(`http://localhost:4000/${calendarID}`);
     Object.keys(timeRange).forEach((key) =>
       url.searchParams.append(key, timeRange[key])
     );
@@ -37,16 +39,11 @@ const CalendarGroup: React.FC = () => {
         if (data) {
           let currEvents: CalendarEvent[] = [];
           data.forEach((element: any) => {
-            const timeStart = new Date(element.start).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            });
-            const timeEnd = new Date(element.end).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            });
+            const timeStart = toShortTimeString(element.start);
+            const timeEnd = toShortTimeString(element.end);
+            console.log(element.catorgory);
             currEvents.push({
-              type: "Lecture",
+              type: element.catorgory,
               title: element.summary,
               subtitle: `${timeStart} - ${timeEnd}`,
               content: element.location,
@@ -55,7 +52,7 @@ const CalendarGroup: React.FC = () => {
           setEvents(currEvents);
         }
       });
-  }, [setEvents]);
+  }, [setEvents, calendarID]);
 
   return (
     <SideBarCardGroup
@@ -66,7 +63,7 @@ const CalendarGroup: React.FC = () => {
           case "Lecture":
             colorType = eventTypes.BlueCard;
             break;
-          case "Labs":
+          case "Laboratory Session":
             colorType = eventTypes.RedCard;
             break;
           default:
@@ -84,4 +81,10 @@ const CalendarGroup: React.FC = () => {
   );
 };
 
+function toShortTimeString(date: Date) {
+  return new Date(date).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
 export default CalendarGroup;
