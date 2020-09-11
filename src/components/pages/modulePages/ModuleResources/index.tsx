@@ -25,7 +25,7 @@ export interface ResourcesProps {
   moduleID: string;
   scope?: string;
   view: string;
-  can_manage: boolean;
+  canManage: boolean;
 }
 
 export interface ResourceState {
@@ -46,7 +46,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     this.state = {
       error: null,
       isLoaded: false,
-      staffView: this.props.can_manage,
+      staffView: this.props.canManage,
       resources: [],
       searchText: "",
     };
@@ -88,7 +88,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
         } as Resource);
       }
 
-      resourceArr = resourceArr.sort((a, b) => (a.index > b.index ? 1 : -1));
+      resourceArr = resourceArr.sort((a, b) => a.index - b.index);
       if (resourceArr.length === 0) {
         this.setState({
           error: this.state.staffView
@@ -301,7 +301,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             prompts={this.getSearchPrompts()}
           />
           </div>
-          {this.props.can_manage && (
+          {this.props.canManage && (
             <Button
               onClick={() =>
                 this.setState({ staffView: !this.state.staffView })

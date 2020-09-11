@@ -84,12 +84,12 @@ class ModuleOverview extends React.Component<
           tags: resource.tags,
           folder: resource.category,
           id: resource.id,
-          downloads: resource.downloads,
           path: resource.path,
+          index: resource.index,
         } as Resource);
       }
-
-      let allAvailableWeeks = tags(this.state.resources)
+			resourceArr = resourceArr.sort((a, b) => a.index - b.index);
+      let allAvailableWeeks = tags(resourceArr)
         .map((t) => t.toLowerCase())
         .filter((t) => t.startsWith("week"));
 

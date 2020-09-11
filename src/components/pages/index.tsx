@@ -57,11 +57,11 @@ const StandardView: React.FC<StandardViewProps> = ({
   // const modules : Module[] = modulesList;
   // useEffect(() => {
   //   const onSuccess = (data: { [k: string]: any }[]) => {
-  //     setModules(data.map(({ title, code, has_materials, can_manage }) => ({
+  //     setModules(data.map(({ title, code, hasMaterials, canManage }) => ({
   //       title,
   //       code: `CO${code}`,
-  //       can_manage,
-  //       has_materials,
+  //       canManage,
+  //       hasMaterials,
   //       // Hardcoded stuff, we don't have this data currently
   //       terms: [Term.AUTUMN],
   //       progressPercent: Math.floor(Math.random() * 100),
@@ -131,9 +131,9 @@ const StandardView: React.FC<StandardViewProps> = ({
           <Route
             path="/modules/:id/resources/:scope?"
             render={(props) => {
-              let can_manage =
+              let canManage =
                 modules.find((module) => module.code === props.match.params.id)
-                  ?.can_manage || false;
+                  ?.canManage || false;
               return (
                 <Container className={classNames("pageContainer")}>
                   <ModuleResources
@@ -141,7 +141,7 @@ const StandardView: React.FC<StandardViewProps> = ({
                     moduleID={props.match.params.id}
                     scope={props.match.params.scope}
                     view={fileView}
-                    can_manage={can_manage}
+                    canManage={canManage}
                   />
                 </Container>
               );

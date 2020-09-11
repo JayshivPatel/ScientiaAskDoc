@@ -36,72 +36,11 @@
   border-bottom-right-radius: 0.5rem;
 }
 
-.interfaceGroup {
-  border-bottom: 1px solid var(--border-color);
-  padding: 0rem 0.5rem;
-}
-
 $button-background: transparentize($gray-200, 0.75);
 $button-border: transparentize($gray-300, 1);
 
-.inputBar {
-  border-radius: 0.5rem;
-  border-width: 1px;
-  border-color: var(--input-bar);
-
-  background-color: var(--input-bar);
-  color: var(--primary-text-color);
-
-  text-align: right;
-
-  transition: 0.2s background-color;
-  -webkit-transition: 0.2s background-color;
-  -moz-transition: 0.2s back-ground-color;
-}
-
-.inputBar:focus {
-  box-shadow: none !important;
-  border-color: var(--border-color-focus);
-  background-color: var(--input-bar-focus);
-  color: var(--primary-text-color);
-}
-
 .settingsModal {
   z-index: 10000;
-}
-
-.modalToggleButton {
-  background-color: var(--primary-button);
-  color: var(--primary-button-text);
-
-  border-width: 0px;
-  border-radius: 8px;
-
-  margin-left: 20px;
-  justify-content: space-between;
-  height: 2.25rem;
-  font-size: 1.05rem;
-
-  transition: 0.2s background-color;
-  -webkit-transition: 0.2s background-color;
-  -moz-transition: 0.2s background-color;
-}
-
-.modalToggleButton:active,
-.modalToggleButton:global(.active) {
-  background: var(--primary-button-active) !important;
-  color: var(--primary-button-text-active) !important;
-  font-weight: 500;
-  text-align: left;
-  border-width: 0rem;
-  height: 2.25rem;
-  line-height: 1.375rem;
-}
-
-.modalToggleButton:hover {
-  background-color: var(--primary-button-hover);
-  color: var(--primary-button-text);
-  box-shadow: none !important;
 }
 
 .dontBreakOut {
