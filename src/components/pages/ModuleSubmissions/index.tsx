@@ -23,7 +23,13 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID, onEventClick }) => {
         onSearchTextChange={setSearchText}
         prompts={getSearchPrompts()}
       />
-      <Row style={{ marginTop: "1.25rem" }}>
+      <Row
+        style={{
+          marginTop: "1.25rem",
+          marginLeft: "-0.625rem",
+          marginRight: "-0.625rem",
+        }}
+      >
         {eventsData
           .filter(({ moduleCode }) => moduleCode === moduleID)
           .filter((e) => includeInSearchResult(e, searchText))
@@ -37,7 +43,11 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID, onEventClick }) => {
               xl={4}
               key={e.id}
               onClick={() => onEventClick(e)}
-              style={{ marginTop: "1.25rem" }}
+              style={{
+                marginTop: "1.25rem",
+                paddingLeft: "0.625rem",
+                paddingRight: "0.625rem",
+              }}
             >
               <ModuleEventCard event={e} activeDay={activeDay} />
             </Col>

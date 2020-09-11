@@ -16,6 +16,8 @@ code {
     monospace;
 }
 
+
+
 :root {
   --background-color: #{$white};
   --secondary-background-color: #{$gray-200};
@@ -62,7 +64,7 @@ code {
 	
 	--inverted-button: #{black};
   --inverted-button-hover: #{$gray-900};
-  --inverted-button-active: #{$gray-800};
+  --inverted-button-active: #{$gray-200};
 	--inverted-button-text: #{white};
 	
   --image-invert: 0%;
@@ -134,9 +136,9 @@ code {
   --tertiary-button-text: #{$gray-600};
 	--tertiary-button-text-hover: #{$gray-500};
 	
-	--inverted-button: #{$gray-400};
+	--inverted-button: #{$white};
   --inverted-button-hover: #{$gray-500};
-  --inverted-button-active: #{$gray-600};
+  --inverted-button-active: #{$gray-800};
 	--inverted-button-text: #{black};
 
   --input-bar: #{$gray-800};

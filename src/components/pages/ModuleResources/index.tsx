@@ -16,6 +16,10 @@ import { openResource, tags, folders, filterInvisibleResources } from "./utils";
 import { Resource } from "constants/types";
 import { titleCase } from "utils/functions";
 import Button from "react-bootstrap/esm/Button";
+import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import IconButton from "components/atoms/IconButton";
+import styles from "./style.module.scss";
 
 export interface ResourcesProps {
   year: string;
@@ -88,10 +92,9 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       resourceArr = resourceArr.sort((a, b) => (a.index > b.index ? 1 : -1));
       if (resourceArr.length === 0) {
         this.setState({
-          error:
-            this.state.staffView
-              ? undefined
-              : "No resource has been uploaded. ",
+          error: this.state.staffView
+            ? undefined
+            : "No resource has been uploaded. ",
         });
       }
       this.setState({ resources: resourceArr, isLoaded: true });
@@ -291,17 +294,27 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     return (
       <>
         <MyBreadcrumbs />
-
-        {this.props.can_manage &&
-        <Button onClick={() => this.setState({ staffView: !this.state.staffView})} block>
-          Switch View
-        </Button>}
-
-        <SearchBox
-          searchText={this.state.searchText}
-          onSearchTextChange={(text) => this.setState({ searchText: text })}
-          prompts={this.getSearchPrompts()}
-        />
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ width: "100%" }}>
+          <SearchBox
+            searchText={this.state.searchText}
+            onSearchTextChange={(text) => this.setState({ searchText: text })}
+            prompts={this.getSearchPrompts()}
+          />
+          </div>
+          {this.props.can_manage && (
+            <Button
+              onClick={() =>
+                this.setState({ staffView: !this.state.staffView })
+              }
+              variant="secondary"
+              style={{ marginLeft: "0.625rem"}}
+              className={styles.sectionHeaderButton}
+            >
+              <FontAwesomeIcon icon={faExchangeAlt} />
+            </Button>
+          )}
+        </div>
 
         <LoadingScreen
           error={this.state.error}

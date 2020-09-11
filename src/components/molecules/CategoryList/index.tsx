@@ -76,7 +76,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
         setShowMenu={setShowMenus && setShowMenus(id)}
         icon={icon}
         tags={tags}
-        downloads={(type === "link" || type === "video") ? undefined : downloads}
+        downloads={undefined}
         invisible={visible_after.getTime() - Date.now() > 0}
         title={title}
         resourceActions={resourceActions ? resourceActions(id, title) : null}
