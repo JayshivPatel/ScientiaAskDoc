@@ -47,29 +47,35 @@ const CalendarGroup: React.FC = () => {
       });
   }, [setEvents, calendarID]);
 
+  let eventsData = events.map(({ type, title, subtitle, content }) => {
+    let colorType: eventTypes;
+    switch (type) {
+      case "Lecture":
+        colorType = eventTypes.BlueCard;
+        break;
+      case "Laboratory Session":
+        colorType = eventTypes.RedCard;
+        break;
+      default:
+        colorType = eventTypes.GreenCard;
+        break;
+    }
+    return {
+      title,
+      subtitle,
+      content,
+      type: colorType,
+    };
+	});
+	
   return (
     <SideBarCardGroup
       title="Today"
-      events={events.map(({ type, title, subtitle, content }) => {
-        let colorType: eventTypes;
-        switch (type) {
-          case "Lecture":
-            colorType = eventTypes.BlueCard;
-            break;
-          case "Laboratory Session":
-            colorType = eventTypes.RedCard;
-            break;
-          default:
-            colorType = eventTypes.GreenCard;
-            break;
-        }
-        return {
-          title,
-          subtitle,
-          content,
-          type: colorType,
-        };
-      })}
+      events={
+        eventsData.length === 0
+          ? [{ title: "No Events", type: eventTypes.BlueCard }]
+          : eventsData
+      }
     />
   );
 };

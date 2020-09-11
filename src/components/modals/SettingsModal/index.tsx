@@ -5,6 +5,8 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
+
 import useLocalStorage from "react-use-localstorage";
 import styles from "./style.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -165,10 +167,10 @@ const SettingsModal: React.FC<Props> = ({
             </Col>
           </Form.Group>
           <Form.Group as={Row}>
-            <Form.Label column xs="9" sm="10">
-              Calendar ID:
+            <Form.Label column xs="8" sm="9" md="10">
+              Calendar ID
             </Form.Label>
-            <Col xs="3" sm="2">
+            <Col xs="4" sm="3" md="2">
               <Form.Control
                 className={styles.inputBar}
                 value={calendarID}
@@ -179,22 +181,19 @@ const SettingsModal: React.FC<Props> = ({
               />
             </Col>
           </Form.Group>
-          <p>
-            To get calendar ID: open{" "}
-            <a
-							href="https://www.imperial.ac.uk/timetabling/mytimetable/"
-							rel="noopener noreferrer"
+          <Alert variant="primary" className={styles.dontBreakOut}>
+            To get <code>CALENDAR_ID</code>: open{" "}
+            <Alert.Link
+              href="https://www.imperial.ac.uk/timetabling/mytimetable/"
               target="_blank"
             >
               this
-            </a>
-            , and enter your long email.
-          </p>
-          <p>
-            You should receive an email containing:
-            webcal://www.imperial.ac.uk/timetabling/mytimetable/ical/XXXXXXXXXXXXXXX/schedule.ics
-          </p>
-          <p>Enter XXXXXXXXXXXXXXX into the box above. </p>
+            </Alert.Link>
+            , and enter your long email. You should receive an email containing:
+            <br/>
+              webcal://www.imperial.ac.uk/timetabling/mytimetable/ical/
+              <code>CALENDAR_ID</code>/schedule.ics
+          </Alert>
         </Form>
       </Modal.Body>
     </Modal>

@@ -88,6 +88,16 @@ class ModuleOverview extends React.Component<
           path: resource.path,
         } as Resource);
       }
+
+      let allAvailableWeeks = tags(this.state.resources)
+        .map((t) => t.toLowerCase())
+        .filter((t) => t.startsWith("week"));
+
+      if (allAvailableWeeks.length === 0) {
+        this.setState({
+          error: "No resources available here. ",
+        });
+      }
       this.setState({ resources: resourceArr, isLoaded: true });
     };
 
