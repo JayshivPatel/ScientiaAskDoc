@@ -197,6 +197,7 @@ const StaffView: React.FC<StaffViewProps> = ({
 						heading={title}
 					/>
 					<CategoryList
+						key={`${searchText}-${id}`}
 						categoryItems={filesContent.filter(res => res.folder === title)}
 						resourceActions={resourceActions}
 						showMenus={showMenus}
