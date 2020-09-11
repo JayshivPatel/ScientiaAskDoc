@@ -150,7 +150,6 @@ const StaffView: React.FC<StaffViewProps> = ({
 
   return (
     <>
-<<<<<<< HEAD
       <Row style={{ marginTop: "0.625rem" }}>
         <Col style={{paddingRight: "0.3125rem"}}>
           <Button onClick={() => setModal("upload")} block>

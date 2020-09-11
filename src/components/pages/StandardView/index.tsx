@@ -8,6 +8,7 @@ import LoadingScreen from "components/molecules/LoadingScreen";
 import { request } from "utils/api";
 import { api, methods } from "constants/routes";
 import { modulesList } from "../ModuleList/list";
+
 const Timeline = React.lazy(() => import("components/pages/Timeline"));
 const ModuleDashboard = React.lazy(
   () => import("components/pages/ModuleDashboard")
@@ -27,6 +28,7 @@ const ExamPastPapers = React.lazy(() => import("../Exams/PastPapers"));
 const ModuleOverview = React.lazy(() => import("../ModuleOverview"));
 const LeftBar = React.lazy(() => import("components/organisms/LeftBar"));
 const ModuleSubmissions = React.lazy(() => import("../ModuleSubmissions"));
+
 interface StandardViewProps {
   toggledLeft: boolean;
   toggledRight: boolean;
@@ -38,6 +40,7 @@ interface StandardViewProps {
   onEventClick: (e?: TimelineEvent) => void;
   year: string;
 }
+
 const StandardView: React.FC<StandardViewProps> = ({
   toggledLeft,
   toggledRight,
@@ -52,27 +55,30 @@ const StandardView: React.FC<StandardViewProps> = ({
   const [modulesFilter, setModulesFilter] = useState("In Progress");
   const [timelineTerm, setTimelineTerm] = useState(Term.AUTUMN);
   const [modules, setModules] = useState<Module[]>(modulesList);
-  useEffect(() => {
-    const onSuccess = (data: { [k: string]: any }[]) => {
-      setModules(data.map(({ title, code, has_materials, can_manage }) => ({
-        title,
-        code: `CO${code}`,
-        can_manage,
-        has_materials,
-        // Hardcoded stuff, we don't have this data currently
-        terms: [Term.AUTUMN],
-        progressPercent: Math.floor(Math.random() * 100),
-        progressStatus: ProgressStatus.IN_PROGRESS,
-        content: "",
-      })))
-    };
-   request({
-     url: api.MATERIALS_COURSES(year),
-     method: methods.GET,
-     onSuccess: onSuccess,
-     onError: (message) => console.log(`Failed to obtain modules: ${message}`),
-   });
-  }, [year]);
+	// const modules : Module[] = modulesList;
+  // useEffect(() => {
+  //   const onSuccess = (data: { [k: string]: any }[]) => {
+  //     setModules(data.map(({ title, code, has_materials, can_manage }) => ({
+  //       title,
+  //       code: `CO${code}`,
+  //       can_manage,
+  //       has_materials,
+  //       // Hardcoded stuff, we don't have this data currently
+  //       terms: [Term.AUTUMN],
+  //       progressPercent: Math.floor(Math.random() * 100),
+  //       progressStatus: ProgressStatus.IN_PROGRESS,
+  //       content: "",
+  //     })))
+  //   };
+
+  //  request({
+  //    url: api.MATERIALS_COURSES(year),
+  //    method: methods.GET,
+  //    onSuccess: onSuccess,
+  //    onError: (message) => console.log(`Failed to obtain modules: ${message}`),
+  //  });
+  // }, [year]);
+
   return (
     <div
       id="wrapper"
@@ -92,17 +98,20 @@ const StandardView: React.FC<StandardViewProps> = ({
         />
         <RightBar onSettingsClick={onSettingsClick} />
         <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
+
         <Switch>
           <Route path="/dashboard">
             <Container className={classNames("pageContainer")}>
               <Dashboard />
             </Container>
           </Route>
+
           <Route exact path="/modules">
             <Container className={classNames("pageContainer")}>
               <ModuleList modules={modules} modulesFilter={modulesFilter}/>
             </Container>
           </Route>
+
           <Route
             path="/modules/:id/dashboard"
             render={(props) => (
@@ -111,6 +120,7 @@ const StandardView: React.FC<StandardViewProps> = ({
               </Container>
             )}
           />
+
           <Route
             path="/modules/:id/overview"
             render={(props) => (
@@ -119,6 +129,7 @@ const StandardView: React.FC<StandardViewProps> = ({
               </Container>
             )}
           />
+
           <Route
             path="/modules/:id/resources/:scope?"
             render={(props) => {
@@ -136,6 +147,7 @@ const StandardView: React.FC<StandardViewProps> = ({
               );
             }}
           />
+
           <Route
             path="/modules/:id/submissions"
             render={(props) => (
@@ -147,11 +159,13 @@ const StandardView: React.FC<StandardViewProps> = ({
               </Container>
             )}
           />
+
           <Route path="/modules/:id/feedback">
             <Container className={classNames("pageContainer")}>
               <ModuleFeedback />
             </Container>
           </Route>
+
           <Route path="/timeline">
             <Timeline
               initSideBar={initTimelineSideBar}
@@ -162,26 +176,31 @@ const StandardView: React.FC<StandardViewProps> = ({
               modules={modules}
             />
           </Route>
+
           <Route path="/exams/overview">
             <Container className={classNames("pageContainer")}>
               <Exams />
             </Container>
           </Route>
+
           <Route path="/exams/timetable">
             <Container className={classNames("pageContainer")}>
               <ExamTimetable />
             </Container>
           </Route>
+
           <Route path="/exams/grading">
             <Container className={classNames("pageContainer")}>
               <ExamGrading />
             </Container>
           </Route>
+
           <Route path="/exams/rubrics">
             <Container className={classNames("pageContainer")}>
               <ExamRubrics />
             </Container>
           </Route>
+
           <Route
             path="/exams/papers/:scope?"
             render={(props) => (
@@ -193,6 +212,7 @@ const StandardView: React.FC<StandardViewProps> = ({
               </Container>
             )}
           />
+
           <Route
             path="/modules/:id"
             render={(props) => (
@@ -209,4 +229,5 @@ const StandardView: React.FC<StandardViewProps> = ({
     </div>
   );
 };
+
 export default StandardView;
