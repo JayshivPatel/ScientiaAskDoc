@@ -71,7 +71,7 @@ const CalendarGroup: React.FC = () => {
   return (
     <SideBarCardGroup
 			title="Today"
-			maxHeight="calc(100vh - 25.5rem)"
+			maxHeight={`calc(${window.innerHeight}px - 25rem)`}
       events={
         eventsData.length === 0
           ? [{ title: "No Events", type: eventTypes.BlueCard }]
