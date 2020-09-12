@@ -12,7 +12,7 @@ const CalendarGroup: React.FC = () => {
 
   useEffect(() => {
     const timeRange: any = {};
-    timeRange.intervalStart = new Date("2020-03-13");
+    timeRange.intervalStart = new Date("2020-03-09");
     timeRange.intervalEnd = addDays(timeRange.intervalStart, 1);
 
     let url: URL = new URL(api.CALENDAR_EVENTS(calendarID));
@@ -66,14 +66,16 @@ const CalendarGroup: React.FC = () => {
       content,
       type: colorType,
     };
-	});
-	
+  });
+
   return (
     <SideBarCardGroup
-			title="Today"
-			maxHeight={`calc(${window.innerHeight}px - 25rem)`}
+      title="Today"
+      maxHeight={`calc(${window.innerHeight}px - 25rem)`}
       events={
-        eventsData.length === 0
+        calendarID === ""
+          ? [{ title: "Not Configured", type: eventTypes.BlueCard }]
+          : eventsData.length === 0
           ? [{ title: "No Events", type: eventTypes.BlueCard }]
           : eventsData
       }
