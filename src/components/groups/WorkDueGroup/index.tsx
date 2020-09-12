@@ -65,7 +65,8 @@ const WorkDueGroup: React.FC<WorkDueGroupProps> = ({
   return (
     <SideBarCardGroup
       title="Work Due"
-      onCardClick={handleEventClick}
+			onCardClick={handleEventClick}
+			maxHeight="calc(100vh - 35rem)"
       events={
         workDueList.length === 0
           ? [{ title: "No Work Due", type: eventTypes.BlueCard }]

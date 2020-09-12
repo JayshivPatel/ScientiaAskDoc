@@ -6,19 +6,22 @@ import SideBarCard, { SideBarCardProps } from "components/cards/SideBarCard";
 export interface SideBarCardGroupProps {
   events: SideBarCardProps[];
   title: string;
-  onCardClick?: (id?: number) => void;
+	onCardClick?: (id?: number) => void;
+	maxHeight?: string;
 }
 
 const SideBarCardGroup: React.FC<SideBarCardGroupProps> = ({
   events,
   title,
-  onCardClick,
+	onCardClick,
+	maxHeight,
 }: SideBarCardGroupProps) => {
   return (
     <div>
       <h1 className={styles.sideBarCardGroupHeading}>{title}</h1>
       <div
-        className={classNames("btn-group-vertical", styles.sideBarCardGroup)}
+				className={classNames(styles.sideBarCardGroup)}
+				style={{maxHeight: maxHeight}}
         role="group"
       >
         {events.map(({ type, title, subtitle, content, id }) => (
