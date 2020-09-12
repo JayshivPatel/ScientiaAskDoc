@@ -12,6 +12,7 @@ export function addDays(date: Date, days: number) {
   return result;
 }
 
+// get nearest whole number days since 1970-01-01 to compare dates in the british timezone
 export function toDayCount(date: Date) {
   return Math.floor(date.getTime() / 86400000);
 }
