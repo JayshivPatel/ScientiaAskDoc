@@ -13,8 +13,9 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import SettingsModal from "./modals/SettingsModal";
 import EventModal from "./modals/EventModal";
-import { TimelineEvent } from "constants/types";
+import { TimelineEvent, CalendarEvent } from "constants/types";
 import authenticationService from "../utils/auth";
+import CalendarModal from "./modals/CalendarModal";
 
 type AppState = {
   toggledLeft: boolean;
@@ -22,7 +23,9 @@ type AppState = {
   showSettings: boolean;
   fileView: string;
   showEventModal: boolean;
+  showCalendarModal: boolean;
   activeModalEvent?: TimelineEvent;
+  activeCalendarEvent?: CalendarEvent;
   year: string;
 };
 
@@ -37,6 +40,7 @@ class App extends React.Component<{}, AppState> {
       toggledRight: false,
       showSettings: false,
       showEventModal: false,
+      showCalendarModal: false,
       activeModalEvent: undefined,
       fileView: localStorage.getItem("fileView") || "card",
       year: "2021",
@@ -118,6 +122,10 @@ class App extends React.Component<{}, AppState> {
     this.setState({ showEventModal: true, activeModalEvent: e });
   }
 
+  showCalendarModal(e?: CalendarEvent) {
+    this.setState({ showCalendarModal: true, activeCalendarEvent: e });
+  }
+
   render() {
     const horizontalBarPages = [
       { name: "Dashboard", path: "/dashboard", icon: faHome },
@@ -139,6 +147,12 @@ class App extends React.Component<{}, AppState> {
           setYear={(year: string) => this.setState({ year: year })}
         />
 
+        <CalendarModal
+          show={this.state.showCalendarModal}
+          onHide={() => this.setState({ showCalendarModal: false })}
+          event={this.state.activeCalendarEvent}
+        />
+
         <EventModal
           show={this.state.showEventModal}
           onHide={() => this.setState({ showEventModal: false })}
@@ -147,8 +161,8 @@ class App extends React.Component<{}, AppState> {
         />
 
         <Switch>
-					<Route path="/signin" component={SignIn}/>
-					
+          <Route path="/signin" component={SignIn} />
+
           <Route
             path="/"
             render={(props) =>
@@ -171,6 +185,9 @@ class App extends React.Component<{}, AppState> {
                       this.setState({ showSettings: true })
                     }
                     onEventClick={(e?: TimelineEvent) => this.showEventModal(e)}
+                    onCalendarClick={(e?: CalendarEvent) =>
+                      this.showCalendarModal(e)
+                    }
                     toggledLeft={this.state.toggledLeft}
                     toggledRight={this.state.toggledRight}
                     initTimelineSideBar={() => {

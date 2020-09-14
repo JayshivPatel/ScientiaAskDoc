@@ -17,25 +17,25 @@ interface Props {
 const ModuleEventCard: React.FC<Props> = ({ event, activeDay }) => {
   if (!event) return null;
   const timeLeft = toDayCount(event.endDate) - toDayCount(activeDay);
-  let assessmentStyle = styles.unassessedSubmission;
+  let assessmentStyle = styles.blueCard;
   let icon = undefined;
   let borderColour = "transparent";
   let dateElements: string[] = ["End: ", event.endDate.toLocaleDateString()];
   switch (event.assessment) {
     case "required":
-      assessmentStyle = styles.unassessedSubmission;
+      assessmentStyle = styles.blueCard;
       break;
     case "assessed":
-      assessmentStyle = styles.individualAssessed;
+      assessmentStyle = styles.tealCard;
       break;
     case "group":
-      assessmentStyle = styles.groupAssessed;
+      assessmentStyle = styles.redCard;
       break;
     case "unassessed":
       assessmentStyle = styles.unassessed;
       break;
     case "exam":
-      assessmentStyle = styles.writtenExam;
+      assessmentStyle = styles.indigoCard;
       break;
   }
   switch (event.status) {

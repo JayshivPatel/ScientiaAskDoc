@@ -18,8 +18,19 @@ export function toDayCount(date: Date) {
 }
 
 export function openExternal(url: string) {
-  const win = window.open(url, '_blank');
+  const win = window.open(url, "_blank");
   if (win != null) {
     win.focus();
   }
+}
+
+export function toEventDateTime(date: Date) {
+  return (
+    date.toLocaleDateString() +
+    ", " +
+    date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+  );
 }

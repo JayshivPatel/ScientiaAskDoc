@@ -6,7 +6,10 @@ import useLocalStorage from "react-use-localstorage";
 import { api } from "constants/routes";
 import { CalendarEvent } from "constants/types";
 
-const CalendarGroup: React.FC = () => {
+interface Props {
+  onCalendarClick: (e?: CalendarEvent) => void;
+}
+const CalendarGroup: React.FC<Props> = ({ onCalendarClick }) => {
   let [events, setEvents] = useState<CalendarEvent[]>([]);
   const [calendarID] = useLocalStorage("calendarID", "");
 
@@ -31,47 +34,44 @@ const CalendarGroup: React.FC = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          let currEvents: CalendarEvent[] = [];
-          data.sort(sortEvents).forEach((element: any) => {
-            const timeStart = toShortTimeString(element.start);
-            const timeEnd = toShortTimeString(element.end);
-            currEvents.push({
-              type: element.catorgory,
-              title: element.summary,
-              subtitle: `${timeStart} - ${timeEnd}`,
-              content: element.location,
-            });
-          });
-          setEvents(currEvents);
+          data.sort(sortEvents);
+          setEvents(data);
         }
       });
   }, [setEvents, calendarID]);
 
-  let eventsData = events.map(({ type, title, subtitle, content }) => {
-    let colorType: eventTypes;
-    switch (type) {
-      case "Lecture":
-        colorType = eventTypes.BlueCard;
-        break;
-      case "Laboratory Session":
-        colorType = eventTypes.RedCard;
-        break;
-      default:
-        colorType = eventTypes.GreenCard;
-        break;
+  let eventsData = events.map(
+    ({ summary, location, start, end, catorgory }, i) => {
+      const timeStart = toShortTimeString(start);
+      const timeEnd = toShortTimeString(end);
+      let colorType: eventTypes;
+      switch (catorgory) {
+        case "Lecture":
+          colorType = eventTypes.BlueCard;
+          break;
+        case "Laboratory Session":
+          colorType = eventTypes.RedCard;
+          break;
+        default:
+          colorType = eventTypes.GreenCard;
+          break;
+      }
+
+      return {
+        title: summary,
+        subtitle: `${timeStart} - ${timeEnd}`,
+        content: location,
+        type: colorType,
+        id: i,
+      };
     }
-    return {
-      title,
-      subtitle,
-      content,
-      type: colorType,
-    };
-  });
+  );
 
   return (
     <SideBarCardGroup
       title="Today"
       maxHeight={`calc(${window.innerHeight}px - 25rem)`}
+      onCardClick={(id) => onCalendarClick(events[id || 0])}
       events={
         calendarID === ""
           ? [{ title: "Not Configured", type: eventTypes.BlueCard }]

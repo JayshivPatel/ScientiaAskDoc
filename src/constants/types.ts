@@ -55,10 +55,12 @@ export interface TimelineEvent {
 }
 
 export interface CalendarEvent {
-  type: string;
-  title: string;
-  subtitle: string;
-  content: string;
+  summary: string;
+  description: string;
+  location: string;
+  start: Date;
+  end: Date;
+  catorgory: string;
 }
 
 export enum ProgressStatus {

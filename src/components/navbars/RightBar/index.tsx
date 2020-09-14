@@ -5,6 +5,7 @@ import CalendarGroup from "components/groups/CalendarGroup";
 import SideBarTabGroup from "components/groups/SideBarTabGroup";
 import { faCog, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import authenticationService from "utils/auth";
+import { CalendarEvent } from "constants/types";
 
 export interface RightBarState {
   date: Date;
@@ -12,7 +13,8 @@ export interface RightBarState {
 }
 
 export interface RightBarProps {
-  onSettingsClick: (event: React.MouseEvent) => void;
+	onSettingsClick: (event: React.MouseEvent) => void;
+  onCalendarClick: (e?: CalendarEvent) => void;
 }
 
 class RightBar extends React.Component<RightBarProps, RightBarState> {
@@ -70,7 +72,7 @@ class RightBar extends React.Component<RightBarProps, RightBarState> {
         <p className={styles.rightbarStatus}>
           {this.state.date.toLocaleString("en-GB", timeOptions)}
         </p>
-        <CalendarGroup />
+        <CalendarGroup onCalendarClick={this.props.onCalendarClick}/>
         <SideBarTabGroup title="Account" buttons={buttons} />
       </div>
     );

@@ -2,7 +2,7 @@ import React, { useState, Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import "./style.scss";
 import classNames from "classnames";
-import { Term, TimelineEvent, Module } from "constants/types";
+import { Term, TimelineEvent, Module, CalendarEvent } from "constants/types";
 import Container from "react-bootstrap/esm/Container";
 import LoadingScreen from "components/suspense/LoadingScreen";
 // import { request } from "utils/api";
@@ -36,7 +36,8 @@ interface StandardViewProps {
   revertTimelineSideBar: () => void;
   onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
   onSettingsClick: (event: React.MouseEvent) => void;
-  onEventClick: (e?: TimelineEvent) => void;
+	onEventClick: (e?: TimelineEvent) => void;
+  onCalendarClick: (e?: CalendarEvent) => void;
   year: string;
 }
 
@@ -48,7 +49,8 @@ const StandardView: React.FC<StandardViewProps> = ({
   fileView,
   revertTimelineSideBar,
   initTimelineSideBar,
-  onEventClick,
+	onEventClick,
+	onCalendarClick,
   year,
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
@@ -94,7 +96,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         onEventClick={onEventClick}
         year={year}
       />
-      <RightBar onSettingsClick={onSettingsClick} />
+      <RightBar onSettingsClick={onSettingsClick} onCalendarClick={onCalendarClick}/>
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
       <Suspense fallback={<LoadingScreen successful={<></>} />}>
         <Switch>

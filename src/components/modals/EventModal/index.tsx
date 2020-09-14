@@ -13,7 +13,7 @@ import {
 import FileItemRow from "components/rows/FileItemRow";
 import { resourceTypeToIcon } from "components/pages/modulePages/ModuleResources/utils";
 import { TimelineEvent } from "constants/types";
-import { toDayCount } from "utils/functions";
+import { toDayCount, toEventDateTime } from "utils/functions";
 interface Props {
   event?: TimelineEvent;
   show: boolean;
@@ -24,29 +24,29 @@ interface Props {
 const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
   if (!event) return null;
   const timeLeft = toDayCount(event.endDate) - toDayCount(activeDay);
-  let assessmentStyle = styles.unassessedSubmission;
+  let assessmentStyle = styles.blueCard;
   let icon = undefined;
   let borderColour = "transparent";
   let displayText: string;
   switch (event.assessment) {
     case "required":
-      assessmentStyle = styles.unassessedSubmission;
+      assessmentStyle = styles.blueCard;
       displayText = "Unassessed Submission";
       break;
     case "assessed":
-      assessmentStyle = styles.individualAssessed;
+      assessmentStyle = styles.tealCard;
       displayText = "Individual Assessed";
       break;
     case "group":
-      assessmentStyle = styles.groupAssessed;
+      assessmentStyle = styles.redCard;
       displayText = "Group Assessed";
       break;
     case "unassessed":
-      assessmentStyle = styles.unassessed;
+      assessmentStyle = styles.cyanCard;
       displayText = "Unassessed";
       break;
     case "exam":
-      assessmentStyle = styles.writtenExam;
+      assessmentStyle = styles.indigoCard;
       displayText = "Written Exam";
       break;
   }
@@ -108,28 +108,16 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
         <div className={styles.eventTimeInfo}>
           <span className={styles.startDateHeading}>Start:</span>
           <span className={styles.startDate}>
-            {event.startDate.toLocaleDateString() +
-              ", " +
-              event.startDate.toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
+            {toEventDateTime(event.startDate)}
           </span>
           <span className={styles.endDateHeading}>End:</span>
           <span className={styles.endDate}>
-            {event.endDate.toLocaleDateString() +
-              ", " +
-              event.endDate.toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
+            {toEventDateTime(event.endDate)}
           </span>
           {event.status !== "unreleased" && timeLeft >= 0 && (
             <>
               <span className={styles.daysHeading}>Due In:</span>
-              <span className={styles.daysLeft}>
-                {`${timeLeft} days`}
-              </span>
+              <span className={styles.daysLeft}>{`${timeLeft} days`}</span>
             </>
           )}
         </div>

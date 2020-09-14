@@ -213,11 +213,11 @@ $button-border: transparentize($gray-300, 1);
   box-shadow: none !important;
 }
 
-.unassessed,
-.unassessedSubmission,
-.individualAssessed,
-.groupAssessed,
-.writtenExam {
+.cyanCard,
+.blueCard,
+.tealCard,
+.redCard,
+.indigoCard {
   text-transform: capitalize;
   font-weight: 500;
   font-size: 0.9rem;
@@ -225,28 +225,28 @@ $button-border: transparentize($gray-300, 1);
 	padding: 0.25rem 0.5rem;
 }
 
-.unassessedSubmission {
+.blueCard {
   background: var(--blue-background);
   color: var(--blue-text);
   border-color: var(--blue-background);
 }
 
-.individualAssessed {
+.tealCard {
   background: var(--teal-background);
   color: var(--teal-text);
 }
 
-.groupAssessed {
+.redCard {
   background: var(--pink-background);
   color: var(--pink-text);
 }
 
-.unassessed {
+.cyanCard {
   background: var(--cyan-background);
   color: var(--cyan-text);
 }
 
-.writtenExam {
+.indigoCard {
   background: var(--indigo-background);
   color: var(--indigo-text);
 }
