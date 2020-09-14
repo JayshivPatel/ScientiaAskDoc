@@ -54,7 +54,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   year,
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
-  const [timelineTerm, setTimelineTerm] = useState(Term.AUTUMN);
+  const [timelineTerm, setTimelineTerm] = useState<Term>("Autumn");
   const [modules] = useState<Module[]>(modulesList);
   // const modules : Module[] = modulesList;
   // useEffect(() => {

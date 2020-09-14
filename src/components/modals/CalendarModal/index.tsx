@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import styles from "./style.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { TimelineEvent, CalendarEvent } from "constants/types";
+import { CalendarEvent } from "constants/types";
 import { toEventDateTime } from "utils/functions";
 interface Props {
   event?: CalendarEvent;

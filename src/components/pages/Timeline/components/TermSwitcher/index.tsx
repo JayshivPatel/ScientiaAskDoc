@@ -12,29 +12,30 @@ interface Props {
   style?: React.CSSProperties;
 }
 const TermSwitcher: React.FC<Props> = ({ term, setTerm, style }) => {
+	// Only handles 3 main terms, use leftbar for holidays
   return (
     <div style={style} className={styles.timelineTermSwitcher}>
       <ButtonGroup style={{ float: "right" }}>
         <Button
           className={styles.termSwitch}
-          active={term === Term.AUTUMN}
-          onClick={() => setTerm(Term.AUTUMN)}
+          active={term === "Autumn"}
+          onClick={() => setTerm("Autumn")}
           variant="secondary"
         >
           <FontAwesomeIcon icon={faLeaf} fixedWidth />
         </Button>
         <Button
           className={styles.termSwitch}
-          active={term === Term.SPRING}
-          onClick={() => setTerm(Term.SPRING)}
+          active={term === "Spring"}
+          onClick={() => setTerm("Spring")}
           variant="secondary"
         >
           <FontAwesomeIcon icon={faSeedling} fixedWidth />
         </Button>
         <Button
           className={styles.termSwitch}
-          active={term === Term.SUMMER}
-          onClick={() => setTerm(Term.SUMMER)}
+          active={term === "Summer"}
+          onClick={() => setTerm("Summer")}
           variant="secondary"
         >
           <FontAwesomeIcon icon={faSun} fixedWidth />

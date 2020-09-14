@@ -22,8 +22,8 @@ interface TimelineProps {
   revertSideBar: () => void;
   term: Term;
   setTerm: React.Dispatch<React.SetStateAction<Term>>;
-	onEventClick: (e?: TimelineEvent) => void;
-	modules: Module[],
+  onEventClick: (e?: TimelineEvent) => void;
+  modules: Module[];
 }
 
 interface TimelineState {
@@ -180,12 +180,20 @@ function eventsOverlaps(e1: TimelineEvent, e2: TimelineEvent) {
 
 function getTermDates(term: Term): [Date, number] {
   switch (term) {
-    case Term.AUTUMN:
+    case "Autumn":
       return [new Date("2020-10-05"), 11];
-    case Term.SPRING:
+    case "Spring":
       return [new Date("2021-01-11"), 11];
-    case Term.SUMMER:
+    case "Summer":
       return [new Date("2021-04-26"), 9];
+    case "Christmas":
+      return [new Date("2021-12-21"), 3];
+    case "Easter":
+      return [new Date("2021-03-29"), 5];
+    case "Jun-Jul":
+      return [new Date("2021-06-28"), 5];
+    case "Aug-Sept":
+      return [new Date("2021-08-02"), 9];
   }
 }
 

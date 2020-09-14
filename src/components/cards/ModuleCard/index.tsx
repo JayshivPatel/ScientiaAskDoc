@@ -50,14 +50,14 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
           <div className={styles.termIcons}>
             {module.terms.map((term: Term) => {
               switch (term) {
-                case Term.AUTUMN:
-                  return <FontAwesomeIcon icon={faLeaf} key={Term.AUTUMN} />;
-                case Term.SPRING:
+                case "Autumn":
+                  return <FontAwesomeIcon icon={faLeaf} key={"Autumn"} />;
+                case "Spring":
                   return (
-                    <FontAwesomeIcon icon={faSeedling} key={Term.SPRING} />
+                    <FontAwesomeIcon icon={faSeedling} key={"Spring"} />
                   );
-                case Term.SUMMER:
-                  return <FontAwesomeIcon icon={faSun} key={Term.SUMMER} />;
+                case "Summer":
+                  return <FontAwesomeIcon icon={faSun} key={"Summer"} />;
                 default:
                   return "";
               }

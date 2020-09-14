@@ -1,8 +1,11 @@
-export enum Term {
-  AUTUMN,
-  SPRING,
-  SUMMER,
-}
+export type Term =
+  | "Autumn"
+  | "Christmas"
+	| "Summer"
+	| "Easter"
+	| "Spring"
+  | "Jun-Jul"
+  | "Aug-Sept";
 
 export interface Folder {
   title: string;

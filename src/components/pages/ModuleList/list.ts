@@ -1,11 +1,10 @@
-import { ProgressStatus } from "constants/types";
-import { Term } from "constants/types";
+import { ProgressStatus, Module } from "constants/types";
 
-export const modulesList = [
+export const modulesList : Module[] = [
   {
     title: "Introduction to Computer Systems",
     code: "CO112",
-    terms: [Term.AUTUMN],
+    terms: ["Autumn"],
     progressStatus: ProgressStatus.IN_PROGRESS,
     progressPercent: 93,
     content: "",
@@ -13,7 +12,7 @@ export const modulesList = [
   {
     title: "Introduction to Computer Architecture",
     code: "CO113",
-    terms: [Term.SPRING],
+    terms: ["Spring"],
     progressStatus: ProgressStatus.NOT_STARTED,
     progressPercent: 0,
     content: "",
@@ -21,7 +20,7 @@ export const modulesList = [
   {
     title: "Introduction to Databases",
     code: "CO130",
-    terms: [Term.SPRING],
+    terms: ["Spring"],
     progressStatus: ProgressStatus.NOT_STARTED,
     progressPercent: 0,
     content: "",
@@ -29,7 +28,7 @@ export const modulesList = [
   {
     title: "Java",
     code: "CO120.2",
-    terms: [Term.AUTUMN, Term.SPRING, Term.SUMMER],
+    terms: ["Autumn", "Spring", "Summer"],
     progressStatus: ProgressStatus.IN_PROGRESS,
     progressPercent: 20,
     content: "",
@@ -37,7 +36,7 @@ export const modulesList = [
   {
     title: "Introduction to Logic",
     code: "CO140",
-    terms: [Term.AUTUMN],
+    terms: ["Autumn"],
     progressStatus: ProgressStatus.IN_PROGRESS,
     progressPercent: 50,
     content: "",
@@ -45,7 +44,7 @@ export const modulesList = [
   {
     title: "Reasoning About Programs",
     code: "CO141",
-    terms: [Term.SPRING],
+    terms: ["Spring"],
     progressStatus: ProgressStatus.NOT_STARTED,
     progressPercent: 0,
     content: "",
@@ -53,7 +52,7 @@ export const modulesList = [
   {
     title: "Discrete Mathematics",
     code: "CO142",
-    terms: [Term.AUTUMN],
+    terms: ["Autumn"],
     progressStatus: ProgressStatus.IN_PROGRESS,
     progressPercent: 60,
     content: "",
@@ -61,7 +60,7 @@ export const modulesList = [
   {
     title: "Mathematical Methods",
     code: "CO145",
-    terms: [Term.AUTUMN],
+    terms: ["Autumn"],
     progressStatus: ProgressStatus.IN_PROGRESS,
     progressPercent: 45,
     content: "",
@@ -69,7 +68,7 @@ export const modulesList = [
   {
     title: "Graphs and Algorithms",
     code: "CO150",
-    terms: [Term.SPRING],
+    terms: ["Spring"],
     progressStatus: ProgressStatus.NOT_STARTED,
     progressPercent: 0,
     content: "",
