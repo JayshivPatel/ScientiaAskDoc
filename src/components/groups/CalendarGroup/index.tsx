@@ -26,6 +26,7 @@ const CalendarGroup: React.FC<Props> = ({
     Object.keys(timeRange).forEach((key) =>
       url.searchParams.append(key, timeRange[key])
     );
+    // make sure scientia-calendar is running (see README)
     fetch(url.toString(), {
       method: "GET",
       mode: "cors",

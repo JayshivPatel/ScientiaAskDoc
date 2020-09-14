@@ -121,30 +121,22 @@ const SettingsModal: React.FC<Props> = ({
           />
 
           {calendarID === "" ? (
-            <>
-              <Alert variant="primary" className={styles.dontBreakOut}>
-                Open{" "}
-                <Alert.Link
-                  href="https://www.imperial.ac.uk/timetabling/mytimetable/"
-                  target="_blank"
-                >
-                  this link
-                </Alert.Link>
-                , and enter your long email. You should receive an email
-                containing:
-                <br />
-                webcal://www.imperial.ac.uk/timetabling/mytimetable/ical/
-                <code>CALENDAR_ID</code>/schedule.ics
-                <br />
-                Please enter <code>CALENDAR_ID</code> in the box above.
-              </Alert>
-              {process.env.NODE_ENV === "development" ? (
-                <Alert variant="warning" className={styles.dontBreakOut}>
-                  For Developers: make sure scientia-calendar is running (see
-                  README). Remove me in production.
-                </Alert>
-              ) : null}
-            </>
+            <Alert variant="primary" className={styles.dontBreakOut}>
+              Open{" "}
+              <Alert.Link
+                href="https://www.imperial.ac.uk/timetabling/mytimetable/"
+                target="_blank"
+              >
+                this link
+              </Alert.Link>
+              , and enter your long email. You should receive an email
+              containing:
+              <br />
+              webcal://www.imperial.ac.uk/timetabling/mytimetable/ical/
+              <code>CALENDAR_ID</code>/schedule.ics
+              <br />
+              Please enter <code>CALENDAR_ID</code> in the box above.
+            </Alert>
           ) : null}
         </SettingsSection>
       </Modal.Body>
