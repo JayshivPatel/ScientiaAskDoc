@@ -16,6 +16,7 @@ import EventModal from "./modals/EventModal";
 import { TimelineEvent, CalendarEvent } from "constants/types";
 import authenticationService from "../utils/auth";
 import CalendarModal from "./modals/CalendarModal";
+import { TIMELINE_ACTIVE } from "constants/global";
 
 type AppState = {
   toggledLeft: boolean;
@@ -157,7 +158,7 @@ class App extends React.Component<{}, AppState> {
           show={this.state.showEventModal}
           onHide={() => this.setState({ showEventModal: false })}
           event={this.state.activeModalEvent}
-          activeDay={new Date("2020-10-21")}
+          activeDay={TIMELINE_ACTIVE}
         />
 
         <Switch>

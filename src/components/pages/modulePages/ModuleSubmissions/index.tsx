@@ -6,6 +6,7 @@ import MyBreadcrumbs from "components/headings/MyBreadcrumbs";
 import ModuleEventCard from "components/cards/ModuleEventCard";
 import Col from "react-bootstrap/esm/Col";
 import SearchBox from "components/headings/SearchBox";
+import { TIMELINE_ACTIVE } from "constants/global";
 
 interface Props {
   moduleID: string;
@@ -14,7 +15,6 @@ interface Props {
 const ModuleSubmissions: React.FC<Props> = ({ moduleID, onEventClick }) => {
   let [searchText, setSearchText] = useState("");
 
-  const activeDay = new Date("2020-10-21");
   return (
     <>
       <MyBreadcrumbs />
@@ -49,7 +49,7 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID, onEventClick }) => {
                 paddingRight: "0.625rem",
               }}
             >
-              <ModuleEventCard event={e} activeDay={activeDay} />
+              <ModuleEventCard event={e} activeDay={TIMELINE_ACTIVE} />
             </Col>
           ))}
       </Row>

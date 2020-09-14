@@ -11,6 +11,7 @@ import LoadingScreen from "components/suspense/LoadingScreen";
 import { Term, Module, TimelineEvent } from "constants/types";
 import { addDays, toDayCount } from "utils/functions";
 import TimelineMobile from "./components/TimelineMobile";
+import { TIMELINE_ACTIVE } from "constants/global";
 
 export type ModuleTracks = {
   [index: string]: TimelineEvent[][];
@@ -102,7 +103,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 
   render() {
     const [termStart, numWeeks] = getTermDates(this.props.term);
-    const activeDay = new Date("2020-10-21");
+    const activeDay = TIMELINE_ACTIVE;
     const trackHeight = 3.25;
     if (!this.state.isLoaded) {
       return <LoadingScreen successful={<></>} />;

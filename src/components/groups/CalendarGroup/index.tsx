@@ -5,6 +5,7 @@ import { addDays } from "utils/functions";
 import useLocalStorage from "react-use-localstorage";
 import { api } from "constants/routes";
 import { CalendarEvent } from "constants/types";
+import { CALENDAR_ACTIVE } from "constants/global";
 
 interface Props {
   onCalendarClick: (e?: CalendarEvent) => void;
@@ -19,7 +20,7 @@ const CalendarGroup: React.FC<Props> = ({
 
   useEffect(() => {
     const timeRange: any = {};
-    timeRange.intervalStart = new Date("2020-03-09");
+    timeRange.intervalStart = CALENDAR_ACTIVE;
     timeRange.intervalEnd = addDays(timeRange.intervalStart, 1);
 
     let url: URL = new URL(api.CALENDAR_EVENTS(calendarID));
