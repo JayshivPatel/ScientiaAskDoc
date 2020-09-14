@@ -1,0 +1,21 @@
+.inputBar {
+  border-radius: 0.5rem;
+  border-width: 1px;
+  border-color: var(--input-bar);
+
+  background-color: var(--input-bar);
+  color: var(--primary-text-color);
+
+  text-align: right;
+
+  transition: 0.2s background-color;
+  -webkit-transition: 0.2s background-color;
+  -moz-transition: 0.2s back-ground-color;
+}
+
+.inputBar:focus {
+  box-shadow: none !important;
+  border-color: var(--border-color-focus);
+  background-color: var(--input-bar-focus);
+  color: var(--primary-text-color);
+}

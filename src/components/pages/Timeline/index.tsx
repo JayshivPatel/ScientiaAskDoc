@@ -1,14 +1,13 @@
 import React from "react";
-import MyBreadcrumbs from "components/atoms/MyBreadcrumbs";
+import MyBreadcrumbs from "components/headings/MyBreadcrumbs";
 import styles from "./style.module.scss";
 import TermSwitcher from "./components/TermSwitcher";
-import { modulesList } from "../ModuleList/list";
 import WeekRow from "./components/WeekRow";
 import ModuleRows from "./components/ModuleRows";
 import DayIndicatorGrid from "./components/DayIndicatorGrid";
 import EventGrid from "./components/EventGrid";
 import { eventsData } from "./eventsData";
-import LoadingScreen from "components/molecules/LoadingScreen";
+import LoadingScreen from "components/suspense/LoadingScreen";
 import { Term, Module, TimelineEvent } from "constants/types";
 import { addDays, toDayCount } from "utils/functions";
 import TimelineMobile from "./components/TimelineMobile";

@@ -4,8 +4,8 @@ import Row from "react-bootstrap/Row";
 
 import classNames from "classnames";
 
-import ModuleCard from "components/atoms/ModuleCard";
-import Dandruff from "components/molecules/Dandruff";
+import ModuleCard from "components/cards/ModuleCard";
+import Dandruff from "components/headings/Dandruff";
 import { Module } from "constants/types";
 
 export interface ModuleListProps {

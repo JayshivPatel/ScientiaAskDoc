@@ -1,9 +1,11 @@
 const dev = {
-  MATERIALS_URL: `http://${window.location.hostname}:5000`
+	MATERIALS_URL: `http://${window.location.hostname}:5000`,
+	CALENDAR_URL: `http://${window.location.hostname}:4000`
 }
 
 const prod = {
-  MATERIALS_URL: "https://materials.doc.ic.ac.uk",
+	MATERIALS_URL: "https://materials.doc.ic.ac.uk",
+	CALENDAR_URL: "",
 }
 
 const config = process.env.NODE_ENV === "development" ? dev : prod;
@@ -22,5 +24,6 @@ export const api = {
   MATERIALS_RESOURCES_ID: (id:number) => `${config.MATERIALS_URL}/resources/${id}`,
   MATERIALS_RESOURCES_FILE: (id: number) => `${api.MATERIALS_RESOURCES_ID(id)}/file`,
   MATERIALS_ZIPPED: config.MATERIALS_URL + "/resources/zipped",
-  MATERIALS_ZIPPED_SELECTION: config.MATERIALS_URL + "/resources/zipped/selection",
+	MATERIALS_ZIPPED_SELECTION: config.MATERIALS_URL + "/resources/zipped/selection",
+  CALENDAR_EVENTS: (id:string) => `${config.CALENDAR_URL}/${id}`,
 }

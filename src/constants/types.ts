@@ -23,19 +23,19 @@ export interface Resource {
 }
 
 export interface BasicResource {
-	title: string;
+  title: string;
   type: "pdf" | "video" | "file" | "link";
   tags: string[];
   folder: string;
-	id: number;
-	path: string;
+  id: number;
+  path: string;
 }
 
 export interface Module {
   title: string;
   code: string;
-  can_manage?: boolean;
-  has_materials?: boolean;
+  canManage?: boolean;
+  hasMaterials?: boolean;
   terms: Term[];
   progressStatus: ProgressStatus;
   progressPercent: number;
@@ -54,10 +54,17 @@ export interface TimelineEvent {
   endDate: Date;
 }
 
+export interface CalendarEvent {
+  type: string;
+  title: string;
+  subtitle: string;
+  content: string;
+}
+
 export enum ProgressStatus {
   NOT_STARTED = "Not Started",
   IN_PROGRESS = "In Progress",
-  COMPLETED = "Completed"
+  COMPLETED = "Completed",
 }
 
 export type IdBooleanMap = { [key: number]: boolean };

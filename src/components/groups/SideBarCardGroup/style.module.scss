@@ -1,0 +1,78 @@
+@import "assets/scss/custom";
+
+@media (max-width: 62rem) {
+  .sideBarCardGroup {
+    margin-top: 1.25rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+		margin-right: 0 !important;
+    position: relative;
+		width: 15.625rem !important;
+  }
+
+  .sideBarCardGroupHeading {
+    font-size: 1.5rem;
+    color: var(--primary-text-color);
+    text-align: left;
+    margin-top: 1.875rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    position: relative;
+    width: max-content;
+    margin-bottom: 0rem;
+  }
+}
+
+@media (min-width: 62rem) {
+  .sideBarCardGroup {
+    margin-top: 1.25rem;
+    padding-left: 2rem;
+		padding-right: 0.5rem;
+		margin-right: 0 !important;
+    position: relative;
+    width: 14.375rem !important;
+}
+
+  .sideBarCardGroupHeading {
+    font-size: 1.5rem;
+    color: var(--primary-text-color);
+    text-align: left;
+    margin-top: 1.875rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    position: relative;
+    width: max-content;
+    margin-bottom: 0rem;
+  }
+}
+
+.sideBarCardGroup {
+  scrollbar-width: thin;
+  scrollbar-color: var(--background-color) var(--background-color);
+  margin-top: 0.625rem;
+  overflow-y: auto;
+  overflow-x: visible;
+}
+
+.sideBarCardGroup::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.sideBarCardGroup::-webkit-scrollbar-track {
+  background: transparent;
+  margin-left: -1rem;
+}
+
+.sideBarCardGroup::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 0.5rem;
+}
+
+.sideBarCardGroup:hover {
+  scrollbar-color: var(--scrollbar) var(--background-color);
+}
+
+.sideBarCardGroup:hover::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar);
+}

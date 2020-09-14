@@ -1,0 +1,56 @@
+@import "assets/scss/custom";
+@import "assets/scss/global";
+
+@media (min-width: 62rem) {
+  .modal {
+    width: 50%;
+    height: 70%;
+    max-width: none !important;
+    max-height: none !important;
+  }
+}
+
+.modalHeader {
+  padding: 0.5rem 0.5rem;
+  padding-left: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--background-color);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--primary-text-color);
+  border-top-right-radius: 0.5rem !important;
+  border-top-left-radius: 0.5rem !important;
+}
+
+.settingsModal :global(.modal-content) {
+  background-color: var(--background-color);
+  border-radius: 0.5rem;
+}
+
+.modalBody {
+  min-height: 60vh;
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+$button-background: transparentize($gray-200, 0.75);
+$button-border: transparentize($gray-300, 1);
+
+.settingsModal {
+  z-index: 10000;
+}
+
+.dontBreakOut {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
