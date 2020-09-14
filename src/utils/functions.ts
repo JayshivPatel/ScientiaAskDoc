@@ -16,3 +16,10 @@ export function addDays(date: Date, days: number) {
 export function toDayCount(date: Date) {
   return Math.floor(date.getTime() / 86400000);
 }
+
+export function openExternal(url: string) {
+  const win = window.open(url, '_blank');
+  if (win != null) {
+    win.focus();
+  }
+}

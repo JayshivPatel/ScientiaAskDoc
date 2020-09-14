@@ -2,6 +2,7 @@ import React from "react";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import styles from "./style.module.scss";
+import {openExternal} from "utils/functions";
 
 export interface TutorCardProp {
   name: string;
@@ -19,7 +20,8 @@ const TutorCard: React.FC<TutorCardProp> = ({
   return (
     <>
       <Container
-        className={styles.tutorContainer}
+				className={styles.tutorContainer}
+				onClick={() => openExternal(`mailto:${email}`)}
       >
         <Image className={styles.tutorImage} src={image} />
         <div>
