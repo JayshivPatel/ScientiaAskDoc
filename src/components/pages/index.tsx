@@ -35,7 +35,7 @@ interface StandardViewProps {
   initTimelineSideBar: () => void;
   revertTimelineSideBar: () => void;
   onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
-  onSettingsClick: (event: React.MouseEvent) => void;
+  onSettingsClick: (event?: React.MouseEvent) => void;
 	onEventClick: (e?: TimelineEvent) => void;
   onCalendarClick: (e?: CalendarEvent) => void;
   year: string;

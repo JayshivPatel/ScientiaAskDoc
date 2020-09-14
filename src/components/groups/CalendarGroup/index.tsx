@@ -8,8 +8,12 @@ import { CalendarEvent } from "constants/types";
 
 interface Props {
   onCalendarClick: (e?: CalendarEvent) => void;
+  onSettingsClick: (event?: React.MouseEvent<Element, MouseEvent>) => void;
 }
-const CalendarGroup: React.FC<Props> = ({ onCalendarClick }) => {
+const CalendarGroup: React.FC<Props> = ({
+  onCalendarClick,
+  onSettingsClick,
+}) => {
   let [events, setEvents] = useState<CalendarEvent[]>([]);
   const [calendarID] = useLocalStorage("calendarID", "");
 
@@ -71,7 +75,13 @@ const CalendarGroup: React.FC<Props> = ({ onCalendarClick }) => {
     <SideBarCardGroup
       title="Today"
       maxHeight={`calc(${window.innerHeight}px - 25rem)`}
-      onCardClick={(id) => onCalendarClick(events[id || 0])}
+      onCardClick={(id) => {
+        if (id !== undefined) {
+          onCalendarClick(events[id]);
+        } else if (calendarID === "") {
+          onSettingsClick();
+        }
+      }}
       events={
         calendarID === ""
           ? [{ title: "Not Configured", type: eventTypes.BlueCard }]

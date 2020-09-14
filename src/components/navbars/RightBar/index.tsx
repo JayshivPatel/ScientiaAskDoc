@@ -13,7 +13,7 @@ export interface RightBarState {
 }
 
 export interface RightBarProps {
-	onSettingsClick: (event: React.MouseEvent) => void;
+	onSettingsClick: (event?: React.MouseEvent) => void;
   onCalendarClick: (e?: CalendarEvent) => void;
 }
 
@@ -72,7 +72,7 @@ class RightBar extends React.Component<RightBarProps, RightBarState> {
         <p className={styles.rightbarStatus}>
           {this.state.date.toLocaleString("en-GB", timeOptions)}
         </p>
-        <CalendarGroup onCalendarClick={this.props.onCalendarClick}/>
+        <CalendarGroup onCalendarClick={this.props.onCalendarClick} onSettingsClick={this.props.onSettingsClick} />
         <SideBarTabGroup title="Account" buttons={buttons} />
       </div>
     );
