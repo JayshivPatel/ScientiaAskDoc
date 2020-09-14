@@ -13,7 +13,7 @@
 .eventTimeInfo {
   margin-top: 1.875rem;
   display: grid;
-  grid-template-areas: "startHeading start" "endHeading end" "daysHeading daysLeft";
+  grid-template-areas: "startHeading start" "endHeading end" "locationHeading location" "descriptionHeading description";
   width: 90%;
 }
 
@@ -27,13 +27,23 @@
   font-weight: 500;
 }
 
-.daysHeading {
-  grid-area: daysHeading;
+.descriptionHeading {
+  grid-area: descriptionHeading;
   font-weight: 500;
 }
 
-.daysLeft {
-  grid-area: daysLeft;
+.description {
+  grid-area: description;
+  padding-left: 0.625rem;
+}
+
+.locationHeading {
+  grid-area: locationHeading;
+  font-weight: 500;
+}
+
+.location {
+  grid-area: location;
   padding-left: 0.625rem;
 }
 

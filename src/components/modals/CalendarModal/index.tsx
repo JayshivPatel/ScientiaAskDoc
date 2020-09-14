@@ -50,6 +50,8 @@ const CalendarModal: React.FC<Props> = ({ event, show, onHide }) => {
           <div className={assessmentStyle}>{event.catorgory}</div>
         </div>
         <div className={styles.eventTimeInfo}>
+          <span className={styles.locationHeading}>Location:</span>
+          <span className={styles.location}>{event.location}</span>
           <span className={styles.startDateHeading}>Start:</span>
           <span className={styles.startDate}>
             {toEventDateTime(new Date(event.start))}
@@ -58,8 +60,18 @@ const CalendarModal: React.FC<Props> = ({ event, show, onHide }) => {
           <span className={styles.endDate}>
             {toEventDateTime(new Date(event.end))}
           </span>
-          <span className={styles.daysHeading}>Description:</span>
-          <span className={styles.daysLeft}>{event.description}</span>
+          <span className={styles.descriptionHeading}>Description:</span>
+          <span className={styles.description}>
+            {event.description
+              .split("\n")
+              .filter((s) => s !== "")
+              .map((string) => (
+                <>
+                  {string}
+                  <br />
+                </>
+              ))}
+          </span>
         </div>
       </Modal.Body>
     </Modal>
