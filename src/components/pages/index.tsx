@@ -1,155 +1,166 @@
-import React, { useState, Suspense } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-import "./style.scss";
-import classNames from "classnames";
-import { Term, TimelineEvent, Module, CalendarEvent } from "constants/types";
-import Container from "react-bootstrap/esm/Container";
-import LoadingScreen from "components/suspense/LoadingScreen";
+import React, { useState, Suspense } from "react"
+import { Route, Switch, Redirect } from "react-router-dom"
+import "./style.scss"
+import classNames from "classnames"
+import { Term, TimelineEvent, Module, CalendarEvent } from "constants/types"
+import Container from "react-bootstrap/esm/Container"
+import LoadingScreen from "components/suspense/LoadingScreen"
 // import { request } from "utils/api";
 // import { api, methods } from "constants/routes";
-import { modulesList } from "./ModuleList/list";
-import RightBar from "components/navbars/RightBar";
-import LeftBar from "components/navbars/LeftBar";
+import { modulesList } from "./ModuleList/list"
+import RightBar from "components/navbars/RightBar"
+import LeftBar from "components/navbars/LeftBar"
 
-const Timeline = React.lazy(() => import("components/pages/Timeline"));
-const ModuleDashboard = React.lazy(
-  () => import("components/pages/modulePages/ModuleDashboard")
-);
-const Dashboard = React.lazy(() => import("components/pages/Dashboard"));
-const ModuleList = React.lazy(() => import("./ModuleList"));
-const ModuleResources = React.lazy(
-  () => import("./modulePages/ModuleResources")
-);
-const ModuleFeedback = React.lazy(() => import("./modulePages/ModuleFeedback"));
-const ExamGrading = React.lazy(() => import("./exams/Grading"));
-const ExamPastPapers = React.lazy(() => import("./exams/PastPapers"));
-const ModuleOverview = React.lazy(() => import("./modulePages/ModuleOverview"));
-const ModuleSubmissions = React.lazy(
-  () => import("./modulePages/ModuleSubmissions")
-);
+const Timeline = React.lazy(() => import("components/pages/Timeline"))
+const ModuleDashboard = React.lazy(() =>
+	import("components/pages/modulePages/ModuleDashboard")
+)
+const Dashboard = React.lazy(() => import("components/pages/Dashboard"))
+const ModuleList = React.lazy(() => import("./ModuleList"))
+const ModuleResources = React.lazy(() =>
+	import("./modulePages/ModuleResources")
+)
+const ModuleFeedback = React.lazy(() => import("./modulePages/ModuleFeedback"))
+const ExamGrading = React.lazy(() => import("./exams/Grading"))
+const ExamPastPapers = React.lazy(() => import("./exams/PastPapers"))
+const ModuleOverview = React.lazy(() => import("./modulePages/ModuleOverview"))
+const ModuleSubmissions = React.lazy(() =>
+	import("./modulePages/ModuleSubmissions")
+)
 
 interface StandardViewProps {
-  toggledLeft: boolean;
-  toggledRight: boolean;
-  fileView: string;
-  initTimelineSideBar: () => void;
-  revertTimelineSideBar: () => void;
-  onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
-  onSettingsClick: (event?: React.MouseEvent) => void;
-	onEventClick: (e?: TimelineEvent) => void;
-  onCalendarClick: (e?: CalendarEvent) => void;
-  year: string;
+	toggledLeft: boolean
+	toggledRight: boolean
+	fileView: string
+	initTimelineSideBar: () => void
+	revertTimelineSideBar: () => void
+	onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void
+	onSettingsClick: (event?: React.MouseEvent) => void
+	onEventClick: (e?: TimelineEvent) => void
+	onCalendarClick: (e?: CalendarEvent) => void
+	year: string
 }
 
 const StandardView: React.FC<StandardViewProps> = ({
-  toggledLeft,
-  toggledRight,
-  onOverlayClick,
-  onSettingsClick,
-  fileView,
-  revertTimelineSideBar,
-  initTimelineSideBar,
+	toggledLeft,
+	toggledRight,
+	onOverlayClick,
+	onSettingsClick,
+	fileView,
+	revertTimelineSideBar,
+	initTimelineSideBar,
 	onEventClick,
 	onCalendarClick,
-  year,
+	year,
 }: StandardViewProps) => {
-  const [modulesFilter, setModulesFilter] = useState("In Progress");
-  const [timelineTerm, setTimelineTerm] = useState<Term>("Autumn");
-  const [modules] = useState<Module[]>(modulesList);
-  // const modules : Module[] = modulesList;
-  // useEffect(() => {
-  //   const onSuccess = (data: { [k: string]: any }[]) => {
-  //     setModules(data.map(({ title, code, hasMaterials, canManage }) => ({
-  //       title,
-  //       code: `CO${code}`,
-  //       canManage,
-  //       hasMaterials,
-  //       // Hardcoded stuff, we don't have this data currently
-  //       terms: [Term.AUTUMN],
-  //       progressPercent: Math.floor(Math.random() * 100),
-  //       progressStatus: ProgressStatus.IN_PROGRESS,
-  //       content: "",
-  //     })))
-  //   };
+	const [modulesFilter, setModulesFilter] = useState("In Progress")
+	const [timelineTerm, setTimelineTerm] = useState<Term>("Autumn")
+	const [modules] = useState<Module[]>(modulesList)
+	// const modules : Module[] = modulesList;
+	// useEffect(() => {
+	//   const onSuccess = (data: { [k: string]: any }[]) => {
+	//     setModules(data.map(({ title, code, hasMaterials, canManage }) => ({
+	//       title,
+	//       code: `CO${code}`,
+	//       canManage,
+	//       hasMaterials,
+	//       // Hardcoded stuff, we don't have this data currently
+	//       terms: [Term.AUTUMN],
+	//       progressPercent: Math.floor(Math.random() * 100),
+	//       progressStatus: ProgressStatus.IN_PROGRESS,
+	//       content: "",
+	//     })))
+	//   };
 
-  //  request({
-  //    url: api.MATERIALS_COURSES(year),
-  //    method: methods.GET,
-  //    onSuccess: onSuccess,
-  //    onError: (message) => console.log(`Failed to obtain modules: ${message}`),
-  //  });
-  // }, [year]);
+	//  request({
+	//    url: api.MATERIALS_COURSES(year),
+	//    method: methods.GET,
+	//    onSuccess: onSuccess,
+	//    onError: (message) => console.log(`Failed to obtain modules: ${message}`),
+	//  });
+	// }, [year]);
 
-  return (
-    <div
-      id="wrapper"
-      className={classNames({
-        toggledLeft: toggledLeft,
-        toggledRight: toggledRight,
-      })}
-    >
-      <LeftBar
-        modulesFilter={modulesFilter}
-        setModulesFilter={setModulesFilter}
-        timelineTerm={timelineTerm}
-        setTimelineTerm={setTimelineTerm}
-        onEventClick={onEventClick}
-        year={year}
-      />
-      <RightBar onSettingsClick={onSettingsClick} onCalendarClick={onCalendarClick}/>
-      <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
-      <Suspense fallback={<LoadingScreen successful={<></>} />}>
-        <Switch>
+	return (
+		<div
+			id="wrapper"
+			className={classNames({
+				toggledLeft: toggledLeft,
+				toggledRight: toggledRight,
+			})}>
+			<LeftBar
+				modulesFilter={modulesFilter}
+				setModulesFilter={setModulesFilter}
+				timelineTerm={timelineTerm}
+				setTimelineTerm={setTimelineTerm}
+				onEventClick={onEventClick}
+				year={year}
+			/>
+			<RightBar
+				onSettingsClick={onSettingsClick}
+				onCalendarClick={onCalendarClick}
+			/>
+			<div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
+			<Suspense fallback={<LoadingScreen successful={<></>} />}>
+				<Switch>
+					<Route path="/" render={() => <Redirect to="/modules" />} />
+					{/*
           <Route path="/dashboard">
             <Container className={classNames("pageContainer")}>
               <Dashboard />
             </Container>
           </Route>
+        */}
+					<Route exact path="/modules">
+						<Container className={classNames("pageContainer")}>
+							<ModuleList modules={modules} modulesFilter={modulesFilter} />
+						</Container>
+					</Route>
 
-          <Route exact path="/modules">
-            <Container className={classNames("pageContainer")}>
-              <ModuleList modules={modules} modulesFilter={modulesFilter} />
-            </Container>
-          </Route>
+					<Route
+						path="/modules/:id"
+						render={(props) => (
+							<Redirect to={`/modules/${props.match.params.id}/dashboard`} />
+						)}
+					/>
 
-          <Route
-            path="/modules/:id/dashboard"
-            render={(props) => (
-              <Container className={classNames("pageContainer")}>
-                <ModuleDashboard year={year} moduleID={props.match.params.id} />
-              </Container>
-            )}
-          />
+					<Route
+						path="/modules/:id/dashboard"
+						render={(props) => (
+							<Container className={classNames("pageContainer")}>
+								<ModuleDashboard year={year} moduleID={props.match.params.id} />
+							</Container>
+						)}
+					/>
 
-          <Route
-            path="/modules/:id/overview"
-            render={(props) => (
-              <Container className={classNames("pageContainer")}>
-                <ModuleOverview year={year} moduleID={props.match.params.id} />
-              </Container>
-            )}
-          />
+					<Route
+						path="/modules/:id/overview"
+						render={(props) => (
+							<Container className={classNames("pageContainer")}>
+								<ModuleOverview year={year} moduleID={props.match.params.id} />
+							</Container>
+						)}
+					/>
 
-          <Route
-            path="/modules/:id/resources/:scope?"
-            render={(props) => {
-              let canManage =
-                modules.find((module) => module.code === props.match.params.id)
-                  ?.canManage || false;
-              return (
-                <Container className={classNames("pageContainer")}>
-                  <ModuleResources
-                    year={year}
-                    moduleID={props.match.params.id}
-                    scope={props.match.params.scope}
-                    view={fileView}
-                    canManage={canManage}
-                  />
-                </Container>
-              );
-            }}
-          />
-
+					<Route
+						path="/modules/:id/resources/:scope?"
+						render={(props) => {
+							let canManage =
+								modules.find((module) => module.code === props.match.params.id)
+									?.canManage || false
+							return (
+								<Container className={classNames("pageContainer")}>
+									<ModuleResources
+										year={year}
+										moduleID={props.match.params.id}
+										scope={props.match.params.scope}
+										view={fileView}
+										canManage={canManage}
+									/>
+								</Container>
+							)
+						}}
+					/>
+					{/* 
           <Route
             path="/modules/:id/submissions"
             render={(props) => (
@@ -161,13 +172,13 @@ const StandardView: React.FC<StandardViewProps> = ({
               </Container>
             )}
           />
-
+        
           <Route path="/modules/:id/feedback">
             <Container className={classNames("pageContainer")}>
               <ModuleFeedback />
             </Container>
           </Route>
-
+        
           <Route path="/timeline">
             <Timeline
               initSideBar={initTimelineSideBar}
@@ -197,19 +208,12 @@ const StandardView: React.FC<StandardViewProps> = ({
               </Container>
             )}
           />
-
-          <Route
-            path="/modules/:id"
-            render={(props) => (
-              <Redirect to={`/modules/${props.match.params.id}/dashboard`} />
-            )}
-          />
           <Route path="/exams" render={() => <Redirect to="/exams/papers" />} />
-          <Route path="/" render={() => <Redirect to="/dashboard" />} />
-        </Switch>
-      </Suspense>
-    </div>
-  );
-};
+        */}
+				</Switch>
+			</Suspense>
+		</div>
+	)
+}
 
-export default StandardView;
+export default StandardView
