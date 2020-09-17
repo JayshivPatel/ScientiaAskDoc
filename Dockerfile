@@ -10,7 +10,7 @@ RUN mkdir /yarn
 
 # Install dependencies
 WORKDIR /scientia
-RUN yarn install && yarn build && yarn global add serve
+RUN yarn install --network-timeout 300000 && yarn build && yarn global add serve
 
 # Setup user with right accesses to logs
 RUN addgroup --gid $scientia_gid scientia
