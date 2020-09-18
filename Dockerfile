@@ -17,4 +17,4 @@ RUN addgroup --gid $scientia_gid scientia
 RUN usermod -aG scientia root
 
 # Start server
-CMD ["/scientia/scripts/start.sh"]
+CMD ["serve", "-s", "build", "-l", "3000"]
