@@ -17,4 +17,4 @@ RUN addgroup --gid $scientia_gid scientia
 RUN usermod -aG scientia root
 
 # Start server
-CMD ["serve", "-s", "build", "-l", "3000", ">>", "/yarn/application.log", "&"]
+CMD ["/scientia/scripts/start.sh"]
