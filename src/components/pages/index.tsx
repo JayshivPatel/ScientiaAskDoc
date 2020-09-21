@@ -1,8 +1,14 @@
-import React, { useState, Suspense } from "react"
+import React, { useState, useEffect, Suspense } from "react"
 import { Route, Switch, Redirect } from "react-router-dom"
 import "./style.scss"
 import classNames from "classnames"
-import { Term, TimelineEvent, Module, CalendarEvent } from "constants/types"
+import {
+	Term,
+	TimelineEvent,
+	Module,
+	CalendarEvent,
+	ProgressStatus,
+} from "constants/types"
 import Container from "react-bootstrap/esm/Container"
 import LoadingScreen from "components/suspense/LoadingScreen"
 // import { request } from "utils/api";
@@ -10,6 +16,9 @@ import LoadingScreen from "components/suspense/LoadingScreen"
 import { modulesList } from "./ModuleList/list"
 import RightBar from "components/navbars/RightBar"
 import LeftBar from "components/navbars/LeftBar"
+import { request } from "../../utils/api"
+import { api, methods } from "../../constants/routes"
+import { YEAR_OF_NEW_CODES } from "../../constants/doc"
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"))
 const ModuleDashboard = React.lazy(() =>
@@ -55,30 +64,31 @@ const StandardView: React.FC<StandardViewProps> = ({
 }: StandardViewProps) => {
 	const [modulesFilter, setModulesFilter] = useState("In Progress")
 	const [timelineTerm, setTimelineTerm] = useState<Term>("Autumn")
-	const [modules] = useState<Module[]>(modulesList)
-	// const modules : Module[] = modulesList;
-	// useEffect(() => {
-	//   const onSuccess = (data: { [k: string]: any }[]) => {
-	//     setModules(data.map(({ title, code, hasMaterials, canManage }) => ({
-	//       title,
-	//       code: `CO${code}`,
-	//       canManage,
-	//       hasMaterials,
-	//       // Hardcoded stuff, we don't have this data currently
-	//       terms: [Term.AUTUMN],
-	//       progressPercent: Math.floor(Math.random() * 100),
-	//       progressStatus: ProgressStatus.IN_PROGRESS,
-	//       content: "",
-	//     })))
-	//   };
+	const [modules, setModules] = useState<Module[]>([])
+	useEffect(() => {
+		const onSuccess = (data: { [k: string]: any }[]) => {
+			setModules(
+				data.map(({ title, code, hasMaterials, canManage }) => ({
+					title,
+					code: year < YEAR_OF_NEW_CODES ? `CO${code}` : code,
+					canManage,
+					hasMaterials,
+					// Hardcoded stuff, we don't have this data currently
+					terms: ["Autumn"],
+					progressPercent: Math.floor(Math.random() * 100),
+					progressStatus: ProgressStatus.IN_PROGRESS,
+					content: "",
+				}))
+			)
+		}
 
-	//  request({
-	//    url: api.MATERIALS_COURSES(year),
-	//    method: methods.GET,
-	//    onSuccess: onSuccess,
-	//    onError: (message) => console.log(`Failed to obtain modules: ${message}`),
-	//  });
-	// }, [year]);
+		request({
+			url: api.MATERIALS_COURSES(year),
+			method: methods.GET,
+			onSuccess: onSuccess,
+			onError: (message) => console.log(`Failed to obtain modules: ${message}`),
+		})
+	}, [year])
 
 	return (
 		<div
@@ -102,14 +112,14 @@ const StandardView: React.FC<StandardViewProps> = ({
 			<div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
 			<Suspense fallback={<LoadingScreen successful={<></>} />}>
 				<Switch>
-					<Route path="/" render={() => <Redirect to="/modules" />} />
+					<Redirect exact from="/" to="/modules" />
 					{/*
-          <Route path="/dashboard">
-            <Container className={classNames("pageContainer")}>
-              <Dashboard />
-            </Container>
-          </Route>
-        */}
+					  <Route path="/dashboard">
+						<Container className={classNames("pageContainer")}>
+						  <Dashboard />
+						</Container>
+					  </Route>
+					*/}
 					<Route exact path="/modules">
 						<Container className={classNames("pageContainer")}>
 							<ModuleList modules={modules} modulesFilter={modulesFilter} />
@@ -161,55 +171,55 @@ const StandardView: React.FC<StandardViewProps> = ({
 						}}
 					/>
 					{/* 
-          <Route
-            path="/modules/:id/submissions"
-            render={(props) => (
-              <Container className={classNames("pageContainer")}>
-                <ModuleSubmissions
-                  moduleID={props.match.params.id}
-                  onEventClick={onEventClick}
-                />
-              </Container>
-            )}
-          />
-        
-          <Route path="/modules/:id/feedback">
-            <Container className={classNames("pageContainer")}>
-              <ModuleFeedback />
-            </Container>
-          </Route>
-        
-          <Route path="/timeline">
-            <Timeline
-              initSideBar={initTimelineSideBar}
-              revertSideBar={revertTimelineSideBar}
-              term={timelineTerm}
-              setTerm={setTimelineTerm}
-              onEventClick={onEventClick}
-              modules={modules}
-            />
-          </Route>
+					  <Route
+						path="/modules/:id/submissions"
+						render={(props) => (
+						  <Container className={classNames("pageContainer")}>
+							<ModuleSubmissions
+							  moduleID={props.match.params.id}
+							  onEventClick={onEventClick}
+							/>
+						  </Container>
+						)}
+					  />
 
-          <Route path="/exams/grading">
-            <Container className={classNames("pageContainer")}>
-              <ExamGrading />
-            </Container>
-          </Route>
+					  <Route path="/modules/:id/feedback">
+						<Container className={classNames("pageContainer")}>
+						  <ModuleFeedback />
+						</Container>
+					  </Route>
 
-          <Route
-            path="/exams/papers/:scope?"
-            render={(props) => (
-              <Container className={classNames("pageContainer")}>
-                <ExamPastPapers
-                  view={fileView}
-									scope={props.match.params.scope}
-									modules={modules}
-                />
-              </Container>
-            )}
-          />
-          <Route path="/exams" render={() => <Redirect to="/exams/papers" />} />
-        */}
+					  <Route path="/timeline">
+						<Timeline
+						  initSideBar={initTimelineSideBar}
+						  revertSideBar={revertTimelineSideBar}
+						  term={timelineTerm}
+						  setTerm={setTimelineTerm}
+						  onEventClick={onEventClick}
+						  modules={modules}
+						/>
+					  </Route>
+
+					  <Route path="/exams/grading">
+						<Container className={classNames("pageContainer")}>
+						  <ExamGrading />
+						</Container>
+					  </Route>
+
+					  <Route
+						path="/exams/papers/:scope?"
+						render={(props) => (
+						  <Container className={classNames("pageContainer")}>
+							<ExamPastPapers
+							  view={fileView}
+												scope={props.match.params.scope}
+												modules={modules}
+							/>
+						  </Container>
+						)}
+					  />
+					  <Route path="/exams" render={() => <Redirect to="/exams/papers" />} />
+        		*/}
 				</Switch>
 			</Suspense>
 		</div>
