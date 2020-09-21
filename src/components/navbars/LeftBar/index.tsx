@@ -55,7 +55,7 @@ const LeftBar: React.FC<LeftBarProps> = ({
 				</Route>
 			</Switch>
 
-			<WorkDueGroup onEventClick={onEventClick} />
+			{/*<WorkDueGroup onEventClick={onEventClick} />*/}
 		</div>
 	)
 }
