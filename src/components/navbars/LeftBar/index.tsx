@@ -36,10 +36,12 @@ const LeftBar: React.FC<LeftBarProps> = ({
 				</Route>
 
 				<Route exact path="/modules">
-					<SideBarFilterGroup
-						modulesFilter={modulesFilter}
-						setModulesFilter={setModulesFilter}
-					/>
+					{/*
+						<SideBarFilterGroup
+							modulesFilter={modulesFilter}
+							setModulesFilter={setModulesFilter}
+						/>
+					*/}
 				</Route>
 				{/*
         <Route path="/exams">
