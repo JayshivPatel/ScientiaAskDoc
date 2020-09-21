@@ -8,6 +8,7 @@ import { faSun, faLeaf, faSeedling } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Term, ProgressStatus, Module } from "constants/types"
 import { theme } from "../../../utils/functions"
+import authConstants from "../../../constants/auth"
 
 export interface ModuleCardProps {
 	module: Module
@@ -19,9 +20,15 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
 	)
 	useEffect(() => {
 		const urlAttempt = `/images/${theme()}/module/${moduleCode}.png`
-		fetch(urlAttempt, { method: "HEAD" })
+		fetch(urlAttempt, {
+			method: "HEAD",
+			headers: {
+				Authorization: authConstants.ACCESS_TOKEN_HEADER(),
+				"Access-Control-Allow-Origin": "*",
+			},
+		})
 			.then((res) => {
-				if (res.ok) setThumbnail(urlAttempt)
+				if (res.status == 200) setThumbnail(urlAttempt)
 			})
 			.catch((err) => console.log(err))
 	}, [])
@@ -42,6 +49,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
 		case ProgressStatus.COMPLETED:
 			textColor = "#000"
 	}
+
 	return (
 		<Col
 			xs={12}
