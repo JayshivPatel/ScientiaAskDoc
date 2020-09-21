@@ -68,11 +68,11 @@ const StandardView: React.FC<StandardViewProps> = ({
 	useEffect(() => {
 		const onSuccess = (data: { [k: string]: any }[]) => {
 			setModules(
-				data.map(({ title, code, hasMaterials, canManage }) => ({
-					title,
-					code: year < YEAR_OF_NEW_CODES ? `CO${code}` : code,
-					canManage,
-					hasMaterials,
+				data.map((module) => ({
+					title: module.title,
+					code: year < YEAR_OF_NEW_CODES ? `CO${module.code}` : module.code,
+					canManage: module.can_manage,
+					hasMaterials: module.has_materials,
 					// Hardcoded stuff, we don't have this data currently
 					terms: ["Autumn"],
 					progressPercent: Math.floor(Math.random() * 100),
@@ -113,6 +113,7 @@ const StandardView: React.FC<StandardViewProps> = ({
 			<Suspense fallback={<LoadingScreen successful={<></>} />}>
 				<Switch>
 					<Redirect exact from="/" to="/modules" />
+					<Redirect exact from="/modules/:id" to="/modules/:id/dashboard" />
 					{/*
 					  <Route path="/dashboard">
 						<Container className={classNames("pageContainer")}>
@@ -125,13 +126,6 @@ const StandardView: React.FC<StandardViewProps> = ({
 							<ModuleList modules={modules} modulesFilter={modulesFilter} />
 						</Container>
 					</Route>
-
-					<Route
-						path="/modules/:id"
-						render={(props) => (
-							<Redirect to={`/modules/${props.match.params.id}/dashboard`} />
-						)}
-					/>
 
 					<Route
 						path="/modules/:id/dashboard"
