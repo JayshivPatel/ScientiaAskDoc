@@ -73,3 +73,5 @@ export enum ProgressStatus {
 }
 
 export type IdBooleanMap = { [key: number]: boolean }
+
+export type ThumbnailMap = { [key: string]: string }

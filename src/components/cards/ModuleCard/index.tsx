@@ -1,43 +1,28 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import Card from "react-bootstrap/Card"
 import styles from "./style.module.scss"
 import classNames from "classnames"
 import Col from "react-bootstrap/Col"
 import { Link } from "react-router-dom"
-import { faSun, faLeaf, faSeedling } from "@fortawesome/free-solid-svg-icons"
+import { faLeaf, faSeedling, faSun } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Term, ProgressStatus, Module } from "constants/types"
+import { Module, ProgressStatus, Term } from "constants/types"
 import { theme } from "../../../utils/functions"
-import authConstants from "../../../constants/auth"
+import { thumbnails } from "../../../constants/thumbnails"
 
 export interface ModuleCardProps {
 	module: Module
 }
 
 const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
-	let [thumbnail, setThumbnail] = useState(
-		`/images/${theme()}/module/default.png`
-	)
-	useEffect(() => {
-		const urlAttempt = `/images/${theme()}/module/${moduleCode}.png`
-		fetch(urlAttempt, {
-			method: "HEAD",
-			headers: {
-				Authorization: authConstants.ACCESS_TOKEN_HEADER(),
-				"Access-Control-Allow-Origin": "*",
-			},
-		})
-			.then((res) => {
-				if (res.status == 200) setThumbnail(urlAttempt)
-			})
-			.catch((err) => console.log(err))
-	}, [])
-
 	let textColor: string = ""
 	let moduleCode = module.code.startsWith("CO")
 		? module.code.slice(2)
 		: module.code
 	moduleCode = moduleCode.split(".").join("-")
+	let thumbnail = `/images/${theme()}/module/${
+		thumbnails[moduleCode] || "default.png"
+	}`
 
 	switch (module.progressStatus) {
 		case ProgressStatus.NOT_STARTED:
