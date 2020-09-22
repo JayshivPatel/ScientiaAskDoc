@@ -135,15 +135,16 @@ const StandardView: React.FC<StandardViewProps> = ({
 							</Container>
 						)}
 					/>
-
-					<Route
-						path="/modules/:id/overview"
-						render={(props) => (
-							<Container className={classNames("pageContainer")}>
-								<ModuleOverview year={year} moduleID={props.match.params.id} />
-							</Container>
-						)}
-					/>
+					{/*
+						<Route
+							path="/modules/:id/overview"
+							render={(props) => (
+								<Container className={classNames("pageContainer")}>
+									<ModuleOverview year={year} moduleID={props.match.params.id} />
+								</Container>
+							)}
+						/>
+					*/}
 
 					<Route
 						path="/modules/:id/resources/:scope?"

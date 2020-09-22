@@ -14,15 +14,15 @@ const SideBarOutlineGroup: React.FC = () => {
 
 	let outlineButtons = [
 		{
-			title: "Dashboard",
+			title: "Overview",
 			activeURL: `/modules/${id}/dashboard`,
 			icon: faHome,
 		},
-		{
-			title: "Overview",
-			activeURL: `/modules/${id}/overview`,
-			icon: faList,
-		},
+		// {
+		// 	title: "Overview",
+		// 	activeURL: `/modules/${id}/overview`,
+		// 	icon: faList,
+		// },
 		{
 			title: "Resources",
 			activeURL: `/modules/${id}/resources`,

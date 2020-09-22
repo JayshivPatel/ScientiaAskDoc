@@ -1,4 +1,5 @@
 import React from "react"
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons"
 import "./App.scss"
 import TopBar from "./navbars/TopBar"
 import BottomBar from "./navbars/BottomBar"
@@ -128,9 +129,13 @@ class App extends React.Component<{}, AppState> {
 	}
 
 	render() {
-		const horizontalBarPages = [
+		const horizontalBarPages: {
+			name: string
+			path: string
+			icon: IconDefinition
+		}[] = [
 			/* { name: "Dashboard", path: "/dashboard", icon: faHome }, */
-			{ name: "Modules", path: "/modules", icon: faChalkboardTeacher },
+			/* { name: "Modules", path: "/modules", icon: faChalkboardTeacher }, */
 			/* { name: "Timeline", path: "/timeline", icon: faCalendarWeek }, */
 			/* { name: "Exams", path: "/exams", icon: faBookOpen }, */
 		]
