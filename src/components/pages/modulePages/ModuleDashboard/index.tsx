@@ -44,23 +44,6 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
 					url: piazzaLink,
 				},
 			]
-
-			for (const key in data) {
-				let resource = data[key]
-				let resourceURL = queryString.parseUrl(resource.path)
-
-				if (
-					resource.type === "link" &&
-					resourceURL.url !==
-						"https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx"
-				) {
-					newButtons.push({
-						title: resource.title,
-						icon: faLink,
-						url: resource.path,
-					})
-				}
-			}
 			setButtons(newButtons)
 		}
 		request({
