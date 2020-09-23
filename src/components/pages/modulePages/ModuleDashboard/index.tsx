@@ -14,14 +14,15 @@ import { request } from "utils/api";
 import { api, methods } from "constants/routes";
 
 import TutorCardGroup from "components/groups/TutorCardGroup";
-import { modulesList } from "../../ModuleList/list";
+import { Module } from "constants/types";
 
 interface Props {
   year: string;
   moduleID: string;
+  modules: Module[];
 }
 
-const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
+const ModuleDashboard: React.FC<Props> = ({ year, moduleID, modules }) => {
   let [buttons, setButtons] = useState<any>([]);
 
   useEffect(() => {
@@ -63,6 +64,7 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
       }
       setButtons(newButtons);
     };
+
     request({
       url: api.MATERIALS_RESOURCES,
       method: methods.GET,
@@ -81,7 +83,7 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
     <>
       <Dandruff
         heading={
-          modulesList.find(({ code }) => code === moduleID)?.title || moduleID
+          modules.find(({ code }) => code === moduleID)?.title || moduleID
         }
       />
 
