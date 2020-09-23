@@ -19,10 +19,15 @@ const QuickAccessView: React.FC<QuickAccessViewProps> = ({
   modules,
 }) => {
   let quickAccessItems: BasicResource[] = JSON.parse(JSON.stringify(resources));
-  quickAccessItems = quickAccessItems.filter(({ title }) => {
-    return modules.some(({ code }) => {
+  quickAccessItems = quickAccessItems.filter((item) => {
+    return modules.some(({ code, title }) => {
       const moduleCode = code.startsWith("CO") ? code.slice(2) : code;
-      return title.startsWith(moduleCode) || title.startsWith(`C${moduleCode}`);
+      const [paperCode, paperTitle] = item.title.split(": ");
+      return (
+        paperCode === moduleCode ||
+        paperCode === `C${moduleCode}` ||
+        paperTitle === title
+      );
     });
   });
   quickAccessItems.reverse();
