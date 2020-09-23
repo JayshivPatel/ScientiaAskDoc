@@ -13,16 +13,17 @@ import queryString from "query-string"
 import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 
-import TutorCardGroup from "components/groups/TutorCardGroup"
-import { modulesList } from "../../ModuleList/list"
+import TutorCardGroup from "components/groups/TutorCardGroup";
+import { Module } from "constants/types";
 
 interface Props {
-	year: string
-	moduleID: string
+  year: string;
+  moduleID: string;
+  modules: Module[];
 }
 
-const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
-	let [buttons, setButtons] = useState<any>([])
+const ModuleDashboard: React.FC<Props> = ({ year, moduleID, modules }) => {
+  let [buttons, setButtons] = useState<any>([]);
 
 	useEffect(() => {
 		let moduleCode = moduleID.startsWith("CO") ? moduleID.slice(2) : moduleID
@@ -64,7 +65,7 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
 		<>
 			<Dandruff
 				heading={
-					modulesList.find(({ code }) => code === moduleID)?.title || moduleID
+					modules.find(({ code }) => code === moduleID)?.title || moduleID
 				}
 			/>
 
