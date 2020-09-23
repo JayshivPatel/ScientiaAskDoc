@@ -6,7 +6,7 @@ import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 import FileItemRow from "components/rows/FileItemRow";
-import { SelectionProps } from "components/pages/SelectionView";
+import { SelectionProps } from "components/sections/SelectionView";
 import { resourceTypeToIcon } from "../../pages/modulePages/ModuleResources/utils";
 import { IdBooleanMap, Resource } from "constants/types";
 import { request } from "utils/api";

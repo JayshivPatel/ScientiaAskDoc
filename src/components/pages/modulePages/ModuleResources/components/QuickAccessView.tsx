@@ -1,7 +1,7 @@
 import React from "react";
 import SelectionView, {
   SelectionProps,
-} from "components/pages/SelectionView";
+} from "components/sections/SelectionView";
 import QuickAccessRow from "components/rows/QuickAccessRow";
 import { Resource } from "constants/types";
 

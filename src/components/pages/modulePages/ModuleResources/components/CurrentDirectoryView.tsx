@@ -1,7 +1,7 @@
 import React from "react";
 import SelectionView, {
   SelectionProps
-} from "components/pages/SelectionView";
+} from "components/sections/SelectionView";
 import CurrentDirectoryRow from "components/rows/CurrentDirectoryRow";
 import { Resource } from "constants/types";
 

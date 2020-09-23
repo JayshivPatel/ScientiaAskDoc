@@ -1,5 +1,5 @@
 import React from "react";
-import SelectionView, { SelectionProps } from "components/pages/SelectionView";
+import SelectionView, { SelectionProps } from "components/sections/SelectionView";
 import QuickAccessRow from "components/rows/QuickAccessRow";
 import { BasicResource, Module } from "constants/types";
 

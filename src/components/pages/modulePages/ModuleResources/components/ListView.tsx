@@ -1,7 +1,7 @@
 import React from "react";
 import SelectionView, {
   SelectionProps,
-} from "components/pages/SelectionView";
+} from "components/sections/SelectionView";
 import CategoryList from "components/sections/CategoryList";
 import CategoryHeader from "components/headings/CategoryHeader";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";

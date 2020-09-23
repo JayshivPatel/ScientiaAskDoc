@@ -4,7 +4,7 @@ import Col from "react-bootstrap/esm/Col";
 import FolderCard from "components/cards/FolderCard";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import { faFolder } from "@fortawesome/free-solid-svg-icons";
-import { SelectionProps } from "../../pages/SelectionView";
+import { SelectionProps } from "../../sections/SelectionView";
 
 const FoldersRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
   return (
