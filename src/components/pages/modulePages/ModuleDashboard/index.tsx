@@ -2,30 +2,56 @@ import React, { useEffect, useState } from "react"
 import Dandruff from "components/headings/Dandruff"
 import styles from "./style.module.scss"
 import classNames from "classnames"
-import {
-	faGlobe,
-	faLink,
-	faUserFriends,
-} from "@fortawesome/free-solid-svg-icons"
+import { faGlobe, faUserFriends } from "@fortawesome/free-solid-svg-icons"
 import PageButtonGroup from "components/groups/PageButtonGroup"
-import queryString from "query-string"
 
 import { request } from "utils/api"
 import { api, methods } from "constants/routes"
-
-import TutorCardGroup from "components/groups/TutorCardGroup"
 import { modulesList } from "../../ModuleList/list"
+import { JSXElement } from "@babel/types"
 
 interface Props {
 	year: string
 	moduleID: string
 }
 
-const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
-	let [buttons, setButtons] = useState<any>([])
+const MODULE_AIMS_PLACEHOLDER = (
+	<p>
+		No description of the module aims could be found at this time for this
+		module.
+	</p>
+)
 
+// ------------ NO WAY TO GET THIS TO WORK WITH CORS UNFORTUNATELY :(
+// ------------ KEEPING IT HERE FOR FUTURE REFERENCE
+// ---- THIS BELOW WOULD STAY IN THE COMPONENT
+// let [moduleAims, setModuleAims] = useState<any>([])
+// useEffect(() => {
+// 	fetch(imperialWebsiteModuleURL, {mode: 'no-cors'})
+// 		.then(response => response.ok ? response.text() : "")
+// 		.then(htmlString => setModuleAims(parseModuleAimsFromHTMLString(htmlString)))
+// 		.catch(_ => setModuleAims([MODULE_AIMS_PLACEHOLDER]))
+// }, [year, moduleCode])
+// function parseModuleAimsFromHTMLString(htmlString: string) {
+// 	let htmlContent: Document = new DOMParser().parseFromString(htmlString, "text/html")
+// 	console.log(htmlString)
+// 	let rootElement = htmlContent.getElementById("dss-mainview")
+// 	if (rootElement !== null) {
+// 		const [_, firstHeader, ...rest] = rootElement.children
+// 		if (firstHeader.tagName === "H3" && firstHeader.innerHTML === "Module Aims") {
+// 			const firstElemAfterModuleAims = rest.find(e => e.tagName === "H3")
+// 			return rest.slice(0, rest.indexOf(firstElemAfterModuleAims || rest[rest.length - 1]))
+// 		}
+// 		return [MODULE_AIMS_PLACEHOLDER]
+// 	}
+// }
+
+const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
+	const moduleCode = moduleID.startsWith("CO") ? moduleID.slice(2) : moduleID
+	const imperialWebsiteModuleURL = `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`
+
+	let [buttons, setButtons] = useState<any>([])
 	useEffect(() => {
-		let moduleCode = moduleID.startsWith("CO") ? moduleID.slice(2) : moduleID
 		const onSuccess = (data: { [k: string]: any }) => {
 			let piazzaLink = "https://piazza.com/class/"
 			if (piazzaClasses[moduleID] !== undefined && piazzaClasses[moduleID]) {
@@ -36,7 +62,7 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
 				{
 					title: "College Website",
 					icon: faGlobe,
-					url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
+					url: imperialWebsiteModuleURL,
 				},
 				{
 					title: "Piazza",
@@ -72,26 +98,7 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
 			<div
 				className={styles.moduleDashboardText}
 				style={{ paddingTop: "0.75rem" }}>
-				<span>In this module you will have the opportunity to:</span>
-				<ul>
-					<li>
-						Learn about language and semantics of propositional and first-order
-						logic
-					</li>
-					<li>
-						Explore the user of logic for modelling rigorously human reasoning
-					</li>
-					<li>
-						Apply various semantic methods for proving validity of arguments and
-						logical equivalences
-					</li>
-					<li>
-						Study natural deduction and resolution for constructing correct
-						proofs
-					</li>
-					<li>Investigate soundness and completeness of natural deduction</li>
-					<li>Apply first-order logic to program specification</li>
-				</ul>
+				{moduleAims[moduleCode] || MODULE_AIMS_PLACEHOLDER}
 			</div>
 
 			<h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
@@ -107,25 +114,55 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
 
 export default ModuleDashboard
 
-const leaders: {
-	name: string
-	email: string
-	address: string
-	image: string
-}[] = [
-	{
-		name: "Dr. Zahid Barr",
-		email: "zahid.barr@imperial.ac.uk",
-		address: "373, Huxley Building",
-		image: "/images/tutors/tutor-1.png",
-	},
-	{
-		name: "Dr. Rosalind Baker",
-		email: "rosalind.baker@imperial.ac.uk",
-		address: "590, Huxley Building",
-		image: "/images/tutors/tutor-2.png",
-	},
-]
+const moduleAims: { [moduleCode: string]: JSX.Element } = {
+	70008: (
+		<>
+			<p>
+				The course is motivated by the increasing need for a theory of
+				concurrent process in real systems and languages. Classroom sessions
+				will include traditional lectures and some supervised problem solving,
+				which are designed to illustrate the principles. The lab sessions will
+				use one of the main stream programming languages for distributed
+				communications and protocol description languages.
+			</p>
+			<p>
+				The course provides the theories and techniques to analyse concurrent
+				computations based on the basic mathematics behind process algebra and
+				their type systems. The course will look at principles of concurrent
+				message passing programming and software, addressing specification and
+				design of message passing languages and distributed protocols. You will
+				learn the application areas of concurrent processes and their type
+				systems, including actor-based programs (such as Scala), channel-based
+				programs (such as Go), network protocols (such as SMTP/HTTP), robotics
+				programming and microservices.
+			</p>
+			More specifically students will:
+			<ol>
+				<li>
+					Gain familiarity with the operational semantics and theory of
+					concurrent processes.
+				</li>
+				<li>
+					Learn the principles to evaluate various process calculi in the
+					literature and examine their expressiveness.
+				</li>
+				<li>
+					Learn a type theory of concurrency and communications in order to
+					specify and verify message-passing communications.
+				</li>
+				<li>
+					Practise concurrent processes and type theory via several applications
+					-- network protocols, program analysis, and concurrent robotics.
+				</li>
+				<li>
+					Be able to apply the taught techniques of concurrency theories to
+					ensure correctness of concurrent applications such as deadlock-freedom
+					and type/communication safety.
+				</li>
+			</ol>
+		</>
+	),
+}
 
 const piazzaClasses: {
 	[index: string]: string
