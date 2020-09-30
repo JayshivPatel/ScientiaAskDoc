@@ -4,6 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavBarTabGroup from "components/navbars/TopBar/components/NavBarTabGroup";
 import NavBarBrand from "components/navbars/TopBar/components/NavBarBrand";
 import styles from "./style.module.scss";
+import { theme } from "utils/functions";
 
 export interface TopBarProps {
   pages: {
@@ -27,7 +28,7 @@ const TopBar: React.FC<TopBarProps> = ({
         <NavBarTabGroup pages={pages} />
 
         <img
-          src="/images/user.png"
+          src={`/images/${theme()}/user.png`}
           className="d-inline-block align-top"
           alt="userPic"
           onClick={onUserIconClick}
