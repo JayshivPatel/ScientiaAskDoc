@@ -7,6 +7,7 @@ import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { theme } from "utils/functions";
 
 export interface FileCardProps {
   title: string;
@@ -31,7 +32,7 @@ const FileCard: React.FC<FileCardProps> = ({
   onMouseOver,
   onMouseOut
 }: FileCardProps) => {
-  let banner: string = `/images/light/banner/${type}.png`;
+  let banner: string = `/images/${theme()}/banner/${type}.png`;
 
   return (
     <Card
