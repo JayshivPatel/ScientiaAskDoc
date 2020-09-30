@@ -3,11 +3,9 @@ stages:
   - build
   - deploy
 
-# .unit_test:
-#   stage: test
-#   image: node
-#   script:
-# 		- ...
+default:
+  before_script:
+    - docker system prune --all --force
 
 build_docker:
   stage: build
@@ -32,7 +30,6 @@ deploy prod:
     - production
   when: manual
   script:
-    - docker system prune --all --force
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
     - docker stop scientia || true
