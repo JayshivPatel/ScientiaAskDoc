@@ -8,7 +8,7 @@ import PageButtonGroup from "components/groups/PageButtonGroup"
 import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 import { modulesList } from "../../ModuleList/list"
-import { JSXElement } from "@babel/types"
+import { teachingAims } from "../../ModuleList/aims"
 
 interface Props {
 	year: string
@@ -48,26 +48,20 @@ const MODULE_AIMS_PLACEHOLDER = (
 
 const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
 	const moduleCode = moduleID.startsWith("CO") ? moduleID.slice(2) : moduleID
-	const imperialWebsiteModuleURL = `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`
 
 	let [buttons, setButtons] = useState<any>([])
 	useEffect(() => {
 		const onSuccess = (data: { [k: string]: any }) => {
-			let piazzaLink = "https://piazza.com/class/"
-			if (piazzaClasses[moduleID] !== undefined && piazzaClasses[moduleID]) {
-				piazzaLink += piazzaClasses[moduleID]
-			}
-
-			let newButtons: any[] = [
+			const newButtons: any[] = [
 				{
-					title: "College Website",
+					title: "Syllabus",
 					icon: faGlobe,
-					url: imperialWebsiteModuleURL,
+					url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
 				},
 				{
 					title: "Piazza",
 					icon: faUserFriends,
-					url: piazzaLink,
+					url: `https://piazza.com/imperial.ac.uk/fall2021/comp${moduleID}`,
 				},
 			]
 			setButtons(newButtons)
@@ -98,7 +92,7 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
 			<div
 				className={styles.moduleDashboardText}
 				style={{ paddingTop: "0.75rem" }}>
-				{moduleAims[moduleCode] || MODULE_AIMS_PLACEHOLDER}
+				{teachingAims[moduleCode] || MODULE_AIMS_PLACEHOLDER}
 			</div>
 
 			<h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
@@ -113,56 +107,6 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
 }
 
 export default ModuleDashboard
-
-const moduleAims: { [moduleCode: string]: JSX.Element } = {
-	70008: (
-		<>
-			<p>
-				The course is motivated by the increasing need for a theory of
-				concurrent process in real systems and languages. Classroom sessions
-				will include traditional lectures and some supervised problem solving,
-				which are designed to illustrate the principles. The lab sessions will
-				use one of the main stream programming languages for distributed
-				communications and protocol description languages.
-			</p>
-			<p>
-				The course provides the theories and techniques to analyse concurrent
-				computations based on the basic mathematics behind process algebra and
-				their type systems. The course will look at principles of concurrent
-				message passing programming and software, addressing specification and
-				design of message passing languages and distributed protocols. You will
-				learn the application areas of concurrent processes and their type
-				systems, including actor-based programs (such as Scala), channel-based
-				programs (such as Go), network protocols (such as SMTP/HTTP), robotics
-				programming and microservices.
-			</p>
-			More specifically students will:
-			<ol>
-				<li>
-					Gain familiarity with the operational semantics and theory of
-					concurrent processes.
-				</li>
-				<li>
-					Learn the principles to evaluate various process calculi in the
-					literature and examine their expressiveness.
-				</li>
-				<li>
-					Learn a type theory of concurrency and communications in order to
-					specify and verify message-passing communications.
-				</li>
-				<li>
-					Practise concurrent processes and type theory via several applications
-					-- network protocols, program analysis, and concurrent robotics.
-				</li>
-				<li>
-					Be able to apply the taught techniques of concurrency theories to
-					ensure correctness of concurrent applications such as deadlock-freedom
-					and type/communication safety.
-				</li>
-			</ol>
-		</>
-	),
-}
 
 const piazzaClasses: {
 	[index: string]: string
