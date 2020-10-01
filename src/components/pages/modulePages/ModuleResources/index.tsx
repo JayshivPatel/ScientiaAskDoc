@@ -1,6 +1,6 @@
 import React from "react"
 
-import { request, download } from "utils/api"
+import { download, request } from "utils/api"
 import { api, methods } from "constants/routes"
 import SearchBox from "components/headings/SearchBox"
 import QuickAccessView from "./components/QuickAccessView"
@@ -12,13 +12,14 @@ import StaffView from "./components/StaffView"
 
 import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
 import LoadingScreen from "components/suspense/LoadingScreen"
-import { openResource, tags, folders, filterInvisibleResources } from "./utils"
-import { Module, Resource } from "constants/types"
+import { filterInvisibleResources, folders, openResource, tags } from "./utils"
+import { Resource } from "constants/types"
 import { titleCase } from "utils/functions"
 import Button from "react-bootstrap/esm/Button"
 import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import styles from "./style.module.scss"
+import WarningJumbotron from "../../../suspense/WarningJumbotron"
 
 export interface ResourcesProps {
 	year: string
@@ -46,7 +47,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 		this.state = {
 			error: null,
 			isLoaded: false,
-			staffView: this.props.canManage,
+			staffView: true,
 			resources: [],
 			searchText: "",
 		}
@@ -120,9 +121,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 	componentDidUpdate(prevProps: ResourcesProps) {
 		if (prevProps.year !== this.props.year) {
 			this.loadResources()
-		}
-		if (prevProps.canManage !== this.props.canManage) {
-			this.setState({ staffView: this.props.canManage })
 		}
 	}
 
@@ -230,7 +228,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 		let scope = this.props.scope || ""
 		let studentViewResources = filterInvisibleResources(this.state.resources)
 		const view = () => {
-			if (this.state.staffView) {
+			if (this.props.canManage && this.state.staffView) {
 				return (
 					<StaffView
 						year={this.props.year}
@@ -242,6 +240,11 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 						includeInSearchResult={this.includeInSearchResult}
 						onRowClick={(id) => this.handleResourceClick(id)}
 					/>
+				)
+			}
+			if (studentViewResources.length === 0) {
+				return (
+					<WarningJumbotron message="No resources have been uploaded for this course yet." />
 				)
 			}
 			switch (this.props.view) {
