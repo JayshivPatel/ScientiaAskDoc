@@ -13,4 +13,12 @@ export const modulesList: Module[] = [
 		progressPercent: 0,
 		content: "",
 	},
+	{
+		title: "Software Engineering Group Projects",
+		code: "60021",
+		terms: ["Autumn"],
+		progressStatus: ProgressStatus.IN_PROGRESS,
+		progressPercent: 0,
+		content: "",
+	},
 ]
