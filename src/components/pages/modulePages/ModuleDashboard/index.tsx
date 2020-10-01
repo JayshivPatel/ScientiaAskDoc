@@ -98,10 +98,10 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
 			<h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
 			<PageButtonGroup buttons={buttons} style={{ marginTop: "1.25rem" }} />
 			{/*
-        <div className={classNames(styles.moduleSectionHeader)}>
-          <TutorCardGroup title="Module Leaders" tutors={leaders} />
-        </div>
-      */}
+				<div className={classNames(styles.moduleSectionHeader)}>
+				  <TutorCardGroup title="Module Leaders" tutors={leaders} />
+				</div>
+			  */}
 		</>
 	)
 }
