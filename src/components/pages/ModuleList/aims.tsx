@@ -54,15 +54,17 @@ export const teachingAims: { [moduleCode: string]: JSX.Element } = {
 		</>
 	),
 	60021: (
-		<p>
-			This is a project-based module where you work in a team to carry out the
-			development and management of a relatively large scale software project,
-			building a piece of software to fulfil the needs of a p articular
-			customer. You will put into practice state-of-the-art techniques used in
-			industrial software development to ensure that your team produces software
-			co-operatively, reliably and on schedule. Each team will work on a
-			different project, and will receive individual coaching to provide support
-			and advice relevant to their particular project.
-		</p>
+		<div>
+			<p>
+				This is a project-based module where you work in a team to carry out the
+				development and management of a relatively large scale software project,
+				building a piece of software to fulfil the needs of a p articular
+				customer. You will put into practice state-of-the-art techniques used in
+				industrial software development to ensure that your team produces
+				software co-operatively, reliably and on schedule. Each team will work
+				on a different project, and will receive individual coaching to provide
+				support and advice relevant to their particular project.
+			</p>
+		</div>
 	),
 }
