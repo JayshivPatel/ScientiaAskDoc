@@ -149,7 +149,7 @@ const StaffView: React.FC<StaffViewProps> = ({
 			<Row style={{ marginTop: "0.625rem" }}>
 				<Col style={{ paddingRight: "0.3125rem" }}>
 					<Button onClick={() => setModal("upload")} block>
-						Upload Resources
+						Upload
 						<FontAwesomeIcon style={{ float: "right" }} icon={faUpload} />
 					</Button>
 				</Col>

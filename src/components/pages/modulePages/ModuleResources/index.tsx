@@ -20,6 +20,8 @@ import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import styles from "./style.module.scss"
 import WarningJumbotron from "../../../suspense/WarningJumbotron"
+import OverlayTrigger from "react-bootstrap/OverlayTrigger"
+import Tooltip from "react-bootstrap/Tooltip"
 
 export interface ResourcesProps {
 	year: string
@@ -310,15 +312,25 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 						/>
 					</div>
 					{this.props.canManage && (
-						<Button
-							onClick={() =>
-								this.setState({ staffView: !this.state.staffView })
-							}
-							variant="secondary"
-							style={{ marginLeft: "0.625rem" }}
-							className={styles.sectionHeaderButton}>
-							<FontAwesomeIcon icon={faExchangeAlt} />
-						</Button>
+						<OverlayTrigger
+							placement="left"
+							overlay={
+								<Tooltip
+									id={`${this.props.moduleID}-view-toggle-tooltip`}
+									style={{ zIndex: 10000 }}>
+									Toggle {this.state.staffView ? "Student" : "Staff"} View
+								</Tooltip>
+							}>
+							<Button
+								onClick={() =>
+									this.setState({ staffView: !this.state.staffView })
+								}
+								variant="secondary"
+								style={{ marginLeft: "0.625rem" }}
+								className={styles.sectionHeaderButton}>
+								<FontAwesomeIcon icon={faExchangeAlt} />
+							</Button>
+						</OverlayTrigger>
 					)}
 				</div>
 
