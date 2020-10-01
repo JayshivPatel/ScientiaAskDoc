@@ -13,7 +13,7 @@ import StaffView from "./components/StaffView"
 import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
 import LoadingScreen from "components/suspense/LoadingScreen"
 import { openResource, tags, folders, filterInvisibleResources } from "./utils"
-import { Resource } from "constants/types"
+import { Module, Resource } from "constants/types"
 import { titleCase } from "utils/functions"
 import Button from "react-bootstrap/esm/Button"
 import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons"
@@ -121,6 +121,9 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 		if (prevProps.year !== this.props.year) {
 			this.loadResources()
 		}
+		if (prevProps.canManage !== this.props.canManage) {
+			this.setState({ staffView: this.props.canManage })
+		}
 	}
 
 	handleFileDownload(indices: number[]) {
@@ -226,7 +229,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 	render() {
 		let scope = this.props.scope || ""
 		let studentViewResources = filterInvisibleResources(this.state.resources)
-
 		const view = () => {
 			if (this.state.staffView) {
 				return (
