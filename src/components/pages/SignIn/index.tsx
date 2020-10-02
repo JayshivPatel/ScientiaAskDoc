@@ -1,51 +1,56 @@
-import React, { useState } from "react";
-import { StaticContext } from 'react-router';
-import { RouteComponentProps, Redirect } from "react-router-dom";
+import React, { useState } from "react"
+import { StaticContext } from "react-router"
+import { RouteComponentProps, Redirect } from "react-router-dom"
 
-import styles from "./style.module.scss";
-import Navbar from "react-bootstrap/Navbar";
-import Container from "react-bootstrap/Container";
-import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
+import styles from "./style.module.scss"
+import Navbar from "react-bootstrap/Navbar"
+import Container from "react-bootstrap/Container"
+import InputGroup from "react-bootstrap/InputGroup"
+import FormControl from "react-bootstrap/FormControl"
+import Button from "react-bootstrap/Button"
 
-import authenticationService from "utils/auth";
+import authenticationService from "utils/auth"
 import { api } from "constants/routes"
 
-type Props = RouteComponentProps<{}, StaticContext, { from: { pathname: string; }; }>;
+type Props = RouteComponentProps<
+  {},
+  StaticContext,
+  { from: { pathname: string } }
+>
 
 const SignIn: React.FC<Props> = ({ location }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [redirect, setRedirect] = useState(false);
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [redirect, setRedirect] = useState(false)
 
-  const { from } = (location && location.state) || { from: { pathname: "/" } };
+  const { from } = (location && location.state) || { from: { pathname: "/" } }
 
   const handleSubmit = async () => {
     // Pending SSO reimplementation of EdTech services authentication
-    if (await authenticationService.login(username, password, api.MATERIALS_LOGIN)) {
-      setRedirect(true);
+    if (
+      await authenticationService.login(username, password, api.MATERIALS_LOGIN)
+    ) {
+      setRedirect(true)
     } else {
       // TODO: Deal with failed login
-      alert("Login failed.");
+      alert("Login failed.")
     }
-	}
-	
-	let handleKeyPress = (event: any) => {
-		if(event.key === 'Enter'){
-			handleSubmit();
-		}
-	}
+  }
 
-  if (redirect) return <Redirect to={from}/>;
+  let handleKeyPress = (event: any) => {
+    if (event.key === "Enter") {
+      handleSubmit()
+    }
+  }
+
+  if (redirect) return <Redirect to={from} />
   return (
     <>
       <Navbar
         className={styles.navBar}
         sticky="top"
         expand="lg"
-        variant="light"
-      >
+        variant="light">
         <Container style={{ display: "flex", justifyContent: "center" }}>
           <img
             src="/images/logo.svg"
@@ -64,9 +69,8 @@ const SignIn: React.FC<Props> = ({ location }) => {
             marginLeft: "0.9375rem",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center"
-          }}
-        >
+            alignItems: "center",
+          }}>
           <h1 className={styles.brandName}>Scientia</h1>
           <i className={styles.tagLine}>A Unified DoC EdTech Platform</i>
         </div>
@@ -74,15 +78,14 @@ const SignIn: React.FC<Props> = ({ location }) => {
           style={{
             marginRight: "0.9375rem",
             marginLeft: "0.9375rem",
-            marginTop: "1.25rem"
-          }}
-        >
+            marginTop: "1.25rem",
+          }}>
           <p className={styles.inputBarHeading}>Username</p>
           <InputGroup className="mb-3">
             <FormControl
               className={styles.inputBar}
               placeholder="Enter your username"
-              onChange={e => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
               aria-label="Username"
               aria-describedby="basic-addon1"
             />
@@ -92,20 +95,23 @@ const SignIn: React.FC<Props> = ({ location }) => {
             <FormControl
               className={styles.inputBar}
               placeholder="Enter your password"
-							onChange={e => setPassword(e.target.value)}
-							onKeyPress={handleKeyPress}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={handleKeyPress}
               type="password"
               aria-label="Password"
               aria-describedby="basic-addon1"
             />
           </InputGroup>
-          <Button variant="secondary" className={styles.inputButton} onClick={handleSubmit}>
+          <Button
+            variant="secondary"
+            className={styles.inputButton}
+            onClick={handleSubmit}>
             Sign In
           </Button>
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default SignIn;
+export default SignIn

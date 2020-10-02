@@ -11,15 +11,15 @@ import { modulesList } from "../../ModuleList/list"
 import { teachingAims } from "../../ModuleList/aims"
 
 interface Props {
-	year: string
-	moduleID: string
+  year: string
+  moduleID: string
 }
 
 const MODULE_AIMS_PLACEHOLDER = (
-	<p>
-		No description of the module aims could be found at this time for this
-		module.
-	</p>
+  <p>
+    No description of the module aims could be found at this time for this
+    module.
+  </p>
 )
 
 // ------------ NO WAY TO GET THIS TO WORK WITH CORS UNFORTUNATELY :(
@@ -47,77 +47,77 @@ const MODULE_AIMS_PLACEHOLDER = (
 // }
 
 const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
-	const moduleCode = moduleID.startsWith("CO") ? moduleID.slice(2) : moduleID
+  const moduleCode = moduleID.startsWith("CO") ? moduleID.slice(2) : moduleID
 
-	let [buttons, setButtons] = useState<any>([])
-	useEffect(() => {
-		const onSuccess = (data: { [k: string]: any }) => {
-			const newButtons: any[] = [
-				{
-					title: "Syllabus",
-					icon: faGlobe,
-					url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
-				},
-				{
-					title: "Piazza",
-					icon: faUserFriends,
-					url: `https://piazza.com/imperial.ac.uk/fall2021/comp${moduleID}`,
-				},
-			]
-			setButtons(newButtons)
-		}
-		request({
-			url: api.MATERIALS_RESOURCES,
-			method: methods.GET,
-			onSuccess,
-			onError: () => {
-				console.log("fail")
-			},
-			body: {
-				year: year,
-				course: moduleCode,
-			},
-		})
-	}, [moduleID, year])
+  let [buttons, setButtons] = useState<any>([])
+  useEffect(() => {
+    const onSuccess = (data: { [k: string]: any }) => {
+      const newButtons: any[] = [
+        {
+          title: "Syllabus",
+          icon: faGlobe,
+          url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
+        },
+        {
+          title: "Piazza",
+          icon: faUserFriends,
+          url: `https://piazza.com/imperial.ac.uk/fall2021/comp${moduleID}`,
+        },
+      ]
+      setButtons(newButtons)
+    }
+    request({
+      url: api.MATERIALS_RESOURCES,
+      method: methods.GET,
+      onSuccess,
+      onError: () => {
+        console.log("fail")
+      },
+      body: {
+        year: year,
+        course: moduleCode,
+      },
+    })
+  }, [moduleID, year])
 
-	return (
-		<>
-			<Dandruff
-				heading={
-					modulesList.find(({ code }) => code === moduleID)?.title || moduleID
-				}
-			/>
+  return (
+    <>
+      <Dandruff
+        heading={
+          modulesList.find(({ code }) => code === moduleID)?.title || moduleID
+        }
+      />
 
-			<h4 className={classNames(styles.moduleSectionHeader)}>Module Aims</h4>
-			<div
-				className={styles.moduleDashboardText}
-				style={{ paddingTop: "0.75rem" }}>
-				{teachingAims[moduleCode] || MODULE_AIMS_PLACEHOLDER}
-			</div>
+      <h4 className={classNames(styles.moduleSectionHeader)}>Module Aims</h4>
+      <div
+        className={styles.moduleDashboardText}
+        style={{ paddingTop: "0.75rem" }}>
+        {teachingAims[moduleCode] || MODULE_AIMS_PLACEHOLDER}
+      </div>
 
-			<h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
-			<PageButtonGroup buttons={buttons} style={{ marginTop: "1.25rem" }} />
-			{/*
-				<div className={classNames(styles.moduleSectionHeader)}>
-				  <TutorCardGroup title="Module Leaders" tutors={leaders} />
-				</div>
-			  */}
-		</>
-	)
+      <h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
+      <PageButtonGroup buttons={buttons} style={{ marginTop: "1.25rem" }} />
+      {/*
+          <div className={classNames(styles.moduleSectionHeader)}>
+            <TutorCardGroup title="Module Leaders" tutors={leaders} />
+          </div>
+        */}
+    </>
+  )
 }
 
 export default ModuleDashboard
 
 const piazzaClasses: {
-	[index: string]: string
+  [index: string]: string
 } = {
-	CO140: "k0r3c04qwhj3e",
-	CO142: "k0r3c156mj35b",
-	CO112: "k0r3by316kp6",
-	CO145: "k0r3c1h4zik5y",
-	"CO120.2": "k0r3bzfpcno23",
-	CO150: "k0r3c1t4x8k6l",
-	CO113: "k0r3byq0f68t",
-	CO141: "k0r3c0t7dak4o",
-	CO130: "k0r3bzsith2r",
+  CO140: "k0r3c04qwhj3e",
+  CO142: "k0r3c156mj35b",
+  CO112: "k0r3by316kp6",
+  CO145: "k0r3c1h4zik5y",
+  "CO120.2": "k0r3bzfpcno23",
+  CO150: "k0r3c1t4x8k6l",
+  CO113: "k0r3byq0f68t",
+  CO141: "k0r3c0t7dak4o",
+  CO130: "k0r3bzsith2r",
 }

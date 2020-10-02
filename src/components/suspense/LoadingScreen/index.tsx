@@ -1,15 +1,19 @@
-import React from "react";
-import Spinner from "react-bootstrap/Spinner";
+import React from "react"
+import Spinner from "react-bootstrap/Spinner"
 
-import WarningJumbotron from "components/suspense/WarningJumbotron";
+import WarningJumbotron from "components/suspense/WarningJumbotron"
 
 export interface LoadingScreenProps {
-	isLoaded?: Boolean;
-	error?: string;
-	successful: JSX.Element;
+  isLoaded?: Boolean
+  error?: string
+  successful: JSX.Element
 }
 
-const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoaded, error, successful }) => {
+const LoadingScreen: React.FC<LoadingScreenProps> = ({
+  isLoaded,
+  error,
+  successful,
+}) => {
   if (!isLoaded)
     return (
       <div
@@ -18,13 +22,19 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoaded, error, successf
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-        }}
-      >
-        <Spinner animation="border" variant={document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark"} />
+        }}>
+        <Spinner
+          animation="border"
+          variant={
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "light"
+              : "dark"
+          }
+        />
       </div>
-    );
-  if (error) return <WarningJumbotron message={`${error}`} />;
-  return successful;
-};
+    )
+  if (error) return <WarningJumbotron message={`${error}`} />
+  return successful
+}
 
-export default LoadingScreen;
+export default LoadingScreen

@@ -1,11 +1,11 @@
-import React, { ReactElement } from "react";
-import Form from "react-bootstrap/Form";
-import styles from "./style.module.scss";
+import React, { ReactElement } from "react"
+import Form from "react-bootstrap/Form"
+import styles from "./style.module.scss"
 
 interface Props {
-  heading: string;
-  children: (ReactElement | null)[];
-  isFirst?: boolean;
+  heading: string
+  children: (ReactElement | null)[]
+  isFirst?: boolean
 }
 
 const SettingsSection: React.FC<Props> = ({ heading, children, isFirst }) => {
@@ -14,7 +14,7 @@ const SettingsSection: React.FC<Props> = ({ heading, children, isFirst }) => {
       <h5 className={!isFirst ? styles.modalSubHeading : ""}>{heading}</h5>
       <Form className={styles.interfaceGroup}>{children}</Form>
     </>
-  );
-};
+  )
+}
 
-export default SettingsSection;
+export default SettingsSection

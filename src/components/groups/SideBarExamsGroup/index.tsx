@@ -1,12 +1,12 @@
-import React from "react";
-import SideBarTabGroup from "components/groups/SideBarTabGroup";
+import React from "react"
+import SideBarTabGroup from "components/groups/SideBarTabGroup"
 import {
   faArchive,
   faGavel,
   faFont,
   faPrint,
   faEllipsisH,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/free-solid-svg-icons"
 
 const SideBarExamsGroup: React.FC = () => {
   let examButtons = [
@@ -35,11 +35,9 @@ const SideBarExamsGroup: React.FC = () => {
       icon: faEllipsisH,
       externalURL: `https://exams.doc.ic.ac.uk`,
     },
-  ];
+  ]
 
-  return (
-      <SideBarTabGroup title="Pages" buttons={examButtons} />
-  );
-};
+  return <SideBarTabGroup title="Pages" buttons={examButtons} />
+}
 
-export default SideBarExamsGroup;
+export default SideBarExamsGroup

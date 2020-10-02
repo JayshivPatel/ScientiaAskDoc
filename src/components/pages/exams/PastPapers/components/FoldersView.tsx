@@ -1,28 +1,26 @@
-import React from "react";
-import SelectionView, {
-  SelectionProps
-} from "components/pages/SelectionView";
-import FoldersRow from "components/rows/FoldersRow";
-import { useHistory, useLocation } from "react-router-dom";
-import { Folder } from "constants/types";
+import React from "react"
+import SelectionView, { SelectionProps } from "components/pages/SelectionView"
+import FoldersRow from "components/rows/FoldersRow"
+import { useHistory, useLocation } from "react-router-dom"
+import { Folder } from "constants/types"
 
 export interface FoldersViewProps {
-  folders: Folder[];
-  scope: string;
-  searchText: string;
+  folders: Folder[]
+  scope: string
+  searchText: string
 }
 
 const FoldersView: React.FC<FoldersViewProps> = ({
   folders,
   scope,
-  searchText
+  searchText,
 }) => {
-  let history = useHistory();
-  let location = useLocation();
+  let history = useHistory()
+  let location = useLocation()
 
   function handleFolderClick(foldersId: number) {
-    let title = folders.filter(({ id }) => id === foldersId)[0].title;
-    history.push(`${location.pathname}/${title}`);
+    let title = folders.filter(({ id }) => id === foldersId)[0].title
+    history.push(`${location.pathname}/${title}`)
   }
 
   if (searchText === "" && scope === "" && folders.length > 0) {
@@ -32,12 +30,12 @@ const FoldersView: React.FC<FoldersViewProps> = ({
         onDownloadClick={() => {}}
         onItemClick={handleFolderClick}
         selectionItems={folders}
-				render={(select: SelectionProps) => <FoldersRow select={select} />}
-				disableSelection={true}
+        render={(select: SelectionProps) => <FoldersRow select={select} />}
+        disableSelection={true}
       />
-    );
+    )
   }
-  return null;
-};
+  return null
+}
 
-export default FoldersView;
+export default FoldersView

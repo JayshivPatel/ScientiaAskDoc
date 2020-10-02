@@ -1,10 +1,10 @@
-import React from "react";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
-import FolderCard from "components/cards/FolderCard";
-import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
-import { faFolder } from "@fortawesome/free-solid-svg-icons";
-import { SelectionProps } from "../../pages/SelectionView";
+import React from "react"
+import Row from "react-bootstrap/esm/Row"
+import Col from "react-bootstrap/esm/Col"
+import FolderCard from "components/cards/FolderCard"
+import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons"
+import { faFolder } from "@fortawesome/free-solid-svg-icons"
+import { SelectionProps } from "../../pages/SelectionView"
 
 const FoldersRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
   return (
@@ -13,16 +13,14 @@ const FoldersRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
         marginTop: "0.625rem",
         marginRight: "-0.625rem",
         marginLeft: "-0.625rem",
-      }}
-    >
+      }}>
       {select.selectionItems.map(({ title, id }) => (
         <Col
           xs={6}
           sm={6}
           md={3}
           key={id}
-          style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}
-        >
+          style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}>
           <FolderCard
             title={title}
             icon={
@@ -34,8 +32,8 @@ const FoldersRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
                 : faFolder
             }
             onIconClick={(e) => {
-              e.stopPropagation();
-              select.handleIconClick(id);
+              e.stopPropagation()
+              select.handleIconClick(id)
             }}
             onClick={() => select.handleCardClick(id)}
             onMouseOver={() => select.handleMouseOver(id)}
@@ -44,7 +42,7 @@ const FoldersRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
         </Col>
       ))}
     </Row>
-  );
-};
+  )
+}
 
-export default FoldersRow;
+export default FoldersRow

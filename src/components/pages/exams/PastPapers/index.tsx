@@ -1,88 +1,88 @@
-import React, { Suspense } from "react";
-import SearchBox from "components/headings/SearchBox";
-import QuickAccessView from "./components/QuickAccessView";
-import FoldersView from "./components/FoldersView";
-import MyBreadcrumbs from "components/headings/MyBreadcrumbs";
-import LoadingScreen from "components/suspense/LoadingScreen";
-import { BasicResource, Folder, Module } from "constants/types";
-const CurrentDirectoryView = React.lazy(
-  () => import("./components/CurrentDirectoryView")
-);
+import React, { Suspense } from "react"
+import SearchBox from "components/headings/SearchBox"
+import QuickAccessView from "./components/QuickAccessView"
+import FoldersView from "./components/FoldersView"
+import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
+import LoadingScreen from "components/suspense/LoadingScreen"
+import { BasicResource, Folder, Module } from "constants/types"
+const CurrentDirectoryView = React.lazy(() =>
+  import("./components/CurrentDirectoryView")
+)
 
 export interface ResourcesProps {
-  scope?: string;
-	view: string;
-	modules: Module[];
+  scope?: string
+  view: string
+  modules: Module[]
 }
 
 export interface ResourceState {
-  error: any;
-  isLoaded: Boolean;
-  resources: BasicResource[];
-  searchText: string;
-  folders: Folder[];
+  error: any
+  isLoaded: Boolean
+  resources: BasicResource[]
+  searchText: string
+  folders: Folder[]
 }
 
 class PastPapers extends React.Component<ResourcesProps, ResourceState> {
   constructor(props: ResourcesProps) {
-    super(props);
+    super(props)
     this.state = {
       error: null,
       isLoaded: false,
       resources: [],
       folders: [],
       searchText: "",
-    };
+    }
   }
 
   loadResources() {
     fetch("/jsons/folders.json")
       .then((response) => response.json())
       .then((f) => {
-        f.forEach((folder: Folder) => this.loadFromFolder(folder.title));
-        this.setState({ folders: f, isLoaded: true });
+        f.forEach((folder: Folder) => this.loadFromFolder(folder.title))
+        this.setState({ folders: f, isLoaded: true })
       })
       .catch((error) => {
-        this.setState({ error: error, isLoaded: true });
-      });
+        this.setState({ error: error, isLoaded: true })
+      })
   }
 
   loadFromFolder(title: string) {
     fetch(`/jsons/${title.trim()}.json`)
       .then((response) => response.json())
       .then((r) => {
-        const resource = this.state.resources.slice();
-        this.setState({ resources: resource.concat(r) });
+        const resource = this.state.resources.slice()
+        this.setState({ resources: resource.concat(r) })
       })
       .catch((error) => {
-        this.setState({ error: title + error });
-      });
+        this.setState({ error: title + error })
+      })
   }
 
   componentDidMount() {
-    this.loadResources();
+    this.loadResources()
   }
 
   includeInSearchResult(item: BasicResource, searchText: string) {
-		let rx = /([a-z]+)\(([^)]+)\)/gi;
-    let match: RegExpExecArray | null;
-    let title = item.title.toLowerCase();
-    let tags = item.tags.map((tag) => tag.toLowerCase());
+    let rx = /([a-z]+)\(([^)]+)\)/gi
+    let match: RegExpExecArray | null
+    let title = item.title.toLowerCase()
+    let tags = item.tags.map((tag) => tag.toLowerCase())
 
     while ((match = rx.exec(searchText)) !== null) {
       switch (match[1]) {
         case "class":
-          const matchSafe = match as RegExpExecArray;
+          const matchSafe = match as RegExpExecArray
           if (!tags.some((tag) => tag === matchSafe[2])) {
-            return false;
+            return false
           }
-          break;
+          break
       }
     }
-    let rest = searchText.replace(rx, "").trim();
+    let rest = searchText.replace(rx, "").trim()
     return (
       tags.some((tag) => tag.indexOf(rest) !== -1) || title.indexOf(rest) !== -1
-    );
+    )
   }
 
   getSearchPrompts() {
@@ -104,22 +104,22 @@ class PastPapers extends React.Component<ResourcesProps, ResourceState> {
       { name: "phd", value: "class(phd)" },
       { name: "x1", value: "class(x1)" },
       { name: "x2", value: "class(x2)" },
-    ];
-    const prompts = [{ title: "Classes", list: classList }];
+    ]
+    const prompts = [{ title: "Classes", list: classList }]
 
-    return prompts;
+    return prompts
   }
 
   handleResourceClick(id: number) {
     let win = window.open(
       this.state.resources.find((r) => r.id === id)?.path,
       "_blank"
-    );
-    win?.focus();
+    )
+    win?.focus()
   }
 
   render() {
-    let scope = this.props.scope || "";		
+    let scope = this.props.scope || ""
     const view = () => {
       switch (this.props.view) {
         default:
@@ -147,13 +147,13 @@ class PastPapers extends React.Component<ResourcesProps, ResourceState> {
                 resources={this.state.resources}
                 scope={scope}
                 searchText={this.state.searchText}
-								onItemClick={(id) => this.handleResourceClick(id)}
-								modules={this.props.modules}
+                onItemClick={(id) => this.handleResourceClick(id)}
+                modules={this.props.modules}
               />
             </>
-          );
+          )
       }
-    };
+    }
 
     return (
       <>
@@ -173,8 +173,8 @@ class PastPapers extends React.Component<ResourcesProps, ResourceState> {
           successful={view()}
         />
       </>
-    );
+    )
   }
 }
 
-export default PastPapers;
+export default PastPapers

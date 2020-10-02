@@ -1,5 +1,5 @@
-import React from "react";
-import Dandruff from "components/headings/Dandruff";
+import React from "react"
+import Dandruff from "components/headings/Dandruff"
 
 const ExamGrading: React.FC = () => {
   return (
@@ -67,7 +67,7 @@ const ExamGrading: React.FC = () => {
         </table>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ExamGrading;
+export default ExamGrading

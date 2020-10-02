@@ -4,17 +4,17 @@ import {
   faFileVideo,
   faLink,
   IconDefinition,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/free-solid-svg-icons"
 
 export function resourceTypeToIcon(type: string): IconDefinition {
   switch (type) {
     case "pdf":
-      return faFilePdf;
+      return faFilePdf
     case "video":
-      return faFileVideo;
+      return faFileVideo
     case "link":
-      return faLink;
+      return faLink
     default:
-      return faFileAlt;
+      return faFileAlt
   }
 }

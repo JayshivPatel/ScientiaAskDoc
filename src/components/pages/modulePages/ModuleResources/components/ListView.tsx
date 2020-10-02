@@ -1,20 +1,18 @@
-import React from "react";
-import SelectionView, {
-  SelectionProps,
-} from "components/pages/SelectionView";
-import CategoryList from "components/sections/CategoryList";
-import CategoryHeader from "components/headings/CategoryHeader";
-import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
-import { Folder, Resource } from "constants/types";
+import React from "react"
+import SelectionView, { SelectionProps } from "components/pages/SelectionView"
+import CategoryList from "components/sections/CategoryList"
+import CategoryHeader from "components/headings/CategoryHeader"
+import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons"
+import { Folder, Resource } from "constants/types"
 
 export interface ListViewProps {
-  folders: Folder[];
-  resources: Resource[];
-  searchText: string;
-  onDownloadClick: (identifiers: number[]) => void;
-  onSectionDownloadClick: (title: string) => void;
-  onItemClick: (identifier: number) => void;
-  includeInSearchResult: (item: Resource, searchText: string) => boolean;
+  folders: Folder[]
+  resources: Resource[]
+  searchText: string
+  onDownloadClick: (identifiers: number[]) => void
+  onSectionDownloadClick: (title: string) => void
+  onItemClick: (identifier: number) => void
+  includeInSearchResult: (item: Resource, searchText: string) => boolean
 }
 
 const ListView: React.FC<ListViewProps> = ({
@@ -25,12 +23,11 @@ const ListView: React.FC<ListViewProps> = ({
   onItemClick,
   includeInSearchResult,
 }) => {
-
-  let filesContent: Resource[] = resources;
+  let filesContent: Resource[] = resources
   if (searchText !== "") {
     filesContent = filesContent.filter((item) =>
       includeInSearchResult(item, searchText.toLowerCase())
-    );
+    )
   }
 
   return (
@@ -44,21 +41,21 @@ const ListView: React.FC<ListViewProps> = ({
           {folders.map(({ title, id }) => {
             let categoryItems = filesContent.filter(
               (res) => res.folder === title
-            );
+            )
             function isAllSelected(): boolean {
-              let isSelected = select.state.isSelected;
-              return categoryItems.every((item) => isSelected[item.id]);
+              let isSelected = select.state.isSelected
+              return categoryItems.every((item) => isSelected[item.id])
             }
 
             function onSelectAllClick() {
-              let setValue = !isAllSelected();
+              let setValue = !isAllSelected()
               let isSelected = JSON.parse(
                 JSON.stringify(select.state.isSelected)
-              );
+              )
               for (let item in categoryItems) {
-                isSelected[categoryItems[item].id] = setValue;
+                isSelected[categoryItems[item].id] = setValue
               }
-              select.setIsSelected(isSelected);
+              select.setIsSelected(isSelected)
             }
 
             return (
@@ -67,11 +64,11 @@ const ListView: React.FC<ListViewProps> = ({
                   heading={title}
                   onSelectAllClick={onSelectAllClick}
                   selectAllIcon={isAllSelected() ? faCheckSquare : faSquare}
-									checkBoxColor={
-										select.isAnySelected()
-											? "var(--secondary-text-color)"
-											: "var(--secondary-button-text)"
-									}
+                  checkBoxColor={
+                    select.isAnySelected()
+                      ? "var(--secondary-text-color)"
+                      : "var(--secondary-button-text)"
+                  }
                 />
                 <CategoryList
                   categoryItems={categoryItems}
@@ -82,12 +79,12 @@ const ListView: React.FC<ListViewProps> = ({
                   select={select}
                 />
               </div>
-            );
+            )
           })}
         </>
       )}
     />
-  );
-};
+  )
+}
 
-export default ListView;
+export default ListView

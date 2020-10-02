@@ -1,16 +1,14 @@
-import React from "react";
-import SelectionView, {
-  SelectionProps
-} from "components/pages/SelectionView";
-import CurrentDirectoryRow from "components/rows/CurrentDirectoryRow";
-import { BasicResource } from "constants/types";
+import React from "react"
+import SelectionView, { SelectionProps } from "components/pages/SelectionView"
+import CurrentDirectoryRow from "components/rows/CurrentDirectoryRow"
+import { BasicResource } from "constants/types"
 
 export interface CurrentDirectoryViewProps {
-  resources: BasicResource[];
-  scope: string;
-  searchText: string;
-  onItemClick: (identifier: number) => void;
-  includeInSearchResult: (item: BasicResource, searchText: string) => boolean;
+  resources: BasicResource[]
+  scope: string
+  searchText: string
+  onItemClick: (identifier: number) => void
+  includeInSearchResult: (item: BasicResource, searchText: string) => boolean
 }
 
 const CurrentDirectoryView: React.FC<CurrentDirectoryViewProps> = ({
@@ -18,16 +16,16 @@ const CurrentDirectoryView: React.FC<CurrentDirectoryViewProps> = ({
   scope,
   searchText,
   onItemClick,
-  includeInSearchResult
+  includeInSearchResult,
 }) => {
-  let filesContent: BasicResource[] = resources;
+  let filesContent: BasicResource[] = resources
   if (scope !== "") {
-    filesContent = filesContent.filter(({ folder }) => folder === scope);
+    filesContent = filesContent.filter(({ folder }) => folder === scope)
   }
   if (searchText !== "") {
-    filesContent = filesContent.filter(item =>
+    filesContent = filesContent.filter((item) =>
       includeInSearchResult(item, searchText.toLowerCase())
-    );
+    )
   }
 
   if (scope !== "" || searchText !== "") {
@@ -36,15 +34,15 @@ const CurrentDirectoryView: React.FC<CurrentDirectoryViewProps> = ({
         heading="Files"
         onItemClick={onItemClick}
         onDownloadClick={() => {}}
-				selectionItems={filesContent}
-				disableSelection={true}
+        selectionItems={filesContent}
+        disableSelection={true}
         render={(select: SelectionProps) => (
           <CurrentDirectoryRow select={select} />
         )}
       />
-    );
+    )
   }
-  return null;
-};
+  return null
+}
 
-export default CurrentDirectoryView;
+export default CurrentDirectoryView

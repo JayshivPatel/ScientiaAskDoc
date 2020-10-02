@@ -1,17 +1,17 @@
-import React from "react";
-import Form from "react-bootstrap/Form";
-import styles from "./style.module.scss";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Button from "react-bootstrap/Button";
+import React from "react"
+import Form from "react-bootstrap/Form"
+import styles from "./style.module.scss"
+import ButtonGroup from "react-bootstrap/ButtonGroup"
+import Button from "react-bootstrap/Button"
 
 interface Props {
-  heading: string;
-  onClick: (value: any, e?: any) => void;
-  value: any;
+  heading: string
+  onClick: (value: any, e?: any) => void
+  value: any
   buttons: {
-    value: any;
-    text: string;
-  }[];
+    value: any
+    text: string
+  }[]
 }
 
 const ButtonGroupSetting: React.FC<Props> = ({
@@ -30,14 +30,13 @@ const ButtonGroupSetting: React.FC<Props> = ({
             active={value === button.value}
             onClick={(e) => onClick(button.value, e)}
             key={button.value}
-            variant="secondary"
-          >
+            variant="secondary">
             {button.text}
           </Button>
         ))}
       </ButtonGroup>
     </Form.Group>
-  );
-};
+  )
+}
 
-export default ButtonGroupSetting;
+export default ButtonGroupSetting

@@ -1,18 +1,18 @@
-import React from "react";
-import styles from "./style.module.scss";
+import React from "react"
+import styles from "./style.module.scss"
 
 export interface NoticeItemProps {
-  heading: string;
-  user: string;
-  time: string;
-  body: string;
+  heading: string
+  user: string
+  time: string
+  body: string
 }
 
 const NoticeItem: React.FC<NoticeItemProps> = ({
   heading,
   user,
   time,
-  body
+  body,
 }: NoticeItemProps) => {
   return (
     <>
@@ -25,7 +25,7 @@ const NoticeItem: React.FC<NoticeItemProps> = ({
         <p className={styles.noticeBody}>{body}</p>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default NoticeItem;
+export default NoticeItem

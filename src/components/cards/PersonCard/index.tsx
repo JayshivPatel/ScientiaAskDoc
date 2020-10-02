@@ -1,7 +1,7 @@
-import React from "react";
-import Image from "react-bootstrap/Image";
-import Container from "react-bootstrap/Container";
-import styles from "./style.module.scss";
+import React from "react"
+import Image from "react-bootstrap/Image"
+import Container from "react-bootstrap/Container"
+import styles from "./style.module.scss"
 
 const PersonCard: React.FC = () => {
   return (
@@ -22,10 +22,10 @@ const PersonCard: React.FC = () => {
         </div>
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default PersonCard;
+export default PersonCard
 
 const userInfo = {
   name: "Branden Ritter",
@@ -34,5 +34,5 @@ const userInfo = {
   cid: "01343896",
   year: "First Year Undergraduate",
   dep: "Department of Computing",
-  course: "MEng Computing (AI)"
-};
+  course: "MEng Computing (AI)",
+}

@@ -1,17 +1,15 @@
-import React from "react";
-import SelectionView, {
-  SelectionProps
-} from "components/pages/SelectionView";
-import CurrentDirectoryRow from "components/rows/CurrentDirectoryRow";
-import { Resource } from "constants/types";
+import React from "react"
+import SelectionView, { SelectionProps } from "components/pages/SelectionView"
+import CurrentDirectoryRow from "components/rows/CurrentDirectoryRow"
+import { Resource } from "constants/types"
 
 export interface CurrentDirectoryViewProps {
-  resources: Resource[];
-  scope: string;
-  searchText: string;
-  onDownloadClick: (identifiers: number[]) => void;
-  onItemClick: (identifier: number) => void;
-  includeInSearchResult: (item: Resource, searchText: string) => boolean;
+  resources: Resource[]
+  scope: string
+  searchText: string
+  onDownloadClick: (identifiers: number[]) => void
+  onItemClick: (identifier: number) => void
+  includeInSearchResult: (item: Resource, searchText: string) => boolean
 }
 
 const CurrentDirectoryView: React.FC<CurrentDirectoryViewProps> = ({
@@ -20,16 +18,16 @@ const CurrentDirectoryView: React.FC<CurrentDirectoryViewProps> = ({
   searchText,
   onDownloadClick,
   onItemClick,
-  includeInSearchResult
+  includeInSearchResult,
 }) => {
-  let filesContent: Resource[] = resources;
+  let filesContent: Resource[] = resources
   if (scope !== "") {
-    filesContent = filesContent.filter(({ folder }) => folder === scope);
+    filesContent = filesContent.filter(({ folder }) => folder === scope)
   }
   if (searchText !== "") {
-    filesContent = filesContent.filter(item =>
+    filesContent = filesContent.filter((item) =>
       includeInSearchResult(item, searchText.toLowerCase())
-    );
+    )
   }
 
   if (scope !== "" || searchText !== "") {
@@ -43,9 +41,9 @@ const CurrentDirectoryView: React.FC<CurrentDirectoryViewProps> = ({
           <CurrentDirectoryRow select={select} />
         )}
       />
-    );
+    )
   }
-  return null;
-};
+  return null
+}
 
-export default CurrentDirectoryView;
+export default CurrentDirectoryView

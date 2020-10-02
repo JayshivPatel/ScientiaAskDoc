@@ -12,7 +12,7 @@
   color: var(--lecture-text);
   background: var(--lecture-background);
 }
-  
+
 .tagTeal {
   color: var(--deadline-text);
   background: var(--deadline-background);
@@ -54,7 +54,7 @@
 
 .sectionHeaderButton:global(.active),
 .sectionHeaderButton:active {
-  background:var(--secondary-text-color) !important;
+  background: var(--secondary-text-color) !important;
   font-weight: 500;
   text-align: left;
   border-width: 0rem;
@@ -62,10 +62,11 @@
   line-height: 1.375rem;
 }
 
-.sectionHeaderButton:hover, .sectionHeaderButton:focus {
-	color: var(--secondary-text-color) !important;
+.sectionHeaderButton:hover,
+.sectionHeaderButton:focus {
+  color: var(--secondary-text-color) !important;
   background-color: var(--secondary-background-color) !important;
-	box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 .centeredFlex {

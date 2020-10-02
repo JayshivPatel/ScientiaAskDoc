@@ -1,8 +1,8 @@
-import React from "react";
-import MyBreadcrumbs from "components/headings/MyBreadcrumbs";
-import PersonCard from "components/cards/PersonCard";
-import PageButtonGroup from "components/groups/PageButtonGroup";
-import TutorCardGroup from "components/groups/TutorCardGroup";
+import React from "react"
+import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
+import PersonCard from "components/cards/PersonCard"
+import PageButtonGroup from "components/groups/PageButtonGroup"
+import TutorCardGroup from "components/groups/TutorCardGroup"
 
 import {
   faGlobe,
@@ -12,7 +12,7 @@ import {
   faDatabase,
   faQuestionCircle,
   faBug,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/free-solid-svg-icons"
 
 const Dashboard: React.FC = () => {
   return (
@@ -23,13 +23,12 @@ const Dashboard: React.FC = () => {
       <div
         style={{
           marginTop: "1.875rem",
-        }}
-      >
-        <TutorCardGroup title="Tutors" tutors={tutors}/>
+        }}>
+        <TutorCardGroup title="Tutors" tutors={tutors} />
       </div>
     </>
-  );
-};
+  )
+}
 
 const buttons = [
   {
@@ -72,13 +71,13 @@ const buttons = [
     icon: faBug,
     url: "https://gitlab.doc.ic.ac.uk/edtech/scientia/-/issues/new",
   },
-];
+]
 
 const tutors: {
-  name: string;
-  email: string;
-  address: string;
-  image: string;
+  name: string
+  email: string
+  address: string
+  image: string
 }[] = [
   {
     name: "Dr. Zahid Barr",
@@ -97,8 +96,8 @@ const tutors: {
     email: "subhaan.wicks16@imperial.ac.uk",
     address: "Huxley Building",
     image: "/images/tutors/tutor-3.png",
-	},
-	{
+  },
+  {
     name: "Mr. Jack Wu",
     email: "jack.wu16@imperial.ac.uk",
     address: "Huxley Building",
@@ -110,5 +109,5 @@ const tutors: {
     address: "Huxley Building",
     image: "/images/tutors/tutor-5.jpeg",
   },
-];
-export default Dashboard;
+]
+export default Dashboard

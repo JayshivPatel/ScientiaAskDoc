@@ -1,15 +1,15 @@
 @import "assets/scss/custom";
 @import "assets/scss/global";
 
-
 .iconButton.sectionHeaderButton {
-    background-color: $gray-800;
-    color: $white;
-    margin-left: 0px;
+  background-color: $gray-800;
+  color: $white;
+  margin-left: 0px;
 }
 
-.iconButton.sectionHeaderButton:hover, .iconButton.sectionHeaderButton:focus {
-    background-color: $white;
-    color: $gray-700 !important;
-    box-shadow: none !important;
+.iconButton.sectionHeaderButton:hover,
+.iconButton.sectionHeaderButton:focus {
+  background-color: $white;
+  color: $gray-700 !important;
+  box-shadow: none !important;
 }

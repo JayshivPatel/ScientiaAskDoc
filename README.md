@@ -2,17 +2,18 @@
 
 > Scientia project - A central hub for the EdTech services that are focused on enhancing the remote learning experience for students and faculty alike.
 
-_🚧 This platform is currently under development! 🚧_ 
+_🚧 This platform is currently under development! 🚧_
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Setup
 
-First, run `yarn install` to install the node modules used for the frontend. 
+First, run `yarn install` to install the node modules used for the frontend.
 
 In order for the API links to work, the following repository branches need to be cloned and run separately:
 
 ### 1. materials@scientia-integration
+
 ```shell
 # Clone the repository and checkout to the relevant branch
 git clone https://gitlab.doc.ic.ac.uk/edtech/materials.git
@@ -24,6 +25,7 @@ python3 -m venv venv
 ```
 
 ### 2. scientia-calendar
+
 ```shell
 # Clone the repository
 git clone https://gitlab.doc.ic.ac.uk/zd419/scientia-calendar.git
@@ -35,13 +37,15 @@ nodemon index.js
 ```
 
 ### 3. Gather past paper data
+
 The jsons containing past exam papers exists in `public/jsons`, but the information might be outdated when you're running the project. To refresh the data:
-1. Delete `20XX-20XX.json` and `folders.json` from `public/jsons`. 
-2. Open [https://exams.doc.ic.ac.uk/](https://exams.doc.ic.ac.uk/). 
-3. Copy `scripts/pastpapers.js` into the browser console, and press enter to run. 
-4. Remember to enable multiple file download for the site. 
-5. Copy the downloaded jsons back to `public/jsons`. 
-6. Profit. 
+
+1. Delete `20XX-20XX.json` and `folders.json` from `public/jsons`.
+2. Open [https://exams.doc.ic.ac.uk/](https://exams.doc.ic.ac.uk/).
+3. Copy `scripts/pastpapers.js` into the browser console, and press enter to run.
+4. Remember to enable multiple file download for the site.
+5. Copy the downloaded jsons back to `public/jsons`.
+6. Profit.
 
 ## To run frontend
 

@@ -1,30 +1,30 @@
-import React from "react";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import styles from "./style.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { CalendarEvent } from "constants/types";
-import { toEventDateTime } from "utils/functions";
+import React from "react"
+import Modal from "react-bootstrap/Modal"
+import Button from "react-bootstrap/Button"
+import styles from "./style.module.scss"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faTimes } from "@fortawesome/free-solid-svg-icons"
+import { CalendarEvent } from "constants/types"
+import { toEventDateTime } from "utils/functions"
 interface Props {
-  event?: CalendarEvent;
-  show: boolean;
-  onHide: any;
+  event?: CalendarEvent
+  show: boolean
+  onHide: any
 }
 
 const CalendarModal: React.FC<Props> = ({ event, show, onHide }) => {
-  if (!event) return null;
-  let assessmentStyle = styles.blueCard;
+  if (!event) return null
+  let assessmentStyle = styles.blueCard
   switch (event.catorgory) {
     case "Lecture":
-      assessmentStyle = styles.blueCard;
-      break;
+      assessmentStyle = styles.blueCard
+      break
     case "Laboratory Session":
-      assessmentStyle = styles.redCard;
-      break;
+      assessmentStyle = styles.redCard
+      break
     default:
-      assessmentStyle = styles.tealCard;
-      break;
+      assessmentStyle = styles.tealCard
+      break
   }
 
   return (
@@ -33,14 +33,12 @@ const CalendarModal: React.FC<Props> = ({ event, show, onHide }) => {
       dialogClassName={styles.modal}
       show={show}
       onHide={onHide}
-      centered
-    >
+      centered>
       <Modal.Header className={styles.modalHeader}>
         <Button
           variant="secondary"
           className={styles.sectionHeaderButton}
-          onClick={onHide}
-        >
+          onClick={onHide}>
           <FontAwesomeIcon className={styles.buttonIcon} icon={faTimes} />
         </Button>
       </Modal.Header>
@@ -75,7 +73,7 @@ const CalendarModal: React.FC<Props> = ({ event, show, onHide }) => {
         </div>
       </Modal.Body>
     </Modal>
-  );
-};
+  )
+}
 
-export default CalendarModal;
+export default CalendarModal

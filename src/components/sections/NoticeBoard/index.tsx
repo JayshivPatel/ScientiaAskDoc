@@ -1,30 +1,30 @@
-import React from "react";
-import NoticeItem from "components/sections/NoticeBoard/components/NoticeItem";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/esm/Row";
+import React from "react"
+import NoticeItem from "components/sections/NoticeBoard/components/NoticeItem"
+import Col from "react-bootstrap/Col"
+import Row from "react-bootstrap/esm/Row"
 
 const NoticeBoard: React.FC = () => {
   return (
     <>
       <h4>Notice Board</h4>
-			<Row>
-      {noticeItems.map(({ heading, user, time, body }) => (
-        <Col md={6}>
-          <NoticeItem
-            key={heading}
-            heading={heading}
-            user={user}
-            time={time}
-            body={body}
-          />
-        </Col>
-      ))}
-			</Row>
+      <Row>
+        {noticeItems.map(({ heading, user, time, body }) => (
+          <Col md={6}>
+            <NoticeItem
+              key={heading}
+              heading={heading}
+              user={user}
+              time={time}
+              body={body}
+            />
+          </Col>
+        ))}
+      </Row>
     </>
-  );
-};
+  )
+}
 
-export default NoticeBoard;
+export default NoticeBoard
 
 const noticeItems = [
   {
@@ -48,4 +48,4 @@ const noticeItems = [
     body:
       "The exams will still be considered as exams, even though they are now online, so all stated pass requirements still apply. To pass a core module, it is 40% overall, i.e. coursework + exams combined at 15% + 85%. To pass 161, it is 50% overall; the percentage breakdown is on the website.",
   },
-];
+]

@@ -1,17 +1,17 @@
-import React from "react";
-import Nav from "react-bootstrap/Nav";
-import { NavLink } from "react-router-dom";
-import styles from "./style.module.scss";
+import React from "react"
+import Nav from "react-bootstrap/Nav"
+import { NavLink } from "react-router-dom"
+import styles from "./style.module.scss"
 
 export interface NavBarItemProps {
   page: {
-    name: string;
-    path: string;
-  };
+    name: string
+    path: string
+  }
 }
 
 const NavBarTabItem: React.FC<NavBarItemProps> = ({
-  page
+  page,
 }: NavBarItemProps) => {
   return (
     <Nav.Item>
@@ -19,12 +19,11 @@ const NavBarTabItem: React.FC<NavBarItemProps> = ({
         as={NavLink}
         activeClassName="active"
         to={page.path}
-        className={styles.pageButton}
-      >
+        className={styles.pageButton}>
         {page.name}
       </Nav.Link>
     </Nav.Item>
-  );
-};
+  )
+}
 
-export default NavBarTabItem;
+export default NavBarTabItem

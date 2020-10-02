@@ -27,8 +27,8 @@
   border-radius: 0.5rem !important;
   background: transparent;
   border-width: 0rem;
-	padding: 0.5rem;
-	padding-top: 0;
+  padding: 0.5rem;
+  padding-top: 0;
 }
 
 .fileCard :global(.card-title) {
@@ -49,8 +49,8 @@
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
 
-	height: 120px;
-	object-fit: cover;
+  height: 120px;
+  object-fit: cover;
 }
 
 .fileRow {
@@ -60,7 +60,7 @@
 }
 
 @media (max-width: 576px) {
-	.fileCard :global(.card-img-top) {
-		height: 100px;
-	}
+  .fileCard :global(.card-img-top) {
+    height: 100px;
+  }
 }

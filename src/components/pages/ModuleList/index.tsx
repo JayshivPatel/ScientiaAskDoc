@@ -9,18 +9,18 @@ import Dandruff from "components/headings/Dandruff"
 import { Module } from "constants/types"
 
 export interface ModuleListProps {
-	modules: Module[]
-	modulesFilter: String
+  modules: Module[]
+  modulesFilter: String
 }
 
 const ModuleList: React.FC<ModuleListProps> = ({
-	modules,
-	modulesFilter,
+  modules,
+  modulesFilter,
 }: ModuleListProps) => {
-	return (
-		<>
-			<Dandruff heading="Modules" />
-			{/*
+  return (
+    <>
+      <Dandruff heading="Modules" />
+      {/*
           <h4 className={classNames(styles.moduleSectionHeader)}>
             First Year Undergraduate
           </h4>
@@ -32,23 +32,23 @@ const ModuleList: React.FC<ModuleListProps> = ({
           </p>
       */}
 
-			<h4 className={classNames(styles.moduleSectionHeader)}>Your modules</h4>
-			<p className={classNames(styles.moduleParagraph)}>
-				These are the modules you are currently enrolled for. Click on any to
-				access the relevant teaching materials and resources.
-			</p>
-			<Row style={{ marginLeft: "-0.625rem", marginRight: "-0.625rem" }}>
-				{modules
-					.filter(
-						({ progressStatus }) =>
-							modulesFilter === "" || progressStatus === modulesFilter
-					)
-					.map((module) => (
-						<ModuleCard module={module} key={module.code} />
-					))}
-			</Row>
-		</>
-	)
+      <h4 className={classNames(styles.moduleSectionHeader)}>Your modules</h4>
+      <p className={classNames(styles.moduleParagraph)}>
+        These are the modules you are currently enrolled for. Click on any to
+        access the relevant teaching materials and resources.
+      </p>
+      <Row style={{ marginLeft: "-0.625rem", marginRight: "-0.625rem" }}>
+        {modules
+          .filter(
+            ({ progressStatus }) =>
+              modulesFilter === "" || progressStatus === modulesFilter
+          )
+          .map((module) => (
+            <ModuleCard module={module} key={module.code} />
+          ))}
+      </Row>
+    </>
+  )
 }
 
 export default ModuleList

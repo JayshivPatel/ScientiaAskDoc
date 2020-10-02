@@ -1,22 +1,22 @@
-import React from "react";
-import styles from "./style.module.scss";
-import classNames from "classnames";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react"
+import styles from "./style.module.scss"
+import classNames from "classnames"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faBullhorn,
   faExclamationCircle,
   faCheckCircle,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/free-solid-svg-icons"
 
 export interface TimelineEventProps {
-  title: string;
-  prefix: string;
-  assessment: string;
-  status: string;
-  startColumn: number;
-  endColumn: number;
-  rowNumber: number;
-  onClick: (event: React.MouseEvent) => void;
+  title: string
+  prefix: string
+  assessment: string
+  status: string
+  startColumn: number
+  endColumn: number
+  rowNumber: number
+  onClick: (event: React.MouseEvent) => void
 }
 
 const EventCard: React.FC<TimelineEventProps> = ({
@@ -29,47 +29,47 @@ const EventCard: React.FC<TimelineEventProps> = ({
   rowNumber,
   onClick,
 }) => {
-  let icon = undefined;
-  let cardColour = "blue";
-  let borderColour = "";
-  let isSingleDay = endColumn - startColumn < 2;
+  let icon = undefined
+  let cardColour = "blue"
+  let borderColour = ""
+  let isSingleDay = endColumn - startColumn < 2
   switch (assessment) {
     case "required":
-      cardColour = "blue";
-      break;
+      cardColour = "blue"
+      break
     case "assessed":
-      cardColour = "teal";
-      break;
+      cardColour = "teal"
+      break
     case "group":
-      cardColour = "pink";
-      break;
+      cardColour = "pink"
+      break
     case "unassessed":
-      cardColour = "cyan";
-      break;
+      cardColour = "cyan"
+      break
     case "exam":
-      cardColour = "indigo";
-      break;
+      cardColour = "indigo"
+      break
   }
 
   switch (status) {
     case "due":
-      borderColour = "text";
-      break;
+      borderColour = "text"
+      break
     case "unreleased":
-      borderColour = "background";
-      break;
+      borderColour = "background"
+      break
     case "late":
-      borderColour = "text";
-      icon = faBullhorn;
-      break;
+      borderColour = "text"
+      icon = faBullhorn
+      break
     case "missed":
-      borderColour = "background";
-      icon = faExclamationCircle;
-      break;
+      borderColour = "background"
+      icon = faExclamationCircle
+      break
     case "complete":
-      borderColour = "background";
-      icon = faCheckCircle;
-      break;
+      borderColour = "background"
+      icon = faCheckCircle
+      break
   }
   return (
     <div
@@ -84,21 +84,18 @@ const EventCard: React.FC<TimelineEventProps> = ({
         backgroundColor: `var(--${cardColour}-background)`,
         color: `var(--${cardColour}-text)`,
         borderColor: `var(--${cardColour}-${borderColour})`,
-      }}
-    >
+      }}>
       {(!isSingleDay || !icon) && (
         <span
           className={styles.eventTitle}
           style={{
             fontSize: isSingleDay ? "0rem" : "1rem",
-          }}
-        >
+          }}>
           <span
             className={styles.eventPrefix}
             style={{
               fontSize: isSingleDay ? "0.9rem" : "1rem",
-            }}
-          >
+            }}>
             {prefix}
           </span>
           &nbsp;{title}
@@ -114,7 +111,7 @@ const EventCard: React.FC<TimelineEventProps> = ({
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default EventCard;
+export default EventCard

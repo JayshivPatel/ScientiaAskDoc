@@ -1,29 +1,28 @@
-import React from "react";
-import styles from "./style.module.scss";
-import classNames from "classnames";
-import SideBarCard, { SideBarCardProps } from "components/cards/SideBarCard";
+import React from "react"
+import styles from "./style.module.scss"
+import classNames from "classnames"
+import SideBarCard, { SideBarCardProps } from "components/cards/SideBarCard"
 
 export interface SideBarCardGroupProps {
-  events: SideBarCardProps[];
-  title: string;
-	onCardClick?: (id?: number) => void;
-	maxHeight?: string;
+  events: SideBarCardProps[]
+  title: string
+  onCardClick?: (id?: number) => void
+  maxHeight?: string
 }
 
 const SideBarCardGroup: React.FC<SideBarCardGroupProps> = ({
   events,
   title,
-	onCardClick,
-	maxHeight,
+  onCardClick,
+  maxHeight,
 }: SideBarCardGroupProps) => {
   return (
     <div>
       <h1 className={styles.sideBarCardGroupHeading}>{title}</h1>
       <div
-				className={classNames(styles.sideBarCardGroup)}
-				style={{maxHeight: maxHeight}}
-        role="group"
-      >
+        className={classNames(styles.sideBarCardGroup)}
+        style={{ maxHeight: maxHeight }}
+        role="group">
         {events.map(({ type, title, subtitle, content, id }) => (
           <SideBarCard
             title={title}
@@ -36,7 +35,7 @@ const SideBarCardGroup: React.FC<SideBarCardGroupProps> = ({
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SideBarCardGroup;
+export default SideBarCardGroup

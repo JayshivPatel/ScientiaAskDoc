@@ -11,70 +11,70 @@ import { theme } from "../../../utils/functions"
 import { thumbnails } from "../../../constants/thumbnails"
 
 export interface ModuleCardProps {
-	module: Module
+  module: Module
 }
 
 const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
-	let textColor: string = ""
-	let moduleCode = module.code.startsWith("CO")
-		? module.code.slice(2)
-		: module.code
-	moduleCode = moduleCode.split(".").join("-")
-	let thumbnail = `/images/${theme()}/module/${
-		thumbnails[moduleCode] || "default.png"
-	}`
+  let textColor: string = ""
+  let moduleCode = module.code.startsWith("CO")
+    ? module.code.slice(2)
+    : module.code
+  moduleCode = moduleCode.split(".").join("-")
+  let thumbnail = `/images/${theme()}/module/${
+    thumbnails[moduleCode] || "default.png"
+  }`
 
-	switch (module.progressStatus) {
-		case ProgressStatus.NOT_STARTED:
-			textColor = "#ACB5BD"
-			break
-		case ProgressStatus.IN_PROGRESS:
-			textColor = "#29A745"
-			break
-		case ProgressStatus.COMPLETED:
-			textColor = "#000"
-	}
+  switch (module.progressStatus) {
+    case ProgressStatus.NOT_STARTED:
+      textColor = "#ACB5BD"
+      break
+    case ProgressStatus.IN_PROGRESS:
+      textColor = "#29A745"
+      break
+    case ProgressStatus.COMPLETED:
+      textColor = "#000"
+  }
 
-	return (
-		<Col
-			xs={12}
-			sm={12}
-			md={6}
-			lg={4}
-			xl={3}
-			style={{
-				marginTop: "1.875rem",
-				paddingLeft: "0.625rem",
-				paddingRight: "0.625rem",
-			}}>
-			<Card
-				border={!module.hasMaterials ? "danger" : ""}
-				className={classNames(styles.moduleCard)}
-				as={Link}
-				to={`modules/${module.code}`}>
-				<Card.Header>
-					<div className={styles.termIcons}>
-						{module.terms.map((term: Term) => {
-							switch (term) {
-								case "Autumn":
-									return <FontAwesomeIcon icon={faLeaf} key={"Autumn"} />
-								case "Spring":
-									return <FontAwesomeIcon icon={faSeedling} key={"Spring"} />
-								case "Summer":
-									return <FontAwesomeIcon icon={faSun} key={"Summer"} />
-								default:
-									return ""
-							}
-						})}
-					</div>
-					<span>{module.code}</span>
-				</Card.Header>
-				<Card.Img style={{ borderRadius: 0 }} variant="top" src={thumbnail} />
-				<Card.Body>
-					<Card.Title>{module.title}</Card.Title>
-				</Card.Body>
-				<Card.Footer>
-					{/*
+  return (
+    <Col
+      xs={12}
+      sm={12}
+      md={6}
+      lg={4}
+      xl={3}
+      style={{
+        marginTop: "1.875rem",
+        paddingLeft: "0.625rem",
+        paddingRight: "0.625rem",
+      }}>
+      <Card
+        border={!module.hasMaterials ? "danger" : ""}
+        className={classNames(styles.moduleCard)}
+        as={Link}
+        to={`modules/${module.code}`}>
+        <Card.Header>
+          <div className={styles.termIcons}>
+            {module.terms.map((term: Term) => {
+              switch (term) {
+                case "Autumn":
+                  return <FontAwesomeIcon icon={faLeaf} key={"Autumn"} />
+                case "Spring":
+                  return <FontAwesomeIcon icon={faSeedling} key={"Spring"} />
+                case "Summer":
+                  return <FontAwesomeIcon icon={faSun} key={"Summer"} />
+                default:
+                  return ""
+              }
+            })}
+          </div>
+          <span>{module.code}</span>
+        </Card.Header>
+        <Card.Img style={{ borderRadius: 0 }} variant="top" src={thumbnail} />
+        <Card.Body>
+          <Card.Title>{module.title}</Card.Title>
+        </Card.Body>
+        <Card.Footer>
+          {/*
             <span
               style={{ color: textColor }}
               className={styles.moduleCardProgressText}
@@ -86,10 +86,10 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
               className={styles.moduleCardProgressText}
             >{`${module.progressPercent}%`}</span>
           */}
-				</Card.Footer>
-			</Card>
-		</Col>
-	)
+        </Card.Footer>
+      </Card>
+    </Col>
+  )
 }
 
 export default ModuleCard

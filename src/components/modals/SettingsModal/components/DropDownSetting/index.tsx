@@ -1,16 +1,16 @@
-import React from "react";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
+import React from "react"
+import Form from "react-bootstrap/Form"
+import Row from "react-bootstrap/esm/Row"
+import Col from "react-bootstrap/esm/Col"
 
 interface Props {
-  heading: string;
-  onChange: Function;
-  value: any;
+  heading: string
+  onChange: Function
+  value: any
   options: {
-    value: any;
-    text: string;
-  }[];
+    value: any
+    text: string
+  }[]
 }
 
 const DropDownSetting: React.FC<Props> = ({
@@ -28,10 +28,9 @@ const DropDownSetting: React.FC<Props> = ({
         <Form.Control
           as="select"
           onChange={(e) => {
-            onChange(e.target.value);
+            onChange(e.target.value)
           }}
-          value={value}
-        >
+          value={value}>
           {options.map(({ text, value }) => (
             <option value={value} key={value}>
               {text}
@@ -40,7 +39,7 @@ const DropDownSetting: React.FC<Props> = ({
         </Form.Control>
       </Col>
     </Form.Group>
-  );
-};
+  )
+}
 
-export default DropDownSetting;
+export default DropDownSetting

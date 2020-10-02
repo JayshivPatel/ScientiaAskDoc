@@ -1,16 +1,16 @@
-import React from "react";
-import styles from "./style.module.scss";
-import Card from "react-bootstrap/Card";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import React from "react"
+import styles from "./style.module.scss"
+import Card from "react-bootstrap/Card"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons"
 
 export interface FolderCardProps {
-  title: string;
-  icon: IconDefinition;
-  onIconClick: (event: React.MouseEvent) => void;
-  onClick: (event: React.MouseEvent) => void;
-  onMouseOver: (event: React.MouseEvent) => void;
-  onMouseOut: (event: React.MouseEvent) => void;
+  title: string
+  icon: IconDefinition
+  onIconClick: (event: React.MouseEvent) => void
+  onClick: (event: React.MouseEvent) => void
+  onMouseOver: (event: React.MouseEvent) => void
+  onMouseOut: (event: React.MouseEvent) => void
 }
 
 const FolderCard: React.FC<FolderCardProps> = ({
@@ -19,17 +19,18 @@ const FolderCard: React.FC<FolderCardProps> = ({
   onIconClick,
   onClick,
   onMouseOver,
-  onMouseOut
+  onMouseOut,
 }: FolderCardProps) => {
   return (
     <Card
       className={styles.folderCard}
       onClick={onClick}
       onMouseOver={onMouseOver}
-      onMouseOut={onMouseOut}
-    >
+      onMouseOut={onMouseOut}>
       <Card.Body style={{ padding: ".6rem" }}>
-        <Card.Text style={{ marginBottom: 0, textTransform: "capitalize" }}>{title}</Card.Text>
+        <Card.Text style={{ marginBottom: 0, textTransform: "capitalize" }}>
+          {title}
+        </Card.Text>
         <FontAwesomeIcon
           style={{ fontSize: "1.125rem", cursor: "default" }}
           icon={icon}
@@ -37,7 +38,7 @@ const FolderCard: React.FC<FolderCardProps> = ({
         />
       </Card.Body>
     </Card>
-  );
-};
+  )
+}
 
-export default FolderCard;
+export default FolderCard

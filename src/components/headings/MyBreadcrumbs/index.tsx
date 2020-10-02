@@ -1,9 +1,9 @@
-import React from "react";
-import Breadcrumb from "react-bootstrap/Breadcrumb";
+import React from "react"
+import Breadcrumb from "react-bootstrap/Breadcrumb"
 
-import styles from "./style.module.scss";
-import withBreadcrumbs from "react-router-breadcrumbs-hoc";
-import { Link } from "react-router-dom";
+import styles from "./style.module.scss"
+import withBreadcrumbs from "react-router-breadcrumbs-hoc"
+import { Link } from "react-router-dom"
 
 const MyBreadcrumbs = withBreadcrumbs()(
   ({ breadcrumbs }: { breadcrumbs: any }) => (
@@ -14,14 +14,13 @@ const MyBreadcrumbs = withBreadcrumbs()(
             key={match.url}
             className={styles.breadcrumbItem}
             linkAs={Link}
-            linkProps={{ to: match.url }}
-          >
+            linkProps={{ to: match.url }}>
             {breadcrumb}
           </Breadcrumb.Item>
         )
       )}
     </Breadcrumb>
   )
-);
+)
 
-export default MyBreadcrumbs;
+export default MyBreadcrumbs

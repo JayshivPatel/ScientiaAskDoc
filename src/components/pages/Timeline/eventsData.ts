@@ -1,4 +1,4 @@
-import { TimelineEvent } from "constants/types";
+import { TimelineEvent } from "constants/types"
 
 export const eventsData: TimelineEvent[] = [
   {
@@ -187,8 +187,8 @@ export const eventsData: TimelineEvent[] = [
     prefix: "CBT",
     assessment: "unassessed",
     status: "unreleased",
-	},
-	{
+  },
+  {
     title: "Java Practice Test",
     id: 17,
     startDate: new Date("2020-12-11T09:00:00"),
@@ -199,4 +199,4 @@ export const eventsData: TimelineEvent[] = [
     assessment: "assessed",
     status: "unreleased",
   },
-];
+]

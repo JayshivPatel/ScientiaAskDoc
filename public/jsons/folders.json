@@ -1,1 +1,7 @@
-[{"title":"2014-2015","id":"pastpapers/papers.14-15"},{"title":"2015-2016","id":"pastpapers/papers.15-16"},{"title":"2016-2017","id":"pastpapers/papers.16-17"},{"title":"2017-2018","id":"pastpapers/papers.17-18"},{"title":"2018-2019","id":"pastpapers/papers.18-19"}]
+[
+  { "title": "2014-2015", "id": "pastpapers/papers.14-15" },
+  { "title": "2015-2016", "id": "pastpapers/papers.15-16" },
+  { "title": "2016-2017", "id": "pastpapers/papers.16-17" },
+  { "title": "2017-2018", "id": "pastpapers/papers.17-18" },
+  { "title": "2018-2019", "id": "pastpapers/papers.18-19" }
+]

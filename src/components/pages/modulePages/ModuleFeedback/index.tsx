@@ -1,22 +1,22 @@
-import React from "react";
-import styles from "./style.module.scss";
+import React from "react"
+import styles from "./style.module.scss"
 
-import classNames from "classnames";
-import MyBreadcrumbs from "components/headings/MyBreadcrumbs";
+import classNames from "classnames"
+import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
 
-import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
-import Badge from "react-bootstrap/Badge";
-import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import InputGroup from "react-bootstrap/InputGroup"
+import FormControl from "react-bootstrap/FormControl"
+import Button from "react-bootstrap/Button"
+import Badge from "react-bootstrap/Badge"
+import Card from "react-bootstrap/Card"
+import Row from "react-bootstrap/esm/Row"
+import Col from "react-bootstrap/esm/Col"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faInfoCircle,
   faFile,
-  faFolder
-} from "@fortawesome/free-solid-svg-icons";
+  faFolder,
+} from "@fortawesome/free-solid-svg-icons"
 
 const ModuleFeedback: React.FC = () => {
   return (
@@ -37,8 +37,7 @@ const ModuleFeedback: React.FC = () => {
 
       <h5
         style={{ marginTop: "1.875rem", marginBottom: "0.625rem" }}
-        className={classNames(styles.moduleSectionHeader)}
-      >
+        className={classNames(styles.moduleSectionHeader)}>
         Folders
       </h5>
       <Row style={{ marginRight: "-0.625rem", marginLeft: "-0.625rem" }}>
@@ -48,8 +47,7 @@ const ModuleFeedback: React.FC = () => {
             sm={6}
             md={3}
             key={i}
-            style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}
-          >
+            style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}>
             <Card className={styles.folderCard}>
               <Card.Body style={{ padding: ".6rem" }}>
                 <Card.Text style={{ marginBottom: 0 }}>Folder {i}</Card.Text>
@@ -74,8 +72,7 @@ const ModuleFeedback: React.FC = () => {
             lg={4}
             xl={3}
             key={i}
-            style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}
-          >
+            style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}>
             <Card className={styles.quickViewCard}>
               <Card.Header>
                 <span className={styles.assessmentResult}>40 / 50</span>
@@ -91,14 +88,12 @@ const ModuleFeedback: React.FC = () => {
               <Card.Footer>
                 <Badge
                   pill
-                  className={classNames(styles.quickViewTag, styles.tagTeal)}
-                >
+                  className={classNames(styles.quickViewTag, styles.tagTeal)}>
                   New
                 </Badge>
                 <Badge
                   pill
-                  className={classNames(styles.quickViewTag, styles.tagBlue)}
-                >
+                  className={classNames(styles.quickViewTag, styles.tagBlue)}>
                   Week 1
                 </Badge>
               </Card.Footer>
@@ -107,7 +102,7 @@ const ModuleFeedback: React.FC = () => {
         ))}
       </Row>
     </>
-  );
-};
+  )
+}
 
-export default ModuleFeedback;
+export default ModuleFeedback

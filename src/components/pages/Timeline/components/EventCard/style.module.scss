@@ -1,15 +1,14 @@
 @import "assets/scss/custom";
 
-
 .timelineEvent {
-	cursor: pointer;
+  cursor: pointer;
   margin: 0.5rem 0.25rem;
   border-radius: 0.5rem;
   padding: 0.5rem;
   display: flex;
   align-items: center;
-	justify-content: space-between;
-	border: 0.125rem solid transparent;
+  justify-content: space-between;
+  border: 0.125rem solid transparent;
 }
 
 .eventTitle {
