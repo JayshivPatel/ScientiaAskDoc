@@ -49,7 +49,9 @@ export async function request(data: RequestData) {
 			if (data.returnBlob) {
 				return response.blob()
 			}
-			return response.json()
+			return response.text().then((text) => {
+				return text ? JSON.parse(text) : null
+			})
 		})
 		.then((responseData) => {
 			data.onSuccess(responseData)
