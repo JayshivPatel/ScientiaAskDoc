@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import Dandruff from "components/headings/Dandruff"
 import styles from "./style.module.scss"
 import classNames from "classnames"
 import { faGlobe, faUserFriends } from "@fortawesome/free-solid-svg-icons"
 import PageButtonGroup from "components/groups/PageButtonGroup"
 
-import { request } from "utils/api"
-import { api, methods } from "constants/routes"
 import { modulesList } from "../../ModuleList/list"
 import { teachingAims } from "../../ModuleList/aims"
 
@@ -49,36 +47,18 @@ const MODULE_AIMS_PLACEHOLDER = (
 const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
   const moduleCode = moduleID.startsWith("CO") ? moduleID.slice(2) : moduleID
 
-  let [buttons, setButtons] = useState<any>([])
-  useEffect(() => {
-    const onSuccess = (data: { [k: string]: any }) => {
-      const newButtons: any[] = [
-        {
-          title: "Syllabus",
-          icon: faGlobe,
-          url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
-        },
-        {
-          title: "Piazza",
-          icon: faUserFriends,
-          url: `https://piazza.com/imperial.ac.uk/fall2021/comp${moduleID}`,
-        },
-      ]
-      setButtons(newButtons)
-    }
-    request({
-      url: api.MATERIALS_RESOURCES,
-      method: methods.GET,
-      onSuccess,
-      onError: () => {
-        console.log("fail")
-      },
-      body: {
-        year: year,
-        course: moduleCode,
-      },
-    })
-  }, [moduleID, year])
+	let buttons : any[] = [
+		{
+			title: "Syllabus",
+			icon: faGlobe,
+			url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
+		},
+		{
+			title: "Piazza",
+			icon: faUserFriends,
+			url: `https://piazza.com/imperial.ac.uk/fall2021/comp${moduleID}`,
+		},
+	]
 
   return (
     <>
@@ -107,17 +87,3 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
 }
 
 export default ModuleDashboard
-
-const piazzaClasses: {
-  [index: string]: string
-} = {
-  CO140: "k0r3c04qwhj3e",
-  CO142: "k0r3c156mj35b",
-  CO112: "k0r3by316kp6",
-  CO145: "k0r3c1h4zik5y",
-  "CO120.2": "k0r3bzfpcno23",
-  CO150: "k0r3c1t4x8k6l",
-  CO113: "k0r3byq0f68t",
-  CO141: "k0r3c0t7dak4o",
-  CO130: "k0r3bzsith2r",
-}
