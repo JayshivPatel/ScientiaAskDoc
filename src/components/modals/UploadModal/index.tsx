@@ -55,7 +55,9 @@ const UploadModal: React.FC<UploadModalProps> = ({
   const [resourceDetails, setResourceDetails] = useState<{
     [id: number]: ResourceDetails
   }>({})
-  const maxSize = 26214400 // 25mb, TODO: lift to constants
+  const maxSize = 25 * (2 ** 10) * (2 ** 10); // 25mb
+  const linkResourceDetailsID = -1;
+  const linkResource = resourceDetails[linkResourceDetailsID];
   const prettyBytes = require("pretty-bytes")
 
   const onDrop = useCallback(
@@ -171,8 +173,8 @@ const UploadModal: React.FC<UploadModalProps> = ({
           url: api.MATERIALS_RESOURCES,
           method: methods.POST,
           onSuccess: hideAndReload,
-          onError: onError(resourceDetails[-1]),
-          body: makePayload(resourceDetails[-1]),
+          onError: onError(linkResource),
+          body: makePayload(linkResource),
         })
         break
       }
@@ -287,7 +289,12 @@ const UploadModal: React.FC<UploadModalProps> = ({
                 tagList={tags}
                 isLink={true}
                 titleDuplicated={titleDuplicated}
-                setResourceDetails={updateResourceDetails(-1)}
+                setResourceDetails={updateResourceDetails(linkResourceDetailsID)}
+                defaultTitle={linkResource?.title}
+                defaultURL={linkResource?.url}
+                defaultCategory={linkResource?.category}
+                defaultTags={linkResource?.tags}
+                defaultVisibleAfter={linkResource?.visibleAfter}
               />
             </Tab>
           </Tabs>
