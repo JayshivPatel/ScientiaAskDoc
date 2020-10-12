@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styles from "./style.module.scss"
 import classNames from "classnames"
 
@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { DragHandle } from "components/sections/CategoryList"
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons"
+import useOutsideAlerter from "./useOutsideAlerter"
 
 export interface FileListItemProps {
   title: string
@@ -41,6 +42,8 @@ const FileItemRow: React.FC<FileListItemProps> = ({
 }) => {
   const [xPos, setXPos] = useState("0px")
   const [yPos, setYPos] = useState("0px")
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  useOutsideAlerter(wrapperRef, () => setShowMenu && setShowMenu(false));
 
   const handleClick = () => {
     setShowMenu && showMenu && setShowMenu(false)
@@ -61,6 +64,7 @@ const FileItemRow: React.FC<FileListItemProps> = ({
     <>
       {showMenu && resourceActions && (
         <div
+          ref={wrapperRef}
           className={styles.resourceMenu}
           style={{
             top: yPos,
