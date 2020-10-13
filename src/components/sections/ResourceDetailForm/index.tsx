@@ -263,34 +263,25 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
       </Form.Group>
 
       <Form.Group>
-        {defaultVisibleAfter ? (
-          <Row>
-            <Col md="auto">
-              <Form.Label>Visible after</Form.Label>
+        <Row>
+          <Col md="auto">
+            <Form.Switch
+              id={`${id}-visibilityPickerSwitch`}
+              label={showPicker ? "Visible after" : "Visible immediately"}
+              onClick={() => setShowPicker(!showPicker)}
+              defaultChecked
+            />
+          </Col>
+          {showPicker && (
+            <Col>
+              {datepicker}
+              <p className={styles.mutedText}>
+                Course managers will still be able to view all "invisible"
+                resources.
+              </p>
             </Col>
-            <Col>{datepicker}</Col>
-          </Row>
-        ) : (
-          <Row>
-            <Col md="auto">
-              <Form.Switch
-                id={`${id}-visibilityPickerSwitch`}
-                label={showPicker ? "Visible after" : "Visible immediately"}
-                onClick={() => setShowPicker(!showPicker)}
-                defaultChecked
-              />
-            </Col>
-            {showPicker && (
-              <Col>
-                {datepicker}
-                <p className={styles.mutedText}>
-                  Course managers will still be able to view all "invisible"
-                  resources.
-                </p>
-              </Col>
-            )}
-          </Row>
-        )}
+          )}
+        </Row>
       </Form.Group>
     </>
   )
