@@ -48,7 +48,6 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
         paddingRight: "0.625rem",
       }}>
       <Card
-        border={!module.hasMaterials ? "danger" : ""}
         className={classNames(styles.moduleCard)}
         as={Link}
         to={`modules/${module.code}`}>
