@@ -55,7 +55,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
   const [resourceDetails, setResourceDetails] = useState<{
     [id: number]: ResourceDetails
   }>({})
-  const maxSize = 26214400 // 25mb, TODO: lift to constants
+  const MAX_SIZE = 52428800 // 50MB, TODO: lift to constants
   const prettyBytes = require("pretty-bytes")
 
   const onDrop = useCallback(
@@ -78,7 +78,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
   } = useDropzone({
     onDrop,
     minSize: 0,
-    maxSize,
+    maxSize: MAX_SIZE,
     multiple: true,
   })
 
