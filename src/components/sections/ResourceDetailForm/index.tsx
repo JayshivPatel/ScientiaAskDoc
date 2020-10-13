@@ -69,13 +69,12 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   const [tagOptions, setTagOptions] = useState<Option[]>(
     tagList.map(createOption)
   )
-  const [showPicker, setShowPicker] = useState(false)
-  const [startDate, setStartDate] = useState(defaultVisibleAfter || new Date())
+  const [showPicker, setShowPicker] = useState(defaultVisibleAfter !== undefined)
+  const [visibleAfter, setVisibleAfter] = useState<Date>(defaultVisibleAfter || new Date())
 
   const [title, setTitle] = useState<string>(defaultTitle || "")
   const [category, setCategory] = useState(defaultCategory || DEFAULT_CATEGORY)
   const [tags, setTags] = useState<string[]>(defaultTags || [])
-  const [visibleAfter, setVisibleAfter] = useState<Date>()
   const [url, setURL] = useState(defaultURL || "")
   const [urlError, setURLError] = useState<URLError>()
   const [titleError, setLinkTitleError] = useState<LinkTitleError>()
@@ -134,22 +133,21 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
     validateLinkTitle(defaultTitle || "")
   }, [])
 
-  useEffect(() => {
-    setResourceDetails({
-      title,
-      category,
-      tags,
-      visibleAfter,
-      url,
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, category, tags, visibleAfter, url])
+  const updateResourceDetails = () => setResourceDetails({
+    title,
+    category,
+    tags,
+    visibleAfter,
+    url,
+  })
+
+  useEffect(updateResourceDetails, [title, category, tags, visibleAfter, url])
+  useEffect(updateResourceDetails, [])
 
   const datepicker = (
     <DatePicker
-      selected={startDate}
+      selected={visibleAfter}
       onChange={(date: Date) => {
-        setStartDate(date)
         setVisibleAfter(date)
       }}
       showTimeInput
@@ -269,7 +267,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
               id={`${id}-visibilityPickerSwitch`}
               label={showPicker ? "Visible after" : "Visible immediately"}
               onClick={() => setShowPicker(!showPicker)}
-              defaultChecked
+              defaultChecked={showPicker}
             />
           </Col>
           {showPicker && (
