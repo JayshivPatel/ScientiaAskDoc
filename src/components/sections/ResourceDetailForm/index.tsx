@@ -11,7 +11,15 @@ import DatePicker from "react-datepicker"
 import {titleCase} from "utils/functions"
 import {DEFAULT_CATEGORY} from "../../../constants/global"
 
-import {LinkTitleError, URLError} from "../../modals/UploadModal";
+export enum URLError {
+  EmptyURL,
+  InvalidURL
+}
+
+export enum LinkTitleError {
+  EmptyTitle,
+  DuplicateTitle
+}
 
 interface ResourceDetailFormProps {
   id: number
@@ -23,8 +31,7 @@ interface ResourceDetailFormProps {
   defaultCategory?: string
   defaultTags?: string[]
   defaultVisibleAfter?: Date
-  titleError?: LinkTitleError
-  urlError?: URLError
+  handleInvalidDetails?: (areDetailsValid: boolean) => void
   titleDuplicated: (category: string, title: string) => boolean
   setResourceDetails: (details: ResourceDetails) => void
 }
@@ -56,9 +63,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   defaultURL,
   defaultCategory,
   defaultTags,
-  defaultVisibleAfter,
-  titleError,
-  urlError,
+  defaultVisibleAfter, handleInvalidDetails,
   titleDuplicated,
   setResourceDetails,
 }) => {
@@ -76,6 +81,28 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   const [tags, setTags] = useState<string[]>(defaultTags || [])
   const [visibleAfter, setVisibleAfter] = useState<Date>()
   const [url, setURL] = useState(defaultURL || "")
+  const [urlError, setURLError] = useState<URLError>()
+  const [titleError, setLinkTitleError] = useState<LinkTitleError>()
+
+  const validateURL = (url: string) => {
+    if (url.trim() === "") {
+      setURLError(URLError.EmptyURL)
+      return
+    }
+    setURLError(undefined)
+  }
+
+  const validateLinkTitle = (title: string) => {
+    if (title.trim() === "") {
+      setLinkTitleError(LinkTitleError.EmptyTitle)
+      return
+    }
+    if (titleDuplicated(category, title) && !(defaultCategory && title === defaultTitle)) {
+      setLinkTitleError(LinkTitleError.DuplicateTitle)
+      return
+    }
+    setLinkTitleError(undefined)
+  }
 
   const urlErrorMessage = (error: URLError | undefined) => {
     switch (error) {
@@ -87,7 +114,6 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
         return ""
     }
   }
-
   const linkTitleMessage = (error: LinkTitleError | undefined) => {
     switch (error) {
       case LinkTitleError.EmptyTitle:
@@ -98,6 +124,20 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
         return ""
     }
   }
+
+  useEffect(() => {
+    handleInvalidDetails && handleInvalidDetails(
+        (isLink && titleError === undefined && urlError === undefined) ||
+        (!isLink && titleError === undefined)
+    )
+  }, [titleError, urlError])
+
+
+  useEffect(() => {
+    validateURL(defaultURL || "")
+    validateLinkTitle(defaultTitle || "")
+  }, [])
+
   useEffect(() => {
     setResourceDetails({
       title,
@@ -132,7 +172,10 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
             placeholder="Enter the URL"
             defaultValue={defaultURL}
             isInvalid={urlError !== undefined}
-            onChange={(event) => setURL(event.target.value)}
+            onChange={(event) => {
+              validateURL(event.target.value)
+              setURL(event.target.value)
+            }}
           />
           <Form.Control.Feedback type="invalid">
             {urlErrorMessage(urlError)}
@@ -148,7 +191,10 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
           placeholder="Enter the Resource Title"
           defaultValue={defaultTitle}
           isInvalid={titleError !== undefined}
-          onChange={(event) => setTitle(event.target.value)}
+          onChange={(event) => {
+            validateLinkTitle(event.target.value)
+            setTitle(event.target.value)
+          }}
         />
         <Form.Control.Feedback type="invalid">
           {linkTitleMessage(titleError)}

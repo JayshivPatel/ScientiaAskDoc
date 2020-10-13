@@ -31,7 +31,7 @@ const EditModal: React.FC<EditModalProps> = ({
   titleDuplicated,
 }) => {
   const [details, setDetails] = useState<ResourceDetails>()
-
+  const [canSubmitChanges, setCanSubmitChanges] = useState<boolean>(false)
   const updateResourceDetails = (details: ResourceDetails) => {
     setDetails(details)
   }
@@ -84,6 +84,7 @@ const EditModal: React.FC<EditModalProps> = ({
             defaultCategory={resource.folder}
             defaultTags={resource.tags.filter((tag) => tag !== "new")}
             defaultVisibleAfter={resource.visible_after}
+            handleInvalidDetails={(areDetailsValid: boolean) => setCanSubmitChanges(areDetailsValid)}
             titleDuplicated={titleDuplicated}
             setResourceDetails={updateResourceDetails}
           />
@@ -94,7 +95,7 @@ const EditModal: React.FC<EditModalProps> = ({
             <Button onClick={onHide} variant="secondary">
               Cancel
             </Button>
-            <Button type="submit" variant="info">
+            <Button type="submit" disabled={!canSubmitChanges} variant="info">
               Submit
             </Button>
           </ButtonGroup>

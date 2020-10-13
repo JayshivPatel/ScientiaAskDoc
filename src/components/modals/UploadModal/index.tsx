@@ -37,16 +37,6 @@ interface UploadModalProps {
   titleDuplicated: (category: string, title: string) => boolean
 }
 
-export enum URLError {
-  EmptyURL,
-  InvalidURL
-}
-
-export enum LinkTitleError {
-  EmptyTitle,
-  DuplicateTitle
-}
-
 const UploadModal: React.FC<UploadModalProps> = ({
   show,
   onHide,
@@ -65,34 +55,12 @@ const UploadModal: React.FC<UploadModalProps> = ({
   const [resourceDetails, setResourceDetails] = useState<{
     [id: number]: ResourceDetails
   }>({})
-  const [urlError, setURLError] = useState<URLError>()
-  const [linkTitleError, setLinkTitleError] = useState<LinkTitleError>()
+  const [canUploadFile, setCanUploadFile] = useState<boolean>(false)
+  const [canUploadLink, setCanUploadLink] = useState<boolean>(false)
   const maxSize = 25 * (2 ** 10) * (2 ** 10); // 25mb
   const linkResourceDetailsID = -1;
   const linkResource = resourceDetails[linkResourceDetailsID];
   const prettyBytes = require("pretty-bytes")
-
-  const validateURL = (url: string) => {
-    if (url.trim() === "") {
-      setURLError(URLError.EmptyURL)
-      return false
-    }
-    setURLError(undefined)
-    return true
-  }
-
-  const validateLinkTitle = (title: string) => {
-    if (title.trim() === "") {
-      setLinkTitleError(LinkTitleError.EmptyTitle)
-      return false
-    }
-    if (titleDuplicated(linkResource.category, title)) {
-      setLinkTitleError(LinkTitleError.DuplicateTitle)
-      return false
-    }
-    setURLError(undefined)
-    return true
-  }
 
   const onDrop = useCallback(
     (acceptedFiles) => {
@@ -204,9 +172,6 @@ const UploadModal: React.FC<UploadModalProps> = ({
       }
       case "link": {
         // The title and url of the new link must be validated before uploading
-        const isValidURL = validateURL(linkResource.url)
-        const isValidLinkTitle = validateLinkTitle(linkResource.title)
-        if (isValidURL && isValidLinkTitle) {
           await request({
             url: api.MATERIALS_RESOURCES,
             method: methods.POST,
@@ -215,7 +180,6 @@ const UploadModal: React.FC<UploadModalProps> = ({
             body: makePayload(linkResource),
           })
           break
-        }
       }
     }
   }
@@ -308,6 +272,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
                                 tagList={tags}
                                 isLink={false}
                                 defaultTitle={file.name}
+                                handleInvalidDetails={(areDetailsValid: boolean) => setCanUploadFile(areDetailsValid)}
                                 titleDuplicated={titleDuplicated}
                                 setResourceDetails={updateResourceDetails(
                                   index
@@ -334,8 +299,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
                 defaultCategory={linkResource?.category}
                 defaultTags={linkResource?.tags}
                 defaultVisibleAfter={linkResource?.visibleAfter}
-                urlError={urlError}
-                titleError={linkTitleError}
+                handleInvalidDetails={(areDetailsValid: boolean) => {setCanUploadLink(areDetailsValid)}}
               />
             </Tab>
           </Tabs>
@@ -346,6 +310,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
             className={styles.buttonUpload}
             style={{ marginBottom: "0rem" }}
             type="submit"
+            disabled={!((tab === "file" && canUploadFile) || (tab !== "file" && canUploadLink))}
             variant="secondary">
             Upload
           </Button>
