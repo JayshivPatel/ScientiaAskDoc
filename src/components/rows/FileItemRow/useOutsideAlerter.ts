@@ -7,7 +7,7 @@ export default function useOutsideAlerter(ref: RefObject<HTMLDivElement>, callba
      * Alert if clicked on outside of element
      */
     function handleClickOutside(event: MouseEvent) {
-      event.preventDefault();
+      // event.preventDefault();
       if (event.button === 0 && ref.current && !ref.current.contains(event.target as Node)) {
           callback();
       }
