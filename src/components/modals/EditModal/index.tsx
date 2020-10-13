@@ -82,9 +82,9 @@ const EditModal: React.FC<EditModalProps> = ({
             defaultTitle={resource.title}
             defaultURL={resource.path}
             defaultCategory={resource.folder}
-            defaultTags={resource.tags.filter((tag) => tag !== "new")}
+            defaultTags={resource.tags.filter(tag => tag !== "new")}
             defaultVisibleAfter={resource.visible_after}
-            handleInvalidDetails={(areDetailsValid: boolean) => setCanSubmitChanges(areDetailsValid)}
+            handleInvalidDetails={setCanSubmitChanges}
             titleDuplicated={titleDuplicated}
             setResourceDetails={updateResourceDetails}
           />

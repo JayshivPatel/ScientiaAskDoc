@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useEffect } from "react"
 import classNames from "classnames"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -57,6 +57,8 @@ const UploadModal: React.FC<UploadModalProps> = ({
   }>({})
   const [canUploadFile, setCanUploadFile] = useState<boolean>(false)
   const [canUploadLink, setCanUploadLink] = useState<boolean>(false)
+  const [suppressErrorMsg, setSuppressErrorMsg] = useState<boolean>(true)
+
   const maxSize = 25 * (2 ** 10) * (2 ** 10); // 25mb
   const linkResourceDetailsID = -1;
   const linkResource = resourceDetails[linkResourceDetailsID];
@@ -272,7 +274,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
                                 tagList={tags}
                                 isLink={false}
                                 defaultTitle={file.name}
-                                handleInvalidDetails={(areDetailsValid: boolean) => setCanUploadFile(areDetailsValid)}
+                                handleInvalidDetails={setCanUploadFile}
                                 titleDuplicated={titleDuplicated}
                                 setResourceDetails={updateResourceDetails(
                                   index
@@ -299,6 +301,8 @@ const UploadModal: React.FC<UploadModalProps> = ({
                 defaultCategory={linkResource?.category}
                 defaultTags={linkResource?.tags}
                 defaultVisibleAfter={linkResource?.visibleAfter}
+                suppressErrorMsg={suppressErrorMsg}
+                setSuppressErrorMsg={setSuppressErrorMsg}
                 handleInvalidDetails={(areDetailsValid: boolean) => {setCanUploadLink(areDetailsValid)}}
               />
             </Tab>

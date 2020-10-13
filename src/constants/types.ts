@@ -75,3 +75,13 @@ export enum ProgressStatus {
 export type IdBooleanMap = { [key: number]: boolean }
 
 export type ThumbnailMap = { [key: string]: string }
+
+export enum URLError {
+  EmptyURL = "empty_url",
+  InvalidURL = "invalid_url"
+}
+
+export enum LinkTitleError {
+  EmptyTitle = "empty_title",
+  DuplicateTitle = "invalid_url"
+}

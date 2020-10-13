@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, { useEffect, useState } from "react"
 import "react-datepicker/dist/react-datepicker.css"
 import styles from "./style.module.scss"
 
@@ -8,18 +8,9 @@ import Form from "react-bootstrap/Form"
 import CreatableSelect from "react-select/creatable"
 import DatePicker from "react-datepicker"
 
-import {titleCase} from "utils/functions"
-import {DEFAULT_CATEGORY} from "../../../constants/global"
-
-export enum URLError {
-  EmptyURL,
-  InvalidURL
-}
-
-export enum LinkTitleError {
-  EmptyTitle,
-  DuplicateTitle
-}
+import { titleCase } from "utils/functions"
+import { DEFAULT_CATEGORY } from "../../../constants/global"
+import { URLError, LinkTitleError } from "constants/types"
 
 interface ResourceDetailFormProps {
   id: number
@@ -31,6 +22,8 @@ interface ResourceDetailFormProps {
   defaultCategory?: string
   defaultTags?: string[]
   defaultVisibleAfter?: Date
+  suppressErrorMsg?: boolean
+  setSuppressErrorMsg?: (b: boolean) => void
   handleInvalidDetails?: (areDetailsValid: boolean) => void
   titleDuplicated: (category: string, title: string) => boolean
   setResourceDetails: (details: ResourceDetails) => void
@@ -63,7 +56,10 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   defaultURL,
   defaultCategory,
   defaultTags,
-  defaultVisibleAfter, handleInvalidDetails,
+  defaultVisibleAfter, 
+  suppressErrorMsg, 
+  setSuppressErrorMsg,
+  handleInvalidDetails,
   titleDuplicated,
   setResourceDetails,
 }) => {
@@ -171,8 +167,9 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
             type="text"
             placeholder="Enter the URL"
             defaultValue={defaultURL}
-            isInvalid={urlError !== undefined}
+            isInvalid={!suppressErrorMsg && urlError !== undefined}
             onChange={(event) => {
+              setSuppressErrorMsg?.(false)
               validateURL(event.target.value)
               setURL(event.target.value)
             }}
@@ -190,8 +187,9 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
           type="text"
           placeholder="Enter the Resource Title"
           defaultValue={defaultTitle}
-          isInvalid={titleError !== undefined}
+          isInvalid={!suppressErrorMsg && titleError !== undefined}
           onChange={(event) => {
+            setSuppressErrorMsg?.(false)
             validateLinkTitle(event.target.value)
             setTitle(event.target.value)
           }}
