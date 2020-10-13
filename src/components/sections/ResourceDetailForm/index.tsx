@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, {useEffect, useState} from "react"
 import "react-datepicker/dist/react-datepicker.css"
 import styles from "./style.module.scss"
 
@@ -8,8 +8,10 @@ import Form from "react-bootstrap/Form"
 import CreatableSelect from "react-select/creatable"
 import DatePicker from "react-datepicker"
 
-import { titleCase } from "utils/functions"
-import { DEFAULT_CATEGORY } from "../../../constants/global"
+import {titleCase} from "utils/functions"
+import {DEFAULT_CATEGORY} from "../../../constants/global"
+
+import {LinkTitleError, URLError} from "../../modals/UploadModal";
 
 interface ResourceDetailFormProps {
   id: number
@@ -21,6 +23,8 @@ interface ResourceDetailFormProps {
   defaultCategory?: string
   defaultTags?: string[]
   defaultVisibleAfter?: Date
+  titleError?: LinkTitleError
+  urlError?: URLError
   titleDuplicated: (category: string, title: string) => boolean
   setResourceDetails: (details: ResourceDetails) => void
 }
@@ -53,6 +57,8 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   defaultCategory,
   defaultTags,
   defaultVisibleAfter,
+  titleError,
+  urlError,
   titleDuplicated,
   setResourceDetails,
 }) => {
@@ -71,6 +77,27 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   const [visibleAfter, setVisibleAfter] = useState<Date>()
   const [url, setURL] = useState(defaultURL || "")
 
+  const urlErrorMessage = (error: URLError | undefined) => {
+    switch (error) {
+      case URLError.EmptyURL:
+        return "URL cannot be empty!"
+      case URLError.InvalidURL:
+        return "Invalid URL format!"
+      default:
+        return ""
+    }
+  }
+
+  const linkTitleMessage = (error: LinkTitleError | undefined) => {
+    switch (error) {
+      case LinkTitleError.EmptyTitle:
+        return "Link title cannot be empty!"
+      case LinkTitleError.DuplicateTitle:
+        return "A resource with this title already exists under this category. Please choose a different title."
+      default:
+        return ""
+    }
+  }
   useEffect(() => {
     setResourceDetails({
       title,
@@ -94,7 +121,6 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
       dateFormat="MMMM d, yyyy HH:mm 'UTC'"
     />
   )
-
   return (
     <>
       {isLink && (
@@ -105,8 +131,12 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
             type="text"
             placeholder="Enter the URL"
             defaultValue={defaultURL}
+            isInvalid={urlError !== undefined}
             onChange={(event) => setURL(event.target.value)}
           />
+          <Form.Control.Feedback type="invalid">
+            {urlErrorMessage(urlError)}
+          </Form.Control.Feedback>
         </Form.Group>
       )}
 
@@ -117,15 +147,11 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
           type="text"
           placeholder="Enter the Resource Title"
           defaultValue={defaultTitle}
-          isInvalid={
-            titleDuplicated(category, title) &&
-            !(defaultCategory && title === defaultTitle)
-          }
+          isInvalid={titleError !== undefined}
           onChange={(event) => setTitle(event.target.value)}
         />
         <Form.Control.Feedback type="invalid">
-          A resource with this title already exists under this category. Please
-          choose a different title.
+          {linkTitleMessage(titleError)}
         </Form.Control.Feedback>
       </Form.Group>
 
