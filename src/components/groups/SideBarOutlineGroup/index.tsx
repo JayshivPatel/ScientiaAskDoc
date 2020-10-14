@@ -18,26 +18,26 @@ const SideBarOutlineGroup: React.FC = () => {
       activeURL: `/modules/${id}/dashboard`,
       icon: faHome,
     },
-    // {
-    // 	title: "Overview",
-    // 	activeURL: `/modules/${id}/overview`,
-    // 	icon: faList,
-    // },
+    {
+    	title: "Overview",
+    	activeURL: `/modules/${id}/overview`,
+    	icon: faList,
+    },
     {
       title: "Course Materials",
       activeURL: `/modules/${id}/resources`,
       icon: faArchive,
     },
-    // {
-    //   title: "Submissions",
-    //   activeURL: `/modules/${id}/submissions`,
-    //   icon: faUpload,
-    // },
-    // {
-    //   title: "Feedback",
-    //   activeURL: `/modules/${id}/feedback`,
-    //   icon: faHighlighter,
-    // },
+    {
+      title: "Submissions",
+      activeURL: `/modules/${id}/submissions`,
+      icon: faUpload,
+    },
+    {
+      title: "Feedback",
+      activeURL: `/modules/${id}/feedback`,
+      icon: faHighlighter,
+    },
   ]
 
   return <SideBarTabGroup title="Outline" buttons={outlineButtons} />
