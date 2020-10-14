@@ -204,6 +204,13 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
             className={styles.createableSelect}
             value={createOption(category)}
             options={categoryOptions}
+            styles={{
+              singleValue: base => ({
+                ...base,
+                color: "var(--primary-text-color)",
+              }),
+              menuList: base => ({ ...base, backgroundColor: "var(--primary-button)"})
+            }}
             createOptionPosition="first"
             onCreateOption={(inputValue) => {
               let valueToCreate = titleCase(inputValue)
@@ -238,7 +245,11 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
             input.toLowerCase() !== "new"
           }
           menuPortalTarget={document.body}
-          styles={{ menuPortal: (styles) => ({ ...styles, zIndex: 10001 }) }}
+          styles={{
+            menuPortal: (styles) => ({ ...styles, zIndex: 10001 }),
+            singleValue: base => ({ ...base, color: "var(--primary-text-color)"}),
+            menuList: base => ({ ...base, backgroundColor: "var(--primary-button)"})
+          }}
           options={tagOptions}
           createOptionPosition="first"
           onCreateOption={(inputValue) => {

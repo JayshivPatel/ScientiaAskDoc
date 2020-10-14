@@ -53,9 +53,9 @@
   margin-top: 0.625rem;
 }
 
-// .createableSelect > * {
-//   border-radius: 0.5rem !important;
-//   background-color: var(--primary-button) !important;
-//   border-color: var(--border-color) !important;
-//   color: var(--primary-text-color) !important;
-// }
+.createableSelect > * {
+  border-radius: 0.5rem !important;
+  background-color: var(--primary-button) !important;
+  border-color: var(--border-color) !important;
+  color: var(--primary-text-color) !important;
+}

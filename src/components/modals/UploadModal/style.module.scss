@@ -76,6 +76,7 @@
 
 .clickable {
   cursor: pointer;
+  background-color: var(--secondary-background-color);
 }
 
 .uploadModal {
@@ -162,4 +163,8 @@
   border-bottom-right-radius: 0.5rem;
   padding: 0.75rem;
   padding-top: 0rem;
+}
+
+.collapse {
+  background-color: var(--background-color);
 }
