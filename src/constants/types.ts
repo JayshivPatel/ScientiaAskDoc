@@ -4,8 +4,7 @@ export type Term =
   | "Summer"
   | "Easter"
   | "Spring"
-  | "Jun-Jul"
-  | "Aug-Sept"
+  | "Jun-Sept"
 
 export interface Folder {
   title: string

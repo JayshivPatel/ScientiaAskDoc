@@ -200,10 +200,8 @@ function getTermDates(term: Term): [Date, number] {
       return [new Date("2021-12-21"), 3]
     case "Easter":
       return [new Date("2021-03-29"), 5]
-    case "Jun-Jul":
-      return [new Date("2021-06-28"), 5]
-    case "Aug-Sept":
-      return [new Date("2021-08-02"), 9]
+    case "Jun-Sept":
+      return [new Date("2021-06-28"), 14]
   }
 }
 
