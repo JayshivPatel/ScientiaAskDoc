@@ -43,6 +43,7 @@ export interface Module {
   progressStatus: ProgressStatus
   progressPercent: number
   content: string
+  subscriptionLevel: 1 | 2 | 3
 }
 
 export interface TimelineEvent {

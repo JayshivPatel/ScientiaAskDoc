@@ -29,6 +29,7 @@ const ModuleRows: React.FC<ModuleRowsProps> = ({
         key={code}
         style={{ height: `${tracks?.length * trackHeight}rem` }}
         moduleCode={code}
+        subscriptionLevel={modulesList[i].subscriptionLevel}
         title={modulesList[i].title}
       />
     )

@@ -78,6 +78,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           progressPercent: Math.floor(Math.random() * 100),
           progressStatus: ProgressStatus.IN_PROGRESS,
           content: "",
+          subscriptionLevel: Math.floor(Math.random() * 3) + 1 as (1 | 2 | 3),
         }))
       )
     }
