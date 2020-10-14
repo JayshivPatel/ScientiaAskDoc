@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import ButtonGroup from "react-bootstrap/ButtonGroup"
 
+import styles from "./style.module.scss"
 import ResourceDetailForm, {
   ResourceDetails,
 } from "components/sections/ResourceDetailForm"
@@ -11,7 +12,8 @@ import { Resource } from "constants/types"
 import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 import {inspect} from "util";
-import styles from "./style.module.scss"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTimes} from "@fortawesome/free-solid-svg-icons";
 
 interface EditModalProps {
   show: boolean
@@ -70,8 +72,14 @@ const EditModal: React.FC<EditModalProps> = ({
       onHide={onHide}
       centered
       className={styles.editModal}>
-      <Modal.Header closeButton>
-        <Modal.Title>Edit Resource</Modal.Title>
+      <Modal.Header>
+        <Modal.Title style={{ fontSize: "1.25rem" }}>Edit Resource</Modal.Title>
+        <Button
+            variant="secondary"
+            className={styles.sectionHeaderButton}
+            onClick={onHide}>
+          <FontAwesomeIcon className={styles.buttonIcon} icon={faTimes} />
+        </Button>
       </Modal.Header>
 
       <Form onSubmit={handleSubmit}>
