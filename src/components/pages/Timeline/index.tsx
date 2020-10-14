@@ -55,7 +55,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     let timelineEvents = eventsData
     for (let i = 0; i < timelineEvents.length; i++) {
       const event = timelineEvents[i]
-      let tracks: TimelineEvent[][] = modulesTracks[event.moduleCode] ?? [[]]
+      let tracks: TimelineEvent[][] = modulesTracks[event.moduleCode] ?? []
       let isPlaced = false
       for (const track of tracks) {
         if (track.every((te) => !eventsOverlaps(te, event))) {

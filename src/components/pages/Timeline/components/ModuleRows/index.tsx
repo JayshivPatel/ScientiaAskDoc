@@ -44,7 +44,7 @@ const ModuleRows: React.FC<ModuleRowsProps> = ({
       timelineBackgrounds.push(
         <div
           key={code + j}
-          style={{ height: `${tracks.length * trackHeight + offset}rem` }}
+          style={{ height: `${tracks?.length * trackHeight + offset}rem` }}
           className={timelineBackgroundsClass}></div>
       )
     }
