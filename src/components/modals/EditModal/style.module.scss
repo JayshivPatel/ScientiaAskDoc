@@ -1,0 +1,128 @@
+@import "assets/scss/custom";
+@import "assets/scss/global";
+
+.dropzone {
+  text-align: center;
+  padding: 1.25rem;
+  border: 0.125rem dashed var(--border-color);
+  background-color: var(--background-color);
+  color: var(--tertiary-text-color);
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+
+.buttonCancel {
+}
+
+.accept {
+  border-color: $green !important;
+}
+
+.tabElement {
+  border-width: 0rem !important;
+}
+
+.reject {
+  border-color: $red !important;
+}
+
+.filesizeDisplay {
+  color: $gray-600;
+  padding-left: 1rem;
+}
+
+.clickable {
+  cursor: pointer;
+  background-color: var(--secondary-background-color);
+}
+
+.editModal {
+  border-radius: 0.5rem;
+}
+
+.tabContainer {
+  border-width: 0rem;
+}
+
+.tabContainer :global(.nav-item.active) {
+  background-color: var(--primary-button-active);
+  color: var(--primary-button-text-active);
+  border-width: 0rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+
+.tabContainer > *:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.tabContainer :global(.nav-item) {
+  background-color: var(--primary-button);
+  color: var(--primary-button-text);
+  border-width: 0rem;
+  border-radius: 0.5rem;
+}
+
+.tabContainer :global(.nav-item:not(:first-of-type)) {
+  margin-left: 0.625rem;
+}
+
+.tabContainer > .nav-link {
+  text-decoration: none;
+}
+
+.editModal :global(.modal-content) {
+  background-color: var(--background-color);
+  border-radius: 0.5rem;
+}
+
+.editModal :global(.modal-header) {
+  padding: 0.5rem 0.5rem;
+  padding-left: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--background-color);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--primary-text-color);
+  border-top-right-radius: 0.5rem !important;
+  border-top-left-radius: 0.5rem !important;
+}
+
+.editModal :global(.modal-footer) {
+  padding: 0.5rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--background-color);
+  border-top: 1px solid var(--border-color);
+  color: var(--primary-text-color);
+  border-bottom-right-radius: 0.5rem !important;
+  border-bottom-left-radius: 0.5rem !important;
+}
+
+.sectionHeaderButton {
+  color: var(--tertiary-text-color);
+  background-color: var(--background-color);
+  margin-right: 0rem !important;
+}
+
+.sectionHeaderButton:hover {
+  color: var(--tertiary-text-color);
+  background-color: var(--secondary-background-color);
+}
+
+.editModal :global(.modal-body) {
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  padding: 0.75rem;
+  padding-top: 0rem;
+}
+
+.collapse {
+  background-color: var(--background-color);
+}

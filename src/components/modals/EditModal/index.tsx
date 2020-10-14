@@ -10,6 +10,8 @@ import ResourceDetailForm, {
 import { Resource } from "constants/types"
 import { request } from "utils/api"
 import { api, methods } from "constants/routes"
+import {inspect} from "util";
+import styles from "./style.module.scss"
 
 interface EditModalProps {
   show: boolean
@@ -66,7 +68,8 @@ const EditModal: React.FC<EditModalProps> = ({
       size="lg"
       show={show}
       onHide={onHide}
-      centered>
+      centered
+      className={styles.editModal}>
       <Modal.Header closeButton>
         <Modal.Title>Edit Resource</Modal.Title>
       </Modal.Header>
