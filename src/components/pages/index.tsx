@@ -112,15 +112,15 @@ const StandardView: React.FC<StandardViewProps> = ({
       <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
       <Suspense fallback={<LoadingScreen successful={<></>} />}>
         <Switch>
-          <Redirect exact from="/" to="/modules" />
+          <Redirect exact from="/" to="/dashboard" />
           <Redirect exact from="/modules/:id" to="/modules/:id/dashboard" />
-          {/*
+          
 					  <Route path="/dashboard">
 						<Container className={classNames("pageContainer")}>
 						  <Dashboard />
 						</Container>
 					  </Route>
-					*/}
+					
           <Route exact path="/modules">
             <Container className={classNames("pageContainer")}>
               <ModuleList modules={modules} modulesFilter={modulesFilter} />
@@ -135,7 +135,7 @@ const StandardView: React.FC<StandardViewProps> = ({
               </Container>
             )}
           />
-          {/*
+          
 						<Route
 							path="/modules/:id/overview"
 							render={(props) => (
@@ -144,7 +144,7 @@ const StandardView: React.FC<StandardViewProps> = ({
 								</Container>
 							)}
 						/>
-					*/}
+					
 
           <Route
             path="/modules/:id/resources/:scope?"
@@ -165,7 +165,7 @@ const StandardView: React.FC<StandardViewProps> = ({
               )
             }}
           />
-          {/* 
+          
 					  <Route
 						path="/modules/:id/submissions"
 						render={(props) => (
@@ -214,7 +214,7 @@ const StandardView: React.FC<StandardViewProps> = ({
 						)}
 					  />
 					  <Route path="/exams" render={() => <Redirect to="/exams/papers" />} />
-        		*/}
+        		
         </Switch>
       </Suspense>
     </div>

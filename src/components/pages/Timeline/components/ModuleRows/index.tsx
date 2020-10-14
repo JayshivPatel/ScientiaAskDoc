@@ -27,7 +27,7 @@ const ModuleRows: React.FC<ModuleRowsProps> = ({
     moduleHeadings.push(
       <ModuleHeading
         key={code}
-        style={{ height: `${tracks.length * trackHeight}rem` }}
+        style={{ height: `${tracks?.length * trackHeight}rem` }}
         moduleCode={code}
         title={modulesList[i].title}
       />
