@@ -46,15 +46,12 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       showSubscriptionLevels: new Set([1, 2, 3])
     }
   }
-
-  componentDidMount() {
-    this.props.initSideBar()
+  setModuleTracks() {
     let modulesTracks: ModuleTracks = {}
 
     this.props.modules.forEach(({ code }) => {
       modulesTracks[code] = [[], []]
     })
-
     const timelineEvents = eventsData // for future api calls
     for (let i = 0; i < timelineEvents.length; i++) {
       const event = timelineEvents[i]
@@ -71,7 +68,11 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         tracks.push([event])
       }
     }
-
+    return modulesTracks
+  }
+  componentDidMount() {
+    this.props.initSideBar()
+    let modulesTracks: ModuleTracks = this.setModuleTracks()
     this.setState({
       modulesTracks: modulesTracks,
       isLoaded: true,
@@ -134,6 +135,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         || (makeNumber(a.code) - makeNumber(b.code))
     })
 
+    let modulesTracks: ModuleTracks = this.setModuleTracks()
+
     if (
       window.innerWidth <= 550 &&
       window.innerHeight <= 900 &&
@@ -151,7 +154,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         />
       )
     }
-
     return (
       <>
         <div className={styles.timelineContainer}>
@@ -173,7 +175,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
               numWeeks={numWeeks}
               trackHeight={trackHeight}
               modulesList={currModules}
-              modulesTracks={this.state.modulesTracks}
+              modulesTracks={modulesTracks}
             />
 
             <DayIndicatorGrid
@@ -187,7 +189,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
               numWeeks={numWeeks}
               trackHeight={trackHeight}
               modulesList={currModules}
-              modulesTracks={this.state.modulesTracks}
+              modulesTracks={modulesTracks}
               dateToColumn={(date) => this.dateToColumn(date, termStart)}
               isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
               onEventClick={(id) => this.handleEventClick(id)}
@@ -218,10 +220,8 @@ function getTermDates(term: Term): [Date, number] {
       return [new Date("2021-12-21"), 3]
     case "Easter":
       return [new Date("2021-03-29"), 5]
-    case "Jun-Jul":
-      return [new Date("2021-06-28"), 5]
-    case "Aug-Sept":
-      return [new Date("2021-08-02"), 9]
+    case "Jun-Sept":
+      return [new Date("2021-06-28"), 14]
   }
 }
 
