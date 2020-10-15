@@ -161,10 +161,10 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
           <div className={styles.timelineGrid}>
             <div className={styles.timelineSwitchers}>
               <TermSwitcher term={this.props.term} setTerm={this.props.setTerm} />
-              <SubscriptionLevelSwitcher 
+              {/* <SubscriptionLevelSwitcher 
                 levelIsActive={x => this.state.showSubscriptionLevels.has(x)}
                 setSubscriptionLevel={x => this.handleSubscriptionLevelClick(x)}
-              />
+              /> */}
             </div>
             <WeekRow
               numWeeks={numWeeks}
