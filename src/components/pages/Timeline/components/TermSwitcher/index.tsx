@@ -77,10 +77,9 @@ const TermSwitcher: React.FC<Props> = ({
     if (activeTermGroupSwitch) {
       document.getElementById(TERM_GROUP_SWITCH_ID)?.focus()
     } else if (isTermPresent) {
-      // FIXME: Incorrect focusing
       document.getElementById(term)?.focus()
     }
-  }, [activeTermGroupSwitch])
+  }, [activeTermGroupSwitch, isTermPresent])
   
   /* Term group switch behaviour:
    *   1. [active && icon is selected term]: not hovering, selected term is not in the current term group.
@@ -93,7 +92,7 @@ const TermSwitcher: React.FC<Props> = ({
       className={styles.termSwitch}
       active={activeTermGroupSwitch}
 
-      onClick={() => setShowSecondaryMenu(!showSecondaryMenu)}
+      onClick={() => {console.log("pressed"); setShowSecondaryMenu(!showSecondaryMenu)}}
       onMouseEnter={() => setHoverTermGroupSwitch(true)}
       onMouseLeave={() => setHoverTermGroupSwitch(false)}
       variant="secondary">
