@@ -62,7 +62,6 @@ const TermSwitcher: React.FC<Props> = ({
       className={styles.termSwitch}
       active={term === termName}
       onClick={() => {
-        setShowSecondaryMenu(false)
         setTerm(termName)
         document.getElementById(termName)?.focus()
       }}
@@ -92,7 +91,7 @@ const TermSwitcher: React.FC<Props> = ({
       className={styles.termSwitch}
       active={activeTermGroupSwitch}
 
-      onClick={() => {console.log("pressed"); setShowSecondaryMenu(!showSecondaryMenu)}}
+      onClick={() => setShowSecondaryMenu(!showSecondaryMenu)}
       onMouseEnter={() => setHoverTermGroupSwitch(true)}
       onMouseLeave={() => setHoverTermGroupSwitch(false)}
       variant="secondary">
