@@ -55,8 +55,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       modulesTracks[code] = [[], []]
     })
     const timelineEvents = eventsData // for future api calls
-    for (let i = 0; i < timelineEvents.length; i++) {
-      const event = timelineEvents[i]
+    for (const event of timelineEvents) {
       const tracks: TimelineEvent[][] = modulesTracks[event.moduleCode] ?? []
       let isPlaced = false
       for (const track of tracks) {
