@@ -11,14 +11,18 @@ import Button from "react-bootstrap/esm/Button"
 export interface Props {
   modulesList: Module[]
   term: Term
+  expandSecondaryMenu: boolean
   setTerm: React.Dispatch<React.SetStateAction<Term>>
+  setExpandSecondaryMenu: (set: boolean) => void
   openDesktopSite: () => void
 }
 
 const TimelineMobile: React.FC<Props> = ({
   modulesList,
   term,
+  expandSecondaryMenu,
   setTerm,
+  setExpandSecondaryMenu,
   openDesktopSite,
 }) => {
   return (
@@ -27,6 +31,8 @@ const TimelineMobile: React.FC<Props> = ({
       <TermSwitcher
         term={term}
         setTerm={setTerm}
+        showSecondaryMenu={expandSecondaryMenu}
+        setShowSecondaryMenu={setExpandSecondaryMenu}
         style={{ paddingLeft: "0rem", paddingRight: "0rem" }}
       />
       {modulesList.map(({ code, title, subscriptionLevel }) => (

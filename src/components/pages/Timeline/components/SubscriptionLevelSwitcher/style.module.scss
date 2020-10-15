@@ -24,11 +24,18 @@
   border-width: 0rem;
   height: 2.25rem;
   line-height: 1.375rem;
+  box-shadow: none !important;
 }
 
 .subscriptionLevelSwitch:hover {
   background-color: var(--primary-button-hover);
   color: var(--primary-button-text);
+  box-shadow: none !important;
+}
+
+.subscriptionLevelSwitch:focus {
+  outline: none !important;
+  outline-offset: none !important;
   box-shadow: none !important;
 }
 

@@ -23,11 +23,18 @@
   border-width: 0rem;
   height: 2.25rem;
   line-height: 1.375rem;
+  box-shadow: none !important;
 }
 
 .termSwitch:hover {
   background-color: var(--primary-button-hover);
   color: var(--primary-button-text);
+  box-shadow: none !important;
+}
+
+.termSwitch:focus {
+  outline: none !important;
+  outline-offset: none !important;
   box-shadow: none !important;
 }
 
@@ -40,7 +47,7 @@
   background: var(--background-color);
   padding-right: 1.25rem;
   padding-left: 0.625rem;
-  height: 5.5rem !important;
+  height: 2.5rem !important;
 
   padding-bottom: 0.625rem;
 }

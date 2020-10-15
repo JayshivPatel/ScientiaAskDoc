@@ -33,6 +33,7 @@ interface TimelineState {
   showMobileOnSmallScreens: boolean
   showSubscriptionLevels: Set<SubscriptionLevel>
   eventsData: TimelineEvent[]
+  showSecondaryTermMenu: boolean
 }
 
 class Timeline extends React.Component<TimelineProps, TimelineState> {
@@ -43,7 +44,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       isLoaded: false,
       showMobileOnSmallScreens: true,
       eventsData: [],
-      showSubscriptionLevels: new Set([1, 2, 3])
+      showSubscriptionLevels: new Set([1, 2, 3]),
+      showSecondaryTermMenu: false,
     }
   }
   setModuleTracks() {
@@ -146,6 +148,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         <TimelineMobile
           term={this.props.term}
           setTerm={this.props.setTerm}
+          expandSecondaryMenu={this.state.showSecondaryTermMenu}
+          setExpandSecondaryMenu={set => this.setState({ showSecondaryTermMenu: set})}
           modulesList={currModules}
           openDesktopSite={() => {
             this.setState({ showMobileOnSmallScreens: false })
@@ -160,11 +164,16 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
           <MyBreadcrumbs />
           <div className={styles.timelineGrid}>
             <div className={styles.timelineSwitchers}>
-              <TermSwitcher term={this.props.term} setTerm={this.props.setTerm} />
-              {/* <SubscriptionLevelSwitcher 
+              <TermSwitcher 
+                term={this.props.term} 
+                setTerm={this.props.setTerm}
+                showSecondaryMenu={this.state.showSecondaryTermMenu}
+                setShowSecondaryMenu={set => this.setState({ showSecondaryTermMenu: set})}
+              />
+              <SubscriptionLevelSwitcher 
                 levelIsActive={x => this.state.showSubscriptionLevels.has(x)}
                 setSubscriptionLevel={x => this.handleSubscriptionLevelClick(x)}
-              /> */}
+              />
             </div>
             <WeekRow
               numWeeks={numWeeks}
