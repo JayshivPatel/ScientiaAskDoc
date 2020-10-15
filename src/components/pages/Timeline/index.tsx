@@ -43,15 +43,12 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       eventsData: [],
     }
   }
-
-  componentDidMount() {
-    this.props.initSideBar()
+  setModuleTracks() {
     let modulesTracks: ModuleTracks = {}
 
     this.props.modules.forEach(({ code }) => {
       modulesTracks[code] = [[], []]
     })
-
     const timelineEvents = eventsData // for future api calls
     for (let i = 0; i < timelineEvents.length; i++) {
       const event = timelineEvents[i]
@@ -68,7 +65,11 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         tracks.push([event])
       }
     }
-
+    return modulesTracks
+  }
+  componentDidMount() {
+    this.props.initSideBar()
+    let modulesTracks: ModuleTracks = this.setModuleTracks()
     this.setState({
       modulesTracks: modulesTracks,
       isLoaded: true,
@@ -122,6 +123,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         || (makeNumber(a.code) - makeNumber(b.code))
     })
 
+    let modulesTracks: ModuleTracks = this.setModuleTracks()
+
     if (
       window.innerWidth <= 550 &&
       window.innerHeight <= 900 &&
@@ -139,7 +142,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         />
       )
     }
-
     return (
       <>
         <div className={styles.timelineContainer}>
@@ -155,7 +157,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
               numWeeks={numWeeks}
               trackHeight={trackHeight}
               modulesList={currModules}
-              modulesTracks={this.state.modulesTracks}
+              modulesTracks={modulesTracks}
             />
 
             <DayIndicatorGrid
@@ -169,7 +171,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
               numWeeks={numWeeks}
               trackHeight={trackHeight}
               modulesList={currModules}
-              modulesTracks={this.state.modulesTracks}
+              modulesTracks={modulesTracks}
               dateToColumn={(date) => this.dateToColumn(date, termStart)}
               isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
               onEventClick={(id) => this.handleEventClick(id)}
