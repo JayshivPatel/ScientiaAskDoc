@@ -1,4 +1,4 @@
-.termSwitch {
+.subscriptionLevelSwitch {
   background-color: var(--primary-button);
   color: var(--primary-button-text);
 
@@ -6,8 +6,9 @@
   border-radius: 0.5rem;
 
   justify-content: space-between;
-  height: 2.25rem;
   font-size: 1.05rem;
+  height: 2.25rem;
+
 
   transition: 0.2s background-color;
   -webkit-transition: 0.2s background-color;
@@ -15,8 +16,8 @@
 
 }
 
-.termSwitch:active,
-.termSwitch:global(.active) {
+.subscriptionLevelSwitch:active,
+.subscriptionLevelSwitch:global(.active) {
   background: var(--primary-button-active) !important;
   color: var(--primary-button-text-active) !important;
   font-weight: 500;
@@ -25,13 +26,13 @@
   line-height: 1.375rem;
 }
 
-.termSwitch:hover {
+.subscriptionLevelSwitch:hover {
   background-color: var(--primary-button-hover);
   color: var(--primary-button-text);
   box-shadow: none !important;
 }
 
-.timelineTermSwitcher {
+.subscriptionLevelSwitcher {
   grid-area: switcher;
   top: 0;
   left: 0;
@@ -41,10 +42,9 @@
   padding-right: 1.25rem;
   padding-left: 0.625rem;
   height: 2.5rem !important;
-
   padding-bottom: 0.625rem;
 }
 
-.timelineTermSwitcher > * {
+.subscriptionLevelSwitcher > * {
   width: 100%;
 }

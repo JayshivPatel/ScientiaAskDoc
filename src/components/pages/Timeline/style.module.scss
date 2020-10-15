@@ -6,7 +6,10 @@
 
 .timelineGrid {
   display: grid;
-  grid-template-areas: "switcher weeks" "modules background";
+  grid-template-areas: 
+    "switcher weeks" 
+    "modules  background"
+  ;
   grid-template-rows: auto;
   margin-bottom: 1.25rem;
   margin-left: -0.625rem;
@@ -45,4 +48,17 @@
 
 .timelineGrid:hover::-webkit-scrollbar-thumb {
   background-color: var(--scrollbar);
+}
+
+.timelineSwitchers {
+  grid-area: switcher;
+  top: 0;
+  left: 0;
+  position: sticky;
+  z-index: 5;
+  background: var(--background-color);
+  padding-right: 1.25rem;
+  padding-left: 0.625rem;
+  height: 5.5rem !important;
+  padding-bottom: 0.625rem;
 }

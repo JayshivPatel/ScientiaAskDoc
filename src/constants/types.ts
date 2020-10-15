@@ -43,7 +43,7 @@ export interface Module {
   progressStatus: ProgressStatus
   progressPercent: number
   content: string
-  subscriptionLevel: 1 | 2 | 3
+  subscriptionLevel: SubscriptionLevel
 }
 
 export interface TimelineEvent {
@@ -86,3 +86,5 @@ export enum LinkTitleError {
   EmptyTitle = "empty_title",
   DuplicateTitle = "invalid_url"
 }
+
+export type SubscriptionLevel = 1 | 2 | 3

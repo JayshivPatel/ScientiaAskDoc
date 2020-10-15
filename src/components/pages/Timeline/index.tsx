@@ -8,10 +8,11 @@ import DayIndicatorGrid from "./components/DayIndicatorGrid"
 import EventGrid from "./components/EventGrid"
 import { eventsData } from "./eventsData"
 import LoadingScreen from "components/suspense/LoadingScreen"
-import { Term, Module, TimelineEvent } from "constants/types"
+import { Term, Module, TimelineEvent, SubscriptionLevel } from "constants/types"
 import { addDays, toDayCount } from "utils/functions"
 import TimelineMobile from "./components/TimelineMobile"
 import { TIMELINE_ACTIVE } from "constants/global"
+import SubscriptionLevelSwitcher from "./components/SubscriptionLevelSwitcher"
 
 export type ModuleTracks = {
   [index: string]: TimelineEvent[][]
@@ -30,6 +31,7 @@ interface TimelineState {
   modulesTracks: ModuleTracks
   isLoaded: boolean
   showMobileOnSmallScreens: boolean
+  showSubscriptionLevels: Set<SubscriptionLevel>
   eventsData: TimelineEvent[]
 }
 
@@ -41,6 +43,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       isLoaded: false,
       showMobileOnSmallScreens: true,
       eventsData: [],
+      showSubscriptionLevels: new Set([1, 2, 3])
     }
   }
 
@@ -101,6 +104,15 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     this.props.onEventClick(event)
   }
 
+  handleSubscriptionLevelClick(level: SubscriptionLevel) {
+    console.log("level" + level);
+    const newLevels = new Set(this.state.showSubscriptionLevels)
+    if (!newLevels.delete(level)) {
+      newLevels.add(level);
+    }
+    this.setState({ showSubscriptionLevels: newLevels });
+  }
+
   render() {
     const [termStart, numWeeks] = getTermDates(this.props.term)
     const activeDay = TIMELINE_ACTIVE
@@ -108,8 +120,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     if (!this.state.isLoaded) {
       return <LoadingScreen successful={<></>} />
     }
-    let currModules = this.props.modules.filter(({ terms }) =>
-      terms.includes(this.props.term)
+    let currModules = this.props.modules.filter(({ terms, subscriptionLevel }) =>
+      terms.includes(this.props.term) && this.state.showSubscriptionLevels.has(subscriptionLevel)
     )
 
     /* sort current modules by:
@@ -145,7 +157,13 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         <div className={styles.timelineContainer}>
           <MyBreadcrumbs />
           <div className={styles.timelineGrid}>
-            <TermSwitcher term={this.props.term} setTerm={this.props.setTerm} />
+            <div className={styles.timelineSwitchers}>
+              <TermSwitcher term={this.props.term} setTerm={this.props.setTerm} />
+              <SubscriptionLevelSwitcher 
+                levelIsActive={x => this.state.showSubscriptionLevels.has(x)}
+                setSubscriptionLevel={x => this.handleSubscriptionLevelClick(x)}
+              />
+            </div>
             <WeekRow
               numWeeks={numWeeks}
               termStart={termStart}
