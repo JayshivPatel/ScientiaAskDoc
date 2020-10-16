@@ -36,6 +36,9 @@ const ModuleOverview = React.lazy(() => import("./modulePages/ModuleOverview"))
 const ModuleSubmissions = React.lazy(() =>
   import("./modulePages/ModuleSubmissions")
 )
+const HandIns = React.lazy(() => 
+  import("./HandIns")
+)
 
 interface StandardViewProps {
   toggledLeft: boolean
@@ -201,6 +204,12 @@ const StandardView: React.FC<StandardViewProps> = ({
 						  <ExamGrading />
 						</Container>
 					  </Route>
+
+            <Route path="/handins">
+              <Container className={classNames("pageContainer")}>
+                <HandIns studentID="zy7218" courseID="144" exerciseID={123} />
+              </Container>
+            </Route>
 
 					  <Route
 						path="/exams/papers/:scope?"
