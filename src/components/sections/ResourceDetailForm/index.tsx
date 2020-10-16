@@ -75,7 +75,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   const [title, setTitle] = useState<string>(defaultTitle || "")
   const [category, setCategory] = useState(defaultCategory || DEFAULT_CATEGORY)
   const [tags, setTags] = useState<string[]>(defaultTags || [])
-  const [url, setURL] = useState(defaultURL || "https://")
+  const [url, setURL] = useState(defaultURL || "")
   const [urlError, setURLError] = useState<URLError>()
   const [titleError, setLinkTitleError] = useState<LinkTitleError>()
 
