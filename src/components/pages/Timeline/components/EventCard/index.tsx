@@ -7,6 +7,7 @@ import {
   faExclamationCircle,
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons"
+import TitleSpan from "../TitleSpan"
 
 export interface TimelineEventProps {
   title: string
@@ -71,6 +72,7 @@ const EventCard: React.FC<TimelineEventProps> = ({
       icon = faCheckCircle
       break
   }
+
   return (
     <div
       className={classNames(styles.timelineEvent)}
@@ -85,22 +87,7 @@ const EventCard: React.FC<TimelineEventProps> = ({
         color: `var(--${cardColour}-text)`,
         borderColor: `var(--${cardColour}-${borderColour})`,
       }}>
-      {(!isSingleDay || !icon) && (
-        <span
-          className={styles.eventTitle}
-          style={{
-            fontSize: isSingleDay ? "0rem" : "1rem",
-          }}>
-          <span
-            className={styles.eventPrefix}
-            style={{
-              fontSize: isSingleDay ? "0.9rem" : "1rem",
-            }}>
-            {prefix}
-          </span>
-          &nbsp;{title}
-        </span>
-      )}
+      {(!isSingleDay || !icon) && <TitleSpan isSingleDay={isSingleDay} prefix={prefix} title={title}/>}
       {icon && (
         <FontAwesomeIcon
           style={{

@@ -1,0 +1,15 @@
+@import "assets/scss/custom";
+
+.eventTitle {
+  font-size: 1rem;
+  position: sticky;
+  left: 17.3rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.eventPrefix {
+  font-weight: 500;
+  font-size: 1rem;
+}
