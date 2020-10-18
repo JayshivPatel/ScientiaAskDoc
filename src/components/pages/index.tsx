@@ -19,6 +19,8 @@ import LeftBar from "components/navbars/LeftBar"
 import { request } from "../../utils/api"
 import { api, methods } from "../../constants/routes"
 import { YEAR_OF_NEW_CODES } from "../../constants/doc"
+import {ModuleTracks} from "./Timeline";
+import {toDayCount} from "../../utils/functions";
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"))
 const ModuleDashboard = React.lazy(() =>
@@ -68,6 +70,8 @@ const StandardView: React.FC<StandardViewProps> = ({
   const [modulesFilter, setModulesFilter] = useState("In Progress")
   const [timelineTerm, setTimelineTerm] = useState<Term>("Autumn")
   const [modules, setModules] = useState<Module[]>([])
+    const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>([])
+    const [modulesTracks, setModulesTracks] = useState<ModuleTracks>({})
   useEffect(() => {
     const onSuccess = (data: { [k: string]: any }[]) => {
       setModules(
@@ -93,6 +97,65 @@ const StandardView: React.FC<StandardViewProps> = ({
       onError: (message) => console.log(`Failed to obtain modules: ${message}`),
     })
   }, [year])
+
+    const eventsOverlaps = (e1: TimelineEvent, e2: TimelineEvent) => {
+        return (
+            toDayCount(e1.startDate) <= toDayCount(e2.endDate) &&
+            toDayCount(e1.endDate) >= toDayCount(e2.startDate)
+        )
+    }
+    useEffect(() => {
+        let timelineEvents: TimelineEvent[] = []
+        let counter: number = 1
+        for (const module of modules) {
+            request({
+                url: api.CATE_COURSE_EXERCISES(module.code),
+                method: methods.GET,
+                onSuccess: (data: { [k: string]: any }[]) => {
+                    if (data) {
+                        const transformedData: TimelineEvent[] = data.map((exercise, index) => ({
+                            id: counter + index,
+                            moduleCode: module.code,
+                            title: exercise.title,
+                            startDate: new Date(exercise.start_date),
+                            endDate: new Date(exercise.deadlines[0]["deadline"]),
+                            prefix: exercise.type,
+                            assessment: "assessed",
+                            owner: "",
+                            status: "missed",
+                        }))
+                        counter += data.length
+                        timelineEvents = timelineEvents.concat(transformedData)
+                        setTimelineEvents(timelineEvents)
+                    }
+                },
+                onError: (message) => console.log(`Failed to obtain modules: ${message}`)
+            })
+        }
+    }, [modules])
+
+    useEffect(() => {
+        let modulesTracks: ModuleTracks = {}
+        modules.forEach(({ code }) => {
+            modulesTracks[code] = [[], []]
+        })
+
+        for (const event of timelineEvents) {
+            const tracks: TimelineEvent[][] = modulesTracks[event.moduleCode] ?? []
+            let isPlaced = false
+            for (const track of tracks) {
+                if (track.every((te) => !eventsOverlaps(te, event))) {
+                    isPlaced = true
+                    track.push(event)
+                    break
+                }
+            }
+            if (!isPlaced) {
+                tracks.push([event])
+            }
+        }
+        setModulesTracks(modulesTracks)
+    }, [timelineEvents])
 
   return (
     <div
@@ -140,14 +203,14 @@ const StandardView: React.FC<StandardViewProps> = ({
             )}
           />
           
-						<Route
-							path="/modules/:id/overview"
-							render={(props) => (
-								<Container className={classNames("pageContainer")}>
-									<ModuleOverview year={year} moduleID={props.match.params.id} />
-								</Container>
-							)}
-						/>
+            <Route
+                path="/modules/:id/overview"
+                render={(props) => (
+                    <Container className={classNames("pageContainer")}>
+                        <ModuleOverview year={year} moduleID={props.match.params.id} />
+                    </Container>
+                )}
+            />
 					
 
           <Route
@@ -170,40 +233,41 @@ const StandardView: React.FC<StandardViewProps> = ({
             }}
           />
           
-					  <Route
-						path="/modules/:id/submissions"
-						render={(props) => (
-						  <Container className={classNames("pageContainer")}>
-							<ModuleSubmissions
-							  moduleID={props.match.params.id}
-							  onEventClick={onEventClick}
-							/>
-						  </Container>
-						)}
-					  />
+          <Route
+            path="/modules/:id/submissions"
+            render={(props) => (
+              <Container className={classNames("pageContainer")}>
+                <ModuleSubmissions
+                  moduleID={props.match.params.id}
+                  onEventClick={onEventClick}
+                />
+              </Container>
+            )}
+          />
 
-					  <Route path="/modules/:id/feedback">
-						<Container className={classNames("pageContainer")}>
-						  <ModuleFeedback />
-						</Container>
-					  </Route>
+          <Route path="/modules/:id/feedback">
+            <Container className={classNames("pageContainer")}>
+              <ModuleFeedback />
+            </Container>
+          </Route>
 
-					  <Route path="/timeline">
-						<Timeline
-						  initSideBar={initTimelineSideBar}
-						  revertSideBar={revertTimelineSideBar}
-						  term={timelineTerm}
-						  setTerm={setTimelineTerm}
-						  onEventClick={onEventClick}
-						  modules={modules}
-						/>
-					  </Route>
+          <Route path="/timeline">
+            <Timeline
+              initSideBar={initTimelineSideBar}
+              revertSideBar={revertTimelineSideBar}
+              term={timelineTerm}
+              setTerm={setTimelineTerm}
+              onEventClick={onEventClick}
+              modules={modules}
+              modulesTracks={modulesTracks}
+            />
+          </Route>
 
-					  <Route path="/exams/grading">
-						<Container className={classNames("pageContainer")}>
-						  <ExamGrading />
-						</Container>
-					  </Route>
+          <Route path="/exams/grading">
+            <Container className={classNames("pageContainer")}>
+              <ExamGrading />
+            </Container>
+          </Route>
 
             <Route path="/handins">
               <Container className={classNames("pageContainer")}>

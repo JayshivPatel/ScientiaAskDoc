@@ -13,6 +13,8 @@ import { addDays, toDayCount } from "utils/functions"
 import TimelineMobile from "./components/TimelineMobile"
 import { TIMELINE_ACTIVE } from "constants/global"
 import SubscriptionLevelSwitcher from "./components/SubscriptionLevelSwitcher"
+import {api, methods} from "../../../constants/routes";
+import {request} from "../../../utils/api";
 
 export type ModuleTracks = {
   [index: string]: TimelineEvent[][]
@@ -25,10 +27,10 @@ interface TimelineProps {
   setTerm: React.Dispatch<React.SetStateAction<Term>>
   onEventClick: (e?: TimelineEvent) => void
   modules: Module[]
+  modulesTracks: ModuleTracks
 }
 
 interface TimelineState {
-  modulesTracks: ModuleTracks
   isLoaded: boolean
   showMobileOnSmallScreens: boolean
   showSubscriptionLevels: Set<SubscriptionLevel>
@@ -40,7 +42,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
   constructor(props: TimelineProps) {
     super(props)
     this.state = {
-      modulesTracks: {},
       isLoaded: false,
       showMobileOnSmallScreens: true,
       eventsData: [],
@@ -48,34 +49,10 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       showSecondaryTermMenu: false,
     }
   }
-  setModuleTracks() {
-    let modulesTracks: ModuleTracks = {}
 
-    this.props.modules.forEach(({ code }) => {
-      modulesTracks[code] = [[], []]
-    })
-    const timelineEvents = eventsData // for future api calls
-    for (const event of timelineEvents) {
-      const tracks: TimelineEvent[][] = modulesTracks[event.moduleCode] ?? []
-      let isPlaced = false
-      for (const track of tracks) {
-        if (track.every((te) => !eventsOverlaps(te, event))) {
-          isPlaced = true
-          track.push(event)
-          break
-        }
-      }
-      if (!isPlaced) {
-        tracks.push([event])
-      }
-    }
-    return modulesTracks
-  }
-  componentDidMount() {
+  async componentDidMount() {
     this.props.initSideBar()
-    let modulesTracks: ModuleTracks = this.setModuleTracks()
     this.setState({
-      modulesTracks: modulesTracks,
       isLoaded: true,
       eventsData: eventsData,
     })
@@ -107,7 +84,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
   }
 
   handleSubscriptionLevelClick(level: SubscriptionLevel) {
-    console.log("level" + level);
     const newLevels = new Set(this.state.showSubscriptionLevels)
     if (!newLevels.delete(level)) {
       newLevels.add(level);
@@ -120,10 +96,11 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     const activeDay = TIMELINE_ACTIVE
     const trackHeight = 3.25
     if (!this.state.isLoaded) {
-      return <LoadingScreen successful={<></>} />
+      return <LoadingScreen successful={<></>}/>
     }
-    let currModules = this.props.modules.filter(({ terms, subscriptionLevel }) =>
-      terms.includes(this.props.term) && this.state.showSubscriptionLevels.has(subscriptionLevel)
+
+    let currModules = this.props.modules.filter(({terms, subscriptionLevel}) =>
+        terms.includes(this.props.term) && this.state.showSubscriptionLevels.has(subscriptionLevel)
     )
 
     /* sort current modules by:
@@ -131,89 +108,80 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
      *   2. When (1) are the same, comparing module code
      */
     currModules.sort((a, b) => {
-      const makeNumber = (code: string): number => Number(code.replace( /^\D+/g, ''))
-      return b.subscriptionLevel - a.subscriptionLevel 
-        || (makeNumber(a.code) - makeNumber(b.code))
+      const makeNumber = (code: string): number => Number(code.replace(/^\D+/g, ''))
+      return b.subscriptionLevel - a.subscriptionLevel
+          || (makeNumber(a.code) - makeNumber(b.code))
     })
 
-    let modulesTracks: ModuleTracks = this.setModuleTracks()
-
     if (
-      window.innerWidth <= 550 &&
-      window.innerHeight <= 900 &&
-      this.state.showMobileOnSmallScreens
+        window.innerWidth <= 550 &&
+        window.innerHeight <= 900 &&
+        this.state.showMobileOnSmallScreens
     ) {
       return (
-        <TimelineMobile
-          term={this.props.term}
-          setTerm={this.props.setTerm}
-          expandSecondaryMenu={this.state.showSecondaryTermMenu}
-          setExpandSecondaryMenu={set => this.setState({ showSecondaryTermMenu: set})}
-          modulesList={currModules}
-          openDesktopSite={() => {
-            this.setState({ showMobileOnSmallScreens: false })
-            document.documentElement.style.fontSize = "40%"
-          }}
-        />
+          <TimelineMobile
+              term={this.props.term}
+              setTerm={this.props.setTerm}
+              expandSecondaryMenu={this.state.showSecondaryTermMenu}
+              setExpandSecondaryMenu={set => this.setState({showSecondaryTermMenu: set})}
+              modulesList={currModules}
+              openDesktopSite={() => {
+                this.setState({showMobileOnSmallScreens: false})
+                document.documentElement.style.fontSize = "40%"
+              }}
+          />
       )
     }
     return (
-      <>
-        <div className={styles.timelineContainer}>
-          <MyBreadcrumbs />
-          <div className={styles.timelineGrid}>
-            <div className={styles.timelineSwitchers}>
-              <TermSwitcher 
-                term={this.props.term} 
-                setTerm={this.props.setTerm}
-                showSecondaryMenu={this.state.showSecondaryTermMenu}
-                setShowSecondaryMenu={set => this.setState({ showSecondaryTermMenu: set})}
+        <>
+          <div className={styles.timelineContainer}>
+            <MyBreadcrumbs/>
+            <div className={styles.timelineGrid}>
+              <div className={styles.timelineSwitchers}>
+                <TermSwitcher
+                    term={this.props.term}
+                    setTerm={this.props.setTerm}
+                    showSecondaryMenu={this.state.showSecondaryTermMenu}
+                    setShowSecondaryMenu={set => this.setState({showSecondaryTermMenu: set})}
+                />
+                <SubscriptionLevelSwitcher
+                    levelIsActive={x => this.state.showSubscriptionLevels.has(x)}
+                    setSubscriptionLevel={x => this.handleSubscriptionLevelClick(x)}
+                />
+              </div>
+              <WeekRow
+                  numWeeks={numWeeks}
+                  termStart={termStart}
+                  activeDay={activeDay}
               />
-              <SubscriptionLevelSwitcher 
-                levelIsActive={x => this.state.showSubscriptionLevels.has(x)}
-                setSubscriptionLevel={x => this.handleSubscriptionLevelClick(x)}
+              <ModuleRows
+                  numWeeks={numWeeks}
+                  trackHeight={trackHeight}
+                  modulesList={currModules}
+                  modulesTracks={this.props.modulesTracks}
+              />
+
+              <DayIndicatorGrid
+                  numWeeks={numWeeks}
+                  activeDay={activeDay}
+                  activeColumn={this.dateToColumn(activeDay, termStart)}
+                  isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
+              />
+
+              <EventGrid
+                  numWeeks={numWeeks}
+                  trackHeight={trackHeight}
+                  modulesList={currModules}
+                  modulesTracks={this.props.modulesTracks}
+                  dateToColumn={(date) => this.dateToColumn(date, termStart)}
+                  isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
+                  onEventClick={(id) => this.handleEventClick(id)}
               />
             </div>
-            <WeekRow
-              numWeeks={numWeeks}
-              termStart={termStart}
-              activeDay={activeDay}
-            />
-            <ModuleRows
-              numWeeks={numWeeks}
-              trackHeight={trackHeight}
-              modulesList={currModules}
-              modulesTracks={modulesTracks}
-            />
-
-            <DayIndicatorGrid
-              numWeeks={numWeeks}
-              activeDay={activeDay}
-              activeColumn={this.dateToColumn(activeDay, termStart)}
-              isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
-            />
-
-            <EventGrid
-              numWeeks={numWeeks}
-              trackHeight={trackHeight}
-              modulesList={currModules}
-              modulesTracks={modulesTracks}
-              dateToColumn={(date) => this.dateToColumn(date, termStart)}
-              isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
-              onEventClick={(id) => this.handleEventClick(id)}
-            />
           </div>
-        </div>
-      </>
+        </>
     )
   }
-}
-
-function eventsOverlaps(e1: TimelineEvent, e2: TimelineEvent) {
-  return (
-    toDayCount(e1.startDate) <= toDayCount(e2.endDate) &&
-    toDayCount(e1.endDate) >= toDayCount(e2.startDate)
-  )
 }
 
 function getTermDates(term: Term): [Date, number] {
