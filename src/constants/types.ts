@@ -57,6 +57,60 @@ export interface TimelineEvent {
   endDate: Date
 }
 
+export type SubmissionType = "electronic" | "hardcopy" | "other"
+
+export type ExerciseData = TimelineEvent & {
+  maximumMark: number
+  submissionType: SubmissionType
+}
+
+export type ExerciseCreation = {
+  id: number
+  startDate: Date
+  endDate: Date
+  title: string
+  alternativeExercise: boolean
+  assessmentType: AssessmentType
+  assessment: "unassessed" | "individual" | "groups"
+  hardcopyDue?: Date
+  electronicDue?: Date
+  provisionOfMarkingSchemaFile: boolean
+  provisionOfSpec: boolean
+  maximumMark: number
+  weightWithinModule: "average"
+  provisionOfSampleAnswerFile?: Date
+}
+
+export enum AssessmentTypeSeveralDays {
+  TUTORIAL = "tutorial",
+  COURSEWORK = "coursework",
+  COMPUTER_BASED_TUTORIAL = "computer-based tutorial",
+  COMPUTER_BASED_COURSEWORK = "computer-based coursework",
+  LABORATORY = "laboratory",
+  MMT = "mmt",
+  PMT = "pmt",
+  PPT = "ppt",
+  REPORT = "report",
+  ESSAY = "essay",
+  PROJECT = "project",
+}
+
+export enum AssessmentTypeOneDay {
+  TEST = "test",
+  ONLINE_TEST = "online-test",
+  RESIT_TEST = "resit-test",
+  RESIT_ONLINE_TEST = "resit-online-test",
+  EXAM_QUESTION = "exam-question",
+}
+
+export enum AssessmentTypeSpecialisedActivity {
+  GROUP_FORMATION = "group-formation"
+}
+
+export type AssessmentType = AssessmentTypeOneDay
+                           | AssessmentTypeSeveralDays
+                           | AssessmentTypeSpecialisedActivity
+
 export interface CalendarEvent {
   summary: string
   description: string
