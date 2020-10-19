@@ -14,7 +14,7 @@ const SideBarOutlineGroup: React.FC = () => {
 
   let outlineButtons = [
     {
-      title: "Overview",
+      title: "Dashboard",
       activeURL: `/modules/${id}/dashboard`,
       icon: faHome,
     },
