@@ -265,7 +265,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
                             </Row>
                           </Accordion.Toggle>
 
-                          <Accordion.Collapse eventKey={`${index}`} className={styles.collapse}>
+                          
                             <Card.Body>
                               <ResourceDetailForm
                                 id={index}
@@ -281,7 +281,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
                                 )}
                               />
                             </Card.Body>
-                          </Accordion.Collapse>
+                          
                         </Card>
                       )
                   )}

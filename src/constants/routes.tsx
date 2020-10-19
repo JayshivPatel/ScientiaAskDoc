@@ -1,10 +1,12 @@
 const dev = {
   MATERIALS_URL: `http://${window.location.hostname}:5000`,
+  CATE_URL: `http://${window.location.hostname}:2000`,
   CALENDAR_URL: `http://${window.location.hostname}:4000`,
 }
 
 const prod = {
   MATERIALS_URL: "https://api-materials.doc.ic.ac.uk",
+  CATE_URL: "",
   CALENDAR_URL: "",
 }
 
@@ -18,6 +20,8 @@ export const methods = {
 }
 
 export const api = {
+  CATE_LOGIN: `${config.CATE_URL}/auth/login`,
+  CATE_COURSE_EXERCISES: (courseCode: string) =>`${config.CATE_URL}/exercises/${courseCode}`,
   MATERIALS_LOGIN: `${config.MATERIALS_URL}/auth/login`,
   MATERIALS_COURSES: (year: string) =>
     `${config.MATERIALS_URL}/courses/${year}`,
