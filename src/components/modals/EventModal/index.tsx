@@ -162,7 +162,7 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
       )}
     </Modal>
 
-  const ModalSubmissionDeclaration =
+  const ModalSubmissionDeclaration = undefined;
 
 
   switch (step) {
