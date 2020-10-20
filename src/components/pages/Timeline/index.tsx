@@ -54,8 +54,18 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     this.props.initSideBar()
     this.setState({
       isLoaded: true,
-      eventsData: eventsData,
     })
+  }
+
+  componentWillReceiveProps(nextProps: TimelineProps) {
+    if (nextProps.modulesTracks !== this.props.modulesTracks) {
+      const events: TimelineEvent[] = []
+      for (let key in this.props.modulesTracks) {
+        let value = this.props.modulesTracks[key]
+        value.forEach(vs => vs.forEach(v => events.push(v)))
+      }
+      this.setState({ eventsData: events })
+    }
   }
 
   componentWillUnmount() {
