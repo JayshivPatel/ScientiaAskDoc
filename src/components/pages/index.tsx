@@ -8,6 +8,7 @@ import {
   Module,
   CalendarEvent,
   ProgressStatus,
+  SubscriptionLevel,
 } from "constants/types"
 import Container from "react-bootstrap/esm/Container"
 import LoadingScreen from "components/suspense/LoadingScreen"
@@ -70,8 +71,8 @@ const StandardView: React.FC<StandardViewProps> = ({
   const [modulesFilter, setModulesFilter] = useState("In Progress")
   const [timelineTerm, setTimelineTerm] = useState<Term>("Autumn")
   const [modules, setModules] = useState<Module[]>([])
-    const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>([])
-    const [modulesTracks, setModulesTracks] = useState<ModuleTracks>({})
+  const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>([])
+  const [modulesTracks, setModulesTracks] = useState<ModuleTracks>({})
   useEffect(() => {
     const onSuccess = (data: { [k: string]: any }[]) => {
       setModules(
@@ -85,7 +86,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           progressPercent: Math.floor(Math.random() * 100),
           progressStatus: ProgressStatus.IN_PROGRESS,
           content: "",
-          subscriptionLevel: Math.floor(Math.random() * 3) + 1 as (1 | 2 | 3),
+          subscriptionLevel: Math.floor(Math.random() * 3) + 1 as SubscriptionLevel,
         }))
       )
     }
@@ -98,64 +99,70 @@ const StandardView: React.FC<StandardViewProps> = ({
     })
   }, [year])
 
-    const eventsOverlaps = (e1: TimelineEvent, e2: TimelineEvent) => {
-        return (
-            toDayCount(e1.startDate) <= toDayCount(e2.endDate) &&
-            toDayCount(e1.endDate) >= toDayCount(e2.startDate)
-        )
+  const eventsOverlaps = (e1: TimelineEvent, e2: TimelineEvent) => {
+    return (
+      toDayCount(e1.startDate) <= toDayCount(e2.endDate) &&
+      toDayCount(e1.endDate) >= toDayCount(e2.startDate)
+    )
+  }
+
+  useEffect(() => {
+    let timelineEvents: TimelineEvent[] = []
+    let counter: number = 1
+    for (const module of modules) {
+      request({
+        url: api.CATE_COURSE_EXERCISES(module.code),
+        method: methods.GET,
+        onSuccess: (data: { [k: string]: any }[]) => {
+
+          if (data) {
+            const transformedData: TimelineEvent[] = data.map((exercise, index) => ({
+              id: counter + index,
+              moduleCode: module.code,
+              title: exercise.title,
+              startDate: new Date(exercise.start_date),
+              endDate: new Date(exercise.deadlines[0]["deadline"]),
+              prefix: exercise.type,
+              assessment: "assessed",
+              owner: "",
+              status: "missed",
+            }))
+            counter += data.length
+            timelineEvents = timelineEvents.concat(transformedData)
+            setTimelineEvents(timelineEvents)
+          }
+        },
+        onError: (message) => console.log(`Failed to obtain modules: ${message}`)
+      })
     }
-    useEffect(() => {
-        let timelineEvents: TimelineEvent[] = []
-        let counter: number = 1
-        for (const module of modules) {
-            request({
-                url: api.CATE_COURSE_EXERCISES(module.code),
-                method: methods.GET,
-                onSuccess: (data: { [k: string]: any }[]) => {
-                    if (data) {
-                        const transformedData: TimelineEvent[] = data.map((exercise, index) => ({
-                            id: counter + index,
-                            moduleCode: module.code,
-                            title: exercise.title,
-                            startDate: new Date(exercise.start_date),
-                            endDate: new Date(exercise.deadlines[0]["deadline"]),
-                            prefix: exercise.type,
-                            assessment: "assessed",
-                            owner: "",
-                            status: "missed",
-                        }))
-                        counter += data.length
-                        timelineEvents = timelineEvents.concat(transformedData)
-                        setTimelineEvents(timelineEvents)
-                    }
-                },
-                onError: (message) => console.log(`Failed to obtain modules: ${message}`)
-            })
-        }
-    }, [modules])
+  }, [modules])
 
-    useEffect(() => {
-        let modulesTracks: ModuleTracks = {}
-        modules.forEach(({ code }) => {
-            modulesTracks[code] = [[], []]
-        })
+  useEffect(() => {
+    let modulesTracks: ModuleTracks = {}
+    modules.forEach(({ code }) => {
+      modulesTracks[code] = [[], []]
+    })
 
-        for (const event of timelineEvents) {
-            const tracks: TimelineEvent[][] = modulesTracks[event.moduleCode] ?? []
-            let isPlaced = false
-            for (const track of tracks) {
-                if (track.every((te) => !eventsOverlaps(te, event))) {
-                    isPlaced = true
-                    track.push(event)
-                    break
-                }
-            }
-            if (!isPlaced) {
-                tracks.push([event])
-            }
+    for (const event of timelineEvents) {
+      const tracks: TimelineEvent[][] = modulesTracks[event.moduleCode] ?? []
+      let isPlaced = false
+      for (const track of tracks) {
+        if (track.every((te) => !eventsOverlaps(te, event))) {
+          isPlaced = true
+          track.push(event)
+          break
         }
-        setModulesTracks(modulesTracks)
-    }, [timelineEvents])
+      }
+      if (!isPlaced) {
+        tracks.push([event])
+      }
+    }
+    setModulesTracks(modulesTracks)
+  }, [timelineEvents])
+
+  useEffect(() => {
+    console.log(modulesList.length)
+  }, [modulesList])
 
   return (
     <div
@@ -259,6 +266,7 @@ const StandardView: React.FC<StandardViewProps> = ({
               setTerm={setTimelineTerm}
               onEventClick={onEventClick}
               modules={modules}
+              timelineEvents={timelineEvents}
               modulesTracks={modulesTracks}
             />
           </Route>
