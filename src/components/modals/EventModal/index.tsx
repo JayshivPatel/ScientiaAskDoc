@@ -15,29 +15,18 @@ import FileItemRow from "components/rows/FileItemRow"
 import {resourceTypeToIcon} from "components/pages/modulePages/ModuleResources/utils"
 import {TimelineEvent} from "constants/types"
 import {toDayCount, toEventDateTime} from "utils/functions"
+import SubmissionModal from "../SubmissionModal"
 
 interface Props {
   event?: TimelineEvent
   show: boolean
-  onHide: any
+  onHide: () => void
   activeDay: Date
 }
 
 const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
 
-  const [step, setStep] = useState<number>(0);
-
-  const nextStep = () => {
-    setStep(step + 1);
-  }
-
-  const prevStep = () => {
-    setStep(step - 1);
-  }
-
-  const resetStep = () => {
-    setStep(0);
-  }
+  const [viewSubmission, setViewSubmission] = useState<boolean>(false);
 
   if (!event) return null
   const timeLeft = toDayCount(event.endDate) - toDayCount(activeDay)
@@ -85,15 +74,8 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
       break
   }
 
-  const ModalInfoPage =
-    <Modal
-      className={styles.eventModal}
-      dialogClassName={styles.modal}
-      show={show}
-      onClose={resetStep}
-      onHide={onHide}
-      centered
-    >
+  const ModalInfoPage = (
+    <div>
       <Modal.Header className={styles.modalHeader}>
         <Button
           variant="secondary"
@@ -155,27 +137,38 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
       </Modal.Body>
       {event.status !== "unreleased" && timeLeft >= -1 && (
         <Modal.Footer className={styles.modalFooter}>
-          <Button variant="secondary" className={styles.submitButton} onClick={nextStep}>
+          <Button 
+            variant="secondary" 
+            className={styles.submitButton} 
+            onClick={() => setViewSubmission(true)}
+          >
             Submit
           </Button>
         </Modal.Footer>
       )}
+    </div>
+  )
+
+  let wrapped = viewSubmission ? 
+    (
+      <SubmissionModal 
+        event={event} 
+        activeDay={activeDay}
+      />
+    )
+  : ModalInfoPage
+
+  return (
+    <Modal
+      className={styles.eventModal}
+      dialogClassName={styles.modal}
+      show={show}
+      onHide={onHide}
+      centered
+    >
+      {wrapped}
     </Modal>
-
-  const ModalSubmissionDeclaration = undefined;
-
-
-  switch (step) {
-    case 0:
-      return ModalInfoPage
-    case 1:
-
-    case 2:
-
-    case 3:
-
-  }
-  return null;
+  );
 }
 
 const dummy = [
