@@ -1,18 +1,15 @@
-import React, {useState} from "react"
-import Modal from "react-bootstrap/Modal"
+import React, { useState } from "react"
 import Button from "react-bootstrap/Button"
+import parentStyles from "../style.module.scss"
 import styles from "./style.module.scss"
 import { TimelineEvent } from "constants/types"
 import Tab from "react-bootstrap/esm/Tab"
-import Row from "react-bootstrap/esm/Row"
-import Col from "react-bootstrap/esm/Col"
 import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
 
-
 enum Stage {
-  DECLARATION = "declaration",
-  GROUP_FORMATION = "group_formation",
-  FILE_UPLOAD = "file_upload", 
+  DECLARATION = "Declaration",
+  GROUP_FORMATION = "Group Formation",
+  FILE_UPLOAD = "File Upload", 
 }
 
 const allStages: Stage[] = [
@@ -26,7 +23,7 @@ interface Props {
   activeDay: Date
 }
 
-const SubmissionModal: React.FC<Props> = ({ 
+const SubmissionSection: React.FC<Props> = ({ 
   event, 
   activeDay, 
 }) => {
@@ -34,33 +31,35 @@ const SubmissionModal: React.FC<Props> = ({
   const [stage, setStage] = useState<Stage>(Stage.DECLARATION)
 
   const tabPaneOf = (s: Stage) => {
-    return (
+    return (s === stage) && (
       <Tab.Pane active={s == stage}>
         {`placeholder of ${s}`}
       </Tab.Pane>
     )
   }
 
+  const buttonOf = (s: Stage) => {
+    return (
+      <Button
+        className={styles.sectionButton}
+        onClick={() => setStage(s)}
+        active={s === stage}
+      >
+        {s}
+      </Button>
+    )
+  }
+
   return (
-      <Tab.Container>
-        <Row>
-          <Col sm={3}>
-            <ButtonGroup vertical>
-              <Button>123</Button>
-              <Button>456</Button>
-              <Button>789</Button>
-            </ButtonGroup>
-          </Col>
-          <Col sm={9}>
-            <Tab.Content>
-              {allStages.map(tabPaneOf)}
-            </Tab.Content>
-          </Col>
-        </Row>
-      </Tab.Container>
-
+    <>
+      <div className={styles.sectionSwitcher}>
+        <ButtonGroup>
+          {allStages.map(buttonOf)}
+        </ButtonGroup>
+      </div>
+      {allStages.map(tabPaneOf)}
+    </>
   )
-
 }
 
 const dummy = [
@@ -78,4 +77,4 @@ const dummy = [
   },
 ]
 
-export default SubmissionModal
+export default SubmissionSection

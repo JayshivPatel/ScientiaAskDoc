@@ -1,0 +1,53 @@
+.sectionButton {
+  background-color: var(--primary-button);
+  color: var(--primary-button-text);
+
+  border-width: 0rem;
+  border-radius: 0.5rem;
+  margin: 0;
+
+  justify-content: space-between;
+  height: 2.25rem;
+  font-size: 1.05rem;
+
+  transition: 0.2s background-color;
+  -webkit-transition: 0.2s background-color;
+  -moz-transition: 0.2s background-color;
+
+}
+
+.sectionButton:active,
+.sectionButton:global(.active) {
+  background: var(--primary-button-active) !important;
+  color: var(--primary-button-text-active) !important;
+  font-weight: 500;
+  border-width: 0rem;
+  height: 2.25rem;
+  line-height: 1.375rem;
+  box-shadow: none !important;
+}
+
+.sectionButton:hover {
+  background-color: var(--primary-button-hover);
+  color: var(--primary-button-text);
+  box-shadow: none !important;
+}
+
+.sectionButton:focus {
+  outline: none !important;
+  outline-offset: none !important;
+  box-shadow: none !important;
+}
+
+.sectionSwitcher {
+  top: 0;
+  left: 0;
+  position: sticky;
+  z-index: 5;
+  background: var(--background-color);
+  height: 2.5rem !important;
+}
+
+.sectionSwitcher > * {
+  width: 100%;
+}

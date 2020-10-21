@@ -15,7 +15,7 @@ import FileItemRow from "components/rows/FileItemRow"
 import {resourceTypeToIcon} from "components/pages/modulePages/ModuleResources/utils"
 import {TimelineEvent} from "constants/types"
 import {toDayCount, toEventDateTime} from "utils/functions"
-import SubmissionModal from "../SubmissionModal"
+import SubmissionSection from "./SubmissionSection"
 
 interface Props {
   event?: TimelineEvent
@@ -74,8 +74,48 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
       break
   }
 
-  const ModalInfoPage = (
-    <div>
+  const ModalInfo = (
+    <>
+      {dummy.map(({title, type, tags, id}: any) => (
+        <FileItemRow
+          title={title}
+          tags={tags}
+          icon={resourceTypeToIcon(type)}
+          onClick={() => {
+          }}
+          key={id}
+        />
+      ))}
+    </>
+  )
+
+  const footerAttributes = ((): [string, () => void] | undefined => {
+    if (viewSubmission) {
+      return ["Back", () => setViewSubmission(false)]
+    }
+    if (event.status !== "unreleased" && timeLeft >= -1) {
+      return ["Submit", () => setViewSubmission(true)]
+    }
+    return undefined
+  })()
+
+  const mainSection = viewSubmission ? 
+    (
+      <SubmissionSection 
+        event={event} 
+        activeDay={activeDay}
+      />
+    )
+  : ModalInfo
+
+  return (
+    <Modal
+      className={styles.eventModal}
+      dialogClassName={styles.modal}
+      show={show}
+      onHide={onHide}
+      centered
+    >
       <Modal.Header className={styles.modalHeader}>
         <Button
           variant="secondary"
@@ -121,52 +161,22 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
             )}
           </div>
           <div className={styles.sectionHeaderContainer}>
-            <span className={styles.sectionHeader}>Given</span>
+            <span className={styles.sectionHeader}>{viewSubmission ? "Submission" : "Given"}</span>
           </div>
-          {dummy.map(({title, type, tags, id}: any) => (
-            <FileItemRow
-              title={title}
-              tags={tags}
-              icon={resourceTypeToIcon(type)}
-              onClick={() => {
-              }}
-              key={id}
-            />
-          ))}
+          {mainSection}
         </div>
       </Modal.Body>
-      {event.status !== "unreleased" && timeLeft >= -1 && (
+      {footerAttributes && (
         <Modal.Footer className={styles.modalFooter}>
           <Button 
             variant="secondary" 
             className={styles.submitButton} 
-            onClick={() => setViewSubmission(true)}
+            onClick={footerAttributes[1]}
           >
-            Submit
+            {footerAttributes[0]}
           </Button>
         </Modal.Footer>
       )}
-    </div>
-  )
-
-  let wrapped = viewSubmission ? 
-    (
-      <SubmissionModal 
-        event={event} 
-        activeDay={activeDay}
-      />
-    )
-  : ModalInfoPage
-
-  return (
-    <Modal
-      className={styles.eventModal}
-      dialogClassName={styles.modal}
-      show={show}
-      onHide={onHide}
-      centered
-    >
-      {wrapped}
     </Modal>
   );
 }
