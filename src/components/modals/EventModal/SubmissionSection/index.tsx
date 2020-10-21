@@ -1,16 +1,16 @@
-import React, { useState } from "react"
+import React, {useState} from "react"
 import Button from "react-bootstrap/Button"
-import parentStyles from "../style.module.scss"
 import styles from "./style.module.scss"
-import { EnumDictionary, ResourceUploadRequirement, ResourceUploadStatus, TimelineEvent } from "constants/types"
-import Tab from "react-bootstrap/esm/Tab"
+import {EnumDictionary, ResourceUploadRequirement, ResourceUploadStatus, TimelineEvent} from "constants/types"
 import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
+import Form from "react-bootstrap/Form"
+import Col from "react-bootstrap/Col"
 import SubmissionFileUpload from "./SubmissionFileUpload"
 
 enum Stage {
   DECLARATION = "Declaration",
   GROUP_FORMATION = "Group Formation",
-  FILE_UPLOAD = "File Upload", 
+  FILE_UPLOAD = "File Upload",
 }
 
 const allStages: Stage[] = [
@@ -19,20 +19,111 @@ const allStages: Stage[] = [
   Stage.FILE_UPLOAD
 ]
 
+interface SubmitDeclarationProps {
+
+}
+
+const SubmitDeclarationSection: React.FC<SubmitDeclarationProps> = ({}) => {
+
+  return (
+    <Form>
+      <Form.Group
+        className={styles.submitDeclParagraph}
+      >
+        <Form.Label>
+          We declare that this final submitted version is our unaided work.
+        </Form.Label>
+        <Form.Label>
+          We acknowledge the following people for help through our original discussions:
+        </Form.Label>
+      </Form.Group>
+      <Form.Group>
+        <Form.Row>
+          <Col>
+            <Form.Label className={styles.submitDeclTitle}>Name</Form.Label>
+            <Form.Control placeholder="Name"/>
+            <Form.Control placeholder="Name"/>
+            <Form.Control placeholder="Name"/>
+            <Form.Control placeholder="Name"/>
+            <Form.Control placeholder="Name"/>
+          </Col>
+          <Col>
+            <Form.Label className={styles.submitDeclTitle}>Login (if member of DOC)</Form.Label>
+            <Form.Control placeholder="Login"/>
+            <Form.Control placeholder="Login"/>
+            <Form.Control placeholder="Login"/>
+            <Form.Control placeholder="Login"/>
+            <Form.Control placeholder="Login"/>
+          </Col>
+        </Form.Row>
+        <Form.Row>
+          <Col>
+            <Button
+              variant="secondary"
+              className={styles.submitDeclButton}
+            >
+              Change Declaration
+            </Button>
+          </Col>
+          <Col>
+            <Button
+              variant="secondary"
+              className={styles.submitDeclButton}
+            >
+              Reset Form
+            </Button>
+          </Col>
+        </Form.Row>
+      </Form.Group>
+      <Form.Group
+        className={styles.submitDeclParagraph}
+      >
+        <p>
+          Fill in or modify these boxes as appropriate.
+        </p>
+        <p>
+          Names must contain only alphabetic characters [A-Za-z],
+          spaces and hyphens (-); logins must contain only lower case
+          letters and/or digits [a-z0-9]. Name-login pairs with incorrect
+          syntax will be ignored.
+        </p>
+      </Form.Group>
+      <Form.Group>
+        <Form.Row>
+          <Col>
+            <Button
+              variant="secondary"
+              className={styles.submitDeclButton}
+            >
+              Delete Declaration
+            </Button>
+          </Col>
+          <Col>
+            <p>
+              Only possible when no submission record exists
+              (neither hardcopy nor electronic).
+            </p>
+          </Col>
+        </Form.Row>
+      </Form.Group>
+    </Form>
+  )
+}
+
 interface Props {
   event?: TimelineEvent
   activeDay: Date
 }
 
-const SubmissionSection: React.FC<Props> = ({ 
-  event, 
-  activeDay, 
-}) => {
+const SubmissionSection: React.FC<Props> = ({
+                                              event,
+                                              activeDay,
+                                            }) => {
 
   const [stage, setStage] = useState<Stage>(Stage.DECLARATION)
 
   const mainSectionDic: EnumDictionary<Stage, JSX.Element> = {
-    [Stage.DECLARATION]: <></>,
+    [Stage.DECLARATION]: <SubmitDeclarationSection/>,
     [Stage.GROUP_FORMATION]: <></>,
     [Stage.FILE_UPLOAD]: (
       <SubmissionFileUpload
@@ -104,7 +195,7 @@ const dummyRUS: ResourceUploadStatus[] = [
     size: 1024,
     timestamp: new Date()
   },
-  
+
 ]
 
 export default SubmissionSection
