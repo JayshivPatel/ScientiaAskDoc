@@ -27,9 +27,13 @@ const enum FileCategory {
 
 const categoryExtensions: EnumDictionary<FileCategory, string[]> = {
   [FileCategory.CODE]: [
-    "java", 
     "c", "cpp", "h", "hpp", 
-    "hs", "lhs", ""],
+    "java", 
+    "kt",
+    "hs", "lhs",
+    "sh",
+    "py", 
+  ],
   [FileCategory.EXCEL]: ["xls", "xlsx"],
   [FileCategory.LINK]: [""],
   [FileCategory.PDF]: ["pdf"],
@@ -61,13 +65,30 @@ const extensionDictionary: { [suffix: string]: FileCategory } = (() => {
 
 interface Props {
   suffixes: string[]
+  style?: React.CSSProperties
+  onClick?: ((event: React.MouseEvent) => void)
 }
 
-const FileExtensionIcon: React.FC<Props> = ({ suffixes }) => {
+const FileExtensionIcon: React.FC<Props> = ({ 
+  suffixes,
+  style,
+  onClick,
+}) => {
   const category = suffixes.length === 1 
     ? extensionDictionary[suffixes[0]] ?? FileCategory.PLAIN_TEXT
     : FileCategory.PLAIN_TEXT
-  return (<FontAwesomeIcon icon={categoryIcons[category]}/>)
+  return (
+    <FontAwesomeIcon 
+      style={style}
+      icon={categoryIcons[category]}
+      onClick={e => {
+        e.stopPropagation()
+        onClick?.(e)
+      }}
+      fixedWidth
+    
+    />
+    )
 }
 
 export default FileExtensionIcon
