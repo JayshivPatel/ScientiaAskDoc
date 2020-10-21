@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { 
   faFileAlt,
@@ -9,12 +9,13 @@ import {
   faFilePowerpoint, 
   faFileVideo, 
   faFileWord,
-  IconDefinition 
+  IconDefinition, 
+  faFile
 } from '@fortawesome/free-solid-svg-icons'
 import { EnumDictionary } from 'constants/types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const enum FileCategory {
+enum FileCategory {
   CODE = "code",
   EXCEL = "excel",
   LINK = "link",
@@ -23,6 +24,7 @@ const enum FileCategory {
   POWERPOINT = "powerpoint",
   VIDEO = "video",
   WORD = "word",
+  OTHER = "other",
 }
 
 const categoryExtensions: EnumDictionary<FileCategory, string[]> = {
@@ -35,12 +37,13 @@ const categoryExtensions: EnumDictionary<FileCategory, string[]> = {
     "py", 
   ],
   [FileCategory.EXCEL]: ["xls", "xlsx"],
-  [FileCategory.LINK]: [""],
+  [FileCategory.LINK]: [],
   [FileCategory.PDF]: ["pdf"],
   [FileCategory.POWERPOINT]: ["ppt", "pptx"],
-  [FileCategory.PLAIN_TEXT]: ["txt"],
+  [FileCategory.PLAIN_TEXT]: ["txt", ""],
   [FileCategory.VIDEO]: ["flv", "avi", "mp4"],
   [FileCategory.WORD]: ["doc", "docx"],
+  [FileCategory.OTHER]: [],
 }
 
 const categoryIcons: EnumDictionary<FileCategory, IconDefinition> = {
@@ -52,6 +55,7 @@ const categoryIcons: EnumDictionary<FileCategory, IconDefinition> = {
   [FileCategory.PLAIN_TEXT]: faFileAlt,
   [FileCategory.VIDEO]: faFileVideo,
   [FileCategory.WORD]: faFileWord,
+  [FileCategory.OTHER]: faFile,
 }
 
 const extensionDictionary: { [suffix: string]: FileCategory } = (() => {
@@ -74,9 +78,23 @@ const FileExtensionIcon: React.FC<Props> = ({
   style,
   onClick,
 }) => {
-  const category = suffixes.length === 1 
-    ? extensionDictionary[suffixes[0]] ?? FileCategory.PLAIN_TEXT
-    : FileCategory.PLAIN_TEXT
+
+  const [category, setCategory] = useState<FileCategory>(FileCategory.OTHER)
+
+  // Set icon as per suffixes' categories
+  useEffect(() => {
+    let category: FileCategory | undefined = undefined
+    for (const suffix of suffixes) {
+      const currentCategory = extensionDictionary[suffix] ?? FileCategory.OTHER
+      if (category && (category !== currentCategory)) {
+        setCategory(FileCategory.OTHER)
+        return
+      }
+      category = currentCategory
+    }
+    setCategory(category ?? FileCategory.OTHER)
+  }, [suffixes])
+  
   return (
     <FontAwesomeIcon 
       style={style}
