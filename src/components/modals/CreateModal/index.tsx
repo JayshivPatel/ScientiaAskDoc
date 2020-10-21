@@ -25,9 +25,7 @@ import ResourceDetailForm, {
 } from "components/sections/ResourceDetailForm"
 import {request} from "utils/api"
 import {api, methods} from "constants/routes"
-import {Dropdown, Grid, Segment} from 'semantic-ui-react'
-// import {DropdownButton} from "react-bootstrap";
-// import Dropdown from "react-bootstrap/Dropdown";
+import moment from "moment"
 
 interface CreateModalProps {
   show: boolean
@@ -202,17 +200,32 @@ const CreateModal: React.FC<CreateModalProps> = ({
   ]);
 
   const [type_options] = React.useState([
-    {label: "1", value: 1},
-    {label: "2", value: 2},
-    {label: "3", value: 3},
-    {label: "4", value: 4},
-    {label: "5", value: 5},
-    {label: "6", value: 6},
-    {label: "7", value: 7},
-    {label: "8", value: 8},
-    {label: "9", value: 9},
-    {label: "10", value: 10}
+    {label: "Tutorial", value: 1},
+    {label: "Coursework", value: 2},
+    {label: "Computer-based Tutorial", value: 3},
+    {label: "Computer-based_coursework", value: 4},
+    {label: "Laboratory", value: 5},
+    {label: "MMT", value: 6},
+    {label: "PMT", value: 7},
+    {label: "PPT", value: 8},
+    {label: "Report", value: 9},
+    {label: "Essay", value: 10},
+    {label: "Project", value: 8},
+    {label: "TEST", value: 9},
+    {label: "ON-LINE TEST", value: 9},
+    {label: "RESIT TEST", value: 9},
+    {label: "RESIT ON-LONE TEST", value: 9},
+    {label: "EXAM QUESTION", value: 9},
+    {label: "GROUP FORMATION", value: 9}
   ]);
+
+  const date = moment().toDate()
+  const dates = []
+  for (let i = 1; i <= 14; i++) {
+    dates.push({label: new Date(date.setDate(date.getDate() + 1)).toDateString(), value : i})
+  }
+
+  const [date_options] = React.useState(dates);
 
   return (
     <Modal
@@ -269,7 +282,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 <Col>
                   Start Date:
                   <select>
-                    {type_options.map(({label, value}) => (
+                    {date_options.map(({label, value}) => (
                       <option key={value} value={value}>
                         {label}
                       </option>
@@ -280,7 +293,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 <Col>
                   End Date:
                   <select>
-                    {type_options.map(({label, value}) => (
+                    {date_options.map(({label, value}) => (
                       <option key={value} value={value}>
                         {label}
                       </option>
@@ -298,6 +311,9 @@ const CreateModal: React.FC<CreateModalProps> = ({
                     </label>
                   </form>
                 </Col>
+              </Row>
+
+              <Row>
               </Row>
             </Tab>
 
