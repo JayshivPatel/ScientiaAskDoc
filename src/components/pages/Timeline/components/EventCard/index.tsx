@@ -87,7 +87,14 @@ const EventCard: React.FC<TimelineEventProps> = ({
         color: `var(--${cardColour}-text)`,
         borderColor: `var(--${cardColour}-${borderColour})`,
       }}>
-      {(!isSingleDay || !icon) && <TitleSpan isSingleDay={isSingleDay} prefix={prefix} title={title}/>}
+      {(!isSingleDay || !icon) && (
+        <TitleSpan 
+          isSingleDay={isSingleDay} 
+          prefix={prefix} 
+          title={title} 
+          hasIcon={icon !== undefined}
+        />
+      )}
       {icon && (
         <FontAwesomeIcon
           style={{
