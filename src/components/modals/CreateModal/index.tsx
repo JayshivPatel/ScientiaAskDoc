@@ -219,13 +219,35 @@ const CreateModal: React.FC<CreateModalProps> = ({
     {label: "GROUP FORMATION", value: 9}
   ]);
 
+  // options for dates:
   const date = moment().toDate()
   const dates = []
   for (let i = 1; i <= 14; i++) {
-    dates.push({label: new Date(date.setDate(date.getDate() + 1)).toDateString(), value : i})
+    dates.push({label: new Date(date.setDate(date.getDate() + 1)).toDateString(), value: i})
   }
-
   const [date_options] = React.useState(dates);
+
+  // time options:
+  const origin_time = new Date().setHours(0, 0, 0, 0)
+  const time_wholeday = []
+  for (let i = 0; i < 24; i++) {
+    time_wholeday.push({label: new Date(date.setHours(i, 0, 0, 0)).toTimeString(), value: i})
+  }
+  const [time_options] = React.useState(time_wholeday)
+
+  function Checkbox({title}: { title: string }, {isChecked}: { isChecked: boolean }) {
+    const [checked, setChecked] = React.useState(true);
+
+    return (
+      <label>
+        <input type="checkbox"
+               checked={isChecked}
+               onChange={() => setChecked(!checked)}
+        />
+        {title}
+      </label>
+    );
+  }
 
   return (
     <Modal
@@ -256,7 +278,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
             <Tab eventKey="info" title={"Excercise info"}>
               <Row>
                 <Col>
-                  Number:
+                  ♥Number:
                   <select>
                     {page_options.map(({label, value}) => (
                       <option key={value} value={value}>
@@ -267,7 +289,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 </Col>
 
                 <Col>
-                  Exercise Type:
+                  ♥Exercise Type:
                   <select>
                     {type_options.map(({label, value}) => (
                       <option key={value} value={value}>
@@ -280,7 +302,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
               <Row>
                 <Col>
-                  Start Date:
+                  ♥Start Date:
                   <select>
                     {date_options.map(({label, value}) => (
                       <option key={value} value={value}>
@@ -291,7 +313,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 </Col>
 
                 <Col>
-                  End Date:
+                  ♥End Date:
                   <select>
                     {date_options.map(({label, value}) => (
                       <option key={value} value={value}>
@@ -306,7 +328,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 <Col>
                   <form>
                     <label>
-                      Short Title:
+                      ♥Short Title:
                       <input type="text" name="name"/>
                     </label>
                   </form>
@@ -314,7 +336,150 @@ const CreateModal: React.FC<CreateModalProps> = ({
               </Row>
 
               <Row>
+                <Col>
+                  ♥Provision of Online Spec.
+                  <Col>
+                    <Checkbox title="Yes"/> <Checkbox title="No"/>
+                  </Col>
+
+                </Col>
+
+                <Col>
+                  ♥Provision of data files.
+                  <Col>
+                    <Checkbox title="Yes"/> <Checkbox title="No"/>
+                  </Col>
+
+                </Col>
+
+                <Col>
+                </Col>
               </Row>
+
+              <Row>
+                <Col>
+                  ♥Visibility for student after:
+                </Col>
+              </Row>
+
+              // TODO: add a line here to separate.
+
+              <Row>
+                <Col>
+                  ※Type of assenment
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Checkbox title="※Not assessed"/>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Checkbox title="※Assessed"/>
+                </Col>
+
+                <Col>
+                  <Row>
+                    <Checkbox title={"※Individual"}/>
+                  </Row>
+                  <Row>
+                    <Checkbox title={"※Group"}/>
+                  </Row>
+
+                </Col>
+
+                <Col>
+                  <Row>
+                    ※Submission:
+                  </Row>
+
+                  <Col>
+                    <Row>
+                      <Checkbox title="Hardcopy"/>
+                    </Row>
+
+                    <Row>
+                      <Checkbox title="Electronic"/>
+                    </Row>
+
+                    <Row>
+                      <Checkbox title="Hardcopy AND Electronic"/>
+                    </Row>
+                  </Col>
+                </Col>
+
+
+                <Col>
+                  <Row>
+                    ※hardcopy due time:
+                    <select>
+                      {time_options.map(({label, value}) => (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      ))}
+                    </select>
+                  </Row>
+
+                  <Row>
+                    ※electronic due time:
+                    <select>
+                      {time_options.map(({label, value}) => (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      ))}
+                    </select>
+                  </Row>
+                </Col>
+
+              </Row>
+
+              <Row>
+                <Col>
+                  ※Provision of on-line mark schema:
+                  <Col>
+                    <Checkbox title="No"/> <Checkbox title="Yes"/>
+                  </Col>
+
+                  <Col>
+                    Maximum mark (0-100):
+                    <input type="number" min={0} max={100} defaultValue={100}></input>
+                  </Col>
+
+
+                  <Col>
+                    Weigh(%) within module:
+                    <input type="number" min={0} max={100} placeholder={"%"}></input>
+                  </Col>
+                </Col>
+              </Row>
+
+              // TODO: a line here to separate
+
+              <Row>
+                <Col>
+                  ※Provision of on-line answers:
+                  <Col>
+                    <Row>
+                      <Checkbox title="No"/>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <Checkbox title="Yes 👉 "/>
+                      </Col>
+                      <Col>
+                        Visible to students after:
+                        <input type="number" min={0} max={5} defaultValue={2}></input>Weeks
+                      </Col>
+                    </Row>
+                  </Col>
+                </Col>
+              </Row>
+
             </Tab>
 
             <Tab eventKey="file" title="File">
