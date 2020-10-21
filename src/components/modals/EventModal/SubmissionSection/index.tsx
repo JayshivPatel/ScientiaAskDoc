@@ -12,6 +12,10 @@ enum Stage {
   FILE_UPLOAD = "File Upload", 
 }
 
+type EnumDictionary<T extends string | symbol | number, U> = {
+  [K in T]: U;
+};
+
 const allStages: Stage[] = [
   Stage.DECLARATION,
   Stage.GROUP_FORMATION,
@@ -30,12 +34,10 @@ const SubmissionSection: React.FC<Props> = ({
 
   const [stage, setStage] = useState<Stage>(Stage.DECLARATION)
 
-  const tabPaneOf = (s: Stage) => {
-    return (s === stage) && (
-      <Tab.Pane active={s == stage}>
-        {`placeholder of ${s}`}
-      </Tab.Pane>
-    )
+  const mainSectionDic: EnumDictionary<Stage, JSX.Element> = {
+    [Stage.DECLARATION]: <></>,
+    [Stage.GROUP_FORMATION]: <></>,
+    [Stage.FILE_UPLOAD]: <></>,
   }
 
   const buttonOf = (s: Stage) => {
@@ -57,7 +59,7 @@ const SubmissionSection: React.FC<Props> = ({
           {allStages.map(buttonOf)}
         </ButtonGroup>
       </div>
-      {allStages.map(tabPaneOf)}
+      {mainSectionDic[stage]}
     </>
   )
 }
