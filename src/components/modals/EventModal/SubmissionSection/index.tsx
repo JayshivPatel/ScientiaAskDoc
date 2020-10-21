@@ -2,19 +2,16 @@ import React, { useState } from "react"
 import Button from "react-bootstrap/Button"
 import parentStyles from "../style.module.scss"
 import styles from "./style.module.scss"
-import { TimelineEvent } from "constants/types"
+import { EnumDictionary, ResourceUploadRequirement, ResourceUploadStatus, TimelineEvent } from "constants/types"
 import Tab from "react-bootstrap/esm/Tab"
 import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
+import SubmissionFileUpload from "./SubmissionFileUpload"
 
 enum Stage {
   DECLARATION = "Declaration",
   GROUP_FORMATION = "Group Formation",
   FILE_UPLOAD = "File Upload", 
 }
-
-type EnumDictionary<T extends string | symbol | number, U> = {
-  [K in T]: U;
-};
 
 const allStages: Stage[] = [
   Stage.DECLARATION,
@@ -37,7 +34,12 @@ const SubmissionSection: React.FC<Props> = ({
   const mainSectionDic: EnumDictionary<Stage, JSX.Element> = {
     [Stage.DECLARATION]: <></>,
     [Stage.GROUP_FORMATION]: <></>,
-    [Stage.FILE_UPLOAD]: <></>,
+    [Stage.FILE_UPLOAD]: (
+      <SubmissionFileUpload
+        requiredResources={dummyRUR}
+        uploadedResources={dummyRUS}
+      />
+    ),
   }
 
   const buttonOf = (s: Stage) => {
@@ -64,19 +66,45 @@ const SubmissionSection: React.FC<Props> = ({
   )
 }
 
-const dummy = [
+const dummyRUR: ResourceUploadRequirement[] = [
   {
-    title: "spec-112-1.pdf",
-    type: "pdf",
-    tags: ["Specification"],
-    id: 1,
+    title: "foo",
+    allowedSuffixes: ["pdf"]
   },
   {
-    title: "task1_ans.pdf",
-    tags: ["Solution"],
-    type: "pdf",
-    id: 2,
+    title: "report",
+    allowedSuffixes: ["pdf", "txt", "pptx", "ppt"]
   },
+  {
+    title: "HaskellCoursework",
+    allowedSuffixes: ["hs", "lhs"]
+  },
+  {
+    title: "allow_empty_suffix",
+    allowedSuffixes: ["", "txt"]
+  },
+]
+
+const dummyRUS: ResourceUploadStatus[] = [
+  {
+    title: "bar",
+    suffix: "pdf",
+    size: 1024,
+    timestamp: new Date()
+  },
+  {
+    title: "KotlinCoursework",
+    suffix: "kt",
+    size: 2048,
+    timestamp: new Date()
+  },
+  {
+    title: "ref",
+    suffix: "",
+    size: 1024,
+    timestamp: new Date()
+  },
+  
 ]
 
 export default SubmissionSection
