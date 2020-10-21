@@ -13,7 +13,7 @@ export interface Folder {
 
 export interface Resource {
   title: string
-  type: "pdf" | "video" | "file" | "link"
+  type: FileType
   tags: string[]
   folder: string
   id: number
@@ -24,9 +24,21 @@ export interface Resource {
   thumbnail?: string
 }
 
+export interface ResourceUploadRequirement {
+  title: string
+  allowedSuffixes: string[]  
+}
+
+export interface ResourceUploadStatus {
+  title: string
+  suffix: string
+  size: number
+  timestamp: Date
+}
+
 export interface BasicResource {
   title: string
-  type: "pdf" | "video" | "file" | "link"
+  type: FileType
   tags: string[]
   folder: string
   id: number
@@ -58,6 +70,8 @@ export interface TimelineEvent {
 }
 
 export type SubmissionType = "electronic" | "hardcopy" | "other"
+
+export type FileType = "pdf" | "video" | "file" | "link"
 
 export type ExerciseData = TimelineEvent & {
   maximumMark: number
@@ -141,3 +155,7 @@ export enum LinkTitleError {
 }
 
 export type SubscriptionLevel = 1 | 2 | 3
+
+export type EnumDictionary<T extends string | symbol | number, U> = {
+  [K in T]: U;
+};
