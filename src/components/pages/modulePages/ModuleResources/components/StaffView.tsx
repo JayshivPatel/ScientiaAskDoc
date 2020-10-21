@@ -16,6 +16,7 @@ import IconButton from "components/buttons/IconButton"
 import WarningJumbotron from "components/suspense/WarningJumbotron"
 import EditModal from "components/modals/EditModal"
 import UploadModal from "components/modals/UploadModal"
+import CreateModal from "components/modals/CreateModal"
 import CategoryList from "components/sections/CategoryList"
 import CategoryHeader from "components/headings/CategoryHeader"
 
@@ -154,8 +155,9 @@ const StaffView: React.FC<StaffViewProps> = ({
           </Button>
         </Col>
         <Col style={{ paddingLeft: "0.3125rem" }}>
-          <Button onClick={() => setModal("alert")} block>
-            Remove All
+          <Button onClick={() => setModal("create")} block>
+            {/*Remove All*/}
+            Add new Exercise
             <FontAwesomeIcon style={{ float: "right" }} icon={faTrash} />
           </Button>
         </Col>
@@ -163,6 +165,20 @@ const StaffView: React.FC<StaffViewProps> = ({
       <input type="file" ref={hiddenFileInput} onChange={reuploadFile} hidden />
       <UploadModal
         show={modal === "upload"}
+        onHide={closeModal}
+        hideAndReload={() => {
+          closeModal()
+          reload()
+        }}
+        year={year}
+        course={course}
+        categories={categories(folders)}
+        tags={tags}
+        titleDuplicated={titleDuplicated}
+      />
+
+      <CreateModal
+        show={modal === "create"}
         onHide={closeModal}
         hideAndReload={() => {
           closeModal()
