@@ -32,8 +32,9 @@ export interface ResourceUploadRequirement {
 export interface ResourceUploadStatus {
   title: string
   suffix: string
-  size: number
+  file: File
   timestamp: Date
+  oldRequirement: ResourceUploadRequirement
 }
 
 export interface BasicResource {

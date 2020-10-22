@@ -29,15 +29,47 @@ const SubmissionSection: React.FC<Props> = ({
   activeDay, 
 }) => {
 
-  const [stage, setStage] = useState<Stage>(Stage.DECLARATION)
+  const [stage, setStage] = useState(Stage.DECLARATION)
+  const [requirements, setRequirements] = useState<ResourceUploadRequirement[]>(dummyRUR)
+  const [uploaded, setUploaded] = useState<ResourceUploadStatus[]>([])
+
+  const uploadFile = (file: File, index: number) => {
+    const requirement = requirements[index]
+    const suffix = file.name.substr(file.name.lastIndexOf('.') + 1)
+    console.log(suffix);
+
+    if (requirement.allowedSuffixes.includes(suffix)) {
+      const title = requirement.title
+      const newFile = new File([file], `${title}${suffix === "" ? "" : `.${suffix}`}`, { type: file.type })
+      const newStatus: ResourceUploadStatus = {
+        file: newFile,
+        title: title,
+        suffix: suffix,
+        timestamp: new Date(),
+        oldRequirement: requirement
+      }
+      console.log(newFile);
+      setRequirements(requirements.filter((_, i) => i !== index))
+      setUploaded([...uploaded, newStatus])
+    } else {
+      alert("u kidding?")
+    }
+  }
+
+  const removeFile = (index: number) => {
+    const status = uploaded[index]
+    setRequirements([...requirements, status.oldRequirement])
+    setUploaded(uploaded.filter((_, i) => i !== index))
+  }
 
   const mainSectionDic: EnumDictionary<Stage, JSX.Element> = {
     [Stage.DECLARATION]: <></>,
     [Stage.GROUP_FORMATION]: <></>,
     [Stage.FILE_UPLOAD]: (
       <SubmissionFileUpload
-        requiredResources={dummyRUR}
-        uploadedResources={dummyRUS}
+        requiredResources={requirements}
+        uploadedResources={uploaded}
+        uploadFile={uploadFile}
       />
     ),
   }
@@ -83,28 +115,6 @@ const dummyRUR: ResourceUploadRequirement[] = [
     title: "allow_empty_suffix",
     allowedSuffixes: ["", "txt"]
   },
-]
-
-const dummyRUS: ResourceUploadStatus[] = [
-  {
-    title: "bar",
-    suffix: "pdf",
-    size: 1024,
-    timestamp: new Date()
-  },
-  {
-    title: "KotlinCoursework",
-    suffix: "kt",
-    size: 2048,
-    timestamp: new Date()
-  },
-  {
-    title: "ref",
-    suffix: "",
-    size: 1024,
-    timestamp: new Date()
-  },
-  
 ]
 
 export default SubmissionSection
