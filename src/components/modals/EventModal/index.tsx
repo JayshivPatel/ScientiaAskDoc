@@ -15,7 +15,7 @@ import FileItemRow from "components/rows/FileItemRow"
 import {resourceTypeToIcon} from "components/pages/modulePages/ModuleResources/utils"
 import {TimelineEvent} from "constants/types"
 import {toDayCount, toEventDateTime} from "utils/functions"
-import SubmissionSection from "./SubmissionSection"
+import SubmissionSection from "../../sections/SubmissionSection"
 
 interface Props {
   event?: TimelineEvent
