@@ -27,6 +27,7 @@ interface TimelineProps {
   setTerm: React.Dispatch<React.SetStateAction<Term>>
   onEventClick: (e?: TimelineEvent) => void
   modules: Module[]
+  timelineEvents: TimelineEvent[]
   modulesTracks: ModuleTracks
 }
 
@@ -34,7 +35,6 @@ interface TimelineState {
   isLoaded: boolean
   showMobileOnSmallScreens: boolean
   showSubscriptionLevels: Set<SubscriptionLevel>
-  eventsData: TimelineEvent[]
   showSecondaryTermMenu: boolean
 }
 
@@ -44,7 +44,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     this.state = {
       isLoaded: false,
       showMobileOnSmallScreens: true,
-      eventsData: [],
       showSubscriptionLevels: new Set([1, 2, 3]),
       showSecondaryTermMenu: false,
     }
@@ -54,7 +53,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     this.props.initSideBar()
     this.setState({
       isLoaded: true,
-      eventsData: eventsData,
     })
   }
 
@@ -79,7 +77,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
   }
 
   handleEventClick(id: number) {
-    const event = this.state.eventsData.find((e) => e.id === id)
+    const event = this.props.timelineEvents.find((e) => e.id === id)
     this.props.onEventClick(event)
   }
 

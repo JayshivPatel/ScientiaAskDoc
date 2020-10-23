@@ -1,0 +1,93 @@
+.sectionButton {
+  background-color: var(--primary-button);
+  color: var(--primary-button-text);
+
+  border-width: 0rem;
+  border-radius: 0.5rem;
+  margin: 0;
+
+  justify-content: space-between;
+  height: 2.25rem;
+  font-size: 1.05rem;
+
+  transition: 0.2s background-color;
+  -webkit-transition: 0.2s background-color;
+  -moz-transition: 0.2s background-color;
+
+}
+
+.sectionButton:active,
+.sectionButton:global(.active) {
+  background: var(--primary-button-active) !important;
+  color: var(--primary-button-text-active) !important;
+  font-weight: 500;
+  border-width: 0rem;
+  height: 2.25rem;
+  line-height: 1.375rem;
+  box-shadow: none !important;
+}
+
+.sectionButton:hover {
+  background-color: var(--primary-button-hover);
+  color: var(--primary-button-text);
+  box-shadow: none !important;
+}
+
+.sectionButton:focus {
+  outline: none !important;
+  outline-offset: none !important;
+  box-shadow: none !important;
+}
+
+.sectionSwitcher {
+  top: 0;
+  left: 0;
+  position: sticky;
+  z-index: 5;
+  background: var(--background-color);
+  height: 2.5rem !important;
+}
+
+.sectionSwitcher > * {
+  width: 100%;
+}
+
+.submitDeclButton.focus,
+.submitDeclButton:focus {
+  background: var(--primary-button);
+  color: var(--primary-button-text);
+  box-shadow: none;
+}
+
+.submitDeclButton {
+  color: var(--primary-button-text);
+  background: var(--primary-button);
+  font-weight: 500;
+  letter-spacing: 0;
+  border-width: 0rem;
+  line-height: 1.375rem;
+  height: 2.25rem;
+  border-radius: 0.5rem !important;
+  transition: 0.2s background;
+  -webkit-transition: 0.2s background;
+  -moz-transition: 0.2s background;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+}
+
+.submitDeclButton.active,
+.submitDeclButton:active {
+  background: var(--primary-button-active) !important;
+  color: var(--primary-button-text-active) !important;
+  font-weight: 500;
+  border-width: 0rem;
+  height: 2.25rem;
+  line-height: 1.375rem;
+}
+
+.submitDeclButton:hover {
+  background-color: var(--primary-button-hover);
+  color: var(--primary-button-text);
+  box-shadow: none !important;
+}

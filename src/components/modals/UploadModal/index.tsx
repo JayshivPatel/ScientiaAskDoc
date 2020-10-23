@@ -233,7 +233,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
                 <p>Click here or drag and drop files to upload.</p>
               </div>
 
-              <Accordion>
+              <Accordion defaultActiveKey="0">
                 {acceptedFiles.length > 0 &&
                   acceptedFiles.map(
                     (file, index) =>
@@ -282,6 +282,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
                               />
                             </Card.Body>
                           </Accordion.Collapse>
+
                         </Card>
                       )
                   )}

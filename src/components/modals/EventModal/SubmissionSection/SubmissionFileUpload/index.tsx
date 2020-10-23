@@ -1,0 +1,68 @@
+import React, { useRef, useState } from 'react'
+import styles from './style.module.scss'
+import FileItemRow from 'components/rows/FileItemRow'
+import { Resource, ResourceUploadRequirement, ResourceUploadStatus } from 'constants/types'
+import UploadResourceItemRow from 'components/rows/UploadResourceItemRow'
+import { faDownload, faTrash, faUpload } from '@fortawesome/free-solid-svg-icons'
+
+interface Props {
+  requiredResources: ResourceUploadRequirement[]
+  uploadedResources: ResourceUploadStatus[]
+  uploadFile: (file: File, index: number) => void
+}
+
+const SubmissionFileUpload: React.FC<Props> = ({
+  requiredResources,
+  uploadedResources,
+  uploadFile,
+}) => {
+
+  const uploadRef = useRef<HTMLInputElement>(null)
+  const [uploadIndex, setUploadIndex] = useState<number>(0)
+
+  const onFileSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    file && uploadFile(file, uploadIndex)
+  }
+
+  const clickUpload = (index: number) => {
+    setUploadIndex(index)
+    uploadRef.current?.click()
+  }
+
+  return (
+    <div>
+      <span>Requirements: </span>
+      <input type="file" ref={uploadRef} onChange={e => onFileSelection(e)} style={{ display: "none" }}></input>
+      {requiredResources.map(({ title, allowedSuffixes, }, index) => {
+        return (
+          <div>
+            <UploadResourceItemRow
+              title={title}
+              suffixes={allowedSuffixes}
+              colour="pink"
+              respondingIcons={[
+                [faUpload, _ => clickUpload(index)],
+              ]}
+            />
+          </div>
+        )
+      })}
+
+      <span>Uploaded resources: </span>
+      {uploadedResources.map(({ title, suffix, }) => (
+        <UploadResourceItemRow
+          title={title}
+          suffixes={[suffix]}
+          colour="teal"
+          respondingIcons={[
+            [faDownload, e => alert("downloading")],
+            [faTrash, e => alert("deleting")],
+          ]}
+        />
+      ))}
+    </div>
+  )
+}
+
+export default SubmissionFileUpload

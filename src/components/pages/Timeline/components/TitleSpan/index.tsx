@@ -5,19 +5,20 @@ interface Props {
   isSingleDay: boolean,
   prefix: string,
   title: string
+  hasIcon: boolean
 }
 
 const TitleSpan: React.FC<Props> = ({
   isSingleDay,
   prefix,
-  title
+  title,
+  hasIcon
 }) => (
   <span
     className={styles.eventTitle}
     style={{
       fontSize: isSingleDay ? "0rem" : "1rem",
-      position: "sticky",
-      left: "20"
+      marginRight: hasIcon ? "1.5rem" : "0"
     }}>
     <span
       className={styles.eventPrefix}

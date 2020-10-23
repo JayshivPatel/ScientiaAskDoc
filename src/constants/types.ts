@@ -13,7 +13,7 @@ export interface Folder {
 
 export interface Resource {
   title: string
-  type: "pdf" | "video" | "file" | "link"
+  type: FileType
   tags: string[]
   folder: string
   id: number
@@ -24,9 +24,22 @@ export interface Resource {
   thumbnail?: string
 }
 
+export interface ResourceUploadRequirement {
+  title: string
+  allowedSuffixes: string[]  
+}
+
+export interface ResourceUploadStatus {
+  title: string
+  suffix: string
+  file: File
+  timestamp: Date
+  oldRequirement: ResourceUploadRequirement
+}
+
 export interface BasicResource {
   title: string
-  type: "pdf" | "video" | "file" | "link"
+  type: FileType
   tags: string[]
   folder: string
   id: number
@@ -56,6 +69,62 @@ export interface TimelineEvent {
   startDate: Date
   endDate: Date
 }
+
+export type SubmissionType = "electronic" | "hardcopy" | "other"
+
+export type FileType = "pdf" | "video" | "file" | "link"
+
+export type ExerciseData = TimelineEvent & {
+  maximumMark: number
+  submissionType: SubmissionType
+}
+
+export type ExerciseCreation = {
+  id: number
+  startDate: Date
+  endDate: Date
+  title: string
+  alternativeExercise: boolean
+  assessmentType: AssessmentType
+  assessment: "unassessed" | "individual" | "groups"
+  hardcopyDue?: Date
+  electronicDue?: Date
+  provisionOfMarkingSchemaFile: boolean
+  provisionOfSpec: boolean
+  maximumMark: number
+  weightWithinModule: "average"
+  provisionOfSampleAnswerFile?: Date
+}
+
+export enum AssessmentTypeSeveralDays {
+  TUTORIAL = "tutorial",
+  COURSEWORK = "coursework",
+  COMPUTER_BASED_TUTORIAL = "computer-based tutorial",
+  COMPUTER_BASED_COURSEWORK = "computer-based coursework",
+  LABORATORY = "laboratory",
+  MMT = "mmt",
+  PMT = "pmt",
+  PPT = "ppt",
+  REPORT = "report",
+  ESSAY = "essay",
+  PROJECT = "project",
+}
+
+export enum AssessmentTypeOneDay {
+  TEST = "test",
+  ONLINE_TEST = "online-test",
+  RESIT_TEST = "resit-test",
+  RESIT_ONLINE_TEST = "resit-online-test",
+  EXAM_QUESTION = "exam-question",
+}
+
+export enum AssessmentTypeSpecialisedActivity {
+  GROUP_FORMATION = "group-formation"
+}
+
+export type AssessmentType = AssessmentTypeOneDay
+                           | AssessmentTypeSeveralDays
+                           | AssessmentTypeSpecialisedActivity
 
 export interface CalendarEvent {
   summary: string
@@ -87,3 +156,7 @@ export enum LinkTitleError {
 }
 
 export type SubscriptionLevel = 1 | 2 | 3
+
+export type EnumDictionary<T extends string | symbol | number, U> = {
+  [K in T]: U;
+};
