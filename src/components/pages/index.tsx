@@ -116,7 +116,6 @@ const StandardView: React.FC<StandardViewProps> = ({
           if (data) {
             newEvents[module.code] = []
             data.forEach((exercise, index) => {
-              console.log(module.code)
               newEvents[module.code][index] = {
                 id: index,
                 moduleCode: module.code,
@@ -132,7 +131,7 @@ const StandardView: React.FC<StandardViewProps> = ({
             setTimelineEvents({ ...newEvents })
           }
         },
-        onError: (message) => console.log(`Failed to obtain modules: ${message}`)
+        onError: (message) => console.log(`Failed to obtain exercises: ${message}`)
       })
     }
   }, [modules])

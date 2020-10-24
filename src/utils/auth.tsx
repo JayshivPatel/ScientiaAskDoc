@@ -33,6 +33,7 @@ async function login(username: string, password: string, login_url: string) {
   })
   if (response.ok) {
     const data = await response.json()
+    console.log(data)
     storeDataInStorage({
       ...data,
       user_info: {

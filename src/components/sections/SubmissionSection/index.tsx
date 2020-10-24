@@ -6,6 +6,8 @@ import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
 import SubmissionFileUpload from "../SubmissionFileUpload"
 import { api, methods } from "constants/routes"
 import { request } from "utils/api"
+import SubmissionGroupFormation from "../SubmissionGroupFormation";
+
 
 enum Stage {
   DECLARATION = "Declaration",
@@ -96,9 +98,11 @@ const SubmissionSection: React.FC<Props> = ({
     setUploaded(uploaded.filter((_, i) => i !== index))
   }
 
-  const mainSectionDic: EnumDictionary<Stage, JSX.Element> = {
+  const mainSectionDict: EnumDictionary<Stage, JSX.Element> = {
     [Stage.DECLARATION]: <></>,
-    [Stage.GROUP_FORMATION]: <></>,
+    [Stage.GROUP_FORMATION]: (
+      <SubmissionGroupFormation/>
+    ),
     [Stage.FILE_UPLOAD]: (
       <SubmissionFileUpload
         requiredResources={requirements}
@@ -129,7 +133,7 @@ const SubmissionSection: React.FC<Props> = ({
           {allStages.map(buttonOf)}
         </ButtonGroup>
       </div>
-      {mainSectionDic[stage]}
+      {mainSectionDict[stage]}
     </>
   )
 }

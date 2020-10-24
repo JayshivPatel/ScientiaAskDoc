@@ -230,7 +230,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     let scope = this.props.scope || ""
     let studentViewResources = filterInvisibleResources(this.state.resources)
     const view = () => {
-      if (this.props.canManage && this.state.staffView) {
+      if (true) {
         return (
           <StaffView
             year={this.props.year}
