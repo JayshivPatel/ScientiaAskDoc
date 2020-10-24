@@ -9,12 +9,15 @@ interface Props {
   requiredResources: ResourceUploadRequirement[]
   uploadedResources: ResourceUploadStatus[]
   uploadFile: (file: File, index: number) => void
+  removeFile: (index: number) => void
+  refresh: () => void
 }
 
 const SubmissionFileUpload: React.FC<Props> = ({
   requiredResources,
   uploadedResources,
   uploadFile,
+  removeFile,
 }) => {
 
   const uploadRef = useRef<HTMLInputElement>(null)

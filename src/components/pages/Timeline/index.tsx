@@ -27,7 +27,7 @@ interface TimelineProps {
   setTerm: React.Dispatch<React.SetStateAction<Term>>
   onEventClick: (e?: TimelineEvent) => void
   modules: Module[]
-  timelineEvents: TimelineEvent[]
+  timelineEvents: { [pair: string]: TimelineEvent[] }
   modulesTracks: ModuleTracks
 }
 
@@ -76,8 +76,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     )
   }
 
-  handleEventClick(id: number) {
-    const event = this.props.timelineEvents.find((e) => e.id === id)
+  handleEventClick(module: string, id: number) {
+    const event = this.props.timelineEvents[module][id]
     this.props.onEventClick(event)
   }
 
@@ -173,7 +173,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
                   modulesTracks={this.props.modulesTracks}
                   dateToColumn={(date) => this.dateToColumn(date, termStart)}
                   isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
-                  onEventClick={(id) => this.handleEventClick(id)}
+                  onEventClick={(module, id) => this.handleEventClick(module, id)}
               />
             </div>
           </div>

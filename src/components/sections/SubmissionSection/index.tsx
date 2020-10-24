@@ -1,9 +1,11 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import Button from "react-bootstrap/Button"
 import styles from "./style.module.scss"
 import {EnumDictionary, ResourceUploadRequirement, ResourceUploadStatus, TimelineEvent} from "constants/types"
 import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
 import SubmissionFileUpload from "../SubmissionFileUpload"
+import { api, methods } from "constants/routes"
+import { request } from "utils/api"
 
 enum Stage {
   DECLARATION = "Declaration",
@@ -20,16 +22,44 @@ const allStages: Stage[] = [
 interface Props {
   event?: TimelineEvent
   activeDay: Date
+  courseCode: string,
+  exerciseID: number
 }
 
 const SubmissionSection: React.FC<Props> = ({
                                               event,
                                               activeDay,
+                                              courseCode,
+                                              exerciseID,
                                             }) => {
 
   const [stage, setStage] = useState(Stage.DECLARATION)
-  const [requirements, setRequirements] = useState<ResourceUploadRequirement[]>(dummyRUR)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [requirements, setRequirements] = useState<ResourceUploadRequirement[]>([])
   const [uploaded, setUploaded] = useState<ResourceUploadStatus[]>([])
+
+  const refresh = () => {
+    setIsLoaded(false)
+    const onSuccess = (data: { 
+      requirements: ResourceUploadRequirement[], 
+      uploaded: ResourceUploadStatus[] 
+    }) => {
+      setRequirements(data.requirements)
+      setUploaded(data.uploaded)
+      setIsLoaded(true)
+    }
+    const onError = () => { alert("err") }
+
+    request({
+      url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
+      method: methods.GET,
+      onSuccess,
+      onError
+    })
+  }
+
+  useEffect(refresh, [])
+
 
   const uploadFile = (file: File, index: number) => {
     const requirement = requirements[index]
@@ -47,8 +77,14 @@ const SubmissionSection: React.FC<Props> = ({
         oldRequirement: requirement
       }
       console.log(newFile);
-      setRequirements(requirements.filter((_, i) => i !== index))
-      setUploaded([...uploaded, newStatus])
+
+      request({
+        url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
+        method: methods.POST,
+        onSuccess: () => {},
+        onError: () => {}
+      })
+      refresh()
     } else {
       alert("u kidding?")
     }
@@ -68,6 +104,8 @@ const SubmissionSection: React.FC<Props> = ({
         requiredResources={requirements}
         uploadedResources={uploaded}
         uploadFile={uploadFile}
+        removeFile={removeFile}
+        refresh={refresh}
       />
     ),
   }

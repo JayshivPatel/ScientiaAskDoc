@@ -71,7 +71,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   const [modulesFilter, setModulesFilter] = useState("In Progress")
   const [timelineTerm, setTimelineTerm] = useState<Term>("Autumn")
   const [modules, setModules] = useState<Module[]>([])
-  const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>([])
+  const [timelineEvents, setTimelineEvents] = useState<{ [pair: string]: TimelineEvent[] }>({})
   const [modulesTracks, setModulesTracks] = useState<ModuleTracks>({})
   useEffect(() => {
     const onSuccess = (data: { [k: string]: any }[]) => {
@@ -107,29 +107,29 @@ const StandardView: React.FC<StandardViewProps> = ({
   }
 
   useEffect(() => {
-    let timelineEvents: TimelineEvent[] = []
-    let counter: number = 1
+    const newEvents: { [pair: string]: TimelineEvent[] } = {}
     for (const module of modules) {
       request({
         url: api.CATE_COURSE_EXERCISES(module.code),
         method: methods.GET,
         onSuccess: (data: { [k: string]: any }[]) => {
-
           if (data) {
-            const transformedData: TimelineEvent[] = data.map((exercise, index) => ({
-              id: counter + index,
-              moduleCode: module.code,
-              title: exercise.title,
-              startDate: new Date(exercise.start_date),
-              endDate: new Date(exercise.deadlines[0]["deadline"]),
-              prefix: exercise.type,
-              assessment: "assessed",
-              owner: "",
-              status: "missed",
-            }))
-            counter += data.length
-            timelineEvents = timelineEvents.concat(transformedData)
-            setTimelineEvents(timelineEvents)
+            newEvents[module.code] = []
+            data.forEach((exercise, index) => {
+              console.log(module.code)
+              newEvents[module.code][index] = {
+                id: index,
+                moduleCode: module.code,
+                title: exercise.title,
+                startDate: new Date(exercise.start_date),
+                endDate: new Date(exercise.deadlines[0]["deadline"]),
+                prefix: exercise.type,
+                assessment: "assessed",
+                owner: "",
+                status: "missed",
+              }
+            })
+            setTimelineEvents({ ...newEvents })
           }
         },
         onError: (message) => console.log(`Failed to obtain modules: ${message}`)
@@ -143,18 +143,20 @@ const StandardView: React.FC<StandardViewProps> = ({
       modulesTracks[code] = [[], []]
     })
 
-    for (const event of timelineEvents) {
-      const tracks: TimelineEvent[][] = modulesTracks[event.moduleCode] ?? []
-      let isPlaced = false
-      for (const track of tracks) {
-        if (track.every((te) => !eventsOverlaps(te, event))) {
-          isPlaced = true
-          track.push(event)
-          break
+    for (const key in timelineEvents) {
+      for (const event of timelineEvents[key]) {
+        const tracks: TimelineEvent[][] = modulesTracks[event.moduleCode] ?? []
+        let isPlaced = false
+        for (const track of tracks) {
+          if (track.every((te) => !eventsOverlaps(te, event))) {
+            isPlaced = true
+            track.push(event)
+            break
+          }
         }
-      }
-      if (!isPlaced) {
-        tracks.push([event])
+        if (!isPlaced) {
+          tracks.push([event])
+        }
       }
     }
     setModulesTracks(modulesTracks)

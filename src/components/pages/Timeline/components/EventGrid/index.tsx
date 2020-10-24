@@ -11,11 +11,12 @@ export interface EventGridProps {
   modulesTracks: ModuleTracks
   dateToColumn: (date: Date) => number
   isInTerm: (date: Date) => boolean
-  onEventClick: (id: number) => void
+  onEventClick: (module: string, id: number) => void
 }
 
 interface EventDisplay {
   title: string
+  courseCode: string
   id: number
   prefix: string
   status: string
@@ -46,6 +47,7 @@ const EventGrid: React.FC<EventGridProps> = ({
         if (!isInTerm(event.startDate) && !isInTerm(event.endDate)) continue
         eventPositions.push({
           title: event.title,
+          courseCode: event.moduleCode,
           id: event.id,
           prefix: event.prefix,
           status: event.status,
@@ -73,6 +75,7 @@ const EventGrid: React.FC<EventGridProps> = ({
       {eventPositions.map(
         ({
           title,
+          courseCode,
           startColumn,
           prefix,
           status,
@@ -92,7 +95,7 @@ const EventGrid: React.FC<EventGridProps> = ({
             rowNumber={rowNumber}
             onClick={(e) => {
               e.preventDefault()
-              onEventClick(id)
+              onEventClick(courseCode, id)
             }}
           />
         )
