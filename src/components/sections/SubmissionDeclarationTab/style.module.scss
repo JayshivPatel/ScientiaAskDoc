@@ -1,0 +1,76 @@
+@import "assets/scss/custom";
+@import "assets/scss/global";
+
+.submitDeclParagraphBold{
+  font-weight: bold;
+}
+
+.submitDeclParagraphBold,
+.submitDeclParagraph {
+  padding-top: 1rem;
+  margin: 0;
+}
+
+.submitDeclFirstRow {
+  margin-top: 1rem;
+}
+
+.submitDeclFirstRow,
+.submitDeclRow {
+  height: 1.9rem;
+}
+
+.submitDeclTitle {
+  height: 1.9rem;
+}
+
+.submitDeclHelpText {
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.submitDeclControl {
+  height: 100%;
+  padding: 0;
+}
+
+.submitDeclButton.focus,
+.submitDeclButton:focus {
+  background: var(--primary-button);
+  color: var(--primary-button-text);
+  box-shadow: none;
+}
+
+.submitDeclButton {
+  color: var(--primary-button-text);
+  background: var(--primary-button);
+  font-weight: 500;
+  letter-spacing: 0;
+  border-width: 0;
+  line-height: 1.375rem;
+  height: 100%;
+  border-radius: 0.5rem !important;
+  transition: 0.2s background;
+  -webkit-transition: 0.2s background;
+  -moz-transition: 0.2s background;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.submitDeclButton.active,
+.submitDeclButton:active{
+  background: var(--primary-button-active) !important;
+  color: var(--primary-button-text-active) !important;
+  font-weight: 500;
+  border-width: 0;
+  height: 100%;
+  line-height: 1.375rem;
+}
+
+.submitDeclButton:hover {
+  background-color: var(--primary-button-hover);
+  color: var(--primary-button-text);
+  box-shadow: none !important;
+}

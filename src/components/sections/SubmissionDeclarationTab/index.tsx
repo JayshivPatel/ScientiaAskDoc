@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import styles from "./style.module.scss";
+
 import Form from "react-bootstrap/Form";
-import styles from "../SubmissionSection/style.module.scss";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons/faPlusCircle";
+import { faMinusCircle } from "@fortawesome/free-solid-svg-icons/faMinusCircle";
 
 interface Declaration {
   name: string
@@ -10,7 +14,8 @@ interface Declaration {
 }
 
 interface Props {
-
+  // validatePair: (name: string, login: string) => boolean
+  // addDeclarations: (declarations: Declaration[]) => void
 }
 
 enum DeclarationStatus {
@@ -19,7 +24,10 @@ enum DeclarationStatus {
   FILLED = "Filled",
 }
 
-const SubmitDeclarationSection: React.FC<Props> = ({}) => {
+const SubmitDeclarationSection: React.FC<Props> = ({
+
+
+}) => {
 
   const [declarationSubmitted, setDeclarationSubmitted] = useState<boolean>(false);
   const [declarationStatus, setDeclarationStatus] = useState<DeclarationStatus>(DeclarationStatus.NOTSET)
@@ -37,6 +45,8 @@ const SubmitDeclarationSection: React.FC<Props> = ({}) => {
 
   const addRow = (name: string, login: string) => {
     setDeclarationList([...declarationList, {name, login}])
+    setName("")
+    setLogin("")
   }
 
   const deleteRow = (index: number) => {
@@ -44,6 +54,7 @@ const SubmitDeclarationSection: React.FC<Props> = ({}) => {
   }
 
   const resetForm = () => {
+    setDeclarationStatus(DeclarationStatus.NOTSET)
     setDeclarationList([])
     setName("")
     setLogin("")
@@ -55,6 +66,8 @@ const SubmitDeclarationSection: React.FC<Props> = ({}) => {
     } else {
       setDeclarationStatus(DeclarationStatus.FILLED)
     }
+    setName("")
+    setLogin("")
   }
 
   let displayText: string
@@ -65,9 +78,9 @@ const SubmitDeclarationSection: React.FC<Props> = ({}) => {
   }
 
   const DeclarationStatement: JSX.Element = (declarationStatus === DeclarationStatus.EMPTY) ?
-    (<p className={styles.submitDeclParagraph}>We declare that this final submitted version is our unaided work.</p>) :
+    (<p className={styles.submitDeclParagraphBold}>We declare that this final submitted version is our unaided work.</p>) :
     ((declarationStatus === DeclarationStatus.FILLED) ?
-      <p className={styles.submitDeclParagraph}>We acknowledge the following people for help through our original discussions:</p> :
+      <p className={styles.submitDeclParagraphBold}>We acknowledge the following people for help through our original discussions:</p> :
       <p className={styles.submitDeclParagraph}>Fill in these boxes if the following people provide help through you original discussions:</p>)
 
   const DeclarationRow: JSX.Element =
@@ -75,17 +88,30 @@ const SubmitDeclarationSection: React.FC<Props> = ({}) => {
       {declarationList.map(
         (val, idx) => {
           return (
-            <Form.Row>
-              <Col>
-                <Form.Control plaintext readOnly defaultValue={val.name} />
+            <Form.Row className={styles.submitDeclRow}>
+              <Col sm="5">
+                <Form.Control
+                  className={styles.submitDeclControl}
+                  plaintext
+                  readOnly
+                  defaultValue={val.name}
+                />
               </Col>
-              <Col>
-                <Form.Control plaintext readOnly defaultValue={val.login.toString()} />
+              <Col sm="5">
+                <Form.Control
+                  className={styles.submitDeclControl}
+                  plaintext
+                  readOnly
+                  defaultValue={val.login.toString()}
+                />
               </Col>
-              <Col>
+              <Col sm="2">
                 <Button
-                  onClick={() => deleteRow(idx)}>
-                  Delete
+                  className={styles.submitDeclButton}
+                  onClick={() => deleteRow(idx)}
+                  variant="secondary"
+                >
+                  <FontAwesomeIcon icon={faMinusCircle} />
                 </Button>
               </Col>
             </Form.Row>
@@ -99,46 +125,70 @@ const SubmitDeclarationSection: React.FC<Props> = ({}) => {
       <Form.Group>
         {DeclarationStatement}
         {DeclarationRow}
-        <Form.Row>
-          <Col>
+        <Form.Row className={styles.submitDeclFirstRow}>
+          <Col sm="5">
             <Form.Label className={styles.submitDeclTitle}>Name</Form.Label>
-            <Form.Control placeholder="Name" value={name} onChange={(event) => setName(event.target.value)}/>
           </Col>
-          <Col>
+          <Col sm="5">
             <Form.Label className={styles.submitDeclTitle}>Login (if member of DOC)</Form.Label>
-            <Form.Control placeholder="Login" value={login} onChange={(event) => setLogin(event.target.value)}/>
           </Col>
-          <Col>
+          <Col sm="2"/>
+        </Form.Row>
+        <Form.Row className={styles.submitDeclRow}>
+          <Col sm="5">
+            <Form.Control
+              className={styles.submitDeclControl}
+              placeholder="Name"
+              value={name}
+              onChange={
+                (event) => setName(event.target.value)
+              }
+            />
+          </Col>
+          <Col sm="5">
+            <Form.Control
+              className={styles.submitDeclControl}
+              placeholder="Login"
+              value={login}
+              onChange={
+                (event) => setLogin(event.target.value)
+              }
+            />
+          </Col>
+          <Col sm="2">
             <Button
-              onClick={() => addRow(name, login)}>
-              Add
+              className={styles.submitDeclButton}
+              onClick={() => addRow(name, login)}
+              variant="secondary"
+            >
+              <FontAwesomeIcon icon={faPlusCircle} />
             </Button>
           </Col>
         </Form.Row>
-        <Form.Text>
+        <Form.Text muted className={styles.submitDeclHelpText}>
           Names must contain only alphabetic characters [A-Za-z],
           spaces and hyphens (-); logins must contain only lower case
           letters and/or digits [a-z0-9]. Name-login pairs with incorrect
           syntax will be ignored.
         </Form.Text>
-        <Form.Row>
+        <Form.Row className={styles.submitDeclRow}>
           <Col>
             <Button
-              variant="secondary"
               className={styles.submitDeclButton}
               onClick={() => {
                 submitForm()
                 switchDeclarationStatus()
               }}
+              variant="secondary"
             >
               {displayText}
             </Button>
           </Col>
           <Col>
             <Button
-              variant="secondary"
               className={styles.submitDeclButton}
               onClick={resetForm}
+              variant="secondary"
             >
               Reset Form
             </Button>
@@ -146,22 +196,18 @@ const SubmitDeclarationSection: React.FC<Props> = ({}) => {
         </Form.Row>
       </Form.Group>
       <Form.Group>
-        <Form.Row>
-          <Col>
-            <Button
-              variant="secondary"
-              className={styles.submitDeclButton}
-            >
-              Delete Declaration
-            </Button>
-          </Col>
-          <Col>
-            <Form.Text>
-              Only possible when no submission record exists
-              (neither hardcopy nor electronic).
-            </Form.Text>
-          </Col>
+        <Form.Row className={styles.submitDeclRow}>
+          <Button
+            className={styles.submitDeclButton}
+            variant="secondary"
+          >
+            Delete Declaration
+          </Button>
         </Form.Row>
+        <Form.Text muted className={styles.submitDeclHelpText}>
+          Only possible when no submission record exists
+          (neither hardcopy nor electronic).
+        </Form.Text>
       </Form.Group>
     </Form>
   )
