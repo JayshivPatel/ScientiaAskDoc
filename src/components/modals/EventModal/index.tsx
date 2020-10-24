@@ -115,7 +115,7 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
       className={styles.eventModal}
       dialogClassName={styles.modal}
       show={show}
-      onHide={onHide}
+      onHide={() => {onHide(); setViewSubmission(false)}}
       centered
     >
       <Modal.Header className={styles.modalHeader}>
@@ -129,7 +129,7 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
         <Button
           variant="secondary"
           className={styles.sectionHeaderButton}
-          onClick={onHide}>
+          onClick={() => {onHide(); setViewSubmission(false)}}>
           <FontAwesomeIcon className={styles.buttonIcon} icon={faTimes}/>
         </Button>
       </Modal.Header>
