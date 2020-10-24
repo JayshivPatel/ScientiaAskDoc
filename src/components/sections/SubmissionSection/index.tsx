@@ -7,7 +7,7 @@ import SubmissionFileUpload from "../SubmissionFileUpload"
 import { api, methods } from "constants/routes"
 import { request } from "utils/api"
 import SubmissionGroupFormation from "../SubmissionGroupFormation";
-
+import SubmitDeclarationSection from "../SubmissionDeclarationTab";
 
 enum Stage {
   DECLARATION = "Declaration",
@@ -29,11 +29,11 @@ interface Props {
 }
 
 const SubmissionSection: React.FC<Props> = ({
-                                              event,
-                                              activeDay,
-                                              courseCode,
-                                              exerciseID,
-                                            }) => {
+  event,
+  activeDay,
+  courseCode,
+  exerciseID,
+}) => {
 
   const [stage, setStage] = useState(Stage.DECLARATION)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -99,7 +99,9 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   const mainSectionDict: EnumDictionary<Stage, JSX.Element> = {
-    [Stage.DECLARATION]: <></>,
+    [Stage.DECLARATION]: (
+      <SubmitDeclarationSection/>
+    ),
     [Stage.GROUP_FORMATION]: (
       <SubmissionGroupFormation/>
     ),
