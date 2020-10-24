@@ -23,7 +23,7 @@ interface ResourceDetailFormProps {
   defaultTags?: string[]
   defaultVisibleAfter?: Date
   suppressErrorMsg?: boolean
-  setSuppressErrorMsg?: (b: boolean) => void
+  setSuppressErrorMsg?: (suppressErrorMessage: boolean) => void
   handleInvalidDetails?: (areDetailsValid: boolean) => void
   titleDuplicated: (category: string, title: string) => boolean
   setResourceDetails: (details: ResourceDetails) => void
