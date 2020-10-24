@@ -6,7 +6,8 @@ import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
 import SubmissionFileUpload from "../SubmissionFileUpload"
 import { api, methods } from "constants/routes"
 import { request } from "utils/api"
-import SubmissionGroupFormation from "../SubmissionGroupFormation";
+import SubmitDeclarationSection from "../SubmissionDeclarationTab";
+import SubmissionGroupFormation, { UserInfo } from "../SubmissionGroupFormation";
 
 
 enum Stage {
@@ -29,15 +30,17 @@ interface Props {
 }
 
 const SubmissionSection: React.FC<Props> = ({
-                                              event,
-                                              activeDay,
-                                              courseCode,
-                                              exerciseID,
-                                            }) => {
+  event,
+  activeDay,
+  courseCode,
+  exerciseID,
+}) => {
 
   const [stage, setStage] = useState(Stage.DECLARATION)
   const [isLoaded, setIsLoaded] = useState(false)
   const [requirements, setRequirements] = useState<ResourceUploadRequirement[]>([])
+  const [uploaded, setUploaded] = useState<ResourceUploadStatus[]>([])
+  const [groupMembers, setGroupMembers] = useState<UserInfo[]>([])
 
   const refresh = () => {
     setIsLoaded(false)
@@ -113,9 +116,14 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   const mainSectionDict: EnumDictionary<Stage, JSX.Element> = {
-    [Stage.DECLARATION]: <></>,
+    [Stage.DECLARATION]: (
+      <SubmitDeclarationSection/>
+    ),
     [Stage.GROUP_FORMATION]: (
-      <SubmissionGroupFormation/>
+      <SubmissionGroupFormation
+          groupMembers={groupMembers}
+          onGroupMemberChange={setGroupMembers}
+      />
     ),
     [Stage.FILE_UPLOAD]: (
       <SubmissionFileUpload
