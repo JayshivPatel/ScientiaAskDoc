@@ -4,8 +4,12 @@ import authenticationService from "utils/auth"
 import {request} from "../../../utils/api";
 import {api, methods} from "../../../constants/routes";
 import Table from "react-bootstrap/Table";
+import SearchBox from "../../headings/SearchBox";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
-interface UserInfo {
+export interface UserInfo {
     username: string,
     name: string
     classEnrolled: string,
@@ -22,13 +26,17 @@ const tableHeadings = [
 ]
 
 interface Props {
-    // currentUserInfo: UserInfo | undefined
+    groupMembers: UserInfo[];
+    onGroupMemberChange: (members: []) => void
 }
 
 const SubmissionGroupFormation: React.FC<Props> = ({
-
+    groupMembers,
+    onGroupMemberChange
 }) => {
     const [currentUserInfo, setCurrentUserInfo] = useState<UserInfo>()
+    const [searchText, setSearchText] = useState("")
+
     useEffect(() => {
         // Load the user information of the current user
         const currentUser = authenticationService.getUserInfo()["username"]
@@ -82,6 +90,18 @@ const SubmissionGroupFormation: React.FC<Props> = ({
                     { currentUserInfo && studentInfoRow(currentUserInfo) }
                 </tbody>
             </Table>
+            <Form>
+                <Form.Row>
+                    <Col xs={7}>
+                        <SearchBox onSearchTextChange={() => {return}} searchText={searchText}/>
+                    </Col>
+                    <Col>
+                        <Button className={styles.sectionButton}>
+                            Add group member
+                        </Button>
+                    </Col>
+                </Form.Row>
+            </Form>
         </div>);
 }
 

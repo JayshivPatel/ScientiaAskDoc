@@ -6,7 +6,7 @@ import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
 import SubmissionFileUpload from "../SubmissionFileUpload"
 import { api, methods } from "constants/routes"
 import { request } from "utils/api"
-import SubmissionGroupFormation from "../SubmissionGroupFormation";
+import SubmissionGroupFormation, {UserInfo} from "../SubmissionGroupFormation";
 
 
 enum Stage {
@@ -39,6 +39,7 @@ const SubmissionSection: React.FC<Props> = ({
   const [isLoaded, setIsLoaded] = useState(false)
   const [requirements, setRequirements] = useState<ResourceUploadRequirement[]>([])
   const [uploaded, setUploaded] = useState<ResourceUploadStatus[]>([])
+  const [groupMembers, setGroupMembers] = useState<UserInfo[]>([])
 
   const refresh = () => {
     setIsLoaded(false)
@@ -101,7 +102,10 @@ const SubmissionSection: React.FC<Props> = ({
   const mainSectionDict: EnumDictionary<Stage, JSX.Element> = {
     [Stage.DECLARATION]: <></>,
     [Stage.GROUP_FORMATION]: (
-      <SubmissionGroupFormation/>
+      <SubmissionGroupFormation
+          groupMembers={groupMembers}
+          onGroupMemberChange={setGroupMembers}
+      />
     ),
     [Stage.FILE_UPLOAD]: (
       <SubmissionFileUpload
