@@ -76,27 +76,21 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   const [category, setCategory] = useState(defaultCategory || DEFAULT_CATEGORY)
   const [tags, setTags] = useState<string[]>(defaultTags || [])
   const [url, setURL] = useState(defaultURL || "")
-  const [urlError, setURLError] = useState<URLError>()
-  const [titleError, setLinkTitleError] = useState<LinkTitleError>()
+  const [urlError, setURLError] = useState<URLError | undefined>(undefined)
+  const [linkTitleError, setLinkTitleError] = useState<LinkTitleError | undefined>(undefined)
 
   const validateURL = (url: string) => {
     if (url.trim() === "") {
       setURLError(URLError.EmptyURL)
-      return
     }
-    setURLError(undefined)
   }
 
   const validateLinkTitle = (title: string) => {
     if (title.trim() === "") {
       setLinkTitleError(LinkTitleError.EmptyTitle)
-      return
-    }
-    if (titleDuplicated(category, title) && !(defaultCategory && title === defaultTitle)) {
+    } else if (titleDuplicated(category, title) && !(defaultCategory && title === defaultTitle)) {
       setLinkTitleError(LinkTitleError.DuplicateTitle)
-      return
     }
-    setLinkTitleError(undefined)
   }
 
   const urlErrorMessage = (error: URLError | undefined) => {
@@ -109,7 +103,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
         return ""
     }
   }
-  const linkTitleMessage = (error: LinkTitleError | undefined) => {
+  const linkTitleErrorMessage = (error: LinkTitleError | undefined) => {
     switch (error) {
       case LinkTitleError.EmptyTitle:
         return "Link title cannot be empty!"
@@ -122,10 +116,10 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 
   useEffect(() => {
     handleInvalidDetails && handleInvalidDetails(
-        (isLink && titleError === undefined && urlError === undefined) ||
-        (!isLink && titleError === undefined)
+        (isLink && linkTitleError === undefined && urlError === undefined) ||
+        (!isLink && linkTitleError === undefined)
     )
-  }, [titleError, urlError])
+  }, [linkTitleError, urlError])
 
 
   useEffect(() => {
@@ -185,7 +179,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
           type="text"
           placeholder="Enter the Resource Title"
           defaultValue={defaultTitle}
-          isInvalid={!suppressErrorMsg && titleError !== undefined}
+          isInvalid={!suppressErrorMsg && linkTitleError !== undefined}
           onChange={(event) => {
             setSuppressErrorMsg?.(false)
             validateLinkTitle(event.target.value)
@@ -193,7 +187,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
           }}
         />
         <Form.Control.Feedback type="invalid">
-          {linkTitleMessage(titleError)}
+          {linkTitleErrorMessage(linkTitleError)}
         </Form.Control.Feedback>
       </Form.Group>
 
