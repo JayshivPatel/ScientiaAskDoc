@@ -43,7 +43,7 @@ const FileItemRow: React.FC<FileListItemProps> = ({
   const [xPos, setXPos] = useState("0px")
   const [yPos, setYPos] = useState("0px")
   const wrapperRef = useRef<HTMLDivElement>(null);
-  useOutsideAlerter(wrapperRef, () => setShowMenu && setShowMenu(false));
+  useOutsideAlerter(wrapperRef, () => setShowMenu?.(false));
 
   const handleClick = () => {
     setShowMenu && showMenu && setShowMenu(false)
