@@ -25,16 +25,17 @@ export interface Resource {
 }
 
 export interface ResourceUploadRequirement {
+  id: number
   title: string
-  allowedSuffixes: string[]  
+  allowedSuffixes: string[]
+  uploadedFile?: ResourceUploadStatus 
 }
 
 export interface ResourceUploadStatus {
   title: string
   suffix: string
-  file: File
-  timestamp: Date
-  oldRequirement: ResourceUploadRequirement
+  // file: File
+  // timestamp: Date
 }
 
 export interface BasicResource {
