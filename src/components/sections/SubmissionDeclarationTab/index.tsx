@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 
 interface Declaration {
   name: string
-  id: string
+  login: string
 }
 
 interface Props {
@@ -19,14 +19,12 @@ enum DeclarationStatus {
   FILLED = "Filled",
 }
 
-const MAX_DECLARATION_NUM: number = 1000
-
 const SubmitDeclarationSection: React.FC<Props> = ({}) => {
 
   const [declarationSubmitted, setDeclarationSubmitted] = useState<boolean>(false);
   const [declarationStatus, setDeclarationStatus] = useState<DeclarationStatus>(DeclarationStatus.NOTSET)
   const [name, setName] = useState<string>("")
-  const [id, setId] = useState<string>("")
+  const [login, setLogin] = useState<string>("")
   const [declarationList, setDeclarationList] = useState<Declaration[]>([])
 
   const switchDeclarationStatus = ((): () => void => {
@@ -37,12 +35,26 @@ const SubmitDeclarationSection: React.FC<Props> = ({}) => {
     }
   })()
 
-  const addRow = (name: string, id: string) => {
-    setDeclarationList([...declarationList, {name, id}])
+  const addRow = (name: string, login: string) => {
+    setDeclarationList([...declarationList, {name, login}])
   }
 
   const deleteRow = (index: number) => {
     setDeclarationList(declarationList.filter((val, idx) => index !== idx))
+  }
+
+  const resetForm = () => {
+    setDeclarationList([])
+    setName("")
+    setLogin("")
+  }
+
+  const submitForm = () => {
+    if (declarationList.length === 0) {
+      setDeclarationStatus(DeclarationStatus.EMPTY)
+    } else {
+      setDeclarationStatus(DeclarationStatus.FILLED)
+    }
   }
 
   let displayText: string
@@ -68,7 +80,7 @@ const SubmitDeclarationSection: React.FC<Props> = ({}) => {
                 <Form.Control plaintext readOnly defaultValue={val.name} />
               </Col>
               <Col>
-                <Form.Control plaintext readOnly defaultValue={val.id.toString()} />
+                <Form.Control plaintext readOnly defaultValue={val.login.toString()} />
               </Col>
               <Col>
                 <Button
@@ -90,35 +102,16 @@ const SubmitDeclarationSection: React.FC<Props> = ({}) => {
         <Form.Row>
           <Col>
             <Form.Label className={styles.submitDeclTitle}>Name</Form.Label>
-            <Form.Control placeholder="Name" onChange={(event) => setName(event.target.value)}/>
+            <Form.Control placeholder="Name" value={name} onChange={(event) => setName(event.target.value)}/>
           </Col>
           <Col>
             <Form.Label className={styles.submitDeclTitle}>Login (if member of DOC)</Form.Label>
-            <Form.Control placeholder="Login" onChange={(event) => setId(event.target.value)}/>
+            <Form.Control placeholder="Login" value={login} onChange={(event) => setLogin(event.target.value)}/>
           </Col>
           <Col>
             <Button
-              onClick={() => addRow(name, id)}>
+              onClick={() => addRow(name, login)}>
               Add
-            </Button>
-          </Col>
-        </Form.Row>
-        <Form.Row>
-          <Col>
-            <Button
-              variant="secondary"
-              className={styles.submitDeclButton}
-              onClick={switchDeclarationStatus}
-            >
-              {displayText}
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              variant="secondary"
-              className={styles.submitDeclButton}
-            >
-              Reset Form
             </Button>
           </Col>
         </Form.Row>
@@ -128,6 +121,29 @@ const SubmitDeclarationSection: React.FC<Props> = ({}) => {
           letters and/or digits [a-z0-9]. Name-login pairs with incorrect
           syntax will be ignored.
         </Form.Text>
+        <Form.Row>
+          <Col>
+            <Button
+              variant="secondary"
+              className={styles.submitDeclButton}
+              onClick={() => {
+                submitForm()
+                switchDeclarationStatus()
+              }}
+            >
+              {displayText}
+            </Button>
+          </Col>
+          <Col>
+            <Button
+              variant="secondary"
+              className={styles.submitDeclButton}
+              onClick={resetForm}
+            >
+              Reset Form
+            </Button>
+          </Col>
+        </Form.Row>
       </Form.Group>
       <Form.Group>
         <Form.Row>
