@@ -14,7 +14,7 @@ export interface UserInfo {
     name: string
     classEnrolled: string,
     role: string,
-    signatureTime: Date,
+    signatureTime: Date
 }
 
 const tableHeadingsLeader = [
@@ -37,15 +37,6 @@ interface Props {
     groupMembers: UserInfo[];
     onGroupMemberChange: (members: []) => void
 }
-// const [declarationList, setDeclarationList] = useState<Declaration[]>([])
-
-// const addRow = (name: string, login: string) => {
-//     setDeclarationList([...declarationList, {name, login}])
-//     setName("")
-//     setLogin("")
-//   }
-
-
 
 const SubmissionGroupFormation: React.FC<Props> = ({
     groupMembers,
