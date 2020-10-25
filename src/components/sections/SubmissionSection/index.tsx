@@ -3,11 +3,11 @@ import Button from "react-bootstrap/Button"
 import styles from "./style.module.scss"
 import {EnumDictionary, ResourceUploadRequirement, ResourceUploadStatus, TimelineEvent} from "constants/types"
 import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
-import SubmissionFileUpload from "../SubmissionFileUpload"
+import SubmissionFileUploadTab from "../SubmissionFileUploadTab"
 import { api, methods } from "constants/routes"
 import { request } from "utils/api"
 import SubmitDeclarationSection from "../SubmissionDeclarationTab";
-import SubmissionGroupFormation, {UserInfo} from "../SubmissionGroupFormation";
+import SubmissionGroupFormation, { UserInfo } from "../SubmissionGroupFormation";
 
 
 enum Stage {
@@ -46,10 +46,8 @@ const SubmissionSection: React.FC<Props> = ({
     setIsLoaded(false)
     const onSuccess = (data: { 
       requirements: ResourceUploadRequirement[], 
-      uploaded: ResourceUploadStatus[] 
     }) => {
       setRequirements(data.requirements)
-      setUploaded(data.uploaded)
       setIsLoaded(true)
     }
     const onError = () => { alert("err") }
@@ -63,6 +61,9 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   useEffect(refresh, [])
+  useEffect(() => {
+    if (isLoaded) console.log("refresh!")
+  }, [isLoaded])
 
 
   const uploadFile = (file: File, index: number) => {
@@ -73,31 +74,45 @@ const SubmissionSection: React.FC<Props> = ({
     if (requirement.allowedSuffixes.includes(suffix)) {
       const title = requirement.title
       const newFile = new File([file], `${title}${suffix === "" ? "" : `.${suffix}`}`, { type: file.type })
-      const newStatus: ResourceUploadStatus = {
-        file: newFile,
+      const newStatus: { [k: string]: any } = {
         title: title,
         suffix: suffix,
         timestamp: new Date(),
-        oldRequirement: requirement
       }
       console.log(newFile);
 
       request({
         url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
         method: methods.POST,
-        onSuccess: () => {},
-        onError: () => {}
-      })
-      refresh()
+        body: newStatus,
+        onSuccess: () => {
+          const formData = new FormData()
+          formData.append("file", file)
+          request({
+            url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
+            method: methods.PUT,
+            onSuccess: () => {},
+            onError: () => {},
+            body: formData,
+            sendFile: true,
+          })
+        },
+        onError: () => {},
+      }).finally(refresh)
+      
     } else {
       alert("u kidding?")
     }
   }
 
   const removeFile = (index: number) => {
-    const status = uploaded[index]
-    setRequirements([...requirements, status.oldRequirement])
-    setUploaded(uploaded.filter((_, i) => i !== index))
+    request({
+      url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
+      method: methods.DELETE,
+      body: { fileID: index },
+      onSuccess: () => {},
+      onError:  () => {},
+    }).finally(refresh)
   }
 
   const mainSectionDict: EnumDictionary<Stage, JSX.Element> = {
@@ -111,9 +126,8 @@ const SubmissionSection: React.FC<Props> = ({
       />
     ),
     [Stage.FILE_UPLOAD]: (
-      <SubmissionFileUpload
+      <SubmissionFileUploadTab
         requiredResources={requirements}
-        uploadedResources={uploaded}
         uploadFile={uploadFile}
         removeFile={removeFile}
         refresh={refresh}
@@ -144,24 +158,5 @@ const SubmissionSection: React.FC<Props> = ({
     </>
   )
 }
-
-const dummyRUR: ResourceUploadRequirement[] = [
-  {
-    title: "foo",
-    allowedSuffixes: ["pdf"]
-  },
-  {
-    title: "report",
-    allowedSuffixes: ["pdf", "txt", "pptx", "ppt"]
-  },
-  {
-    title: "HaskellCoursework",
-    allowedSuffixes: ["hs", "lhs"]
-  },
-  {
-    title: "allow_empty_suffix",
-    allowedSuffixes: ["", "txt"]
-  },
-]
 
 export default SubmissionSection

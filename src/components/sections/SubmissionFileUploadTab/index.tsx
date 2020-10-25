@@ -3,19 +3,17 @@ import styles from './style.module.scss'
 import FileItemRow from 'components/rows/FileItemRow'
 import { Resource, ResourceUploadRequirement, ResourceUploadStatus } from 'constants/types'
 import UploadResourceItemRow from 'components/rows/UploadResourceItemRow'
-import { faDownload, faTrash, faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faDownload, faTrash, faUpload, IconDefinition } from '@fortawesome/free-solid-svg-icons'
 
 interface Props {
   requiredResources: ResourceUploadRequirement[]
-  uploadedResources: ResourceUploadStatus[]
   uploadFile: (file: File, index: number) => void
   removeFile: (index: number) => void
   refresh: () => void
 }
 
-const SubmissionFileUpload: React.FC<Props> = ({
+const SubmissionFileUploadTab: React.FC<Props> = ({
   requiredResources,
-  uploadedResources,
   uploadFile,
   removeFile,
 }) => {
@@ -33,39 +31,36 @@ const SubmissionFileUpload: React.FC<Props> = ({
     uploadRef.current?.click()
   }
 
+  const respondingIconsOf = (isUpload: boolean, index: number): [IconDefinition, (e: React.MouseEvent) => void][] => {
+    if (isUpload) {
+      return [
+        [faUpload, _ => clickUpload(index)],
+      ]
+    }
+    return [
+      [faDownload, e => alert("downloading")],
+      [faTrash, e => removeFile(index)],
+    ]
+  }
+
   return (
     <div>
       <span>Requirements: </span>
       <input type="file" ref={uploadRef} onChange={e => onFileSelection(e)} style={{ display: "none" }}></input>
-      {requiredResources.map(({ title, allowedSuffixes, }, index) => {
+      {requiredResources.map(({ title, allowedSuffixes, uploadedFile }, index) => {
         return (
           <div>
             <UploadResourceItemRow
               title={title}
-              suffixes={allowedSuffixes}
-              colour="pink"
-              respondingIcons={[
-                [faUpload, _ => clickUpload(index)],
-              ]}
+              suffixes={(uploadedFile && [uploadedFile.suffix]) ?? allowedSuffixes}
+              colour={uploadedFile ? "teal" : "pink"}
+              respondingIcons={respondingIconsOf(uploadedFile === undefined, index)}
             />
           </div>
         )
       })}
-
-      <span>Uploaded resources: </span>
-      {uploadedResources.map(({ title, suffix, }) => (
-        <UploadResourceItemRow
-          title={title}
-          suffixes={[suffix]}
-          colour="teal"
-          respondingIcons={[
-            [faDownload, e => alert("downloading")],
-            [faTrash, e => alert("deleting")],
-          ]}
-        />
-      ))}
     </div>
   )
 }
 
-export default SubmissionFileUpload
+export default SubmissionFileUploadTab

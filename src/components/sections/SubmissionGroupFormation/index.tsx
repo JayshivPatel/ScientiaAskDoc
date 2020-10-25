@@ -17,12 +17,20 @@ export interface UserInfo {
     signatureTime: Date
 }
 
-const tableHeadings = [
+const tableHeadingsLeader = [
     "Student",
     "Class",
     "Role",
     "Signature",
     "Delete"
+]
+
+const tableHeadingsMember = [
+    "Student",
+    "Class",
+    "Role",
+    "Signature",
+    "Sign"
 ]
 
 interface Props {
@@ -36,10 +44,30 @@ const SubmissionGroupFormation: React.FC<Props> = ({
 }) => {
     const [currentUserInfo, setCurrentUserInfo] = useState<UserInfo>()
     const [searchText, setSearchText] = useState("")
+    const [members, addGroupMember] = useState<UserInfo[]>([])
+    const [username, setUserName] = useState<string>("")
+    const [name, setName] = useState<string>("")
+    const [classEnrolled, setClassEnrolled] = useState<string>("")
+    const [role, setRole] = useState<string>("")
+    const [signatureTime, setSignatureTime] = useState<Date>(new Date())
+    const isLeader = (username: string) => {
+        // TODO: Implement this function
+        return true;
+    }
+    const currentUser = authenticationService.getUserInfo()["username"]
+    const currentRole: string = isLeader(currentUser) ? "Leader" : "Member"
+
+    const addRow = (username: string, name: string, classEnrolled: string, role: string, signatureTime: Date) => {
+        addGroupMember([...members, {username, name, classEnrolled, role, signatureTime}])
+        setUserName(username)
+        setName(name)
+        setClassEnrolled(classEnrolled)
+        setRole(role)
+        setSignatureTime(new Date())
+    }
 
     useEffect(() => {
         // Load the user information of the current user
-        const currentUser = authenticationService.getUserInfo()["username"]
         request({
             url: api.CATE_USER_INFO(currentUser),
             method: methods.GET,
@@ -48,7 +76,7 @@ const SubmissionGroupFormation: React.FC<Props> = ({
                     username: currentUser,
                     name: `${data.lastname}, ${data.firstname}`,
                     classEnrolled: "c3", // Is not included in the current data format
-                    role: "Leader",
+                    role: currentRole,
                     signatureTime: new Date()
                 })
             },
@@ -72,7 +100,7 @@ const SubmissionGroupFormation: React.FC<Props> = ({
                 {studentInfo.signatureTime.toISOString().slice(0, 10)}
             </td>
             <td>
-                {/* Should be the delete checkbox */}
+                {/* Should be the delete checkbox for leader or sign checkbox for member */}
             </td>
         </tr>
     )
@@ -82,7 +110,7 @@ const SubmissionGroupFormation: React.FC<Props> = ({
             <span className={styles.sectionHeader}>Group Members</span>
             <Table responsive>
                 <thead>
-                    { tableHeadings.map((heading) => (
+                    { (isLeader(currentUser) ? tableHeadingsLeader : tableHeadingsMember).map((heading) => (
                         <th key={heading}>{heading}</th>
                     ))}
                 </thead>
@@ -92,12 +120,33 @@ const SubmissionGroupFormation: React.FC<Props> = ({
             </Table>
             <Form>
                 <Form.Row>
-                    <Col xs={7}>
-                        <SearchBox onSearchTextChange={() => {return}} searchText={searchText}/>
+                    <Col>
+                        <Button 
+                           className={styles.sectionButton}
+                        >
+                           Delete
+                        </Button>
                     </Col>
                     <Col>
-                        <Button className={styles.sectionButton}>
-                            Add group member
+                        <Button 
+                           className={styles.sectionButton}
+                        >
+                           Reset
+                        </Button>
+                    </Col>
+                </Form.Row>
+                <Form.Row>
+                    <Col xs={7}>
+                        <SearchBox 
+                          onSearchTextChange={setSearchText} 
+                          searchText={searchText}
+                        />
+                    </Col>
+                    <Col>
+                        <Button 
+                           className={styles.sectionButton}
+                           onClick={() => addRow(username, name, classEnrolled, role, signatureTime)}>
+                           Add group member
                         </Button>
                     </Col>
                 </Form.Row>
