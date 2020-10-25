@@ -8,7 +8,7 @@ import { api, methods } from "constants/routes"
 import { request } from "utils/api"
 import SubmitDeclarationSection from "../SubmissionDeclarationTab";
 import SubmissionGroupFormation, { UserInfo } from "../SubmissionGroupFormation";
-
+import authenticationService from "utils/auth"
 
 enum Stage {
   DECLARATION = "Declaration",
@@ -55,8 +55,12 @@ const SubmissionSection: React.FC<Props> = ({
     request({
       url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
       method: methods.GET,
+      body: {
+        username: authenticationService.getUserInfo()["username"]
+      },
       onSuccess,
-      onError
+      onError,
+      sendFile: false
     })
   }
 
@@ -87,6 +91,8 @@ const SubmissionSection: React.FC<Props> = ({
         body: newStatus,
         onSuccess: () => {
           const formData = new FormData()
+          formData.append("username", authenticationService.getUserInfo()["username"])
+          formData.append("fileID", String(index))
           formData.append("file", file)
           request({
             url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
@@ -109,7 +115,10 @@ const SubmissionSection: React.FC<Props> = ({
     request({
       url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
       method: methods.DELETE,
-      body: { fileID: index },
+      body: {
+        fileID: index,
+        username: authenticationService.getUserInfo()["username"]
+      },
       onSuccess: () => {},
       onError:  () => {},
     }).finally(refresh)
