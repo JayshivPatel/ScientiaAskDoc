@@ -26,6 +26,7 @@ import ResourceDetailForm, {
 import {request} from "utils/api"
 import {api, methods} from "constants/routes"
 import moment from "moment"
+import CreatableSelect from 'react-select/creatable';
 
 interface CreateModalProps {
   show: boolean
@@ -235,19 +236,61 @@ const CreateModal: React.FC<CreateModalProps> = ({
   }
   const [time_options] = React.useState(time_wholeday)
 
-  function Checkbox({title}: { title: string }, {isChecked}: { isChecked: boolean }) {
-    const [checked, setChecked] = React.useState(true);
+  const handleChange = (newValue: any, actionMeta: any) => {
+    console.group('Value Changed');
+    console.log(newValue);
+    console.log(`action: ${actionMeta.action}`);
+    console.groupEnd();
+  };
 
-    return (
-      <label>
-        <input type="checkbox"
-               checked={isChecked}
-               onChange={() => setChecked(!checked)}
-        />
-        {title}
-      </label>
-    );
+  const handleInputChange = (inputValue: any, actionMeta: any) => {
+    console.group('Input Changed');
+    console.log(inputValue);
+    console.log(`action: ${actionMeta.action}`);
+    console.groupEnd();
+  };
+
+  // switch for provision online
+  const [provOnlineSwitch, setProvOnlineSwitch] = useState(false);
+  const provOnlineSwitchAction = () => {
+    setProvOnlineSwitch(!provOnlineSwitch);
+  };
+
+  // state for assessed/unassessed cw
+  const [isAssessed, setAssessed] = useState(false);
+  const assesedAction = () => {
+    setAssessed(!isAssessed);
   }
+
+  // state for individual/group cw
+  const [isGrouped, setGrouped] = useState(false);
+  const isGroupAction = () => {
+    setGrouped(!isGrouped);
+  }
+
+  // state for handin types
+  const [handinTypes] = useState([
+    {type: "Hardcopy", value: 0},
+    {type: "Electronic", value: 1},
+    {type: "Hardcopy and Electronic", value: 2}
+  ]);
+  const [handinType, setHandinType] = useState(0);
+  const sethandinHardcopy = () => {
+    setHandinType(0)
+  };
+  const sethandinElectronic = () => {
+    setHandinType(1)
+  };
+  const sethandinHardcopyAndElectronic = () => {
+    setHandinType(2)
+  };
+
+  // state for provision of mark schema
+  const [provSchemaSwitch, setSchemaSwitch] = useState(false);
+  const provSchemaSwitchAction = () => {
+    setSchemaSwitch(!provSchemaSwitch);
+  };
+
 
   return (
     <Modal
@@ -275,94 +318,104 @@ const CreateModal: React.FC<CreateModalProps> = ({
             className={styles.tabContainer}
             style={{marginTop: "1.25rem"}}
             onSelect={(tab) => setTab(tab ? tab : "file")}>
-            <Tab eventKey="info" title={"Excercise info"}>
-              <Row>
-                <Col>
+
+
+            <Tab eventKey="info" title={"Exercise info"}>
+              <Row style={{paddingTop: "10px"}}>
+                <Col className={styles.Col}>
                   ♥Number:
-                  <select>
-                    {page_options.map(({label, value}) => (
-                      <option key={value} value={value}>
-                        {label}
-                      </option>
-                    ))}
-                  </select>
+                  <CreatableSelect
+                    isClearable
+                    onChange={handleChange}
+                    onInputChange={handleInputChange}
+                    options={page_options}
+                    className={styles.SelectArea}
+                  />
                 </Col>
 
-                <Col>
+                <Col className={styles.Col}>
                   ♥Exercise Type:
-                  <select>
-                    {type_options.map(({label, value}) => (
-                      <option key={value} value={value}>
-                        {label}
-                      </option>
-                    ))}
-                  </select>
+                  <CreatableSelect
+                    isClearable
+                    onChange={handleChange}
+                    onInputChange={handleInputChange}
+                    options={type_options}
+                    className={styles.SelectArea}
+                  />
                 </Col>
               </Row>
 
               <Row>
-                <Col>
+                <Col className={styles.Col}>
                   ♥Start Date:
-                  <select>
-                    {date_options.map(({label, value}) => (
-                      <option key={value} value={value}>
-                        {label}
-                      </option>
-                    ))}
-                  </select>
+                  <CreatableSelect
+                    isClearable
+                    onChange={handleChange}
+                    onInputChange={handleInputChange}
+                    options={date_options}
+                    className={styles.SelectArea}
+                  />
                 </Col>
 
-                <Col>
+                <Col className={styles.Col}>
                   ♥End Date:
-                  <select>
-                    {date_options.map(({label, value}) => (
-                      <option key={value} value={value}>
-                        {label}
-                      </option>
-                    ))}
-                  </select>
+                  <CreatableSelect
+                    isClearable
+                    onChange={handleChange}
+                    onInputChange={handleInputChange}
+                    options={date_options}
+                    className={styles.SelectArea}
+                  />
+                </Col>
+              </Row>
+
+              <Form.Row>
+                <Col className={styles.Col}>
+                  ♥Short Title:
+                  <Form.Control placeholder="Short Title"
+                                className={styles.TextArea}/>
+                </Col>
+              </Form.Row>
+
+              <Row>
+                <Col className={styles.Col}>
+                  ♥Provision of Online Spec
+                  <Form.Switch onChange={provOnlineSwitchAction}
+                               id={"custon-switch"}
+                               checked={{provOnlineSwitch}}
+                               className={styles.Switch}
+                  />
+
                 </Col>
               </Row>
 
               <Row>
-                <Col>
-                  <form>
-                    <label>
-                      ♥Short Title:
-                      <input type="text" name="name"/>
-                    </label>
-                  </form>
+                <Col className={styles.Col}>
+                  ♥Provision of data files
+                  <Form.Switch onChange={provOnlineSwitchAction}
+                               id={"custon-switch"}
+                               checked={{provOnlineSwitch}}
+                               className={styles.Switch}
+                  />
+
                 </Col>
               </Row>
 
               <Row>
-                <Col>
-                  ♥Provision of Online Spec.
-                  <Col>
-                    <Checkbox title="Yes"/> <Checkbox title="No"/>
-                  </Col>
-
-                </Col>
-
-                <Col>
-                  ♥Provision of data files.
-                  <Col>
-                    <Checkbox title="Yes"/> <Checkbox title="No"/>
-                  </Col>
-
-                </Col>
-
-                <Col>
-                </Col>
-              </Row>
-
-              <Row>
-                <Col>
+                <Col className={styles.Col}>
                   ♥Visibility for student after:
+                  <CreatableSelect
+                    isClearable
+                    onChange={handleChange}
+                    onInputChange={handleInputChange}
+                    options={time_options}
+                    className={styles.SelectArea}
+                    placeholder={"Select a time"}
+                  />
                 </Col>
               </Row>
 
-              // TODO: add a line here to separate.
+              <hr/>
 
               <Row>
                 <Col>
@@ -372,21 +425,21 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
               <Row>
                 <Col>
-                  <Checkbox title="※Not assessed"/>
+                  <Form.Check onChange={assesedAction} checked={isAssessed} label="※Not assessed"/>
                 </Col>
               </Row>
 
               <Row>
                 <Col>
-                  <Checkbox title="※Assessed"/>
+                  <Form.Check onChange={assesedAction} checked={!isAssessed} label="※Assessed 👉 "/>
                 </Col>
 
                 <Col>
                   <Row>
-                    <Checkbox title={"※Individual"}/>
+                    <Form.Check onChange={isGroupAction} checked={!isGrouped} label={"※Individual"}/>
                   </Row>
                   <Row>
-                    <Checkbox title={"※Group"}/>
+                    <Form.Check onChange={isGroupAction} checked={isGrouped} label={"※Group"}/>
                   </Row>
 
                 </Col>
@@ -398,15 +451,16 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
                   <Col>
                     <Row>
-                      <Checkbox title="Hardcopy"/>
+                      <Form.Check onChange={sethandinHardcopy} checked={handinType === 0} label="Hardcopy"/>
                     </Row>
 
                     <Row>
-                      <Checkbox title="Electronic"/>
+                      <Form.Check onChange={sethandinElectronic} checked={handinType === 1} label="Electronic"/>
                     </Row>
 
                     <Row>
-                      <Checkbox title="Hardcopy AND Electronic"/>
+                      <Form.Check onChange={sethandinHardcopyAndElectronic} checked={handinType === 2}
+                                  label="Hardcopy AND Electronic"/>
                     </Row>
                   </Col>
                 </Col>
@@ -415,74 +469,87 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 <Col>
                   <Row>
                     ※hardcopy due time:
-                    <select>
-                      {time_options.map(({label, value}) => (
-                        <option key={value} value={value}>
-                          {label}
-                        </option>
-                      ))}
-                    </select>
+                    <CreatableSelect
+                      isClearable
+                      onChange={handleChange}
+                      onInputChange={handleInputChange}
+                      options={time_options}
+                      className={styles.SelectArea_time}
+                      placeholder={"Select a time"}
+                    />
                   </Row>
 
                   <Row>
                     ※electronic due time:
-                    <select>
-                      {time_options.map(({label, value}) => (
-                        <option key={value} value={value}>
-                          {label}
-                        </option>
-                      ))}
-                    </select>
+                    <CreatableSelect
+                      isClearable
+                      onChange={handleChange}
+                      onInputChange={handleInputChange}
+                      options={time_options}
+                      className={styles.SelectArea_time}
+                      placeholder={"Select a time"}
+                    />
                   </Row>
                 </Col>
+              </Row>
 
+              <hr/>
+
+              <Row>
+                <Col className={styles.Col}>
+                  ※Provision of on-line mark schema:
+                  <Form.Switch onChange={provSchemaSwitchAction}
+                               id={"custon-switch"}
+                               checked={{provSchemaSwitch}}
+                               className={styles.Switch}
+                  />
+                </Col>
               </Row>
 
               <Row>
-                <Col>
-                  ※Provision of on-line mark schema:
-                  <Col>
-                    <Checkbox title="No"/> <Checkbox title="Yes"/>
-                  </Col>
-
-                  <Col>
-                    Maximum mark (0-100):
-                    <input type="number" min={0} max={100} defaultValue={100}></input>
-                  </Col>
+                <Col className={styles.Col}>
+                  Maximum mark (0-100):
+                  <Form.Control type="number" className={styles.TextArea} min={0} max={100} defaultValue={100}/>
+                </Col>
 
 
-                  <Col>
-                    Weigh(%) within module:
-                    <input type="number" min={0} max={100} placeholder={"%"}></input>
-                  </Col>
+                <Col className={styles.Col}>
+                  Weigh(%) within module:
+                  <Form.Control type="number" className={styles.TextArea} min={0} max={100} placeholder={"%"}/>
                 </Col>
               </Row>
 
-              // TODO: a line here to separate
+              <hr/>
 
               <Row>
                 <Col>
                   ※Provision of on-line answers:
                   <Col>
-                    <Row>
-                      <Checkbox title="No"/>
-                    </Row>
-                    <Row>
+                    <Form.Row>
+                      <Form.Check label="No"/>
+                    </Form.Row>
+
+                    <Form.Row>
                       <Col>
-                        <Checkbox title="Yes 👉 "/>
+                        <Form.Check label="Yes 👉 "/>
                       </Col>
-                      <Col>
+
+                      <Col className={styles.Col}>
                         Visible to students after:
-                        <input type="number" min={0} max={5} defaultValue={2}></input>Weeks
+                        <Form.Control type="number" min={0} max={5} defaultValue={2}/>Weeks
                       </Col>
-                    </Row>
+                    </Form.Row>
                   </Col>
                 </Col>
               </Row>
 
-            </Tab>
 
-            <Tab eventKey="file" title="File">
+              <hr/>
+
+              <div style={{textAlign: "center"}}>
+                Upload spec file for this exercise
+              </div>
+
               <div
                 {...getRootProps({
                   className: classNames(
@@ -556,25 +623,6 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 )}
               </Accordion>
             </Tab>
-
-            {/*<Tab eventKey="link" title="Link">*/}
-            {/*  <ResourceDetailForm*/}
-            {/*    id={-1}*/}
-            {/*    categories={categories}*/}
-            {/*    tagList={tags}*/}
-            {/*    isLink={true}*/}
-            {/*    titleDuplicated={titleDuplicated}*/}
-            {/*    setResourceDetails={updateResourceDetails(linkResourceDetailsID)}*/}
-            {/*    defaultTitle={linkResource?.title}*/}
-            {/*    defaultURL={linkResource?.url}*/}
-            {/*    defaultCategory={linkResource?.category}*/}
-            {/*    defaultTags={linkResource?.tags}*/}
-            {/*    defaultVisibleAfter={linkResource?.visibleAfter}*/}
-            {/*    suppressErrorMsg={suppressErrorMsg}*/}
-            {/*    setSuppressErrorMsg={setSuppressErrorMsg}*/}
-            {/*    handleInvalidDetails={(areDetailsValid: boolean) => {setCanUploadLink(areDetailsValid)}}*/}
-            {/*  />*/}
-            {/*</Tab>*/}
           </Tabs>
         </Modal.Body>
 

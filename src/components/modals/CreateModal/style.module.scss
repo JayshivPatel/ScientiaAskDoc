@@ -3,7 +3,7 @@
 
 .dropzone {
   text-align: center;
-  padding: 1.25rem;
+  padding: 3rem;
   border: 0.125rem dashed var(--border-color);
   background-color: var(--background-color);
   color: var(--tertiary-text-color);
@@ -167,4 +167,28 @@
 
 .collapse {
   background-color: var(--background-color);
+}
+
+.TextArea {
+  margin-left: 10px;
+  width: 15%;
+}
+
+.SelectArea {
+  margin-left: 10px;
+  width: 40%;
+}
+
+.Switch {
+  margin-left: 10px;
+}
+
+.SelectArea_time {
+  margin-left: 10px;
+  width: 80%;
+}
+
+.Col {
+  display: flex;
+  align-items: center;
 }
