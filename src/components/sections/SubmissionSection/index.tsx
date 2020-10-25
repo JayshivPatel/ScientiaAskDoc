@@ -5,7 +5,7 @@ import {EnumDictionary, ResourceUploadRequirement, ResourceUploadStatus, Timelin
 import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
 import SubmissionFileUploadTab from "../SubmissionFileUploadTab"
 import { api, methods } from "constants/routes"
-import { request } from "utils/api"
+import { download, request } from "utils/api"
 import SubmitDeclarationSection from "../SubmissionDeclarationTab";
 import SubmissionGroupFormation, { UserInfo } from "../SubmissionGroupFormation";
 import authenticationService from "utils/auth"
@@ -124,6 +124,10 @@ const SubmissionSection: React.FC<Props> = ({
     }).finally(refresh)
   }
 
+  const downloadFile = (url: string, filename: string, suffix: string) => {
+    download(api.CATE_FILE_DOWNLOAD, `${filename}.${suffix}`, { downloadPath: url })
+  }
+
   const mainSectionDict: EnumDictionary<Stage, JSX.Element> = {
     [Stage.DECLARATION]: (
       <SubmitDeclarationSection/>
@@ -139,6 +143,7 @@ const SubmissionSection: React.FC<Props> = ({
         requiredResources={requirements}
         uploadFile={uploadFile}
         removeFile={removeFile}
+        downloadFile={downloadFile}
         refresh={refresh}
       />
     ),

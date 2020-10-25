@@ -9,6 +9,7 @@ interface Props {
   requiredResources: ResourceUploadRequirement[]
   uploadFile: (file: File, index: number) => void
   removeFile: (index: number) => void
+  downloadFile: (url: string, filename: string, suffix: string) => void
   refresh: () => void
 }
 
@@ -16,6 +17,7 @@ const SubmissionFileUploadTab: React.FC<Props> = ({
   requiredResources,
   uploadFile,
   removeFile,
+  downloadFile,
 }) => {
 
   const uploadRef = useRef<HTMLInputElement>(null)
@@ -31,16 +33,20 @@ const SubmissionFileUploadTab: React.FC<Props> = ({
     uploadRef.current?.click()
   }
 
-  const respondingIconsOf = (isUpload: boolean, index: number): [IconDefinition, (e: React.MouseEvent) => void][] => {
-    if (isUpload) {
+  const respondingIconsOf = (
+    uploadedFile: ResourceUploadStatus | undefined, 
+    index: number
+  ): [IconDefinition, (e: React.MouseEvent) => void][] => {
+    if (uploadedFile) {
+      return [
+        [faDownload, e => downloadFile(uploadedFile.url, uploadedFile.title, uploadedFile.suffix)],
+        [faTrash, e => removeFile(index)],
+      ]
+    } else {
       return [
         [faUpload, _ => clickUpload(index)],
       ]
     }
-    return [
-      [faDownload, e => alert("downloading")],
-      [faTrash, e => removeFile(index)],
-    ]
   }
 
   return (
@@ -54,7 +60,7 @@ const SubmissionFileUploadTab: React.FC<Props> = ({
               title={title}
               suffixes={(uploadedFile && [uploadedFile.suffix]) ?? allowedSuffixes}
               colour={uploadedFile ? "teal" : "pink"}
-              respondingIcons={respondingIconsOf(uploadedFile === undefined, index)}
+              respondingIcons={respondingIconsOf(uploadedFile, index)}
             />
           </div>
         )

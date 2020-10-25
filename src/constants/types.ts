@@ -34,8 +34,8 @@ export interface ResourceUploadRequirement {
 export interface ResourceUploadStatus {
   title: string
   suffix: string
-  // file: File
-  // timestamp: Date
+  checksum: string
+  url: string
 }
 
 export interface BasicResource {

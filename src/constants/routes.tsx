@@ -24,6 +24,7 @@ export const api = {
   CATE_COURSE_EXERCISES: (courseCode: string) =>`${config.CATE_URL}/exercises/${courseCode}`,
   CATE_USER_INFO: (username: string) => `${config.CATE_URL}/auth/${username}`,
   CATE_FILE_UPLOAD: (courseCode: string, exerciseID: number) => `${config.CATE_URL}/upload/${courseCode}/${exerciseID}`,
+  CATE_FILE_DOWNLOAD: `${config.CATE_URL}/download`,
   MATERIALS_LOGIN: `${config.MATERIALS_URL}/auth/login`,
   MATERIALS_COURSES: (year: string) =>
     `${config.MATERIALS_URL}/courses/${year}`,
