@@ -12,7 +12,7 @@ interface Props {
   refresh: () => void
 }
 
-const SubmissionFileUpload: React.FC<Props> = ({
+const SubmissionFileUploadTab: React.FC<Props> = ({
   requiredResources,
   uploadFile,
   removeFile,
@@ -63,4 +63,4 @@ const SubmissionFileUpload: React.FC<Props> = ({
   )
 }
 
-export default SubmissionFileUpload
+export default SubmissionFileUploadTab

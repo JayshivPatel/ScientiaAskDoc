@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button"
 import styles from "./style.module.scss"
 import {EnumDictionary, ResourceUploadRequirement, ResourceUploadStatus, TimelineEvent} from "constants/types"
 import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
-import SubmissionFileUpload from "../SubmissionFileUpload"
+import SubmissionFileUploadTab from "../SubmissionFileUploadTab"
 import { api, methods } from "constants/routes"
 import { request } from "utils/api"
 import SubmitDeclarationSection from "../SubmissionDeclarationTab";
@@ -126,7 +126,7 @@ const SubmissionSection: React.FC<Props> = ({
       />
     ),
     [Stage.FILE_UPLOAD]: (
-      <SubmissionFileUpload
+      <SubmissionFileUploadTab
         requiredResources={requirements}
         uploadFile={uploadFile}
         removeFile={removeFile}
