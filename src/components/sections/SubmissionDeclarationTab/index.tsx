@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons/faPlusCircle";
 import { faMinusCircle } from "@fortawesome/free-solid-svg-icons/faMinusCircle";
+import classNames from "classnames";
 
 interface Declaration {
   name: string
@@ -20,8 +21,8 @@ interface Props {
 
 enum DeclarationStatus {
   NOTSET = "NotSet",
-  EMPTY = "Empty",
-  FILLED = "Filled",
+  UNAIDED = "Unaided",
+  WITH_HELP = "With help",
 }
 
 const SubmitDeclarationSection: React.FC<Props> = ({
@@ -56,9 +57,9 @@ const SubmitDeclarationSection: React.FC<Props> = ({
 
   const submitForm = () => {
     if (declarationList.length === 0) {
-      setDeclarationStatus(DeclarationStatus.EMPTY)
+      setDeclarationStatus(DeclarationStatus.UNAIDED)
     } else {
-      setDeclarationStatus(DeclarationStatus.FILLED)
+      setDeclarationStatus(DeclarationStatus.WITH_HELP)
     }
     setName("")
     setLogin("")
@@ -71,11 +72,34 @@ const SubmitDeclarationSection: React.FC<Props> = ({
     displayText = "Submit Declaration"
   }
 
-  const DeclarationStatement: JSX.Element = (declarationStatus === DeclarationStatus.EMPTY) ?
-    (<p className={styles.submitDeclParagraphBold}>We declare that this final submitted version is our unaided work.</p>) :
-    ((declarationStatus === DeclarationStatus.FILLED) ?
-      <p className={styles.submitDeclParagraphBold}>We acknowledge the following people for help through our original discussions:</p> :
-      <p className={styles.submitDeclParagraph}>Fill in these boxes if the following people provide help through you original discussions:</p>)
+  const unaidedSelectText = "Click to declare that the submission is unaided."
+  const unaidedDeclarationText = "We declare that this final submitted version is our unaided work."
+  const withHelpSelectText = "Click to acknowledge other people for helping through your original discussions."
+  const withHelpDeclarationText = "We acknowledge the following people for help through our original discussions:"
+
+  const [unaidedClass, withHelpClass] = {
+    [DeclarationStatus.NOTSET]: ["", ""],
+    [DeclarationStatus.UNAIDED]: [styles.active, styles.collapsed],
+    [DeclarationStatus.WITH_HELP]: [styles.collapsed, styles.active],
+  }[declarationStatus]
+
+  console.log(unaidedClass, withHelpClass)
+
+  const unaided: JSX.Element = (
+    <div 
+      className={classNames(styles.unaidedPanel, unaidedClass, styles.center)}
+      onClick={() => {
+        submitForm()
+        setDeclarationStatus(DeclarationStatus.UNAIDED)
+      }}
+    >
+      <div className={styles.center}>
+        <p className={styles.submitDeclParagraphBold}>
+          {declarationStatus === DeclarationStatus.NOTSET ? unaidedSelectText : unaidedDeclarationText}
+        </p>
+      </div>
+    </div>
+  )
 
   const DeclarationRow: JSX.Element =
     <>
@@ -114,94 +138,93 @@ const SubmitDeclarationSection: React.FC<Props> = ({
       )}
     </>
 
+  const withHelp: JSX.Element = (
+    <div 
+      className={classNames(styles.withHelpPanel, withHelpClass)}
+      style={{ height: 'auto' }}
+      onClick={() => setDeclarationStatus(DeclarationStatus.WITH_HELP)}
+    >
+      <div className={declarationStatus === DeclarationStatus.NOTSET ? styles.center : ""}>
+        <span className={styles.submitDeclParagraphBold}>
+          {declarationStatus === DeclarationStatus.NOTSET ? withHelpSelectText : withHelpDeclarationText}
+        </span>
+        {DeclarationRow}
+        {(declarationStatus === DeclarationStatus.WITH_HELP) && <>
+          <Form.Row className={styles.submitDeclFirstRow}>
+            <Col sm="5">
+              <Form.Label className={styles.submitDeclTitle}>Name</Form.Label>
+            </Col>
+            <Col sm="5">
+              <Form.Label className={styles.submitDeclTitle}>Login (if member of DOC)</Form.Label>
+            </Col>
+            <Col sm="2"/>
+          </Form.Row>
+          <Form.Row className={styles.submitDeclRow}>
+            <Col sm="5">
+              <Form.Control
+                className={styles.submitDeclControl}
+                placeholder="Name"
+                value={name}
+                onChange={
+                  (event) => setName(event.target.value)
+                }
+              />
+            </Col>
+            <Col sm="5">
+              <Form.Control
+                className={styles.submitDeclControl}
+                placeholder="Login"
+                value={login}
+                onChange={
+                  (event) => setLogin(event.target.value)
+                }
+              />
+            </Col>
+            <Col sm="2">
+              <Button
+                className={styles.submitDeclButton}
+                onClick={() => addRow(name, login)}
+                variant="secondary"
+              >
+                <FontAwesomeIcon icon={faPlusCircle} />
+              </Button>
+            </Col>
+          </Form.Row>
+        </>
+        }
+
+      </div>
+    </div>
+  )
+
   return (
     <Form>
       <Form.Group>
-        {DeclarationStatement}
-        {DeclarationRow}
-        <Form.Row className={styles.submitDeclFirstRow}>
-          <Col sm="5">
-            <Form.Label className={styles.submitDeclTitle}>Name</Form.Label>
-          </Col>
-          <Col sm="5">
-            <Form.Label className={styles.submitDeclTitle}>Login (if member of DOC)</Form.Label>
-          </Col>
-          <Col sm="2"/>
-        </Form.Row>
-        <Form.Row className={styles.submitDeclRow}>
-          <Col sm="5">
-            <Form.Control
-              className={styles.submitDeclControl}
-              placeholder="Name"
-              value={name}
-              onChange={
-                (event) => setName(event.target.value)
-              }
-            />
-          </Col>
-          <Col sm="5">
-            <Form.Control
-              className={styles.submitDeclControl}
-              placeholder="Login"
-              value={login}
-              onChange={
-                (event) => setLogin(event.target.value)
-              }
-            />
-          </Col>
-          <Col sm="2">
-            <Button
-              className={styles.submitDeclButton}
-              onClick={() => addRow(name, login)}
-              variant="secondary"
-            >
-              <FontAwesomeIcon icon={faPlusCircle} />
-            </Button>
-          </Col>
-        </Form.Row>
-        <Form.Text muted className={styles.submitDeclHelpText}>
-          Names must contain only alphabetic characters [A-Za-z],
-          spaces and hyphens (-); logins must contain only lower case
-          letters and/or digits [a-z0-9]. Name-login pairs with incorrect
-          syntax will be ignored.
-        </Form.Text>
-        <Form.Row className={styles.submitDeclRow}>
-          <Col>
-            <Button
-              className={styles.submitDeclButton}
-              onClick={() => {
-                submitForm()
-                switchDeclarationStatus()
-              }}
-              variant="secondary"
-            >
-              {displayText}
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              className={styles.submitDeclButton}
-              onClick={resetForm}
-              variant="secondary"
-            >
-              Reset Form
-            </Button>
-          </Col>
-        </Form.Row>
-      </Form.Group>
-      <Form.Group>
-        <Form.Row className={styles.submitDeclRow}>
-          <Button
-            className={styles.submitDeclButton}
-            variant="secondary"
-          >
-            Delete Declaration
-          </Button>
-        </Form.Row>
-        <Form.Text muted className={styles.submitDeclHelpText}>
-          Only possible when no submission record exists
-          (neither hardcopy nor electronic).
-        </Form.Text>
+        <div style={{ display: 'flex' }}>
+          {declarationStatus !== DeclarationStatus.WITH_HELP && unaided}
+          {declarationStatus !== DeclarationStatus.UNAIDED && withHelp}
+        </div>
+        {declarationStatus === DeclarationStatus.WITH_HELP && (
+          <Form.Text muted className={styles.submitDeclHelpText}>
+            Names must contain only alphabetic characters [A-Za-z],
+            spaces and hyphens (-); logins must contain only lower case
+            letters and/or digits [a-z0-9]. Name-login pairs with incorrect
+            syntax will be ignored.
+          </Form.Text>)
+        }
+        {declarationStatus !== DeclarationStatus.NOTSET && (
+          <Form.Row className={styles.submitDeclRow}>
+            <Col>
+              <Button
+                className={styles.submitDeclButton}
+                onClick={resetForm}
+                variant="secondary"
+              >
+                Reset Form
+              </Button>
+            </Col>
+          </Form.Row>
+        )}
       </Form.Group>
     </Form>
   )

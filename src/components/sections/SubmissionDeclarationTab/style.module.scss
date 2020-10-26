@@ -7,7 +7,7 @@
 
 .submitDeclParagraphBold,
 .submitDeclParagraph {
-  padding-top: 1rem;
+  vertical-align: middle;
   margin: 0;
 }
 
@@ -73,4 +73,79 @@
   background-color: var(--primary-button-hover);
   color: var(--primary-button-text);
   box-shadow: none !important;
+}
+
+
+
+// .unaidedPanel:hover {
+//   transform: scale(1.02);
+// }
+
+.unaidedPanel {
+  background-color: var(--teal-background);
+  color: var(--teal-text);
+  height: 9rem;
+  width: 50%;
+  text-align: center;
+  vertical-align: middle;
+  position: relative;
+  border-radius: 0.25rem;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s linear;
+  -webkit-transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s linear;
+  -moz-transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s linear;
+  margin: 0.5rem;
+  padding: 1rem;
+}
+
+.unaidedPanel:hover {
+  transform: scale(1.01);
+}
+
+.unaidedPanel.active {
+  width: 100%;
+}
+
+.unaidedPanel.collapsed {
+  visibility: hidden;
+  margin: 0;
+  padding: 0;
+  width: 0%;
+}
+
+
+.withHelpPanel {
+  background-color: var(--blue-background);
+  color: var(--blue-text);
+  height: 9rem;
+  width: 50%;
+  text-align: center;
+  vertical-align: middle;
+  position: relative;
+  border-radius: 0.25rem;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  -webkit-transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  -moz-transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  margin: 0.5rem;
+  padding: 1rem;
+}
+
+.withHelpPanel:hover {
+  transform: scale(1.01);
+}
+
+.withHelpPanel.active {
+  width: 100%;
+}
+
+.withHelpPanel.collapsed {
+  visibility: hidden;
+  margin: 0;
+  padding: 0;
+  width: 0%;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
 }
