@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react"
 import Button from "react-bootstrap/Button"
 import styles from "./style.module.scss"
-import {EnumDictionary, ResourceUploadRequirement, ResourceUploadStatus, TimelineEvent} from "constants/types"
+import {EnumDictionary, ResourceUploadRequirement, ResourceUploadStatus, TimelineEvent, UserInfo} from "constants/types"
 import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
 import SubmissionFileUploadTab from "../SubmissionFileUploadTab"
 import { api, methods } from "constants/routes"
 import { download, request } from "utils/api"
 import SubmitDeclarationSection from "../SubmissionDeclarationTab";
-import SubmissionGroupFormation, { UserInfo } from "../SubmissionGroupFormation";
 import authenticationService from "utils/auth"
+import SubmissionGroupFormation from "../SubmissionGroupFormation";
 
 enum Stage {
   DECLARATION = "Declaration",
@@ -41,6 +41,30 @@ const SubmissionSection: React.FC<Props> = ({
   const [requirements, setRequirements] = useState<ResourceUploadRequirement[]>([])
   const [uploaded, setUploaded] = useState<ResourceUploadStatus[]>([])
   const [groupMembers, setGroupMembers] = useState<UserInfo[]>([])
+  const currentUser = authenticationService.getUserInfo()["username"]
+
+  useEffect(() => {
+    // Load the user information of the current user
+    request({
+      url: api.CATE_GROUP_INFO(courseCode, exerciseID),
+      method: methods.GET,
+      onSuccess: (data: { [k: string]: any }) => {
+        if (data) {
+          setGroupMembers(data.map((memberInfo: { [attr: string]: string }) => ({
+            username: memberInfo.username,
+            name: `${memberInfo.lastname}, ${memberInfo.firstname}`,
+            classEnrolled: memberInfo.class,
+            role: memberInfo.role,
+            signatureTime: new Date() // Needs to be changed after backend for declaration is implemented
+          })))
+        }
+      },
+      body: { username: currentUser },
+      onError: (message: string) => console.log(`Failed to retrieve user information: ${message}`)
+    })
+
+  }, [])
+
 
   const refresh = () => {
     setIsLoaded(false)

@@ -11,6 +11,14 @@ export interface Folder {
   id: number
 }
 
+export interface UserInfo {
+  username: string,
+  name: string
+  classEnrolled: string,
+  role: string,
+  signatureTime: Date
+}
+
 export interface Resource {
   title: string
   type: FileType

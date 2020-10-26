@@ -8,14 +8,7 @@ import SearchBox from "../../headings/SearchBox";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-
-export interface UserInfo {
-    username: string,
-    name: string
-    classEnrolled: string,
-    role: string,
-    signatureTime: Date
-}
+import {UserInfo} from "../../../constants/types";
 
 const tableHeadingsLeader = [
     "Student",
@@ -33,6 +26,11 @@ const tableHeadingsMember = [
     "Sign"
 ]
 
+enum Role {
+    LEADER = "Leader",
+    MEMBER = "Member"
+}
+
 interface Props {
     groupMembers: UserInfo[];
     onGroupMemberChange: (members: []) => void
@@ -42,7 +40,6 @@ const SubmissionGroupFormation: React.FC<Props> = ({
     groupMembers,
     onGroupMemberChange
 }) => {
-    const [currentUserInfo, setCurrentUserInfo] = useState<UserInfo>()
     const [searchText, setSearchText] = useState("")
     const [members, addGroupMember] = useState<UserInfo[]>([])
     const [username, setUserName] = useState<string>("")
@@ -51,11 +48,11 @@ const SubmissionGroupFormation: React.FC<Props> = ({
     const [role, setRole] = useState<string>("")
     const [signatureTime, setSignatureTime] = useState<Date>(new Date())
     const isLeader = (username: string) => {
-        // TODO: Implement this function
-        return true;
+        const leaderInfo = groupMembers.filter((member) => member.role == "leader")[0]
+        return leaderInfo.username == username;
     }
     const currentUser = authenticationService.getUserInfo()["username"]
-    const currentRole: string = isLeader(currentUser) ? "Leader" : "Member"
+    const currentRole: string = isLeader(currentUser) ? Role.LEADER : Role.MEMBER
 
     const addRow = (username: string, name: string, classEnrolled: string, role: string, signatureTime: Date) => {
         addGroupMember([...members, {username, name, classEnrolled, role, signatureTime}])
@@ -65,25 +62,6 @@ const SubmissionGroupFormation: React.FC<Props> = ({
         setRole(role)
         setSignatureTime(new Date())
     }
-
-    useEffect(() => {
-        // Load the user information of the current user
-        request({
-            url: api.CATE_USER_INFO(currentUser),
-            method: methods.GET,
-            onSuccess: (data: { [k: string]: any }) => {
-                setCurrentUserInfo({
-                    username: currentUser,
-                    name: `${data.lastname}, ${data.firstname}`,
-                    classEnrolled: "c3", // Is not included in the current data format
-                    role: currentRole,
-                    signatureTime: new Date()
-                })
-            },
-            onError: (message: string) => console.log(`Failed to retrieve user information: ${message}`)
-        })
-
-    }, [])
 
     const studentInfoRow = (studentInfo: UserInfo) => (
         <tr key={`${studentInfo.name}`}>
@@ -105,6 +83,44 @@ const SubmissionGroupFormation: React.FC<Props> = ({
         </tr>
     )
 
+    const memberButtonGroup = (
+        <Form.Row>
+            <Col>
+                <Button
+                    className={styles.sectionButton}
+                >
+                    Delete
+                </Button>
+            </Col>
+            <Col>
+                <Button
+                    className={styles.sectionButton}
+                >
+                    Reset
+                </Button>
+            </Col>
+        </Form.Row>
+    )
+
+    const leaderButtonGroup = (
+        <Form.Row>
+            <Col>
+                <SearchBox
+                    onSearchTextChange={setSearchText}
+                    searchText={searchText}
+                />
+            </Col>
+            <Col>
+                <Button
+                    className={styles.sectionButton}
+                    onClick={() => addRow(username, name, classEnrolled, role, signatureTime)}
+                >
+                    Add group member
+                </Button>
+            </Col>
+        </Form.Row>
+    )
+
     return (
         <div>
             <span className={styles.sectionHeader}>Group Members</span>
@@ -115,41 +131,11 @@ const SubmissionGroupFormation: React.FC<Props> = ({
                     ))}
                 </thead>
                 <tbody>
-                    { currentUserInfo && studentInfoRow(currentUserInfo) }
+                    { groupMembers && (groupMembers.map((memberInfo: UserInfo) => studentInfoRow(memberInfo)))}
                 </tbody>
             </Table>
             <Form>
-                <Form.Row>
-                    <Col>
-                        <Button 
-                           className={styles.sectionButton}
-                        >
-                           Delete
-                        </Button>
-                    </Col>
-                    <Col>
-                        <Button 
-                           className={styles.sectionButton}
-                        >
-                           Reset
-                        </Button>
-                    </Col>
-                </Form.Row>
-                <Form.Row>
-                    <Col xs={7}>
-                        <SearchBox 
-                          onSearchTextChange={setSearchText} 
-                          searchText={searchText}
-                        />
-                    </Col>
-                    <Col>
-                        <Button 
-                           className={styles.sectionButton}
-                           onClick={() => addRow(username, name, classEnrolled, role, signatureTime)}>
-                           Add group member
-                        </Button>
-                    </Col>
-                </Form.Row>
+                { (currentRole == Role.LEADER && leaderButtonGroup) || (currentRole == Role.MEMBER && memberButtonGroup) }
             </Form>
         </div>);
 }
