@@ -93,7 +93,7 @@ const SubmissionSection: React.FC<Props> = ({
           const formData = new FormData()
           formData.append("username", authenticationService.getUserInfo()["username"])
           formData.append("fileID", String(index))
-          formData.append("file", file)
+          formData.append("file", newFile)
           request({
             url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
             method: methods.PUT,
