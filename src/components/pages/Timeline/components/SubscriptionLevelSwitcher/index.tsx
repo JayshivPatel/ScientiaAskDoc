@@ -19,6 +19,7 @@ const SubscriptionLevelSwitcher: React.FC<Props> = ({
 
   const makeButton = (level: SubscriptionLevel) => (
     <Button
+      key={level}
       className={styles.subscriptionLevelSwitch}
       active={levelIsActive(level)}
       onClick={() => setSubscriptionLevel(level)}

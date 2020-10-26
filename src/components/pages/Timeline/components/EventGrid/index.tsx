@@ -83,10 +83,10 @@ const EventGrid: React.FC<EventGridProps> = ({
           endColumn,
           assessment,
           rowNumber,
-        }) => (
+        }, index) => (
           <EventCard
             title={title}
-            key={id}
+            key={index}
             assessment={assessment}
             prefix={prefix}
             status={status}

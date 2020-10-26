@@ -87,6 +87,7 @@ const TermSwitcher: React.FC<Props> = ({
   const termGroupSwitch = (
     <Button
       id={TERM_GROUP_SWITCH_ID}
+      key={"switch"}
       data-tip data-for={"Click to expand"}
       className={styles.termSwitch}
       active={activeTermGroupSwitch}
