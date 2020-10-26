@@ -97,42 +97,41 @@ const SubmissionSection: React.FC<Props> = ({
   const uploadFile = (file: File, index: number) => {
     const requirement = requirements[index]
     const suffix = file.name.substr(file.name.lastIndexOf('.') + 1)
-    console.log(suffix);
-
-    if (requirement.allowedSuffixes.includes(suffix)) {
-      const title = requirement.title
-      const newFile = new File([file], `${title}${suffix === "" ? "" : `.${suffix}`}`, { type: file.type })
-      const newStatus: { [k: string]: any } = {
-        title: title,
-        suffix: suffix,
-        timestamp: new Date(),
-      }
-      console.log(newFile);
-
-      request({
-        url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
-        method: methods.POST,
-        body: newStatus,
-        onSuccess: () => {
-          const formData = new FormData()
-          formData.append("username", authenticationService.getUserInfo()["username"])
-          formData.append("fileID", String(index))
-          formData.append("file", newFile)
-          request({
-            url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
-            method: methods.PUT,
-            onSuccess: () => {},
-            onError: () => {},
-            body: formData,
-            sendFile: true,
-          })
-        },
-        onError: () => {},
-      }).finally(refresh)
-      
-    } else {
-      alert("u kidding?")
+    if (!requirement.allowedSuffixes.includes(suffix)){
+      return alert("Invalid file suffix!")
     }
+    if (file.size > requirement.maxSize) {
+      return alert("File size exceeds max allowing size")
+    }
+    const title = requirement.title
+    const newFile = new File([file], `${title}${suffix === "" ? "" : `.${suffix}`}`, { type: file.type })
+    const newStatus: { [k: string]: any } = {
+      title: title,
+      suffix: suffix,
+      timestamp: new Date(),
+    }
+    console.log(newFile);
+
+    request({
+      url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
+      method: methods.POST,
+      body: newStatus,
+      onSuccess: () => {
+        const formData = new FormData()
+        formData.append("username", authenticationService.getUserInfo()["username"])
+        formData.append("fileID", String(index))
+        formData.append("file", newFile)
+        request({
+          url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
+          method: methods.PUT,
+          onSuccess: () => {},
+          onError: () => {},
+          body: formData,
+          sendFile: true,
+        })
+      },
+      onError: () => {},
+    }).finally(refresh)
   }
 
   const removeFile = (index: number) => {
