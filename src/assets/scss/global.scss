@@ -18,6 +18,21 @@
   background: var(--deadline-background);
 }
 
+.tagTealDark {
+  color: #fff;
+  background: var(--deadline-text);
+}
+
+.tagPink {
+  color: var(--pink-text);
+  background: var(--pink-background);
+}
+
+.tagPinkDark {
+  color: #fff;
+  background: var(--pink-text);
+}
+
 // Section header with checkbox settings
 .sectionHeaderContainer {
   display: flex;
