@@ -40,7 +40,7 @@ interface TimelineState {
 
 class Timeline extends React.Component<TimelineProps, TimelineState> {
   constructor(props: TimelineProps) {
-    super(props)
+    super(props)    
     this.state = {
       isLoaded: false,
       showMobileOnSmallScreens: true,
@@ -49,7 +49,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.props.initSideBar()
     this.setState({
       isLoaded: true,

@@ -22,6 +22,7 @@ import { api, methods } from "../../constants/routes"
 import { YEAR_OF_NEW_CODES } from "../../constants/doc"
 import {ModuleTracks} from "./Timeline";
 import {toDayCount} from "../../utils/functions";
+import moment from "moment"
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"))
 const ModuleDashboard = React.lazy(() =>
@@ -120,8 +121,8 @@ const StandardView: React.FC<StandardViewProps> = ({
                 id: index,
                 moduleCode: module.code,
                 title: exercise.title,
-                startDate: new Date(exercise.start_date),
-                endDate: new Date(exercise.deadlines[0]["deadline"]),
+                startDate: moment(exercise.start_date).toDate(),
+                endDate: moment(exercise.deadlines[0]["deadline"]).toDate(),
                 prefix: exercise.type,
                 assessment: "assessed",
                 owner: "",
@@ -136,7 +137,7 @@ const StandardView: React.FC<StandardViewProps> = ({
     }
   }, [modules])
 
-  useEffect(() => {
+  useEffect(() => {    
     let modulesTracks: ModuleTracks = {}
     modules.forEach(({ code }) => {
       modulesTracks[code] = [[], []]
