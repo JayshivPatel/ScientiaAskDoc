@@ -172,9 +172,10 @@ const SubmissionSection: React.FC<Props> = ({
     ),
   }
 
-  const buttonOf = (s: Stage) => {
+  const buttonOf = (s: Stage, index: number) => {
     return (
       <Button
+        key={index}
         className={styles.sectionButton}
         onClick={() => setStage(s)}
         active={s === stage}

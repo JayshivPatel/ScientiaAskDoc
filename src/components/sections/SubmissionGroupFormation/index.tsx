@@ -126,9 +126,11 @@ const SubmissionGroupFormation: React.FC<Props> = ({
             <span className={styles.sectionHeader}>Group Members</span>
             <Table responsive>
                 <thead>
-                    { (isLeader(currentUser) ? tableHeadingsLeader : tableHeadingsMember).map((heading) => (
-                        <th key={heading}>{heading}</th>
-                    ))}
+                    <tr>
+                        { (isLeader(currentUser) ? tableHeadingsLeader : tableHeadingsMember).map((heading) => (
+                            <th key={heading}>{heading}</th>
+                        ))}
+                    </tr>
                 </thead>
                 <tbody>
                     { groupMembers && (groupMembers.map((memberInfo: UserInfo) => studentInfoRow(memberInfo)))}

@@ -100,8 +100,9 @@ const UploadResourceItemRow: React.FC<Props> = ({
                 {key}
               </Badge>
             )}
-            {respondingIcons?.map(([icon, onClick]) => {
+            {respondingIcons?.map(([icon, onClick], index) => {
               return <FontAwesomeIcon
+                key={`tail${index}`}
                 className={styles.respondingIcon}
                 icon={icon} 
                 onClick={onClick}

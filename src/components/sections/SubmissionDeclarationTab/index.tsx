@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 
 import Form from "react-bootstrap/Form";
@@ -35,13 +35,7 @@ const SubmitDeclarationSection: React.FC<Props> = ({
   const [login, setLogin] = useState<string>("")
   const [declarationList, setDeclarationList] = useState<Declaration[]>([])
 
-  const switchDeclarationStatus = ((): () => void => {
-    if (declarationSubmitted) {
-      return () => setDeclarationSubmitted(false)
-    } else {
-      return () => setDeclarationSubmitted(true)
-    }
-  })()
+  const switchDeclarationStatus = () => setDeclarationSubmitted(!declarationSubmitted)
 
   const addRow = (name: string, login: string) => {
     setDeclarationList([...declarationList, {name, login}])
@@ -49,8 +43,8 @@ const SubmitDeclarationSection: React.FC<Props> = ({
     setLogin("")
   }
 
-  const deleteRow = (index: number) => {
-    setDeclarationList(declarationList.filter((val, idx) => index !== idx))
+  const deleteRow = (targetName: string, targetLogin: string) => {
+    setDeclarationList(declarationList.filter(({ name, login }) => targetName !== name || targetLogin !== login))
   }
 
   const resetForm = () => {
@@ -86,15 +80,15 @@ const SubmitDeclarationSection: React.FC<Props> = ({
   const DeclarationRow: JSX.Element =
     <>
       {declarationList.map(
-        (val, idx) => {
+        ({ name, login }, index) => {
           return (
-            <Form.Row className={styles.submitDeclRow}>
+            <Form.Row className={styles.submitDeclRow} key={index}>
               <Col sm="5">
                 <Form.Control
                   className={styles.submitDeclControl}
                   plaintext
                   readOnly
-                  defaultValue={val.name}
+                  value={name}
                 />
               </Col>
               <Col sm="5">
@@ -102,13 +96,13 @@ const SubmitDeclarationSection: React.FC<Props> = ({
                   className={styles.submitDeclControl}
                   plaintext
                   readOnly
-                  defaultValue={val.login.toString()}
+                  value={login.toString()}
                 />
               </Col>
               <Col sm="2">
                 <Button
                   className={styles.submitDeclButton}
-                  onClick={() => deleteRow(idx)}
+                  onClick={() => deleteRow(name, login)}
                   variant="secondary"
                 >
                   <FontAwesomeIcon icon={faMinusCircle} />

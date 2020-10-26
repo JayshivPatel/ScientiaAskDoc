@@ -71,7 +71,7 @@ const SubmissionFileUploadTab: React.FC<Props> = ({
       {requiredResources.map((resource, index) => {
         const { title, allowedSuffixes, uploadedFile } = resource
         return (
-          <div>
+          <div key={index}>
             <UploadResourceItemRow
               title={title}
               suffixes={(uploadedFile && [uploadedFile.suffix]) ?? allowedSuffixes}
