@@ -170,7 +170,8 @@
 }
 
 .TextArea {
-  margin-left: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
   width: 15%;
 }
 
@@ -188,7 +189,17 @@
   width: 80%;
 }
 
+.SelectArea_day {
+  margin-left: 10px;
+  width: 60%;
+}
+
 .Col {
   display: flex;
   align-items: center;
+}
+
+.font {
+  margin-left: 5px;
+  margin-right: 5px;
 }
