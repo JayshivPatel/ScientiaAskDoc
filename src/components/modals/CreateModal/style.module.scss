@@ -61,9 +61,6 @@
   border-color: $green !important;
 }
 
-.tabElement {
-  border-width: 0rem !important;
-}
 
 .reject {
   border-color: $red !important;
@@ -81,38 +78,6 @@
 
 .uploadModal {
   border-radius: 0.5rem;
-}
-
-.tabContainer {
-  border-width: 0rem;
-}
-
-.tabContainer :global(.nav-item.active) {
-  background-color: var(--primary-button-active);
-  color: var(--primary-button-text-active);
-  border-width: 0rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-}
-
-.tabContainer > *:focus {
-  box-shadow: none;
-  outline: none;
-}
-
-.tabContainer :global(.nav-item) {
-  background-color: var(--primary-button);
-  color: var(--primary-button-text);
-  border-width: 0rem;
-  border-radius: 0.5rem;
-}
-
-.tabContainer :global(.nav-item:not(:first-of-type)) {
-  margin-left: 0.625rem;
-}
-
-.tabContainer > .nav-link {
-  text-decoration: none;
 }
 
 .createModal :global(.modal-content) {
@@ -197,6 +162,29 @@
 .Col {
   display: flex;
   align-items: center;
+}
+
+.normalRow {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  margin: auto;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  background-color: lightgray;
+  border-radius: 20px;
+}
+
+.highlightRow {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  margin: auto;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: lightgreen;
+  border-radius: 20px;
 }
 
 .font {

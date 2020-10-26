@@ -16,7 +16,17 @@ import {
   faCaretDown,
   faTimes,
   faFolder,
-  faFolderOpen, faEye, faArrowAltCircleRight
+  faFolderOpen,
+  faEye,
+  faArrowAltCircleRight,
+  faCalendarAlt,
+  faClock,
+  faUser,
+  faUsers,
+  faFileUpload,
+  faPen,
+  faFileAlt,
+  faChevronCircleDown, faBars, faFileSignature
 } from "@fortawesome/free-solid-svg-icons"
 
 import styles from "./style.module.scss"
@@ -56,7 +66,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
   const [resourceDetails, setResourceDetails] = useState<{
     [id: number]: ResourceDetails
   }>({})
-  const [canUploadFile, setCanUploadFile] = useState<boolean>(false)
+  const [canUploadFile, setCanUploadFile] = useState<boolean>(true)
   const [canUploadLink, setCanUploadLink] = useState<boolean>(false)
   const [suppressErrorMsg, setSuppressErrorMsg] = useState<boolean>(true)
 
@@ -250,10 +260,16 @@ const CreateModal: React.FC<CreateModalProps> = ({
     console.groupEnd();
   };
 
-  // switch for provision online
+  // switch for provision online spec
   const [provOnlineSwitch, setProvOnlineSwitch] = useState(false);
   const provOnlineSwitchAction = () => {
     setProvOnlineSwitch(!provOnlineSwitch);
+  };
+
+  // state for provision onlin data
+  const [provOnlineDataSwitch, setProvOnlineDataSwitch] = useState(false);
+  const provOnlineDataSwitchAction = () => {
+    setProvOnlineDataSwitch(!provOnlineDataSwitch);
   };
 
   // state for assessed/unassessed cw
@@ -290,7 +306,12 @@ const CreateModal: React.FC<CreateModalProps> = ({
   const provSchemaSwitchAction = () => {
     setSchemaSwitch(!provSchemaSwitch);
   };
-
+  
+ // state for provision of answer
+  const [provOnlineAnswerSwitch, setProvOnlineAnswerSwitch] = useState(false);
+  const provOnlineAnswerSwitchAction = () => {
+    setProvOnlineAnswerSwitch(!provOnlineAnswerSwitch);
+  };
 
   return (
     <Modal
@@ -314,16 +335,10 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
       <Form onSubmit={handleSubmit}>
         <Modal.Body>
-          <Tabs
-            className={styles.tabContainer}
-            style={{marginTop: "1.25rem"}}
-            onSelect={(tab) => setTab(tab ? tab : "file")}>
-
-
-            <Tab eventKey="info" title={"Exercise info"}>
               <Row style={{paddingTop: "10px"}}>
                 <Col className={styles.Col}>
-                  ♥Number:
+                  <FontAwesomeIcon icon={faFileAlt} className={styles.font}/>
+                  Number:
                   <CreatableSelect
                     isClearable
                     onChange={handleChange}
@@ -334,7 +349,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 </Col>
 
                 <Col className={styles.Col}>
-                  ♥Exercise Type:
+                  <FontAwesomeIcon icon={faBars} className={styles.font}/>
+                  Exercise Type:
                   <CreatableSelect
                     isClearable
                     onChange={handleChange}
@@ -347,7 +363,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
               <Row>
                 <Col className={styles.Col}>
-                  ♥Start Date:
+                  <FontAwesomeIcon icon={faCalendarAlt} className={styles.font}/>Start Date:
                   <CreatableSelect
                     isClearable
                     onChange={handleChange}
@@ -358,7 +374,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 </Col>
 
                 <Col className={styles.Col}>
-                  ♥End Date:
+                  <FontAwesomeIcon icon={faCalendarAlt} className={styles.font}/>End Date:
                   <CreatableSelect
                     isClearable
                     onChange={handleChange}
@@ -371,7 +387,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
               <Form.Row>
                 <Col className={styles.Col}>
-                  ♥Short Title:
+                  <FontAwesomeIcon icon={faFileSignature} className={styles.font}/>
+                  Short Title:
                   <Form.Control placeholder="Short Title"
                                 className={styles.TextArea}/>
                 </Col>
@@ -381,8 +398,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 <Col className={styles.Col}>
                   <FontAwesomeIcon icon={faEye} className={styles.font}/>Provision of Online Spec
                   <Form.Switch onChange={provOnlineSwitchAction}
-                               id={"custon-switch"}
-                               checked={{provOnlineSwitch}}
+                               id={"provOnlineSwitch"}
+                               checked={provOnlineSwitch}
                                className={styles.Switch}
                   />
 
@@ -392,9 +409,9 @@ const CreateModal: React.FC<CreateModalProps> = ({
               <Row>
                 <Col className={styles.Col}>
                   <FontAwesomeIcon icon={faEye} className={styles.font}/>Provision of data files
-                  <Form.Switch onChange={provOnlineSwitchAction}
-                               id={"custon-switch"}
-                               checked={{provOnlineSwitch}}
+                  <Form.Switch onChange={provOnlineDataSwitchAction}
+                               id={"provOnlineDataSwitch"}
+                               checked={provOnlineDataSwitch}
                                className={styles.Switch}
                   />
 
@@ -403,7 +420,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
               <Row>
                 <Col className={styles.Col}>
-                  ♥Visibility for student after:
+                  <FontAwesomeIcon icon={faClock} className={styles.font}/>
+                  Visibility for student after:
                   <CreatableSelect
                     isClearable
                     onChange={handleChange}
@@ -418,36 +436,40 @@ const CreateModal: React.FC<CreateModalProps> = ({
               <hr/>
 
               <Row>
-                <Col>
-                  ※Type of assenment
-                </Col>
-              </Row>
-
-              <Row>
-                <Col>
-                  <Form.Check onChange={assesedAction} checked={isAssessed} label="※Not assessed"/>
-                </Col>
-              </Row>
-
-              <Row className={styles.Col}>
                 <Col className={styles.Col}>
-                  <Form.Check onChange={assesedAction} checked={!isAssessed} label="※Assessed"/>
+                  <FontAwesomeIcon icon={faPen} className={styles.font}/>
+                  Type of assenment
+                </Col>
+              </Row>
+
+              <Row className={styles.normalRow}>
+                <Col>
+                  <Form.Check onChange={assesedAction} checked={isAssessed} label="Not assessed"/>
+                </Col>
+              </Row>
+
+              <Row className={styles.highlightRow}>
+                <Col className={styles.Col}>
+                  <Form.Check onChange={assesedAction} checked={!isAssessed} label="Assessed"/>
                   <FontAwesomeIcon icon={faArrowAltCircleRight} className={styles.font}/>
                 </Col>
 
                 <Col>
-                  <Row>
-                    <Form.Check onChange={isGroupAction} checked={!isGrouped} label={"※Individual"}/>
+                  <Row className={styles.Col}>
+                    <FontAwesomeIcon icon={faUser} className={styles.font}/>
+                    <Form.Check onChange={isGroupAction} checked={!isGrouped} label={"Individual"}/>
                   </Row>
-                  <Row>
-                    <Form.Check onChange={isGroupAction} checked={isGrouped} label={"※Group"}/>
+                  <Row className={styles.Col}>
+                    <FontAwesomeIcon icon={faUsers} className={styles.font}/>
+                    <Form.Check onChange={isGroupAction} checked={isGrouped} label={"Group"}/>
                   </Row>
 
                 </Col>
 
                 <Col>
-                  <Row>
-                    ※Submission:
+                  <Row className={styles.Col}>
+                    <FontAwesomeIcon icon={faFileUpload} className={styles.font}/>
+                    Submission:
                   </Row>
 
                   <Col>
@@ -468,8 +490,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
 
                 <Col>
-                  <Row>
-                    ※hardcopy due time:
+                  <Row className={styles.Col}>
+                    <FontAwesomeIcon icon={faClock} className={styles.font}/>hardcopy due time:
                     <CreatableSelect
                       isClearable
                       onChange={handleChange}
@@ -480,8 +502,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
                     />
                   </Row>
 
-                  <Row>
-                    ※electronic due time:
+                  <Row className={styles.Col}>
+                    <FontAwesomeIcon icon={faClock} className={styles.font}/>electronic due time:
                     <CreatableSelect
                       isClearable
                       onChange={handleChange}
@@ -500,8 +522,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 <Col className={styles.Col}>
                   <FontAwesomeIcon icon={faEye} className={styles.font}/>Provision of on-line mark schema:
                   <Form.Switch onChange={provSchemaSwitchAction}
-                               id={"custon-switch"}
-                               checked={{provSchemaSwitch}}
+                               id={"provSchemaSwitch"}
+                               checked={provSchemaSwitch}
                                className={styles.Switch}
                   />
                 </Col>
@@ -523,25 +545,21 @@ const CreateModal: React.FC<CreateModalProps> = ({
               <hr/>
 
               <Row>
-                <Col>
+                <Col className={styles.Col}>
                   <FontAwesomeIcon icon={faEye} className={styles.font}/>Provision of on-line answers:
                   <Col>
-                    <Form.Row>
-                      <Form.Check label="No"/>
-                    </Form.Row>
-
-                    <Form.Row>
-                      <Col className={styles.Col}>
-                        <Form.Check label="Yes"/>
-                        <FontAwesomeIcon icon={faArrowAltCircleRight} className={styles.font}/>
-                      </Col>
-
-                      <Col className={styles.Col}>
-                        <FontAwesomeIcon icon={faEye} className={styles.font}/>Visible to students after:
-                        <Form.Control type="number" min={0} max={5} defaultValue={2} className={styles.TextArea}/>Weeks
-                      </Col>
-                    </Form.Row>
+                    <Form.Switch onChange={provOnlineAnswerSwitchAction}
+                                 id={"provOnlineAnswerSwitch"}
+                                 checked={provOnlineAnswerSwitch}
+                                 className={styles.Switch}
+                    />
                   </Col>
+                </Col>
+
+
+                <Col className={styles.Col}>
+                  <FontAwesomeIcon icon={faEye} className={styles.font}/>Visible to students after:
+                  <Form.Control type="number" min={0} max={5} defaultValue={2} className={styles.TextArea}/>Weeks
                 </Col>
               </Row>
 
@@ -605,6 +623,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
                         <Accordion.Collapse eventKey={`${index}`} className={styles.collapse}>
                           <Card.Body>
+                            // TODO: replace ResourceDetailForm by another file upload form
+                            // and setup the upload logic
                             <ResourceDetailForm
                               id={index}
                               key={index}
@@ -624,8 +644,6 @@ const CreateModal: React.FC<CreateModalProps> = ({
                     )
                 )}
               </Accordion>
-            </Tab>
-          </Tabs>
         </Modal.Body>
 
         <Modal.Footer>
@@ -633,7 +651,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
             className={styles.buttonUpload}
             style={{marginBottom: "0rem"}}
             type="submit"
-            disabled={!((tab === "file" && canUploadFile) || (tab !== "file" && canUploadLink))}
+            disabled={!(canUploadFile)}
             variant="secondary">
             Upload
           </Button>
