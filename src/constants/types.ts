@@ -28,6 +28,7 @@ export interface ResourceUploadRequirement {
   id: number
   title: string
   allowedSuffixes: string[]
+  maxSize: number,
   uploadedFile?: ResourceUploadStatus 
 }
 
@@ -35,6 +36,8 @@ export interface ResourceUploadStatus {
   title: string
   suffix: string
   checksum: string
+  size: number,
+  timestamp: Date,
   url: string
 }
 

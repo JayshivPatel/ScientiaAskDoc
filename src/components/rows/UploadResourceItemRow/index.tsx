@@ -3,17 +3,16 @@ import styles from "./style.module.scss"
 import classNames from "classnames"
 
 import Row from "react-bootstrap/esm/Row"
-import Badge from "react-bootstrap/Badge"
 import { IconDefinition } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-import { DragHandle } from "components/sections/CategoryList"
-import { faArrowDown } from "@fortawesome/free-solid-svg-icons"
 import FileExtensionIcon from "components/atoms/FileExtensionIcon"
+import Badge from "react-bootstrap/esm/Badge"
 
 interface Props {
   title: string
   suffixes: string[]
+  tags?: string[]
   colour?: ("pink" | "teal")
   invisible?: boolean
   respondingIcons?: [IconDefinition, (e: React.MouseEvent) => void][]
@@ -25,6 +24,7 @@ interface Props {
 const UploadResourceItemRow: React.FC<Props> = ({
   title,
   suffixes,
+  tags,
   colour,
   invisible,
   respondingIcons,
@@ -36,6 +36,14 @@ const UploadResourceItemRow: React.FC<Props> = ({
   const [xPos, setXPos] = useState("0px")
   const [yPos, setYPos] = useState("0px")
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const tagColourClass = styles[
+    `tag${
+      colour 
+        ? colour.charAt(0).toUpperCase() + colour.slice(1) + "Dark"
+        : "Blue"
+    }`
+  ]
 
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -80,7 +88,18 @@ const UploadResourceItemRow: React.FC<Props> = ({
             />
             {showFullFileTitle(title, suffixes)}
           </div>
+
           <div className={styles.centeredFlex}>
+            {tags?.map(key => <Badge 
+              pill 
+              key={key} 
+              className={classNames(
+                styles.fileTag,
+                tagColourClass,
+              )}>
+                {key}
+              </Badge>
+            )}
             {respondingIcons?.map(([icon, onClick]) => {
               return <FontAwesomeIcon
                 className={styles.respondingIcon}

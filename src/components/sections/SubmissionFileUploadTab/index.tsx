@@ -4,6 +4,8 @@ import FileItemRow from 'components/rows/FileItemRow'
 import { Resource, ResourceUploadRequirement, ResourceUploadStatus } from 'constants/types'
 import UploadResourceItemRow from 'components/rows/UploadResourceItemRow'
 import { faDownload, faTrash, faUpload, IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import { showFileSize } from 'utils/functions'
+import moment from 'moment'
 
 interface Props {
   requiredResources: ResourceUploadRequirement[]
@@ -49,11 +51,25 @@ const SubmissionFileUploadTab: React.FC<Props> = ({
     }
   }
 
+  const tagsOf = (requirement: ResourceUploadRequirement): string[] => {
+    if (requirement.uploadedFile) {
+      return [
+        moment(requirement.uploadedFile.timestamp).fromNow(),
+        showFileSize(requirement.uploadedFile.size, 0),
+      ]
+    } else {
+      return [
+        "≤ " + showFileSize(requirement.maxSize, 0)
+      ]
+    }
+  }
+
   return (
     <div>
       <span>Requirements: </span>
       <input type="file" ref={uploadRef} onChange={e => onFileSelection(e)} style={{ display: "none" }}></input>
-      {requiredResources.map(({ title, allowedSuffixes, uploadedFile }, index) => {
+      {requiredResources.map((resource, index) => {
+        const { title, allowedSuffixes, uploadedFile } = resource
         return (
           <div>
             <UploadResourceItemRow
@@ -61,6 +77,7 @@ const SubmissionFileUploadTab: React.FC<Props> = ({
               suffixes={(uploadedFile && [uploadedFile.suffix]) ?? allowedSuffixes}
               colour={uploadedFile ? "teal" : "pink"}
               respondingIcons={respondingIconsOf(uploadedFile, index)}
+              tags={tagsOf(resource)}
             />
           </div>
         )
