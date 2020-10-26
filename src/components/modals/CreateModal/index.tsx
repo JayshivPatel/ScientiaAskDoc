@@ -16,7 +16,7 @@ import {
   faCaretDown,
   faTimes,
   faFolder,
-  faFolderOpen,
+  faFolderOpen, faEye, faArrowAltCircleRight
 } from "@fortawesome/free-solid-svg-icons"
 
 import styles from "./style.module.scss"
@@ -353,7 +353,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
                     onChange={handleChange}
                     onInputChange={handleInputChange}
                     options={date_options}
-                    className={styles.SelectArea}
+                    className={styles.SelectArea_day}
                   />
                 </Col>
 
@@ -364,7 +364,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
                     onChange={handleChange}
                     onInputChange={handleInputChange}
                     options={date_options}
-                    className={styles.SelectArea}
+                    className={styles.SelectArea_day}
                   />
                 </Col>
               </Row>
@@ -379,7 +379,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
               <Row>
                 <Col className={styles.Col}>
-                  ♥Provision of Online Spec
+                  <FontAwesomeIcon icon={faEye} className={styles.font}/>Provision of Online Spec
                   <Form.Switch onChange={provOnlineSwitchAction}
                                id={"custon-switch"}
                                checked={{provOnlineSwitch}}
@@ -391,7 +391,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
               <Row>
                 <Col className={styles.Col}>
-                  ♥Provision of data files
+                  <FontAwesomeIcon icon={faEye} className={styles.font}/>Provision of data files
                   <Form.Switch onChange={provOnlineSwitchAction}
                                id={"custon-switch"}
                                checked={{provOnlineSwitch}}
@@ -429,9 +429,10 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 </Col>
               </Row>
 
-              <Row>
-                <Col>
-                  <Form.Check onChange={assesedAction} checked={!isAssessed} label="※Assessed 👉 "/>
+              <Row className={styles.Col}>
+                <Col className={styles.Col}>
+                  <Form.Check onChange={assesedAction} checked={!isAssessed} label="※Assessed"/>
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} className={styles.font}/>
                 </Col>
 
                 <Col>
@@ -497,7 +498,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
               <Row>
                 <Col className={styles.Col}>
-                  ※Provision of on-line mark schema:
+                  <FontAwesomeIcon icon={faEye} className={styles.font}/>Provision of on-line mark schema:
                   <Form.Switch onChange={provSchemaSwitchAction}
                                id={"custon-switch"}
                                checked={{provSchemaSwitch}}
@@ -523,20 +524,21 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
               <Row>
                 <Col>
-                  ※Provision of on-line answers:
+                  <FontAwesomeIcon icon={faEye} className={styles.font}/>Provision of on-line answers:
                   <Col>
                     <Form.Row>
                       <Form.Check label="No"/>
                     </Form.Row>
 
                     <Form.Row>
-                      <Col>
-                        <Form.Check label="Yes 👉 "/>
+                      <Col className={styles.Col}>
+                        <Form.Check label="Yes"/>
+                        <FontAwesomeIcon icon={faArrowAltCircleRight} className={styles.font}/>
                       </Col>
 
                       <Col className={styles.Col}>
-                        Visible to students after:
-                        <Form.Control type="number" min={0} max={5} defaultValue={2}/>Weeks
+                        <FontAwesomeIcon icon={faEye} className={styles.font}/>Visible to students after:
+                        <Form.Control type="number" min={0} max={5} defaultValue={2} className={styles.TextArea}/>Weeks
                       </Col>
                     </Form.Row>
                   </Col>
