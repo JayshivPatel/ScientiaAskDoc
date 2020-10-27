@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import Button from "react-bootstrap/Button"
 import styles from "./style.module.scss"
-import {EnumDictionary, ResourceUploadRequirement, ResourceUploadStatus, TimelineEvent, UserInfo} from "constants/types"
+import {DeclarationHelper, DeclarationStatus, EnumDictionary, ResourceUploadRequirement, ResourceUploadStatus, TimelineEvent, UserInfo} from "constants/types"
 import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
 import SubmissionFileUploadTab from "../SubmissionFileUploadTab"
 import { api, methods } from "constants/routes"
@@ -9,6 +9,7 @@ import { download, request } from "utils/api"
 import SubmitDeclarationSection from "../SubmissionDeclarationTab";
 import authenticationService from "utils/auth"
 import SubmissionGroupFormation from "../SubmissionGroupFormation";
+import { stringify } from "querystring"
 
 enum Stage {
   DECLARATION = "Declaration",
@@ -40,6 +41,8 @@ const SubmissionSection: React.FC<Props> = ({
   const [isLoaded, setIsLoaded] = useState(false)
   const [requirements, setRequirements] = useState<ResourceUploadRequirement[]>([])
   const [uploaded, setUploaded] = useState<ResourceUploadStatus[]>([])
+  const [declarationStatus, setDeclarationStatus] = useState<DeclarationStatus>(DeclarationStatus.NOTSET)
+  const [declaredHelpers, setDeclaredHelpers] = useState<DeclarationHelper[]>([])
   const [groupMembers, setGroupMembers] = useState<UserInfo[]>([])
   const currentUser = authenticationService.getUserInfo()["username"]
 
@@ -68,13 +71,7 @@ const SubmissionSection: React.FC<Props> = ({
 
   const refresh = () => {
     setIsLoaded(false)
-    const onSuccess = (data: { 
-      requirements: ResourceUploadRequirement[], 
-    }) => {
-      setRequirements(data.requirements)
-      setIsLoaded(true)
-    }
-    const onError = () => { alert("err") }
+    const onError = (part: string) => () => { alert(part) }
 
     request({
       url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
@@ -82,9 +79,34 @@ const SubmissionSection: React.FC<Props> = ({
       body: {
         username: authenticationService.getUserInfo()["username"]
       },
-      onSuccess,
-      onError,
+      onSuccess: (data: { requirements: ResourceUploadRequirement[] }) => {
+        setRequirements(data.requirements)
+        setIsLoaded(true)
+      },
+      onError: onError("file"),
       sendFile: false
+    })
+
+    request({
+      url: api.CATE_DECLARATION(courseCode, exerciseID),
+      method: methods.GET,
+      body: {
+        username: authenticationService.getUserInfo()["username"],
+        operation: 'get'
+      },
+      onSuccess: (data: null | "Unaided" | { name: string, login: string }[]) => {
+        if (data === null) {
+          setDeclarationStatus(DeclarationStatus.NOTSET)
+          setDeclaredHelpers([])
+        } else if (data === "Unaided") {
+          setDeclarationStatus(DeclarationStatus.UNAIDED)
+          setDeclaredHelpers([])
+        } else {
+          setDeclarationStatus(DeclarationStatus.WITH_HELP)
+          setDeclaredHelpers(data)
+        }
+      },
+      onError: onError("decl"),
     })
   }
 
@@ -92,6 +114,29 @@ const SubmissionSection: React.FC<Props> = ({
   useEffect(() => {
     if (isLoaded) console.log("refresh!")
   }, [isLoaded])
+
+  const addDeclarationHelper = (name: string, login: string) => {
+    const newHelpers = [...declaredHelpers, { name, login }]
+    uploadDeclaration(newHelpers)
+  }
+
+  const removeDeclarationHelper = (targetName: string, targetLogin: string) => {
+    uploadDeclaration(declaredHelpers.filter(({ name, login }) => targetName !== name || targetLogin !== login))
+  }
+
+  const uploadDeclaration = (data: "Unaided" | DeclarationHelper[]) => {
+    console.log(data)
+    request({
+      url: api.CATE_DECLARATION(courseCode, exerciseID),
+      method: methods.PUT,
+      body: {
+        username: authenticationService.getUserInfo()["username"],
+        declaration: data
+      },
+      onSuccess: () => {},
+      onError: () => alert("error")
+    }).then(refresh)
+  }
 
 
   const uploadFile = (file: File, index: number) => {
@@ -153,7 +198,21 @@ const SubmissionSection: React.FC<Props> = ({
 
   const mainSectionDict: EnumDictionary<Stage, JSX.Element> = {
     [Stage.DECLARATION]: (
-      <SubmitDeclarationSection/>
+      <SubmitDeclarationSection
+        status={declarationStatus}
+        declaredHelpers={declaredHelpers}
+        onUnset={() => setDeclarationStatus(DeclarationStatus.NOTSET)}
+        onSetUnaided={() => {
+          uploadDeclaration("Unaided")
+        }}
+        onSetWithHelp={() => {
+          uploadDeclaration([])
+        }}
+        addHelper={(name, login) => {
+          addDeclarationHelper(name, login)
+        }}
+        removeHelper={removeDeclarationHelper}
+      />
     ),
     [Stage.GROUP_FORMATION]: (
       <SubmissionGroupFormation

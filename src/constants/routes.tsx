@@ -26,6 +26,7 @@ export const api = {
   CATE_GROUP_INFO: (courseCode: string, exerciseID: number) => `${config.CATE_URL}/groups/${courseCode}/${exerciseID}`,
   CATE_FILE_UPLOAD: (courseCode: string, exerciseID: number) => `${config.CATE_URL}/upload/${courseCode}/${exerciseID}`,
   CATE_FILE_DOWNLOAD: `${config.CATE_URL}/download`,
+  CATE_DECLARATION: (courseCode: string, exerciseID: number) => `${config.CATE_URL}/declaration/${courseCode}/${exerciseID}`,
   MATERIALS_LOGIN: `${config.MATERIALS_URL}/auth/login`,
   MATERIALS_COURSES: (year: string) =>
     `${config.MATERIALS_URL}/courses/${year}`,

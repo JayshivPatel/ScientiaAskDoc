@@ -19,6 +19,18 @@ export interface UserInfo {
   signatureTime: Date
 }
 
+export interface DeclarationHelper {
+  name: string,
+  login: string 
+}
+
+export enum DeclarationStatus {
+  NOTSET = "NotSet",
+  UNAIDED = "Unaided",
+  WITH_HELP = "With help",
+}
+
+
 export interface Resource {
   title: string
   type: FileType

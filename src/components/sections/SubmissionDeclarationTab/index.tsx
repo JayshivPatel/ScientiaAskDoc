@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons/faPlusCircle";
 import { faMinusCircle } from "@fortawesome/free-solid-svg-icons/faMinusCircle";
 import classNames from "classnames";
+import { DeclarationHelper, DeclarationStatus } from "constants/types";
+import { faCheckCircle, faEye } from "@fortawesome/free-solid-svg-icons";
 
 interface Declaration {
   name: string
@@ -15,52 +17,43 @@ interface Declaration {
 }
 
 interface Props {
-  // validatePair: (name: string, login: string) => boolean
-  // addDeclarations: (declarations: Declaration[]) => void
-}
-
-enum DeclarationStatus {
-  NOTSET = "NotSet",
-  UNAIDED = "Unaided",
-  WITH_HELP = "With help",
+  status: DeclarationStatus
+  declaredHelpers: DeclarationHelper[]
+  onUnset: () => void
+  onSetUnaided: () => void
+  onSetWithHelp: () => void
+  addHelper: (name: string, login: string) => void 
+  removeHelper: (name: string, login: string) => void
 }
 
 const SubmitDeclarationSection: React.FC<Props> = ({
-
-
+  status,
+  declaredHelpers,
+  onUnset,
+  onSetUnaided,
+  onSetWithHelp,
+  addHelper,
+  removeHelper,
 }) => {
 
-  const [declarationSubmitted, setDeclarationSubmitted] = useState<boolean>(false);
-  const [declarationStatus, setDeclarationStatus] = useState<DeclarationStatus>(DeclarationStatus.NOTSET)
+  const declarationSubmitted = status !== DeclarationStatus.NOTSET
   const [name, setName] = useState<string>("")
   const [login, setLogin] = useState<string>("")
-  const [declarationList, setDeclarationList] = useState<Declaration[]>([])
-
-  const switchDeclarationStatus = () => setDeclarationSubmitted(!declarationSubmitted)
 
   const addRow = (name: string, login: string) => {
-    setDeclarationList([...declarationList, {name, login}])
+    if (name !== "" && !declaredHelpers.find(({ name: n, login: l }) => n === name && login === l)) {
+      addHelper(name, login)
+    }
     setName("")
     setLogin("")
   }
-
-  const deleteRow = (targetName: string, targetLogin: string) => {
-    setDeclarationList(declarationList.filter(({ name, login }) => targetName !== name || targetLogin !== login))
-  }
-
   const resetForm = () => {
-    setDeclarationStatus(DeclarationStatus.NOTSET)
-    setDeclarationList([])
+    onUnset()
     setName("")
     setLogin("")
   }
 
   const submitForm = () => {
-    if (declarationList.length === 0) {
-      setDeclarationStatus(DeclarationStatus.UNAIDED)
-    } else {
-      setDeclarationStatus(DeclarationStatus.WITH_HELP)
-    }
     setName("")
     setLogin("")
   }
@@ -81,21 +74,20 @@ const SubmitDeclarationSection: React.FC<Props> = ({
     [DeclarationStatus.NOTSET]: ["", ""],
     [DeclarationStatus.UNAIDED]: [styles.active, styles.collapsed],
     [DeclarationStatus.WITH_HELP]: [styles.collapsed, styles.active],
-  }[declarationStatus]
-
-  console.log(unaidedClass, withHelpClass)
+  }[status]
 
   const unaided: JSX.Element = (
     <div 
       className={classNames(styles.unaidedPanel, unaidedClass, styles.center)}
       onClick={() => {
         submitForm()
-        setDeclarationStatus(DeclarationStatus.UNAIDED)
+        onSetUnaided()
       }}
     >
-      <div className={styles.center}>
+      <div className={styles.center}>   
         <p className={styles.submitDeclParagraphBold}>
-          {declarationStatus === DeclarationStatus.NOTSET ? unaidedSelectText : unaidedDeclarationText}
+          {status === DeclarationStatus.UNAIDED && <FontAwesomeIcon icon={faCheckCircle} style={{ marginRight: '0.3rem' }}/> }
+          {status === DeclarationStatus.NOTSET ? unaidedSelectText : unaidedDeclarationText}
         </p>
       </div>
     </div>
@@ -103,7 +95,7 @@ const SubmitDeclarationSection: React.FC<Props> = ({
 
   const DeclarationRow: JSX.Element =
     <>
-      {declarationList.map(
+      {declaredHelpers.map(
         ({ name, login }, index) => {
           return (
             <Form.Row className={styles.submitDeclRow} key={index}>
@@ -126,7 +118,7 @@ const SubmitDeclarationSection: React.FC<Props> = ({
               <Col sm="2">
                 <Button
                   className={styles.submitDeclButton}
-                  onClick={() => deleteRow(name, login)}
+                  onClick={() => removeHelper(name, login)}
                   variant="secondary"
                 >
                   <FontAwesomeIcon icon={faMinusCircle} />
@@ -142,14 +134,20 @@ const SubmitDeclarationSection: React.FC<Props> = ({
     <div 
       className={classNames(styles.withHelpPanel, withHelpClass)}
       style={{ height: 'auto' }}
-      onClick={() => setDeclarationStatus(DeclarationStatus.WITH_HELP)}
+      onClick={() => {
+        if (status !== DeclarationStatus.WITH_HELP) {
+          onSetWithHelp()
+        }
+      }}
     >
-      <div className={declarationStatus === DeclarationStatus.NOTSET ? styles.center : ""}>
+      <div className={status === DeclarationStatus.NOTSET ? styles.center : ""}>
         <span className={styles.submitDeclParagraphBold}>
-          {declarationStatus === DeclarationStatus.NOTSET ? withHelpSelectText : withHelpDeclarationText}
+          {status === DeclarationStatus.NOTSET || <FontAwesomeIcon icon={faEye} style={{ marginRight: '0.3rem' }}/>}
+          {status === DeclarationStatus.NOTSET ? withHelpSelectText : withHelpDeclarationText}
         </span>
-        {DeclarationRow}
-        {(declarationStatus === DeclarationStatus.WITH_HELP) && <>
+        {(status === DeclarationStatus.WITH_HELP) && <>
+          {DeclarationRow}
+          
           <Form.Row className={styles.submitDeclFirstRow}>
             <Col sm="5">
               <Form.Label className={styles.submitDeclTitle}>Name</Form.Label>
@@ -201,10 +199,10 @@ const SubmitDeclarationSection: React.FC<Props> = ({
     <Form>
       <Form.Group>
         <div style={{ display: 'flex' }}>
-          {declarationStatus !== DeclarationStatus.WITH_HELP && unaided}
-          {declarationStatus !== DeclarationStatus.UNAIDED && withHelp}
+          {status !== DeclarationStatus.WITH_HELP && unaided}
+          {status !== DeclarationStatus.UNAIDED && withHelp}
         </div>
-        {declarationStatus === DeclarationStatus.WITH_HELP && (
+        {status === DeclarationStatus.WITH_HELP && (
           <Form.Text muted className={styles.submitDeclHelpText}>
             Names must contain only alphabetic characters [A-Za-z],
             spaces and hyphens (-); logins must contain only lower case
@@ -212,7 +210,7 @@ const SubmitDeclarationSection: React.FC<Props> = ({
             syntax will be ignored.
           </Form.Text>)
         }
-        {declarationStatus !== DeclarationStatus.NOTSET && (
+        {status !== DeclarationStatus.NOTSET && (
           <Form.Row className={styles.submitDeclRow}>
             <Col>
               <Button

@@ -84,6 +84,7 @@
 .unaidedPanel {
   background-color: var(--teal-background);
   color: var(--teal-text);
+  cursor: pointer;
   height: 9rem;
   width: 50%;
   text-align: center;
@@ -102,6 +103,7 @@
 }
 
 .unaidedPanel.active {
+  cursor: default;
   width: 100%;
 }
 
@@ -116,6 +118,7 @@
 .withHelpPanel {
   background-color: var(--blue-background);
   color: var(--blue-text);
+  cursor: pointer;
   height: 9rem;
   width: 50%;
   text-align: center;
@@ -134,6 +137,7 @@
 }
 
 .withHelpPanel.active {
+  cursor: default;
   width: 100%;
 }
 
