@@ -18,5 +18,15 @@
     transition: 0.2s background-color;
     -webkit-transition: 0.2s background-color;
     -moz-transition: 0.2s background-color;
+}
 
+.unsignedLabel {
+    color: red;
+}
+
+.creatableSelect > * {
+    border-radius: 0.5rem !important;
+    background-color: var(--primary-button) !important;
+    border-color: var(--border-color) !important;
+    color: var(--primary-text-color) !important;
 }

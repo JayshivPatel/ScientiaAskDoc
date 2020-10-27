@@ -11,12 +11,19 @@ export interface Folder {
   id: number
 }
 
-export interface UserInfo {
+export interface GroupFormationMemberInfo {
   username: string,
   name: string
   classEnrolled: string,
   role: string,
-  signatureTime: Date
+  signatureTime: Date | undefined
+}
+
+export interface StudentInfo {
+  "username": string,
+  "firstname": string,
+  "lastname": string,
+  "class": string
 }
 
 export interface Resource {

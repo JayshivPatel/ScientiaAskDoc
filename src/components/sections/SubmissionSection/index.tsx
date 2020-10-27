@@ -1,7 +1,14 @@
 import React, {useEffect, useState} from "react"
 import Button from "react-bootstrap/Button"
 import styles from "./style.module.scss"
-import {EnumDictionary, ResourceUploadRequirement, ResourceUploadStatus, TimelineEvent, UserInfo} from "constants/types"
+import {
+  EnumDictionary,
+  ResourceUploadRequirement,
+  ResourceUploadStatus,
+  TimelineEvent,
+  GroupFormationMemberInfo,
+  StudentInfo
+} from "constants/types"
 import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
 import SubmissionFileUploadTab from "../SubmissionFileUploadTab"
 import { api, methods } from "constants/routes"
@@ -9,6 +16,7 @@ import { download, request } from "utils/api"
 import SubmitDeclarationSection from "../SubmissionDeclarationTab";
 import authenticationService from "utils/auth"
 import SubmissionGroupFormation from "../SubmissionGroupFormation";
+import moment from "moment";
 
 enum Stage {
   DECLARATION = "Declaration",
@@ -40,11 +48,24 @@ const SubmissionSection: React.FC<Props> = ({
   const [isLoaded, setIsLoaded] = useState(false)
   const [requirements, setRequirements] = useState<ResourceUploadRequirement[]>([])
   const [uploaded, setUploaded] = useState<ResourceUploadStatus[]>([])
-  const [groupMembers, setGroupMembers] = useState<UserInfo[]>([])
+  const [groupMembers, setGroupMembers] = useState<GroupFormationMemberInfo[]>([])
+  const [availableStudents, setAvailableStudents] = useState<StudentInfo[]>([])
   const currentUser = authenticationService.getUserInfo()["username"]
 
   useEffect(() => {
-    // Load the user information of the current user
+    request({
+      url: api.CATE_GROUP_INFO(courseCode, exerciseID),
+      method: methods.POST,
+      onSuccess: (data: { [k: string]: StudentInfo }) => {
+        if (data) {
+          setAvailableStudents(Object.keys(data).map((key, index) => data[key]))
+        }
+      },
+      onError: (message: string) => console.log(`Failed to retrieve available students: ${message}`),
+    })
+  }, [])
+
+  useEffect(() => {
     request({
       url: api.CATE_GROUP_INFO(courseCode, exerciseID),
       method: methods.GET,
@@ -55,7 +76,7 @@ const SubmissionSection: React.FC<Props> = ({
             name: `${memberInfo.lastname}, ${memberInfo.firstname}`,
             classEnrolled: memberInfo.class,
             role: memberInfo.role,
-            signatureTime: new Date() // Needs to be changed after backend for declaration is implemented
+            signatureTime: memberInfo.signature === "Unsigned" ? undefined : moment(memberInfo.signature).toDate()
           })))
         }
       },
@@ -158,6 +179,7 @@ const SubmissionSection: React.FC<Props> = ({
     [Stage.GROUP_FORMATION]: (
       <SubmissionGroupFormation
           groupMembers={groupMembers}
+          availableStudents={availableStudents}
           onGroupMemberChange={setGroupMembers}
       />
     ),
