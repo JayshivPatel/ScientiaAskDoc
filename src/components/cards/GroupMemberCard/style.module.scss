@@ -1,0 +1,51 @@
+.groupMemberCard {
+  background: var(--background-color);
+  height: 100%;
+  border-width: 0rem;
+  border-radius: 0.5rem !important;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--border-color);
+}
+
+.groupMemberCard:hover {
+  transform: scale(1.03);
+  text-decoration: none;
+  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
+  border-color: var(--border-color-hover);
+}
+
+.groupMemberCard :global(.card-header) {
+  background: var(--background-color);
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  border-width: 0rem;
+  color: var(--primary-text-color);
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: right;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.groupMemberCard :global(.card-body) {
+  padding: 0.5rem;
+  color: var(--primary-text-color);
+}
+
+.groupMemberCard :global(.card-title) {
+  margin-bottom: 0;
+}
+
+.groupMemberCard :global(.card-footer) {
+  border-radius: 0.5rem !important;
+  background: var(--background-color);
+  border-width: 0rem;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.unsignedLabel {
+  color: red;
+}
