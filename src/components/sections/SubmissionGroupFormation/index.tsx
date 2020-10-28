@@ -180,10 +180,20 @@ const SubmissionGroupFormation: React.FC<Props> = ({
       <Row md={2} noGutters={true}>
         {
           groupMembers && (groupMembers.map(
-              (memberInfo: GroupFormationMemberInfo) =>
-                <Col style={{padding: "0.5em"}}>
-                  <GroupMemberCard memberInfo={memberInfo}/>
-                </Col>
+              (memberInfo: GroupFormationMemberInfo) => {
+                const { username, name, classEnrolled, role, signatureTime } = memberInfo
+                return (
+                  <Col style={{padding: "0.5em"}}>
+                    <GroupMemberCard 
+                      username={username} 
+                      name={name} 
+                      classEnrolled={classEnrolled} 
+                      role={role}
+                      signatureTime={signatureTime}
+                    />
+                  </Col>
+                )
+              }
             )
           )
         }
