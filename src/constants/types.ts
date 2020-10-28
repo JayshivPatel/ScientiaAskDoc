@@ -32,7 +32,6 @@ export interface DeclarationHelper {
 }
 
 export enum DeclarationStatus {
-  NOTSET = "NotSet",
   UNAIDED = "Unaided",
   WITH_HELP = "With help",
 }

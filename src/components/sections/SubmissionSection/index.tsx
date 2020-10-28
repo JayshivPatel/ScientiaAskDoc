@@ -22,13 +22,11 @@ import { stringify } from "querystring"
 import moment from "moment";
 
 enum Stage {
-  DECLARATION = "Declaration",
   GROUP_FORMATION = "Group Formation",
   FILE_UPLOAD = "File Upload",
 }
 
 const allStages: Stage[] = [
-  Stage.DECLARATION,
   Stage.GROUP_FORMATION,
   Stage.FILE_UPLOAD
 ]
@@ -47,11 +45,11 @@ const SubmissionSection: React.FC<Props> = ({
   exerciseID,
 }) => {
 
-  const [stage, setStage] = useState(Stage.DECLARATION)
+  const [stage, setStage] = useState(Stage.FILE_UPLOAD)
   const [isLoaded, setIsLoaded] = useState(false)
   const [requirements, setRequirements] = useState<ResourceUploadRequirement[]>([])
   const [uploaded, setUploaded] = useState<ResourceUploadStatus[]>([])
-  const [declarationStatus, setDeclarationStatus] = useState<DeclarationStatus>(DeclarationStatus.NOTSET)
+  const [declarationStatus, setDeclarationStatus] = useState<DeclarationStatus>(DeclarationStatus.UNAIDED)
   const [declaredHelpers, setDeclaredHelpers] = useState<DeclarationHelper[]>([])
   const [groupID, setGroupID] = useState("")
   const [groupMembers, setGroupMembers] = useState<GroupFormationMemberInfo[]>([])
@@ -137,7 +135,7 @@ const SubmissionSection: React.FC<Props> = ({
       },
       onSuccess: (data: null | "Unaided" | { name: string, login: string }[]) => {
         if (data === null) {
-          setDeclarationStatus(DeclarationStatus.NOTSET)
+          setDeclarationStatus(DeclarationStatus.UNAIDED)
           setDeclaredHelpers([])
         } else if (data === "Unaided") {
           setDeclarationStatus(DeclarationStatus.UNAIDED)
@@ -237,23 +235,8 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   const mainSectionDict: EnumDictionary<Stage, JSX.Element> = {
-    [Stage.DECLARATION]: (
-      <SubmitDeclarationSection
-        status={declarationStatus}
-        declaredHelpers={declaredHelpers}
-        onUnset={() => setDeclarationStatus(DeclarationStatus.NOTSET)}
-        onSetUnaided={() => {
-          uploadDeclaration("Unaided")
-        }}
-        onSetWithHelp={() => {
-          uploadDeclaration([])
-        }}
-        addHelper={(name, login) => {
-          addDeclarationHelper(name, login)
-        }}
-        removeHelper={removeDeclarationHelper}
-      />
-    ),
+    // [Stage.DECLARATION]: (
+    // ),
     [Stage.GROUP_FORMATION]: (
       <SubmissionGroupFormation
           groupID={groupID}
@@ -296,6 +279,21 @@ const SubmissionSection: React.FC<Props> = ({
         </ButtonGroup>
       </div>
       {mainSectionDict[stage]}
+      <hr></hr>
+      <SubmitDeclarationSection
+        status={declarationStatus}
+        declaredHelpers={declaredHelpers}
+        onSetUnaided={() => {
+          uploadDeclaration("Unaided")
+        }}
+        onSetWithHelp={() => {
+          uploadDeclaration([])
+        }}
+        addHelper={(name, login) => {
+          addDeclarationHelper(name, login)
+        }}
+        removeHelper={removeDeclarationHelper}
+      />
     </>
   )
 }
