@@ -7,6 +7,7 @@ import Container from "react-bootstrap/Container"
 import {theme} from "../../../utils/functions";
 import moment from "moment";
 import Badge from "react-bootstrap/esm/Badge";
+import Col from "react-bootstrap/cjs/Col";
 
 interface ExtraProps {
 }
@@ -23,35 +24,39 @@ const GroupMemberCard: React.FC<Props> = ({
 }) => {
 
   return (
-    <Container
-      className={classNames(styles.groupMemberCard, role === 'leader' && styles.leaderCard)}
-    >
-      <div style={{ verticalAlign: 'top', height: '100%', paddingTop: '0.5rem' }}>
-        <Image
-          src={`/images/${theme()}/user.png`}
-          className={styles.profilePic}
-        />
-      </div>
-      <div className={styles.memberInfoSection}>
-        <h4 className={styles.memberName}>
-          {name}
-        </h4>
-        <div style={{ display: 'flex' }}>
-          <h6 className={styles.memberName}>{username}</h6>
-          <p className={styles.memberClass}>{classEnrolled}</p>
-        </div>
-        <Badge 
-          pill 
-          key={"sign"} 
-          className={classNames(
-            styles.tag,
-            signatureTime ? styles.tagTeal : styles.tagPink
-          )}
+    <Col style={{padding: "0.5em", zIndex: 0}}>
+      <Container
+        className={classNames(styles.groupMemberCard, role === 'leader' && styles.leaderCard)}
+      >
+        <div
+             style={{ verticalAlign: 'top', height: '100%', paddingTop: '0.5rem' }}
         >
-          {signatureTime ? moment(signatureTime).fromNow().toUpperCase() : "NOT SIGNED"}
-        </Badge>
-      </div>
-    </Container>
+          <Image
+            src={`/images/${theme()}/user.png`}
+            className={styles.profilePic}
+          />
+        </div>
+        <div className={styles.memberInfoSection}>
+          <h4 className={styles.memberName}>
+            {name}
+          </h4>
+          <div style={{ display: 'flex' }}>
+            <h6 className={styles.memberName}>{username}</h6>
+            <p className={styles.memberClass}>{classEnrolled}</p>
+          </div>
+          <Badge
+            pill
+            key={"sign"}
+            className={classNames(
+              styles.tag,
+              signatureTime ? styles.tagTeal : styles.tagPink
+            )}
+          >
+            {signatureTime ? moment(signatureTime).fromNow().toUpperCase() : "NOT SIGNED"}
+          </Badge>
+        </div>
+      </Container>
+    </Col>
 )
 }
 

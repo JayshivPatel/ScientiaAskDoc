@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styles from "./style.module.scss"
 import authenticationService from "utils/auth"
-import Table from "react-bootstrap/Table";
 import Select from "react-select"
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
@@ -183,15 +182,13 @@ const SubmissionGroupFormation: React.FC<Props> = ({
               (memberInfo: GroupFormationMemberInfo) => {
                 const { username, name, classEnrolled, role, signatureTime } = memberInfo
                 return (
-                  <Col style={{padding: "0.5em"}}>
-                    <GroupMemberCard 
-                      username={username} 
-                      name={name} 
-                      classEnrolled={classEnrolled} 
-                      role={role}
-                      signatureTime={signatureTime}
-                    />
-                  </Col>
+                  <GroupMemberCard
+                    username={username}
+                    name={name}
+                    classEnrolled={classEnrolled}
+                    role={role}
+                    signatureTime={signatureTime}
+                  />
                 )
               }
             )
