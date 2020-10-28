@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import styles from "./style.module.scss"
 import authenticationService from "utils/auth"
 import Table from "react-bootstrap/Table";
-import CreatableSelect from "react-select/creatable"
+import Select from "react-select"
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -38,28 +38,28 @@ const createOption = (student: StudentInfo) => {
     const promptText = `${student.lastname}, ${student.firstname} (${student.username}) - ${student.class}`
     return {
         label: promptText,
-        value: promptText
+        value: student.username
     }
 }
 
 interface Props {
+    groupID: string
     groupMembers: GroupFormationMemberInfo[]
     availableStudents: StudentInfo[]
-    onGroupMemberChange: (members: []) => void
+    addNewGroupMember: (username: string) => void
+    removeGroupMember: (username: string) => void
+    refresh: () => void
 }
 
 const SubmissionGroupFormation: React.FC<Props> = ({
+    groupID,
     groupMembers,
     availableStudents,
-    onGroupMemberChange
+    addNewGroupMember,
+    removeGroupMember,
+    refresh,
 }) => {
-    const [searchText, setSearchText] = useState("")
-    const [members, addGroupMember] = useState<GroupFormationMemberInfo[]>([])
-    const [username, setUserName] = useState<string>("")
-    const [name, setName] = useState<string>("")
-    const [classEnrolled, setClassEnrolled] = useState<string>("")
-    const [role, setRole] = useState<string>("")
-    const [signatureTime, setSignatureTime] = useState<Date>(new Date())
+    const [newMember, setNewMember] = useState("")
     const [availableStudentOptions, setAvailableStudentOptions] = useState<Option[]>(
         availableStudents.map(createOption)
     )
@@ -72,16 +72,6 @@ const SubmissionGroupFormation: React.FC<Props> = ({
     }
     const currentUser = authenticationService.getUserInfo()["username"]
     const currentRole: string = isLeader(currentUser) ? Role.LEADER : Role.MEMBER
-
-
-    const addRow = (username: string, name: string, classEnrolled: string, role: string, signatureTime: Date) => {
-        addGroupMember([...members, {username, name, classEnrolled, role, signatureTime}])
-        setUserName(username)
-        setName(name)
-        setClassEnrolled(classEnrolled)
-        setRole(role)
-        setSignatureTime(new Date())
-    }
 
     const studentInfoRow = (studentInfo: GroupFormationMemberInfo) => (
         <tr key={`${studentInfo.name}`}>
@@ -101,26 +91,25 @@ const SubmissionGroupFormation: React.FC<Props> = ({
                 (studentInfo.signatureTime?.toISOString().slice(0, 10))}
             </td>
             <td>
-                {
-                    /*
+                {/*
                     * Display the checkbox if:
                     * 1. the current user is a group member, the username in studentInfo matches that of the current
                     *  user, and the current user has not yet signed
                     * 2. the current user is the leader and the username in studentInfo does not match the
                     * that of the current user
                     * */
-                    (((currentRole === Role.MEMBER && currentUser === studentInfo.username && !studentInfo.signatureTime)
-                            || (currentRole === Role.LEADER && currentUser !== studentInfo.username)) && (
-                                <Form.Group controlId="signatureCheckbox">
-                                    <Form.Check type="checkbox"/>
-                                </Form.Group>
-                        )
-                    )
                 }
+                {(((currentRole === Role.MEMBER && currentUser === studentInfo.username && !studentInfo.signatureTime)
+                        || (currentRole === Role.LEADER && currentUser !== studentInfo.username)) && (
+                            <Form.Group controlId="signatureCheckbox">
+                                <Form.Check type="checkbox"/>
+                            </Form.Group>
+                    )
+                )}
             </td>
         </tr>
     )
-
+    console.log(groupMembers)
     const leaderButtonGroup = (hasMembers: boolean) => (
         <>
             {
@@ -144,15 +133,23 @@ const SubmissionGroupFormation: React.FC<Props> = ({
             }
             <Form.Row>
                 <Col>
-                    <CreatableSelect
-                        className={styles.creatableSelect}
+                    <Select
+                        className={styles.select}
+                        menuPlacement="auto"
+                        value={availableStudentOptions.filter((option) => option.value == newMember)}
                         options={availableStudentOptions}
+                        onChange={(selectedMember) =>
+                            setNewMember(selectedMember ? (selectedMember as Option).value : "")
+                        }
                     />
                 </Col>
                 <Col>
                     <Button
                         className={styles.sectionButton}
-                        onClick={() => addRow(username, name, classEnrolled, role, signatureTime)}
+                        onClick={() => {
+                            addNewGroupMember(newMember)
+                            setNewMember('')
+                        }}
                     >
                         Add group member
                     </Button>

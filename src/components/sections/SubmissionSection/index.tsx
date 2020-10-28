@@ -53,13 +53,14 @@ const SubmissionSection: React.FC<Props> = ({
   const [uploaded, setUploaded] = useState<ResourceUploadStatus[]>([])
   const [declarationStatus, setDeclarationStatus] = useState<DeclarationStatus>(DeclarationStatus.NOTSET)
   const [declaredHelpers, setDeclaredHelpers] = useState<DeclarationHelper[]>([])
+  const [groupID, setGroupID] = useState("")
   const [groupMembers, setGroupMembers] = useState<GroupFormationMemberInfo[]>([])
   const [availableStudents, setAvailableStudents] = useState<StudentInfo[]>([])
   const currentUser = authenticationService.getUserInfo()["username"]
 
   useEffect(() => {
     request({
-      url: api.CATE_GROUP_INFO(courseCode, exerciseID),
+      url: api.CATE_GROUP_FORMATION(courseCode, exerciseID),
       method: methods.POST,
       onSuccess: (data: { [k: string]: StudentInfo }) => {
         if (data) {
@@ -70,29 +71,46 @@ const SubmissionSection: React.FC<Props> = ({
     })
   }, [])
 
-  useEffect(() => {
+
+  const updateGroupMember = (method: string, username: string) => {
     request({
-      url: api.CATE_GROUP_INFO(courseCode, exerciseID),
+      url: api.CATE_GROUP_FORMATION(courseCode, exerciseID),
+      method: method,
+      body: {
+        username: username,
+        groupID: groupID
+      },
+      onSuccess: () => {},
+      onError: (message: string) => console.log(`Failed to update new team member ${username}: ${message}`),
+    }).finally(retrieveGroupInfo)
+  }
+
+  const retrieveGroupInfo = () => {
+    request({
+      url: api.CATE_GROUP_FORMATION(courseCode, exerciseID),
       method: methods.GET,
       onSuccess: (data: { [k: string]: any }) => {
         if (data) {
-          setGroupMembers(data.map((memberInfo: { [attr: string]: string }) => ({
-            username: memberInfo.username,
-            name: `${memberInfo.lastname}, ${memberInfo.firstname}`,
-            classEnrolled: memberInfo.class,
-            role: memberInfo.role,
-            signatureTime: memberInfo.signature === "Unsigned" ? undefined : moment(memberInfo.signature).toDate()
-          })))
+          for (let groupID in data) {
+            setGroupID(groupID)
+            setGroupMembers(data[groupID].map((memberInfo: { [attr: string]: string }) => ({
+              username: memberInfo.username,
+              name: `${memberInfo.lastname}, ${memberInfo.firstname}`,
+              classEnrolled: memberInfo.class,
+              role: memberInfo.role,
+              signatureTime: memberInfo.signature === "Unsigned" ? undefined : moment(memberInfo.signature).toDate()
+            })))
+          }
         }
       },
       body: { username: currentUser },
       onError: (message: string) => console.log(`Failed to retrieve user information: ${message}`)
     })
+  }
 
-  }, [])
+  useEffect(() => retrieveGroupInfo(), [])
 
-
-  const refresh = () => {
+  const refreshRequirements = () => {
     setIsLoaded(false)
     const onError = (part: string) => () => { alert(part) }
 
@@ -133,7 +151,7 @@ const SubmissionSection: React.FC<Props> = ({
     })
   }
 
-  useEffect(refresh, [])
+  useEffect(refreshRequirements, [])
   useEffect(() => {
     if (isLoaded) console.log("refresh!")
   }, [isLoaded])
@@ -158,7 +176,7 @@ const SubmissionSection: React.FC<Props> = ({
       },
       onSuccess: () => {},
       onError: () => alert("error")
-    }).then(refresh)
+    }).then(refreshRequirements)
   }
 
 
@@ -178,7 +196,6 @@ const SubmissionSection: React.FC<Props> = ({
       suffix: suffix,
       timestamp: new Date(),
     }
-    console.log(newFile);
 
     request({
       url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
@@ -199,7 +216,7 @@ const SubmissionSection: React.FC<Props> = ({
         })
       },
       onError: () => {},
-    }).finally(refresh)
+    }).finally(refreshRequirements)
   }
 
   const removeFile = (index: number) => {
@@ -212,7 +229,7 @@ const SubmissionSection: React.FC<Props> = ({
       },
       onSuccess: () => {},
       onError:  () => {},
-    }).finally(refresh)
+    }).finally(refreshRequirements)
   }
 
   const downloadFile = (url: string, filename: string, suffix: string) => {
@@ -239,9 +256,12 @@ const SubmissionSection: React.FC<Props> = ({
     ),
     [Stage.GROUP_FORMATION]: (
       <SubmissionGroupFormation
+          groupID={groupID}
           groupMembers={groupMembers}
           availableStudents={availableStudents}
-          onGroupMemberChange={setGroupMembers}
+          addNewGroupMember={(username: string) => updateGroupMember(methods.PUT, username)}
+          removeGroupMember={(username: string) => updateGroupMember(methods.DELETE, username)}
+          refresh={retrieveGroupInfo}
       />
     ),
     [Stage.FILE_UPLOAD]: (
@@ -250,7 +270,7 @@ const SubmissionSection: React.FC<Props> = ({
         uploadFile={uploadFile}
         removeFile={removeFile}
         downloadFile={downloadFile}
-        refresh={refresh}
+        refresh={refreshRequirements}
       />
     ),
   }
