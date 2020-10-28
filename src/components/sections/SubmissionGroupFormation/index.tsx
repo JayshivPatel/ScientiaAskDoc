@@ -177,12 +177,11 @@ const SubmissionGroupFormation: React.FC<Props> = ({
         </tbody>
       </Table>
       */}
-      <Row md={2}>
+      <Row md={2} noGutters={true}>
         {
-          groupMembers && (
-            groupMembers.map(
+          groupMembers && (groupMembers.map(
               (memberInfo: GroupFormationMemberInfo) =>
-                <Col>
+                <Col style={{padding: "0.5em"}}>
                   <GroupMemberCard memberInfo={memberInfo}/>
                 </Col>
             )

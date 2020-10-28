@@ -1,51 +1,54 @@
 .groupMemberCard {
+  display: flex;
+  height: 8em;
+  padding: 0;
+  margin-top: 0.5rem;
+  align-items: center;
+  width: 100%;
   background: var(--background-color);
-  height: 100%;
-  border-width: 0rem;
-  border-radius: 0.5rem !important;
-  transition: transform 0.2s, box-shadow 0.2s;
   border: 1px solid var(--border-color);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  transition: 0.2s transform, 0.2s box-shadow;
+  -webkit-transition: 0.2s transform, 0.2s box-shadow;
+  -moz-transition: 0.2s transform, 0.2s box-shadow;
+  cursor: pointer;
 }
 
 .groupMemberCard:hover {
-  transform: scale(1.03);
-  text-decoration: none;
-  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
   border-color: var(--border-color-hover);
+  transform: scale(1.03);
+  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
 }
 
-.groupMemberCard :global(.card-header) {
-  background: var(--background-color);
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
-  border-width: 0rem;
+.profilePic {
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  height: 4rem;
+  width: 4rem;
+}
+
+.memberName,
+.memberRole,
+.memberClass {
+  font-size: 1rem;
+  margin-bottom: 0rem;
+  line-height: 1.5rem !important;
+}
+
+.memberRole {
+  color: var(--secondary-text-color);
+}
+
+.memberName {
   color: var(--primary-text-color);
-  font-weight: 500;
-  text-transform: uppercase;
-  text-align: right;
-  padding: 0.5rem;
-  display: flex;
-  justify-content: space-between;
 }
 
-.groupMemberCard :global(.card-body) {
-  padding: 0.5rem;
-  color: var(--primary-text-color);
+.memberEmail {
+  color: var(--email-text);
 }
 
-.groupMemberCard :global(.card-title) {
-  margin-bottom: 0;
+.memberClass {
+  color: var(--tertiary-text-color);
 }
 
-.groupMemberCard :global(.card-footer) {
-  border-radius: 0.5rem !important;
-  background: var(--background-color);
-  border-width: 0rem;
-  padding: 0.5rem;
-  display: flex;
-  justify-content: space-between;
-}
-
-.unsignedLabel {
-  color: red;
-}
