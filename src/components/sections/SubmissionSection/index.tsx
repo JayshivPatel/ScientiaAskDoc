@@ -21,6 +21,7 @@ import SubmissionGroupFormation from "../SubmissionGroupFormation";
 import moment from "moment";
 import Accordion from "react-bootstrap/esm/Accordion"
 import Card from "react-bootstrap/Card"
+import LoadingScreen from "components/suspense/LoadingScreen"
 
 enum Stage {
   GROUP_FORMATION = "Group Formation",
@@ -28,8 +29,8 @@ enum Stage {
 }
 
 const allStages: Stage[] = [
+  Stage.FILE_UPLOAD,
   Stage.GROUP_FORMATION,
-  Stage.FILE_UPLOAD
 ]
 
 interface Props {
@@ -335,23 +336,10 @@ const SubmissionSection: React.FC<Props> = ({
     ),
   }
 
-  const buttonOf = (s: Stage, index: number) => {
-    return (
-      <Button
-        key={index}
-        className={styles.sectionButton}
-        onClick={() => setStage(s)}
-        active={s === stage}
-      >
-        {s}
-      </Button>
-    )
-  }
-
   const sectionOf = (s: Stage, index: number) => {
     return (
       <div>
-        <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
+        <Accordion.Toggle as={Card.Header} className={styles.accordionTab} eventKey={`${index}`}>
           {s}
         </Accordion.Toggle>
         <Accordion.Collapse eventKey={`${index}`}>
@@ -362,9 +350,17 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   return (
-    <Accordion defaultActiveKey="0">
-      {allStages.map(sectionOf)}
-    </Accordion>
+    <div style={{ position: 'relative', minHeight: '5rem' }}>
+      <LoadingScreen
+        isLoaded={isLoaded}
+        successful={
+          <Accordion defaultActiveKey="0">
+            {allStages.map(sectionOf)}
+          </Accordion>
+        }
+      />
+    </div>
+
   )
 }
 

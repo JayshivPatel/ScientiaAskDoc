@@ -37,7 +37,7 @@ const GroupMemberCard: React.FC<Props> = ({
 }) => {
   const [tagStyle, tagText] = (() => {
     if (signatureTime) {
-      return [styles.tagTeal, `SIGNED ${moment(signatureTime).fromNow().toUpperCase()}`]
+      return [styles.tagTeal, `SIGNED`]
     } else if (currentUser === username && currentRole === Role.MEMBER) {
       return [styles.tagPink, "Click Here to Sign"]
     } else {

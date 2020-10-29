@@ -91,3 +91,17 @@
   color: var(--primary-button-text);
   box-shadow: none !important;
 }
+
+.accordionTab {
+  font-size: 15px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.accordionTab:hover {
+
+  background-color: var(--primary-button-hover);
+  color: var(--primary-button-text);
+}
