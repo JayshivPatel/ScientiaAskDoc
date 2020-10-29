@@ -23,6 +23,8 @@ export const api = {
   CATE_LOGIN: `${config.CATE_URL}/auth/login`,
   CATE_COURSE_EXERCISES: (courseCode: string) =>`${config.CATE_URL}/exercises/${courseCode}`,
   CATE_USER_INFO: (username: string) => `${config.CATE_URL}/auth/${username}`,
+  CATE_AVAILABLE_STUDENTS_FOR_EXERCISE: (courseCode: string, exerciseNum: number) =>
+    `${config.CATE_URL}/groups/courses/${courseCode}/exercises/${exerciseNum}`,
   CATE_GROUP_FORMATION: (courseCode: string, exerciseID: number) => `${config.CATE_URL}/groups/${courseCode}/${exerciseID}`,
   CATE_FILE_UPLOAD: (courseCode: string, exerciseID: number) => `${config.CATE_URL}/upload/${courseCode}/${exerciseID}`,
   CATE_FILE_DOWNLOAD: `${config.CATE_URL}/download`,

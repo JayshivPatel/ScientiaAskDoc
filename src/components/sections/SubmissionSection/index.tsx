@@ -63,11 +63,11 @@ const SubmissionSection: React.FC<Props> = ({
 
   const retrieveAvailableStudents = () => {
     request({
-      url: api.CATE_GROUP_FORMATION(courseCode, exerciseID),
-      method: methods.POST,
+      url: api.CATE_AVAILABLE_STUDENTS_FOR_EXERCISE(courseCode, exerciseID),
+      method: methods.GET,
       onSuccess: (data: { [k: string]: StudentInfo }) => {
         if (data) {
-          setAvailableStudents(Object.keys(data).map((key, index) => data[key]))
+          setAvailableStudents(Object.keys(data).map((key, _) => data[key]))
         }
       },
       onError: (message: string) => console.log(`Failed to retrieve available students: ${message}`),
@@ -103,6 +103,9 @@ const SubmissionSection: React.FC<Props> = ({
               signatureTime: memberInfo.signature === "Unsigned" ? undefined : moment(memberInfo.signature).toDate()
             })))
           }
+        } else {
+          setGroupID("")
+          setGroupMembers([])
         }
       },
       body: { username: currentUser },
@@ -135,7 +138,20 @@ const SubmissionSection: React.FC<Props> = ({
       "operation": "sign"
     })
   }
-
+  const createGroup = () => {
+    request({
+      url: api.CATE_GROUP_FORMATION(courseCode, exerciseID),
+      method: methods.POST,
+      body: {
+        "username": currentUser
+      },
+      onSuccess: () => {},
+      onError: (message: string) => console.log(`Failed to create a new group: ${message}`),
+    }).finally(() => {
+      retrieveGroupInfo()
+      retrieveAvailableStudents()
+    })
+  }
   const deleteGroup = () => {
     request({
       url: api.CATE_GROUP_FORMATION(courseCode, exerciseID),
@@ -144,8 +160,10 @@ const SubmissionSection: React.FC<Props> = ({
         "groupID": groupID
       },
       onSuccess: () => {},
-      onError: (message: string) => console.log(`Failed to delete new team member: ${message}`),
+      onError: (message: string) => console.log(`Failed to delete group ${groupID}: ${message}`),
     }).finally(() => {
+      retrieveGroupInfo()
+      retrieveAvailableStudents()
     })
   }
 
@@ -285,6 +303,8 @@ const SubmissionSection: React.FC<Props> = ({
           addNewGroupMember={addNewGroupMember}
           removeGroupMember={removeGroupMember}
           addMemberSignature={addMemberSignature}
+          createGroup={createGroup}
+          deleteGroup={deleteGroup}
       />
     ),
     [Stage.FILE_UPLOAD]: (

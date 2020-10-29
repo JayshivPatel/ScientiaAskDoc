@@ -8,8 +8,9 @@ import Button from "react-bootstrap/Button";
 import {GroupFormationMemberInfo, StudentInfo} from "../../../constants/types";
 import GroupMemberCard from "../../cards/GroupMemberCard";
 import Row from "react-bootstrap/Row"
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faPlus, faUserPlus, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Container from "react-bootstrap/cjs/Container";
 
 const tableHeadingsLeader = [
   "Student",
@@ -52,6 +53,8 @@ interface Props {
   addNewGroupMember: (username: string) => void
   removeGroupMember: (username: string) => void
   addMemberSignature: (username: string) => void
+  createGroup: () => void
+  deleteGroup: () => void
 }
 
 const SubmissionGroupFormation: React.FC<Props> = ({
@@ -61,10 +64,11 @@ const SubmissionGroupFormation: React.FC<Props> = ({
                                                      addNewGroupMember,
                                                      removeGroupMember,
                                                      addMemberSignature,
+                                                     createGroup,
+                                                     deleteGroup
                                                    }) => {
   const [newMember, setNewMember] = useState("")
   const [availableStudentOptions, setAvailableStudentOptions] = useState<Option[]>([])
-
   useEffect(() => {
     setAvailableStudentOptions(availableStudents.map(createOption))
   }, [availableStudents])
@@ -101,13 +105,13 @@ const SubmissionGroupFormation: React.FC<Props> = ({
               setNewMember('')
             }}
           >
-            <FontAwesomeIcon icon={faPlus}/>
+            <FontAwesomeIcon icon={faUserPlus}/>
           </Button>
         </Col>
       </Form.Row>
       <Form.Row>
         <Col>
-          <Button className={styles.deleteGroupButton}>
+          <Button className={styles.deleteGroupButton} onClick={() => deleteGroup()}>
             Delete Group
           </Button>
         </Col>
@@ -115,8 +119,8 @@ const SubmissionGroupFormation: React.FC<Props> = ({
     </>
   )
 
-  return (
-    <div>
+  const groupMemberDisplay = (
+    <>
       <Row md={2} noGutters={true}>
         {
           groupMembers && (groupMembers.map(
@@ -148,6 +152,19 @@ const SubmissionGroupFormation: React.FC<Props> = ({
       <Form>
         {(currentRole === Role.LEADER && leaderButtonGroup())}
       </Form>
+    </>
+  )
+
+  const groupCreationDisplay = (
+    <Container onClick={() => createGroup()} className={styles.createGroupSection}>
+      <FontAwesomeIcon icon={faUsers} style={{fontSize: "3.5rem", marginRight: "2rem"}}/>
+      <span className={styles.createLabel}>Create Your Group</span>
+    </Container>
+  )
+
+  return (
+    <div>
+      {(groupMembers.length === 0 && groupCreationDisplay) || (groupMembers.length !== 0 && groupMemberDisplay)}
     </div>);
 }
 export default SubmissionGroupFormation

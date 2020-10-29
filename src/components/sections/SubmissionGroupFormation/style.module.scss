@@ -15,7 +15,7 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    width: auto;
+    width: 120%;
     font-size: 1.05rem;
 
     transition: 0.2s background-color;
@@ -59,4 +59,62 @@
 .select .Select-menu-outer {
     top: auto !important;
     bottom: 100% !important;
+}
+
+.createGroupSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    margin: 0.5rem 0;
+    height: 5em;
+    cursor: pointer;
+}
+
+.createGroupSection:hover {
+    border-color: var(--border-color-hover);
+    transform: scale(1.03);
+    box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
+}
+
+.createLabel {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+
+.createGroupSection::before, .createGroupSection::after {
+    box-sizing: inherit;
+    position: absolute;
+    content: '';
+    border: 2px solid transparent;
+    width: 0;
+    height: 0;
+}
+
+.createGroupSection::after {
+    bottom: 0;
+    right: 0;
+}
+
+.createGroupSection::before {
+    top: 0;
+    left: 0;
+}
+
+.createGroupSection:hover::before, .createGroupSection:hover::after {
+    width: 100%;
+    height: 100%;
+}
+
+.createGroupSection:hover::before {
+    border-top-color: var(--teal);
+    border-right-color: var(--teal);
+    transition: width 0.3s ease-out, height 0.3s ease-out 0.3s;
+}
+
+.createGroupSection:hover::after {
+    border-bottom-color: var(--teal);
+    border-left-color: var(--teal);
+    transition: border-color 0s ease-out 0.6s, width 0.3s ease-out 0.6s, height 0.3s ease-out 1s;
 }
