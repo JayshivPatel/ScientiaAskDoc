@@ -3,7 +3,7 @@
 
 .dropzone {
   text-align: center;
-  padding: 3rem;
+  padding: 2rem;
   border: 0.125rem dashed var(--border-color);
   background-color: var(--background-color);
   color: var(--tertiary-text-color);
@@ -137,26 +137,38 @@
 .TextArea {
   margin-left: 5px;
   margin-right: 5px;
-  width: 15%;
+  width: 25%;
 }
 
-.SelectArea {
+.SelectArea_layer3 {
+  z-index: 5;
   margin-left: 10px;
-  width: 40%;
+  width: 60%;
 }
 
 .Switch {
   margin-left: 10px;
 }
 
-.SelectArea_time {
+.SelectArea_visibility {
+  z-index: 9;
   margin-left: 10px;
-  width: 80%;
+  width: 40%;
+}
+
+.SelectArea_layer2 {
+  z-index: 7;
+  margin-left: 10px;
+  width: 50%;
 }
 
 .SelectArea_day {
+  z-index: 9;
   margin-left: 10px;
   width: 60%;
+}
+.Row {
+  padding: 5px;
 }
 
 .Col {
@@ -164,28 +176,28 @@
   align-items: center;
 }
 
-.normalRow {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  margin: auto;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-bottom: 10px;
-  background-color: lightgray;
-  border-radius: 20px;
-}
-
-.highlightRow {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  margin: auto;
-  margin-left: 20px;
-  margin-right: 20px;
-  background-color: lightgreen;
-  border-radius: 20px;
-}
+//.normalRow {
+//  display: flex;
+//  align-items: center;
+//  padding: 15px;
+//  margin: auto;
+//  margin-left: 20px;
+//  margin-right: 20px;
+//  margin-bottom: 10px;
+//  background-color: lightgray;
+//  border-radius: 20px;
+//}
+//
+//.highlightRow {
+//  display: flex;
+//  align-items: center;
+//  padding: 20px;
+//  margin: auto;
+//  margin-left: 20px;
+//  margin-right: 20px;
+//  background-color: lightgreen;
+//  border-radius: 20px;
+//}
 
 .font {
   margin-left: 5px;
