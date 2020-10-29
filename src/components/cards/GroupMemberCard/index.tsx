@@ -8,19 +8,29 @@ import {theme} from "../../../utils/functions";
 import moment from "moment";
 import Badge from "react-bootstrap/esm/Badge";
 import Col from "react-bootstrap/cjs/Col";
+import Button from "react-bootstrap/Button"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons"
+import {Role} from "../../sections/SubmissionGroupFormation";
 
 interface ExtraProps {
+  currentRole: string
+  onRemoveButtonClick: (username: string) => void
 }
 
 type Props = GroupFormationMemberInfo & ExtraProps
 
 
 const GroupMemberCard: React.FC<Props> = ({
+  currentRole,
   username,
   name,
   classEnrolled,
   role,
   signatureTime,
+  onRemoveButtonClick,
 }) => {
 
   return (
@@ -36,6 +46,14 @@ const GroupMemberCard: React.FC<Props> = ({
             className={styles.profilePic}
           />
         </div>
+        {!signatureTime && currentRole == Role.LEADER &&
+        (<Button
+          className={styles.removeButton}
+          variant={"secondary"}
+          onClick={() => onRemoveButtonClick(username)}
+        >
+          <FontAwesomeIcon icon={faTimes}/>
+        </Button>)}
         <div className={styles.memberInfoSection}>
           <h4 className={styles.memberName}>
             {name}

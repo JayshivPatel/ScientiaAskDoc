@@ -11,8 +11,10 @@
     border-radius: 0.5rem;
     margin: 0;
 
-    justify-content: space-between;
-    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
     font-size: 1.05rem;
 
     transition: 0.2s background-color;
@@ -29,6 +31,7 @@
     background-color: var(--primary-button) !important;
     border-color: var(--border-color) !important;
     color: var(--primary-text-color) !important;
+    z-index: 999 !important;
 }
 
 .select .Select-menu-outer {

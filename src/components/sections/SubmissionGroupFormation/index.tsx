@@ -8,6 +8,8 @@ import Button from "react-bootstrap/Button";
 import {GroupFormationMemberInfo, StudentInfo} from "../../../constants/types";
 import GroupMemberCard from "../../cards/GroupMemberCard";
 import Row from "react-bootstrap/Row"
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const tableHeadingsLeader = [
   "Student",
@@ -93,12 +95,12 @@ const SubmissionGroupFormation: React.FC<Props> = ({
       </td>
       <td>
         {/*
-                    * Display the checkbox if:
-                    * 1. the current user is a group member, the username in studentInfo matches that of the current
-                    *  user, and the current user has not yet signed
-                    * 2. the current user is the leader and the username in studentInfo does not match the
-                    * that of the current user
-                    * */
+          * Display the checkbox if:
+          * 1. the current user is a group member, the username in studentInfo matches that of the current
+          *  user, and the current user has not yet signed
+          * 2. the current user is the leader and the username in studentInfo does not match the
+          * that of the current user
+          * */
         }
         {(((currentRole === Role.MEMBER && currentUser === studentInfo.username && !studentInfo.signatureTime)
             || (currentRole === Role.LEADER && currentUser !== studentInfo.username)) && (
@@ -113,27 +115,8 @@ const SubmissionGroupFormation: React.FC<Props> = ({
 
   const leaderButtonGroup = (hasMembers: boolean) => (
     <>
-      {
-        hasMembers && (
-          <Form.Row style={{paddingBottom: "0.5em"}}>
-            <Col>
-              <Button
-                className={styles.sectionButton}
-              >
-                Delete
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                className={styles.sectionButton}
-              >
-                Reset
-              </Button>
-            </Col>
-          </Form.Row>)
-      }
       <Form.Row>
-        <Col>
+        <Col xs={10}>
           <Select
             className={styles.select}
             menuPlacement="auto"
@@ -152,7 +135,7 @@ const SubmissionGroupFormation: React.FC<Props> = ({
               setNewMember('')
             }}
           >
-            Add group member
+            Add
           </Button>
         </Col>
       </Form.Row>
@@ -183,11 +166,13 @@ const SubmissionGroupFormation: React.FC<Props> = ({
                 const { username, name, classEnrolled, role, signatureTime } = memberInfo
                 return (
                   <GroupMemberCard
+                    currentRole={currentRole}
                     username={username}
                     name={name}
                     classEnrolled={classEnrolled}
                     role={role}
                     signatureTime={signatureTime}
+                    onRemoveButtonClick={removeGroupMember}
                   />
                 )
               }
