@@ -18,8 +18,9 @@ import { download, request } from "utils/api"
 import SubmitDeclarationSection from "../SubmissionDeclarationTab";
 import authenticationService from "utils/auth"
 import SubmissionGroupFormation from "../SubmissionGroupFormation";
-import { stringify } from "querystring"
 import moment from "moment";
+import Accordion from "react-bootstrap/esm/Accordion"
+import Card from "react-bootstrap/Card"
 
 enum Stage {
   GROUP_FORMATION = "Group Formation",
@@ -120,7 +121,7 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   const removeGroupMember = (username: string) => {
-    updateGroupMember(methods.DELETE, {
+    updateGroupMember(methods.PUT, {
       "username": username,
       "groupID": groupID,
       "operation": "delete"
@@ -276,8 +277,6 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   const mainSectionDict: EnumDictionary<Stage, JSX.Element> = {
-    // [Stage.DECLARATION]: (
-    // ),
     [Stage.GROUP_FORMATION]: (
       <SubmissionGroupFormation
           groupID={groupID}
@@ -289,13 +288,30 @@ const SubmissionSection: React.FC<Props> = ({
       />
     ),
     [Stage.FILE_UPLOAD]: (
-      <SubmissionFileUploadTab
-        requiredResources={requirements}
-        uploadFile={uploadFile}
-        removeFile={removeFile}
-        downloadFile={downloadFile}
-        refresh={refreshRequirements}
-      />
+      <div>
+        <SubmissionFileUploadTab
+          requiredResources={requirements}
+          uploadFile={uploadFile}
+          removeFile={removeFile}
+          downloadFile={downloadFile}
+          refresh={refreshRequirements}
+        />
+        <hr/>
+        <SubmitDeclarationSection
+          status={declarationStatus}
+          declaredHelpers={declaredHelpers}
+          onSetUnaided={() => {
+            uploadDeclaration("Unaided")
+          }}
+          onSetWithHelp={() => {
+            uploadDeclaration([])
+          }}
+          addHelper={(name, login) => {
+            addDeclarationHelper(name, login)
+          }}
+          removeHelper={removeDeclarationHelper}
+        />
+      </div>
     ),
   }
 
@@ -312,30 +328,23 @@ const SubmissionSection: React.FC<Props> = ({
     )
   }
 
-  return (
-    <>
-      <div className={styles.sectionSwitcher}>
-        <ButtonGroup>
-          {allStages.map(buttonOf)}
-        </ButtonGroup>
+  const sectionOf = (s: Stage, index: number) => {
+    return (
+      <div>
+        <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
+          {s}
+        </Accordion.Toggle>
+        <Accordion.Collapse eventKey={`${index}`}>
+          {mainSectionDict[s]}
+        </Accordion.Collapse>
       </div>
-      {mainSectionDict[stage]}
-      <hr></hr>
-      <SubmitDeclarationSection
-        status={declarationStatus}
-        declaredHelpers={declaredHelpers}
-        onSetUnaided={() => {
-          uploadDeclaration("Unaided")
-        }}
-        onSetWithHelp={() => {
-          uploadDeclaration([])
-        }}
-        addHelper={(name, login) => {
-          addDeclarationHelper(name, login)
-        }}
-        removeHelper={removeDeclarationHelper}
-      />
-    </>
+    )
+  }
+
+  return (
+    <Accordion defaultActiveKey="0">
+      {allStages.map(sectionOf)}
+    </Accordion>
   )
 }
 

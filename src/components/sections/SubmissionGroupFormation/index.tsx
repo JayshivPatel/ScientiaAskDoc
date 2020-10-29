@@ -117,7 +117,6 @@ const SubmissionGroupFormation: React.FC<Props> = ({
 
   return (
     <div>
-      <span className={styles.sectionHeader}>Group Members</span>
       <Row md={2} noGutters={true}>
         {
           groupMembers && (groupMembers.map(
