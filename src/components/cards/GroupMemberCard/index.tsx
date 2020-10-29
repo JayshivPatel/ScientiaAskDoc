@@ -16,37 +16,50 @@ import {
 import {Role} from "../../sections/SubmissionGroupFormation";
 
 interface ExtraProps {
+  currentUser: string
   currentRole: string
-  onRemoveButtonClick: (username: string) => void
+  onRemoveButtonClick?: (username: string) => void
+  onClick?: (mouseEvent: React.MouseEvent) => void
 }
 
 type Props = GroupFormationMemberInfo & ExtraProps
 
-
 const GroupMemberCard: React.FC<Props> = ({
+  currentUser,
   currentRole,
   username,
-  name,
+  realName,
   classEnrolled,
   role,
   signatureTime,
   onRemoveButtonClick,
+  onClick,
 }) => {
+  const [tagStyle, tagText] = (() => {
+    if (signatureTime) {
+      return [styles.tagTeal, `SIGNED ${moment(signatureTime).fromNow().toUpperCase()}`]
+    } else if (currentUser === username && currentRole === Role.MEMBER) {
+      return [styles.tagPink, "Click Here to Sign"]
+    } else {
+      return [styles.tagPink, "Not Signed"]
+    }
+  })()
 
   return (
     <Col style={{padding: "0.5em", zIndex: 0}}>
       <Container
         className={classNames(styles.groupMemberCard, role === 'leader' && styles.leaderCard)}
+        onClick={onClick}
       >
         <div
-             style={{ verticalAlign: 'top', height: '100%', paddingTop: '0.5rem' }}
+          style={{ verticalAlign: 'top', height: '100%', paddingTop: '0.5rem' }}
         >
           <Image
             src={`/images/${theme()}/user.png`}
             className={styles.profilePic}
           />
         </div>
-        {!signatureTime && currentRole == Role.LEADER &&
+        {onRemoveButtonClick &&
         (<Button
           className={styles.removeButton}
           variant={"secondary"}
@@ -56,7 +69,7 @@ const GroupMemberCard: React.FC<Props> = ({
         </Button>)}
         <div className={styles.memberInfoSection}>
           <h4 className={styles.memberName}>
-            {name}
+            {realName}
           </h4>
           <div style={{ display: 'flex' }}>
             <h6 className={styles.memberName}>{username}</h6>
@@ -67,15 +80,14 @@ const GroupMemberCard: React.FC<Props> = ({
             key={"sign"}
             className={classNames(
               styles.tag,
-              signatureTime ? styles.tagTeal : styles.tagPink
+              tagStyle
             )}
           >
-            {signatureTime ? moment(signatureTime).fromNow().toUpperCase() : "NOT SIGNED"}
+            {tagText}
           </Badge>
         </div>
       </Container>
     </Col>
 )
 }
-
 export default GroupMemberCard

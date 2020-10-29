@@ -57,6 +57,10 @@ const SubmissionSection: React.FC<Props> = ({
   const currentUser = authenticationService.getUserInfo()["username"]
 
   useEffect(() => {
+    retrieveAvailableStudents()
+  }, [])
+
+  const retrieveAvailableStudents = () => {
     request({
       url: api.CATE_GROUP_FORMATION(courseCode, exerciseID),
       method: methods.POST,
@@ -67,20 +71,19 @@ const SubmissionSection: React.FC<Props> = ({
       },
       onError: (message: string) => console.log(`Failed to retrieve available students: ${message}`),
     })
-  }, [])
+  }
 
-
-  const updateGroupMember = (method: string, username: string) => {
+  const updateGroupMember = (method: string, body: {[k: string]: any}) => {
     request({
       url: api.CATE_GROUP_FORMATION(courseCode, exerciseID),
       method: method,
-      body: {
-        username: username,
-        groupID: groupID
-      },
+      body: body,
       onSuccess: () => {},
-      onError: (message: string) => console.log(`Failed to update new team member ${username}: ${message}`),
-    }).finally(retrieveGroupInfo)
+      onError: (message: string) => console.log(`Failed to update new team member: ${message}`),
+    }).finally(() => {
+      retrieveGroupInfo()
+      retrieveAvailableStudents()
+    })
   }
 
   const retrieveGroupInfo = () => {
@@ -93,7 +96,7 @@ const SubmissionSection: React.FC<Props> = ({
             setGroupID(groupID)
             setGroupMembers(data[groupID].map((memberInfo: { [attr: string]: string }) => ({
               username: memberInfo.username,
-              name: `${memberInfo.lastname}, ${memberInfo.firstname}`,
+              realName: `${memberInfo.lastname}, ${memberInfo.firstname}`,
               classEnrolled: memberInfo.class,
               role: memberInfo.role,
               signatureTime: memberInfo.signature === "Unsigned" ? undefined : moment(memberInfo.signature).toDate()
@@ -107,6 +110,44 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   useEffect(() => retrieveGroupInfo(), [])
+
+  const addNewGroupMember = (username: string) => {
+    updateGroupMember(methods.PUT, {
+      "username": username,
+      "groupID": groupID,
+      "operation": "add"
+    })
+  }
+
+  const removeGroupMember = (username: string) => {
+    updateGroupMember(methods.DELETE, {
+      "username": username,
+      "groupID": groupID,
+      "operation": "delete"
+    })
+  }
+
+  const addMemberSignature = (username: string) => {
+    updateGroupMember(methods.PUT, {
+      "username": username,
+      "groupID": groupID,
+      "operation": "sign"
+    })
+  }
+
+  const deleteGroup = () => {
+    request({
+      url: api.CATE_GROUP_FORMATION(courseCode, exerciseID),
+      method: methods.DELETE,
+      body: {
+        "groupID": groupID
+      },
+      onSuccess: () => {},
+      onError: (message: string) => console.log(`Failed to delete new team member: ${message}`),
+    }).finally(() => {
+    })
+  }
+
 
   const refreshRequirements = () => {
     setIsLoaded(false)
@@ -242,9 +283,9 @@ const SubmissionSection: React.FC<Props> = ({
           groupID={groupID}
           groupMembers={groupMembers}
           availableStudents={availableStudents}
-          addNewGroupMember={(username: string) => updateGroupMember(methods.PUT, username)}
-          removeGroupMember={(username: string) => updateGroupMember(methods.DELETE, username)}
-          refresh={retrieveGroupInfo}
+          addNewGroupMember={addNewGroupMember}
+          removeGroupMember={removeGroupMember}
+          addMemberSignature={addMemberSignature}
       />
     ),
     [Stage.FILE_UPLOAD]: (

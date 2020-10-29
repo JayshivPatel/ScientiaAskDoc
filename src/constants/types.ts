@@ -13,7 +13,7 @@ export interface Folder {
 
 export interface GroupFormationMemberInfo {
   username: string,
-  name: string
+  realName: string
   classEnrolled: string,
   role: string,
   signatureTime: Date | undefined

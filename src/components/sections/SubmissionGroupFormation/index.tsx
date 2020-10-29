@@ -51,7 +51,7 @@ interface Props {
   availableStudents: StudentInfo[]
   addNewGroupMember: (username: string) => void
   removeGroupMember: (username: string) => void
-  refresh: () => void
+  addMemberSignature: (username: string) => void
 }
 
 const SubmissionGroupFormation: React.FC<Props> = ({
@@ -60,12 +60,15 @@ const SubmissionGroupFormation: React.FC<Props> = ({
                                                      availableStudents,
                                                      addNewGroupMember,
                                                      removeGroupMember,
-                                                     refresh,
+                                                     addMemberSignature,
                                                    }) => {
   const [newMember, setNewMember] = useState("")
-  const [availableStudentOptions, setAvailableStudentOptions] = useState<Option[]>(
-    availableStudents.map(createOption)
-  )
+  const [availableStudentOptions, setAvailableStudentOptions] = useState<Option[]>([])
+
+  useEffect(() => {
+    setAvailableStudentOptions(availableStudents.map(createOption))
+  }, [availableStudents])
+
   const isLeader = (username: string) => {
     if (groupMembers.length === 0) {
       return true
@@ -76,47 +79,10 @@ const SubmissionGroupFormation: React.FC<Props> = ({
   const currentUser = authenticationService.getUserInfo()["username"]
   const currentRole: string = isLeader(currentUser) ? Role.LEADER : Role.MEMBER
 
-  const studentInfoRow = (studentInfo: GroupFormationMemberInfo) => (
-    <tr key={`${studentInfo.name}`}>
-      <td>
-        {studentInfo.name} ({studentInfo.username})
-      </td>
-      <td>
-        {studentInfo.classEnrolled}
-      </td>
-      <td>
-        {studentInfo.role}
-      </td>
-      <td>
-        {(!studentInfo.signatureTime && (
-          <span className={styles.unsignedLabel}>NOT YET SIGNED</span>
-        )) ||
-        (studentInfo.signatureTime?.toISOString().slice(0, 10))}
-      </td>
-      <td>
-        {/*
-          * Display the checkbox if:
-          * 1. the current user is a group member, the username in studentInfo matches that of the current
-          *  user, and the current user has not yet signed
-          * 2. the current user is the leader and the username in studentInfo does not match the
-          * that of the current user
-          * */
-        }
-        {(((currentRole === Role.MEMBER && currentUser === studentInfo.username && !studentInfo.signatureTime)
-            || (currentRole === Role.LEADER && currentUser !== studentInfo.username)) && (
-            <Form.Group controlId="signatureCheckbox">
-              <Form.Check type="checkbox"/>
-            </Form.Group>
-          )
-        )}
-      </td>
-    </tr>
-  )
-
-  const leaderButtonGroup = (hasMembers: boolean) => (
+  const leaderButtonGroup = () => (
     <>
       <Form.Row>
-        <Col xs={10}>
+        <Col xs={11}>
           <Select
             className={styles.select}
             menuPlacement="auto"
@@ -127,7 +93,7 @@ const SubmissionGroupFormation: React.FC<Props> = ({
             }
           />
         </Col>
-        <Col>
+        <Col xs={1}>
           <Button
             className={styles.sectionButton}
             onClick={() => {
@@ -135,7 +101,14 @@ const SubmissionGroupFormation: React.FC<Props> = ({
               setNewMember('')
             }}
           >
-            Add
+            <FontAwesomeIcon icon={faPlus}/>
+          </Button>
+        </Col>
+      </Form.Row>
+      <Form.Row>
+        <Col>
+          <Button className={styles.deleteGroupButton}>
+            Delete Group
           </Button>
         </Col>
       </Form.Row>
@@ -145,34 +118,27 @@ const SubmissionGroupFormation: React.FC<Props> = ({
   return (
     <div>
       <span className={styles.sectionHeader}>Group Members</span>
-      {/*
-      <Table responsive style={{marginBottom: 0}}>
-        <thead>
-        <tr>
-          {(isLeader(currentUser) ? tableHeadingsLeader : tableHeadingsMember).map((heading) => (
-            <th key={heading}>{heading}</th>
-          ))}
-        </tr>
-        </thead>
-        <tbody>
-        {groupMembers && (groupMembers.map((memberInfo: GroupFormationMemberInfo) => studentInfoRow(memberInfo)))}
-        </tbody>
-      </Table>
-      */}
       <Row md={2} noGutters={true}>
         {
           groupMembers && (groupMembers.map(
               (memberInfo: GroupFormationMemberInfo) => {
-                const { username, name, classEnrolled, role, signatureTime } = memberInfo
+                const { username, realName, classEnrolled, role, signatureTime } = memberInfo
+                const onRemoveButtonClick =
+                  currentRole === Role.LEADER && !signatureTime ? removeGroupMember : undefined
+                const onClick = currentRole === Role.MEMBER && username === currentUser && !signatureTime ?
+                  () => addMemberSignature(username) : undefined
                 return (
                   <GroupMemberCard
+                    key={username}
+                    currentUser={currentUser}
                     currentRole={currentRole}
                     username={username}
-                    name={name}
+                    realName={realName}
                     classEnrolled={classEnrolled}
                     role={role}
                     signatureTime={signatureTime}
-                    onRemoveButtonClick={removeGroupMember}
+                    onRemoveButtonClick={onRemoveButtonClick}
+                    onClick={onClick}
                   />
                 )
               }
@@ -181,9 +147,8 @@ const SubmissionGroupFormation: React.FC<Props> = ({
         }
       </Row>
       <Form>
-        {(currentRole === Role.LEADER && leaderButtonGroup(groupMembers.length > 1))}
+        {(currentRole === Role.LEADER && leaderButtonGroup())}
       </Form>
     </div>);
 }
-
 export default SubmissionGroupFormation
