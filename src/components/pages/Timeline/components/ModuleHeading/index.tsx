@@ -23,7 +23,7 @@ const ModuleHeading: React.FC<ModuleHeadingprops> = ({
       to={`modules/${moduleCode}/submissions`}>
       <Card.Header>
         <span>{moduleCode}</span>
-        <span>{`Level ${subscriptionLevel}`}</span>
+        <span style={{ color: 'var(--tertiary-text-color)', fontSize: '12px' }}>{`Level ${subscriptionLevel}`}</span>
       </Card.Header>
       <Card.Body>
         <Card.Text>{title}</Card.Text>

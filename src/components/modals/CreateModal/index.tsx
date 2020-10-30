@@ -38,7 +38,7 @@ import {api, methods} from "constants/routes"
 import moment from "moment"
 import CreatableSelect from 'react-select/creatable';
 import Container from "react-bootstrap/cjs/Container";
-import Select from "react-select/base";
+import Select from "react-select";
 
 interface CreateModalProps {
   show: boolean
@@ -431,7 +431,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 onInputChange={handleInputChange}
                 options={weigh_options}
                 placeholder={'%'}
-                className={styles.SelectArea_layer3}
+                className={styles.SelectArea_layer2}
               />
             </Col>
           </Row>
