@@ -197,7 +197,7 @@ const SubmissionSection: React.FC<Props> = ({
       sendFile: false
     })
 
-    allStages.includes(Stage.GROUP_FORMATION) && request({
+    allStages.includes(Stage.FILE_UPLOAD) && request({
       url: api.CATE_DECLARATION(courseCode, exerciseID),
       method: methods.GET,
       body: {
