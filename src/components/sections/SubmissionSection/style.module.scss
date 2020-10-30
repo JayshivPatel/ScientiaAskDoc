@@ -35,7 +35,7 @@
 
 .sectionButton:focus {
   outline: none !important;
-  outline-offset: none !important;
+  outline-offset: 0 !important;
   box-shadow: none !important;
 }
 
@@ -93,6 +93,8 @@
 }
 
 .accordionTab {
+  cursor: pointer;
+  background-color: var(--secondary-background-color);
   font-size: 15px;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -101,7 +103,10 @@
 }
 
 .accordionTab:hover {
-
   background-color: var(--primary-button-hover);
   color: var(--primary-button-text);
+}
+
+.collapse {
+  background-color: var(--background-color);
 }

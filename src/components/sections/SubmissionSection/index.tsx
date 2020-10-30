@@ -342,7 +342,7 @@ const SubmissionSection: React.FC<Props> = ({
         <Accordion.Toggle as={Card.Header} className={styles.accordionTab} eventKey={`${index}`}>
           {s}
         </Accordion.Toggle>
-        <Accordion.Collapse eventKey={`${index}`}>
+        <Accordion.Collapse eventKey={`${index}`} className={styles.collapse}>
           {mainSectionDict[s]}
         </Accordion.Collapse>
       </div>
