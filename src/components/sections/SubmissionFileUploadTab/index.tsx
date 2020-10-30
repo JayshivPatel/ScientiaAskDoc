@@ -16,6 +16,7 @@ interface Props {
   removeFile: (index: number) => void
   downloadFile: (url: string, filename: string, suffix: string) => void
   refresh: () => void
+  onWarningSectionClick: (event: React.MouseEvent) => void
 }
 
 const SubmissionFileUploadTab: React.FC<Props> = ({
@@ -24,6 +25,7 @@ const SubmissionFileUploadTab: React.FC<Props> = ({
   uploadFile,
   removeFile,
   downloadFile,
+  onWarningSectionClick,
 }) => {
 
   const uploadRef = useRef<HTMLInputElement>(null)
@@ -91,7 +93,7 @@ const SubmissionFileUploadTab: React.FC<Props> = ({
 
   const warningSection = (
     <>
-      <Container className={styles.warningSection}>
+      <Container className={styles.warningSection} onClick={onWarningSectionClick}>
         <FontAwesomeIcon icon={faExclamation} style={{fontSize: "3.5rem", marginRight: "2rem"}}/>
         <span className={styles.warningLabel}>Your must be in a group to submit your work!</span>
       </Container>
