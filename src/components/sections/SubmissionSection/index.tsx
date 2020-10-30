@@ -28,6 +28,23 @@ enum Stage {
   FILE_UPLOAD = "File Upload",
 }
 
+enum LoadingParts {
+  DECLARATION = 'Declaration',
+  GROUP_INFO = 'Group Info',
+  AVAILABLE_STUDENTS = 'Available Students',
+  FILE_STATUS = 'File Status',
+}
+
+const groupParts = [
+  LoadingParts.GROUP_INFO,
+  LoadingParts.AVAILABLE_STUDENTS
+]
+
+const essentialParts = [
+  LoadingParts.FILE_STATUS,
+  LoadingParts.DECLARATION
+]
+
 interface Props {
   event?: TimelineEvent
   activeDay: Date
@@ -43,8 +60,13 @@ const SubmissionSection: React.FC<Props> = ({
 }) => {
   const allStages: Stage[] = event?.assessment === "group" ?
     [ Stage.FILE_UPLOAD, Stage.GROUP_FORMATION ] : [ Stage.FILE_UPLOAD ];
-  const [loadingStages, setLoadingStages] = useState<Set<Stage>>(new Set())
-  const [loadErrorStages, setLoadErrorStages] = useState<Set<Stage>>(new Set())
+  const allParts: LoadingParts[] =
+    event?.assessment === "group" 
+      ? [...groupParts, ...essentialParts] 
+      : essentialParts
+  
+  const [loadingParts, setLoadingParts] = useState<Set<LoadingParts>>(new Set())
+  const [loadErrorParts, setLoadErrorParts] = useState<Set<LoadingParts>>(new Set())
   const [requirements, setRequirements] = useState<ResourceUploadRequirement[]>([])
   const [declarationStatus, setDeclarationStatus] = useState<DeclarationStatus>(DeclarationStatus.UNAIDED)
   const [declaredHelpers, setDeclaredHelpers] = useState<DeclarationHelper[]>([])
@@ -53,29 +75,27 @@ const SubmissionSection: React.FC<Props> = ({
   const [availableStudents, setAvailableStudents] = useState<StudentInfo[]>([])
   const currentUser = authenticationService.getUserInfo()["username"]
 
-  const loaded = (s: Stage) => {
-    loadingStages.delete(s)
-    setLoadingStages(new Set(loadingStages))
+  const loaded = (part: LoadingParts) => {
+    setLoadingParts(loadingParts => {
+      loadingParts.delete(part)
+      return new Set(loadingParts)
+    })
   }
 
-  const loadError = (s: Stage) => {
-    loadingStages.delete(s)
-    setLoadingStages(new Set([...loadingStages]))
-    setLoadErrorStages(new Set([...loadErrorStages, s]))
+  const loadError = (part: LoadingParts) => {
+    setLoadingParts(loadingParts => {
+      console.log("Failed to retrieve part: ", part)
+      loadingParts.delete(part)
+      return new Set([...loadingParts])
+    })
+    setLoadErrorParts(loadErrorParts => new Set([...loadErrorParts, part]))
   }
 
-  const isLoaded = loadingStages.size === 0
+  const isLoaded = loadingParts.size === 0
+  const isLoadError = loadErrorParts.size > 0
 
   /* ================================ Group Formation ================================ */
-  useEffect(() => {
-    if (event?.assessment === "group") {
-      retrieveGroupInfo()
-      retrieveAvailableStudents()
-    }
-    refreshRequirements()
-  }, [])
-
-  const retrieveAvailableStudents = () => {
+  const retrieveAvailableStudents = async () => {
     request({
       url: api.CATE_AVAILABLE_STUDENTS_FOR_EXERCISE(courseCode, exerciseID),
       method: methods.GET,
@@ -83,8 +103,9 @@ const SubmissionSection: React.FC<Props> = ({
         if (data) {
           setAvailableStudents(Object.keys(data).map((key, _) => data[key]))
         }
+        loaded(LoadingParts.AVAILABLE_STUDENTS)
       },
-      onError: (message: string) => console.log(`Failed to retrieve available students: ${message}`),
+      onError: () => loadError(LoadingParts.AVAILABLE_STUDENTS),
     })
   }
 
@@ -101,7 +122,7 @@ const SubmissionSection: React.FC<Props> = ({
     })
   }
 
-  const retrieveGroupInfo = () => {
+  const retrieveGroupInfo = async () => {
     request({
       url: api.CATE_GROUP_FORMATION(courseCode, exerciseID),
       method: methods.GET,
@@ -121,9 +142,10 @@ const SubmissionSection: React.FC<Props> = ({
           setGroupID("")
           setGroupMembers([])
         }
+        loaded(LoadingParts.GROUP_INFO)
       },
       body: { username: currentUser },
-      onError: (message: string) => console.log(`Failed to retrieve user information: ${message}`)
+      onError: () => loadError(LoadingParts.GROUP_INFO)
     })
   }
 
@@ -180,47 +202,6 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   /* ================================ File Submission ================================ */
-  const refreshRequirements = () => {
-    setLoadingStages(new Set(allStages))
-
-    allStages.includes(Stage.FILE_UPLOAD) && request({
-      url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
-      method: methods.GET,
-      body: {
-        username: authenticationService.getUserInfo()["username"]
-      },
-      onSuccess: (data: { requirements: ResourceUploadRequirement[] }) => {
-        setRequirements(data.requirements)
-        loaded(Stage.FILE_UPLOAD)
-      },
-      onError: () => loadError(Stage.FILE_UPLOAD),
-      sendFile: false
-    })
-
-    allStages.includes(Stage.FILE_UPLOAD) && request({
-      url: api.CATE_DECLARATION(courseCode, exerciseID),
-      method: methods.GET,
-      body: {
-        username: authenticationService.getUserInfo()["username"],
-        operation: 'get'
-      },
-      onSuccess: (data: null | "Unaided" | { name: string, login: string }[]) => {
-        if (data === null) {
-          setDeclarationStatus(DeclarationStatus.UNAIDED)
-          setDeclaredHelpers([])
-        } else if (data === "Unaided") {
-          setDeclarationStatus(DeclarationStatus.UNAIDED)
-          setDeclaredHelpers([])
-        } else {
-          setDeclarationStatus(DeclarationStatus.WITH_HELP)
-          setDeclaredHelpers(data)
-        }
-        loaded(Stage.GROUP_FORMATION)
-      },
-      onError: () => loadError(Stage.GROUP_FORMATION),
-    })
-  }
-
   const uploadFile = (file: File, index: number) => {
     const requirement = requirements[index]
     const suffix = file.name.substr(file.name.lastIndexOf('.') + 1)
@@ -257,7 +238,7 @@ const SubmissionSection: React.FC<Props> = ({
         })
       },
       onError: () => {},
-    }).finally(refreshRequirements)
+    }).finally(refreshAllParts)
   }
 
   const removeFile = (index: number) => {
@@ -270,12 +251,26 @@ const SubmissionSection: React.FC<Props> = ({
       },
       onSuccess: () => {},
       onError:  () => {},
-    }).finally(refreshRequirements)
+    }).finally(refreshAllParts)
   }
 
   const downloadFile = (url: string, filename: string, suffix: string) => {
     download(api.CATE_FILE_DOWNLOAD, `${filename}.${suffix}`, { downloadPath: url })
   }
+
+  const retrieveFileStatus = async () => request({
+    url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
+    method: methods.GET,
+    body: {
+      username: authenticationService.getUserInfo()["username"]
+    },
+    onSuccess: (data: { requirements: ResourceUploadRequirement[] }) => {
+      setRequirements(data.requirements)
+      loaded(LoadingParts.FILE_STATUS)
+    },
+    onError: () => loadError(LoadingParts.FILE_STATUS),
+    sendFile: false
+  })
 
 
   /* ================================ Declaration ================================ */
@@ -289,7 +284,6 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   const uploadDeclaration = (data: "Unaided" | DeclarationHelper[]) => {
-    console.log(data)
     request({
       url: api.CATE_DECLARATION(courseCode, exerciseID),
       method: methods.PUT,
@@ -299,9 +293,48 @@ const SubmissionSection: React.FC<Props> = ({
       },
       onSuccess: () => {},
       onError: () => alert("error")
-    }).then(refreshRequirements)
+    }).then(refreshAllParts)
   }
 
+  const retrieveDeclaration = async () => request({
+    url: api.CATE_DECLARATION(courseCode, exerciseID),
+    method: methods.GET,
+    body: {
+      username: authenticationService.getUserInfo()["username"],
+      operation: 'get'
+    },
+    onSuccess: (data: null | "Unaided" | { name: string, login: string }[]) => {
+      if (data === null) {
+        setDeclarationStatus(DeclarationStatus.UNAIDED)
+        setDeclaredHelpers([])
+      } else if (data === "Unaided") {
+        setDeclarationStatus(DeclarationStatus.UNAIDED)
+        setDeclaredHelpers([])
+      } else {
+        setDeclarationStatus(DeclarationStatus.WITH_HELP)
+        setDeclaredHelpers(data)
+      }
+      loaded(LoadingParts.DECLARATION)
+    },
+    onError: () => loadError(LoadingParts.DECLARATION),
+  })
+
+
+  /* ================================ Refresh ================================ */
+  const refreshAllParts = () => {
+    setLoadingParts(new Set(allParts))
+
+    const actionDic: EnumDictionary<LoadingParts, () => Promise<void>> = {
+      [LoadingParts.GROUP_INFO]: retrieveGroupInfo,
+      [LoadingParts.AVAILABLE_STUDENTS]: retrieveAvailableStudents,
+      [LoadingParts.FILE_STATUS]: retrieveFileStatus,
+      [LoadingParts.DECLARATION]: retrieveDeclaration,
+    }
+
+    Promise.all(allParts.map(part => actionDic[part]()))
+  }
+
+  useEffect(refreshAllParts, [])
 
   const mainSectionDict: EnumDictionary<Stage, JSX.Element> = {
     [Stage.GROUP_FORMATION]: (
@@ -324,7 +357,7 @@ const SubmissionSection: React.FC<Props> = ({
           uploadFile={uploadFile}
           removeFile={removeFile}
           downloadFile={downloadFile}
-          refresh={refreshRequirements}
+          refresh={refreshAllParts}
         />
         <hr/>
         <SubmitDeclarationSection
@@ -367,7 +400,7 @@ const SubmissionSection: React.FC<Props> = ({
             {allStages.map(sectionOf)}
           </Accordion>
         }
-        error={!isLoaded ? `Oops! The server just put me on hold!` : undefined}
+        error={isLoadError ? `Oops! The server just put me on hold!` : undefined}
       />
     </div>
 
