@@ -106,7 +106,7 @@ const StandardView: React.FC<StandardViewProps> = ({
       toDayCount(e1.endDate) >= toDayCount(e2.startDate)
     )
   }
-
+  const exerciseTypes: ("assessed" | "group")[] = ["group", "assessed"]
   useEffect(() => {
     const newEvents: { [pair: string]: TimelineEvent[] } = {}
     for (const module of modules) {
@@ -124,7 +124,7 @@ const StandardView: React.FC<StandardViewProps> = ({
                 startDate: moment(exercise.start_date).toDate(),
                 endDate: moment(exercise.deadlines[0]["deadline"]).toDate(),
                 prefix: exercise.type,
-                assessment: "assessed",
+                assessment: exerciseTypes[Math.floor(Math.random() * exerciseTypes.length)],
                 owner: "",
                 status: "missed",
               }

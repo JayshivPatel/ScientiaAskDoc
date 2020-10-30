@@ -28,10 +28,6 @@ enum Stage {
   FILE_UPLOAD = "File Upload",
 }
 
-const allStages: Stage[] = [
-  Stage.FILE_UPLOAD,
-  Stage.GROUP_FORMATION,
-]
 
 interface Props {
   event?: TimelineEvent
@@ -46,7 +42,8 @@ const SubmissionSection: React.FC<Props> = ({
   courseCode,
   exerciseID,
 }) => {
-
+  const allStages: Stage[] = event?.assessment === "group" ?
+    [ Stage.FILE_UPLOAD, Stage.GROUP_FORMATION ] : [ Stage.FILE_UPLOAD ];
   const [stage, setStage] = useState(Stage.FILE_UPLOAD)
   const [isLoaded, setIsLoaded] = useState(false)
   const [requirements, setRequirements] = useState<ResourceUploadRequirement[]>([])
@@ -58,8 +55,13 @@ const SubmissionSection: React.FC<Props> = ({
   const [availableStudents, setAvailableStudents] = useState<StudentInfo[]>([])
   const currentUser = authenticationService.getUserInfo()["username"]
 
+
+  /* ================================ Group Formation ================================ */
   useEffect(() => {
-    retrieveAvailableStudents()
+    if (event?.assessment === "group") {
+      retrieveGroupInfo()
+      retrieveAvailableStudents()
+    }
   }, [])
 
   const retrieveAvailableStudents = () => {
@@ -114,8 +116,6 @@ const SubmissionSection: React.FC<Props> = ({
     })
   }
 
-  useEffect(() => retrieveGroupInfo(), [])
-
   const addNewGroupMember = (username: string) => {
     updateGroupMember(methods.PUT, {
       "username": username,
@@ -168,7 +168,7 @@ const SubmissionSection: React.FC<Props> = ({
     })
   }
 
-
+  /* ================================ File Submission ================================ */
   const refreshRequirements = () => {
     setIsLoaded(false)
     const onError = (part: string) => () => { alert(part) }
@@ -214,29 +214,6 @@ const SubmissionSection: React.FC<Props> = ({
   useEffect(() => {
     if (isLoaded) console.log("refresh!")
   }, [isLoaded])
-
-  const addDeclarationHelper = (name: string, login: string) => {
-    const newHelpers = [...declaredHelpers, { name, login }]
-    uploadDeclaration(newHelpers)
-  }
-
-  const removeDeclarationHelper = (targetName: string, targetLogin: string) => {
-    uploadDeclaration(declaredHelpers.filter(({ name, login }) => targetName !== name || targetLogin !== login))
-  }
-
-  const uploadDeclaration = (data: "Unaided" | DeclarationHelper[]) => {
-    console.log(data)
-    request({
-      url: api.CATE_DECLARATION(courseCode, exerciseID),
-      method: methods.PUT,
-      body: {
-        username: authenticationService.getUserInfo()["username"],
-        declaration: data
-      },
-      onSuccess: () => {},
-      onError: () => alert("error")
-    }).then(refreshRequirements)
-  }
 
 
   const uploadFile = (file: File, index: number) => {
@@ -295,6 +272,32 @@ const SubmissionSection: React.FC<Props> = ({
     download(api.CATE_FILE_DOWNLOAD, `${filename}.${suffix}`, { downloadPath: url })
   }
 
+
+  /* ================================ Declaration ================================ */
+  const addDeclarationHelper = (name: string, login: string) => {
+    const newHelpers = [...declaredHelpers, { name, login }]
+    uploadDeclaration(newHelpers)
+  }
+
+  const removeDeclarationHelper = (targetName: string, targetLogin: string) => {
+    uploadDeclaration(declaredHelpers.filter(({ name, login }) => targetName !== name || targetLogin !== login))
+  }
+
+  const uploadDeclaration = (data: "Unaided" | DeclarationHelper[]) => {
+    console.log(data)
+    request({
+      url: api.CATE_DECLARATION(courseCode, exerciseID),
+      method: methods.PUT,
+      body: {
+        username: authenticationService.getUserInfo()["username"],
+        declaration: data
+      },
+      onSuccess: () => {},
+      onError: () => alert("error")
+    }).then(refreshRequirements)
+  }
+
+
   const mainSectionDict: EnumDictionary<Stage, JSX.Element> = {
     [Stage.GROUP_FORMATION]: (
       <SubmissionGroupFormation
@@ -311,6 +314,7 @@ const SubmissionSection: React.FC<Props> = ({
     [Stage.FILE_UPLOAD]: (
       <div>
         <SubmissionFileUploadTab
+          displayFileUpload={(event?.assessment === "group" && groupID !== "") || event?.assessment !== "group"}
           requiredResources={requirements}
           uploadFile={uploadFile}
           removeFile={removeFile}

@@ -3,11 +3,14 @@ import styles from './style.module.scss'
 import FileItemRow from 'components/rows/FileItemRow'
 import { Resource, ResourceUploadRequirement, ResourceUploadStatus } from 'constants/types'
 import UploadResourceItemRow from 'components/rows/UploadResourceItemRow'
-import { faDownload, faTrash, faUpload, IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import {faDownload, faExclamation, faTrash, faUpload, faUsers, IconDefinition} from '@fortawesome/free-solid-svg-icons'
 import { showFileSize } from 'utils/functions'
 import moment from 'moment'
+import Container from "react-bootstrap/cjs/Container";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 interface Props {
+  displayFileUpload: boolean
   requiredResources: ResourceUploadRequirement[]
   uploadFile: (file: File, index: number) => void
   removeFile: (index: number) => void
@@ -16,6 +19,7 @@ interface Props {
 }
 
 const SubmissionFileUploadTab: React.FC<Props> = ({
+  displayFileUpload,
   requiredResources,
   uploadFile,
   removeFile,
@@ -64,8 +68,8 @@ const SubmissionFileUploadTab: React.FC<Props> = ({
     }
   }
 
-  return (
-    <div>
+  const fileUploadSection = (
+    <>
       <span>Requirements: </span>
       <input type="file" ref={uploadRef} onChange={e => onFileSelection(e)} style={{ display: "none" }}></input>
       {requiredResources.map((resource, index) => {
@@ -82,6 +86,21 @@ const SubmissionFileUploadTab: React.FC<Props> = ({
           </div>
         )
       })}
+    </>
+  )
+
+  const warningSection = (
+    <>
+      <Container className={styles.warningSection}>
+        <FontAwesomeIcon icon={faExclamation} style={{fontSize: "3.5rem", marginRight: "2rem"}}/>
+        <span className={styles.warningLabel}>Your must be in a group to submit your work!</span>
+      </Container>
+    </>
+  )
+
+  return (
+    <div>
+      {(displayFileUpload && fileUploadSection) || (!displayFileUpload && warningSection)}
     </div>
   )
 }
