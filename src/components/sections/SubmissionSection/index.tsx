@@ -28,7 +28,6 @@ enum Stage {
   FILE_UPLOAD = "File Upload",
 }
 
-
 interface Props {
   event?: TimelineEvent
   activeDay: Date
@@ -44,10 +43,9 @@ const SubmissionSection: React.FC<Props> = ({
 }) => {
   const allStages: Stage[] = event?.assessment === "group" ?
     [ Stage.FILE_UPLOAD, Stage.GROUP_FORMATION ] : [ Stage.FILE_UPLOAD ];
-  const [stage, setStage] = useState(Stage.FILE_UPLOAD)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [loadingStages, setLoadingStages] = useState<Set<Stage>>(new Set())
+  const [loadErrorStages, setLoadErrorStages] = useState<Set<Stage>>(new Set())
   const [requirements, setRequirements] = useState<ResourceUploadRequirement[]>([])
-  const [uploaded, setUploaded] = useState<ResourceUploadStatus[]>([])
   const [declarationStatus, setDeclarationStatus] = useState<DeclarationStatus>(DeclarationStatus.UNAIDED)
   const [declaredHelpers, setDeclaredHelpers] = useState<DeclarationHelper[]>([])
   const [groupID, setGroupID] = useState("")
@@ -55,6 +53,18 @@ const SubmissionSection: React.FC<Props> = ({
   const [availableStudents, setAvailableStudents] = useState<StudentInfo[]>([])
   const currentUser = authenticationService.getUserInfo()["username"]
 
+  const loaded = (s: Stage) => {
+    loadingStages.delete(s)
+    setLoadingStages(new Set(loadingStages))
+  }
+
+  const loadError = (s: Stage) => {
+    loadingStages.delete(s)
+    setLoadingStages(new Set([...loadingStages]))
+    setLoadErrorStages(new Set([...loadErrorStages, s]))
+  }
+
+  const isLoaded = loadingStages.size === 0
 
   /* ================================ Group Formation ================================ */
   useEffect(() => {
@@ -62,6 +72,7 @@ const SubmissionSection: React.FC<Props> = ({
       retrieveGroupInfo()
       retrieveAvailableStudents()
     }
+    refreshRequirements()
   }, [])
 
   const retrieveAvailableStudents = () => {
@@ -170,10 +181,9 @@ const SubmissionSection: React.FC<Props> = ({
 
   /* ================================ File Submission ================================ */
   const refreshRequirements = () => {
-    setIsLoaded(false)
-    const onError = (part: string) => () => { alert(part) }
+    setLoadingStages(new Set(allStages))
 
-    request({
+    allStages.includes(Stage.FILE_UPLOAD) && request({
       url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
       method: methods.GET,
       body: {
@@ -181,13 +191,13 @@ const SubmissionSection: React.FC<Props> = ({
       },
       onSuccess: (data: { requirements: ResourceUploadRequirement[] }) => {
         setRequirements(data.requirements)
-        setIsLoaded(true)
+        loaded(Stage.FILE_UPLOAD)
       },
-      onError: onError("file"),
+      onError: () => loadError(Stage.FILE_UPLOAD),
       sendFile: false
     })
 
-    request({
+    allStages.includes(Stage.GROUP_FORMATION) && request({
       url: api.CATE_DECLARATION(courseCode, exerciseID),
       method: methods.GET,
       body: {
@@ -205,16 +215,11 @@ const SubmissionSection: React.FC<Props> = ({
           setDeclarationStatus(DeclarationStatus.WITH_HELP)
           setDeclaredHelpers(data)
         }
+        loaded(Stage.GROUP_FORMATION)
       },
-      onError: onError("decl"),
+      onError: () => loadError(Stage.GROUP_FORMATION),
     })
   }
-
-  useEffect(refreshRequirements, [])
-  useEffect(() => {
-    if (isLoaded) console.log("refresh!")
-  }, [isLoaded])
-
 
   const uploadFile = (file: File, index: number) => {
     const requirement = requirements[index]
@@ -362,6 +367,7 @@ const SubmissionSection: React.FC<Props> = ({
             {allStages.map(sectionOf)}
           </Accordion>
         }
+        error={!isLoaded ? `Oops! The server just put me on hold!` : undefined}
       />
     </div>
 
