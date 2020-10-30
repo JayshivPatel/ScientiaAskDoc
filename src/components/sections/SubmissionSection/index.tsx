@@ -73,6 +73,7 @@ const SubmissionSection: React.FC<Props> = ({
   const [groupID, setGroupID] = useState("")
   const [groupMembers, setGroupMembers] = useState<GroupFormationMemberInfo[]>([])
   const [availableStudents, setAvailableStudents] = useState<StudentInfo[]>([])
+  const[activeStage, setActiveStage] = useState(event?.assessment === "group" ? "1" : "0")
   const currentUser = authenticationService.getUserInfo()["username"]
 
   const loaded = (part: LoadingParts) => {
@@ -335,6 +336,9 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   useEffect(refreshAllParts, [])
+  
+  // Programmatically open the group formation tab
+  const openGroupFormationTab = (event: React.MouseEvent) => setActiveStage("1")
 
   const mainSectionDict: EnumDictionary<Stage, JSX.Element> = {
     [Stage.GROUP_FORMATION]: (
@@ -358,6 +362,7 @@ const SubmissionSection: React.FC<Props> = ({
           removeFile={removeFile}
           downloadFile={downloadFile}
           refresh={refreshAllParts}
+          onWarningSectionClick={openGroupFormationTab}
         />
         <hr/>
         <SubmitDeclarationSection
@@ -381,7 +386,11 @@ const SubmissionSection: React.FC<Props> = ({
   const sectionOf = (s: Stage, index: number) => {
     return (
       <div>
-        <Accordion.Toggle as={Card.Header} className={styles.accordionTab} eventKey={`${index}`}>
+        <Accordion.Toggle
+          onClick={() => setActiveStage(`${index}`)}
+          as={Card.Header}
+          className={styles.accordionTab}
+          eventKey={`${index}`}>
           {s}
         </Accordion.Toggle>
         <Accordion.Collapse eventKey={`${index}`} className={styles.collapse}>
@@ -396,7 +405,7 @@ const SubmissionSection: React.FC<Props> = ({
       <LoadingScreen
         isLoaded={isLoaded}
         successful={
-          <Accordion defaultActiveKey="0">
+          <Accordion activeKey={activeStage}>
             {allStages.map(sectionOf)}
           </Accordion>
         }
