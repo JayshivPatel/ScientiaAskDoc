@@ -258,7 +258,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
     setProvOnlineSwitch(!provOnlineSwitch);
   };
 
-  // state for provision onlin data
+  // state for provision online data
   const [provOnlineDataSwitch, setProvOnlineDataSwitch] = useState(false);
   const provOnlineDataSwitchAction = () => {
     setProvOnlineDataSwitch(!provOnlineDataSwitch);
@@ -295,7 +295,6 @@ const CreateModal: React.FC<CreateModalProps> = ({
   const dateInfoLabels = [
     "Start date:",
     "Due date:",
-    "Visible after:",
   ]
 
   const datePicker = (
@@ -363,17 +362,6 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
             {dateInfoLabels.map(createDateInfoRow)}
           </Container>
-            {/* <Col className={styles.Col}>
-              <FontAwesomeIcon icon={faClock} className={styles.font}/>Due time:
-              <CreatableSelect
-                isClearable
-                onChange={handleChange}
-                onInputChange={handleInputChange}
-                options={time_options}
-                className={styles.SelectArea_layer2}
-                placeholder={"Select a time"}
-              />
-            </Col> */}
 
           <hr/>
 
@@ -452,7 +440,9 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
           <Row className={styles.Row}>
             <Col className={styles.Col}>
-              Provision of on-line answers:
+              <span className={styles.infoLabel}>
+                Provision of answers:
+              </span>
               <Col>
                 <Form.Switch onChange={provOnlineAnswerSwitchAction}
                              id={"provOnlineAnswerSwitch"}
@@ -462,10 +452,18 @@ const CreateModal: React.FC<CreateModalProps> = ({
               </Col>
             </Col>
 
-
             <Col className={styles.Col}>
-              Visible after:
-              <Form.Control type="number" min={0} max={5} defaultValue={2} className={styles.TextArea}/>weeks
+              <span className={styles.infoLabel}>
+                Visible after:
+              </span>
+              <Form.Control
+                type="number"
+                disabled={!provOnlineAnswerSwitch}
+                min={0}
+                max={5}
+                defaultValue={2}
+                className={styles.TextArea}/>
+                weeks
             </Col>
           </Row>
 
