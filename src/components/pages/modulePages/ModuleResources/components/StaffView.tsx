@@ -5,7 +5,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup"
 import Col from "react-bootstrap/esm/Col"
 import Row from "react-bootstrap/esm/Row"
 
-import { faEdit } from "@fortawesome/free-regular-svg-icons"
+import {faEdit, faPlusSquare} from "@fortawesome/free-regular-svg-icons"
 import {
   faDownload,
   faTrash,
@@ -158,7 +158,7 @@ const StaffView: React.FC<StaffViewProps> = ({
           <Button onClick={() => setModal("create")} block>
             {/*Remove All*/}
             Add new Exercise
-            <FontAwesomeIcon style={{ float: "right" }} icon={faTrash} />
+            <FontAwesomeIcon style={{ float: "right" }} icon={faPlusSquare} />
           </Button>
         </Col>
       </Row>

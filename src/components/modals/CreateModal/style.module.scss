@@ -135,9 +135,9 @@
 }
 
 .TextArea {
-  margin-left: 5px;
+  margin-left: 10px;
   margin-right: 5px;
-  width: 25%;
+  width: 60%;
 }
 
 .SelectArea_layer3 {
@@ -165,8 +165,14 @@
 .SelectArea_day {
   z-index: 9;
   margin-left: 10px;
-  width: 60%;
+  width: 100%;
 }
+
+.datePicker {
+  margin-left: 10px;
+  width: 100%;
+}
+
 .Row {
   padding: 5px;
 }
@@ -202,4 +208,8 @@
 .font {
   margin-left: 5px;
   margin-right: 5px;
+}
+
+.infoLabel {
+  font-size: 14px;
 }
