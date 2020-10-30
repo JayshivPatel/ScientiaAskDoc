@@ -10,12 +10,14 @@ import {
   faFileVideo, 
   faFileWord,
   IconDefinition, 
-  faFile
+  faFile,
+  faArchive
 } from '@fortawesome/free-solid-svg-icons'
 import { EnumDictionary } from 'constants/types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 enum FileCategory {
+  ARCHIVE = "archive",
   CODE = "code",
   EXCEL = "excel",
   LINK = "link",
@@ -28,13 +30,74 @@ enum FileCategory {
 }
 
 const categoryExtensions: EnumDictionary<FileCategory, string[]> = {
+  [FileCategory.ARCHIVE]: [
+    "zip",
+    "7z",
+    "rar",
+    "tar", "tgz", "taz", "gz",
+    "jar",
+    "jar",
+  ],
   [FileCategory.CODE]: [
-    "c", "cpp", "h", "hpp", 
-    "java", 
+    // c, c++
+    "c", "cc", "cpp", "cxx", "c++", "h", "hpp", "hh",
+    // java
+    "j", "jav", "java", "class",
+    // kotlin 
     "kt",
+    // haskell
     "hs", "lhs",
-    "sh",
-    "py", 
+    // prolog
+    "pl", "pro", "P",
+    // shell script
+    "sh", "csh",
+    // ruby
+    "rb", "rbw",
+    // lua,
+    "lua",
+    // python
+    "py", "pyc", "pyo", "pyd", 
+    // perl,
+    "pl", "pm",
+    // julia
+    "jl", 
+    // matlab
+    "m",
+    // R
+    "R",
+    // javascript, typescript
+    "js", "ts", "jsx", "tsx",
+    // php,
+    "php",
+    // standard ml
+    "sml",
+    // scheme, racket
+    "scm", "sch", "ss", "rkt",
+    // scala,
+    "scala",
+    // ocaml
+    "ml", "mli",
+    // erlang, elixir
+    "erl", "ex", "exs",
+    // rust,
+    "rs",
+    // swift
+    "swift",
+    // go
+    "go",
+    // fortran
+    "f", "for" ,"f90",
+    // sql
+    "sql",
+    // css, sass, scss
+    "css", "sass", "scss",
+    // json
+    "json",
+    // xml
+    "xml",
+    // yaml
+    "yaml", "yml"
+
   ],
   [FileCategory.EXCEL]: ["xls", "xlsx"],
   [FileCategory.LINK]: [],
@@ -47,6 +110,7 @@ const categoryExtensions: EnumDictionary<FileCategory, string[]> = {
 }
 
 const categoryIcons: EnumDictionary<FileCategory, IconDefinition> = {
+  [FileCategory.ARCHIVE]: faArchive,
   [FileCategory.CODE]: faFileCode,
   [FileCategory.EXCEL]: faFileExcel,
   [FileCategory.LINK]: faLink,
