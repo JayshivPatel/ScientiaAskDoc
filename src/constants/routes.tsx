@@ -21,14 +21,21 @@ export const methods = {
 
 export const api = {
   CATE_LOGIN: `${config.CATE_URL}/auth/login`,
-  CATE_COURSE_EXERCISES: (courseCode: string) =>`${config.CATE_URL}/exercises/${courseCode}`,
+  CATE_COURSE_EXERCISES: (courseCode: string) =>`${config.CATE_URL}/courses/${courseCode}/exercises`,
   CATE_USER_INFO: (username: string) => `${config.CATE_URL}/auth/${username}`,
-  CATE_AVAILABLE_STUDENTS_FOR_EXERCISE: (courseCode: string, exerciseNum: number) =>
-    `${config.CATE_URL}/groups/courses/${courseCode}/exercises/${exerciseNum}`,
-  CATE_GROUP_FORMATION: (courseCode: string, exerciseID: number) => `${config.CATE_URL}/groups/${courseCode}/${exerciseID}`,
-  CATE_FILE_UPLOAD: (courseCode: string, exerciseID: number) => `${config.CATE_URL}/upload/${courseCode}/${exerciseID}`,
+  CATE_AVAILABLE_STUDENTS_FOR_EXERCISE: (courseCode: string, exerciseNumber: number) =>
+    `${config.CATE_URL}/groups/courses/${courseCode}/exercises/${exerciseNumber}`,
+  CATE_DELETE_GROUP: (courseCode: string, exerciseNumber: number, groupID: string) =>
+    `${config.CATE_URL}/groups/courses/${courseCode}/exercises/${exerciseNumber}/groups/${groupID}`,
+  CATE_GROUP_FORMATION: (courseCode: string, exerciseNumber: number, groupID: string, username: string) =>
+    `${config.CATE_URL}/groups/courses/${courseCode}/exercises/${exerciseNumber}/groups/${groupID}/members/${username}`,
+  CATE_GROUP_SINGLE_MEMBER: (courseCode: string, exerciseNumber: number, username: string) =>
+    `${config.CATE_URL}/groups/courses/${courseCode}/exercises/${exerciseNumber}/members/${username}`,
+  CATE_FILE_UPLOAD: (courseCode: string, exerciseNumber: number, username: string) =>
+    `${config.CATE_URL}/upload/courses/${courseCode}/exercises/${exerciseNumber}/students/${username}`,
   CATE_FILE_DOWNLOAD: `${config.CATE_URL}/download`,
-  CATE_DECLARATION: (courseCode: string, exerciseID: number) => `${config.CATE_URL}/declaration/${courseCode}/${exerciseID}`,
+  CATE_DECLARATION: (courseCode: string, exerciseNumber: number, username: string) =>
+    `${config.CATE_URL}/declarations/courses/${courseCode}/exercises/${exerciseNumber}/students/${username}`,
   MATERIALS_LOGIN: `${config.MATERIALS_URL}/auth/login`,
   MATERIALS_COURSES: (year: string) =>
     `${config.MATERIALS_URL}/courses/${year}`,

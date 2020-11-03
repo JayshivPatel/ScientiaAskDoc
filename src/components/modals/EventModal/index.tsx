@@ -105,7 +105,7 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
         event={event} 
         activeDay={activeDay}
         courseCode={event?.moduleCode}
-        exerciseID={event.id}
+        exerciseNumber={event.id}
       />
     )
   : ModalInfo

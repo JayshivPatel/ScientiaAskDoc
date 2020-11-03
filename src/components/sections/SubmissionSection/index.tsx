@@ -49,14 +49,14 @@ interface Props {
   event?: TimelineEvent
   activeDay: Date
   courseCode: string,
-  exerciseID: number
+  exerciseNumber: number
 }
 
 const SubmissionSection: React.FC<Props> = ({
   event,
   activeDay,
   courseCode,
-  exerciseID,
+  exerciseNumber,
 }) => {
   const allStages: Stage[] = event?.assessment === "group" ?
     [ Stage.FILE_UPLOAD, Stage.GROUP_FORMATION ] : [ Stage.FILE_UPLOAD ];
@@ -98,7 +98,7 @@ const SubmissionSection: React.FC<Props> = ({
   /* ================================ Group Formation ================================ */
   const retrieveAvailableStudents = async () => {
     request({
-      url: api.CATE_AVAILABLE_STUDENTS_FOR_EXERCISE(courseCode, exerciseID),
+      url: api.CATE_AVAILABLE_STUDENTS_FOR_EXERCISE(courseCode, exerciseNumber),
       method: methods.GET,
       onSuccess: (data: { [k: string]: StudentInfo }) => {
         if (data) {
@@ -110,11 +110,10 @@ const SubmissionSection: React.FC<Props> = ({
     })
   }
 
-  const updateGroupMember = (method: string, body: {[k: string]: any}) => {
+  const updateGroupMember = (method: string, username: string) => {
     request({
-      url: api.CATE_GROUP_FORMATION(courseCode, exerciseID),
+      url: api.CATE_GROUP_FORMATION(courseCode, exerciseNumber, groupID, username),
       method: method,
-      body: body,
       onSuccess: () => {},
       onError: (message: string) => console.log(`Failed to update new team member: ${message}`),
     }).finally(() => {
@@ -125,7 +124,7 @@ const SubmissionSection: React.FC<Props> = ({
 
   const retrieveGroupInfo = async () => {
     request({
-      url: api.CATE_GROUP_FORMATION(courseCode, exerciseID),
+      url: api.CATE_GROUP_SINGLE_MEMBER(courseCode, exerciseNumber, currentUser),
       method: methods.GET,
       onSuccess: (data: { [k: string]: any }) => {
         if (data) {
@@ -145,41 +144,14 @@ const SubmissionSection: React.FC<Props> = ({
         }
         loaded(LoadingParts.GROUP_INFO)
       },
-      body: { username: currentUser },
       onError: () => loadError(LoadingParts.GROUP_INFO)
     })
   }
 
-  const addNewGroupMember = (username: string) => {
-    updateGroupMember(methods.PUT, {
-      "username": username,
-      "groupID": groupID,
-      "operation": "add"
-    })
-  }
-
-  const removeGroupMember = (username: string) => {
-    updateGroupMember(methods.PUT, {
-      "username": username,
-      "groupID": groupID,
-      "operation": "delete"
-    })
-  }
-
-  const addMemberSignature = (username: string) => {
-    updateGroupMember(methods.PUT, {
-      "username": username,
-      "groupID": groupID,
-      "operation": "sign"
-    })
-  }
   const createGroup = () => {
     request({
-      url: api.CATE_GROUP_FORMATION(courseCode, exerciseID),
+      url: api.CATE_GROUP_SINGLE_MEMBER(courseCode, exerciseNumber, currentUser),
       method: methods.POST,
-      body: {
-        "username": currentUser
-      },
       onSuccess: () => {},
       onError: (message: string) => console.log(`Failed to create a new group: ${message}`),
     }).finally(() => {
@@ -189,11 +161,8 @@ const SubmissionSection: React.FC<Props> = ({
   }
   const deleteGroup = () => {
     request({
-      url: api.CATE_GROUP_FORMATION(courseCode, exerciseID),
+      url: api.CATE_DELETE_GROUP(courseCode, exerciseNumber, groupID),
       method: methods.DELETE,
-      body: {
-        "groupID": groupID
-      },
       onSuccess: () => {},
       onError: (message: string) => console.log(`Failed to delete group ${groupID}: ${message}`),
     }).finally(() => {
@@ -221,16 +190,15 @@ const SubmissionSection: React.FC<Props> = ({
     }
 
     request({
-      url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
+      url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser),
       method: methods.POST,
       body: newStatus,
       onSuccess: () => {
         const formData = new FormData()
-        formData.append("username", authenticationService.getUserInfo()["username"])
         formData.append("fileID", String(index))
         formData.append("file", newFile)
         request({
-          url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
+          url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser),
           method: methods.PUT,
           onSuccess: () => {},
           onError: () => {},
@@ -244,7 +212,7 @@ const SubmissionSection: React.FC<Props> = ({
 
   const removeFile = (index: number) => {
     request({
-      url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
+      url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser),
       method: methods.DELETE,
       body: {
         fileID: index,
@@ -260,11 +228,8 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   const retrieveFileStatus = async () => request({
-    url: api.CATE_FILE_UPLOAD(courseCode, exerciseID),
+    url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser),
     method: methods.GET,
-    body: {
-      username: authenticationService.getUserInfo()["username"]
-    },
     onSuccess: (data: { requirements: ResourceUploadRequirement[] }) => {
       setRequirements(data.requirements)
       loaded(LoadingParts.FILE_STATUS)
@@ -286,10 +251,9 @@ const SubmissionSection: React.FC<Props> = ({
 
   const uploadDeclaration = (data: "Unaided" | DeclarationHelper[]) => {
     request({
-      url: api.CATE_DECLARATION(courseCode, exerciseID),
+      url: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser),
       method: methods.PUT,
       body: {
-        username: authenticationService.getUserInfo()["username"],
         declaration: data
       },
       onSuccess: () => {},
@@ -298,10 +262,9 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   const retrieveDeclaration = async () => request({
-    url: api.CATE_DECLARATION(courseCode, exerciseID),
+    url: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser),
     method: methods.GET,
     body: {
-      username: authenticationService.getUserInfo()["username"],
       operation: 'get'
     },
     onSuccess: (data: null | "Unaided" | { name: string, login: string }[]) => {
@@ -346,9 +309,9 @@ const SubmissionSection: React.FC<Props> = ({
           groupID={groupID}
           groupMembers={groupMembers}
           availableStudents={availableStudents}
-          addNewGroupMember={addNewGroupMember}
-          removeGroupMember={removeGroupMember}
-          addMemberSignature={addMemberSignature}
+          addNewGroupMember={(username: string) => updateGroupMember(methods.PUT, username)}
+          removeGroupMember={(username: string) => updateGroupMember(methods.DELETE, username)}
+          addMemberSignature={(username: string) => updateGroupMember(methods.POST, username)}
           createGroup={createGroup}
           deleteGroup={deleteGroup}
       />
@@ -385,7 +348,7 @@ const SubmissionSection: React.FC<Props> = ({
 
   const sectionOf = (s: Stage, index: number) => {
     return (
-      <div>
+      <div key={index}>
         <Accordion.Toggle
           onClick={() => setActiveStage(`${index}`)}
           as={Card.Header}
