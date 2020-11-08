@@ -165,6 +165,16 @@ export interface CalendarEvent {
   catorgory: string
 }
 
+export interface Feedback {
+  exercise_title: string,
+  id: 0,
+  course: string,
+  course_title: string,
+  exercise: 0,
+  year: string,
+  group: string
+}
+
 export enum ProgressStatus {
   NOT_STARTED = "Not Started",
   IN_PROGRESS = "In Progress",

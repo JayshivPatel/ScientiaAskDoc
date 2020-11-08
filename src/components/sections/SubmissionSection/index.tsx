@@ -73,7 +73,7 @@ const SubmissionSection: React.FC<Props> = ({
   const [groupID, setGroupID] = useState("")
   const [groupMembers, setGroupMembers] = useState<GroupFormationMemberInfo[]>([])
   const [availableStudents, setAvailableStudents] = useState<StudentInfo[]>([])
-  const[activeStage, setActiveStage] = useState(event?.assessment === "group" ? "1" : "0")
+  const [activeStage, setActiveStage] = useState(event?.assessment === "group" ? "1" : "0")
   const currentUser = authenticationService.getUserInfo()["username"]
 
   const loaded = (part: LoadingParts) => {

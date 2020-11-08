@@ -2,10 +2,12 @@ const dev = {
   MATERIALS_URL: `http://${window.location.hostname}:5000`,
   CATE_URL: `http://${window.location.hostname}:2000`,
   CALENDAR_URL: `http://${window.location.hostname}:4000`,
+  EMARKING_URL: `http://${window.location.hostname}:7000`,
 }
 
 const prod = {
   MATERIALS_URL: "https://api-materials.doc.ic.ac.uk",
+  EMARKING_URL: `http://${window.location.hostname}:7000`,
   CATE_URL: "",
   CALENDAR_URL: "",
 }
@@ -36,6 +38,13 @@ export const api = {
   CATE_FILE_DOWNLOAD: `${config.CATE_URL}/download`,
   CATE_DECLARATION: (courseCode: string, exerciseNumber: number, username: string) =>
     `${config.CATE_URL}/declarations/courses/${courseCode}/exercises/${exerciseNumber}/students/${username}`,
+
+  EMARKING_ME_FEEDBACK: `${config.EMARKING_URL}/me/feedback`,
+  EMARKING_ME_DISTRIBUTIONS: `${config.EMARKING_URL}/me/distributions`,
+
+  EMARKING_DISTRIBUTION_SUBMISSION: (distributionID: string) => 
+    `${config.EMARKING_URL}/distributions/${distributionID}/submissions`,
+
   MATERIALS_LOGIN: `${config.MATERIALS_URL}/auth/login`,
   MATERIALS_COURSES: (year: string) =>
     `${config.MATERIALS_URL}/courses/${year}`,

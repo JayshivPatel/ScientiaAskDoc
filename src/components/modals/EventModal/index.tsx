@@ -16,6 +16,7 @@ import {resourceTypeToIcon} from "components/pages/modulePages/ModuleResources/u
 import {TimelineEvent} from "constants/types"
 import {toDayCount, toEventDateTime} from "utils/functions"
 import SubmissionSection from "../../sections/SubmissionSection"
+import MarkingSection from "components/sections/MarkingSection"
 
 interface Props {
   event?: TimelineEvent
@@ -24,9 +25,15 @@ interface Props {
   activeDay: Date
 }
 
+enum Stage {
+  INFO = "info",
+  SUBMISSION = "submission",
+  MARKING = "marking",
+}
+
 const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
 
-  const [viewSubmission, setViewSubmission] = useState<boolean>(false);
+  const [viewStage, setViewStage] = useState<Stage>(Stage.INFO);
 
   if (!event) return null
   const timeLeft = toDayCount(event.endDate) - toDayCount(activeDay)
@@ -90,32 +97,48 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
   )
 
   const footerAttributes = ((): [string, () => void] | undefined => {
-    if (viewSubmission) {
-      return ["Back", () => setViewSubmission(false)]
+    if (viewStage !== Stage.INFO) {
+      return ["Back", () => setViewStage(Stage.INFO)]
     }
     if (event.status !== "unreleased" && timeLeft >= -1) {
-      return ["Submit", () => setViewSubmission(true)]
+      return ["Submit", () => setViewStage(Stage.SUBMISSION)]
+    }
+    if (event.status === "missed") {
+      return ["Marking", () => setViewStage(Stage.MARKING)]
     }
     return undefined
   })()
 
-  const mainSection = viewSubmission ? 
-    (
-      <SubmissionSection 
-        event={event} 
-        activeDay={activeDay}
-        courseCode={event?.moduleCode}
-        exerciseNumber={event.id}
-      />
-    )
-  : ModalInfo
+  const [sectionTitle, mainSection] = (() => {
+    switch (viewStage) {
+      case Stage.INFO:
+        return ["Given", ModalInfo]
+      case Stage.SUBMISSION:
+        return ["Submission", (
+          <SubmissionSection 
+            event={event} 
+            activeDay={activeDay}
+            courseCode={event?.moduleCode}
+            exerciseNumber={event.id}
+          />
+        )]
+      case Stage.MARKING:
+        return ["Marking", (
+          <MarkingSection
+            courseCode={event?.moduleCode}
+            exerciseNumber={event.id}
+          />
+        )]
+    }
+  })()
+
 
   return (
     <Modal
       className={styles.eventModal}
       dialogClassName={styles.modal}
       show={show}
-      onHide={() => {onHide(); setViewSubmission(false)}}
+      onHide={() => {onHide(); setViewStage(Stage.INFO)}}
       centered
     >
       <Modal.Header className={styles.modalHeader}>
@@ -129,7 +152,7 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
         <Button
           variant="secondary"
           className={styles.sectionHeaderButton}
-          onClick={() => {onHide(); setViewSubmission(false)}}>
+          onClick={() => {onHide(); setViewStage(Stage.INFO)}}>
           <FontAwesomeIcon className={styles.buttonIcon} icon={faTimes}/>
         </Button>
       </Modal.Header>
@@ -163,7 +186,7 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
             )}
           </div>
           <div className={styles.sectionHeaderContainer}>
-            <span className={styles.sectionHeader}>{viewSubmission ? "Submission" : "Given"}</span>
+            <span className={styles.sectionHeader}>{sectionTitle}</span>
           </div>
           {mainSection}
         </div>
