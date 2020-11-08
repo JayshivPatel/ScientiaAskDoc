@@ -175,6 +175,12 @@ export interface Feedback {
   group: string
 }
 
+export interface MarkingItem {
+  studentName: string,
+  submissionID: string,
+  feedbackID?: string
+}
+
 export enum ProgressStatus {
   NOT_STARTED = "Not Started",
   IN_PROGRESS = "In Progress",

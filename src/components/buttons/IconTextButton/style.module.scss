@@ -1,0 +1,16 @@
+@import "assets/scss/custom";
+@import "assets/scss/global";
+
+.iconTextButton.sectionHeaderButton {
+  background-color: $gray-800;
+  color: $white;
+  margin-left: 0px;
+  font-size: small;
+}
+
+.iconTextButton.sectionHeaderButton:hover,
+.iconTextButton.sectionHeaderButton:focus {
+  background-color: $white;
+  color: $gray-700 !important;
+  box-shadow: none !important;
+}

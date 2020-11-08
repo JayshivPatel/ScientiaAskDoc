@@ -45,6 +45,9 @@ export const api = {
   EMARKING_DISTRIBUTION_SUBMISSION: (distributionID: string) => 
     `${config.EMARKING_URL}/distributions/${distributionID}/submissions`,
 
+  EMARKING_SUBMISSION_FILE: (submissionID: string) => 
+    `${config.EMARKING_URL}/submissions/${submissionID}/file`,
+
   MATERIALS_LOGIN: `${config.MATERIALS_URL}/auth/login`,
   MATERIALS_COURSES: (year: string) =>
     `${config.MATERIALS_URL}/courses/${year}`,

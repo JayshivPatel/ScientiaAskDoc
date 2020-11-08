@@ -1,0 +1,49 @@
+@import "assets/scss/global";
+
+.listItem {
+  cursor: pointer;
+  margin: 0;
+  padding: 0.25rem 1.25rem;
+  border: 0 !important;
+  color: var(--primary-text-color);
+}
+
+.listRow:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
+}
+
+.listRow {
+  padding: 0.25rem 0.5rem;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  -webkit-transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  -moz-transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  border-radius: 0.5rem !important;
+  height: 4rem !important;
+  display: "flex";
+  align-items: "center";
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  background: transparent;
+}
+
+.listItemTitle {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  margin-right: 0.25rem;
+  display: flex;
+  align-items: center;
+  
+}
+
+.fileTag:last-child {
+  margin-right: 0rem;
+}
+
+.resourceMenu {
+  position: absolute;
+  box-shadow: 0px 8px 10px #999999;
+  border-radius: 8px;
+  z-index: 10000;
+}

@@ -11,7 +11,7 @@ import { IconDefinition } from "@fortawesome/free-solid-svg-icons"
 interface IconButtonProps {
   buttonProps?: any
   tooltip?: string
-  onClick: any
+  onClick?: (e: MouseEvent) => void
   icon: IconDefinition
 }
 
