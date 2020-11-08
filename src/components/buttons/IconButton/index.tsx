@@ -34,7 +34,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   if (tooltip) {
     return (
       <OverlayTrigger
-        overlay={<Tooltip id={`tooltip-${tooltip}`}>{tooltip}</Tooltip>}>
+        overlay={<Tooltip id={`tooltip-${tooltip}`} style={{ zIndex: 99999 }}>{tooltip}</Tooltip>}>
         {button()}
       </OverlayTrigger>
     )
