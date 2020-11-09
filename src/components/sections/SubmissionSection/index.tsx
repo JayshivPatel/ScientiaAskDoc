@@ -264,9 +264,6 @@ const SubmissionSection: React.FC<Props> = ({
   const retrieveDeclaration = async () => request({
     url: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser),
     method: methods.GET,
-    body: {
-      operation: 'get'
-    },
     onSuccess: (data: null | "Unaided" | { name: string, login: string }[]) => {
       if (data === null) {
         setDeclarationStatus(DeclarationStatus.UNAIDED)
