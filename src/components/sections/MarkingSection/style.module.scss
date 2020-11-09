@@ -1,3 +1,6 @@
+@import "assets/scss/custom";
+@import "assets/scss/global";
+
 .sectionButton {
   background-color: var(--primary-button);
   color: var(--primary-button-text);
@@ -16,6 +19,17 @@
   transition: 0.2s background-color;
   -webkit-transition: 0.2s background-color;
   -moz-transition: 0.2s background-color;
+}
+
+.sectionButton.red {
+  background-color: var(--pink-background) !important;
+  color: var(--pink-text) !important;
+}
+
+.sectionButton.green {
+  background-color: var(--teal-background) !important;
+  color: var(--teal-text) !important;
+
 }
 
 .operationButtonGroup {
@@ -37,4 +51,5 @@
   width: 100%;
   max-height: 15rem;
   overflow-y: scroll;
+  margin-bottom: 1rem;
 }

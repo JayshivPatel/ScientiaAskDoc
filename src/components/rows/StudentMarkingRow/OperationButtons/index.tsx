@@ -1,10 +1,8 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import IconButton from 'components/buttons/IconButton';
-import IconTextButton from 'components/buttons/IconTextButton';
 import React from 'react'
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
-interface ButtonDefinition {
+export interface ButtonDefinition {
   icon: IconDefinition,
   text: string,
   tooltip?: string,

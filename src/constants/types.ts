@@ -178,7 +178,8 @@ export interface Feedback {
 export interface MarkingItem {
   studentName: string,
   submissionID: string,
-  feedbackID?: string
+  feedbackID: string
+  uploadedFeedback: boolean
 }
 
 export enum ProgressStatus {

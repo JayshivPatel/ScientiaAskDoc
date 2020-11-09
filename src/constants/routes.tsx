@@ -42,6 +42,9 @@ export const api = {
   EMARKING_ME_FEEDBACK: `${config.EMARKING_URL}/me/feedback`,
   EMARKING_ME_DISTRIBUTIONS: `${config.EMARKING_URL}/me/distributions`,
 
+  EMARKING_FEEDBACK: (feedbackID: string, file?: boolean) => 
+    `${config.EMARKING_URL}/feedback/${feedbackID}${file ? '/file' : ''}`,
+
   EMARKING_DISTRIBUTION_SUBMISSION: (distributionID: string) => 
     `${config.EMARKING_URL}/distributions/${distributionID}/submissions`,
 
