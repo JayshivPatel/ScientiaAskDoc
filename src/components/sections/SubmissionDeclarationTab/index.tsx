@@ -12,6 +12,7 @@ import { DeclarationHelper, DeclarationStatus } from "constants/types";
 import { faCheckCircle, faEye } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
+  activate?: boolean
   status: DeclarationStatus
   declaredHelpers: DeclarationHelper[]
   onSetUnaided: () => void
@@ -21,6 +22,7 @@ interface Props {
 }
 
 const SubmitDeclarationSection: React.FC<Props> = ({
+  activate,
   status,
   declaredHelpers,
   onSetUnaided,
@@ -100,6 +102,7 @@ const SubmitDeclarationSection: React.FC<Props> = ({
           id='declaration-check' 
           label={isUnaided ? unaidedDeclarationText : withHelpDeclarationText}
           checked={isUnaided}
+          disabled={!activate}
           onChange={() => {
             if (isUnaided) {
               onSetWithHelp()

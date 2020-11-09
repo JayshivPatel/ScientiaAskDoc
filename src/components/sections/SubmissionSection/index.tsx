@@ -17,7 +17,7 @@ import { api, methods } from "constants/routes"
 import { download, request } from "utils/api"
 import SubmitDeclarationSection from "../SubmissionDeclarationTab";
 import authenticationService from "utils/auth"
-import SubmissionGroupFormation from "../SubmissionGroupFormation";
+import SubmissionGroupFormation, { Role } from "../SubmissionGroupFormation";
 import moment from "moment";
 import Accordion from "react-bootstrap/esm/Accordion"
 import Card from "react-bootstrap/Card"
@@ -299,7 +299,7 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   useEffect(refreshAllParts, [])
-  
+
   // Programmatically open the group formation tab
   const openGroupFormationTab = (event: React.MouseEvent) => setActiveStage("1")
 
@@ -329,6 +329,7 @@ const SubmissionSection: React.FC<Props> = ({
         />
         <hr/>
         <SubmitDeclarationSection
+          activate={event?.assessment !== "group" || groupMembers.filter(m => m.username === currentUser && m.role === Role.LEADER).length !== 0}
           status={declarationStatus}
           declaredHelpers={declaredHelpers}
           onSetUnaided={() => {
