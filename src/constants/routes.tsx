@@ -1,6 +1,6 @@
 const dev = {
   MATERIALS_URL: `http://${window.location.hostname}:5000`,
-  CATE_URL: `http://${window.location.hostname}:2000`,
+  CATE_URL: `http://${window.location.hostname}:7000`,
   CALENDAR_URL: `http://${window.location.hostname}:4000`,
   EMARKING_URL: `http://${window.location.hostname}:7000`,
 }
