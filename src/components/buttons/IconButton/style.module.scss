@@ -13,3 +13,36 @@
   color: $gray-700 !important;
   box-shadow: none !important;
 }
+
+.iconButton.circularButton {
+  background-color: #eee;
+  color: $black;
+  border-radius: 50%;
+  border-width: 0;
+  width: 3.5rem !important;
+  height: 3.5rem !important;
+  text-align: center;
+  font-size: 18px;
+  box-shadow: none;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  -webkit-transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  -moz-transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+}
+
+.iconButton.circularButton:hover {
+  background-color: $gray-800;
+  color: $white !important;
+  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
+  transform: scale(1.1);
+}
+
+.iconButton.circularButton:focus {
+  background-color: $gray-400;
+}
+
+.iconButton.warningButton:hover {
+  background-color: $red;
+  color: $white !important;
+}

@@ -9,7 +9,6 @@
 }
 
 .listRow:hover {
-  transform: scale(1.01);
   box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
 }
 
@@ -19,7 +18,7 @@
   -webkit-transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   -moz-transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   border-radius: 0.5rem !important;
-  height: 4rem !important;
+  height: 5rem !important;
   display: "flex";
   align-items: "center";
   justify-content: space-between;
@@ -34,7 +33,7 @@
   margin-right: 0.25rem;
   display: flex;
   align-items: center;
-  
+  width: 40%;
 }
 
 .fileTag:last-child {

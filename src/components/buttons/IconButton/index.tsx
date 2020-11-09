@@ -13,6 +13,8 @@ interface IconButtonProps {
   tooltip?: string
   onClick?: (e: MouseEvent) => void
   icon: IconDefinition
+  circular?: boolean
+  warning?: boolean
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
@@ -20,12 +22,18 @@ const IconButton: React.FC<IconButtonProps> = ({
   tooltip,
   onClick,
   icon,
+  circular = false,
+  warning = false
 }) => {
   const button = () => (
     <Button
       {...buttonProps}
       variant="secondary"
-      className={classNames(styles.sectionHeaderButton, styles.iconButton)}
+      className={classNames(
+        circular ? styles.circularButton : styles.sectionHeaderButton, 
+        styles.iconButton,
+        warning ? styles.warningButton : undefined,
+      )}
       onClick={onClick}>
       <FontAwesomeIcon className={styles.buttonIcon} icon={icon} />
     </Button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './style.module.scss'
 
 import { MarkingItem, StudentInfo, TimelineEvent } from 'constants/types'
@@ -19,7 +19,24 @@ const MarkingSection: React.FC<Props> = ({
 
 }) => {
 
-  const [items, setItems] = useState<MarkingItem[]>(dummy)
+  const [items, setItems] = useState<MarkingItem[]>([])
+
+  useEffect(() => setItemsSorted(dummy), [])
+
+  const setItemsSorted = (newItems: MarkingItem[]) => {
+    newItems.sort((a, b) => {
+      const aFeedback = a.feedbackID !== undefined
+      const bFeedback = b.feedbackID !== undefined
+      if (!aFeedback && bFeedback) {
+        return -1
+      } else if (aFeedback && !bFeedback) {
+        return 1
+      } else {
+        return a.studentName.localeCompare(b.studentName)
+      }
+    })
+    setItems(newItems)
+  }
   
 
   const downloadSubmissionByID = (submissionID: string) => {

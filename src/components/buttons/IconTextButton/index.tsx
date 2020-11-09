@@ -13,7 +13,6 @@ interface Props {
   tooltip?: string
   onClick?: (e: MouseEvent) => void
   buttonProps?: any
-
 }
 
 const IconTextButton: React.FC<Props> = ({

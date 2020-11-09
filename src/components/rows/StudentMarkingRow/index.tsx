@@ -1,4 +1,4 @@
-import { faCheckCircle, faDownload, faShare, faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faCross, faDownload, faEye, faShare, faTimes, faUpload } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import IconButton from 'components/buttons/IconButton'
@@ -7,6 +7,7 @@ import React from 'react'
 import Badge from 'react-bootstrap/Badge'
 import ButtonGroup from 'react-bootstrap/esm/ButtonGroup'
 import Row from 'react-bootstrap/Row'
+import OperationButtons from './OperationButtons'
 import styles from './style.module.scss'
 
 
@@ -27,8 +28,6 @@ const StudentMarkingRow: React.FC<Props> = ({
   onReassign,
 }) => {
 
-
-
   return (
     <div
       className={styles.listItem}
@@ -40,35 +39,49 @@ const StudentMarkingRow: React.FC<Props> = ({
           </div>
         </div>
         <div className={styles.centeredFlex}>
-          <ButtonGroup>
-            <IconButton
-              icon={faDownload}
-              onClick={onDownloadSubmission}
-              tooltip="Download this student's submission"
-            />
-            {feedbackID !== undefined || (
-              <IconButton
-                icon={faUpload}
-                onClick={onUploadFeedback}
-                tooltip="Upload feedback for this student"
-              />
-            )}
-            {feedbackID !== undefined || (
-              <IconButton
-                icon={faShare}
-                onClick={onReassign}
-                tooltip="Reassign this task for this student"
-              />
-            )}
-            {feedbackID !== undefined && (
-              <div>
-                <FontAwesomeIcon icon={faCheckCircle} style={{ color: 'green' }}/>
-                Uploaded!
-              </div>
-              
-            )}
-          </ButtonGroup>
-
+          <OperationButtons
+            actions={[
+              {
+                icon: faEye,
+                text: "View Submission",
+                tooltip: "View Submission of this student",
+                onClick: onDownloadSubmission,
+              }
+            ]}
+          />
+          {feedbackID !== undefined || <OperationButtons
+            actions={[
+              {
+                icon: faUpload,
+                text: "Upload Feedback",
+                tooltip: "Upload feedback for this student",
+                onClick: onUploadFeedback,
+              },
+              {
+                icon: faShare,
+                text: "Re-assign",
+                tooltip: "Re-assign the marking task for this student to other marker",
+                onClick: onUploadFeedback,
+              },
+            ]}
+          />}    
+          {feedbackID !== undefined && <OperationButtons
+            actions={[
+              {
+                icon: faDownload,
+                text: "Download Feedback",
+                tooltip: "Download feedback of this student",
+                onClick: onUploadFeedback,
+              },
+              {
+                icon: faTimes,
+                text: "Delete",
+                tooltip: "Delete Feedback of this student",
+                onClick: onUploadFeedback,
+                warning: true,
+              },
+            ]}
+          />}
         </div>
       </Row>
     </div>
