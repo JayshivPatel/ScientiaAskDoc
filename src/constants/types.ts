@@ -59,6 +59,7 @@ export interface ResourceUploadRequirement {
 }
 
 export interface ResourceUploadStatus {
+  courseworkSubmissionID: number,
   title: string
   suffix: string
   checksum: string
