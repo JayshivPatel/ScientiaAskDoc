@@ -74,21 +74,14 @@ export async function doRequest(data: RequestData): Promise<Response> {
       }
       return response
     })
-    .catch(error => {
+    // Catch and parse error object if returned by API
+    // Currently follows Materials API error shape
+    .catch(async error => {
       try {
-        error.json()
+        throw await error.json()
       } catch (e) {
         throw error
       }
-      throw error
-      // try {
-      //   error.json().then((body: { message: string }) => {
-      //     throw body.message)
-      //   })
-      // } catch (e) {
-      //   throw error
-      // }
-      // throw error
     })
 }
 
@@ -111,17 +104,7 @@ export async function oldRequest(data: OldRequestData) {
   .then(responseData => {
     data.onSuccess(responseData)
   })
-  .catch(error => {
-    // Parse error object if returned by API
-    // Currently follows Materials API error shape
-    try {
-      error.json().then((body: { message: string }) => {
-        data.onError(body.message)
-      })
-    } catch (e) {
-      data.onError(error)
-    }
-  })
+  .catch(error => data.onError(error))
 }
 
 // Utility that downloads files fetched by request (assumes GET)
