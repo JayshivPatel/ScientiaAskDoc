@@ -85,11 +85,11 @@ export async function doRequest(data: RequestData): Promise<Response> {
     })
 }
 
+// WARNING!!! This API calling interface is **DEPRECATED** and should *NOT* be used in future development.
 // API calling interface. onSuccess and onError are functions that take in data
 // and error parameters respectively. Body is process as query parameters if
 // method is GET
 // Note: will trigger CORS OPTIONS preflight due to the Authorization header
-// WARNING: This API calling interface is **DEPRECATED** and should not be used in future development.
 export async function oldRequest(data: OldRequestData) {
   const requestResolver = data.returnBlob ? requestBlob : (data: RequestData) => request<any>(data)
   return requestResolver({

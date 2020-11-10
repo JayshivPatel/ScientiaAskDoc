@@ -1,5 +1,10 @@
 import authConstants, { AuthService, authServices } from "../constants/auth"
 
+/**
+ * Store access token and user info of the given auth service.
+ * @param service the authentication service (i.e. MATERIALS)
+ * @param data data we wish to store
+ */
 function storeDataInStorage(service: AuthService, data: { access_token: string; user_info: any }) {
   sessionStorage.setItem(authConstants.ACCESS_TOKEN(service), data.access_token)
   sessionStorage.setItem(
@@ -8,6 +13,9 @@ function storeDataInStorage(service: AuthService, data: { access_token: string; 
   )
 }
 
+/**
+ * Removes data for all auth services from storage
+ */
 function removeDataFromStorage() {
   authServices.map(service => {
     sessionStorage.removeItem(authConstants.ACCESS_TOKEN(service))
@@ -16,6 +24,10 @@ function removeDataFromStorage() {
 
 }
 
+/**
+ * Get user info under the given auth service
+ * @param service The relevant auth service
+ */
 function getUserInfo(service: AuthService = AuthService.MATERIALS) {
   const info = sessionStorage.getItem(authConstants.USER_INFO(service))
   if (info) {
@@ -24,8 +36,16 @@ function getUserInfo(service: AuthService = AuthService.MATERIALS) {
   return {}
 }
 
-async function login(username: string, password: string, login_url: string, loginService: AuthService) {
-  const response = await fetch(login_url, {
+/**
+ * Login API calling interface. Fetch from the login url of the given login service, then
+ * store relevant data into the storage.
+ * @param username user's college username (i.e. abc123)
+ * @param password user's password
+ * @param loginURL Login url which the login request will be posted to
+ * @param loginService Name of the service that is trying to login (i.e. emarking)
+ */
+async function login(username: string, password: string, loginURL: string, loginService: AuthService) {
+  const response = await fetch(loginURL, {
     method: "POST",
     mode: "cors",
     headers: {
@@ -49,6 +69,11 @@ async function login(username: string, password: string, login_url: string, logi
 }
 
 const logout = () => removeDataFromStorage()
+
+/**
+ * Check if user is logged in to the given auth service
+ * @param services the auth service that you wish to check user's login status on it.
+ */
 const userIsLoggedIn = (services: AuthService[] = [AuthService.MATERIALS]) => {
   for (const service of services) {
     if (sessionStorage.getItem(authConstants.ACCESS_TOKEN(service)) === null) {
