@@ -13,8 +13,6 @@ import { addDays, toDayCount } from "utils/functions"
 import TimelineMobile from "./components/TimelineMobile"
 import { TIMELINE_ACTIVE } from "constants/global"
 import SubscriptionLevelSwitcher from "./components/SubscriptionLevelSwitcher"
-import {api, methods} from "../../../constants/routes";
-import {request} from "../../../utils/api";
 
 export type ModuleTracks = {
   [index: string]: TimelineEvent[][]

@@ -11,6 +11,7 @@ import Button from "react-bootstrap/Button"
 
 import authenticationService from "utils/auth"
 import { api } from "constants/routes"
+import { AuthService } from "constants/auth"
 
 type Props = RouteComponentProps<
   {},
@@ -28,7 +29,7 @@ const SignIn: React.FC<Props> = ({ location }) => {
   const handleSubmit = async () => {
     // Pending SSO reimplementation of EdTech services authentication
     if (
-      await authenticationService.login(username, password, api.MATERIALS_LOGIN)
+      await authenticationService.login(username, password, api.MATERIALS_LOGIN().url, AuthService.MATERIALS)
     ) {
       setRedirect(true)
     } else {

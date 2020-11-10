@@ -11,6 +11,7 @@ import Row from "react-bootstrap/Row"
 import {faPlus, faUserPlus, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Container from "react-bootstrap/cjs/Container";
+import { AuthService } from "constants/auth";
 
 const tableHeadingsLeader = [
   "Student",

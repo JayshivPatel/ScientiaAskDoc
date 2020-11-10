@@ -5,7 +5,7 @@ import {
   faLink,
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons"
-import { request } from "../../../../utils/api"
+import { oldRequest } from "../../../../utils/api"
 import { api, methods } from "../../../../constants/routes"
 import { Resource, Folder } from "constants/types"
 import { DEFAULT_CATEGORY } from "../../../../constants/global"
@@ -66,8 +66,8 @@ export function openResource(resources: Resource[], id: number) {
   const onError = (message: string) => {
     console.log(message)
   }
-  request({
-    url: api.MATERIALS_RESOURCES_FILE(id),
+  oldRequest({
+    url: api.MATERIALS_RESOURCES_FILE(id).url,
     method: methods.GET,
     onSuccess,
     onError,

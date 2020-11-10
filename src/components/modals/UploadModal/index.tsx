@@ -23,7 +23,7 @@ import styles from "./style.module.scss"
 import ResourceDetailForm, {
   ResourceDetails,
 } from "components/sections/ResourceDetailForm"
-import { request } from "utils/api"
+import { oldRequest } from "utils/api"
 import { api, methods } from "constants/routes"
 
 interface UploadModalProps {
@@ -104,8 +104,8 @@ const UploadModal: React.FC<UploadModalProps> = ({
     let formData = new FormData()
     formData.append("file", file)
     return (data: { [k: string]: number }) => {
-      request({
-        url: api.MATERIALS_RESOURCES_FILE(data["id"]),
+      oldRequest({
+        url: api.MATERIALS_RESOURCES_FILE(data["id"]).url,
         method: methods.PUT,
         onSuccess: () => {},
         onError: () => removeFile(file),
@@ -154,8 +154,8 @@ const UploadModal: React.FC<UploadModalProps> = ({
               // Empty promise i.e. do nothing
               return Promise.resolve()
             }
-            return request({
-              url: api.MATERIALS_RESOURCES,
+            return oldRequest({
+              url: api.MATERIALS_RESOURCES().url,
               method: methods.POST,
               onSuccess: submitFileForResource(file),
               onError: onError(resourceDetails[index]),
@@ -174,8 +174,8 @@ const UploadModal: React.FC<UploadModalProps> = ({
       }
       case "link": {
         // The title and url of the new link must be validated before uploading
-          await request({
-            url: api.MATERIALS_RESOURCES,
+          await oldRequest({
+            url: api.MATERIALS_RESOURCES().url,
             method: methods.POST,
             onSuccess: hideAndReload,
             onError: onError(linkResource),

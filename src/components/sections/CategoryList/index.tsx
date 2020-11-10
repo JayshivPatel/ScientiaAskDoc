@@ -13,7 +13,7 @@ import FileItemRow from "components/rows/FileItemRow"
 import { SelectionProps } from "components/pages/SelectionView"
 import { resourceTypeToIcon } from "../../pages/modulePages/ModuleResources/utils"
 import { IdBooleanMap, Resource } from "constants/types"
-import { request } from "utils/api"
+import { oldRequest } from "utils/api"
 import { api, methods } from "constants/routes"
 import arrayMove from "array-move"
 
@@ -113,8 +113,8 @@ const CategoryList: React.FC<CategoryListProps> = ({
     let indexes = oldIndexes.slice(minIndex, maxIndex)
 
     newResources.slice(minIndex, maxIndex).forEach((resource, i) => {
-      request({
-        url: api.MATERIALS_RESOURCES_ID(resource.id),
+      oldRequest({
+        url: api.MATERIALS_RESOURCES_ID(resource.id).url,
         method: methods.PUT,
         onSuccess: () => {},
         onError: () => {},

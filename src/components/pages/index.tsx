@@ -17,12 +17,13 @@ import LoadingScreen from "components/suspense/LoadingScreen"
 import { modulesList } from "./ModuleList/list"
 import RightBar from "components/navbars/RightBar"
 import LeftBar from "components/navbars/LeftBar"
-import { request } from "../../utils/api"
+import { oldRequest, request } from "../../utils/api"
 import { api, methods } from "../../constants/routes"
 import { YEAR_OF_NEW_CODES } from "../../constants/doc"
 import {ModuleTracks} from "./Timeline";
 import {toDayCount} from "../../utils/functions";
 import moment from "moment"
+import { AuthService } from "constants/auth"
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"))
 const ModuleDashboard = React.lazy(() =>
@@ -92,12 +93,19 @@ const StandardView: React.FC<StandardViewProps> = ({
       )
     }
 
-    request({
-      url: api.MATERIALS_COURSES(year),
+    // oldRequest({
+    //   url: api.MATERIALS_COURSES(year).url,
+    //   method: methods.GET,
+    //   onSuccess: onSuccess,
+    //   onError: (message) => console.log(`Failed to obtain modules: ${message}`),
+      
+    // })
+    request<{ [k: string]: any }[]>({
+      api: api.MATERIALS_COURSES(year),
       method: methods.GET,
-      onSuccess: onSuccess,
-      onError: (message) => console.log(`Failed to obtain modules: ${message}`),
     })
+    .then(onSuccess)
+    .catch(message => console.log(`Failed to obtain modules: ${message}`))
   }, [year])
 
   const eventsOverlaps = (e1: TimelineEvent, e2: TimelineEvent) => {
@@ -110,8 +118,8 @@ const StandardView: React.FC<StandardViewProps> = ({
   useEffect(() => {
     const newEvents: { [pair: string]: TimelineEvent[] } = {}
     for (const module of modules) {
-      request({
-        url: api.CATE_COURSE_EXERCISES(module.code),
+      oldRequest({
+        url: api.CATE_COURSE_EXERCISES(module.code).url,
         method: methods.GET,
         onSuccess: (data: { [k: string]: any }[]) => {
           if (data) {

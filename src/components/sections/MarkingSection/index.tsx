@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from './style.module.scss'
 
 import { MarkingItem, StudentInfo, TimelineEvent } from 'constants/types'
-import { request } from 'utils/api'
+import { oldRequest } from 'utils/api'
 import { api, methods } from 'constants/routes'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from 'react-bootstrap/Button'
@@ -37,8 +37,8 @@ const MarkingSection: React.FC<Props> = ({
     if (file){
       const formData = new FormData()
       formData.append("file", file)
-      request({
-        url: api.EMARKING_FEEDBACK(uploadFeedbackID, true),
+      oldRequest({
+        url: api.EMARKING_FEEDBACK(uploadFeedbackID, true).url,
         method: methods.PUT,
         body: formData,
         onSuccess: () => {},
@@ -67,8 +67,8 @@ const MarkingSection: React.FC<Props> = ({
   useEffect(refresh, [])
 
   const downloadSubmissionByID = (submissionID: string) => {
-    request({
-      url: api.EMARKING_SUBMISSION_FILE(submissionID),
+    oldRequest({
+      url: api.EMARKING_SUBMISSION_FILE(submissionID).url,
       method: methods.GET,
       onSuccess: () => {},
       onError: () => {}

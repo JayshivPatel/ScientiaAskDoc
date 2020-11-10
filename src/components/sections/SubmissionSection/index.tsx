@@ -14,7 +14,7 @@ import {
 import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
 import SubmissionFileUploadTab from "../SubmissionFileUploadTab"
 import { api, methods } from "constants/routes"
-import { download, request } from "utils/api"
+import { download, oldRequest, request } from "utils/api"
 import SubmitDeclarationSection from "../SubmissionDeclarationTab";
 import authenticationService from "utils/auth"
 import SubmissionGroupFormation, { Role } from "../SubmissionGroupFormation";
@@ -22,6 +22,7 @@ import moment from "moment";
 import Accordion from "react-bootstrap/esm/Accordion"
 import Card from "react-bootstrap/Card"
 import LoadingScreen from "components/suspense/LoadingScreen"
+import { AuthService } from "constants/auth"
 
 enum Stage {
   GROUP_FORMATION = "Group Formation",
@@ -97,34 +98,34 @@ const SubmissionSection: React.FC<Props> = ({
 
   /* ================================ Group Formation ================================ */
   const retrieveAvailableStudents = async () => {
-    request({
-      url: api.CATE_AVAILABLE_STUDENTS_FOR_EXERCISE(courseCode, exerciseNumber),
+    request<{ [k: string]: StudentInfo }>({
+      api: api.CATE_AVAILABLE_STUDENTS_FOR_EXERCISE(courseCode, exerciseNumber),
       method: methods.GET,
-      onSuccess: (data: { [k: string]: StudentInfo }) => {
-        if (data) {
-          setAvailableStudents(Object.keys(data).map((key, _) => data[key]))
-        }
-        loaded(LoadingParts.AVAILABLE_STUDENTS)
-      },
-      onError: () => loadError(LoadingParts.AVAILABLE_STUDENTS),
     })
+    .then(data => {
+      if (data) {
+        setAvailableStudents(Object.keys(data).map((key, _) => data[key]))
+      }
+      loaded(LoadingParts.AVAILABLE_STUDENTS)
+    })
+    .catch(() => loadError(LoadingParts.AVAILABLE_STUDENTS))
   }
 
   const updateGroupMember = (method: string, username: string) => {
     request({
-      url: api.CATE_GROUP_FORMATION(courseCode, exerciseNumber, groupID, username),
+      api: api.CATE_GROUP_FORMATION(courseCode, exerciseNumber, groupID, username),
       method: method,
-      onSuccess: () => {},
-      onError: (message: string) => console.log(`Failed to update new team member: ${message}`),
-    }).finally(() => {
+    })
+    .catch(message => console.log(`Failed to update new team member: ${message}`))
+    .finally(() => {
       retrieveGroupInfo()
       retrieveAvailableStudents()
     })
   }
 
   const retrieveGroupInfo = async () => {
-    request({
-      url: api.CATE_GROUP_SINGLE_MEMBER(courseCode, exerciseNumber, currentUser),
+    oldRequest({
+      url: api.CATE_GROUP_SINGLE_MEMBER(courseCode, exerciseNumber, currentUser).url,
       method: methods.GET,
       onSuccess: (data: { [k: string]: any }) => {
         if (data) {
@@ -149,8 +150,8 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   const createGroup = () => {
-    request({
-      url: api.CATE_GROUP_SINGLE_MEMBER(courseCode, exerciseNumber, currentUser),
+    oldRequest({
+      url: api.CATE_GROUP_SINGLE_MEMBER(courseCode, exerciseNumber, currentUser).url,
       method: methods.POST,
       onSuccess: () => {},
       onError: (message: string) => console.log(`Failed to create a new group: ${message}`),
@@ -160,8 +161,8 @@ const SubmissionSection: React.FC<Props> = ({
     })
   }
   const deleteGroup = () => {
-    request({
-      url: api.CATE_DELETE_GROUP(courseCode, exerciseNumber, groupID),
+    oldRequest({
+      url: api.CATE_DELETE_GROUP(courseCode, exerciseNumber, groupID).url,
       method: methods.DELETE,
       onSuccess: () => {},
       onError: (message: string) => console.log(`Failed to delete group ${groupID}: ${message}`),
@@ -189,16 +190,16 @@ const SubmissionSection: React.FC<Props> = ({
       timestamp: new Date(),
     }
 
-    request({
-      url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser),
+    oldRequest({
+      url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser).url,
       method: methods.POST,
       body: newStatus,
       onSuccess: () => {
         const formData = new FormData()
         formData.append("fileID", String(index))
         formData.append("file", newFile)
-        request({
-          url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser),
+        oldRequest({
+          url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser).url,
           method: methods.PUT,
           onSuccess: () => {},
           onError: () => {},
@@ -211,8 +212,8 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   const removeFile = (index: number) => {
-    request({
-      url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser),
+    oldRequest({
+      url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser).url,
       method: methods.DELETE,
       body: {
         fileID: index,
@@ -224,11 +225,11 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   const downloadFile = (url: string, filename: string, suffix: string) => {
-    download(api.CATE_FILE_DOWNLOAD, `${filename}.${suffix}`, { downloadPath: url })
+    download(api.CATE_FILE_DOWNLOAD(), `${filename}.${suffix}`, { downloadPath: url })
   }
 
-  const retrieveFileStatus = async () => request({
-    url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser),
+  const retrieveFileStatus = async () => oldRequest({
+    url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser).url,
     method: methods.GET,
     onSuccess: (data: { requirements: ResourceUploadRequirement[] }) => {
       setRequirements(data.requirements)
@@ -250,8 +251,8 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   const uploadDeclaration = (data: "Unaided" | DeclarationHelper[]) => {
-    request({
-      url: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser),
+    oldRequest({
+      url: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser).url,
       method: methods.PUT,
       body: {
         declaration: data
@@ -261,8 +262,8 @@ const SubmissionSection: React.FC<Props> = ({
     }).then(refreshAllParts)
   }
 
-  const retrieveDeclaration = async () => request({
-    url: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser),
+  const retrieveDeclaration = async () => oldRequest({
+    url: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser).url,
     method: methods.GET,
     onSuccess: (data: null | "Unaided" | { name: string, login: string }[]) => {
       if (data === null) {

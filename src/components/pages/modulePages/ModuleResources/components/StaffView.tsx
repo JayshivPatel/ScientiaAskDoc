@@ -20,7 +20,7 @@ import CreateModal from "components/modals/CreateModal"
 import CategoryList from "components/sections/CategoryList"
 import CategoryHeader from "components/headings/CategoryHeader"
 
-import { request, download } from "utils/api"
+import { oldRequest, download } from "utils/api"
 import { api, methods } from "constants/routes"
 import { Folder, Resource, IdBooleanMap } from "constants/types"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -86,8 +86,8 @@ const StaffView: React.FC<StaffViewProps> = ({
     let formData = new FormData()
     formData.append("file", fileUploaded)
 
-    await request({
-      url: api.MATERIALS_RESOURCES_FILE(resourceID),
+    await oldRequest({
+      url: api.MATERIALS_RESOURCES_FILE(resourceID).url,
       method: methods.PUT,
       onSuccess: () => {},
       onError: () => {},
@@ -118,8 +118,8 @@ const StaffView: React.FC<StaffViewProps> = ({
       <IconButton
         tooltip="Delete"
         onClick={async () => {
-          await request({
-            url: api.MATERIALS_RESOURCES_ID(id),
+          await oldRequest({
+            url: api.MATERIALS_RESOURCES_ID(id).url,
             method: methods.DELETE,
             onSuccess: () => {},
             onError: () => {},
@@ -198,8 +198,8 @@ const StaffView: React.FC<StaffViewProps> = ({
         message="This will irreversibly delete all course resources and associated files."
         confirmLabel="Delete All Resources"
         confirmOnClick={() =>
-          request({
-            url: api.MATERIALS_RESOURCES,
+          oldRequest({
+            url: api.MATERIALS_RESOURCES().url,
             method: methods.DELETE,
             onSuccess: () => {
               closeModal()
