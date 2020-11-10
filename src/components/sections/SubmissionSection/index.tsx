@@ -200,7 +200,9 @@ const SubmissionSection: React.FC<Props> = ({
         request({
           url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser),
           method: methods.PUT,
-          onSuccess: () => {},
+          onSuccess: (data: number) => {
+            console.log(data)
+          },
           onError: () => {},
           body: formData,
           sendFile: true,
@@ -210,21 +212,17 @@ const SubmissionSection: React.FC<Props> = ({
     }).finally(refreshAllParts)
   }
 
-  const removeFile = (index: number) => {
+  const removeFile = (rawSubmissionID: number) => {
     request({
-      url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser),
+      url: api.CATE_RAW_SUBMISSION(String(rawSubmissionID)),
       method: methods.DELETE,
-      body: {
-        fileID: index,
-        username: authenticationService.getUserInfo()["username"]
-      },
       onSuccess: () => {},
       onError:  () => {},
     }).finally(refreshAllParts)
   }
 
-  const downloadFile = (url: string, filename: string, suffix: string) => {
-    download(api.CATE_FILE_DOWNLOAD, `${filename}.${suffix}`, { downloadPath: url })
+  const downloadFile = (rawSubmissionID: string, filename: string, suffix: string) => {
+    download(api.CATE_RAW_SUBMISSION(rawSubmissionID), `${filename}.${suffix}`)
   }
 
   const retrieveFileStatus = async () => request({

@@ -14,7 +14,7 @@ interface Props {
   requiredResources: ResourceUploadRequirement[]
   uploadFile: (file: File, index: number) => void
   removeFile: (index: number) => void
-  downloadFile: (url: string, filename: string, suffix: string) => void
+  downloadFile: (rawSubmissionID: string, filename: string, suffix: string) => void
   refresh: () => void
   onWarningSectionClick: (event: React.MouseEvent) => void
 }
@@ -47,8 +47,8 @@ const SubmissionFileUploadTab: React.FC<Props> = ({
   ): [IconDefinition, (e: React.MouseEvent) => void][] => {
     if (uploadedFile) {
       return [
-        [faDownload, e => downloadFile(uploadedFile.url, uploadedFile.title, uploadedFile.suffix)],
-        [faTrash, e => removeFile(index)],
+        [faDownload, e => downloadFile(uploadedFile.rawSubmissionID, uploadedFile.title, uploadedFile.suffix)],
+        [faTrash, e => removeFile(Number(uploadedFile.rawSubmissionID))],
       ]
     } else {
       return [

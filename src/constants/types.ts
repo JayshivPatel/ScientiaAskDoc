@@ -59,6 +59,7 @@ export interface ResourceUploadRequirement {
 }
 
 export interface ResourceUploadStatus {
+  rawSubmissionID: string,
   title: string
   suffix: string
   checksum: string
