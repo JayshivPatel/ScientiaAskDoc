@@ -212,17 +212,17 @@ const SubmissionSection: React.FC<Props> = ({
     }).finally(refreshAllParts)
   }
 
-  const removeFile = (rawSubmissionID: number) => {
+  const removeFile = (courseworkSubmissionID: number) => {
     request({
-      url: api.CATE_RAW_SUBMISSION(String(rawSubmissionID)),
+      url: api.CATE_RAW_SUBMISSION(courseworkSubmissionID),
       method: methods.DELETE,
       onSuccess: () => {},
       onError:  () => {},
     }).finally(refreshAllParts)
   }
 
-  const downloadFile = (rawSubmissionID: string, filename: string, suffix: string) => {
-    download(api.CATE_RAW_SUBMISSION(rawSubmissionID), `${filename}.${suffix}`)
+  const downloadFile = (courseworkSubmissionID: number, filename: string, suffix: string) => {
+    download(api.CATE_RAW_SUBMISSION(courseworkSubmissionID), `${filename}.${suffix}`)
   }
 
   const retrieveFileStatus = async () => request({

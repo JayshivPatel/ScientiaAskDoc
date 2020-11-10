@@ -35,7 +35,7 @@ export const api = {
     `${config.CATE_URL}/groups/courses/${courseCode}/exercises/${exerciseNumber}/members/${username}`,
   CATE_FILE_UPLOAD: (courseCode: string, exerciseNumber: number, username: string) =>
     `${config.CATE_URL}/upload/courses/${courseCode}/exercises/${exerciseNumber}/students/${username}`,
-  CATE_RAW_SUBMISSION: (rawSubmissionID: string) => `${config.CATE_URL}/upload/${rawSubmissionID}/file`,
+  CATE_RAW_SUBMISSION: (courseworkSubmissionID: number) => `${config.CATE_URL}/upload/${courseworkSubmissionID}/file`,
   CATE_FILE_DOWNLOAD: `${config.CATE_URL}/download`,
   CATE_DECLARATION: (courseCode: string, exerciseNumber: number, username: string) =>
     `${config.CATE_URL}/declarations/courses/${courseCode}/exercises/${exerciseNumber}/students/${username}`,
