@@ -39,6 +39,11 @@ export function theme() {
   return document.documentElement.getAttribute("data-theme")
 }
 
+/**
+ * Convert number of bytes into a string that is human-readable
+ * @param bytes Number of bytes
+ * @param precision Decimal precision (default = 2)
+ */
 export function showFileSize(bytes: number, precision: number = 2) {
   const thresh = 1024
   if (bytes < thresh) {

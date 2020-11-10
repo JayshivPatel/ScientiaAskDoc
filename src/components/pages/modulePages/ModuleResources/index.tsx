@@ -1,6 +1,6 @@
 import React from "react"
 
-import { download, request } from "utils/api"
+import { download, oldRequest } from "utils/api"
 import { api, methods } from "constants/routes"
 import SearchBox from "components/headings/SearchBox"
 import QuickAccessView from "./components/QuickAccessView"
@@ -104,8 +104,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       this.setState({ error: message, isLoaded: true })
     }
 
-    request({
-      url: api.MATERIALS_RESOURCES,
+    oldRequest({
+      url: api.MATERIALS_RESOURCES().url,
       method: methods.GET,
       onSuccess,
       onError,
@@ -135,7 +135,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       download(api.MATERIALS_RESOURCES_FILE(indices[0]), filename)
     } else {
       // Multiple files to download, call zipped selection endpoint
-      download(api.MATERIALS_ZIPPED_SELECTION, "materials.zip", {
+      download(api.MATERIALS_ZIPPED_SELECTION(), "materials.zip", {
         ids: indices,
         course: this.moduleCode,
         year: this.props.year,
@@ -159,7 +159,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
   }
 
   handleSectionDownload(category: string) {
-    download(api.MATERIALS_ZIPPED, category + ".zip", {
+    download(api.MATERIALS_ZIPPED(), category + ".zip", {
       year: this.props.year,
       course: this.moduleCode,
       category: category,

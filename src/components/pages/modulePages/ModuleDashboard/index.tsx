@@ -5,7 +5,7 @@ import classNames from "classnames"
 import { faGlobe, faUserFriends } from "@fortawesome/free-solid-svg-icons"
 import PageButtonGroup from "components/groups/PageButtonGroup"
 
-import { request } from "utils/api"
+import { oldRequest } from "utils/api"
 import { api, methods } from "constants/routes"
 import { modulesList } from "../../ModuleList/list"
 import { teachingAims } from "../../ModuleList/aims"
@@ -66,8 +66,8 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
       ]
       setButtons(newButtons)
     }
-    request({
-      url: api.MATERIALS_RESOURCES,
+    oldRequest({
+      url: api.MATERIALS_RESOURCES().url,
       method: methods.GET,
       onSuccess,
       onError: () => {
