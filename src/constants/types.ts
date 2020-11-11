@@ -178,9 +178,17 @@ export interface Feedback {
 
 export interface MarkingItem {
   studentName: string,
-  submissionID: string,
-  feedbackID: string
-  uploadedFeedback: boolean
+  submissionID: number,
+  feedbackID?: number
+}
+
+export interface PostFeedbackResponse {
+  seen: string,
+  id: number,
+  timestamp: string,
+  distribution_id: number,
+  marker: string,
+  student_username: string
 }
 
 export enum ProgressStatus {

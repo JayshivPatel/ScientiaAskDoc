@@ -83,17 +83,35 @@ export const api = {
     url: `${config.EMARKING_URL}/me/distributions`,
   }),
 
-  EMARKING_FEEDBACK: (feedbackID: string, file?: boolean): Api => ({
+  EMARKING_FEEDBACK: (feedbackID: number, file?: boolean): Api => ({
     auth: AuthService.EMARKING,
     url: `${config.EMARKING_URL}/feedback/${feedbackID}${file ? '/file' : ''}`,
   }),
+
+  EMARKING_DISTRIBUTIONS: (distributionID?: number): Api => ({
+    auth: AuthService.EMARKING,
+    url: `${config.EMARKING_URL}/distributions${distributionID !== undefined ? '/' + distributionID : ""}`
+  }), 
     
-  EMARKING_DISTRIBUTION_SUBMISSION: (distributionID: string): Api => ({
+  EMARKING_DISTRIBUTION_SUBMISSION: (distributionID: number): Api => ({
     auth: AuthService.EMARKING,
     url: `${config.EMARKING_URL}/distributions/${distributionID}/submissions`,
   }), 
 
-  EMARKING_SUBMISSION_FILE: (submissionID: string): Api => ({
+  EMARKING_DISTRIBUTION_FEEDBACK: (distributionID: number): Api => ({
+    auth: AuthService.EMARKING,
+    url: `${config.EMARKING_URL}/distributions/${distributionID}/feedback`,
+  }),
+
+  EMARKING_DISTRIBUTION_FEEDBACK_ZIPPED: (distributionID: number): Api => {
+    const { auth, url } = api.EMARKING_DISTRIBUTION_FEEDBACK(distributionID)
+    return {
+      auth: auth,
+      url: `${url}/zipped`
+    }
+  },
+
+  EMARKING_SUBMISSION_FILE: (submissionID: number): Api => ({
     auth: AuthService.EMARKING,
     url: `${config.EMARKING_URL}/submissions/${submissionID}/file`,
   }), 

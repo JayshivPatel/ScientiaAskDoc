@@ -16,7 +16,7 @@ import {resourceTypeToIcon} from "components/pages/modulePages/ModuleResources/u
 import {TimelineEvent} from "constants/types"
 import {toDayCount, toEventDateTime} from "utils/functions"
 import SubmissionSection from "../../sections/SubmissionSection"
-import MarkingSection from "components/sections/MarkingSection"
+import DistributionSection from "components/sections/DistributionSection"
 
 interface Props {
   event?: TimelineEvent
@@ -124,9 +124,10 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
         )]
       case Stage.MARKING:
         return ["Marking", (
-          <MarkingSection
+          <DistributionSection
             courseCode={event?.moduleCode}
             exerciseNumber={event.id}
+            distributionID={123}
           />
         )]
     }

@@ -46,6 +46,8 @@ export async function request<T>(data: RequestData): Promise<T> {
  * @param data The request data object
  */
 export async function doRequest(data: RequestData): Promise<Response> {
+  console.log(data.api)
+
   let headers: { [key: string]: string } = {
     Authorization: authConstants.ACCESS_TOKEN_HEADER(data.api.auth),
     // "Access-Control-Allow-Origin": "*", THIS SHOULD NOT BE NEEDED HERE
