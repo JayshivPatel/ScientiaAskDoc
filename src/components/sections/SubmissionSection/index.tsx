@@ -303,6 +303,8 @@ const SubmissionSection: React.FC<Props> = ({
   // Programmatically open the group formation tab
   const openGroupFormationTab = (event: React.MouseEvent) => setActiveStage("1")
 
+  const userIsLeader = groupMembers.filter(m => m.username === currentUser && m.role === Role.LEADER).length !== 0
+
   const mainSectionDict: EnumDictionary<Stage, JSX.Element> = {
     [Stage.GROUP_FORMATION]: (
       <SubmissionGroupFormation
@@ -319,7 +321,7 @@ const SubmissionSection: React.FC<Props> = ({
     [Stage.FILE_UPLOAD]: (
       <div>
         <SubmissionFileUploadTab
-          displayFileUpload={(event?.assessment === "group" && groupID !== "") || event?.assessment !== "group"}
+          enableFileUpload={(event?.assessment === "group" && groupID !== "" && userIsLeader) || event?.assessment !== "group"}
           requiredResources={requirements}
           uploadFile={uploadFile}
           removeFile={removeFile}
@@ -329,7 +331,7 @@ const SubmissionSection: React.FC<Props> = ({
         />
         <hr/>
         <SubmitDeclarationSection
-          activate={event?.assessment !== "group" || groupMembers.filter(m => m.username === currentUser && m.role === Role.LEADER).length !== 0}
+          activate={event?.assessment !== "group" || userIsLeader}
           status={declarationStatus}
           declaredHelpers={declaredHelpers}
           onSetUnaided={() => {

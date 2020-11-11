@@ -10,7 +10,7 @@ import Container from "react-bootstrap/cjs/Container";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 interface Props {
-  displayFileUpload: boolean
+  enableFileUpload: boolean
   requiredResources: ResourceUploadRequirement[]
   uploadFile: (file: File, index: number) => void
   removeFile: (index: number) => void
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const SubmissionFileUploadTab: React.FC<Props> = ({
-  displayFileUpload,
+  enableFileUpload,
   requiredResources,
   uploadFile,
   removeFile,
@@ -45,16 +45,19 @@ const SubmissionFileUploadTab: React.FC<Props> = ({
     uploadedFile: ResourceUploadStatus | undefined, 
     index: number
   ): [IconDefinition, (e: React.MouseEvent) => void][] => {
-    if (uploadedFile) {
-      return [
-        [faDownload, e => downloadFile(uploadedFile.courseworkSubmissionID, uploadedFile.title, uploadedFile.suffix)],
-        [faTrash, e => removeFile(uploadedFile.courseworkSubmissionID)],
-      ]
-    } else {
-      return [
-        [faUpload, _ => clickUpload(index)],
-      ]
+    if (enableFileUpload) {
+      if (uploadedFile) {
+        return [
+          [faDownload, e => downloadFile(uploadedFile.courseworkSubmissionID, uploadedFile.title, uploadedFile.suffix)],
+          [faTrash, e => removeFile(uploadedFile.courseworkSubmissionID)],
+        ]
+      } else {
+        return [
+          [faUpload, _ => clickUpload(index)],
+        ]
+      }
     }
+    return []
   }
 
   const tagsOf = (requirement: ResourceUploadRequirement): string[] => {
@@ -102,7 +105,8 @@ const SubmissionFileUploadTab: React.FC<Props> = ({
 
   return (
     <div>
-      {(displayFileUpload && fileUploadSection) || (!displayFileUpload && warningSection)}
+      {enableFileUpload || warningSection}
+      {fileUploadSection}
     </div>
   )
 }
