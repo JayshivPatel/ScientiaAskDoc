@@ -28,7 +28,7 @@ export interface StudentInfo {
 
 export interface DeclarationHelper {
   name: string,
-  login: string 
+  login: string,
 }
 
 export enum DeclarationStatus {
@@ -36,6 +36,15 @@ export enum DeclarationStatus {
   WITH_HELP = "With help",
 }
 
+export interface DeclarationInfo {
+  id: number,
+  status: DeclarationStatus,
+  exercise: string,
+  course: string,
+  helpers: DeclarationHelper[],
+  timestamp: string,
+  username: string
+}
 
 export interface Resource {
   title: string

@@ -288,40 +288,67 @@ const CreateModal: React.FC<CreateModalProps> = ({
     setProvOnlineAnswerSwitch(!provOnlineAnswerSwitch);
   };
 
-  const [weigh_options] = useState([
-    {label: "Average", value: -1},
-  ]);
+
+    const [dateStart, setDateStart] = useState<Date>(new Date());
+    const [dateDue, setDateDue] = useState<Date>(new Date());
+
+    const [weigh_options] = useState([
+        {label: "Average", value: -1},
+    ]);
 
   const dateInfoLabels = [
     "Start date:",
     "Due date:",
   ]
 
-  const datePicker = (
-    <DatePicker
-      className={styles.datePicker}
-      onChange={handleChange}
-      showTimeInput
-      timeFormat="HH:mm"
-      dateFormat="MMMM d, yyyy HH:mm 'UTC'"
-    />
-  )
+    const [showPicker, setShowPicker] = useState(true);
 
-  /* TODO: Needs to add callbacks to handle value change */
-  const createDateInfoRow = (label: string) => (
-    <Row className={styles.Row} md={2}>
-      <Col md={2} style={{paddingLeft: 0}}>
+    const datePicker_start = (
+        <DatePicker
+            className={styles.datePicker}
+            selected={dateStart}
+            onChange={(date: Date) => {
+                setDateStart(date);
+                setDateDue(date)
+            }}
+            showTimeInput
+            timeFormat="HH:mm"
+            dateFormat="d/M/yyyy HH:mm 'UTC'"
+        />
+    );
+
+    const datePicker_due = (
+        <DatePicker
+            className={styles.datePicker}
+            selected={dateDue}
+            onChange={(date: Date) => {
+                setDateDue(date)
+                if (date.getUTCDate() < dateStart.getUTCDate()) {
+                    setDateDue(dateStart);
+                    console.warn("Cannot set due date before start date!");
+                    window.alert("Cannot set due date before start date!")
+                }
+            }}
+            showTimeInput
+            timeFormat="HH:mm"
+            dateFormat="d/M/yyyy HH:mm 'UTC'"
+        />
+    );
+
+    /* TODO: Needs to add callbacks to handle value change */
+    const createDateInfoRow = (label: string, datePicker: any) => (
+        <Row className={styles.Row} md={2}>
+            <Col md={2} style={{paddingLeft: 0}}>
         <span className={styles.infoLabel}>
           <FontAwesomeIcon icon={faCalendarAlt} className={styles.font}/>
-          {label}
+            {label}
         </span>
-      </Col>
-      <Col md={10}>
-        {datePicker}
-      </Col>
-    </Row>
-  )
-
+            </Col>
+            <Col md={10}>
+                {datePicker}
+            </Col>
+        </Row>
+    );
 
 
   return (
@@ -353,88 +380,55 @@ const CreateModal: React.FC<CreateModalProps> = ({
                   <FontAwesomeIcon icon={faFileSignature} className={styles.font}/>
                   Title:
                 </span>
-              </Col>
-              <Col md={10}>
-                <Form.Control placeholder="Title"
-                              className={styles.TextArea}/>
-              </Col>
-            </Row>
-
-            {dateInfoLabels.map(createDateInfoRow)}
-          </Container>
+                            </Col>
+                            <Col md={10}>
+                                <Form.Control placeholder="Title"
+                                              className={styles.TextArea}/>
+                            </Col>
+                        </Row>
+                        {createDateInfoRow("Start Date", datePicker_start)}
+                        {createDateInfoRow("Due Date", datePicker_due)}
+                    </Container>
 
           <hr/>
 
-          <Row className={styles.Row} style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-            {/* Exercise Type */}
-            <Col className={styles.Col} xs={8}>
+                    <Row className={styles.Row}
+                         style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+                        {/* Exercise Type */}
+                        <Col className={styles.Col} xs={8}>
               <span className={styles.infoLabel}>
                 <FontAwesomeIcon icon={faBars} className={styles.font}/>
                 Exercise Type:
               </span>
-              <Select
-                isClearable
-                onChange={handleChange}
-                onInputChange={handleInputChange}
-                options={typeOptions}
-                className={styles.SelectArea_layer3}
-              />
-            </Col>
-            <Col>
-              <Row>
-                <Col className={styles.Col} style={{paddingRight: 0}}>
-                  <FontAwesomeIcon icon={faUser} className={styles.font}/>
-                  <Form.Check onChange={isGroupAction} checked={!isGrouped} label={"Individual"}/>
-                </Col>
-                <Col className={styles.Col}>
-                  <FontAwesomeIcon icon={faUsers} className={styles.font}/>
-                  <Form.Check onChange={isGroupAction} checked={isGrouped} label={"Group"}/>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-
-          <hr/>
-
-          <Row className={styles.Row}>
-            <Col className={styles.Col}>
-              Provision of on-line mark schema:
-              <Form.Switch onChange={provSchemaSwitchAction}
-                           id={"provSchemaSwitch"}
-                           checked={provSchemaSwitch}
-                           className={styles.Switch}
-              />
-            </Col>
-          </Row>
-
-          <Row className={styles.Row} md={2}>
-            <Col className={styles.Col} md={3}>
-              <span className={styles.infoLabel}>
-                Maximum mark (0-100):
-              </span>
-            </Col>
-            <Col className={styles.Col} md={9}>
-              <Form.Control type="number" className={styles.TextArea} min={0} max={100}
-                            defaultValue={100}/>
-            </Col>
-          </Row>
-          <Row className={styles.Row} md={2}>
-            <Col className={styles.Col} md={3}>
-              <span className={styles.infoLabel}>
-                Weight(%) in module:
-              </span>
-            </Col>
-            <Col className={styles.Col} md={9}>
-              <CreatableSelect
-                isClearable
-                onChange={handleChange}
-                onInputChange={handleInputChange}
-                options={weigh_options}
-                placeholder={'%'}
-                className={styles.SelectArea_layer2}
-              />
-            </Col>
-          </Row>
+                            <Select
+                                isClearable
+                                onChange={handleChange}
+                                onInputChange={handleInputChange}
+                                options={typeOptions}
+                                className={styles.SelectArea_layer3}
+                            />
+                        </Col>
+                        <Col>
+                            <Row>
+                                <Col>
+                                  <Form.Switch
+                                        id={`groupIndividualPickerSwitch`}
+                                        label={showPicker ? "Individual Submission" : "Group Submission"}
+                                        onClick={() => setShowPicker(!showPicker)}
+                                        defaultChecked={showPicker}
+                                    />
+                                </Col>
+                                {/*<Col className={styles.Col} style={{paddingRight: 0}}>*/}
+                                {/*    <FontAwesomeIcon icon={faUser} className={styles.font}/>*/}
+                                {/*    <Form.Check onChange={isGroupAction} checked={!isGrouped} label={"Individual"}/>*/}
+                                {/*</Col>*/}
+                                {/*<Col className={styles.Col}>*/}
+                                {/*    <FontAwesomeIcon icon={faUsers} className={styles.font}/>*/}
+                                {/*    <Form.Check onChange={isGroupAction} checked={isGrouped} label={"Group"}/>*/}
+                                {/*</Col>*/}
+                            </Row>
+                        </Col>
+                    </Row>
 
           <hr/>
 

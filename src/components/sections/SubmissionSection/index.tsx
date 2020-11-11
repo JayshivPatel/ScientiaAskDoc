@@ -1,28 +1,25 @@
 import React, {useEffect, useState} from "react"
-import Button from "react-bootstrap/Button"
 import styles from "./style.module.scss"
 import {
-  EnumDictionary,
-  ResourceUploadRequirement,
-  ResourceUploadStatus,
-  TimelineEvent,
-  GroupFormationMemberInfo,
-  StudentInfo,
+  DeclarationHelper,
+  DeclarationInfo,
   DeclarationStatus,
-  DeclarationHelper
+  EnumDictionary,
+  GroupFormationMemberInfo,
+  ResourceUploadRequirement,
+  StudentInfo,
+  TimelineEvent
 } from "constants/types"
-import ButtonGroup from "react-bootstrap/esm/ButtonGroup"
 import SubmissionFileUploadTab from "../SubmissionFileUploadTab"
-import { api, methods } from "constants/routes"
-import { download, oldRequest, request } from "utils/api"
+import {api, methods} from "constants/routes"
+import {download, oldRequest, request} from "utils/api"
 import SubmitDeclarationSection from "../SubmissionDeclarationTab";
 import authenticationService from "utils/auth"
-import SubmissionGroupFormation, { Role } from "../SubmissionGroupFormation";
+import SubmissionGroupFormation, {Role} from "../SubmissionGroupFormation";
 import moment from "moment";
 import Accordion from "react-bootstrap/esm/Accordion"
 import Card from "react-bootstrap/Card"
 import LoadingScreen from "components/suspense/LoadingScreen"
-import { AuthService } from "constants/auth"
 
 enum Stage {
   GROUP_FORMATION = "Group Formation",
@@ -238,15 +235,26 @@ const SubmissionSection: React.FC<Props> = ({
 
   /* ================================ Declaration ================================ */
   const addDeclarationHelper = (name: string, login: string) => {
-    const newHelpers = [...declaredHelpers, { name, login }]
-    uploadDeclaration(newHelpers)
+    uploadDeclaration({
+      name: name,
+      login: login,
+    })
   }
 
   const removeDeclarationHelper = (targetName: string, targetLogin: string) => {
-    uploadDeclaration(declaredHelpers.filter(({ name, login }) => targetName !== name || targetLogin !== login))
+    oldRequest({
+      url: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser).url,
+      method: methods.DELETE,
+      body: {
+        "name": targetName,
+        "login": targetLogin,
+      },
+      onSuccess: () => {},
+      onError: () => alert("error")
+    }).then(refreshAllParts)
   }
 
-  const uploadDeclaration = (data: "Unaided" | DeclarationHelper[]) => {
+  const uploadDeclaration = (data: "Unaided" | DeclarationHelper | undefined) => {
     oldRequest({
       url: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser).url,
       method: methods.PUT,
@@ -261,16 +269,14 @@ const SubmissionSection: React.FC<Props> = ({
   const retrieveDeclaration = async () => oldRequest({
     url: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser).url,
     method: methods.GET,
-    onSuccess: (data: null | "Unaided" | { name: string, login: string }[]) => {
-      if (data === null) {
-        setDeclarationStatus(DeclarationStatus.UNAIDED)
-        setDeclaredHelpers([])
-      } else if (data === "Unaided") {
+    onSuccess: (data: DeclarationInfo) => {
+      console.log(data)
+      if (data.status === "Unaided") {
         setDeclarationStatus(DeclarationStatus.UNAIDED)
         setDeclaredHelpers([])
       } else {
         setDeclarationStatus(DeclarationStatus.WITH_HELP)
-        setDeclaredHelpers(data)
+        setDeclaredHelpers(data.helpers)
       }
       loaded(LoadingParts.DECLARATION)
     },
@@ -330,7 +336,7 @@ const SubmissionSection: React.FC<Props> = ({
             uploadDeclaration("Unaided")
           }}
           onSetWithHelp={() => {
-            uploadDeclaration([])
+            uploadDeclaration(undefined)
           }}
           addHelper={(name, login) => {
             addDeclarationHelper(name, login)
