@@ -1,3 +1,4 @@
+import { api } from "constants/routes"
 import authConstants, { AuthService, authServices } from "../constants/auth"
 
 /**
@@ -56,7 +57,7 @@ async function login(username: string, password: string, loginURL: string, login
   })
   if (response.ok) {
     const data = await response.json()
-    console.log(data)
+    console.log(loginService, data)
     storeDataInStorage(loginService, {
       ...data,
       user_info: {
@@ -66,6 +67,19 @@ async function login(username: string, password: string, loginURL: string, login
     return true
   }
   return false
+}
+
+/**
+ * Login to all services
+ * @param username user's college username (i.e. abc123)
+ * @param password user's password
+ */
+async function loginAll(username: string, password: string): Promise<boolean> {
+  const results = await Promise.all(
+    [api.EMARKING_LOGIN(), api.MATERIALS_LOGIN()]
+      .map(({ auth, url }) => login(username, password, url, auth))
+  )
+  return !results.includes(false)
 }
 
 const logout = () => removeDataFromStorage()
@@ -85,6 +99,7 @@ const userIsLoggedIn = (services: AuthService[] = [AuthService.MATERIALS]) => {
 
 export default {
   login,
+  loginAll,
   logout,
   userIsLoggedIn,
   getUserInfo,

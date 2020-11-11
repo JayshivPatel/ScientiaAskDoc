@@ -35,7 +35,6 @@ export async function requestBlob(data: RequestData): Promise<Blob> {
  * @param data The request data object
  */
 export async function request<T>(data: RequestData): Promise<T> {
-  console.log(data.api)
   return doRequest(data)
     .then(response => response.text())
     .then(text => text ? JSON.parse(text) : undefined)
@@ -46,8 +45,6 @@ export async function request<T>(data: RequestData): Promise<T> {
  * @param data The request data object
  */
 export async function doRequest(data: RequestData): Promise<Response> {
-  console.log(data.api)
-
   let headers: { [key: string]: string } = {
     Authorization: authConstants.ACCESS_TOKEN_HEADER(data.api.auth),
     // "Access-Control-Allow-Origin": "*", THIS SHOULD NOT BE NEEDED HERE
@@ -80,7 +77,8 @@ export async function doRequest(data: RequestData): Promise<Response> {
     // Currently follows Materials API error shape
     .catch(async error => {
       try {
-        throw await error.json()
+        const body = await error.json()
+        throw body.message
       } catch (e) {
         throw error
       }

@@ -29,7 +29,7 @@ const SignIn: React.FC<Props> = ({ location }) => {
   const handleSubmit = async () => {
     // Pending SSO reimplementation of EdTech services authentication
     if (
-      await authenticationService.login(username, password, api.MATERIALS_LOGIN().url, AuthService.MATERIALS)
+      await authenticationService.loginAll(username, password)
     ) {
       setRedirect(true)
     } else {

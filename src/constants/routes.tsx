@@ -74,6 +74,16 @@ export const api = {
     url: `${config.CATE_URL}/upload/${courseworkSubmissionID}/file`,
   }),
 
+  EMARKING_LOGIN: (): Api => ({
+    auth: AuthService.EMARKING,
+    url: `${config.EMARKING_URL}/auth/login`,
+  }),
+
+  EMARKING_LOGOUT: (): Api => ({
+    auth: AuthService.EMARKING,
+    url: `${config.EMARKING_URL}/auth/logout`,
+  }),
+
   EMARKING_ME_FEEDBACK: (): Api => ({
     auth: AuthService.EMARKING,
     url: `${config.EMARKING_URL}/me/feedback`,
