@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import styles from "./style.module.scss"
 
 import classNames from "classnames"
@@ -16,26 +16,30 @@ import {
   faInfoCircle,
   faFile,
   faFolder,
+  faDownload,
 } from "@fortawesome/free-solid-svg-icons"
+import SearchBox from "components/headings/SearchBox"
 
 const ModuleFeedback: React.FC = () => {
+  let [searchText, setSearchText] = useState("")
+
   return (
     <>
       <MyBreadcrumbs />
-      <InputGroup>
-        <FormControl
-          className={styles.searchBar}
-          aria-label="Search"
-          placeholder="Search..."
-        />
-        <InputGroup.Append>
-          <Button className={styles.searchBarIcon}>
-            <FontAwesomeIcon size="1x" icon={faInfoCircle} />
-          </Button>
-        </InputGroup.Append>
-      </InputGroup>
+      <SearchBox
+        searchText={searchText}
+        onSearchTextChange={setSearchText}
+        prompts={getSearchPrompts()} 
+      />
 
-      <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
+      <Row style={{ marginTop: "0.625rem" }}>
+        <Col style={{ paddingRight: "0.3125rem" }}>
+        <Button block>
+          Download All
+          <FontAwesomeIcon icon={faDownload}/>
+        </Button>
+        </Col>
+      </Row>
 
       <Row style={{ marginRight: "-0.625rem", marginLeft: "-0.625rem" }}>
         {[...Array(4)].map((e, i) => (
@@ -77,6 +81,34 @@ const ModuleFeedback: React.FC = () => {
       </Row>
     </>
   )
+}
+
+function getSearchPrompts() {
+  const prefixList = [
+    { name: "TUT", value: "prefix(tut)" },
+    { name: "CW", value: "prefix(cw)" },
+  ]
+  
+  const assessmentList = [
+    { name: "Assessed", value: "assessment(assessed)" },
+    { name: "Unassessed", value: "assessment(unassessed)" },
+    { name: "Required", value: "assessment(required)" },
+    { name: "Group", value: "assessment(group)" },
+    { name: "Exam", value: "assessment(exam)" },
+  ]
+  
+  const tagsList = [
+    { name: "New", value: "tag(new)" },
+    { name: "Week 1", value: "tag(week 1)" },
+  ]
+  
+  const prompts = [
+    { title: "Assessment", list: assessmentList },
+    { title: "Tags", list: tagsList },
+    { title: "Prefixes", list: prefixList },
+  ]
+
+  return prompts
 }
 
 export default ModuleFeedback
