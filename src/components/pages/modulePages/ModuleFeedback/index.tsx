@@ -18,6 +18,8 @@ import {
   faFolder,
   faDownload,
 } from "@fortawesome/free-solid-svg-icons"
+import {Feedback} from "constants/types"
+import {feedbackData} from "../ModuleFeedback/feedbackData"
 import SearchBox from "components/headings/SearchBox"
 
 const ModuleFeedback: React.FC = () => {
@@ -81,6 +83,10 @@ const ModuleFeedback: React.FC = () => {
       </Row>
     </>
   )
+}
+
+function sortFeedbacks(f1: Feedback, f2: Feedback) {
+  return f1.id - f2.id
 }
 
 function getSearchPrompts() {
