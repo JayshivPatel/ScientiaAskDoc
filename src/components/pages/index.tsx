@@ -13,7 +13,7 @@ import {
 import Container from "react-bootstrap/esm/Container"
 import LoadingScreen from "components/suspense/LoadingScreen"
 // import { request } from "utils/api";
-// import { api, methods } from "constants/routes";
+import authenticationService from "utils/auth"
 import { modulesList } from "./ModuleList/list"
 import RightBar from "components/navbars/RightBar"
 import LeftBar from "components/navbars/LeftBar"
@@ -75,6 +75,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   const [modules, setModules] = useState<Module[]>([])
   const [timelineEvents, setTimelineEvents] = useState<{ [pair: string]: TimelineEvent[] }>({})
   const [modulesTracks, setModulesTracks] = useState<ModuleTracks>({})
+  const currentUser = authenticationService.getUserInfo()["username"]
   useEffect(() => {
     const onSuccess = (data: { [k: string]: any }[]) => {
       setModules(
@@ -119,23 +120,16 @@ const StandardView: React.FC<StandardViewProps> = ({
     const newEvents: { [pair: string]: TimelineEvent[] } = {}
     for (const module of modules) {
       oldRequest({
-        url: api.CATE_COURSE_EXERCISES(module.code).url,
+        url: api.CATE_COURSE_EXERCISES(module.code, currentUser).url,
         method: methods.GET,
-        onSuccess: (data: { [k: string]: any }[]) => {
+        onSuccess: (data: TimelineEvent[]) => {
+          console.log(data)
           if (data) {
             newEvents[module.code] = []
             data.forEach((exercise, index) => {
-              newEvents[module.code][index] = {
-                id: index,
-                moduleCode: module.code,
-                title: exercise.title,
-                startDate: moment(exercise.start_date).toDate(),
-                endDate: moment(exercise.deadlines[0]["deadline"]).toDate(),
-                prefix: exercise.type,
-                assessment: exerciseTypes[Math.floor(Math.random() * exerciseTypes.length)],
-                owner: "",
-                status: "missed",
-              }
+              exercise.startDate = moment(exercise.startDate).toDate()
+              exercise.endDate = moment(exercise.endDate).toDate()
+              newEvents[module.code][index] = exercise
             })
             setTimelineEvents({ ...newEvents })
           }
