@@ -178,12 +178,14 @@ export interface CalendarEvent {
 
 export interface Feedback {
   exercise_title: string,
-  id: 0,
+  id: number,
   course: string,
   course_title: string,
-  exercise: 0,
+  exercise: number,
   year: string,
-  group: string
+  group: string,
+  score_obtained: number,
+  score_total: number
 }
 
 export interface MarkingItem {
