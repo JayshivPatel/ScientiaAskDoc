@@ -35,32 +35,6 @@ const ModuleFeedback: React.FC = () => {
         </InputGroup.Append>
       </InputGroup>
 
-      <h5
-        style={{ marginTop: "1.875rem", marginBottom: "0.625rem" }}
-        className={classNames(styles.moduleSectionHeader)}>
-        Folders
-      </h5>
-      <Row style={{ marginRight: "-0.625rem", marginLeft: "-0.625rem" }}>
-        {[...Array(3)].map((e, i) => (
-          <Col
-            xs={6}
-            sm={6}
-            md={3}
-            key={i}
-            style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}>
-            <Card className={styles.folderCard}>
-              <Card.Body style={{ padding: ".6rem" }}>
-                <Card.Text style={{ marginBottom: 0 }}>Folder {i}</Card.Text>
-                <FontAwesomeIcon
-                  style={{ fontSize: "1.125rem" }}
-                  icon={faFolder}
-                />
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-
       <h5 className={classNames(styles.moduleSectionHeader)}>Quick Access</h5>
 
       <Row style={{ marginRight: "-0.625rem", marginLeft: "-0.625rem" }}>
