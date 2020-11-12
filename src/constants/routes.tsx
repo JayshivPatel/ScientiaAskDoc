@@ -33,9 +33,9 @@ export const api = {
     auth: AuthService.EMARKING,
     url: `${config.CATE_URL}/auth/login`
   }),
-  CATE_COURSE_EXERCISES: (courseCode: string): Api => ({
+  CATE_COURSE_EXERCISES: (courseCode: string, username: string): Api => ({
     auth: AuthService.EMARKING,
-    url: `${config.CATE_URL}/courses/${courseCode}/exercises`,
+    url: `${config.CATE_URL}/courses/${courseCode}/exercises/members/${username}`,
   }),
   CATE_USER_INFO: (username: string): Api => ({
     auth: AuthService.EMARKING,
