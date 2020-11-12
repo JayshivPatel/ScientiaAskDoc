@@ -12,6 +12,8 @@ interface Props {
   feedbackID?: number,
   onUploadFeedback: (file: File) => void,
   onDownloadSubmission: () => void,
+  onDownloadFeedback: () => void,
+  onDeleteFeedback: () => void,
   onReassign: () => void,
 }
 
@@ -20,6 +22,8 @@ const StudentMarkingRow: React.FC<Props> = ({
   feedbackID,
   onUploadFeedback,
   onDownloadSubmission,
+  onDownloadFeedback,
+  onDeleteFeedback,
   onReassign,
 }) => {
 
@@ -49,15 +53,15 @@ const StudentMarkingRow: React.FC<Props> = ({
     {
       icon: faDownload,
       text: "Download Feedback",
-      tooltip: "Upload feedback for this student",
-      onClick: () => uploadRef.current?.click(),
+      tooltip: "Download feedback given to this student",
+      onClick: () => onDownloadFeedback(),
     },
     {
       icon: faTimes,
       text: "Delete Feedback",
       tooltip: "Delete submitted feedback",
       warning: true,
-      onClick: () => {},
+      onClick: () => onDeleteFeedback(),
     },
   ]
 

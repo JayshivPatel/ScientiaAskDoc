@@ -108,13 +108,15 @@ export async function oldRequest(data: OldRequestData) {
 }
 
 // Utility that downloads files fetched by request (assumes GET)
-export async function download(api: Api, filename: string, body?: any) {
+export async function download(api: Api, filename?: string, body?: any) {
   const onSuccess = (blob: any) => {
     // TODO: Try to navigate straight to the endpoint url instead of creating an object url
     let url = URL.createObjectURL(blob)
     let a = document.createElement("a")
     a.href = url
-    a.download = filename
+    if (filename) {
+      a.download = filename
+    }
     a.click()
     a.remove()
   }

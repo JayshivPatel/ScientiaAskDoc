@@ -191,13 +191,38 @@ export interface MarkingItem {
   feedbackID?: number
 }
 
-export interface PostFeedbackResponse {
+export interface EMarkingSubmissionView {
+  student_username: string,
+  marker: string,
+  id: number,
+  timestamp: string,
+  distribution_id: number,
+}
+
+export interface EMarkingFeedbackView {
   seen: string,
   id: number,
   timestamp: string,
   distribution_id: number,
   marker: string,
   student_username: string
+}
+
+export interface EMarkingDistributionView {
+  year: string,
+  exercise: number,
+  group_id: number,
+  add_blank_page: boolean,
+  platform: "cate" | "labts",
+  distributed_by: string,
+  submissions: EMarkingSubmissionView[]
+  course: string,
+  id: number,
+  feedback_published: boolean,
+  feedback: EMarkingFeedbackView[],
+  timestamp: string,
+  labts_path: string,
+  target_files: string
 }
 
 export enum ProgressStatus {

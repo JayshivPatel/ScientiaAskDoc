@@ -1,37 +1,64 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './style.module.scss'
 
-import { MarkingItem, PostFeedbackResponse, StudentInfo, TimelineEvent } from 'constants/types'
-import { oldRequest, request } from 'utils/api'
+import { MarkingItem, EMarkingFeedbackView, StudentInfo, TimelineEvent, EMarkingDistributionView } from 'constants/types'
+import { download, request, requestBlob } from 'utils/api'
 import { api, methods } from 'constants/routes'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from 'react-bootstrap/Button'
 import StudentMarkingRow from 'components/rows/StudentMarkingRow'
 import classNames from 'classnames'
-import { faCheckCircle, faCross, faDownload, faEye, faShare, faTimes, faUpload } from '@fortawesome/free-solid-svg-icons'
+import LoadingScreen from 'components/suspense/LoadingScreen'
+import { dateToQueryYear } from 'utils/functions'
+import moment from 'moment'
 
 interface BottomButton {
   text: string,
   onClick: () => void,
   colour?: string
+  disabled?: boolean,
+}
+
+enum Stage {
+  LOADING = "loading",
+  ERROR = "error",
+  OK = "ok",
+  NO_DISTRIBUTION = "noDistribution",
 }
 
 interface Props {
   event?: TimelineEvent
   courseCode: string,
-  distributionID: number,
-  exerciseNumber: number
+  exerciseNumber: number,
 }
 
 const DistributionSection: React.FC<Props> = ({
-  distributionID
+  courseCode,
+  exerciseNumber,
 }) => {
 
-  const [items, setItems] = useState<MarkingItem[]>([])
+  const [loading, setLoading] = useState<Stage>(Stage.LOADING)
   const [publishConfirm, setPublishConfirm] = useState<boolean>(false)
+  const [distribution, setDistribution] = useState<EMarkingDistributionView>(dummyView)
 
-  const setItemsSorted = (newItems: MarkingItem[]) => {
-    newItems.sort((a, b) => {
+  const {
+    id: distributionID,
+    submissions,
+    feedback,
+  } = distribution
+
+  const markingItems: MarkingItem[] = 
+    submissions.map(({ student_username: student, id: submissionID }) => {
+      const feedbackID = feedback[
+        feedback.findIndex(({ student_username }) => student_username === student)
+      ]?.id
+      return {
+        studentName: student,
+        submissionID: submissionID,
+        feedbackID: feedbackID
+      }
+    })
+    .sort((a, b) => {
       if (a.feedbackID !== undefined && b.feedbackID === undefined) {
         return -1
       } else if (a.feedbackID === undefined && b.feedbackID !== undefined) {
@@ -40,16 +67,16 @@ const DistributionSection: React.FC<Props> = ({
         return a.studentName.localeCompare(b.studentName)
       }
     })
-    setItems(newItems)
-  }
+  
+  const isReadyToPublishFeedback = feedback.length === submissions.length
 
-  const uploadFeedbackForStudent = async (studentName: string, file: File) => {
-    request<PostFeedbackResponse>({
+  const uploadFeedbackForStudent = (studentName: string, file: File) => {
+    request<EMarkingFeedbackView>({
       api: api.EMARKING_DISTRIBUTION_FEEDBACK(distributionID),
       method: methods.POST,
       body: {
-        marker: "abc",
-        student_username: "123"
+        marker: "yz31218",
+        student_username: studentName
       }
     })
     .then(response => {
@@ -67,17 +94,29 @@ const DistributionSection: React.FC<Props> = ({
   }
   
   const refresh = () => {
-    setItemsSorted(dummy)
-  } 
+    setLoading(Stage.LOADING)
+    request<EMarkingDistributionView[]>({
+      api: api.EMARKING_DISTRIBUTIONS(),
+      method: methods.GET,
+      body: {
+        year: dateToQueryYear(moment().toDate()),
+        course: Number(courseCode),
+        exercise: exerciseNumber,
+      }
+    }).then(distributions => {
+
+      const distribution = distributions[0]
+    
+      distribution && setDistribution(distribution)
+      console.log(distributions)
+      setLoading(distribution ? Stage.OK : Stage.NO_DISTRIBUTION)
+    })
+  }
 
   useEffect(refresh, [])
 
   const downloadSubmissionByID = (submissionID: number) => {
-    request({
-      api: api.EMARKING_SUBMISSION_FILE(submissionID),
-      method: methods.GET,
-    })
-    .then(refresh)
+    download(api.EMARKING_SUBMISSION_FILE(submissionID), "123")
   }
 
   const reassign = () => {
@@ -86,18 +125,31 @@ const DistributionSection: React.FC<Props> = ({
   }
 
   const downloadSubmissionsZip = () => {
-    // alert("download sub zip")
-    // request({
-    //   api: api.EMARKING_DISTRIBUTIONS(distributionID),
-    //   method: methods.GET,
-    // })
-    // .then(console.log)
-    // TODO: download submissions
+    const body = {
+      marker: "yz31218",
+    }
+    download(api.EMARKING_DISTRIBUTION_SUBMISSION_ZIPPED(distributionID), "submissions.zip", body)
+  }
+
+  const downloadFeedbackByID = (feedbackID: number) => {
+    download(api.EMARKING_FEEDBACK(feedbackID, true))
+  }
+
+  const deleteFeedbackByID = (feedbackID: number) => {
+    request({
+      api: api.EMARKING_FEEDBACK(feedbackID),
+      method: methods.DELETE,
+    })
+    .then(refresh)
   }
 
   const uploadFeedbackBatch = () => {
     alert("upload feedback batch")
     // TODO:
+  }
+
+  const downloadFeedbackZip = () => {
+    download(api.EMARKING_DISTRIBUTION_FEEDBACK_ZIPPED(distributionID), "feedback.zip")
   }
   
   const fetchLate = () => {
@@ -115,11 +167,13 @@ const DistributionSection: React.FC<Props> = ({
 
   }
 
-  const makeButton = ({ text, onClick, colour }: BottomButton) => {
+  const makeButton = ({ text, onClick, colour, disabled }: BottomButton) => {
     return (
       <Button
         className={classNames(colour, styles.sectionButton)}
         onClick={onClick}
+        variant="secondary" 
+        disabled={disabled}
       >
         {text}
       </Button>
@@ -132,16 +186,18 @@ const DistributionSection: React.FC<Props> = ({
     </ButtonGroup>
   )
 
-  return (
+  const mainSection = 
     <div>
       <div className={styles.marking}>
-        {items.map(({ studentName, submissionID, feedbackID }) => (
+        {markingItems.map(({ studentName, submissionID, feedbackID }) => (
           <StudentMarkingRow 
             studentName={studentName}
             submissionID={submissionID}
             feedbackID={feedbackID}
             onUploadFeedback={file => uploadFeedbackForStudent(studentName, file)}
             onDownloadSubmission={() => downloadSubmissionByID(submissionID)}
+            onDownloadFeedback={() => feedbackID !== undefined && downloadFeedbackByID(feedbackID)}
+            onDeleteFeedback={() => feedbackID !== undefined && deleteFeedbackByID(feedbackID)}
             onReassign={reassign}
           />
         ))}
@@ -166,21 +222,35 @@ const DistributionSection: React.FC<Props> = ({
             {
               text: "Confirm and publish", 
               onClick: publishFeedback,
-              colour: styles.green
+              colour: styles.green,
+              disabled: !isReadyToPublishFeedback
             },
             {
               text: "Cancel and don't publish", 
               onClick: () => setPublishConfirm(false),
-              colour: styles.red
+              colour: styles.red,
+              disabled: !isReadyToPublishFeedback,
             },
           ] : 
           [
             {
               text: "Publish Feedback", 
               onClick: () => setPublishConfirm(true),
+              disabled: !isReadyToPublishFeedback,
             }
           ]
       )}
+    </div>
+
+  return (
+    <div style={{ position: 'relative', minHeight: '5rem' }}>
+      <LoadingScreen
+        isLoaded={loading !== Stage.LOADING}
+        successful={mainSection}
+        error={ loading === Stage.ERROR ? `Oops! The server just put me on hold!` 
+              : loading === Stage.NO_DISTRIBUTION ? `Oops! Looks like you have no marking distribution on this event!` 
+              : undefined}
+      />
     </div>
   )
 }
@@ -210,5 +280,22 @@ const dummy: MarkingItem[] = [
     submissionID: 114,
   },
 ]
+
+const dummyView: EMarkingDistributionView = {
+  year: "",
+  exercise: 0,
+  group_id: 0,
+  add_blank_page: false,
+  platform: "cate",
+  distributed_by: "",
+  submissions: [],
+  course: "",
+  id: 0,
+  feedback_published: false,
+  feedback: [],
+  timestamp: "",
+  labts_path: "",
+  target_files: ""
+}
 
 export default DistributionSection

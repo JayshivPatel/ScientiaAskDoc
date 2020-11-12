@@ -59,3 +59,13 @@ export function showFileSize(bytes: number, precision: number = 2) {
 
   return bytes.toFixed(precision) + ' ' + units[u];
 }
+
+/**
+ * TODO: Implement this
+ * Convert the date into the academic year that this date is in.
+ * The academic year will be in "aabb" form i.e. 2021 means 2020 - 2021 academic year.
+ * @param date Date object
+ */
+export function dateToQueryYear(date: Date): number {
+  return 2021
+}

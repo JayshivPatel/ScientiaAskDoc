@@ -29,7 +29,10 @@
 .sectionButton.green {
   background-color: var(--teal-background) !important;
   color: var(--teal-text) !important;
+}
 
+.sectionButton:focus {
+  box-shadow: none;
 }
 
 .operationButtonGroup {

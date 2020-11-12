@@ -98,6 +98,11 @@ export const api = {
     url: `${config.EMARKING_URL}/feedback/${feedbackID}${file ? '/file' : ''}`,
   }),
 
+  EMARKING_FEEDBACK_UPLOAD_BATCH: (distributionID: number): Api => ({
+    auth: AuthService.EMARKING,
+    url: `${config.EMARKING_URL}/feedback/batch/distribution/${distributionID}`
+  }),
+
   EMARKING_DISTRIBUTIONS: (distributionID?: number): Api => ({
     auth: AuthService.EMARKING,
     url: `${config.EMARKING_URL}/distributions${distributionID !== undefined ? '/' + distributionID : ""}`
@@ -107,6 +112,14 @@ export const api = {
     auth: AuthService.EMARKING,
     url: `${config.EMARKING_URL}/distributions/${distributionID}/submissions`,
   }), 
+
+  EMARKING_DISTRIBUTION_SUBMISSION_ZIPPED: (distributionID: number): Api => {
+    const { auth, url } = api.EMARKING_DISTRIBUTION_SUBMISSION(distributionID)
+    return {
+      auth: auth,
+      url: `${url}/zipped`
+    }
+  },
 
   EMARKING_DISTRIBUTION_FEEDBACK: (distributionID: number): Api => ({
     auth: AuthService.EMARKING,

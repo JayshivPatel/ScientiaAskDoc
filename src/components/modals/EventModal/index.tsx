@@ -127,7 +127,6 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
           <DistributionSection
             courseCode={event?.moduleCode}
             exerciseNumber={event.id}
-            distributionID={123}
           />
         )]
     }
