@@ -1,3 +1,4 @@
+import auth from "utils/auth"
 import { AuthService } from "./auth"
 
 const dev = {
@@ -33,7 +34,7 @@ export const api = {
     auth: AuthService.EMARKING,
     url: `${config.CATE_URL}/auth/login`
   }),
-  CATE_COURSE_EXERCISES: (courseCode: string, username: string): Api => ({
+  CATE_COURSE_EXERCISES: (courseCode: string, username: string = auth.getUserName()): Api => ({
     auth: AuthService.EMARKING,
     url: `${config.CATE_URL}/courses/${courseCode}/exercises/members/${username}`,
   }),

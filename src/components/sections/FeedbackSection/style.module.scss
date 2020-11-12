@@ -1,0 +1,36 @@
+.mainButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  margin: 0.5rem 0;
+  height: 5em;
+}
+
+.mainButton.ok {
+  color: var(--teal-text);
+  cursor: pointer;
+}
+
+.mainButton.noFeedback {
+}
+
+.mainButton:hover {
+  border-color: var(--border-color-hover);
+  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
+}
+
+.mainButton.ok:hover {
+  color: white;
+  background-color: var(--teal-text);
+}
+
+.mainButton.noFeedback:hover {
+  color: white;
+  background-color: var(--warning);
+}
+
+.description {
+  font-size: 1rem;
+  font-weight: 500;
+}

@@ -105,6 +105,7 @@ export interface TimelineEvent {
   assessment: "unassessed" | "assessed" | "required" | "group" | "exam"
   status: "due" | "unreleased" | "late" | "missed" | "complete"
   owner: string
+  role?: EventRole
   moduleCode: string
   startDate: Date
   endDate: Date
@@ -225,10 +226,27 @@ export interface EMarkingDistributionView {
   target_files: string
 }
 
+export interface EMarkingFeedbackMeView {
+  course: string
+  course_title: string
+  exercise: number
+  exercise_title: string
+  group: string
+  id: number
+  year: string
+}
+
 export enum ProgressStatus {
   NOT_STARTED = "Not Started",
   IN_PROGRESS = "In Progress",
   COMPLETED = "Completed",
+}
+
+export enum EventRole {
+  LECTURER = "lecturer",
+  STUDENT = "student",
+  UTA = "uta",
+  OTHER = "other"
 }
 
 export type IdBooleanMap = { [key: number]: boolean }

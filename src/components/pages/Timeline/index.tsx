@@ -25,7 +25,7 @@ interface TimelineProps {
   setTerm: React.Dispatch<React.SetStateAction<Term>>
   onEventClick: (e?: TimelineEvent) => void
   modules: Module[]
-  timelineEvents: { [pair: string]: TimelineEvent[] }
+  timelineEvents: { [pair: string]: { [id: number]: TimelineEvent } }
   modulesTracks: ModuleTracks
 }
 

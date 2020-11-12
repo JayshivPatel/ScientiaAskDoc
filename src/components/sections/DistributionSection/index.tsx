@@ -11,6 +11,7 @@ import classNames from 'classnames'
 import LoadingScreen from 'components/suspense/LoadingScreen'
 import { dateToQueryYear } from 'utils/functions'
 import moment from 'moment'
+import auth from 'utils/auth'
 
 interface BottomButton {
   text: string,
@@ -75,7 +76,7 @@ const DistributionSection: React.FC<Props> = ({
       api: api.EMARKING_DISTRIBUTION_FEEDBACK(distributionID),
       method: methods.POST,
       body: {
-        marker: "yz31218",
+        marker: auth.getUserName(),
         student_username: studentName
       }
     })
@@ -104,13 +105,12 @@ const DistributionSection: React.FC<Props> = ({
         exercise: exerciseNumber,
       }
     }).then(distributions => {
-
       const distribution = distributions[0]
-    
       distribution && setDistribution(distribution)
       console.log(distributions)
       setLoading(distribution ? Stage.OK : Stage.NO_DISTRIBUTION)
     })
+    .catch(error => setLoading(Stage.ERROR))
   }
 
   useEffect(refresh, [])
@@ -159,7 +159,9 @@ const DistributionSection: React.FC<Props> = ({
 
   const publishFeedback = () => {
     alert("publish")
-    // TODO: 
+    // request({
+
+    // }) 
     setPublishConfirm(false)
   }
 

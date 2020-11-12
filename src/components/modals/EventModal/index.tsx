@@ -13,10 +13,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import FileItemRow from "components/rows/FileItemRow"
 import {resourceTypeToIcon} from "components/pages/modulePages/ModuleResources/utils"
-import {TimelineEvent} from "constants/types"
+import {EventRole, TimelineEvent} from "constants/types"
 import {toDayCount, toEventDateTime} from "utils/functions"
 import SubmissionSection from "../../sections/SubmissionSection"
 import DistributionSection from "components/sections/DistributionSection"
+import FeedbackSection from "components/sections/FeedbackSection"
 
 interface Props {
   event?: TimelineEvent
@@ -29,11 +30,12 @@ enum Stage {
   INFO = "info",
   SUBMISSION = "submission",
   MARKING = "marking",
+  FEEDBACK = "feedback"
 }
 
 const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
 
-  const [viewStage, setViewStage] = useState<Stage>(Stage.INFO);
+  const [viewStage, setViewStage] = useState<Stage>(Stage.INFO)
 
   if (!event) return null
   const timeLeft = toDayCount(event.endDate) - toDayCount(activeDay)
@@ -100,12 +102,20 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
     if (viewStage !== Stage.INFO) {
       return ["Back", () => setViewStage(Stage.INFO)]
     }
-    if (event.status !== "unreleased" && timeLeft >= -1) {
-      return ["Submit", () => setViewStage(Stage.SUBMISSION)]
-    }
-    if (event.status === "missed") {
+    if (event.role && [EventRole.LECTURER, EventRole.UTA].includes(event.role)) {
       return ["Marking", () => setViewStage(Stage.MARKING)]
     }
+    if (event.role === EventRole.STUDENT){
+      if (event.status !== "unreleased" && timeLeft >= -1) {
+        return ["Submit", () => setViewStage(Stage.SUBMISSION)]
+      }
+      if (["complete", "late"].includes(event.status)) {
+        return ["Feedback", () => setViewStage(Stage.FEEDBACK)]
+      }
+    }
+    // if (event.status === "missed") {
+    //   return ["Marking", () => setViewStage(Stage.MARKING)]
+    // }
     return undefined
   })()
 
@@ -118,15 +128,22 @@ const EventModal: React.FC<Props> = ({event, show, onHide, activeDay}) => {
           <SubmissionSection 
             event={event} 
             activeDay={activeDay}
-            courseCode={event?.moduleCode}
+            courseCode={event.moduleCode}
             exerciseNumber={event.id}
           />
         )]
       case Stage.MARKING:
         return ["Marking", (
           <DistributionSection
-            courseCode={event?.moduleCode}
+            courseCode={event.moduleCode}
             exerciseNumber={event.id}
+          />
+        )]
+      case Stage.FEEDBACK:
+        return ["Feedback", (
+          <FeedbackSection
+            courseCode={event.moduleCode}
+            exerciseID={event.id}
           />
         )]
     }

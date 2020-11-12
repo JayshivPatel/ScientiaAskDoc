@@ -9,6 +9,7 @@ import {
   CalendarEvent,
   ProgressStatus,
   SubscriptionLevel,
+  EventRole,
 } from "constants/types"
 import Container from "react-bootstrap/esm/Container"
 import LoadingScreen from "components/suspense/LoadingScreen"
@@ -73,7 +74,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   const [modulesFilter, setModulesFilter] = useState("In Progress")
   const [timelineTerm, setTimelineTerm] = useState<Term>("Autumn")
   const [modules, setModules] = useState<Module[]>([])
-  const [timelineEvents, setTimelineEvents] = useState<{ [pair: string]: TimelineEvent[] }>({})
+  const [timelineEvents, setTimelineEvents] = useState<{ [pair: string]: { [id: number]: TimelineEvent } }>({})
   const [modulesTracks, setModulesTracks] = useState<ModuleTracks>({})
   const currentUser = authenticationService.getUserInfo()["username"]
   useEffect(() => {
@@ -127,9 +128,10 @@ const StandardView: React.FC<StandardViewProps> = ({
           if (data) {
             newEvents[module.code] = []
             data.forEach((exercise, index) => {
+              console.log(index, exercise)
               exercise.startDate = moment(exercise.startDate).toDate()
               exercise.endDate = moment(exercise.endDate).toDate()
-              newEvents[module.code][index] = exercise
+              newEvents[module.code][exercise.id] = exercise
             })
             setTimelineEvents({ ...newEvents })
           }
@@ -146,7 +148,8 @@ const StandardView: React.FC<StandardViewProps> = ({
     })
 
     for (const key in timelineEvents) {
-      for (const event of timelineEvents[key]) {
+      for (const id in timelineEvents[key]) {
+        const event = timelineEvents[key][id]
         const tracks: TimelineEvent[][] = modulesTracks[event.moduleCode] ?? []
         let isPlaced = false
         for (const track of tracks) {

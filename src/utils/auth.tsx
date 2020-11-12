@@ -37,6 +37,10 @@ function getUserInfo(service: AuthService = AuthService.MATERIALS) {
   return {}
 }
 
+function getUserName(): string {
+  return getUserInfo().username ?? ""
+}
+
 /**
  * Login API calling interface. Fetch from the login url of the given login service, then
  * store relevant data into the storage.
@@ -103,4 +107,5 @@ export default {
   logout,
   userIsLoggedIn,
   getUserInfo,
+  getUserName,
 }
