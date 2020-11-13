@@ -10,7 +10,7 @@ import {
 import { useParams } from "react-router-dom"
 
 const SideBarOutlineGroup: React.FC = () => {
-  let { id, feedbackID } = useParams()
+  let { id } = useParams()
 
   let outlineButtons = [
     {
@@ -35,7 +35,7 @@ const SideBarOutlineGroup: React.FC = () => {
     },
     {
       title: "Feedback",
-      activeURL: `/modules/${id}/feedback/${feedbackID}`,
+      activeURL: `/modules/${id}/feedback`,
       icon: faHighlighter,
     },
   ]

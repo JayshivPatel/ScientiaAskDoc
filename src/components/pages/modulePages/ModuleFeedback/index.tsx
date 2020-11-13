@@ -15,6 +15,7 @@ import Col from "react-bootstrap/esm/Col"
 import { api } from 'constants/routes'
 import { download } from 'utils/api'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import FileCard from "components/cards/FileCard"
 import {
   faInfoCircle,
   faFile,
@@ -38,11 +39,18 @@ const ModuleFeedback: React.FC<Props> = ({feedbackID}) => {
   }
   const [searchText, setSearchText] = useState("")
 
-  const mainButton = (
-    <Container className={classNames(styles.mainButton)} onClick={downloadFeedback}>
-      <FontAwesomeIcon icon={faDownload} style={{ fontSize: "3.5rem", marginRight: "2rem" }} />
-    </Container>
-  )
+
+  const feedbacks = (<FileCard
+              title={"Introduction to Machine Learning Coursework 1"}
+              type={"CW"}
+              tags={["Week 1", "New"]}
+              icon={faDownload}
+              thumbnail={"/images/light/banner/pdf.png"}
+              onClick={downloadFeedback}
+              onIconClick={downloadFeedback}
+              onMouseOver={downloadFeedback}
+              onMouseOut={downloadFeedback}
+            />)
 
   return (
     <>
@@ -71,32 +79,7 @@ const ModuleFeedback: React.FC<Props> = ({feedbackID}) => {
             lg={4}
             xl={3}
             style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}>
-            {mainButton}
-            {/* <Card className={styles.quickViewCard}>
-              <Card.Header>
-                <span className={styles.assessmentResult}>40 / 50</span>
-              </Card.Header>
-              <Card.Img variant="top" src="/images/light/banner/pdf.png" />
-              <Card.Body>
-                <Card.Title>Feedback {i}</Card.Title>
-                <FontAwesomeIcon
-                  style={{ fontSize: "1.125rem" }}
-                  icon={faFile}
-                />
-              </Card.Body>
-              <Card.Footer>
-                <Badge
-                  pill
-                  className={classNames(styles.quickViewTag, styles.tagTeal)}>
-                  New
-                </Badge>
-                <Badge
-                  pill
-                  className={classNames(styles.quickViewTag, styles.tagBlue)}>
-                  Week 1
-                </Badge>
-              </Card.Footer>
-            </Card> */}
+            {feedbacks}
           </Col>
         }
       </Row>
