@@ -106,11 +106,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
     setRejectedFiles(newFiles)
   }
 
-  const updateResourceDetails = (id: number) => {
-    return (details: ResourceDetails) => {
-      resourceDetails[id] = details
-      setResourceDetails({...resourceDetails})
-    }
+  const updateResourceDetails = (id: number) => (details: ResourceDetails) => {
+    setResourceDetails(oldDetails => ({...oldDetails, [id]: details}))
   }
 
   const submitFileForResource = (file: File) => {

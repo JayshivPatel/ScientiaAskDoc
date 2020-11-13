@@ -98,7 +98,7 @@ const SubmissionFileUploadTab: React.FC<Props> = ({
     <>
       <Container className={styles.warningSection} onClick={onWarningSectionClick}>
         <FontAwesomeIcon icon={faExclamation} style={{fontSize: "3.5rem", marginRight: "2rem"}}/>
-        <span className={styles.warningLabel}>Your must be in a group to submit your work!</span>
+        <span className={styles.warningLabel}>Your must be a group leader to submit your work!</span>
       </Container>
     </>
   )

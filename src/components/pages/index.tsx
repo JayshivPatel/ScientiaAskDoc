@@ -119,11 +119,9 @@ const StandardView: React.FC<StandardViewProps> = ({
         method: methods.GET, 
       })
       .then(data => {
-        console.log(data)
         if (data) {
           newEvents[module.code] = []
           data.forEach((exercise, index) => {
-            console.log(index, exercise)
             exercise.startDate = moment(exercise.startDate).toDate()
             exercise.endDate = moment(exercise.endDate).toDate()
             newEvents[module.code][exercise.id] = exercise

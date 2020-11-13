@@ -20,10 +20,10 @@ export interface GroupFormationMemberInfo {
 }
 
 export interface StudentInfo {
-  "username": string,
-  "firstname": string,
-  "lastname": string,
-  "class": string
+  username: string,
+  firstname: string,
+  lastname: string,
+  cohort: string,
 }
 
 export interface DeclarationHelper {

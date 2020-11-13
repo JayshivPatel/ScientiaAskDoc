@@ -121,29 +121,28 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   const retrieveGroupInfo = async () => {
-    oldRequest({
-      url: api.CATE_GROUP_SINGLE_MEMBER(courseCode, exerciseNumber, currentUser).url,
+    request<{ id: string, members: { [attr: string]: string }[] } | undefined>({
+      api: api.CATE_GROUP_SINGLE_MEMBER(courseCode, exerciseNumber, currentUser),
       method: methods.GET,
-      onSuccess: (data: { [k: string]: any }) => {
-        if (data) {
-          for (let groupID in data) {
-            setGroupID(groupID)
-            setGroupMembers(data[groupID].map((memberInfo: { [attr: string]: string }) => ({
-              username: memberInfo.username,
-              realName: `${memberInfo.lastname}, ${memberInfo.firstname}`,
-              classEnrolled: memberInfo.class,
-              role: memberInfo.role,
-              signatureTime: memberInfo.signature === "Unsigned" ? undefined : moment(memberInfo.signature).toDate()
-            })))
-          }
-        } else {
-          setGroupID("")
-          setGroupMembers([])
-        }
-        loaded(LoadingParts.GROUP_INFO)
-      },
-      onError: () => loadError(LoadingParts.GROUP_INFO)
     })
+    .then(data => {
+      if (data) {
+        const { id, members } = data
+        setGroupID(id)
+        setGroupMembers(members.map((memberInfo: { [attr: string]: string }) => ({
+          username: memberInfo.username,
+          realName: `${memberInfo.lastname}, ${memberInfo.firstname}`,
+          classEnrolled: memberInfo.class,
+          role: memberInfo.role,
+          signatureTime: memberInfo.signature === "Unsigned" ? undefined : moment(memberInfo.signature).toDate()
+        })))
+      } else {
+        setGroupID("")
+        setGroupMembers([])
+      }
+      loaded(LoadingParts.GROUP_INFO)
+    })
+    .catch(error => loadError(LoadingParts.GROUP_INFO))
   }
 
   const createGroup = () => {
@@ -152,10 +151,7 @@ const SubmissionSection: React.FC<Props> = ({
       method: methods.POST,
       onSuccess: () => {},
       onError: (message: string) => console.log(`Failed to create a new group: ${message}`),
-    }).finally(() => {
-      retrieveGroupInfo()
-      retrieveAvailableStudents()
-    })
+    }).finally(refreshAllParts)
   }
   const deleteGroup = () => {
     oldRequest({
@@ -163,10 +159,7 @@ const SubmissionSection: React.FC<Props> = ({
       method: methods.DELETE,
       onSuccess: () => {},
       onError: (message: string) => console.log(`Failed to delete group ${groupID}: ${message}`),
-    }).finally(() => {
-      retrieveGroupInfo()
-      retrieveAvailableStudents()
-    })
+    }).finally(refreshAllParts)
   }
 
   /* ================================ File Submission ================================ */
@@ -187,27 +180,23 @@ const SubmissionSection: React.FC<Props> = ({
       timestamp: new Date(),
     }
 
-    oldRequest({
-      url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser).url,
+    request({
+      api: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser),
       method: methods.POST,
       body: newStatus,
-      onSuccess: () => {
-        const formData = new FormData()
-        formData.append("fileID", String(index))
-        formData.append("file", newFile)
-        oldRequest({
-          url: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser).url,
-          method: methods.PUT,
-          onSuccess: (data: number) => {
-            console.log(data)
-          },
-          onError: () => {},
-          body: formData,
-          sendFile: true,
-        })
-      },
-      onError: () => {},
-    }).finally(refreshAllParts)
+    })
+    .then(() => {
+      const formData = new FormData()
+      formData.append("fileID", String(index))
+      formData.append("file", newFile)
+      return request<number>({
+        api: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser),
+        method: methods.PUT,
+        body: formData,
+        sendFile: true,
+      })
+    })
+    .finally(refreshAllParts)
   }
 
   const removeFile = (courseworkSubmissionID: number) => {
@@ -270,7 +259,6 @@ const SubmissionSection: React.FC<Props> = ({
     url: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser).url,
     method: methods.GET,
     onSuccess: (data: DeclarationInfo) => {
-      console.log(data)
       if (data.status === "Unaided") {
         setDeclarationStatus(DeclarationStatus.UNAIDED)
         setDeclaredHelpers([])

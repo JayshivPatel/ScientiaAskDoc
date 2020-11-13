@@ -76,6 +76,7 @@ const DistributionSection: React.FC<Props> = ({
   const isReadyToPublishFeedback = feedback.length === submissions.length
 
   const uploadFeedbackForStudent = (studentName: string, file: File) => {
+    setLoading(Stage.LOADING)
     request<EMarkingFeedbackView>({
       api: api.EMARKING_DISTRIBUTION_FEEDBACK(distributionID),
       method: methods.POST,
@@ -140,6 +141,7 @@ const DistributionSection: React.FC<Props> = ({
   }
 
   const deleteFeedbackByID = (feedbackID: number) => {
+    setLoading(Stage.LOADING)
     request({
       api: api.EMARKING_FEEDBACK(feedbackID),
       method: methods.DELETE,

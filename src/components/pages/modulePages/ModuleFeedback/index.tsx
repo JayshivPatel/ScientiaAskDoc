@@ -21,6 +21,7 @@ import {
   faFile,
   faFolder,
   faDownload,
+  faFilePdf,
 } from "@fortawesome/free-solid-svg-icons"
 import {EMarkingFeedbackMeView, Feedback} from "constants/types"
 import {feedbackData} from "../ModuleFeedback/feedbackData"
@@ -81,7 +82,7 @@ const ModuleFeedback: React.FC<Props> = ({ courseCode }) => {
         <Card.Title>{feedback.exercise_title}</Card.Title>
           <FontAwesomeIcon
             style={{ fontSize: "1.125rem" }}
-            icon={faFile}
+            icon={faFilePdf}
           />
         </Card.Body>
         <Card.Footer>
@@ -115,10 +116,10 @@ const ModuleFeedback: React.FC<Props> = ({ courseCode }) => {
 
             <Row style={{ marginTop: "0.625rem" }}>
               <Col style={{ paddingRight: "0.3125rem" }}>
-              <Button block>
+              {/* <Button block>
                 Download All
                 <FontAwesomeIcon icon={faDownload}/>
-              </Button>
+              </Button> */}
               </Col>
             </Row>
 

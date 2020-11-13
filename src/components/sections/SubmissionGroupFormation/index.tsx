@@ -30,8 +30,8 @@ const tableHeadingsMember = [
 ]
 
 export enum Role {
-  LEADER = "Leader",
-  MEMBER = "Member"
+  LEADER = "leader",
+  MEMBER = "member"
 }
 
 interface Option {
@@ -40,7 +40,7 @@ interface Option {
 }
 
 const createOption = (student: StudentInfo) => {
-  const promptText = `${student.lastname}, ${student.firstname} (${student.username}) - ${student.class}`
+  const promptText = `${student.lastname}, ${student.firstname} (${student.username}) - ${student.cohort}`
   return {
     label: promptText,
     value: student.username
