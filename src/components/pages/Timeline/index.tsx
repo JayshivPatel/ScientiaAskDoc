@@ -8,7 +8,7 @@ import DayIndicatorGrid from "./components/DayIndicatorGrid"
 import EventGrid from "./components/EventGrid"
 import { eventsData } from "./eventsData"
 import LoadingScreen from "components/suspense/LoadingScreen"
-import { Term, Module, TimelineEvent, SubscriptionLevel } from "constants/types"
+import { Term, Module, TimelineEvent, SubscriptionLevel, TimelineEventDict } from "constants/types"
 import { addDays, toDayCount } from "utils/functions"
 import TimelineMobile from "./components/TimelineMobile"
 import { TIMELINE_ACTIVE } from "constants/global"
@@ -25,7 +25,7 @@ interface TimelineProps {
   setTerm: React.Dispatch<React.SetStateAction<Term>>
   onEventClick: (e?: TimelineEvent) => void
   modules: Module[]
-  timelineEvents: { [pair: string]: { [id: number]: TimelineEvent } }
+  timelineEvents: TimelineEventDict
   modulesTracks: ModuleTracks
 }
 

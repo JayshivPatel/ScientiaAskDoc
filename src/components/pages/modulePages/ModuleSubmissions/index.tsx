@@ -1,6 +1,5 @@
 import React, { useState } from "react"
-import { TimelineEvent } from "constants/types"
-import { eventsData } from "../../Timeline/eventsData"
+import { TimelineEvent, TimelineEventDict } from "constants/types"
 import Row from "react-bootstrap/esm/Row"
 import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
 import ModuleEventCard from "components/cards/ModuleEventCard"
@@ -10,10 +9,27 @@ import { TIMELINE_ACTIVE } from "constants/global"
 
 interface Props {
   moduleID: string
+  timelineEvents: TimelineEventDict
   onEventClick: (e: TimelineEvent) => void
 }
-const ModuleSubmissions: React.FC<Props> = ({ moduleID, onEventClick }) => {
+const ModuleSubmissions: React.FC<Props> = ({ 
+  moduleID,
+  timelineEvents,
+  onEventClick 
+}) => {
   let [searchText, setSearchText] = useState("")
+  
+  const eventsData = (() => {
+    const data: TimelineEvent[] = []
+    if (timelineEvents[moduleID]) {
+      for (const id in timelineEvents[moduleID]) {
+        const event = timelineEvents[moduleID][id]
+        if (includeInSearchResult(event, searchText))
+        data.push(event)
+      }
+    }
+    return data.sort(sortEvents)
+  })()
 
   return (
     <>
@@ -29,11 +45,7 @@ const ModuleSubmissions: React.FC<Props> = ({ moduleID, onEventClick }) => {
           marginLeft: "-0.625rem",
           marginRight: "-0.625rem",
         }}>
-        {eventsData
-          .filter(({ moduleCode }) => moduleCode === moduleID)
-          .filter((e) => includeInSearchResult(e, searchText))
-          .sort((e1, e2) => sortEvents(e1, e2))
-          .map((e) => (
+        {eventsData.map(e => (
             <Col
               xs={12}
               sm={6}

@@ -111,6 +111,8 @@ export interface TimelineEvent {
   endDate: Date
 }
 
+export type TimelineEventDict = { [module: string]: { [id: number]: TimelineEvent } }
+
 export type SubmissionType = "electronic" | "hardcopy" | "other"
 
 export type FileType = "pdf" | "video" | "file" | "link"

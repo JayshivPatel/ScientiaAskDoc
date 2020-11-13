@@ -10,6 +10,7 @@ import {
   ProgressStatus,
   SubscriptionLevel,
   EventRole,
+  TimelineEventDict,
 } from "constants/types"
 import Container from "react-bootstrap/esm/Container"
 import LoadingScreen from "components/suspense/LoadingScreen"
@@ -74,7 +75,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   const [modulesFilter, setModulesFilter] = useState("In Progress")
   const [timelineTerm, setTimelineTerm] = useState<Term>("Autumn")
   const [modules, setModules] = useState<Module[]>([])
-  const [timelineEvents, setTimelineEvents] = useState<{ [pair: string]: { [id: number]: TimelineEvent } }>({})
+  const [timelineEvents, setTimelineEvents] = useState<TimelineEventDict>({})
   const [modulesTracks, setModulesTracks] = useState<ModuleTracks>({})
   const currentUser = authenticationService.getUserInfo()["username"]
   useEffect(() => {
@@ -247,6 +248,7 @@ const StandardView: React.FC<StandardViewProps> = ({
                 <ModuleSubmissions
                   moduleID={props.match.params.id}
                   onEventClick={onEventClick}
+                  timelineEvents={timelineEvents}
                 />
               </Container>
             )}
