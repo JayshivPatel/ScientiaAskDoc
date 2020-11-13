@@ -8,6 +8,11 @@
   color: var(--primary-text-color);
 }
 
+.listItem.complete {
+  background-color: var(--teal-background);
+  color: var(--teal-text);
+}
+
 .listRow:hover {
   box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
 }

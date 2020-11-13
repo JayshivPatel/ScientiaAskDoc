@@ -12,6 +12,8 @@ import LoadingScreen from 'components/suspense/LoadingScreen'
 import { dateToQueryYear } from 'utils/functions'
 import moment from 'moment'
 import auth from 'utils/auth'
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface BottomButton {
   text: string,
@@ -61,9 +63,9 @@ const DistributionSection: React.FC<Props> = ({
     })
     .sort((a, b) => {
       if (a.feedbackID !== undefined && b.feedbackID === undefined) {
-        return -1
-      } else if (a.feedbackID === undefined && b.feedbackID !== undefined) {
         return 1
+      } else if (a.feedbackID === undefined && b.feedbackID !== undefined) {
+        return -1
       } else {
         return a.studentName.localeCompare(b.studentName)
       }
@@ -172,6 +174,7 @@ const DistributionSection: React.FC<Props> = ({
   const makeButton = ({ text, onClick, colour, disabled }: BottomButton) => {
     return (
       <Button
+        key={text}
         className={classNames(colour, styles.sectionButton)}
         onClick={onClick}
         variant="secondary" 
@@ -203,6 +206,12 @@ const DistributionSection: React.FC<Props> = ({
             onReassign={reassign}
           />
         ))}
+      </div>
+      <div className={styles.markingCount}>
+        <span className={styles.markingCountSpan} style={{ color: isReadyToPublishFeedback ? `var(--teal-text)` : undefined }}>
+          {`Marked: ${feedback.length}/${submissions.length}`}
+          {isReadyToPublishFeedback && <FontAwesomeIcon icon={faCheckCircle} style={{ marginLeft: '0.2rem' }}/>}
+        </span>
       </div>
       {makeBottomButtonGroup([
         {

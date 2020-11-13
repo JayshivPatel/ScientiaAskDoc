@@ -42,7 +42,24 @@
   background-color: $gray-400;
 }
 
-.iconButton.warningButton:hover {
+.iconButton.white {
+  background-color: $white;
+}
+
+.iconButton.warningHover:hover {
   background-color: $red;
   color: $white !important;
+}
+
+.iconButton.tealHover:hover {
+  background-color: var(--teal-text);
+  color: $white !important;
+}
+
+.iconButton.indigo {
+  background-color: var(--indigo-background);
+}
+
+.iconButton.indigo:hover {
+  background-color: var(--indigo-background);
 }

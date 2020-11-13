@@ -8,6 +8,9 @@ import Tooltip from "react-bootstrap/Tooltip"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons"
 
+type Theme = "normal" | "white" 
+type HoverTheme = "normal" | "warning" | "teal"
+
 interface IconButtonProps {
   buttonProps?: any
   tooltip?: string
@@ -15,6 +18,8 @@ interface IconButtonProps {
   icon: IconDefinition
   circular?: boolean
   warning?: boolean
+  theme?: Theme
+  hoverTheme?: HoverTheme
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
@@ -23,8 +28,22 @@ const IconButton: React.FC<IconButtonProps> = ({
   onClick,
   icon,
   circular = false,
-  warning = false
+  warning = false,
+  theme,
+  hoverTheme,
 }) => {
+
+  const themeClass = {
+    "normal": undefined,
+    "white": styles.white,
+  }[theme || "normal"]
+
+  const hoverThemeClass = {
+    "normal": undefined,
+    "warning": styles.warningHover,
+    "teal": styles.tealHover
+  }[hoverTheme || "normal"]
+
   const button = () => (
     <Button
       {...buttonProps}
@@ -32,7 +51,8 @@ const IconButton: React.FC<IconButtonProps> = ({
       className={classNames(
         circular ? styles.circularButton : styles.sectionHeaderButton, 
         styles.iconButton,
-        warning ? styles.warningButton : undefined,
+        themeClass,
+        hoverThemeClass
       )}
       onClick={onClick}>
       <FontAwesomeIcon className={styles.buttonIcon} icon={icon} />

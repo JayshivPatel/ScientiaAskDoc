@@ -67,7 +67,7 @@ const StudentMarkingRow: React.FC<Props> = ({
 
   return (
     <div
-      className={styles.listItem}
+      className={classNames(styles.listItem, feedbackID ? styles.complete : undefined)}
     >
       <input type="file" ref={uploadRef} onChange={e => onFileSelection(e)} style={{ display: "none" }}></input>
       <Row className={classNames(styles.green, styles.listRow)}>
@@ -78,6 +78,7 @@ const StudentMarkingRow: React.FC<Props> = ({
         </div>
         <div className={styles.centeredFlex}>
           <OperationButtons
+            theme={feedbackID ? "white" : undefined}
             actions={[
               {
                 icon: faEye,
@@ -87,7 +88,7 @@ const StudentMarkingRow: React.FC<Props> = ({
               }
             ]}
           />
-          <OperationButtons actions={otherButtons} />
+          <OperationButtons theme={feedbackID ? "white" : undefined} actions={otherButtons} />
         </div>
       </Row>
     </div>

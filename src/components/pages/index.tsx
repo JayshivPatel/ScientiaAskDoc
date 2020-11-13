@@ -95,13 +95,6 @@ const StandardView: React.FC<StandardViewProps> = ({
       )
     }
 
-    // oldRequest({
-    //   url: api.MATERIALS_COURSES(year).url,
-    //   method: methods.GET,
-    //   onSuccess: onSuccess,
-    //   onError: (message) => console.log(`Failed to obtain modules: ${message}`),
-      
-    // })
     request<{ [k: string]: any }[]>({
       api: api.MATERIALS_COURSES(year),
       method: methods.GET,
@@ -116,28 +109,28 @@ const StandardView: React.FC<StandardViewProps> = ({
       toDayCount(e1.endDate) >= toDayCount(e2.startDate)
     )
   }
-  const exerciseTypes: ("assessed" | "group")[] = ["group", "assessed"]
+
   useEffect(() => {
     const newEvents: { [pair: string]: TimelineEvent[] } = {}
     for (const module of modules) {
-      oldRequest({
-        url: api.CATE_COURSE_EXERCISES(module.code, currentUser).url,
-        method: methods.GET,
-        onSuccess: (data: TimelineEvent[]) => {
-          console.log(data)
-          if (data) {
-            newEvents[module.code] = []
-            data.forEach((exercise, index) => {
-              console.log(index, exercise)
-              exercise.startDate = moment(exercise.startDate).toDate()
-              exercise.endDate = moment(exercise.endDate).toDate()
-              newEvents[module.code][exercise.id] = exercise
-            })
-            setTimelineEvents({ ...newEvents })
-          }
-        },
-        onError: (message) => console.log(`Failed to obtain exercises: ${message}`)
+      request<TimelineEvent[]>({
+        api: api.CATE_COURSE_EXERCISES(module.code, currentUser),
+        method: methods.GET, 
       })
+      .then(data => {
+        console.log(data)
+        if (data) {
+          newEvents[module.code] = []
+          data.forEach((exercise, index) => {
+            console.log(index, exercise)
+            exercise.startDate = moment(exercise.startDate).toDate()
+            exercise.endDate = moment(exercise.endDate).toDate()
+            newEvents[module.code][exercise.id] = exercise
+          })
+          setTimelineEvents({ ...newEvents })
+        }
+      })
+      .catch(message => console.log(`Failed to obtain exercises: ${message}`))
     }
   }, [modules])
 

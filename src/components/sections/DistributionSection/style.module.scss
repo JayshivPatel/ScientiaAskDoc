@@ -54,5 +54,16 @@
   width: 100%;
   max-height: 15rem;
   overflow-y: scroll;
-  margin-bottom: 1rem;
+}
+
+.markingCount {
+  width: 100%;
+  display: block;
+}
+
+.markingCountSpan {
+  float: right;
+  font-size: medium;
+  margin: 0.5rem;
+  font-weight: 300;
 }
