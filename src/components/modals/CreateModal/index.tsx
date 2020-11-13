@@ -282,11 +282,11 @@ const CreateModal: React.FC<CreateModalProps> = ({
     setSchemaSwitch(!provSchemaSwitch);
   };
 
-  // state for provision of answer
-  const [provOnlineAnswerSwitch, setProvOnlineAnswerSwitch] = useState(false);
-  const provOnlineAnswerSwitchAction = () => {
-    setProvOnlineAnswerSwitch(!provOnlineAnswerSwitch);
-  };
+  // // state for provision of answer
+  // const [provOnlineAnswerSwitch, setProvOnlineAnswerSwitch] = useState(false);
+  // const provOnlineAnswerSwitchAction = () => {
+  //   setProvOnlineAnswerSwitch(!provOnlineAnswerSwitch);
+  // };
 
 
     const [dateStart, setDateStart] = useState<Date>(new Date());
@@ -430,36 +430,36 @@ const CreateModal: React.FC<CreateModalProps> = ({
                         </Col>
                     </Row>
 
-          <hr/>
+          {/*<hr/>*/}
 
-          <Row className={styles.Row}>
-            <Col className={styles.Col}>
-              <span className={styles.infoLabel}>
-                Provision of answers:
-              </span>
-              <Col>
-                <Form.Switch onChange={provOnlineAnswerSwitchAction}
-                             id={"provOnlineAnswerSwitch"}
-                             checked={provOnlineAnswerSwitch}
-                             className={styles.Switch}
-                />
-              </Col>
-            </Col>
+          {/*<Row className={styles.Row}>*/}
+          {/*  <Col className={styles.Col}>*/}
+          {/*    <span className={styles.infoLabel}>*/}
+          {/*      Provision of answers:*/}
+          {/*    </span>*/}
+          {/*    <Col>*/}
+          {/*      <Form.Switch onChange={provOnlineAnswerSwitchAction}*/}
+          {/*                   id={"provOnlineAnswerSwitch"}*/}
+          {/*                   checked={provOnlineAnswerSwitch}*/}
+          {/*                   className={styles.Switch}*/}
+          {/*      />*/}
+          {/*    </Col>*/}
+          {/*  </Col>*/}
 
-            <Col className={styles.Col}>
-              <span className={styles.infoLabel}>
-                Visible after:
-              </span>
-              <Form.Control
-                type="number"
-                disabled={!provOnlineAnswerSwitch}
-                min={0}
-                max={5}
-                defaultValue={2}
-                className={styles.TextArea}/>
-                weeks
-            </Col>
-          </Row>
+          {/*  <Col className={styles.Col}>*/}
+          {/*    <span className={styles.infoLabel}>*/}
+          {/*      Visible after:*/}
+          {/*    </span>*/}
+          {/*    <Form.Control*/}
+          {/*      type="number"*/}
+          {/*      disabled={!provOnlineAnswerSwitch}*/}
+          {/*      min={0}*/}
+          {/*      max={5}*/}
+          {/*      defaultValue={2}*/}
+          {/*      className={styles.TextArea}/>*/}
+          {/*      weeks*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
 
 
           <hr/>
