@@ -105,6 +105,11 @@ export const api = {
     url: `${config.EMARKING_URL}/feedback/batch/distribution/${distributionID}`
   }),
 
+  EMARKING_FEEDBACK_FOR_COURSE: (courseCode: string, username: string): Api => ({
+    auth: AuthService.EMARKING,
+    url: `${config.EMARKING_URL}/feedback/courses/${courseCode}/members/${username}`
+  }),
+
   EMARKING_DISTRIBUTIONS: (distributionID?: number): Api => ({
     auth: AuthService.EMARKING,
     url: `${config.EMARKING_URL}/distributions${distributionID !== undefined ? '/' + distributionID : ""}`
