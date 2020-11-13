@@ -15,6 +15,7 @@ import Col from "react-bootstrap/esm/Col"
 import { api, methods } from 'constants/routes'
 import { download, request } from 'utils/api'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import FileCard from "components/cards/FileCard"
 import {
   faInfoCircle,
   faFile,
