@@ -1,3 +1,5 @@
+import moment from "moment"
+
 export function titleCase(string: string) {
   var sentence = string.toLowerCase().split(" ")
   for (let i = 0; i < sentence.length; i++) {
@@ -66,6 +68,6 @@ export function showFileSize(bytes: number, precision: number = 2) {
  * The academic year will be in "aabb" form i.e. 2021 means 2020 - 2021 academic year.
  * @param date Date object
  */
-export function dateToQueryYear(date: Date): number {
+export function dateToQueryYear(date: Date = moment().toDate()): number {
   return 2021
 }

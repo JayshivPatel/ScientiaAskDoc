@@ -46,33 +46,33 @@ const FeedbackSection: React.FC<Props> = ({
         year: dateToQueryYear(moment().toDate())
       }
     })
-    .then(feedbacks => {
-      const target = feedbacks[feedbacks.findIndex(x => x.course === courseCode && x.exercise === exerciseID)]
-      setFeedback(target)
-      setLoading(Stage.OK)
-    })
-    .catch(error => {
-      setLoading(Stage.ERROR)
-    })
+      .then(feedbacks => {
+        const target = feedbacks[feedbacks.findIndex(x => x.course === courseCode && x.exercise === exerciseID)]
+        setFeedback(target)
+        setLoading(Stage.OK)
+      })
+      .catch(error => {
+        setLoading(Stage.ERROR)
+      })
   }
 
   useEffect(refresh, [])
 
   const { theme, title, description, icon } = feedback ? {
     theme: styles.ok,
-    title: "Your feedback is released!",
-    description: "Click me to view/download your feedback",
+    title: "Your feedback is available!",
+    description: "Click me to view & download your feedback",
     icon: faCheckCircle,
   } : {
-    theme: styles.noFeedback,
-    title: "Your feedback is not ready yet :(",
-    description: "We are still working around the clock. Come back later!",
-    icon: faExclamation
-  }
+      theme: styles.noFeedback,
+      title: "Your feedback is not ready yet :(",
+      description: "We are still working around the clock. Come back later!",
+      icon: faExclamation
+    }
 
   const mainButton = (
     <Container className={classNames(styles.mainButton, theme)} onClick={downloadFeedback}>
-      <FontAwesomeIcon icon={icon} style={{fontSize: "3.5rem", marginRight: "2rem"}}/>
+      <FontAwesomeIcon icon={icon} style={{ fontSize: "3.5rem", marginRight: "2rem" }} />
       <div>
         <h4>{title}</h4>
         <span className={styles.description}>{description}</span>
