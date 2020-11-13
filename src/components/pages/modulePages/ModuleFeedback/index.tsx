@@ -3,6 +3,7 @@ import styles from "./style.module.scss"
 
 import classNames from "classnames"
 import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
+import Container from 'react-bootstrap/Container'
 
 import InputGroup from "react-bootstrap/InputGroup"
 import FormControl from "react-bootstrap/FormControl"
@@ -11,6 +12,8 @@ import Badge from "react-bootstrap/Badge"
 import Card from "react-bootstrap/Card"
 import Row from "react-bootstrap/esm/Row"
 import Col from "react-bootstrap/esm/Col"
+import { api } from 'constants/routes'
+import { download } from 'utils/api'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faInfoCircle,
@@ -22,8 +25,24 @@ import {Feedback} from "constants/types"
 import {feedbackData} from "../ModuleFeedback/feedbackData"
 import SearchBox from "components/headings/SearchBox"
 
-const ModuleFeedback: React.FC = () => {
-  let [searchText, setSearchText] = useState("")
+interface Props {
+  feedbackID: number
+}
+
+const ModuleFeedback: React.FC<Props> = ({feedbackID}) => {
+
+  const downloadFeedback = () => {
+    if (feedbackID) {
+      download(api.EMARKING_FEEDBACK(feedbackID, true))
+    }
+  }
+  const [searchText, setSearchText] = useState("")
+
+  const mainButton = (
+    <Container className={classNames(styles.mainButton)} onClick={downloadFeedback}>
+      <FontAwesomeIcon icon={faDownload} style={{ fontSize: "3.5rem", marginRight: "2rem" }} />
+    </Container>
+  )
 
   return (
     <>
@@ -44,16 +63,16 @@ const ModuleFeedback: React.FC = () => {
       </Row>
 
       <Row style={{ marginRight: "-0.625rem", marginLeft: "-0.625rem" }}>
-        {[...Array(4)].map((e, i) => (
+        {
           <Col
             xs={12}
             sm={6}
             md={6}
             lg={4}
             xl={3}
-            key={i}
             style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}>
-            <Card className={styles.quickViewCard}>
+            {mainButton}
+            {/* <Card className={styles.quickViewCard}>
               <Card.Header>
                 <span className={styles.assessmentResult}>40 / 50</span>
               </Card.Header>
@@ -77,9 +96,9 @@ const ModuleFeedback: React.FC = () => {
                   Week 1
                 </Badge>
               </Card.Footer>
-            </Card>
+            </Card> */}
           </Col>
-        ))}
+        }
       </Row>
     </>
   )
