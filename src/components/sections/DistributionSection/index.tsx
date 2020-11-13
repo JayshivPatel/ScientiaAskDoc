@@ -158,10 +158,13 @@ const DistributionSection: React.FC<Props> = ({
   }
 
   const publishFeedback = () => {
-    alert("publish")
-    // request({
-
-    // }) 
+    request({
+      api: api.EMARKING_DISTRIBUTIONS(distribution.id),
+      method: methods.PATCH,
+      body: {
+        feedback_published: true
+      }
+    }).then(refresh)
     setPublishConfirm(false)
   }
 

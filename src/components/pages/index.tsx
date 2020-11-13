@@ -124,11 +124,9 @@ const StandardView: React.FC<StandardViewProps> = ({
         url: api.CATE_COURSE_EXERCISES(module.code, currentUser).url,
         method: methods.GET,
         onSuccess: (data: TimelineEvent[]) => {
-          console.log(data)
           if (data) {
             newEvents[module.code] = []
             data.forEach((exercise, index) => {
-              console.log(index, exercise)
               exercise.startDate = moment(exercise.startDate).toDate()
               exercise.endDate = moment(exercise.endDate).toDate()
               newEvents[module.code][exercise.id] = exercise
