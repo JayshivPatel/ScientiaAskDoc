@@ -12,6 +12,9 @@ import LoadingScreen from 'components/suspense/LoadingScreen'
 import { dateToQueryYear } from 'utils/functions'
 import moment from 'moment'
 import auth from 'utils/auth'
+import Container from 'react-bootstrap/Container'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faClipboardCheck} from "@fortawesome/free-solid-svg-icons";
 
 interface BottomButton {
   text: string,
@@ -191,67 +194,79 @@ const DistributionSection: React.FC<Props> = ({
     </ButtonGroup>
   )
 
-  const mainSection = 
-    <div>
-      <div className={styles.marking}>
-        {markingItems.map(({ studentName, submissionID, feedbackID }) => (
-          <StudentMarkingRow 
-            studentName={studentName}
-            submissionID={submissionID}
-            feedbackID={feedbackID}
-            onUploadFeedback={file => uploadFeedbackForStudent(studentName, file)}
-            onDownloadSubmission={() => downloadSubmissionByID(submissionID)}
-            onDownloadFeedback={() => feedbackID !== undefined && downloadFeedbackByID(feedbackID)}
-            onDeleteFeedback={() => feedbackID !== undefined && deleteFeedbackByID(feedbackID)}
-            onReassign={reassign}
-          />
-        ))}
-      </div>
-      {makeBottomButtonGroup([
-        {
-          text: "Download All", 
-          onClick: downloadSubmissionsZip,
-        },
-        {
-          text: "Upload feedbacks", 
-          onClick: uploadFeedbackBatch
-        },
-        {
-          text: "Fetch Late", 
-          onClick: fetchLate,
-        },
-      ])}
-      {makeBottomButtonGroup(
-        publishConfirm ? 
-          [
-            {
-              text: "Confirm and publish", 
-              onClick: publishFeedback,
-              colour: styles.green,
-              disabled: !isReadyToPublishFeedback
-            },
-            {
-              text: "Cancel and don't publish", 
-              onClick: () => setPublishConfirm(false),
-              colour: styles.red,
-              disabled: !isReadyToPublishFeedback,
-            },
-          ] : 
-          [
-            {
-              text: "Publish Feedback", 
-              onClick: () => setPublishConfirm(true),
-              disabled: !isReadyToPublishFeedback,
-            }
-          ]
-      )}
-    </div>
-
+  const mainSection = (isFeedbackPublished: boolean) => {
+    if (!isFeedbackPublished) {
+      return (<div>
+        <div className={styles.marking}>
+          {markingItems.map(({studentName, submissionID, feedbackID}) => (
+            <StudentMarkingRow
+              studentName={studentName}
+              submissionID={submissionID}
+              feedbackID={feedbackID}
+              onUploadFeedback={file => uploadFeedbackForStudent(studentName, file)}
+              onDownloadSubmission={() => downloadSubmissionByID(submissionID)}
+              onDownloadFeedback={() => feedbackID !== undefined && downloadFeedbackByID(feedbackID)}
+              onDeleteFeedback={() => feedbackID !== undefined && deleteFeedbackByID(feedbackID)}
+              onReassign={reassign}
+            />
+          ))}
+        </div>
+        {makeBottomButtonGroup([
+          {
+            text: "Download All",
+            onClick: downloadSubmissionsZip,
+          },
+          {
+            text: "Upload feedbacks",
+            onClick: uploadFeedbackBatch
+          },
+          {
+            text: "Fetch Late",
+            onClick: fetchLate,
+          },
+        ])}
+        {makeBottomButtonGroup(
+          publishConfirm ?
+            [
+              {
+                text: "Confirm and publish",
+                onClick: publishFeedback,
+                colour: styles.green,
+                disabled: !isReadyToPublishFeedback
+              },
+              {
+                text: "Cancel and don't publish",
+                onClick: () => setPublishConfirm(false),
+                colour: styles.red,
+                disabled: !isReadyToPublishFeedback,
+              },
+            ] :
+            [
+              {
+                text: "Publish Feedback",
+                onClick: () => setPublishConfirm(true),
+                disabled: !isReadyToPublishFeedback,
+              }
+            ]
+        )}
+      </div>)
+    } else {
+      return (
+        <Container className={classNames(styles.mainButton, styles.feedbackPublished)}>
+          <FontAwesomeIcon icon={faClipboardCheck} style={{fontSize: "3.5rem", marginRight: "2rem"}}/>
+          <div>
+            <h4>Feedback already published!</h4>
+            <span className={styles.description}>You have completed your task!</span>
+          </div>
+        </Container>
+      )
+    }
+  }
   return (
     <div style={{ position: 'relative', minHeight: '5rem' }}>
       <LoadingScreen
         isLoaded={loading !== Stage.LOADING}
-        successful={mainSection}
+        successful={mainSection(distribution.feedback_published)}
         error={ loading === Stage.ERROR ? `Oops! The server just put me on hold!` 
               : loading === Stage.NO_DISTRIBUTION ? `Oops! Looks like you have no marking distribution on this event!` 
               : undefined}
