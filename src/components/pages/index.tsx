@@ -12,7 +12,7 @@ import {
   EventRole,
   TimelineEventDict,
 } from "constants/types"
-import Container from "react-bootstrap/esm/Container"
+import Container from "react-bootstrap/Container"
 import LoadingScreen from "components/suspense/LoadingScreen"
 // import { request } from "utils/api";
 import authenticationService from "utils/auth"

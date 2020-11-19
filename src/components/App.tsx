@@ -10,7 +10,7 @@ import {
   faChalkboardTeacher,
 } from "@fortawesome/free-solid-svg-icons"
 import StandardView from "./pages"
-import { Switch, Route, Redirect } from "react-router-dom"
+import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom"
 import SignIn from "./pages/SignIn"
 import SettingsModal from "./modals/SettingsModal"
 import EventModal from "./modals/EventModal"
@@ -166,68 +166,70 @@ class App extends React.Component<{}, AppState> {
           activeDay={TIMELINE_ACTIVE}
         />
 
-        <Switch>
-          <Route path="/signin" component={SignIn} />
+        <BrowserRouter>
+          <Switch>
+            <Route path="/signin" component={SignIn} />
 
-          <Route
-            path="/"
-            render={(props) =>
-              authenticationService.userIsLoggedIn() ? (
-                <>
-                  <TopBar
-                    pages={horizontalBarPages}
-                    onFavIconClick={(e) => {
-                      e.preventDefault()
-                      this.toggleLeftBar()
-                    }}
-                    onUserIconClick={(e) => {
-                      e.preventDefault()
-                      this.toggleRightBar()
+            <Route
+              path="/"
+              render={(props) =>
+                authenticationService.userIsLoggedIn() ? (
+                  <>
+                    <TopBar
+                      pages={horizontalBarPages}
+                      onFavIconClick={(e) => {
+                        e.preventDefault()
+                        this.toggleLeftBar()
+                      }}
+                      onUserIconClick={(e) => {
+                        e.preventDefault()
+                        this.toggleRightBar()
+                      }}
+                    />
+
+                    <StandardView
+                      onSettingsClick={() =>
+                        this.setState({ showSettings: true })
+                      }
+                      onEventClick={(e?: TimelineEvent) => this.showEventModal(e)}
+                      onCalendarClick={(e?: CalendarEvent) =>
+                        this.showCalendarModal(e)
+                      }
+                      toggledLeft={this.state.toggledLeft}
+                      toggledRight={this.state.toggledRight}
+                      initTimelineSideBar={() => {
+                        this.isTimelineView = true
+                        this.showOrHideSideBars()
+                      }}
+                      revertTimelineSideBar={() => {
+                        this.isTimelineView = false
+                        this.showOrHideSideBars()
+                      }}
+                      onOverlayClick={(e) => {
+                        e.preventDefault()
+                        this.setState({
+                          toggledLeft: false,
+                          toggledRight: false,
+                        })
+                      }}
+                      fileView={this.state.fileView}
+                      year={this.state.year}
+                    />
+
+                    <BottomBar pages={horizontalBarPages} />
+                  </>
+                ) : (
+                  <Redirect
+                    to={{
+                      pathname: "/signin",
+                      state: { from: props.location },
                     }}
                   />
-
-                  <StandardView
-                    onSettingsClick={() =>
-                      this.setState({ showSettings: true })
-                    }
-                    onEventClick={(e?: TimelineEvent) => this.showEventModal(e)}
-                    onCalendarClick={(e?: CalendarEvent) =>
-                      this.showCalendarModal(e)
-                    }
-                    toggledLeft={this.state.toggledLeft}
-                    toggledRight={this.state.toggledRight}
-                    initTimelineSideBar={() => {
-                      this.isTimelineView = true
-                      this.showOrHideSideBars()
-                    }}
-                    revertTimelineSideBar={() => {
-                      this.isTimelineView = false
-                      this.showOrHideSideBars()
-                    }}
-                    onOverlayClick={(e) => {
-                      e.preventDefault()
-                      this.setState({
-                        toggledLeft: false,
-                        toggledRight: false,
-                      })
-                    }}
-                    fileView={this.state.fileView}
-                    year={this.state.year}
-                  />
-
-                  <BottomBar pages={horizontalBarPages} />
-                </>
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: "/signin",
-                    state: { from: props.location },
-                  }}
-                />
-              )
-            }
-          />
-        </Switch>
+                )
+              }
+            />
+          </Switch>
+        </BrowserRouter>
       </>
     )
   }
