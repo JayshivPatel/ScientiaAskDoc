@@ -69,5 +69,12 @@ export function showFileSize(bytes: number, precision: number = 2) {
  * @param date Date object
  */
 export function dateToQueryYear(date: Date = moment().toDate()): number {
-  return 2021
+  const joinYear = (from: number, to: number) => (from % 100) * 100 + (to % 100)
+  const currYear = date.getUTCFullYear()
+  const termStart = moment.utc(`01/10/${currYear}`, "DD/MM/YYYY").toDate()
+  if (date < termStart) {
+    return joinYear(currYear - 1, currYear)
+  }
+  return joinYear(currYear, currYear + 1)
 }
+
