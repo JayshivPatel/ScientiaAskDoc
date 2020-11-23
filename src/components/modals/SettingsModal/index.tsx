@@ -112,8 +112,8 @@ const SettingsModal: React.FC<Props> = ({
             ]}
           />
 
-          {/*
-          <TextEntrySetting
+          
+          {/* <TextEntrySetting
             heading="Calendar ID"
             value={calendarID}
             setValue={setCalendarID}
@@ -136,8 +136,8 @@ const SettingsModal: React.FC<Props> = ({
               <br />
               Please enter <code>CALENDAR_ID</code> in the box above.
             </Alert>
-          ) : null}
-          */}
+          ) : null} */}
+         
         </SettingsSection>
       </Modal.Body>
     </Modal>

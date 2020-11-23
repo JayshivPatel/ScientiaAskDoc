@@ -10,7 +10,7 @@ import {
 import { useParams } from "react-router-dom"
 
 const SideBarOutlineGroup: React.FC = () => {
-  let { id } = useParams()
+  let { id } = useParams<{ id: string }>()
 
   let outlineButtons = [
     {

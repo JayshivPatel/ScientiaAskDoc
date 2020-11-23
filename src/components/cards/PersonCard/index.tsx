@@ -2,23 +2,46 @@ import React from "react"
 import Image from "react-bootstrap/Image"
 import Container from "react-bootstrap/Container"
 import styles from "./style.module.scss"
+import { PersonInfo } from "constants/types"
 
-const PersonCard: React.FC = () => {
+interface Props {
+  info: PersonInfo
+}
+
+
+const PersonCard: React.FC<Props> = ({
+  info: {
+    name,
+    email,
+    id,
+    cid,
+    dep,
+    extra,
+  }
+}) => {
   return (
     <>
       <Container className={styles.userCardContainer}>
         <Image className={styles.userImage} src="/images/user.png" />
         <div className={styles.userInfoBlock}>
-          <p className={styles.userName}>{userInfo.name}</p>
-          <p className={styles.userEmail}>{userInfo.email}</p>
+          <p className={styles.userName}>{name}</p>
+          <p className={styles.userEmail}>{email}</p>
           <p className={styles.userIdentifier}>
-            {userInfo.id}
+            {id}
             <span className={styles.dot}></span>
-            {userInfo.cid}
+            {cid}
           </p>
-          <p className={styles.userYear}>{userInfo.year + ","}</p>
-          <p className={styles.userDepartment}>{userInfo.dep}</p>
-          <p className={styles.userCourse}>{userInfo.course}</p>
+          {extra.kind === 'student' ?
+            <>
+              <p className={styles.userYear}>{extra.year + ","}</p>
+              <p className={styles.userDepartment}>{dep}</p>
+              <p className={styles.userCourse}>{extra.course}</p>
+            </> : 
+            <>
+              <p className={styles.userCourse}>{extra.title}</p> 
+              <p className={styles.userDepartment}>{dep}</p>
+            </>
+          }
         </div>
       </Container>
     </>
@@ -26,13 +49,3 @@ const PersonCard: React.FC = () => {
 }
 
 export default PersonCard
-
-const userInfo = {
-  name: "Branden Ritter",
-  email: "branden.ritter20@imperial.ac.uk",
-  id: "BR819",
-  cid: "01343896",
-  year: "First Year Undergraduate",
-  dep: "Department of Computing",
-  course: "MEng Computing (AI)",
-}

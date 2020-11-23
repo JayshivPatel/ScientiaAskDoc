@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { StaticContext } from "react-router"
 import { RouteComponentProps, Redirect } from "react-router-dom"
 
@@ -10,8 +10,12 @@ import FormControl from "react-bootstrap/FormControl"
 import Button from "react-bootstrap/Button"
 
 import authenticationService from "utils/auth"
-import { api } from "constants/routes"
+import { api, methods } from "constants/routes"
 import { AuthService } from "constants/auth"
+import CurrentUserInfo, { defaultUserInfo } from "contexts/CurrentUserInfo"
+import { request } from "utils/api"
+import { PersonInfo } from "constants/types"
+import { emailFromUsername } from "utils/functions"
 
 type Props = RouteComponentProps<
   {},
@@ -20,6 +24,7 @@ type Props = RouteComponentProps<
 >
 
 const SignIn: React.FC<Props> = ({ location }) => {
+  const { onChangeCurrentUserInfo } = useContext(CurrentUserInfo)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [redirect, setRedirect] = useState(false)
@@ -31,6 +36,12 @@ const SignIn: React.FC<Props> = ({ location }) => {
     if (
       await authenticationService.loginAll(username, password)
     ) {
+      const response = await request<PersonInfo>({
+        api: api.EMARKING_ME_INFO(),
+        method: methods.GET
+      })
+      console.log(response)
+      onChangeCurrentUserInfo(response)
       setRedirect(true)
     } else {
       // TODO: Deal with failed login

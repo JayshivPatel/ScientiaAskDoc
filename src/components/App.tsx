@@ -14,10 +14,11 @@ import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom"
 import SignIn from "./pages/SignIn"
 import SettingsModal from "./modals/SettingsModal"
 import EventModal from "./modals/EventModal"
-import { TimelineEvent, CalendarEvent } from "constants/types"
+import { TimelineEvent, CalendarEvent, PersonInfo } from "constants/types"
 import authenticationService from "../utils/auth"
 import CalendarModal from "./modals/CalendarModal"
 import { TIMELINE_ACTIVE } from "constants/global"
+import CurrentUserInfo, { defaultUserInfo } from "contexts/CurrentUserInfo"
 
 type AppState = {
   toggledLeft: boolean
@@ -28,6 +29,7 @@ type AppState = {
   showCalendarModal: boolean
   activeModalEvent?: TimelineEvent
   activeCalendarEvent?: CalendarEvent
+  currentUserInfo: PersonInfo
   year: string
 }
 
@@ -46,6 +48,7 @@ class App extends React.Component<{}, AppState> {
       activeModalEvent: undefined,
       fileView: localStorage.getItem("fileView") || "card",
       year: "2021",
+      currentUserInfo: defaultUserInfo
     }
   }
 
@@ -128,6 +131,8 @@ class App extends React.Component<{}, AppState> {
     this.setState({ showCalendarModal: true, activeCalendarEvent: e })
   }
 
+  
+
   render() {
     const horizontalBarPages: {
       name: string
@@ -141,7 +146,10 @@ class App extends React.Component<{}, AppState> {
     ]
 
     return (
-      <>
+      <CurrentUserInfo.Provider value={{
+        info: this.state.currentUserInfo,
+        onChangeCurrentUserInfo: info => this.setState({ currentUserInfo: info })
+      }}>
         <SettingsModal
           show={this.state.showSettings}
           onHide={() => this.setState({ showSettings: false })}
@@ -230,7 +238,7 @@ class App extends React.Component<{}, AppState> {
             />
           </Switch>
         </BrowserRouter>
-      </>
+      </CurrentUserInfo.Provider>
     )
   }
 }

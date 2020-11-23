@@ -94,6 +94,10 @@ export const api = {
     auth: AuthService.EMARKING,
     url: `${config.EMARKING_URL}/me/distributions`,
   }),
+  EMARKING_ME_INFO: (): Api => ({
+    auth: AuthService.EMARKING,
+    url: `${config.EMARKING_URL}/me/data`,
+  }),
 
   EMARKING_FEEDBACK: (feedbackID: number, file?: boolean): Api => ({
     auth: AuthService.EMARKING,

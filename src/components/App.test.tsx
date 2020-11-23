@@ -3,9 +3,6 @@ import { render } from "@testing-library/react"
 import { shallow, configure, mount } from "enzyme"
 import Adapter from 'enzyme-adapter-react-16'
 import App from "./App"
-import FileExtensionIcon from "./atoms/FileExtensionIcon"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFile, faFileCode } from "@fortawesome/free-solid-svg-icons"
 
 configure({adapter: new Adapter()})
 

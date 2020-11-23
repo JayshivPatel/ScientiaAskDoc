@@ -111,6 +111,25 @@ export interface TimelineEvent {
   endDate: Date
 }
 
+export interface PersonInfo {
+  name: string,
+  email: string,
+  id: string,
+  cid: string,
+  dep: string,
+  extra: { kind: 'student' } & PersonInfoStudent 
+       | { kind: 'staff'   } & PersonInfoStaff
+}
+
+export interface PersonInfoStudent {
+  year: string,
+  course: string,
+}
+
+export interface PersonInfoStaff {
+  title: string,
+}
+
 export type TimelineEventDict = { [module: string]: { [id: number]: TimelineEvent } }
 
 export type SubmissionType = "electronic" | "hardcopy" | "other"

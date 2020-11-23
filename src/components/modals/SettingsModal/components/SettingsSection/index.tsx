@@ -4,7 +4,7 @@ import styles from "./style.module.scss"
 
 interface Props {
   heading: string
-  children: (ReactElement | null)[]
+  children: ReactElement | (ReactElement | null)[]
   isFirst?: boolean
 }
 

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
 import PersonCard from "components/cards/PersonCard"
 import PageButtonGroup from "components/groups/PageButtonGroup"
@@ -13,12 +13,16 @@ import {
   faQuestionCircle,
   faBug,
 } from "@fortawesome/free-solid-svg-icons"
+import CurrentUserInfo from "contexts/CurrentUserInfo"
 
 const Dashboard: React.FC = () => {
+
+  const { info } = useContext(CurrentUserInfo)
+
   return (
     <>
       <MyBreadcrumbs />
-      <PersonCard />
+      <PersonCard info={info}/>
       <PageButtonGroup buttons={buttons} style={{ marginTop: "2.8rem" }} />
       <div
         style={{
@@ -110,4 +114,14 @@ const tutors: {
     image: "/images/tutors/tutor-5.jpeg",
   },
 ]
+
+const personCard = {
+  name: "Branden Ritter",
+  email: "branden.ritter20@imperial.ac.uk",
+  id: "BR819",
+  cid: "01343896",
+  year: "First Year Undergraduate",
+  dep: "Department of Computing",
+  course: "MEng Computing (AI)",
+}
 export default Dashboard

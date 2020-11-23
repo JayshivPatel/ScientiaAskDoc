@@ -63,7 +63,6 @@ export function showFileSize(bytes: number, precision: number = 2) {
 }
 
 /**
- * TODO: Implement this
  * Convert the date into the academic year that this date is in.
  * The academic year will be in "aabb" form i.e. 2021 means 2020 - 2021 academic year.
  * @param date Date object
@@ -78,3 +77,14 @@ export function dateToQueryYear(date: Date = moment().toDate()): number {
   return joinYear(currYear, currYear + 1)
 }
 
+/**
+ * Convert college username to his/her email account.
+ * @param username college username (i.e. abc20)
+ */
+export function emailFromUsername(username: string): string {
+  return `${username}@ic.ac.uk`
+}
+
+export function showCohort(cohortID: string): string {
+  return "Computing - Year 3"
+}
