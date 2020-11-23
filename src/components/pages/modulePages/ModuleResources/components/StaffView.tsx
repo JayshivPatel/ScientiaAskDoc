@@ -26,6 +26,7 @@ import { Folder, Resource, IdBooleanMap } from "constants/types"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { DEFAULT_CATEGORY } from "../../../../../constants/global"
 import { categories } from "../utils"
+import moment from "moment"
 
 export interface StaffViewProps {
   year: string
@@ -181,15 +182,13 @@ const StaffView: React.FC<StaffViewProps> = ({
         show={modal === "create"}
         onHide={closeModal}
         hideAndReload={() => {
-          closeModal()
+          closeModal();
           reload()
         }}
         year={year}
         course={course}
-        categories={categories(folders)}
-        tags={tags}
-        titleDuplicated={titleDuplicated}
-      />
+        start_date={moment.now()}
+        due_date={moment.now()}/>
 
       <AlertModal
         show={modal === "alert"}
