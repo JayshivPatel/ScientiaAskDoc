@@ -1,6 +1,10 @@
-import { api, methods } from "constants/routes";
+import { Api, api, methods } from "constants/routes";
 import { RequestData } from "./api"
 
+interface MockRequest {
+  api: Api,
+  method: string,
+}
 
 function mockAPI<Response>(input: RequestData): Promise<Response> {
   const response = mockReturnDict.get(input)
@@ -18,15 +22,15 @@ interface MockResponse {
   body?: any
 }
 
-const mockReturnDict: Map<RequestData, MockResponse> = new Map();
+const mockReturnDict: Map<MockRequest, MockResponse> = new Map();
 
-export const onNextCallTo = (input: RequestData) => ({
+export const onNextCallTo = ({ api, method }: RequestData) => ({
   willReturn(response: any = undefined, statusCode: number = 200) {
-    mockReturnDict.set(input, { statusCode: statusCode, body: response })
+    mockReturnDict.set({ api, method }, { statusCode: statusCode, body: response })
   },
 
   willFail(statusCode: number = 404) {
-    mockReturnDict.set(input, { statusCode: statusCode })
+    mockReturnDict.set({ api, method }, { statusCode: statusCode })
   }
 })
 
