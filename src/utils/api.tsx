@@ -1,5 +1,6 @@
 import authConstants, { AuthService } from "constants/auth"
 import { Api, methods } from "constants/routes"
+import mockAPI from "./mockApi"
 
 interface RequestOptions {
   [key: string]: any
@@ -45,6 +46,11 @@ export async function request<T>(data: RequestData): Promise<T> {
  * @param data The request data object
  */
 export async function doRequest(data: RequestData): Promise<Response> {
+
+  if (process.env.NODE_ENV === 'test') {
+    return mockAPI(data)
+  }
+
   let headers: { [key: string]: string } = {
     Authorization: authConstants.ACCESS_TOKEN_HEADER(data.api.auth),
     // "Access-Control-Allow-Origin": "*", THIS SHOULD NOT BE NEEDED HERE
@@ -84,6 +90,7 @@ export async function doRequest(data: RequestData): Promise<Response> {
       }
     })
 }
+
 
 // WARNING!!! This API calling interface is **DEPRECATED** and should *NOT* be used in future development.
 // API calling interface. onSuccess and onError are functions that take in data
