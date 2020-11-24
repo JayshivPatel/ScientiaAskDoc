@@ -6,32 +6,51 @@ interface MockRequest {
   method: string,
 }
 
-function mockAPI<Response>(input: RequestData): Promise<Response> {
-  const response = mockReturnDict.get(input)
-  if (response) {
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      return Promise.resolve(response.body)
-    }
-    return Promise.reject(response.statusCode)
-  }
-  throw new Error("Not set mock response")
-}
-
 interface MockResponse {
   statusCode: number,
   body?: any
 }
 
-const mockReturnDict: Map<MockRequest, MockResponse> = new Map();
+const mockReturnDict: [MockRequest, MockResponse][] = []
 
-export const onNextCallTo = ({ api, method }: RequestData) => ({
-  willReturn(response: any = undefined, statusCode: number = 200) {
-    mockReturnDict.set({ api, method }, { statusCode: statusCode, body: response })
+const mockAPI = {
+  request<Response>(input: RequestData): Promise<Response> {
+    let response = undefined
+    for (const [{ api, method }, res] of mockReturnDict) {
+      if (input.api === api && input.method === method) {
+        response = res
+        break
+      }
+    }
+  
+    if (response) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Promise.resolve(response.body)
+      }
+      return Promise.reject(response.statusCode)
+    }
+    throw new Error("Not set mock response")
   },
-
-  willFail(statusCode: number = 404) {
-    mockReturnDict.set({ api, method }, { statusCode: statusCode })
+  
+  onNextCallTo(api: Api) {
+    return {
+      withMethod(method: string) {
+        return {
+          willReturn(response: any = undefined, statusCode: number = 200) {
+            mockReturnDict.push([{ api, method }, { statusCode: statusCode, body: response }])
+          },
+        
+          willFail(statusCode: number = 404) {
+            mockReturnDict.push([{ api, method }, { statusCode: statusCode }])
+          }
+        }
+      }
+    }
+  },
+  
+  clearTestCache() {
+    mockReturnDict.length = 0
   }
-})
+}
 
 export default mockAPI

@@ -48,7 +48,7 @@ export async function request<T>(data: RequestData): Promise<T> {
 export async function doRequest(data: RequestData): Promise<Response> {
 
   if (process.env.NODE_ENV === 'test') {
-    return mockAPI(data)
+    return mockAPI.request(data)
   }
 
   let headers: { [key: string]: string } = {
