@@ -210,11 +210,11 @@ const SubmissionSection: React.FC<Props> = ({
     download(api.CATE_RAW_SUBMISSION(courseworkSubmissionID), `${filename}.${suffix}`)
   }
 
-  const retrieveFileStatus = async () => request<ResourceUploadRequirement[]>({
+  const retrieveFileStatus = async () => request<{ requirement: ResourceUploadRequirement[] }>({
     api: api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, currentUser),
     method: methods.GET,
-  }).then(requirements => {
-    setRequirements(requirements)
+  }).then(({ requirement }) => {
+    setRequirements(requirement)
     loaded(LoadingParts.FILE_STATUS)
   }).catch(() => {
     loadError(LoadingParts.FILE_STATUS)
