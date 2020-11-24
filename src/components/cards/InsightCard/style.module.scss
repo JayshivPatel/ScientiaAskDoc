@@ -1,0 +1,61 @@
+@import "assets/scss/custom";
+
+.insightContainer {
+  display: flex;
+  padding: 0;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  width: 100%;
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  transition: 0.2s transform, 0.2s box-shadow;
+  -webkit-transition: 0.2s transform, 0.2s box-shadow;
+  -moz-transition: 0.2s transform, 0.2s box-shadow;
+  cursor: pointer;
+  height: 80%;
+  
+}
+
+.insightContainer.important {
+  border: 2px solid var(--pink-text);
+}
+
+.insightContainer:hover {
+  border-color: var(--border-color-hover);
+  transform: scale(1.03);
+  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
+}
+
+.insightImage {
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  height: 4rem;
+  width: 4rem;
+}
+
+.insightName,
+.insightEmail,
+.insightAddress {
+  font-size: 1.125rem;
+  margin-bottom: 0rem;
+  line-height: 1.5rem !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+}
+
+.insightName {
+  color: var(--primary-text-color);
+}
+
+.insightEmail {
+  color: var(--email-text);
+}
+
+.insightAddress {
+  color: var(--tertiary-text-color);
+}

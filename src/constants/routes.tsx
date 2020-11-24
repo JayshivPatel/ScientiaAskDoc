@@ -1,21 +1,39 @@
 import auth from "utils/auth"
 import { AuthService } from "./auth"
 
-const dev = {
+interface UrlEnv {
+  MATERIALS_URL: string
+  EMARKING_URL: string
+  CATE_URL: string
+  CALENDAR_URL: string
+}
+
+const dev: UrlEnv = {
   MATERIALS_URL: `http://${window.location.hostname}:5000`,
   CATE_URL: `http://${window.location.hostname}:7000`,
   CALENDAR_URL: `http://${window.location.hostname}:4000`,
   EMARKING_URL: `http://${window.location.hostname}:7000`,
 }
 
-const prod = {
+const prod: UrlEnv  = {
   MATERIALS_URL: "https://api-materials.doc.ic.ac.uk",
   EMARKING_URL: `http://${window.location.hostname}:7000`,
   CATE_URL: "",
   CALENDAR_URL: "",
 }
 
-const config = process.env.NODE_ENV === "production" ? prod : dev
+const test: UrlEnv  = {
+  MATERIALS_URL: "TEST_MATERIALS|",
+  EMARKING_URL: "TEST_EMARKING|",
+  CATE_URL: "TEST_CATE|",
+  CALENDAR_URL: "TEST_CALENDAR|",
+}
+
+const config = {
+  production: prod,
+  development: dev,
+  test: test
+}[process.env.NODE_ENV]
 
 export const methods = {
   GET: "GET",
@@ -94,9 +112,15 @@ export const api = {
     auth: AuthService.EMARKING,
     url: `${config.EMARKING_URL}/me/distributions`,
   }),
+  
   EMARKING_ME_INFO: (): Api => ({
     auth: AuthService.EMARKING,
     url: `${config.EMARKING_URL}/me/data`,
+  }),
+
+  EMARKING_ME_DASHBOARD: (): Api => ({
+    auth: AuthService.EMARKING,
+    url: `${config.EMARKING_URL}/me/dashboard`,
   }),
 
   EMARKING_FEEDBACK: (feedbackID: number, file?: boolean): Api => ({

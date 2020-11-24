@@ -3,35 +3,39 @@ import TutorCard from "components/cards/TutorCard"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/esm/Row"
 import styles from "./style.module.scss"
+import { Insight, TimelineEvent } from "constants/types"
+import DueCard from "components/cards/InsightCard/DueCard"
 
-export interface TutorCardGroupProps {
+export interface Props {
   title: string
-  tutors: {
-    name: string
-    email: string
-    address: string
-    image: string
-  }[]
+  insights: Insight[]
+  onEventClick: (e: TimelineEvent) => void
 }
 
-const TutorCardGroup: React.FC<TutorCardGroupProps> = ({ title, tutors }) => {
-  let tutorCards = tutors.map(({ name, email, address, image }) => {
+const InsightCardGroup: React.FC<Props> = ({ 
+  title, 
+  insights,
+  onEventClick
+}) => {
+  let tutorCards = insights.map(({ event }) => {
     return (
-      <Col
-        md={6}
-        style={{ paddingRight: "0.625rem", paddingLeft: "0.625rem" }}
-        key={email}>
-        <TutorCard name={name} email={email} address={address} image={image} />
-      </Col>
+      <DueCard event={event} onEventClick={onEventClick}/>
     )
   })
 
   return (
     <>
       <h4 className={styles.groupTitle}>{title}</h4>
-      <Row>{tutorCards}</Row>
+      <Row>{tutorCards.map((card, index) => (
+        <Col
+          md={'4'}
+          style={{ paddingRight: "0.625rem", paddingLeft: "0.625rem" }}
+          key={`insight-${index}`}>
+            {card}
+        </Col>
+      ))}</Row>
     </>
   )
 }
 
-export default TutorCardGroup
+export default InsightCardGroup

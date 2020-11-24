@@ -1,8 +1,8 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
 import PersonCard from "components/cards/PersonCard"
 import PageButtonGroup from "components/groups/PageButtonGroup"
-import TutorCardGroup from "components/groups/TutorCardGroup"
+import InsightCardGroup from "components/groups/TutorCardGroup"
 
 import {
   faGlobe,
@@ -14,10 +14,50 @@ import {
   faBug,
 } from "@fortawesome/free-solid-svg-icons"
 import CurrentUserInfo from "contexts/CurrentUserInfo"
+import { Insight, TimelineEvent } from "constants/types"
+import { request } from "utils/api"
+import { api, methods } from "constants/routes"
+import LoadingScreen from "components/suspense/LoadingScreen"
+import moment from "moment"
 
-const Dashboard: React.FC = () => {
+interface Props {
+  onEventClick: (e: TimelineEvent) => void
+}
+
+const Dashboard: React.FC<Props> = ({
+  onEventClick
+}) => {
 
   const { info } = useContext(CurrentUserInfo)
+
+  const [insights, setInsights] = useState<Insight[]>(dummyInsights)
+  const [loaded, setLoaded] = useState<boolean>(false)
+
+  const updateInsights = () => {
+    setLoaded(false)
+    request<Insight[]>({
+      api: api.EMARKING_ME_DASHBOARD(),
+      method: methods.GET
+    })
+    .then(insights => insights.map(insight => {
+      switch(insight.kind) {
+        case 'due':
+        case 'release':
+          insight.event.startDate = moment(insight.event.startDate).toDate()
+          insight.event.endDate = moment(insight.event.endDate).toDate()
+      }
+      return insight
+    }))
+    .then(insights => {
+      console.log(insights)
+      setInsights(insights)
+    })
+    .finally(() => {
+      setLoaded(true)
+    })
+  }
+
+  useEffect(updateInsights, [])
 
   return (
     <>
@@ -28,11 +68,22 @@ const Dashboard: React.FC = () => {
         style={{
           marginTop: "1.875rem",
         }}>
-        <TutorCardGroup title="Tutors" tutors={tutors} />
+        <LoadingScreen
+          isLoaded={loaded}
+          successful={
+            <InsightCardGroup 
+              title="Insights" 
+              insights={insights}
+              onEventClick={onEventClick}
+            />}
+        />
       </div>
+
     </>
   )
 }
+
+const dummyInsights: Insight[] = []
 
 const buttons = [
   {
