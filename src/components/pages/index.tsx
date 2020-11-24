@@ -190,7 +190,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           
 					  <Route path="/dashboard">
 						<Container className={classNames("pageContainer")}>
-						  <Dashboard />
+						  <Dashboard onEventClick={onEventClick}/>
 						</Container>
 					  </Route>
 					

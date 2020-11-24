@@ -48,7 +48,7 @@ class App extends React.Component<{}, AppState> {
       activeModalEvent: undefined,
       fileView: localStorage.getItem("fileView") || "card",
       year: "2021",
-      currentUserInfo: defaultUserInfo
+      currentUserInfo: authenticationService.getCurrentPersonInfo() ?? defaultUserInfo
     }
   }
 
@@ -131,8 +131,6 @@ class App extends React.Component<{}, AppState> {
     this.setState({ showCalendarModal: true, activeCalendarEvent: e })
   }
 
-  
-
   render() {
     const horizontalBarPages: {
       name: string
@@ -148,7 +146,10 @@ class App extends React.Component<{}, AppState> {
     return (
       <CurrentUserInfo.Provider value={{
         info: this.state.currentUserInfo,
-        onChangeCurrentUserInfo: info => this.setState({ currentUserInfo: info })
+        onChangeCurrentUserInfo: info => {
+          authenticationService.setCurrentPersonInfo(info)
+          this.setState({ currentUserInfo: info })
+        }
       }}>
         <SettingsModal
           show={this.state.showSettings}

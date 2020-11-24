@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './style.module.scss'
 import FileItemRow from 'components/rows/FileItemRow'
 import { Resource, ResourceUploadRequirement, ResourceUploadStatus } from 'constants/types'

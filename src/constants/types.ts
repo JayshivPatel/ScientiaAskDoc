@@ -130,6 +130,13 @@ export interface PersonInfoStaff {
   title: string,
 }
 
+export interface InsightEvent {
+  event: TimelineEvent
+}
+
+export type Insight = { kind: 'due' } & InsightEvent
+                    | { kind: 'release' } & InsightEvent
+
 export type TimelineEventDict = { [module: string]: { [id: number]: TimelineEvent } }
 
 export type SubmissionType = "electronic" | "hardcopy" | "other"

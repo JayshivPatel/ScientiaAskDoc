@@ -1,4 +1,5 @@
 import { api } from "constants/routes"
+import { PersonInfo } from "constants/types"
 import authConstants, { AuthService, authServices } from "../constants/auth"
 
 /**
@@ -22,7 +23,24 @@ function removeDataFromStorage() {
     sessionStorage.removeItem(authConstants.ACCESS_TOKEN(service))
     sessionStorage.removeItem(authConstants.USER_INFO(service))
   })
+}
 
+const CURRENT_PERSON = "current-person"
+
+function setCurrentPersonInfo(info: PersonInfo) {
+  sessionStorage.setItem(CURRENT_PERSON, JSON.stringify(info))
+}
+
+function removeCurrentPersonInfo() {
+  sessionStorage.removeItem(CURRENT_PERSON)
+}
+
+function getCurrentPersonInfo(): PersonInfo | undefined {
+  const data = sessionStorage.getItem(CURRENT_PERSON)
+  if (data) {
+    return JSON.parse(data)
+  }
+  return undefined
 }
 
 /**
@@ -108,4 +126,7 @@ export default {
   userIsLoggedIn,
   getUserInfo,
   getUserName,
+  getCurrentPersonInfo,
+  setCurrentPersonInfo,
+  removeCurrentPersonInfo,
 }
