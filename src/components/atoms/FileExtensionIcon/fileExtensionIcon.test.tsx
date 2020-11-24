@@ -3,9 +3,9 @@ import { configure, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faArchive,
   faFile,
   faFileAlt,
-  faArchive,
   faFileCode,
   faFilePowerpoint,
   faFileWord,
@@ -14,7 +14,7 @@ import FileExtensionIcon from ".";
 
 configure({ adapter: new Adapter() });
 
-describe("renders learn react link", () => {
+describe("<FileExtensionIcon />", () => {
   it("Able to recognize file extensions", () => {
     const codeDics = [
       [["hs"], faFileCode],
@@ -30,11 +30,15 @@ describe("renders learn react link", () => {
     ];
     const wrapper = mount(<FileExtensionIcon suffixes={[]} />);
     for (const [suffixes, icon] of codeDics) {
-      const onClick = jest.fn();
-      wrapper.setProps({ suffixes: suffixes, onClick: onClick }).update();
+      wrapper.setProps({ suffixes: suffixes }).update();
       expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(icon);
-      wrapper.simulate("click");
-      expect(onClick).toHaveBeenCalled();
     }
+  });
+  it("Click on icon is handled", () => {
+    const wrapper = mount(<FileExtensionIcon suffixes={[]} />);
+    const onClick = jest.fn();
+    wrapper.setProps({ onClick: onClick }).update();
+    wrapper.simulate("click");
+    expect(onClick).toHaveBeenCalled();
   });
 });

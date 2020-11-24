@@ -1,25 +1,24 @@
-import React from "react"
-import styles from "./style.module.scss"
-import classNames from "classnames"
+import React from "react";
+import styles from "./style.module.scss";
+import classNames from "classnames";
+import Button from "react-bootstrap/Button";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
-import Button from "react-bootstrap/Button"
-import OverlayTrigger from "react-bootstrap/OverlayTrigger"
-import Tooltip from "react-bootstrap/Tooltip"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { IconDefinition } from "@fortawesome/free-solid-svg-icons"
-
-type Theme = "normal" | "white" 
-type HoverTheme = "normal" | "warning" | "teal"
+type Theme = "normal" | "white";
+type HoverTheme = "normal" | "warning" | "teal";
 
 interface IconButtonProps {
-  buttonProps?: any
-  tooltip?: string
-  onClick?: (e: MouseEvent) => void
-  icon: IconDefinition
-  circular?: boolean
-  warning?: boolean
-  theme?: Theme
-  hoverTheme?: HoverTheme
+  buttonProps?: any;
+  tooltip?: string;
+  onClick?: (e: MouseEvent) => void;
+  icon: IconDefinition;
+  circular?: boolean;
+  warning?: boolean;
+  theme?: Theme;
+  hoverTheme?: HoverTheme;
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
@@ -32,42 +31,47 @@ const IconButton: React.FC<IconButtonProps> = ({
   theme,
   hoverTheme,
 }) => {
-
   const themeClass = {
-    "normal": undefined,
-    "white": styles.white,
-  }[theme || "normal"]
+    normal: undefined,
+    white: styles.white,
+  }[theme || "normal"];
 
   const hoverThemeClass = {
-    "normal": undefined,
-    "warning": styles.warningHover,
-    "teal": styles.tealHover
-  }[hoverTheme || "normal"]
+    normal: undefined,
+    warning: styles.warningHover,
+    teal: styles.tealHover,
+  }[hoverTheme || "normal"];
 
   const button = () => (
     <Button
       {...buttonProps}
       variant="secondary"
       className={classNames(
-        circular ? styles.circularButton : styles.sectionHeaderButton, 
+        circular ? styles.circularButton : styles.sectionHeaderButton,
         styles.iconButton,
         themeClass,
         hoverThemeClass
       )}
-      onClick={onClick}>
+      onClick={onClick}
+    >
       <FontAwesomeIcon className={styles.buttonIcon} icon={icon} />
     </Button>
-  )
+  );
 
   if (tooltip) {
     return (
       <OverlayTrigger
-        overlay={<Tooltip id={`tooltip-${tooltip}`} style={{ zIndex: 99999 }}>{tooltip}</Tooltip>}>
+        overlay={
+          <Tooltip id={`tooltip-${tooltip}`} style={{ zIndex: 99999 }}>
+            {tooltip}
+          </Tooltip>
+        }
+      >
         {button()}
       </OverlayTrigger>
-    )
+    );
   }
-  return button()
-}
+  return button();
+};
 
-export default IconButton
+export default IconButton;

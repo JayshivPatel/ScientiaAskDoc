@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 
 import {
+  faArchive,
+  faFile,
   faFileAlt,
-  faFilePdf,
-  faLink,
   faFileCode,
   faFileExcel,
+  faFilePdf,
   faFilePowerpoint,
   faFileVideo,
   faFileWord,
+  faLink,
   IconDefinition,
-  faFile,
-  faArchive,
 } from "@fortawesome/free-solid-svg-icons";
 import { EnumDictionary } from "constants/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
