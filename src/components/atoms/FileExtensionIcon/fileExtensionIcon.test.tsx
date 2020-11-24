@@ -1,26 +1,18 @@
-import React from "react"
-import { render } from "@testing-library/react"
-import { shallow, configure, mount } from "enzyme"
-import Adapter from 'enzyme-adapter-react-16'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFile, faFileAlt, faArchive, faFileCode, faFilePowerpoint, faFileWord } from "@fortawesome/free-solid-svg-icons"
-import FileExtensionIcon from "."
+import React from "react";
+import { configure, mount } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFile,
+  faFileAlt,
+  faArchive,
+  faFileCode,
+  faFilePowerpoint,
+  faFileWord,
+} from "@fortawesome/free-solid-svg-icons";
+import FileExtensionIcon from ".";
 
-configure({adapter: new Adapter()})
-
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: jest.fn().mockImplementation(query => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(), // Deprecated
-    removeListener: jest.fn(), // Deprecated
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
-});
+configure({ adapter: new Adapter() });
 
 describe("renders learn react link", () => {
   it("Able to recognize file extensions", () => {
@@ -35,13 +27,14 @@ describe("renders learn react link", () => {
       [[""], faFileAlt],
       [["c", "zip"], faFile],
       [[], faFile],
-    ]
-    const wrapper = mount(<FileExtensionIcon suffixes={[]}/>)
+    ];
+    const wrapper = mount(<FileExtensionIcon suffixes={[]} />);
     for (const [suffixes, icon] of codeDics) {
-      wrapper.setProps({ suffixes: suffixes }).update()
-      expect(wrapper.find(FontAwesomeIcon).prop('icon')).toBe(icon)
+      const onClick = jest.fn();
+      wrapper.setProps({ suffixes: suffixes, onClick: onClick }).update();
+      expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(icon);
+      wrapper.simulate("click");
+      expect(onClick).toHaveBeenCalled();
     }
-  })
-
-
-})
+  });
+});
