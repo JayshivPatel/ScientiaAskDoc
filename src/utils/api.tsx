@@ -36,6 +36,11 @@ export async function requestBlob(data: RequestData): Promise<Blob> {
  * @param data The request data object
  */
 export async function request<T>(data: RequestData): Promise<T> {
+
+  if (process.env.NODE_ENV === 'test') {
+    return mockAPI.request(data)
+  }
+
   return doRequest(data)
     .then(response => response.text())
     .then(text => text ? JSON.parse(text) : undefined)
@@ -46,10 +51,6 @@ export async function request<T>(data: RequestData): Promise<T> {
  * @param data The request data object
  */
 export async function doRequest(data: RequestData): Promise<Response> {
-
-  if (process.env.NODE_ENV === 'test') {
-    return mockAPI.request(data)
-  }
 
   let headers: { [key: string]: string } = {
     Authorization: authConstants.ACCESS_TOKEN_HEADER(data.api.auth),

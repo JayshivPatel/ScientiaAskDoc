@@ -28,12 +28,12 @@ const mockAPI = {
   request<Response>(input: RequestData): Promise<Response> {
     let response = undefined
     for (const [{ api, method }, res] of mockReturnDict) {
-      if (input.api === api && input.method === method) {
+      if (input.api.url === api.url && input.api.auth === api.auth && input.method === method) {
         response = res
         break
       }
     }
-  
+
     if (response) {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return Promise.resolve(response.body)
