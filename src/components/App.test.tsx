@@ -20,7 +20,7 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-describe("renders learn react link", () => {
+describe("The Scientia app", () => {
   it("Able to render the whole app with no error", () => {
     const {} = render(<App/>)
   })
