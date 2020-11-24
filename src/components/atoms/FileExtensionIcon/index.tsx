@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
-import { 
+import {
   faFileAlt,
-  faFilePdf, 
-  faLink, 
-  faFileCode, 
-  faFileExcel, 
-  faFilePowerpoint, 
-  faFileVideo, 
+  faFilePdf,
+  faLink,
+  faFileCode,
+  faFileExcel,
+  faFilePowerpoint,
+  faFileVideo,
   faFileWord,
-  IconDefinition, 
+  IconDefinition,
   faFile,
-  faArchive
-} from '@fortawesome/free-solid-svg-icons'
-import { EnumDictionary } from 'constants/types'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+  faArchive,
+} from "@fortawesome/free-solid-svg-icons";
+import { EnumDictionary } from "constants/types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 enum FileCategory {
   ARCHIVE = "archive",
@@ -34,51 +34,82 @@ const categoryExtensions: EnumDictionary<FileCategory, string[]> = {
     "zip",
     "7z",
     "rar",
-    "tar", "tgz", "taz", "gz",
+    "tar",
+    "tgz",
+    "taz",
+    "gz",
     "jar",
     "jar",
   ],
   [FileCategory.CODE]: [
     // c, c++
-    "c", "cc", "cpp", "cxx", "c++", "h", "hpp", "hh",
+    "c",
+    "cc",
+    "cpp",
+    "cxx",
+    "c++",
+    "h",
+    "hpp",
+    "hh",
     // java
-    "j", "jav", "java", "class",
-    // kotlin 
+    "j",
+    "jav",
+    "java",
+    "class",
+    // kotlin
     "kt",
     // haskell
-    "hs", "lhs",
+    "hs",
+    "lhs",
     // prolog
-    "pl", "pro", "P",
+    "pl",
+    "pro",
+    "P",
     // shell script
-    "sh", "csh",
+    "sh",
+    "csh",
     // ruby
-    "rb", "rbw",
+    "rb",
+    "rbw",
     // lua,
     "lua",
     // python
-    "py", "pyc", "pyo", "pyd", 
+    "py",
+    "pyc",
+    "pyo",
+    "pyd",
     // perl,
-    "pl", "pm",
+    "pl",
+    "pm",
     // julia
-    "jl", 
+    "jl",
     // matlab
     "m",
     // R
     "R",
     // javascript, typescript
-    "js", "ts", "jsx", "tsx",
+    "js",
+    "ts",
+    "jsx",
+    "tsx",
     // php,
     "php",
     // standard ml
     "sml",
     // scheme, racket
-    "scm", "sch", "ss", "rkt",
+    "scm",
+    "sch",
+    "ss",
+    "rkt",
     // scala,
     "scala",
     // ocaml
-    "ml", "mli",
+    "ml",
+    "mli",
     // erlang, elixir
-    "erl", "ex", "exs",
+    "erl",
+    "ex",
+    "exs",
     // rust,
     "rs",
     // swift
@@ -86,18 +117,22 @@ const categoryExtensions: EnumDictionary<FileCategory, string[]> = {
     // go
     "go",
     // fortran
-    "f", "for" ,"f90",
+    "f",
+    "for",
+    "f90",
     // sql
     "sql",
     // css, sass, scss
-    "css", "sass", "scss",
+    "css",
+    "sass",
+    "scss",
     // json
     "json",
     // xml
     "xml",
     // yaml
-    "yaml", "yml"
-
+    "yaml",
+    "yml",
   ],
   [FileCategory.EXCEL]: ["xls", "xlsx"],
   [FileCategory.LINK]: [],
@@ -107,7 +142,7 @@ const categoryExtensions: EnumDictionary<FileCategory, string[]> = {
   [FileCategory.VIDEO]: ["flv", "avi", "mp4"],
   [FileCategory.WORD]: ["doc", "docx"],
   [FileCategory.OTHER]: [],
-}
+};
 
 const categoryIcons: EnumDictionary<FileCategory, IconDefinition> = {
   [FileCategory.ARCHIVE]: faArchive,
@@ -120,57 +155,51 @@ const categoryIcons: EnumDictionary<FileCategory, IconDefinition> = {
   [FileCategory.VIDEO]: faFileVideo,
   [FileCategory.WORD]: faFileWord,
   [FileCategory.OTHER]: faFile,
-}
+};
 
 const extensionDictionary: { [suffix: string]: FileCategory } = (() => {
-  const dic: { [suffix: string]: FileCategory } = {}
+  const dic: { [suffix: string]: FileCategory } = {};
   for (const key in categoryExtensions) {
-    const value = categoryExtensions[key as FileCategory]
-    value.forEach(extension => dic[extension] = key as FileCategory)
+    const value = categoryExtensions[key as FileCategory];
+    value.forEach((extension) => (dic[extension] = key as FileCategory));
   }
-  return dic
-})()
+  return dic;
+})();
 
 interface Props {
-  suffixes: string[]
-  style?: React.CSSProperties
-  onClick?: ((event: React.MouseEvent) => void)
+  suffixes: string[];
+  style?: React.CSSProperties;
+  onClick?: (event: React.MouseEvent) => void;
 }
 
-const FileExtensionIcon: React.FC<Props> = ({ 
-  suffixes,
-  style,
-  onClick,
-}) => {
-
-  const [category, setCategory] = useState<FileCategory>(FileCategory.OTHER)
+const FileExtensionIcon: React.FC<Props> = ({ suffixes, style, onClick }) => {
+  const [category, setCategory] = useState<FileCategory>(FileCategory.OTHER);
 
   // Set icon as per suffixes' categories
   useEffect(() => {
-    let category: FileCategory | undefined = undefined
+    let category: FileCategory | undefined = undefined;
     for (const suffix of suffixes) {
-      const currentCategory = extensionDictionary[suffix] ?? FileCategory.OTHER
-      if (category && (category !== currentCategory)) {
-        setCategory(FileCategory.OTHER)
-        return
+      const currentCategory = extensionDictionary[suffix] ?? FileCategory.OTHER;
+      if (category && category !== currentCategory) {
+        setCategory(FileCategory.OTHER);
+        return;
       }
-      category = currentCategory
+      category = currentCategory;
     }
-    setCategory(category ?? FileCategory.OTHER)
-  }, [suffixes])
-  
+    setCategory(category ?? FileCategory.OTHER);
+  }, [suffixes]);
+
   return (
-    <FontAwesomeIcon 
+    <FontAwesomeIcon
       style={style}
       icon={categoryIcons[category]}
-      onClick={e => {
-        e.stopPropagation()
-        onClick?.(e)
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick?.(e);
       }}
       fixedWidth
-    
     />
-    )
-}
+  );
+};
 
-export default FileExtensionIcon
+export default FileExtensionIcon;
