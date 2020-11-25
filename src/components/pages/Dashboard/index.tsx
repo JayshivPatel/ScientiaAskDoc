@@ -74,9 +74,7 @@ const Dashboard: React.FC<Props> = ({
           isLoaded={loaded}
           successful={
             <InsightCardGroup 
-              title="Insights" 
               insights={insights}
-              onEventClick={onEventClick}
             />}
         />
       </div>

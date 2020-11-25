@@ -1,17 +1,18 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import { TimelineEvent } from 'constants/types'
-import React from 'react'
+import ModalController from 'contexts/ModalController'
+import React, { useContext } from 'react'
 import InsightCard from '..'
 
 interface Props {
   event: TimelineEvent,
-  onEventClick: (event: TimelineEvent) => void
 }
 
 const DueCard: React.FC<Props> = ({
   event,
-  onEventClick,
 }) => {
+
+  const Modals = useContext(ModalController)
 
   if (event.status === 'complete') {
     const paragraph = <>
@@ -23,7 +24,7 @@ const DueCard: React.FC<Props> = ({
         paragraph={paragraph} 
         image={{ kind: 'icon', icon: faExclamationCircle }} 
         timestamp={event.endDate} 
-        onClick={() => onEventClick(event)}
+        onClick={() => Modals.showEventModal(event)}
         ok
       />
     )
@@ -38,7 +39,7 @@ const DueCard: React.FC<Props> = ({
       paragraph={paragraph} 
       image={{ kind: 'icon', icon: faExclamationCircle }} 
       timestamp={event.endDate} 
-      onClick={() => onEventClick(event)}
+      onClick={() => Modals.showEventModal(event)}
       important
     />
   )
