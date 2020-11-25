@@ -6,8 +6,8 @@ import {GroupFormationMemberInfo} from "../../../constants/types";
 import Container from "react-bootstrap/Container"
 import {theme} from "../../../utils/functions";
 import moment from "moment";
-import Badge from "react-bootstrap/esm/Badge";
-import Col from "react-bootstrap/cjs/Col";
+import Badge from "react-bootstrap/Badge";
+import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
@@ -63,7 +63,10 @@ const GroupMemberCard: React.FC<Props> = ({
         (<Button
           className={styles.removeButton}
           variant={"secondary"}
-          onClick={() => onRemoveButtonClick(username)}
+          onClick={(event) => {
+            event.stopPropagation()
+            onRemoveButtonClick(username)
+          }}
         >
           <FontAwesomeIcon icon={faTimes}/>
         </Button>)}
