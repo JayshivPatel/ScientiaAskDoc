@@ -20,6 +20,7 @@ import { api, methods } from "constants/routes"
 import LoadingScreen from "components/suspense/LoadingScreen"
 import moment from "moment"
 import styles from "./style.module.scss"
+import { dateNeutralized } from "utils/functions"
 
 interface Props {
   onEventClick: (e: TimelineEvent) => void
@@ -44,8 +45,7 @@ const Dashboard: React.FC<Props> = ({
       switch(insight.kind) {
         case 'due':
         case 'release':
-          insight.event.startDate = moment(insight.event.startDate).toDate()
-          insight.event.endDate = moment(insight.event.endDate).toDate()
+          dateNeutralized(insight.event, 'startDate', 'endDate')
       }
       return insight
     }))

@@ -22,7 +22,7 @@ import { request } from "../../utils/api"
 import { api, methods } from "../../constants/routes"
 import { YEAR_OF_NEW_CODES } from "../../constants/doc"
 import {ModuleTracks} from "./Timeline";
-import {toDayCount} from "../../utils/functions";
+import {dateNeutralized, toDayCount} from "../../utils/functions";
 import moment from "moment"
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"))
@@ -120,9 +120,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         if (data) {
           newEvents[module.code] = []
           data.forEach((exercise) => {
-            exercise.startDate = moment(exercise.startDate).toDate()
-            exercise.endDate = moment(exercise.endDate).toDate()
-            newEvents[module.code][exercise.id] = exercise
+            newEvents[module.code][exercise.id] = dateNeutralized(exercise, 'startDate', 'endDate')
           })
           setTimelineEvents({ ...newEvents })
         }

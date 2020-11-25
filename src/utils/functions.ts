@@ -88,3 +88,18 @@ export function emailFromUsername(username: string): string {
 export function showCohort(cohortID: string): string {
   return "Computing - Year 3"
 }
+
+export type AllKeysExtends<T, O> = {
+  [K in keyof T]: T[K] extends O ? K : never
+}[keyof T]
+
+
+export function dateNeutralized<T>(dict: T, ...dateKeys: AllKeysExtends<T, Date>[]): T {
+  for (const k of dateKeys) {
+    const date = dict[k]
+    if (typeof date === 'string') {
+      dict[k] = moment(date).toDate() as any
+    }
+  }
+  return dict
+} 
