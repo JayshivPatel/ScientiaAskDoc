@@ -4,7 +4,7 @@ import Adapter from "enzyme-adapter-react-16";
 import { faFileCode } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import IconTextButton from "./index";
-import { OverlayTrigger } from "react-bootstrap/";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 
 configure({ adapter: new Adapter() });
 
@@ -31,8 +31,8 @@ describe("<IconTexxtButton />", () => {
     const overlay = wrapper.find(OverlayTrigger).prop("overlay");
     expect(shallow(<div>{overlay}</div>).text()).toBe(tooltip);
   });
-  it("Check clickings on icon is handled", () => {
-    wrapper.simulate("click");
+  it("Check button onClick", () => {
+    wrapper.simulate('click');
     expect(onClick).toHaveBeenCalled();
   });
 });

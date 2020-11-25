@@ -34,11 +34,11 @@ describe("<FileExtensionIcon />", () => {
       expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(icon);
     }
   });
-  it("Check clickings on icon is handled", () => {
+  it("Check icon onClick", () => {
     const wrapper = mount(<FileExtensionIcon suffixes={[]} />);
     const onClick = jest.fn();
     wrapper.setProps({ onClick: onClick }).update();
-    wrapper.simulate("click");
+    wrapper.simulate('click');
     expect(onClick).toHaveBeenCalled();
   });
 });
