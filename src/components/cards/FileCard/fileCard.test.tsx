@@ -42,14 +42,18 @@ describe("<FileCard />", () => {
   it("Check icon", () => {
     expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(icon);
   });
+  it("Check icon onClick", () => {
+    onIconClick.mockClear();
+    onClick.mockClear();
+    wrapper.find(FontAwesomeIcon).simulate("click");
+    expect(onIconClick).toHaveBeenCalled();
+  });
   it("Check card onClick", () => {
+    onIconClick.mockClear();
+    onClick.mockClear();
     wrapper.simulate("click");
     expect(onClick).toHaveBeenCalled();
     expect(onIconClick).not.toHaveBeenCalled();
-  });
-  it("Check icon onClick", () => {
-    wrapper.find(FontAwesomeIcon).simulate("click");
-    expect(onIconClick).toHaveBeenCalled();
   });
   it("Check mouse over", () => {
     wrapper.simulate("mouseover");
