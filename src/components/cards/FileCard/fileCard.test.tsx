@@ -1,10 +1,9 @@
 import React from "react";
-import { configure, mount, shallow } from "enzyme";
+import { configure, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { faFileCode } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import IconTextButton from "./index";
-import Card from "react-bootstrap/Card"
+import Card from "react-bootstrap/Card";
 import FileCard from "./index";
 import Badge from "react-bootstrap/Badge";
 
@@ -44,20 +43,20 @@ describe("<FileCard />", () => {
     expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(icon);
   });
   it("Check card onClick", () => {
-    wrapper.simulate('click');
+    wrapper.simulate("click");
     expect(onClick).toHaveBeenCalled();
     expect(onIconClick).not.toHaveBeenCalled();
   });
   it("Check icon onClick", () => {
-    wrapper.find(FontAwesomeIcon).simulate('click');
+    wrapper.find(FontAwesomeIcon).simulate("click");
     expect(onIconClick).toHaveBeenCalled();
   });
   it("Check mouse over", () => {
-    wrapper.simulate('mouseover');
+    wrapper.simulate("mouseover");
     expect(onMouseOver).toHaveBeenCalled();
   });
   it("Check mouse out", () => {
-    wrapper.simulate('mouseout');
+    wrapper.simulate("mouseout");
     expect(onMouseOut).toHaveBeenCalled();
   });
 });
