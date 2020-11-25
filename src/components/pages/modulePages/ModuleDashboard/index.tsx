@@ -5,7 +5,7 @@ import classNames from "classnames"
 import { faGlobe, faUserFriends } from "@fortawesome/free-solid-svg-icons"
 import PageButtonGroup from "components/groups/PageButtonGroup"
 
-import { oldRequest } from "utils/api"
+import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 import { modulesList } from "../../ModuleList/list"
 import { teachingAims } from "../../ModuleList/aims"
@@ -51,7 +51,15 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
 
   let [buttons, setButtons] = useState<any>([])
   useEffect(() => {
-    const onSuccess = (data: { [k: string]: any }) => {
+    request<{ [k: string]: any }>({
+      api: api.MATERIALS_RESOURCES(),
+      method: methods.GET,
+      body: {
+        year: year,
+        course: moduleCode,
+      },
+    })
+    .then(data => {
       const newButtons: any[] = [
         {
           title: "Syllabus",
@@ -65,19 +73,8 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
         },
       ]
       setButtons(newButtons)
-    }
-    oldRequest({
-      url: api.MATERIALS_RESOURCES().url,
-      method: methods.GET,
-      onSuccess,
-      onError: () => {
-        console.log("fail")
-      },
-      body: {
-        year: year,
-        course: moduleCode,
-      },
     })
+    .catch(() => console.log("fail"))
   }, [moduleID, year])
 
   return (

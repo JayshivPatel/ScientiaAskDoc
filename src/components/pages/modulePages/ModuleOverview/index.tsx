@@ -1,7 +1,7 @@
 import React from "react"
 import styles from "./style.module.scss"
 
-import { oldRequest } from "utils/api"
+import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 
 import Accordion from "react-bootstrap/Accordion"
@@ -103,16 +103,16 @@ class ModuleOverview extends React.Component<
       this.setState({ error: message, isLoaded: true })
     }
 
-    oldRequest({
-      url: api.MATERIALS_RESOURCES().url,
+    request<{ [k: string]: any }>({
+      api: api.MATERIALS_RESOURCES(),
       method: methods.GET,
-      onSuccess,
-      onError,
       body: {
         year: this.props.year,
         course: this.moduleCode,
       },
     })
+    .then(onSuccess)
+    .catch(onError)
   }
 
   handleResourceClick(id: number) {

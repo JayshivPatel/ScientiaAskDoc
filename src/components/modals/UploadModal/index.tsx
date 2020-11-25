@@ -23,7 +23,7 @@ import styles from "./style.module.scss"
 import ResourceDetailForm, {
   ResourceDetails,
 } from "components/sections/ResourceDetailForm"
-import { oldRequest } from "utils/api"
+import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 
 interface UploadModalProps {
@@ -104,14 +104,13 @@ const UploadModal: React.FC<UploadModalProps> = ({
     let formData = new FormData()
     formData.append("file", file)
     return (data: { [k: string]: number }) => {
-      oldRequest({
-        url: api.MATERIALS_RESOURCES_FILE(data["id"]).url,
+      request({
+        api: api.MATERIALS_RESOURCES_FILE(data["id"]),
         method: methods.PUT,
-        onSuccess: () => {},
-        onError: () => removeFile(file),
         body: formData,
         sendFile: true,
       })
+      .catch(() => removeFile(file))
     }
   }
 
@@ -152,15 +151,15 @@ const UploadModal: React.FC<UploadModalProps> = ({
           acceptedFiles.map((file, index) => {
             if (rejectedFiles.includes(file)) {
               // Empty promise i.e. do nothing
-              return Promise.resolve()
+              return
             }
-            return oldRequest({
-              url: api.MATERIALS_RESOURCES().url,
+            return request({
+              api: api.MATERIALS_RESOURCES(),
               method: methods.POST,
-              onSuccess: submitFileForResource(file),
-              onError: onError(resourceDetails[index]),
               body: makePayload(resourceDetails[index]),
             })
+            .then(() => submitFileForResource(file))
+            .catch(onError(resourceDetails[index]))
           })
         )
 
@@ -174,13 +173,13 @@ const UploadModal: React.FC<UploadModalProps> = ({
       }
       case "link": {
         // The title and url of the new link must be validated before uploading
-          await oldRequest({
-            url: api.MATERIALS_RESOURCES().url,
+          await request({
+            api: api.MATERIALS_RESOURCES(),
             method: methods.POST,
-            onSuccess: hideAndReload,
-            onError: onError(linkResource),
             body: makePayload(linkResource),
           })
+          .then(hideAndReload)
+          .catch(onError(linkResource))
           break
       }
     }

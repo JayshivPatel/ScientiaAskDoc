@@ -13,7 +13,7 @@ import FileItemRow from "components/rows/FileItemRow"
 import { SelectionProps } from "components/pages/SelectionView"
 import { resourceTypeToIcon } from "../../pages/modulePages/ModuleResources/utils"
 import { IdBooleanMap, Resource } from "constants/types"
-import { oldRequest } from "utils/api"
+import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 import arrayMove from "array-move"
 
@@ -59,7 +59,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
   let oldIndexes: number[] = categoryItems.map((resource) => resource.index)
 
   const initListItems = (items: Resource[]) =>
-    items.map(({ title, type, tags, downloads, visible_after, id, index }) => {
+    items.map(({ title, type, tags, visible_after, id, index }) => {
       if (type === undefined || tags === undefined) return null
 
       let icon =
@@ -113,15 +113,14 @@ const CategoryList: React.FC<CategoryListProps> = ({
     let indexes = oldIndexes.slice(minIndex, maxIndex)
 
     newResources.slice(minIndex, maxIndex).forEach((resource, i) => {
-      oldRequest({
-        url: api.MATERIALS_RESOURCES_ID(resource.id).url,
+      request({
+        api: api.MATERIALS_RESOURCES_ID(resource.id),
         method: methods.PUT,
-        onSuccess: () => {},
-        onError: () => {},
         body: {
           index: indexes[i],
         },
       })
+      .catch(() => {})
     })
   }
 

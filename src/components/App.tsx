@@ -145,7 +145,7 @@ class App extends React.Component<{}, AppState> {
 
     return (
       <CurrentUserInfo.Provider value={{
-        info: this.state.currentUserInfo,
+        info: () => (authenticationService.getCurrentPersonInfo() || defaultUserInfo),
         onChangeCurrentUserInfo: info => {
           authenticationService.setCurrentPersonInfo(info)
           this.setState({ currentUserInfo: info })

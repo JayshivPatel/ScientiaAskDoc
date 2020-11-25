@@ -9,9 +9,8 @@ import ResourceDetailForm, {
   ResourceDetails,
 } from "components/sections/ResourceDetailForm"
 import { Resource } from "constants/types"
-import { oldRequest } from "utils/api"
+import { request } from "utils/api"
 import { api, methods } from "constants/routes"
-import {inspect} from "util";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 
@@ -54,13 +53,13 @@ const EditModal: React.FC<EditModalProps> = ({
       if (details.visibleAfter) {
         payload.visible_after = details.visibleAfter
       }
-      oldRequest({
-        url: api.MATERIALS_RESOURCES_ID(resource.id).url,
+      request({
+        api: api.MATERIALS_RESOURCES_ID(resource.id),
         method: methods.PUT,
-        onSuccess: hideAndReload,
-        onError: () => {},
         body: payload,
       })
+      .then(hideAndReload)
+      .catch(() => {})
     }
   }
 

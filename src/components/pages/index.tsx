@@ -9,7 +9,6 @@ import {
   CalendarEvent,
   ProgressStatus,
   SubscriptionLevel,
-  EventRole,
   TimelineEventDict,
 } from "constants/types"
 import Container from "react-bootstrap/Container"
@@ -19,13 +18,12 @@ import authenticationService from "utils/auth"
 import { modulesList } from "./ModuleList/list"
 import RightBar from "components/navbars/RightBar"
 import LeftBar from "components/navbars/LeftBar"
-import { oldRequest, request } from "../../utils/api"
+import { request } from "../../utils/api"
 import { api, methods } from "../../constants/routes"
 import { YEAR_OF_NEW_CODES } from "../../constants/doc"
 import {ModuleTracks} from "./Timeline";
 import {toDayCount} from "../../utils/functions";
 import moment from "moment"
-import { AuthService } from "constants/auth"
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"))
 const ModuleDashboard = React.lazy(() =>
@@ -121,7 +119,7 @@ const StandardView: React.FC<StandardViewProps> = ({
       .then(data => {
         if (data) {
           newEvents[module.code] = []
-          data.forEach((exercise, index) => {
+          data.forEach((exercise) => {
             exercise.startDate = moment(exercise.startDate).toDate()
             exercise.endDate = moment(exercise.endDate).toDate()
             newEvents[module.code][exercise.id] = exercise

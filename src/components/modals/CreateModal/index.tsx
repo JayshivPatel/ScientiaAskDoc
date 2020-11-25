@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from "react"
+import React, {useState, useCallback} from "react"
 import classNames from "classnames"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -13,24 +13,16 @@ import "react-datepicker/dist/react-datepicker.css"
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {
-    faCaretDown,
     faTimes,
     faFolder,
     faFolderOpen,
-    faEye,
-    faArrowAltCircleRight,
     faCalendarAlt,
-    faClock,
-    faUser,
-    faUsers,
     faFileUpload,
-    faPen,
-    faFileAlt,
-    faChevronCircleDown, faBars, faFileSignature
+    faBars, faFileSignature
 } from "@fortawesome/free-solid-svg-icons"
 
 import styles from "./style.module.scss"
-import {oldRequest} from "utils/api"
+import {request} from "utils/api"
 import {api, methods} from "constants/routes"
 import moment from "moment"
 import Container from "react-bootstrap/cjs/Container";
@@ -114,15 +106,13 @@ const CreateModal: React.FC<CreateModalProps> = ({
         let formData = new FormData()
         formData.append("file", file)
         return (data: { [k: string]: number }) => {
-            oldRequest({
-                url: api.MATERIALS_RESOURCES_FILE(data["id"]).url,
+            request({
+                api: api.MATERIALS_RESOURCES_FILE(data["id"]),
                 method: methods.PUT,
-                onSuccess: () => {
-                },
-                onError: () => removeFile(file),
                 body: formData,
                 sendFile: true,
             })
+            .catch(() => removeFile(file))
         }
     }
 
@@ -158,18 +148,18 @@ const CreateModal: React.FC<CreateModalProps> = ({
         switch (tab) {
             case "file": {
                 await Promise.all(
-                    acceptedFiles.map((file, index) => {
+                    acceptedFiles.map(async file => {
                         if (rejectedFiles.includes(file)) {
                             // Empty promise i.e. do nothing
                             return Promise.resolve()
                         }
-                        return oldRequest({
-                            url: api.MATERIALS_RESOURCES().url,
+                        return request({
+                            api: api.MATERIALS_RESOURCES(),
                             method: methods.POST,
-                            onSuccess: submitFileForResource(file),
-                            onError: onError(),
                             body: makePayload(),
                         })
+                        .then(() => submitFileForResource(file))
+                        .catch(() => onError())
                     })
                 )
 
@@ -216,7 +206,6 @@ const CreateModal: React.FC<CreateModalProps> = ({
     const [date_options] = React.useState(dates);
 
     // time options:
-    const origin_time = new Date().setHours(0, 0, 0, 0)
     const time_wholeday = []
     for (let i = 0; i < 24; i++) {
         time_wholeday.push({label: new Date(date.setHours(i, 0, 0, 0)).toTimeString(), value: i})
@@ -282,10 +271,6 @@ const CreateModal: React.FC<CreateModalProps> = ({
         {label: "Average", value: -1},
     ]);
 
-    const dateInfoLabels = [
-        "Start date:",
-        "Due date:",
-    ];
 
     const datePicker_start = (
         <DatePicker

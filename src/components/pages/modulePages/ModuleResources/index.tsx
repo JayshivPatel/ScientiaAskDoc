@@ -1,6 +1,6 @@
 import React from "react"
 
-import { download, oldRequest } from "utils/api"
+import { download, request } from "utils/api"
 import { api, methods } from "constants/routes"
 import SearchBox from "components/headings/SearchBox"
 import QuickAccessView from "./components/QuickAccessView"
@@ -104,16 +104,16 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       this.setState({ error: message, isLoaded: true })
     }
 
-    oldRequest({
-      url: api.MATERIALS_RESOURCES().url,
+    request<{ [k: string]: any }>({
+      api: api.MATERIALS_RESOURCES(),
       method: methods.GET,
-      onSuccess,
-      onError,
       body: {
         year: this.props.year,
         course: this.moduleCode,
       },
     })
+    .then(onSuccess)
+    .catch(onError)
   }
 
   componentDidMount() {

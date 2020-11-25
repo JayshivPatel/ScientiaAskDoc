@@ -43,6 +43,7 @@ const SignIn: React.FC<Props> = ({ location }) => {
       console.log(response)
       onChangeCurrentUserInfo(response)
       setRedirect(true)
+
     } else {
       // TODO: Deal with failed login
       alert("Login failed.")

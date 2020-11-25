@@ -20,11 +20,10 @@ import CreateModal from "components/modals/CreateModal"
 import CategoryList from "components/sections/CategoryList"
 import CategoryHeader from "components/headings/CategoryHeader"
 
-import { oldRequest, download } from "utils/api"
+import { download, request } from "utils/api"
 import { api, methods } from "constants/routes"
 import { Folder, Resource, IdBooleanMap } from "constants/types"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { DEFAULT_CATEGORY } from "../../../../../constants/global"
 import { categories } from "../utils"
 import moment from "moment"
 
@@ -87,14 +86,13 @@ const StaffView: React.FC<StaffViewProps> = ({
     let formData = new FormData()
     formData.append("file", fileUploaded)
 
-    await oldRequest({
-      url: api.MATERIALS_RESOURCES_FILE(resourceID).url,
+    await request({
+      api: api.MATERIALS_RESOURCES_FILE(resourceID),
       method: methods.PUT,
-      onSuccess: () => {},
-      onError: () => {},
       body: formData,
       sendFile: true,
     })
+    .catch(() => {})
     reload()
   }
 
@@ -119,12 +117,11 @@ const StaffView: React.FC<StaffViewProps> = ({
       <IconButton
         tooltip="Delete"
         onClick={async () => {
-          await oldRequest({
-            url: api.MATERIALS_RESOURCES_ID(id).url,
+          await request({
+            api: api.MATERIALS_RESOURCES_ID(id),
             method: methods.DELETE,
-            onSuccess: () => {},
-            onError: () => {},
           })
+          .catch(() => {})
           reload()
         }}
         icon={faTrash}
@@ -197,19 +194,19 @@ const StaffView: React.FC<StaffViewProps> = ({
         message="This will irreversibly delete all course resources and associated files."
         confirmLabel="Delete All Resources"
         confirmOnClick={() =>
-          oldRequest({
-            url: api.MATERIALS_RESOURCES().url,
+          request({
+            api: api.MATERIALS_RESOURCES(),
             method: methods.DELETE,
-            onSuccess: () => {
-              closeModal()
-              reload()
-            },
-            onError: () => {},
             body: {
               year: year,
               course: course,
             },
           })
+          .then(() => {
+            closeModal()
+            reload()
+          })
+          .catch(() => {})
         }
       />
 

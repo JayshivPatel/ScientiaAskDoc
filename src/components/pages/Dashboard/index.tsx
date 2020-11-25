@@ -14,7 +14,7 @@ import {
   faBug,
 } from "@fortawesome/free-solid-svg-icons"
 import CurrentUserInfo from "contexts/CurrentUserInfo"
-import { Insight, TimelineEvent } from "constants/types"
+import { Insight, PersonInfo, TimelineEvent } from "constants/types"
 import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 import LoadingScreen from "components/suspense/LoadingScreen"
@@ -63,7 +63,7 @@ const Dashboard: React.FC<Props> = ({
   return (
     <>
       <MyBreadcrumbs />
-      <PersonCard info={info}/>
+      <PersonCard info={info()}/>
       <PageButtonGroup buttons={buttons} style={{ marginTop: "2.8rem" }} />
       <div
         style={{
@@ -168,13 +168,15 @@ const tutors: {
   },
 ]
 
-const personCard = {
+const personCard: PersonInfo = {
   name: "Branden Ritter",
   email: "branden.ritter20@imperial.ac.uk",
   id: "BR819",
   cid: "01343896",
-  year: "First Year Undergraduate",
   dep: "Department of Computing",
-  course: "MEng Computing (AI)",
+  extra: {
+    kind: 'staff',
+    title: 'Lecturer'
+  }
 }
 export default Dashboard

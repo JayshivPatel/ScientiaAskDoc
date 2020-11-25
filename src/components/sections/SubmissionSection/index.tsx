@@ -12,7 +12,7 @@ import {
 } from "constants/types"
 import SubmissionFileUploadTab from "../SubmissionFileUploadTab"
 import {api, methods} from "constants/routes"
-import {download, oldRequest, request} from "utils/api"
+import {download, request} from "utils/api"
 import SubmitDeclarationSection from "../SubmissionDeclarationTab";
 import authenticationService from "utils/auth"
 import SubmissionGroupFormation, {Role} from "../SubmissionGroupFormation";
@@ -52,7 +52,6 @@ interface Props {
 
 const SubmissionSection: React.FC<Props> = ({
   event,
-  activeDay,
   courseCode,
   exerciseNumber,
 }) => {
@@ -142,24 +141,24 @@ const SubmissionSection: React.FC<Props> = ({
       }
       loaded(LoadingParts.GROUP_INFO)
     })
-    .catch(error => loadError(LoadingParts.GROUP_INFO))
+    .catch(() => loadError(LoadingParts.GROUP_INFO))
   }
 
   const createGroup = () => {
-    oldRequest({
-      url: api.CATE_GROUP_SINGLE_MEMBER(courseCode, exerciseNumber, currentUser).url,
+    request({
+      api: api.CATE_GROUP_SINGLE_MEMBER(courseCode, exerciseNumber, currentUser),
       method: methods.POST,
-      onSuccess: () => {},
-      onError: (message: string) => console.log(`Failed to create a new group: ${message}`),
-    }).finally(refreshAllParts)
+    })
+    .catch(message => console.log(`Failed to create a new group: ${message}`))
+    .finally(refreshAllParts)
   }
   const deleteGroup = () => {
-    oldRequest({
-      url: api.CATE_DELETE_GROUP(courseCode, exerciseNumber, groupID).url,
+    request({
+      api: api.CATE_DELETE_GROUP(courseCode, exerciseNumber, groupID),
       method: methods.DELETE,
-      onSuccess: () => {},
-      onError: (message: string) => console.log(`Failed to delete group ${groupID}: ${message}`),
-    }).finally(refreshAllParts)
+    })
+    .catch(message => console.log(`Failed to delete group ${groupID}: ${message}`))
+    .finally(refreshAllParts)
   }
 
   /* ================================ File Submission ================================ */
@@ -230,45 +229,45 @@ const SubmissionSection: React.FC<Props> = ({
   }
 
   const removeDeclarationHelper = (targetName: string, targetLogin: string) => {
-    oldRequest({
-      url: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser).url,
+    request({
+      api: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser),
       method: methods.DELETE,
       body: {
         "name": targetName,
         "login": targetLogin,
       },
-      onSuccess: () => {},
-      onError: () => alert("error")
-    }).then(refreshAllParts)
+    })
+    .catch(() => alert("error"))
+    .then(refreshAllParts)
   }
 
   const uploadDeclaration = (data: "Unaided" | DeclarationHelper | undefined) => {
-    oldRequest({
-      url: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser).url,
+    request({
+      api: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser),
       method: methods.PUT,
       body: {
         declaration: data
       },
-      onSuccess: () => {},
-      onError: () => alert("error")
-    }).then(refreshAllParts)
+    })
+    .catch(() => alert("error"))
+    .then(refreshAllParts)
   }
 
-  const retrieveDeclaration = async () => oldRequest({
-    url: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser).url,
+  const retrieveDeclaration = () => request<DeclarationInfo>({
+    api: api.CATE_DECLARATION(courseCode, exerciseNumber, currentUser),
     method: methods.GET,
-    onSuccess: (data: DeclarationInfo) => {
-      if (data.status === "Unaided") {
-        setDeclarationStatus(DeclarationStatus.UNAIDED)
-        setDeclaredHelpers([])
-      } else {
-        setDeclarationStatus(DeclarationStatus.WITH_HELP)
-        setDeclaredHelpers(data.helpers)
-      }
-      loaded(LoadingParts.DECLARATION)
-    },
-    onError: () => loadError(LoadingParts.DECLARATION),
   })
+  .then(data => {
+    if (data.status === "Unaided") {
+      setDeclarationStatus(DeclarationStatus.UNAIDED)
+      setDeclaredHelpers([])
+    } else {
+      setDeclarationStatus(DeclarationStatus.WITH_HELP)
+      setDeclaredHelpers(data.helpers)
+    }
+    loaded(LoadingParts.DECLARATION)
+  })
+  .catch(() => loadError(LoadingParts.DECLARATION))
 
 
   /* ================================ Refresh ================================ */
@@ -288,7 +287,7 @@ const SubmissionSection: React.FC<Props> = ({
   useEffect(refreshAllParts, [])
 
   // Programmatically open the group formation tab
-  const openGroupFormationTab = (event: React.MouseEvent) => setActiveStage("1")
+  const openGroupFormationTab = () => setActiveStage("1")
 
   const userIsLeader = groupMembers.filter(m => m.username === currentUser && m.role === Role.LEADER).length !== 0
 

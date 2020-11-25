@@ -15,7 +15,7 @@ export const defaultUserInfo: PersonInfo = {
 }
 
 const CurrentUserInfo = React.createContext({
-  info: defaultUserInfo,
+  info: () => defaultUserInfo,
   onChangeCurrentUserInfo: (newInfo: PersonInfo) => {}
 })
 
