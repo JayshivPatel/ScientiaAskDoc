@@ -1,3 +1,4 @@
+import { AllKeysExtends } from "constants/types"
 import moment from "moment"
 
 export function titleCase(string: string) {
@@ -85,15 +86,27 @@ export function emailFromUsername(username: string): string {
   return `${username}@ic.ac.uk`
 }
 
+/**
+ * TODO: not implemented
+ * 
+ * Show the full cohort string of the given cohortID
+ * i.e. 'c3' => 'Computing - Year 3'
+ * @param cohortID cohort id of the student (e.g. 'c3')
+ */
 export function showCohort(cohortID: string): string {
   return "Computing - Year 3"
 }
 
-export type AllKeysExtends<T, O> = {
-  [K in keyof T]: T[K] extends O ? K : never
-}[keyof T]
-
-
+/**
+ * Neutralize an object by parsing specified date members into Date objects. 
+ * 
+ * Can be used to neutralize the response object from the api request,
+ * as the raw response object stores all Dates members as strings.
+ * 
+ * This function would only work on the keys that are declared to be of 'Date' type. 
+ * @param dict The object to be neutralized
+ * @param dateKeys The keys you wish to neutralize.
+ */
 export function dateNeutralized<T>(dict: T, ...dateKeys: AllKeysExtends<T, Date>[]): T {
   for (const k of dateKeys) {
     const date = dict[k]

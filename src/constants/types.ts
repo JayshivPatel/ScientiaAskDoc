@@ -295,6 +295,25 @@ export enum LinkTitleError {
 
 export type SubscriptionLevel = 1 | 2 | 3
 
+/*****************************************
+ *          # Utility Types #            * 
+ *   Behold! The power of TypeScript :)  *
+ *****************************************/
+
+
+ /**
+  * JavaScript does not allow us to use enum as dictionary keys by default.
+  * Make it happy.
+  */
 export type EnumDictionary<T extends string | symbol | number, U> = {
   [K in T]: U;
-};
+}
+
+/**
+ * A union type contains all keys in type T, whose corresponding value extends type O.
+ * 
+ * i.e. All keys of type O
+ */
+export type AllKeysExtends<T, O> = {
+  [K in keyof T]: T[K] extends O ? K : never
+}[keyof T]
