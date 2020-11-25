@@ -49,7 +49,10 @@ const FileCard: React.FC<FileCardProps> = ({
             cursor: "default",
           }}
           icon={icon}
-          onClick={onIconClick}
+          onClick={(event) => {
+            event.stopPropagation();
+            onIconClick(event);
+          }}
         />
       </Card.Body>
       <Card.Footer>

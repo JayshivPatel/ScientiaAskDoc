@@ -47,6 +47,7 @@ describe("<FileCard />", () => {
     onClick.mockClear();
     wrapper.find(FontAwesomeIcon).simulate("click");
     expect(onIconClick).toHaveBeenCalled();
+    expect(onClick).not.toHaveBeenCalled();
   });
   it("Check card onClick", () => {
     onIconClick.mockClear();
