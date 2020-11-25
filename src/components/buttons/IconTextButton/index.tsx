@@ -4,7 +4,7 @@ import classNames from "classnames"
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
-import Button from "react-bootstrap/esm/Button"
+import Button from "react-bootstrap/Button"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 interface Props {

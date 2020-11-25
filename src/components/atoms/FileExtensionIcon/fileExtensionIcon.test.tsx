@@ -15,7 +15,7 @@ import FileExtensionIcon from ".";
 configure({ adapter: new Adapter() });
 
 describe("<FileExtensionIcon />", () => {
-  it("Able to recognize file extensions", () => {
+  it("Check able to recognize file extensions", () => {
     const codeDics = [
       [["hs"], faFileCode],
       [["hs", "lhs"], faFileCode],
@@ -34,7 +34,7 @@ describe("<FileExtensionIcon />", () => {
       expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(icon);
     }
   });
-  it("Click on icon is handled", () => {
+  it("Check clickings on icon is handled", () => {
     const wrapper = mount(<FileExtensionIcon suffixes={[]} />);
     const onClick = jest.fn();
     wrapper.setProps({ onClick: onClick }).update();
