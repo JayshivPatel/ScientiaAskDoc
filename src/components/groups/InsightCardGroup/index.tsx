@@ -28,7 +28,6 @@ const InsightCardGroup: React.FC<TutorCardGroupProps> = ({ title, tutors }) => {
 
   return (
     <>
-      <h4 className={styles.groupTitle}>{title}</h4>
       <Row>{cards}</Row>
     </>
   )

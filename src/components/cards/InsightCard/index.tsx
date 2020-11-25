@@ -9,24 +9,31 @@ import classNames from "classnames"
 
 export interface Props {
   important?: boolean
+  ok?: boolean
   paragraph: JSX.Element
   timestamp: Date
-  image: { kind: 'icon', icon: IconDefinition } | { kind: 'img', image: string}
+  image: { kind: 'icon', icon: IconDefinition } | { kind: 'img', image: string }
   onClick: (e: React.MouseEvent) => void 
 }
 
 const InsightCard: React.FC<Props> = ({
   important,
+  ok,
   paragraph,
   timestamp,
   image,
   onClick
 }) => {
 
+  const classOf = (...baseClasses: string[]) => classNames(
+    ...baseClasses, 
+    important ? styles.important : undefined,
+    ok ? styles.ok : undefined,
+  )
   const imageDisplay = (() => {
     switch(image.kind) {
       case 'icon':
-        return <FontAwesomeIcon icon={image.icon} size={'3x'} style={{ marginRight: '0.7rem', color: important ? 'var(--pink-background)' : undefined }}/>
+        return <FontAwesomeIcon className={classOf(styles.insightIcon)} icon={image.icon} size={'3x'}/>
       case 'img':
         return <Image className={styles.insightImage} src={image.image} />
     }
@@ -35,12 +42,12 @@ const InsightCard: React.FC<Props> = ({
   return (
     <>
       <Container
-        className={classNames(styles.insightContainer, important ? styles.important : undefined)}
+        className={classOf(styles.insightContainer)}
         onClick={onClick}>
         {imageDisplay}
         <div>
           {paragraph}
-          <p className={styles.insightAddress}>{moment(timestamp).fromNow()}</p>
+          <p className={classOf(styles.insightAddress)}>{moment(timestamp).fromNow()}</p>
         </div>
       </Container>
     </>

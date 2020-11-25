@@ -25,7 +25,6 @@ const InsightCardGroup: React.FC<Props> = ({
 
   return (
     <>
-      <h4 className={styles.groupTitle}>{title}</h4>
       <Row>{tutorCards.map((card, index) => (
         <Col
           md={'4'}

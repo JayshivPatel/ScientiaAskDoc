@@ -19,6 +19,7 @@ import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 import LoadingScreen from "components/suspense/LoadingScreen"
 import moment from "moment"
+import styles from "./style.module.scss"
 
 interface Props {
   onEventClick: (e: TimelineEvent) => void
@@ -68,6 +69,7 @@ const Dashboard: React.FC<Props> = ({
         style={{
           marginTop: "1.875rem",
         }}>
+        <h4 className={styles.insightTitle}>Insights</h4>
         <LoadingScreen
           isLoaded={loaded}
           successful={

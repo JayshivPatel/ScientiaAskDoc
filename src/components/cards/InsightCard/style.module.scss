@@ -19,7 +19,11 @@
 }
 
 .insightContainer.important {
-  border: 2px solid var(--pink-text);
+  background-color: var(--pink-background);
+}
+
+.insightContainer.ok {
+  background-color: var(--teal-background);
 }
 
 .insightContainer:hover {
@@ -58,4 +62,24 @@
 
 .insightAddress {
   color: var(--tertiary-text-color);
+}
+
+.insightAddress.important {
+  color: var(--secondary-text-color);
+}
+
+.insightAddress.ok {
+  color: var(--secondary-text-color);
+}
+
+.insightIcon {
+  margin-right: 0.7rem;
+}
+
+.insightIcon.important {
+  color: var(--pink-text)
+}
+
+.insightIcon.ok {
+  color: var(--teal-text)
 }

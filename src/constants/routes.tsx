@@ -48,6 +48,10 @@ export interface Api {
   url: string,
 }
 
+/**
+ * Definitions of all external API calls.
+ * Each api function returns a pair of authentication service the api uses and its url
+ */
 export const api = {
   CATE_LOGIN: (): Api => ({
     auth: AuthService.EMARKING,
