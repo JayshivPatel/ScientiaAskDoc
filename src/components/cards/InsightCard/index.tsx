@@ -41,10 +41,10 @@ const InsightCard: React.FC<Props> = ({
   })()
 
   const paragraphDisplay = <p>
-    {paragraph.map(({ text, style }) => {
+    {paragraph.map(({ text, style }, idx) => {
       switch(style) {
         case 'bold':
-          return <b className={classOf(styles.insightBoldText)}>{text}</b>
+          return <b key={idx} className={classOf(styles.insightBoldText)}>{text}</b>
         default: 
           return text
       }
