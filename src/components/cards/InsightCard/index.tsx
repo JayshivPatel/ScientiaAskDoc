@@ -6,11 +6,12 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import moment from "moment"
 import classNames from "classnames"
+import { Paragraph } from "./paragraph"
 
 export interface Props {
   important?: boolean
   ok?: boolean
-  paragraph: JSX.Element
+  paragraph: Paragraph
   timestamp: Date
   image: { kind: 'icon', icon: IconDefinition } | { kind: 'img', image: string }
   onClick: (e: React.MouseEvent) => void 
@@ -39,6 +40,17 @@ const InsightCard: React.FC<Props> = ({
     }
   })()
 
+  const paragraphDisplay = <p>
+    {paragraph.map(({ text, style }) => {
+      switch(style) {
+        case 'bold':
+          return <b className={classOf(styles.insightBoldText)}>{text}</b>
+        default: 
+          return text
+      }
+    })}
+  </p>
+
   return (
     <>
       <Container
@@ -46,7 +58,7 @@ const InsightCard: React.FC<Props> = ({
         onClick={onClick}>
         {imageDisplay}
         <div>
-          {paragraph}
+          {paragraphDisplay}
           <p className={classOf(styles.insightAddress)}>{moment(timestamp).fromNow()}</p>
         </div>
       </Container>

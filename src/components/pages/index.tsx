@@ -13,7 +13,6 @@ import {
 } from "constants/types"
 import Container from "react-bootstrap/Container"
 import LoadingScreen from "components/suspense/LoadingScreen"
-// import { request } from "utils/api";
 import authenticationService from "utils/auth"
 import { modulesList } from "./ModuleList/list"
 import RightBar from "components/navbars/RightBar"
@@ -23,7 +22,6 @@ import { api, methods } from "../../constants/routes"
 import { YEAR_OF_NEW_CODES } from "../../constants/doc"
 import {ModuleTracks} from "./Timeline";
 import {dateNeutralized, toDayCount} from "../../utils/functions";
-import moment from "moment"
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"))
 const ModuleDashboard = React.lazy(() =>
@@ -186,7 +184,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           
 					  <Route path="/dashboard">
 						<Container className={classNames("pageContainer")}>
-						  <Dashboard onEventClick={onEventClick}/>
+						  <Dashboard/>
 						</Container>
 					  </Route>
 					
