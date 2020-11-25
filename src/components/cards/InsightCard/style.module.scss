@@ -77,9 +77,13 @@
 }
 
 .insightIcon.important {
-  color: var(--pink-text)
+  color: var(--pink-text);
 }
 
 .insightIcon.ok {
   color: var(--teal-text)
+}
+
+.insightBoldText.important {
+  color: var(--pink-text)
 }

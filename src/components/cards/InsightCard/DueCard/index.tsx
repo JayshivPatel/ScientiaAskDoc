@@ -3,6 +3,7 @@ import { TimelineEvent } from 'constants/types'
 import ModalController from 'contexts/ModalController'
 import React, { useContext } from 'react'
 import InsightCard from '..'
+import WriteParagraph from '../paragraph'
 
 interface Props {
   event: TimelineEvent,
@@ -14,11 +15,18 @@ const DueCard: React.FC<Props> = ({
 
   const Modals = useContext(ModalController)
 
+  const paragraph = WriteParagraph.begin()
+  .bold(event.prefix)
+  .write(' ')
+  .bold(event.title)
+  .write(' under ')
+  .bold(event.moduleCode)
+  .write(' is due soon!')
+  .end()
+
+
   if (event.status === 'complete') {
-    const paragraph = <>
-      <p><b>{event.prefix}</b> <b>{event.title}</b> under <b>{event.moduleCode}</b> is due soon.</p>
-      <p>You have successfully submitted your work!</p>
-    </>
+
     return (
       <InsightCard
         paragraph={paragraph} 
@@ -29,10 +37,6 @@ const DueCard: React.FC<Props> = ({
       />
     )
   }
-
-  const paragraph = <>
-    <p><b>{event.prefix}</b> <b>{event.title}</b> under <b>{event.moduleCode}</b> is due soon.</p>
-  </>
 
   return (
     <InsightCard

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
 import PersonCard from "components/cards/PersonCard"
 import PageButtonGroup from "components/groups/PageButtonGroup"
-import InsightCardGroup from "components/groups/TutorCardGroup"
+import InsightCardGroup from "components/groups/InsightCardGroup"
 
 import {
   faGlobe,
@@ -22,18 +22,17 @@ import moment from "moment"
 import styles from "./style.module.scss"
 import { dateNeutralized } from "utils/functions"
 
-interface Props {
-  onEventClick: (e: TimelineEvent) => void
-}
 
-const Dashboard: React.FC<Props> = ({
-  onEventClick
-}) => {
+const Dashboard: React.FC = () => {
 
   const { info } = useContext(CurrentUserInfo)
 
-  const [insights, setInsights] = useState<Insight[]>(dummyInsights)
+  const [insights, setInsights] = useState<Insight[]>([])
   const [loaded, setLoaded] = useState<boolean>(false)
+
+  const setInsightsSorted = (newInsights: Insight[]) => {
+    setInsights(newInsights.sort((a, b) => compareInsights(b, a)))
+  }
 
   const updateInsights = () => {
     setLoaded(false)
@@ -51,7 +50,7 @@ const Dashboard: React.FC<Props> = ({
     }))
     .then(insights => {
       console.log(insights)
-      setInsights(insights)
+      setInsightsSorted(insights)
     })
     .finally(() => {
       setLoaded(true)
@@ -83,7 +82,30 @@ const Dashboard: React.FC<Props> = ({
   )
 }
 
-const dummyInsights: Insight[] = []
+/**
+ * Insight comparator. It follows the following properties:
+ * 
+ * 0. If two insights are the same, compare stringified results.
+ * 
+ * 1. 'due' insights have the highest precedency.
+ * 
+ * @param a First insight object.
+ * @param b Second insight object.
+ */
+const compareInsights = (a: Insight, b: Insight): number => {
+  if (a.kind !== b.kind) {
+    if (a.kind === 'due') {
+      return 1
+    }
+    if (b.kind === 'due') {
+      return -1
+    }
+  }
+  const aString = JSON.stringify(a)
+  const bString = JSON.stringify(b)
+  return aString.localeCompare(bString)
+}
+
 
 const buttons = [
   {
