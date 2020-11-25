@@ -26,12 +26,12 @@ const ReleaseCard: React.FC<Props> = ({
 
   return (
     <InsightCard
-      paragraph={paragraph} 
-      image={{ kind: 'icon', icon: faPenFancy }} 
-      timestamp={event.endDate} 
+      paragraph={paragraph}
+      image={{ kind: "icon", icon: faPenFancy }}
+      timestamp={event.endDate}
       onClick={() => Modals.EventModal.show(event)}
     />
-  )
+  );
 }
 
 export default ReleaseCard
