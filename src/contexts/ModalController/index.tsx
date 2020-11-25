@@ -1,14 +1,35 @@
-import { TimelineEvent } from 'constants/types'
+import { CalendarEvent, TimelineEvent } from 'constants/types'
 import React from 'react'
 
 interface Context {
-  showEventModal: (e?: TimelineEvent) => void
-  hideEventModal: () => void
+  EventModal: {
+    show: (e?: TimelineEvent) => void
+    hide: () => void
+  },
+  CalendarModal: {
+    show: (e?: CalendarEvent) => void
+    hide: () => void
+  },
+  SettingsModal: {
+    show: () => void
+    hide: () => void
+  }
 }
 
 const ModalController = React.createContext<Context>({
-  showEventModal: _ => {},
-  hideEventModal: () => {},
+  EventModal: {
+    show: _ => {},
+    hide: () => {}
+  },
+  CalendarModal: {
+    show: _ => {},
+    hide: () => {}
+  },
+  SettingsModal: {
+    show: () => {},
+    hide: () => {}
+  }
+  
 })
 
 export default ModalController

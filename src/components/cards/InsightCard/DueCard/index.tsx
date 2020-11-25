@@ -24,7 +24,7 @@ const DueCard: React.FC<Props> = ({
         paragraph={paragraph} 
         image={{ kind: 'icon', icon: faExclamationCircle }} 
         timestamp={event.endDate} 
-        onClick={() => Modals.showEventModal(event)}
+        onClick={() => Modals.EventModal.show(event)}
         ok
       />
     )
@@ -39,7 +39,7 @@ const DueCard: React.FC<Props> = ({
       paragraph={paragraph} 
       image={{ kind: 'icon', icon: faExclamationCircle }} 
       timestamp={event.endDate} 
-      onClick={() => Modals.showEventModal(event)}
+      onClick={() => Modals.EventModal.show(event)}
       important
     />
   )

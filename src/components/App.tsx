@@ -153,8 +153,18 @@ class App extends React.Component<{}, AppState> {
         }
       }}>
         <ModalController.Provider value={{
-          showEventModal: e => this.showEventModal(e),
-          hideEventModal: () => this.setState({ showEventModal: false })
+          EventModal: {
+            show: e => this.showEventModal(e),
+            hide: () => this.setState({ showEventModal: false })
+          },
+          CalendarModal: {
+            show: e => this.showCalendarModal(e),
+            hide: () => this.setState({ showCalendarModal: false })
+          },
+          SettingsModal: {
+            show: () => this.setState({ showSettings: true }),
+            hide: () => this.setState({ showSettings: false })
+          }
         }}>
 
           <SettingsModal
