@@ -1,13 +1,13 @@
-import React from "react"
-import SideBarTabGroup from "components/groups/SideBarTabGroup"
-import { faGitlab } from "@fortawesome/free-brands-svg-icons"
+import React from "react";
+import SideBarTabGroup from "components/groups/SideBarTabGroup";
+import { faGitlab } from "@fortawesome/free-brands-svg-icons";
 import {
-  faFlask,
   faEnvelopeOpen,
-  faUserFriends,
+  faFlask,
   faPlay,
   faStarHalfAlt,
-} from "@fortawesome/free-solid-svg-icons"
+  faUserFriends,
+} from "@fortawesome/free-solid-svg-icons";
 
 const LeftBarDashboard: React.FC = () => {
   let linkButtons = [
@@ -41,9 +41,9 @@ const LeftBarDashboard: React.FC = () => {
       icon: faFlask,
       externalURL: "https://teaching.doc.ic.ac.uk/labts",
     },
-  ]
+  ];
 
-  return <SideBarTabGroup title="Links" buttons={linkButtons} />
-}
+  return <SideBarTabGroup title="Links" buttons={linkButtons} />;
+};
 
-export default LeftBarDashboard
+export default LeftBarDashboard;
