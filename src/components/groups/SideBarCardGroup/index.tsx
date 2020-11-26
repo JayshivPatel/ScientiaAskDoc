@@ -23,14 +23,14 @@ const SideBarCardGroup: React.FC<SideBarCardGroupProps> = ({
         className={classNames(styles.sideBarCardGroup)}
         style={{ maxHeight: maxHeight }}
         role="group">
-        {events.map(({ type, title, subtitle, content, id }) => (
+        {events.map(({ type, title, subtitle, content, id }, idx) => (
           <SideBarCard
             title={title}
             type={type}
             onClick={onCardClick ? (e) => onCardClick(id) : () => {}}
             subtitle={subtitle}
             content={content}
-            key={id ? id : "" + title + type + subtitle}
+            key={id ? id : "" + title + type + subtitle + idx}
           />
         ))}
       </div>
