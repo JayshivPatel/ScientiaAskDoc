@@ -1,23 +1,15 @@
-import React from "react"
-import Image from "react-bootstrap/Image"
-import Container from "react-bootstrap/Container"
-import styles from "./style.module.scss"
-import { PersonInfo } from "constants/types"
+import React from "react";
+import Image from "react-bootstrap/Image";
+import Container from "react-bootstrap/Container";
+import styles from "./style.module.scss";
+import { PersonInfo } from "constants/types";
 
 interface Props {
-  info: PersonInfo
+  info: PersonInfo;
 }
 
-
 const PersonCard: React.FC<Props> = ({
-  info: {
-    name,
-    email,
-    id,
-    cid,
-    dep,
-    extra,
-  }
+  info: { name, email, id, cid, dep, extra },
 }) => {
   return (
     <>
@@ -31,21 +23,22 @@ const PersonCard: React.FC<Props> = ({
             <span className={styles.dot}></span>
             {cid}
           </p>
-          {extra.kind === 'student' ?
+          {extra.kind === "student" ? (
             <>
               <p className={styles.userYear}>{extra.year + ","}</p>
               <p className={styles.userDepartment}>{dep}</p>
               <p className={styles.userCourse}>{extra.course}</p>
-            </> : 
+            </>
+          ) : (
             <>
-              <p className={styles.userCourse}>{extra.title}</p> 
+              <p className={styles.userCourse}>{extra.title}</p>
               <p className={styles.userDepartment}>{dep}</p>
             </>
-          }
+          )}
         </div>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default PersonCard
+export default PersonCard;
