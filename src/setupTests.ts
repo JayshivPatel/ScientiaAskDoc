@@ -5,6 +5,7 @@
 import "@testing-library/jest-dom/extend-expect"
 import { configure } from "enzyme";
 import Adapter from 'enzyme-adapter-react-16';
+import 'mock-local-storage'
 
 configure({ adapter: new Adapter() });
 
@@ -28,9 +29,9 @@ const mockConsoleMethod = (realConsoleMethod: (string: string, ...data: any[]) =
 }
 
 
-
 /**
  * Ignore 'test was not wrapped in act(...)' warning. FIXME: make it work
  */
 console.warn = jest.fn(mockConsoleMethod(console.warn))
 console.error = jest.fn(mockConsoleMethod(console.error))
+
