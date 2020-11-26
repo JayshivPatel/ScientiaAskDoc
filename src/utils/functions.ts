@@ -1,6 +1,11 @@
 import { AllKeysExtends } from "constants/types"
 import moment from "moment"
 
+/**
+ * Converts the given sentence to title case, by rewriting the first letter
+ * in each word to upper case.
+ * @param string the given string object
+ */
 export function titleCase(string: string) {
   var sentence = string.toLowerCase().split(" ")
   for (let i = 0; i < sentence.length; i++) {
@@ -9,6 +14,11 @@ export function titleCase(string: string) {
   return sentence.join(" ")
 }
 
+/**
+ * Add a given number of days to the given date, returns a new date object.
+ * @param date given date object
+ * @param days date offset
+ */
 export function addDays(date: Date, days: number) {
   let result = new Date(date)
   result.setDate(result.getDate() + days)
@@ -94,7 +104,13 @@ export function emailFromUsername(username: string): string {
  * @param cohortID cohort id of the student (e.g. 'c3')
  */
 export function showCohort(cohortID: string): string {
-  return "Computing - Year 3"
+  if (!cohortID.match(/^[c|j][0-9]$/)) {
+    return `Unknown Cohort: ${cohortID}` 
+  }
+  const parts = cohortID[0]
+  const year = Number(cohortID[1])
+  const course = parts[0] === 'c' ? "Computing" : "Joint Maths & Computing"
+  return `${course} - Year ${year}`
 }
 
 /**
