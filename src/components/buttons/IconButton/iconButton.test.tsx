@@ -1,13 +1,10 @@
 import React from "react";
-import { configure, mount, shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { mount, shallow } from "enzyme";
 import IconButton from "./index";
 import { faFileCode } from "@fortawesome/free-solid-svg-icons";
 import Button from "react-bootstrap/cjs/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-
-configure({ adapter: new Adapter() });
 
 describe("<IconButton />", () => {
   const tooltip = "Test Tooltip";
@@ -21,7 +18,7 @@ describe("<IconButton />", () => {
     expect(shallow(<div>{overlay}</div>).text()).toBe(tooltip);
   });
   it("Check button onClick", () => {
-    wrapper.simulate('click');
+    wrapper.simulate("click");
     expect(onClick).toHaveBeenCalled();
   });
   it("Check icon", () => {

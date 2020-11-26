@@ -1,10 +1,7 @@
 import React from "react";
-import { configure, mount } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { mount } from "enzyme";
 import SideBarCard, { eventTypes } from "./index";
 import Card from "react-bootstrap/Card";
-
-configure({ adapter: new Adapter() });
 
 describe("<SideBardCard />", () => {
   const type = eventTypes.BlueCard;

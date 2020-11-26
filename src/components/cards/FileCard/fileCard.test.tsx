@@ -1,12 +1,10 @@
 import React from "react";
-import { configure, mount } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { mount } from "enzyme";
 import { faFileCode } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Card from "react-bootstrap/Card";
 import FileCard from "./index";
 import Badge from "react-bootstrap/Badge";
-
 
 describe("<FileCard />", () => {
   const title = "Test Title";

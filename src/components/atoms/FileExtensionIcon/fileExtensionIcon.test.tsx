@@ -1,6 +1,5 @@
 import React from "react";
-import { configure, mount } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { mount } from "enzyme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArchive,
@@ -11,8 +10,6 @@ import {
   faFileWord,
 } from "@fortawesome/free-solid-svg-icons";
 import FileExtensionIcon from ".";
-
-configure({ adapter: new Adapter() });
 
 describe("<FileExtensionIcon />", () => {
   it("Check able to recognize file extensions", () => {
@@ -38,7 +35,7 @@ describe("<FileExtensionIcon />", () => {
     const wrapper = mount(<FileExtensionIcon suffixes={[]} />);
     const onClick = jest.fn();
     wrapper.setProps({ onClick: onClick }).update();
-    wrapper.simulate('click');
+    wrapper.simulate("click");
     expect(onClick).toHaveBeenCalled();
   });
 });

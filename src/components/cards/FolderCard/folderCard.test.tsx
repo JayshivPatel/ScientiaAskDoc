@@ -1,11 +1,8 @@
 import React from "react";
-import { configure, mount } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { mount } from "enzyme";
 import { faFileCode } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FolderCard from "./index";
-
-configure({ adapter: new Adapter() });
 
 describe("<FolderCard />", () => {
   const title = "Test Title";

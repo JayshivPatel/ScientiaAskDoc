@@ -1,14 +1,11 @@
 import React from "react";
-import { configure, mount } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { mount } from "enzyme";
 import { Module, ProgressStatus } from "../../../constants/types";
 import ModuleCard from "./index";
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
 import { BrowserRouter as Router } from "react-router-dom";
-
-configure({ adapter: new Adapter() });
 
 describe("<ModuleCard />", () => {
   const module: Module = {

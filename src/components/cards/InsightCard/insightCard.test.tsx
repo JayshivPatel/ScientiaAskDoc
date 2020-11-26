@@ -1,14 +1,11 @@
 import React from "react";
-import { configure, mount } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { mount } from "enzyme";
 import Container from "react-bootstrap/Container";
 import { faFileCode } from "@fortawesome/free-solid-svg-icons";
 import InsightCard from "./index";
 import WriteParagraph from "./paragraph";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-configure({ adapter: new Adapter() });
 
 describe("<InsightCard />", () => {
   const paragraph = WriteParagraph.begin().write("first").bold("second").end();
