@@ -1,9 +1,9 @@
-import React from "react"
-import SideBarTabGroup from "components/groups/SideBarTabGroup"
+import React from "react";
+import SideBarTabGroup from "components/groups/SideBarTabGroup";
 
 export interface LeftBarModuleListProps {
-  setModulesFilter: any
-  modulesFilter: String
+  setModulesFilter: any;
+  modulesFilter: String;
 }
 
 const SideBarFilterGroup: React.FC<LeftBarModuleListProps> = ({
@@ -15,33 +15,33 @@ const SideBarFilterGroup: React.FC<LeftBarModuleListProps> = ({
       title: "All",
       active: modulesFilter === "",
       onClick: () => {
-        setModulesFilter("")
+        setModulesFilter("");
       },
     },
     {
       title: "In Progress",
       active: modulesFilter === "In Progress",
       onClick: () => {
-        setModulesFilter("In Progress")
+        setModulesFilter("In Progress");
       },
     },
     {
       title: "Not Started",
       active: modulesFilter === "Not Started",
       onClick: () => {
-        setModulesFilter("Not Started")
+        setModulesFilter("Not Started");
       },
     },
     {
       title: "Completed",
       active: modulesFilter === "Completed",
       onClick: () => {
-        setModulesFilter("Completed")
+        setModulesFilter("Completed");
       },
     },
-  ]
+  ];
 
-  return <SideBarTabGroup title="Filter" buttons={sortButtons} />
-}
+  return <SideBarTabGroup title="Filter" buttons={sortButtons} />;
+};
 
-export default SideBarFilterGroup
+export default SideBarFilterGroup;
