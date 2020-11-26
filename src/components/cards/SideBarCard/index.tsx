@@ -1,15 +1,15 @@
-import React from "react"
-import Card from "react-bootstrap/Card"
-import styles from "./style.module.scss"
-import classNames from "classnames"
+import React from "react";
+import Card from "react-bootstrap/Card";
+import styles from "./style.module.scss";
+import classNames from "classnames";
 
 export interface SideBarCardProps {
-  type: eventTypes
-  title?: string
-  subtitle?: string
-  content?: string
-  id?: number
-  onClick?: (event: React.MouseEvent) => void
+  type: eventTypes;
+  title?: string;
+  subtitle?: string;
+  content?: string;
+  id?: number;
+  onClick?: (event: React.MouseEvent) => void;
 }
 
 export enum eventTypes {
@@ -36,31 +36,32 @@ const SideBarCard: React.FC<SideBarCardProps> = ({
         subtitle === undefined || content === undefined
           ? styles.sideBarEmptyCard
           : ""
-      )}>
+      )}
+    >
       <Card.Body>
         {title && <Card.Title>{title}</Card.Title>}
         {subtitle && <Card.Subtitle>{subtitle}</Card.Subtitle>}
         {content && <Card.Text>{content}</Card.Text>}
       </Card.Body>
     </Card>
-  )
-}
+  );
+};
 
 function getStyle(type: eventTypes): String {
   switch (type) {
     case eventTypes.BlueCard:
-      return styles.sideBarBlueCard
+      return styles.sideBarBlueCard;
     case eventTypes.RedCard:
-      return styles.sideBarRedCard
+      return styles.sideBarRedCard;
     case eventTypes.GreenCard:
-      return styles.sideBarGreenCard
+      return styles.sideBarGreenCard;
     case eventTypes.IndigoCard:
-      return styles.sideBarIndigoCard
+      return styles.sideBarIndigoCard;
     case eventTypes.CyanCard:
-      return styles.sideBarCyanCard
+      return styles.sideBarCyanCard;
     default:
-      return styles.sideBarBlueCard
+      return styles.sideBarBlueCard;
   }
 }
 
-export default SideBarCard
+export default SideBarCard;
