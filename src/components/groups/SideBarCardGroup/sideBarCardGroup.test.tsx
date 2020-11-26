@@ -17,7 +17,7 @@ describe("<SideBarCardGroup />", () => {
     <SideBarCardGroup events={events} title={title} onCardClick={onCardClick} />
   );
   it("Check events", () => {
-    expect(wrapper.find(SideBarCard).children().length).toBe(2);
+    expect(wrapper.find(SideBarCard).length).toBe(2);
   });
   it("Check title", () => {
     expect(wrapper.find(".sideBarCardGroupHeading").text()).toBe(title);
