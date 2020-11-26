@@ -17,8 +17,11 @@ import authenticationService from "utils/auth"
 import GroupMemberCard from "../../cards/GroupMemberCard";
 import LoadingScreen from "../../suspense/LoadingScreen";
 
-
 const flushPromises = () => new Promise(setImmediate)
+
+beforeEach(() => {
+  mockAPI.clearTestCache()
+})
 
 describe("SubmissionSectionSync", () => {
   it("Able to render the submission section", () => {
@@ -154,36 +157,36 @@ describe("SubmissionSectionGeneral", () => {
     done()
   })
 
-  // it("can render section for group coursework submission", async done => {
-  //   const component = <SubmissionSection
-  //     event={eventGroup}
-  //     activeDay={new Date()}
-  //     courseCode={courseCode}
-  //     exerciseNumber={exerciseNumber}
-  //   />
+  it("can render section for group coursework submission", async done => {
+    const component = <SubmissionSection
+      event={eventGroup}
+      activeDay={new Date()}
+      courseCode={courseCode}
+      exerciseNumber={exerciseNumber}
+    />
 
-  //   mockAPI.onNextCallTo(
-  //     api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, username),
-  //   ).withMethod(methods.GET).willReturn(fileRequirements, 200)
+    mockAPI.onNextCallTo(
+      api.CATE_FILE_UPLOAD(courseCode, exerciseNumber, username),
+    ).withMethod(methods.GET).willReturn(fileRequirements, 200)
 
-  //   mockAPI.onNextCallTo(
-  //     api.CATE_DECLARATION(courseCode, exerciseNumber, username)
-  //   ).withMethod(methods.GET).willReturn(declaration, 200)
+    mockAPI.onNextCallTo(
+      api.CATE_DECLARATION(courseCode, exerciseNumber, username)
+    ).withMethod(methods.GET).willReturn(declaration, 200)
 
-  //   mockAPI.onNextCallTo(
-  //     api.CATE_GROUP_SINGLE_MEMBER(courseCode, exerciseNumber, username)
-  //   ).withMethod(methods.GET).willReturn(groupData, 200)
+    mockAPI.onNextCallTo(
+      api.CATE_GROUP_SINGLE_MEMBER(courseCode, exerciseNumber, username)
+    ).withMethod(methods.GET).willReturn(groupData, 200)
 
-  //   mockAPI.onNextCallTo(
-  //     api.CATE_AVAILABLE_STUDENTS_FOR_EXERCISE(courseCode, exerciseNumber)
-  //   ).withMethod(methods.GET).willReturn(availableMembers, 200)
+    mockAPI.onNextCallTo(
+      api.CATE_AVAILABLE_STUDENTS_FOR_EXERCISE(courseCode, exerciseNumber)
+    ).withMethod(methods.GET).willReturn(availableMembers, 200)
 
-  //   const wrapper = mount(component)
-  //   await flushPromises()
-  //   wrapper.update()
-  //   expect(wrapper.find(UploadResourceItemRow)).toHaveLength(2)
-  //   expect(wrapper.find(GroupMemberCard)).toHaveLength(1)
-  //   done()
-  // })
+    const wrapper = mount(component)
+    await flushPromises()
+    wrapper.update()
+    expect(wrapper.find(UploadResourceItemRow)).toHaveLength(2)
+    expect(wrapper.find(GroupMemberCard)).toHaveLength(1)
+    done()
+  })
 
 })

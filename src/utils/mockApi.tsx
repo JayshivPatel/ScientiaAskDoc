@@ -38,7 +38,7 @@ const mockAPI = {
       }
       return Promise.reject(response.statusCode)
     }
-    throw new Error("Not set mock response")
+    return Promise.reject(404)
   },
 
   /**

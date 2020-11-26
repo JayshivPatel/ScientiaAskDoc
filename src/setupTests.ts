@@ -6,6 +6,8 @@ import "@testing-library/jest-dom/extend-expect"
 import { configure } from "enzyme";
 import Adapter from 'enzyme-adapter-react-16';
 import 'mock-local-storage'
+import * as utils from 'utils/api'
+import mockAPI from 'utils/mockApi'
 
 configure({ adapter: new Adapter() });
 
@@ -34,4 +36,11 @@ const mockConsoleMethod = (realConsoleMethod: (string: string, ...data: any[]) =
  */
 console.warn = jest.fn(mockConsoleMethod(console.warn))
 console.error = jest.fn(mockConsoleMethod(console.error))
+
+/**
+ * Mock api/utils/request api
+ */
+jest.spyOn(utils, 'request');
+const mockRequest = utils.request as jest.Mock
+mockRequest.mockImplementation(mockAPI.request)
 
