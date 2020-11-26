@@ -9,23 +9,16 @@ import {
   TimelineEvent
 } from "../../../constants/types";
 import moment from "moment";
-import Adapter from 'enzyme-adapter-react-16'
-import {configure, mount} from "enzyme";
+import {mount} from "enzyme";
 import UploadResourceItemRow from "../../rows/UploadResourceItemRow";
 import mockAPI from "../../../utils/mockApi";
 import {api, methods} from "../../../constants/routes";
 import authenticationService from "utils/auth"
 import GroupMemberCard from "../../cards/GroupMemberCard";
 import LoadingScreen from "../../suspense/LoadingScreen";
-import { setIgnoreActWarning } from "utils/testutils";
 
-configure({adapter: new Adapter()})
 
 const flushPromises = () => new Promise(setImmediate)
-
-beforeEach(() => {
-  setIgnoreActWarning()
-})
 
 describe("SubmissionSectionSync", () => {
   it("Able to render the submission section", () => {

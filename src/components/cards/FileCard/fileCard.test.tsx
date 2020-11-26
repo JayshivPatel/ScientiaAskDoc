@@ -7,7 +7,6 @@ import Card from "react-bootstrap/Card";
 import FileCard from "./index";
 import Badge from "react-bootstrap/Badge";
 
-configure({ adapter: new Adapter() });
 
 describe("<FileCard />", () => {
   const title = "Test Title";
