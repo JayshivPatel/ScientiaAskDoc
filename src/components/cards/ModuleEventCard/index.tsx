@@ -7,7 +7,7 @@ import {
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons"
 import { TimelineEvent } from "constants/types"
-import Card from "react-bootstrap/esm/Card"
+import Card from "react-bootstrap/Card"
 import { toDayCount } from "utils/functions"
 interface Props {
   event?: TimelineEvent
