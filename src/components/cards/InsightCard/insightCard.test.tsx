@@ -43,6 +43,7 @@ describe("<InsightCard />", () => {
     expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(faFileCode);
   });
   it("Check card onClick", () => {
+    onClick.mockClear();
     wrapper.find(Container).simulate("click");
     expect(onClick).toHaveBeenCalled();
   });
