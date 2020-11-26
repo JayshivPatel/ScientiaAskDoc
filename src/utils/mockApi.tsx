@@ -12,7 +12,12 @@ interface MockResponse {
   body?: any
 }
 
-const mockReturnDict: [MockRequest, MockResponse][] = []
+const mockReturnDict: Map<string, MockResponse> = new Map()
+
+const registerMockRequest = (request: MockRequest, response: MockResponse) => {
+  const stringifiedRequest = request.toString()
+  mockReturnDict.set(stringifiedRequest, response)
+}
 
 /**
  * mock API interface, for hijacking and testing api calls in each component.
@@ -26,13 +31,7 @@ const mockAPI = {
    * @param input request data for the mock api call.
    */
   request<Response>(input: RequestData): Promise<Response> {
-    let response = undefined
-    for (const [{ api, method }, res] of mockReturnDict) {
-      if (input.api.url === api.url && input.api.auth === api.auth && input.method === method) {
-        response = res
-        break
-      }
-    }
+    let response = mockReturnDict.get(input.toString())
 
     if (response) {
       if (response.statusCode >= 200 && response.statusCode < 300) {
@@ -63,7 +62,7 @@ const mockAPI = {
            * @param statusCode The status code (default = 200). This should be a successful status code (2xx)
            */
           willReturn(response: any = undefined, statusCode: number = 200) {
-            mockReturnDict.push([{ api, method }, { statusCode: statusCode, body: response }])
+            registerMockRequest({ api, method }, { statusCode: statusCode, body: response })
           },
         
           /**
@@ -71,7 +70,7 @@ const mockAPI = {
            * @param statusCode The erroneous status code (default = 404). This should be a failed status code.
            */
           willFail(statusCode: number = 404) {
-            mockReturnDict.push([{ api, method }, { statusCode: statusCode }])
+            registerMockRequest({ api, method }, { statusCode: statusCode })
           }
         }
       },
@@ -94,7 +93,7 @@ const mockAPI = {
    * Clear the test cache. Recommended to call this function after each test to gain better performance.
    */
   clearTestCache() {
-    mockReturnDict.splice(0, mockReturnDict.length)
+    mockReturnDict.clear()
   }
 }
 

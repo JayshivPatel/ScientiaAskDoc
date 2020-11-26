@@ -80,7 +80,8 @@
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
       "!src/serviceWorker.ts",
-      "!src/constants/*"
+      "!src/constants/*",
+      "!src/utils/mockApi.tsx"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!ui-core)/"
