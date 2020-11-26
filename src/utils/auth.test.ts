@@ -26,7 +26,7 @@ const loginService = AuthService.EMARKING
 const loginURL = 'www.foo.bar.com/some/auth/url'
 
 describe("Test function 'login'", () => {
-  fit('should store correct value into sessionStorage', async () => {
+  it('should store correct value into sessionStorage', async () => {
     const accessToken = 'accessToken123'
     const mockOtherData = "Susan Jackson"
     const returnData = { access_token: accessToken, other_data: mockOtherData }
@@ -43,7 +43,7 @@ describe("Test function 'login'", () => {
       .toBe(JSON.stringify({ username: username }))
   })
 
-  fit('should return false and leave sessionStorage untouched when login error', async () => {
+  it('should return false and leave sessionStorage untouched when login error', async () => {
     global.fetch = jest.fn(async (): Promise<Response> => {
       return {
         ok: false,
