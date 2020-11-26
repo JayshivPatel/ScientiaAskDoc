@@ -1,10 +1,7 @@
 import React from "react";
-import { configure, mount } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { mount } from "enzyme";
 import { PersonInfo } from "../../../constants/types";
 import PersonCard from "./index";
-
-configure({ adapter: new Adapter() });
 
 describe("<PersonCard />", () => {
   const info: PersonInfo = {

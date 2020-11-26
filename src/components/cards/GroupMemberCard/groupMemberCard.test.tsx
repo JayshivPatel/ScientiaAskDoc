@@ -1,13 +1,10 @@
 import React from "react";
-import { configure, mount } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { mount } from "enzyme";
 import GroupMemberCard from "./index";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Badge from "react-bootstrap/Badge";
 import { Role } from "../../sections/SubmissionGroupFormation";
-
-configure({ adapter: new Adapter() });
 
 describe("<GroupMemberCard />", () => {
   const currentUser = "Test Current User";
