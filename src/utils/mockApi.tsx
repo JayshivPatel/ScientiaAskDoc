@@ -15,7 +15,7 @@ interface MockResponse {
 const mockReturnDict: Map<string, MockResponse> = new Map()
 
 const registerMockRequest = (request: MockRequest, response: MockResponse) => {
-  const stringifiedRequest = request.toString()
+  const stringifiedRequest = JSON.stringify(request)
   mockReturnDict.set(stringifiedRequest, response)
 }
 
@@ -31,8 +31,7 @@ const mockAPI = {
    * @param input request data for the mock api call.
    */
   request<Response>(input: RequestData): Promise<Response> {
-    let response = mockReturnDict.get(input.toString())
-
+    let response = mockReturnDict.get(JSON.stringify(input))
     if (response) {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return Promise.resolve(response.body)

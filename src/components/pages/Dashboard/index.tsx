@@ -18,7 +18,6 @@ import { Insight, PersonInfo, TimelineEvent } from "constants/types"
 import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 import LoadingScreen from "components/suspense/LoadingScreen"
-import moment from "moment"
 import styles from "./style.module.scss"
 import { dateNeutralized } from "utils/functions"
 

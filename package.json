@@ -81,7 +81,8 @@
       "src/**/*.{ts,tsx}",
       "!src/serviceWorker.ts",
       "!src/constants/*",
-      "!src/utils/mockApi.tsx"
+      "!src/utils/mockApi.tsx",
+      "!src/utils/testutils.ts"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!ui-core)/"
