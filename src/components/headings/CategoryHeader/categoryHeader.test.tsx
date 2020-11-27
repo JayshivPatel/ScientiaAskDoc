@@ -14,4 +14,6 @@ describe("<Category Header", () => {
       selectAllIcon={selectAllIcon}
     />
   );
+  it('pass', () => {})
+
 });
