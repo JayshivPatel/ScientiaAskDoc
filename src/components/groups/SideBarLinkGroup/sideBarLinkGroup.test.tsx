@@ -4,8 +4,6 @@ import SideBarTabGroup from "../SideBarTabGroup";
 import SideBarLinkGroup from "./index";
 
 describe("<SideBarLinkGroup />", () => {
-  const setModulesFilter = jest.fn();
-  const modulesFilter = "";
   const wrapper = mount(<SideBarLinkGroup />);
   it("Check all", () => {
     expect(wrapper.find(SideBarTabGroup)).toHaveLength(1);
