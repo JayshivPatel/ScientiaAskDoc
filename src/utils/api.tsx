@@ -1,6 +1,6 @@
 import authConstants, { AuthService } from "constants/auth"
 import { Api, methods } from "constants/routes"
-import mockAPI from "./mockApi"
+import { JSDOM } from 'jsdom'
 
 interface RequestOptions {
   [key: string]: any
@@ -133,7 +133,7 @@ export async function download(api: Api, filename?: string, body?: any) {
     console.log(message)
   }
 
-  requestBlob({
+  return requestBlob({
     api: api,
     method: methods.GET,
     body,

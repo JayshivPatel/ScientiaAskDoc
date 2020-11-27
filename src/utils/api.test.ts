@@ -128,17 +128,38 @@ describe('Test download api', () => {
 
 
   it('should download and display the correct blob object', async () => {
-    // const fetchCallback: jest.Mock
-    //   = jest.fn(async (a, b) => ({ ok: true, blob: () => blob }))
-    // global.fetch = fetchCallback
-
-    // const urlMock = jest.fn(blob => url)
-    // global.URL.createObjectURL = urlMock
+    const fetchCallback: jest.Mock
+      = jest.fn(async (a, b) => ({ ok: true, blob: () => blob }))
+    global.fetch = fetchCallback
+    global.URL.createObjectURL = jest.fn().mockReturnValueOnce(url)
+    const mLink = { setAttribute: jest.fn(), innerHTML: '', click: jest.fn(), remove: jest.fn() }
+    document.createElement = jest.fn().mockReturnValueOnce(mLink)
     
-    // await download(mockApiRoute, filename)
-    // expect(urlMock).toHaveBeenCalledTimes(1)
-    // expect(urlMock.mock.results[0].value).toBe(url)
+    await download(mockApiRoute, filename)
+    expect(URL.createObjectURL).toBeCalledWith(blob)
+    expect(URL.createObjectURL).toReturnWith(url)
+    expect(document.createElement).toBeCalledWith('a')
+    expect(document.createElement).toReturnWith(mLink)
+    expect(mLink.click).toBeCalled()
+    expect(mLink.remove).toBeCalled()
 
   })
+
+  it('should not render object on a failed fetch', async () => {
+    const fetchCallback: jest.Mock
+      = jest.fn(async (a, b) => {
+        throw 'error'
+      })
+    global.fetch = fetchCallback
+    global.URL.createObjectURL = jest.fn().mockReturnValueOnce(url)
+    const mLink = { setAttribute: jest.fn(), innerHTML: '' }
+    document.createElement = jest.fn().mockReturnValueOnce(mLink)
+    
+    await download(mockApiRoute, filename)
+    expect(URL.createObjectURL).toBeCalledTimes(0)
+    expect(document.createElement).toBeCalledTimes(0)
+
+  })
+
 
 })
