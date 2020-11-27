@@ -8,6 +8,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import 'mock-local-storage'
 import * as utils from 'utils/api'
 import mockAPI from 'utils/mockApi'
+import { JSDOM } from "jsdom"
 
 configure({ adapter: new Adapter() });
 
@@ -44,3 +45,9 @@ jest.spyOn(utils, 'request');
 const mockRequest = utils.request as jest.Mock
 mockRequest.mockImplementation(mockAPI.request)
 
+
+/**
+ * Mock global window
+ */
+const dom = new JSDOM()
+global.document = dom.window.document
