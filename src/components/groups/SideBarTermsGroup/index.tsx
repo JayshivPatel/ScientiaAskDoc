@@ -1,12 +1,18 @@
-import React from "react"
-import SideBarTabGroup from "components/groups/SideBarTabGroup"
-import { Term } from "constants/types"
-import { faSeedling, faSun, faCandyCane, faEgg, faUmbrellaBeach } from "@fortawesome/free-solid-svg-icons"
-import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons"
+import React from "react";
+import SideBarTabGroup from "components/groups/SideBarTabGroup";
+import { Term } from "constants/types";
+import {
+  faCandyCane,
+  faEgg,
+  faSeedling,
+  faSun,
+  faUmbrellaBeach,
+} from "@fortawesome/free-solid-svg-icons";
+import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
 
 interface Props {
-  term: Term
-  setTerm: React.Dispatch<React.SetStateAction<Term>>
+  term: Term;
+  setTerm: React.Dispatch<React.SetStateAction<Term>>;
 }
 const SideBarTermsGroup: React.FC<Props> = ({ term, setTerm }) => {
   let termButtons = [
@@ -46,9 +52,9 @@ const SideBarTermsGroup: React.FC<Props> = ({ term, setTerm }) => {
       onClick: () => setTerm("Jun-Sept"),
       icon: faUmbrellaBeach,
     },
-  ]
+  ];
 
-  return <SideBarTabGroup title="Terms" buttons={termButtons} />
-}
+  return <SideBarTabGroup title="Terms" buttons={termButtons} />;
+};
 
-export default SideBarTermsGroup
+export default SideBarTermsGroup;
