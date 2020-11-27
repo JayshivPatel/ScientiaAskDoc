@@ -1,16 +1,16 @@
-import React from "react"
-import SideBarTabGroup from "components/groups/SideBarTabGroup"
+import React from "react";
+import SideBarTabGroup from "components/groups/SideBarTabGroup";
 import {
-  faList,
   faArchive,
   faHighlighter,
   faHome,
+  faList,
   faUpload,
-} from "@fortawesome/free-solid-svg-icons"
-import { useParams } from "react-router-dom"
+} from "@fortawesome/free-solid-svg-icons";
+import { useParams } from "react-router-dom";
 
 const SideBarOutlineGroup: React.FC = () => {
-  let { id } = useParams<{ id: string }>()
+  let { id } = useParams<{ id: string }>();
 
   let outlineButtons = [
     {
@@ -19,9 +19,9 @@ const SideBarOutlineGroup: React.FC = () => {
       icon: faHome,
     },
     {
-    	title: "Overview",
-    	activeURL: `/modules/${id}/overview`,
-    	icon: faList,
+      title: "Overview",
+      activeURL: `/modules/${id}/overview`,
+      icon: faList,
     },
     {
       title: "Course Materials",
@@ -38,9 +38,9 @@ const SideBarOutlineGroup: React.FC = () => {
       activeURL: `/modules/${id}/feedback`,
       icon: faHighlighter,
     },
-  ]
+  ];
 
-  return <SideBarTabGroup title="Outline" buttons={outlineButtons} />
-}
+  return <SideBarTabGroup title="Outline" buttons={outlineButtons} />;
+};
 
-export default SideBarOutlineGroup
+export default SideBarOutlineGroup;
