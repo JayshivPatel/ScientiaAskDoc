@@ -1,15 +1,15 @@
-import React from "react"
-import styles from "./style.module.scss"
+import React from "react";
+import styles from "./style.module.scss";
 
-import Button from "react-bootstrap/Button"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { IconDefinition } from "@fortawesome/free-solid-svg-icons"
+import Button from "react-bootstrap/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 export interface CategoryHeaderProps {
-  heading: string
-  onSelectAllClick?: (event: React.MouseEvent) => void
-  selectAllIcon?: IconDefinition
-  checkBoxColor?: string
+  heading: string;
+  onSelectAllClick?: (event: React.MouseEvent) => void;
+  selectAllIcon?: IconDefinition;
+  checkBoxColor?: string;
 }
 
 const CategoryHeader: React.FC<CategoryHeaderProps> = ({
@@ -27,7 +27,8 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
             <Button
               className={styles.sectionHeaderButton}
               onClick={onSelectAllClick}
-              variant="secondary">
+              variant="secondary"
+            >
               <FontAwesomeIcon
                 icon={selectAllIcon}
                 style={{ color: checkBoxColor }}
@@ -37,7 +38,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
         )}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default CategoryHeader
+export default CategoryHeader;
