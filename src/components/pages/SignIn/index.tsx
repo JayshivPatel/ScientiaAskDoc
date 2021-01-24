@@ -40,7 +40,6 @@ const SignIn: React.FC<Props> = ({ location }) => {
         api: api.EMARKING_ME_INFO(),
         method: methods.GET
       })
-      console.log(response)
       onChangeCurrentUserInfo(response)
       setRedirect(true)
 

@@ -184,8 +184,8 @@ const StaffView: React.FC<StaffViewProps> = ({
         }}
         year={year}
         course={course}
-        start_date={moment.now()}
-        due_date={moment.now()}/>
+        startDate={moment.now()}
+        dueDate={moment.now()}/>
 
       <AlertModal
         show={modal === "alert"}

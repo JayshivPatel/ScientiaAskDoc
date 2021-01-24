@@ -48,7 +48,6 @@ const Dashboard: React.FC = () => {
       return insight
     }))
     .then(insights => {
-      console.log(insights)
       setInsightsSorted(insights)
     })
     .finally(() => {

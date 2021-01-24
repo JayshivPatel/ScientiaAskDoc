@@ -112,7 +112,6 @@ const DistributionSection: React.FC<Props> = ({
     }).then(distributions => {
       const distribution = distributions[0]
       distribution && setDistribution(distribution)
-      console.log(distributions)
       setLoading(distribution ? Stage.OK : Stage.NO_DISTRIBUTION)
     })
     .catch(error => setLoading(Stage.ERROR))

@@ -58,7 +58,6 @@ const ModuleFeedback: React.FC<Props> = ({ courseCode }) => {
       }
     })
     .then(feedbacks => {
-      console.log(feedbacks)
       setFeedbacks(feedbacks.filter(x => x.course === courseCode).sort((a, b) => a.id - b.id))
       setLoading(Stage.OK)
     })

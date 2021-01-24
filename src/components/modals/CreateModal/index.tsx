@@ -37,9 +37,9 @@ interface CreateModalProps {
   course: string
   title?: string
   exerciseType?: string
-  start_date: number
-  due_date: number
-  is_individual?: boolean
+  startDate: number
+  dueDate: number
+  isIndividual?: boolean
   suppressErrorMsg?: boolean
   setSuppressErrorMsg?: (b: boolean) => void
 }
@@ -53,9 +53,9 @@ const CreateModal: React.FC<CreateModalProps> = ({
                                                    title,
                                                    course,
                                                    exerciseType,
-                                                   start_date,
-                                                   due_date,
-                                                   is_individual,
+                                                   startDate,
+                                                   dueDate,
+                                                   isIndividual,
                                                    suppressErrorMsg,
                                                    setSuppressErrorMsg,
                                                  }) => {
@@ -124,8 +124,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
         course: course,
         exerciseType: exerciseType,
         title: title,
-        start_date: start_date,
-        due_date: due_date,
+        start_date: startDate,
+        due_date: dueDate,
       };
       return payload
     }
@@ -183,26 +183,22 @@ const CreateModal: React.FC<CreateModalProps> = ({
   for (let i = 1; i <= 14; i++) {
     dates.push({label: new Date(date.setDate(date.getDate() + 1)).toDateString(), value: i})
   }
-  const [date_options] = React.useState(dates);
+  const [dateOptions] = React.useState(dates);
 
   // time options:
-  const time_wholeday = []
+  const timeWholeDay = []
   for (let i = 0; i < 24; i++) {
-    time_wholeday.push({label: new Date(date.setHours(i, 0, 0, 0)).toTimeString(), value: i})
+    timeWholeDay.push({label: new Date(date.setHours(i, 0, 0, 0)).toTimeString(), value: i})
   }
-  const [time_options] = React.useState(time_wholeday)
+  const [timeOptions] = React.useState(timeWholeDay)
 
   const handleChange = (newValue: any, actionMeta: any) => {
     console.group('Value Changed');
-    console.log(newValue);
-    console.log(`action: ${actionMeta.action}`);
     console.groupEnd();
   };
 
   const handleInputChange = (inputValue: any, actionMeta: any) => {
     console.group('Input Changed');
-    console.log(inputValue);
-    console.log(`action: ${actionMeta.action}`);
     console.groupEnd();
   };
 
@@ -214,17 +210,17 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
 
   const [dateStart, setDateStart] = useState<Date>(new Date());
-  const Day_unit_time = 1000 * 60 * 60 * 24;
-  const [dateDue, setDateDue] = useState<Date>(new Date(dateStart.getTime() + Day_unit_time));
+  const dayUnitTime = 1000 * 60 * 60 * 24;
+  const [dateDue, setDateDue] = useState<Date>(new Date(dateStart.getTime() + dayUnitTime));
 
 
-  const datePicker_start = (
+  const datePickerStart = (
     <DatePicker
       className={styles.datePicker}
       selected={dateStart}
       onChange={(date: Date) => {
         setDateStart(date);
-        let nextDate = new Date(date.getTime() + Day_unit_time);
+        let nextDate = new Date(date.getTime() + dayUnitTime);
         setDateDue(nextDate);
       }}
       showTimeInput
@@ -233,14 +229,14 @@ const CreateModal: React.FC<CreateModalProps> = ({
     />
   );
 
-  const datePicker_due = (
+  const datePickerDue = (
     <DatePicker
       className={styles.datePicker}
       selected={dateDue}
       onChange={(date: Date) => {
         setDateDue(date);
         if (date.getUTCDate() < dateStart.getUTCDate()) {
-          let nextDate = new Date(dateStart.getTime() + Day_unit_time);
+          let nextDate = new Date(dateStart.getTime() + dayUnitTime);
           setDateDue(nextDate);
           console.warn("Cannot set due date before start date!");
           window.alert("Cannot set due date before start date!")
@@ -335,8 +331,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 </Form.Group>
               </Col>
             </Row>
-            {createDateInfoRow("Start Date", datePicker_start)}
-            {createDateInfoRow("Due Date", datePicker_due)}
+            {createDateInfoRow("Start Date", datePickerStart)}
+            {createDateInfoRow("Due Date", datePickerDue)}
           </Container>
           <hr/>
           <Row

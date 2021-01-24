@@ -79,7 +79,6 @@ async function login(username: string, password: string, loginURL: string, login
   })
   if (response.ok) {
     const data = await response.json()
-    console.log(loginService, data)
     storeDataInStorage(loginService, {
       ...data,
       user_info: {

@@ -141,7 +141,7 @@ class App extends React.Component<{}, AppState> {
       { name: "Dashboard", path: "/dashboard", icon: faHome },
       { name: "Modules", path: "/modules", icon: faChalkboardTeacher },
       { name: "Timeline", path: "/timeline", icon: faCalendarWeek },
-      { name: "Exams", path: "/exams", icon: faBookOpen },
+      // { name: "Exams", path: "/exams", icon: faBookOpen },
     ]
 
     return (

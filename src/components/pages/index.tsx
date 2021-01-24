@@ -153,10 +153,6 @@ const StandardView: React.FC<StandardViewProps> = ({
     setModulesTracks(modulesTracks)
   }, [timelineEvents])
 
-  useEffect(() => {
-    console.log(modulesList.length)
-  }, [modulesList])
-
   return (
     <div
       id="wrapper"
