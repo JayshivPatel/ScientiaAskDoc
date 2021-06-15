@@ -52,10 +52,10 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       modulesTracks[code] = [[], []]
     })
 
-    let timelineEvents = eventsData
+    const timelineEvents = eventsData // for future api calls
     for (let i = 0; i < timelineEvents.length; i++) {
       const event = timelineEvents[i]
-      let tracks: TimelineEvent[][] = modulesTracks[event.moduleCode]
+      const tracks: TimelineEvent[][] = modulesTracks[event.moduleCode] ?? []
       let isPlaced = false
       for (const track of tracks) {
         if (track.every((te) => !eventsOverlaps(te, event))) {
@@ -111,6 +111,16 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     let currModules = this.props.modules.filter(({ terms }) =>
       terms.includes(this.props.term)
     )
+
+    /* sort current modules by:
+     *   1. comparing subscription level in inverse order (level 3 at the top)
+     *   2. When (1) are the same, comparing module code
+     */
+    currModules.sort((a, b) => {
+      const makeNumber = (code: string): number => Number(code.replace( /^\D+/g, ''))
+      return b.subscriptionLevel - a.subscriptionLevel 
+        || (makeNumber(a.code) - makeNumber(b.code))
+    })
 
     if (
       window.innerWidth <= 550 &&
@@ -190,10 +200,8 @@ function getTermDates(term: Term): [Date, number] {
       return [new Date("2021-12-21"), 3]
     case "Easter":
       return [new Date("2021-03-29"), 5]
-    case "Jun-Jul":
-      return [new Date("2021-06-28"), 5]
-    case "Aug-Sept":
-      return [new Date("2021-08-02"), 9]
+    case "Jun-Sept":
+      return [new Date("2021-06-28"), 14]
   }
 }
 

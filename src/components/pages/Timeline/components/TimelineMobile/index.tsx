@@ -29,9 +29,10 @@ const TimelineMobile: React.FC<Props> = ({
         setTerm={setTerm}
         style={{ paddingLeft: "0rem", paddingRight: "0rem" }}
       />
-      {modulesList.map(({ code, title }) => (
+      {modulesList.map(({ code, title, subscriptionLevel }) => (
         <ModuleHeading
           moduleCode={code}
+          subscriptionLevel={subscriptionLevel}
           key={code}
           style={{ marginTop: "1.25rem" }}
           title={title}

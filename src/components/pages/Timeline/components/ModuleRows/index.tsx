@@ -27,8 +27,9 @@ const ModuleRows: React.FC<ModuleRowsProps> = ({
     moduleHeadings.push(
       <ModuleHeading
         key={code}
-        style={{ height: `${tracks.length * trackHeight}rem` }}
+        style={{ height: `${tracks?.length * trackHeight}rem` }}
         moduleCode={code}
+        subscriptionLevel={modulesList[i].subscriptionLevel}
         title={modulesList[i].title}
       />
     )
@@ -44,7 +45,7 @@ const ModuleRows: React.FC<ModuleRowsProps> = ({
       timelineBackgrounds.push(
         <div
           key={code + j}
-          style={{ height: `${tracks.length * trackHeight + offset}rem` }}
+          style={{ height: `${tracks?.length * trackHeight + offset}rem` }}
           className={timelineBackgroundsClass}></div>
       )
     }

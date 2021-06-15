@@ -12,6 +12,7 @@ export const modulesList: Module[] = [
     progressStatus: ProgressStatus.IN_PROGRESS,
     progressPercent: 0,
     content: "",
+    subscriptionLevel: 3,
   },
   {
     title: "Software Engineering Group Projects",
@@ -20,5 +21,6 @@ export const modulesList: Module[] = [
     progressStatus: ProgressStatus.IN_PROGRESS,
     progressPercent: 0,
     content: "",
+    subscriptionLevel: 3,
   },
 ]

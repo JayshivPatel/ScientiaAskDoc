@@ -10,6 +10,7 @@ import DatePicker from "react-datepicker"
 
 import { titleCase } from "utils/functions"
 import { DEFAULT_CATEGORY } from "../../../constants/global"
+import { URLError, LinkTitleError } from "constants/types"
 
 interface ResourceDetailFormProps {
   id: number
@@ -21,6 +22,9 @@ interface ResourceDetailFormProps {
   defaultCategory?: string
   defaultTags?: string[]
   defaultVisibleAfter?: Date
+  suppressErrorMsg?: boolean
+  setSuppressErrorMsg?: (suppressErrorMessage: boolean) => void
+  handleInvalidDetails?: (areDetailsValid: boolean) => void
   titleDuplicated: (category: string, title: string) => boolean
   setResourceDetails: (details: ResourceDetails) => void
 }
@@ -52,7 +56,10 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   defaultURL,
   defaultCategory,
   defaultTags,
-  defaultVisibleAfter,
+  defaultVisibleAfter, 
+  suppressErrorMsg, 
+  setSuppressErrorMsg,
+  handleInvalidDetails,
   titleDuplicated,
   setResourceDetails,
 }) => {
@@ -62,31 +69,79 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   const [tagOptions, setTagOptions] = useState<Option[]>(
     tagList.map(createOption)
   )
-  const [showPicker, setShowPicker] = useState(false)
-  const [startDate, setStartDate] = useState(defaultVisibleAfter || new Date())
+  const [showPicker, setShowPicker] = useState(defaultVisibleAfter !== undefined)
+  const [visibleAfter, setVisibleAfter] = useState<Date>(defaultVisibleAfter || new Date())
 
   const [title, setTitle] = useState<string>(defaultTitle || "")
   const [category, setCategory] = useState(defaultCategory || DEFAULT_CATEGORY)
   const [tags, setTags] = useState<string[]>(defaultTags || [])
-  const [visibleAfter, setVisibleAfter] = useState<Date>()
   const [url, setURL] = useState(defaultURL || "")
+  const [urlError, setURLError] = useState<URLError | undefined>(undefined)
+  const [linkTitleError, setLinkTitleError] = useState<LinkTitleError | undefined>(undefined)
+
+  const validateURL = (url: string) => {
+    if (url.trim() === "") {
+      setURLError(URLError.EmptyURL)
+    }
+  }
+
+  const validateLinkTitle = (title: string) => {
+    if (title.trim() === "") {
+      setLinkTitleError(LinkTitleError.EmptyTitle)
+    } else if (titleDuplicated(category, title) && !(defaultCategory && title === defaultTitle)) {
+      setLinkTitleError(LinkTitleError.DuplicateTitle)
+    }
+  }
+
+  const urlErrorMessage = (error: URLError | undefined) => {
+    switch (error) {
+      case URLError.EmptyURL:
+        return "URL cannot be empty!"
+      case URLError.InvalidURL:
+        return "Invalid URL format!"
+      default:
+        return ""
+    }
+  }
+  const linkTitleErrorMessage = (error: LinkTitleError | undefined) => {
+    switch (error) {
+      case LinkTitleError.EmptyTitle:
+        return "Link title cannot be empty!"
+      case LinkTitleError.DuplicateTitle:
+        return "A resource with this title already exists under this category. Please choose a different title."
+      default:
+        return ""
+    }
+  }
 
   useEffect(() => {
-    setResourceDetails({
-      title,
-      category,
-      tags,
-      visibleAfter,
-      url,
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, category, tags, visibleAfter, url])
+    handleInvalidDetails && handleInvalidDetails(
+        (isLink && linkTitleError === undefined && urlError === undefined) ||
+        (!isLink && linkTitleError === undefined)
+    )
+  }, [linkTitleError, urlError])
+
+
+  useEffect(() => {
+    validateURL(defaultURL || "")
+    validateLinkTitle(defaultTitle || "")
+  }, [])
+
+  const updateResourceDetails = () => setResourceDetails({
+    title,
+    category,
+    tags,
+    visibleAfter,
+    url,
+  })
+
+  useEffect(updateResourceDetails, [title, category, tags, visibleAfter, url])
+  useEffect(updateResourceDetails, [])
 
   const datepicker = (
     <DatePicker
-      selected={startDate}
+      selected={visibleAfter}
       onChange={(date: Date) => {
-        setStartDate(date)
         setVisibleAfter(date)
       }}
       showTimeInput
@@ -94,7 +149,6 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
       dateFormat="MMMM d, yyyy HH:mm 'UTC'"
     />
   )
-
   return (
     <>
       {isLink && (
@@ -105,8 +159,16 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
             type="text"
             placeholder="Enter the URL"
             defaultValue={defaultURL}
-            onChange={(event) => setURL(event.target.value)}
+            isInvalid={!suppressErrorMsg && urlError !== undefined}
+            onChange={(event) => {
+              setSuppressErrorMsg?.(false)
+              validateURL(event.target.value)
+              setURL(event.target.value)
+            }}
           />
+          <Form.Control.Feedback type="invalid">
+            {urlErrorMessage(urlError)}
+          </Form.Control.Feedback>
         </Form.Group>
       )}
 
@@ -117,15 +179,15 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
           type="text"
           placeholder="Enter the Resource Title"
           defaultValue={defaultTitle}
-          isInvalid={
-            titleDuplicated(category, title) &&
-            !(defaultCategory && title === defaultTitle)
-          }
-          onChange={(event) => setTitle(event.target.value)}
+          isInvalid={!suppressErrorMsg && linkTitleError !== undefined}
+          onChange={(event) => {
+            setSuppressErrorMsg?.(false)
+            validateLinkTitle(event.target.value)
+            setTitle(event.target.value)
+          }}
         />
         <Form.Control.Feedback type="invalid">
-          A resource with this title already exists under this category. Please
-          choose a different title.
+          {linkTitleErrorMessage(linkTitleError)}
         </Form.Control.Feedback>
       </Form.Group>
 
@@ -136,6 +198,13 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
             className={styles.createableSelect}
             value={createOption(category)}
             options={categoryOptions}
+            styles={{
+              singleValue: base => ({
+                ...base,
+                color: "var(--primary-text-color)",
+              }),
+              menuList: base => ({ ...base, backgroundColor: "var(--primary-button)"})
+            }}
             createOptionPosition="first"
             onCreateOption={(inputValue) => {
               let valueToCreate = titleCase(inputValue)
@@ -170,7 +239,11 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
             input.toLowerCase() !== "new"
           }
           menuPortalTarget={document.body}
-          styles={{ menuPortal: (styles) => ({ ...styles, zIndex: 10001 }) }}
+          styles={{
+            menuPortal: (styles) => ({ ...styles, zIndex: 10001 }),
+            singleValue: base => ({ ...base, color: "var(--primary-text-color)"}),
+            menuList: base => ({ ...base, backgroundColor: "var(--primary-button)"})
+          }}
           options={tagOptions}
           createOptionPosition="first"
           onCreateOption={(inputValue) => {
@@ -193,34 +266,25 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
       </Form.Group>
 
       <Form.Group>
-        {defaultVisibleAfter ? (
-          <Row>
-            <Col md="auto">
-              <Form.Label>Visible after</Form.Label>
+        <Row>
+          <Col md="auto">
+            <Form.Switch
+              id={`${id}-visibilityPickerSwitch`}
+              label={showPicker ? "Visible after" : "Visible immediately"}
+              onClick={() => setShowPicker(!showPicker)}
+              defaultChecked={showPicker}
+            />
+          </Col>
+          {showPicker && (
+            <Col>
+              {datepicker}
+              <p className={styles.mutedText}>
+                Course managers will still be able to view all "invisible"
+                resources.
+              </p>
             </Col>
-            <Col>{datepicker}</Col>
-          </Row>
-        ) : (
-          <Row>
-            <Col md="auto">
-              <Form.Switch
-                id={`${id}-visibilityPickerSwitch`}
-                label={showPicker ? "Visible after" : "Visible immediately"}
-                onClick={() => setShowPicker(!showPicker)}
-                defaultChecked
-              />
-            </Col>
-            {showPicker && (
-              <Col>
-                {datepicker}
-                <p className={styles.mutedText}>
-                  Course managers will still be able to view all "invisible"
-                  resources.
-                </p>
-              </Col>
-            )}
-          </Row>
-        )}
+          )}
+        </Row>
       </Form.Group>
     </>
   )

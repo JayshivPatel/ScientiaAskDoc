@@ -4,7 +4,8 @@ import styles from "./style.module.scss"
 import classNames from "classnames"
 import Col from "react-bootstrap/Col"
 import { Link } from "react-router-dom"
-import { faLeaf, faSeedling, faSun } from "@fortawesome/free-solid-svg-icons"
+import { faSeedling, faSun, faCandyCane, faEgg, faUmbrellaBeach } from "@fortawesome/free-solid-svg-icons"
+import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Module, ProgressStatus, Term } from "constants/types"
 import { theme } from "../../../utils/functions"
@@ -56,11 +57,17 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
             {module.terms.map((term: Term) => {
               switch (term) {
                 case "Autumn":
-                  return <FontAwesomeIcon icon={faLeaf} key={"Autumn"} />
+                  return <FontAwesomeIcon icon={faCanadianMapleLeaf} key={"Autumn"} />
                 case "Spring":
                   return <FontAwesomeIcon icon={faSeedling} key={"Spring"} />
                 case "Summer":
                   return <FontAwesomeIcon icon={faSun} key={"Summer"} />
+                case "Christmas":
+                  return <FontAwesomeIcon icon={faCandyCane} key={"Christmas"} />
+                case "Easter":
+                  return <FontAwesomeIcon icon={faEgg} key={"Easter"} />
+                case "Jun-Sept":
+                  return <FontAwesomeIcon icon={faUmbrellaBeach} key={"Jun-Sept"} />
                 default:
                   return ""
               }

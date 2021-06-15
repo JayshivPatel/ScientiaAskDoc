@@ -4,12 +4,16 @@ import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import ButtonGroup from "react-bootstrap/ButtonGroup"
 
+import styles from "./style.module.scss"
 import ResourceDetailForm, {
   ResourceDetails,
 } from "components/sections/ResourceDetailForm"
 import { Resource } from "constants/types"
 import { request } from "utils/api"
 import { api, methods } from "constants/routes"
+import {inspect} from "util";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTimes} from "@fortawesome/free-solid-svg-icons";
 
 interface EditModalProps {
   show: boolean
@@ -31,7 +35,7 @@ const EditModal: React.FC<EditModalProps> = ({
   titleDuplicated,
 }) => {
   const [details, setDetails] = useState<ResourceDetails>()
-
+  const [canSubmitChanges, setCanSubmitChanges] = useState<boolean>(false)
   const updateResourceDetails = (details: ResourceDetails) => {
     setDetails(details)
   }
@@ -66,9 +70,16 @@ const EditModal: React.FC<EditModalProps> = ({
       size="lg"
       show={show}
       onHide={onHide}
-      centered>
-      <Modal.Header closeButton>
-        <Modal.Title>Edit Resource</Modal.Title>
+      centered
+      className={styles.editModal}>
+      <Modal.Header>
+        <Modal.Title style={{ fontSize: "1.25rem" }}>Edit Resource</Modal.Title>
+        <Button
+            variant="secondary"
+            className={styles.sectionHeaderButton}
+            onClick={onHide}>
+          <FontAwesomeIcon className={styles.buttonIcon} icon={faTimes} />
+        </Button>
       </Modal.Header>
 
       <Form onSubmit={handleSubmit}>
@@ -82,8 +93,9 @@ const EditModal: React.FC<EditModalProps> = ({
             defaultTitle={resource.title}
             defaultURL={resource.path}
             defaultCategory={resource.folder}
-            defaultTags={resource.tags.filter((tag) => tag !== "new")}
+            defaultTags={resource.tags.filter(tag => tag !== "new")}
             defaultVisibleAfter={resource.visible_after}
+            handleInvalidDetails={setCanSubmitChanges}
             titleDuplicated={titleDuplicated}
             setResourceDetails={updateResourceDetails}
           />
@@ -94,7 +106,7 @@ const EditModal: React.FC<EditModalProps> = ({
             <Button onClick={onHide} variant="secondary">
               Cancel
             </Button>
-            <Button type="submit" variant="info">
+            <Button type="submit" disabled={!canSubmitChanges} variant="info">
               Submit
             </Button>
           </ButtonGroup>

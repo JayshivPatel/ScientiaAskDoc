@@ -1,7 +1,8 @@
 import React from "react"
 import SideBarTabGroup from "components/groups/SideBarTabGroup"
 import { Term } from "constants/types"
-import { faLeaf, faSeedling, faSun } from "@fortawesome/free-solid-svg-icons"
+import { faSeedling, faSun, faCandyCane, faEgg, faUmbrellaBeach } from "@fortawesome/free-solid-svg-icons"
+import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons"
 
 interface Props {
   term: Term
@@ -13,12 +14,13 @@ const SideBarTermsGroup: React.FC<Props> = ({ term, setTerm }) => {
       title: "Autumn",
       active: term === "Autumn",
       onClick: () => setTerm("Autumn"),
-      icon: faLeaf,
+      icon: faCanadianMapleLeaf,
     },
     {
       title: "Christmas",
       active: term === "Christmas",
       onClick: () => setTerm("Christmas"),
+      icon: faCandyCane,
     },
     {
       title: "Spring",
@@ -30,6 +32,7 @@ const SideBarTermsGroup: React.FC<Props> = ({ term, setTerm }) => {
       title: "Easter",
       active: term === "Easter",
       onClick: () => setTerm("Easter"),
+      icon: faEgg,
     },
     {
       title: "Summer",
@@ -38,14 +41,10 @@ const SideBarTermsGroup: React.FC<Props> = ({ term, setTerm }) => {
       icon: faSun,
     },
     {
-      title: "Jun-Jul",
-      active: term === "Jun-Jul",
-      onClick: () => setTerm("Jun-Jul"),
-    },
-    {
-      title: "Aug-Sept",
-      active: term === "Aug-Sept",
-      onClick: () => setTerm("Aug-Sept"),
+      title: "Jun-Sept",
+      active: term === "Jun-Sept",
+      onClick: () => setTerm("Jun-Sept"),
+      icon: faUmbrellaBeach,
     },
   ]
 

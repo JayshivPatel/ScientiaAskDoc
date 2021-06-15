@@ -4,12 +4,14 @@ import styles from "./style.module.scss"
 import { Link } from "react-router-dom"
 export interface ModuleHeadingprops {
   moduleCode: string
+  subscriptionLevel: 1 | 2 | 3,
   title: string
   style?: CSSProperties
 }
 
 const ModuleHeading: React.FC<ModuleHeadingprops> = ({
   moduleCode,
+  subscriptionLevel,
   title,
   style,
 }) => {
@@ -21,6 +23,7 @@ const ModuleHeading: React.FC<ModuleHeadingprops> = ({
       to={`modules/${moduleCode}/submissions`}>
       <Card.Header>
         <span>{moduleCode}</span>
+        <span>{`Level ${subscriptionLevel}`}</span>
       </Card.Header>
       <Card.Body>
         <Card.Text>{title}</Card.Text>

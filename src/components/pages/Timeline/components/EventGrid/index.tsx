@@ -39,7 +39,7 @@ const EventGrid: React.FC<EventGridProps> = ({
   let currRow = 1
   for (let i = 0; i < modulesList.length; i++) {
     const code = modulesList[i].code
-    const moduleTracks = modulesTracks[code]
+    const moduleTracks = modulesTracks[code] ?? []
 
     for (const moduleTrack of moduleTracks) {
       for (const event of moduleTrack) {
