@@ -3,11 +3,6 @@ stages:
   - build
   - deploy
 
-
-default:
-  before_script:
-    - docker system prune --all --force
-
 cache:
   paths:
     - .yarn
