@@ -4,7 +4,7 @@ import "./App.scss"
 import TopBar from "./navbars/TopBar"
 import BottomBar from "./navbars/BottomBar"
 import StandardView from "./pages"
-import {Redirect, Route, Switch} from "react-router-dom"
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom"
 import SignIn from "./pages/SignIn"
 import SettingsModal from "./modals/SettingsModal"
 import EventModal from "./modals/EventModal"
@@ -159,7 +159,7 @@ class App extends React.Component<{}, AppState> {
           event={this.state.activeModalEvent}
           activeDay={TIMELINE_ACTIVE}
         />
-
+        <BrowserRouter>
         <Switch>
           <Route path="/signin" component={SignIn} />
 
@@ -222,6 +222,7 @@ class App extends React.Component<{}, AppState> {
             }
           />
         </Switch>
+        </BrowserRouter>
       </>
     )
   }
