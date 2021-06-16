@@ -79,6 +79,9 @@
     "prettier": "2.2.0"
   },
   "jest": {
+    "coverageReporters": [
+      "cobertura"
+    ],
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
       "!src/serviceWorker.ts",
