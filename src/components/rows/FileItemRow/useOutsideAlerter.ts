@@ -1,4 +1,4 @@
-import React, { useEffect, RefObject } from "react";
+import {RefObject, useEffect} from "react";
 
 
 export default function useOutsideAlerter(ref: RefObject<HTMLDivElement>, callback: () => void) {

@@ -1,23 +1,17 @@
 import React from "react"
-import { IconDefinition } from "@fortawesome/free-solid-svg-icons"
+import {IconDefinition} from "@fortawesome/free-solid-svg-icons"
 import "./App.scss"
 import TopBar from "./navbars/TopBar"
 import BottomBar from "./navbars/BottomBar"
-import {
-  faBookOpen,
-  faHome,
-  faCalendarWeek,
-  faChalkboardTeacher,
-} from "@fortawesome/free-solid-svg-icons"
 import StandardView from "./pages"
-import { Switch, Route, Redirect } from "react-router-dom"
+import {Redirect, Route, Switch} from "react-router-dom"
 import SignIn from "./pages/SignIn"
 import SettingsModal from "./modals/SettingsModal"
 import EventModal from "./modals/EventModal"
-import { TimelineEvent, CalendarEvent } from "constants/types"
+import {CalendarEvent, TimelineEvent} from "constants/types"
 import authenticationService from "../utils/auth"
 import CalendarModal from "./modals/CalendarModal"
-import { TIMELINE_ACTIVE } from "constants/global"
+import {TIMELINE_ACTIVE} from "constants/global"
 
 type AppState = {
   toggledLeft: boolean

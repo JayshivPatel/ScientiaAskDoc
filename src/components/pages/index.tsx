@@ -1,19 +1,10 @@
-import React, {useState, useEffect, Suspense} from "react"
-import {Route, Switch, Redirect} from "react-router-dom"
+import React, {Suspense, useEffect, useState} from "react"
+import {Redirect, Route, Switch} from "react-router-dom"
 import "./style.scss"
 import classNames from "classnames"
-import {
-    Term,
-    TimelineEvent,
-    Module,
-    CalendarEvent,
-    ProgressStatus,
-} from "constants/types"
+import {CalendarEvent, Module, ProgressStatus, Term, TimelineEvent,} from "constants/types"
 import Container from "react-bootstrap/esm/Container"
 import LoadingScreen from "components/suspense/LoadingScreen"
-// import { request } from "utils/api";
-// import { api, methods } from "constants/routes";
-import {modulesList} from "./ModuleList/list"
 import RightBar from "components/navbars/RightBar"
 import LeftBar from "components/navbars/LeftBar"
 import {request} from "../../utils/api"

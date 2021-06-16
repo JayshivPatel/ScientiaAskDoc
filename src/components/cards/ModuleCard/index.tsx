@@ -3,20 +3,19 @@ import Card from "react-bootstrap/Card"
 import styles from "./style.module.scss"
 import classNames from "classnames"
 import Col from "react-bootstrap/Col"
-import { Link } from "react-router-dom"
-import { faSeedling, faSun, faCandyCane, faEgg, faUmbrellaBeach } from "@fortawesome/free-solid-svg-icons"
-import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Module, ProgressStatus, Term } from "constants/types"
-import { theme } from "../../../utils/functions"
-import { thumbnails } from "../../../constants/thumbnails"
+import {Link} from "react-router-dom"
+import {faCandyCane, faEgg, faSeedling, faSun, faUmbrellaBeach} from "@fortawesome/free-solid-svg-icons"
+import {faCanadianMapleLeaf} from "@fortawesome/free-brands-svg-icons"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {Module, Term} from "constants/types"
+import {theme} from "../../../utils/functions"
+import {thumbnails} from "../../../constants/thumbnails"
 
 export interface ModuleCardProps {
   module: Module
 }
 
 const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
-  let textColor: string = ""
   let moduleCode = module.code.startsWith("CO")
     ? module.code.slice(2)
     : module.code
@@ -24,17 +23,18 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
   let thumbnail = `/images/${theme()}/module/${
     thumbnails[moduleCode] || "default.png"
   }`
-
-  switch (module.progressStatus) {
-    case ProgressStatus.NOT_STARTED:
-      textColor = "#ACB5BD"
-      break
-    case ProgressStatus.IN_PROGRESS:
-      textColor = "#29A745"
-      break
-    case ProgressStatus.COMPLETED:
-      textColor = "#000"
-  }
+  // let textColor: string = ""
+  //
+  // switch (module.progressStatus) {
+  //   case ProgressStatus.NOT_STARTED:
+  //     textColor = "#ACB5BD"
+  //     break
+  //   case ProgressStatus.IN_PROGRESS:
+  //     textColor = "#29A745"
+  //     break
+  //   case ProgressStatus.COMPLETED:
+  //     textColor = "#000"
+  // }
 
   return (
     <Col
