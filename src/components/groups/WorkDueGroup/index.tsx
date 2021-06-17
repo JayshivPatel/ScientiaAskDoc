@@ -5,12 +5,10 @@ import { eventsData } from "components/pages/Timeline/eventsData";
 import { TimelineEvent } from "constants/types";
 
 export interface WorkDueGroupProps {
-  filter?: String;
   onEventClick: (e?: TimelineEvent) => void;
 }
 
 const WorkDueGroup: React.FC<WorkDueGroupProps> = ({
-  filter,
   onEventClick,
 }: WorkDueGroupProps) => {
   let timeOptions = {
@@ -30,7 +28,6 @@ const WorkDueGroup: React.FC<WorkDueGroupProps> = ({
 
   let workDueList = eventsData
     .filter(({ status }) => status === "due" || status === "late")
-    .filter(({ moduleCode }) => filter === undefined || moduleCode === filter)
     .map(({ title, moduleCode, id, endDate, prefix, assessment }) => {
       let colorType: eventTypes;
       switch (assessment) {
