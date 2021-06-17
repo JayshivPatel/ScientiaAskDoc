@@ -9,7 +9,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 
 import {DragHandle} from "components/sections/CategoryList"
 import {faArrowDown} from "@fortawesome/free-solid-svg-icons"
-import useOutsideAlerter from "./useOutsideAlerter"
+import useOutsideAlerter from "../../../hooks/useOutsideAlerter"
 
 export interface FileListItemProps {
   title: string
