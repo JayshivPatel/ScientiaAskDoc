@@ -6,35 +6,23 @@ _🚧 This platform is currently under development! 🚧_
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Requirements
-
-- [Node](https://nodejs.org/en/) 14.X
-- [Yarn](https://yarnpkg.com/)
-
-If you already have a different version of Node, install [NVM](https://github.com/nvm-sh/nvm#installing-and-updating) and proceed as follows:
-
-```shell script
-nvm install 14
-nvm use 14
-```
-
 ## Setup
 
 First, run `yarn install` to install the node modules used for the frontend.
+
 In order for the API links to work, the following repository branches need to be cloned and run separately:
 
-### 1. materials@api
-
-Clone *Materials*. 
+### 1. materials@scientia-integration
 
 ```shell
 # Clone the repository and checkout to the relevant branch
 git clone https://gitlab.doc.ic.ac.uk/edtech/materials.git
-git checkout api
-```
+git checkout scientia-integration
 
-Follow the instructions in the [README](https://gitlab.doc.ic.ac.uk/edtech/materials/-/blob/api/README.md) to 
-run the app on port 5000. Check that you meet the system requirements (near the top of the README) before attempting this.
+# Setup and run the development server on port 5000
+python3 -m venv venv
+./scripts/start_scientia_dev.sh
+```
 
 ### 2. scientia-calendar
 

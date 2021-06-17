@@ -1,4 +1,4 @@
-FROM node:14
+FROM node
 
 ARG scientia_gid
 

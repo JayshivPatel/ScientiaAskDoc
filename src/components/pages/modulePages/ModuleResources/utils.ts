@@ -26,9 +26,7 @@ export function tags(resources: Resource[]) {
 export function folders(resources: Resource[]): Folder[] {
   return Array.from(
     new Set<string>(resources.map((res: Resource) => res.folder))
-  )
-    .sort()
-    .map((title, id) => ({ title: title, id: id }))
+  ).map((title, id) => ({ title: title, id: id }))
 }
 
 export function categories(folders: Folder[]): string[] {

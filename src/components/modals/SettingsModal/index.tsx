@@ -1,10 +1,11 @@
 import React from "react"
 import Modal from "react-bootstrap/Modal"
 import Button from "react-bootstrap/Button"
+import Alert from "react-bootstrap/Alert"
 import useLocalStorage from "react-use-localstorage"
 import styles from "./style.module.scss"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faTimes} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faTimes } from "@fortawesome/free-solid-svg-icons"
 import TextEntrySetting from "./components/TextEntrySetting"
 import ButtonGroupSetting from "./components/ButtonGroupSetting"
 import DropDownSetting from "./components/DropDownSetting"
@@ -37,7 +38,7 @@ const SettingsModal: React.FC<Props> = ({
   )
 
   const [theme, setTheme] = useLocalStorage("theme", "default")
-  // const [calendarID, setCalendarID] = useLocalStorage("calendarID", "")
+  const [calendarID, setCalendarID] = useLocalStorage("calendarID", "")
 
   return (
     <Modal

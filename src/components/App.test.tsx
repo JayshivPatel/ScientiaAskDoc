@@ -1,6 +1,7 @@
 import React from "react"
-import {render} from "@testing-library/react"
+import { render } from "@testing-library/react"
 import App from "./App"
+
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -20,4 +21,6 @@ describe("The Scientia app", () => {
   it("Able to render the whole app with no error", () => {
     const {} = render(<App/>)
   })
+
+
 })

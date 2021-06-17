@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 
 import Button from "react-bootstrap/Button"
 import ButtonGroup from "react-bootstrap/ButtonGroup"
@@ -21,10 +21,10 @@ import CategoryList from "components/sections/CategoryList"
 import CategoryHeader from "components/headings/CategoryHeader"
 
 import { download, request } from "utils/api"
-import {api, methods} from "constants/routes"
-import {Folder, IdBooleanMap, Resource} from "constants/types"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {categories} from "../utils"
+import { api, methods } from "constants/routes"
+import { Folder, Resource, IdBooleanMap } from "constants/types"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { categories } from "../utils"
 import moment from "moment"
 
 export interface StaffViewProps {

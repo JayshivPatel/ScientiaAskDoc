@@ -23,7 +23,7 @@ interface ResourceDetailFormProps {
   defaultTags?: string[]
   defaultVisibleAfter?: Date
   suppressErrorMsg?: boolean
-  setSuppressErrorMsg?: (suppressErrorMessage: boolean) => void
+  setSuppressErrorMsg?: (b: boolean) => void
   handleInvalidDetails?: (areDetailsValid: boolean) => void
   titleDuplicated: (category: string, title: string) => boolean
   setResourceDetails: (details: ResourceDetails) => void
@@ -76,21 +76,27 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   const [category, setCategory] = useState(defaultCategory || DEFAULT_CATEGORY)
   const [tags, setTags] = useState<string[]>(defaultTags || [])
   const [url, setURL] = useState(defaultURL || "")
-  const [urlError, setURLError] = useState<URLError | undefined>(undefined)
-  const [linkTitleError, setLinkTitleError] = useState<LinkTitleError | undefined>(undefined)
+  const [urlError, setURLError] = useState<URLError>()
+  const [titleError, setLinkTitleError] = useState<LinkTitleError>()
 
   const validateURL = (url: string) => {
     if (url.trim() === "") {
       setURLError(URLError.EmptyURL)
+      return
     }
+    setURLError(undefined)
   }
 
   const validateLinkTitle = (title: string) => {
     if (title.trim() === "") {
       setLinkTitleError(LinkTitleError.EmptyTitle)
-    } else if (titleDuplicated(category, title) && !(defaultCategory && title === defaultTitle)) {
-      setLinkTitleError(LinkTitleError.DuplicateTitle)
+      return
     }
+    if (titleDuplicated(category, title) && !(defaultCategory && title === defaultTitle)) {
+      setLinkTitleError(LinkTitleError.DuplicateTitle)
+      return
+    }
+    setLinkTitleError(undefined)
   }
 
   const urlErrorMessage = (error: URLError | undefined) => {
@@ -103,7 +109,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
         return ""
     }
   }
-  const linkTitleErrorMessage = (error: LinkTitleError | undefined) => {
+  const linkTitleMessage = (error: LinkTitleError | undefined) => {
     switch (error) {
       case LinkTitleError.EmptyTitle:
         return "Link title cannot be empty!"
@@ -116,10 +122,10 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 
   useEffect(() => {
     handleInvalidDetails && handleInvalidDetails(
-        (isLink && linkTitleError === undefined && urlError === undefined) ||
-        (!isLink && linkTitleError === undefined)
+        (isLink && titleError === undefined && urlError === undefined) ||
+        (!isLink && titleError === undefined)
     )
-  }, [linkTitleError, urlError])
+  }, [titleError, urlError])
 
 
   useEffect(() => {
@@ -179,7 +185,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
           type="text"
           placeholder="Enter the Resource Title"
           defaultValue={defaultTitle}
-          isInvalid={!suppressErrorMsg && linkTitleError !== undefined}
+          isInvalid={!suppressErrorMsg && titleError !== undefined}
           onChange={(event) => {
             setSuppressErrorMsg?.(false)
             validateLinkTitle(event.target.value)
@@ -187,7 +193,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
           }}
         />
         <Form.Control.Feedback type="invalid">
-          {linkTitleErrorMessage(linkTitleError)}
+          {linkTitleMessage(titleError)}
         </Form.Control.Feedback>
       </Form.Group>
 

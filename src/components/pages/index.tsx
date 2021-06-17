@@ -1,26 +1,27 @@
-import React, {Suspense, useEffect, useState} from "react"
-import {Redirect, Route, Switch} from "react-router-dom"
+import React, { useState, useEffect, Suspense } from "react"
+import { Route, Switch, Redirect } from "react-router-dom"
 import "./style.scss"
 import classNames from "classnames"
 import {
-    CalendarEvent,
-    Module,
-    ProgressStatus,
-    SubscriptionLevel,
-    Term,
-    TimelineEvent,
-    TimelineEventDict,
+  Term,
+  TimelineEvent,
+  Module,
+  CalendarEvent,
+  ProgressStatus,
+  SubscriptionLevel,
+  TimelineEventDict,
 } from "constants/types"
 import Container from "react-bootstrap/Container"
 import LoadingScreen from "components/suspense/LoadingScreen"
 import authenticationService from "utils/auth"
+import { modulesList } from "./ModuleList/list"
 import RightBar from "components/navbars/RightBar"
 import LeftBar from "components/navbars/LeftBar"
+import { request } from "../../utils/api"
+import { api, methods } from "../../constants/routes"
+import { YEAR_OF_NEW_CODES } from "../../constants/doc"
 import {ModuleTracks} from "./Timeline";
 import {dateNeutralized, toDayCount} from "../../utils/functions";
-import {request} from "../../utils/api"
-import {api, methods} from "../../constants/routes"
-import {YEAR_OF_NEW_CODES} from "../../constants/doc"
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"))
 const ModuleDashboard = React.lazy(() =>
@@ -38,7 +39,7 @@ const ModuleOverview = React.lazy(() => import("./modulePages/ModuleOverview"))
 const ModuleSubmissions = React.lazy(() =>
   import("./modulePages/ModuleSubmissions")
 )
-const HandIns = React.lazy(() =>
+const HandIns = React.lazy(() => 
   import("./HandIns")
 )
 
@@ -111,7 +112,7 @@ const StandardView: React.FC<StandardViewProps> = ({
     for (const module of modules) {
       request<TimelineEvent[]>({
         api: api.CATE_COURSE_EXERCISES(module.code, currentUser),
-        method: methods.GET,
+        method: methods.GET, 
       })
       .then(data => {
         if (data) {
@@ -126,7 +127,7 @@ const StandardView: React.FC<StandardViewProps> = ({
     }
   }, [modules])
 
-  useEffect(() => {
+  useEffect(() => {    
     let modulesTracks: ModuleTracks = {}
     modules.forEach(({ code }) => {
       modulesTracks[code] = [[], []]
@@ -176,7 +177,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         <Switch>
           <Redirect exact from="/" to="/dashboard" />
           <Redirect exact from="/modules/:id" to="/modules/:id/dashboard" />
-
+          
 					  <Route path="/dashboard">
 						<Container className={classNames("pageContainer")}>
 						  <Dashboard/>

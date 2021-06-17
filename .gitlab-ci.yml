@@ -3,24 +3,9 @@ stages:
   - build
   - deploy
 
-cache:
-  paths:
-    - .yarn
-
-unit_test:
-  stage: test
-  image: node:14
-  interruptible: true
-  cache:
-    paths:
-      - node_modules/
-      - .yarn
-  script:
-    - yarn install --cache-folder .yarn
-    - yarn test --coverage --all src --watchAll=false
-  artifacts:
-    reports:
-      cobertura: coverage/cobertura-coverage.xml
+default:
+  before_script:
+    - docker system prune --all --force
 
 build_docker:
   stage: build
@@ -49,12 +34,12 @@ deploy prod:
     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
     - docker stop scientia || true
     - >
-      docker run
-      --name scientia
-      --rm -d
-      -p 3000:3000
-      -v /yarn:/yarn
-      $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+        docker run
+        --name scientia
+        --rm -d
+        -p 3000:3000
+        -v /yarn:/yarn
+        $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   tags:
     - deploy_prod
   environment:
