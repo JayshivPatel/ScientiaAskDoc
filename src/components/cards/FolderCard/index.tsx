@@ -34,7 +34,10 @@ const FolderCard: React.FC<FolderCardProps> = ({
         <FontAwesomeIcon
           style={{ fontSize: "1.125rem", cursor: "default" }}
           icon={icon}
-          onClick={onIconClick}
+          onClick={(event) => {
+            event.stopPropagation()
+            onIconClick(event)
+          }}
         />
       </Card.Body>
     </Card>
