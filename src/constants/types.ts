@@ -57,6 +57,12 @@ export interface TimelineEvent {
   endDate: Date
 }
 
+export type TimelineEventDict = {
+  [module: string]: {
+    [id: number]: TimelineEvent
+  }
+}
+
 export interface CalendarEvent {
   summary: string
   description: string
@@ -78,10 +84,10 @@ export type ThumbnailMap = { [key: string]: string }
 
 export enum URLError {
   EmptyURL = "empty_url",
-  InvalidURL = "invalid_url"
+  InvalidURL = "invalid_url",
 }
 
 export enum LinkTitleError {
   EmptyTitle = "empty_title",
-  DuplicateTitle = "invalid_url"
+  DuplicateTitle = "invalid_url",
 }

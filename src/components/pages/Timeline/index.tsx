@@ -8,7 +8,7 @@ import DayIndicatorGrid from "./components/DayIndicatorGrid"
 import EventGrid from "./components/EventGrid"
 import { eventsData } from "./eventsData"
 import LoadingScreen from "components/suspense/LoadingScreen"
-import { Term, Module, TimelineEvent } from "constants/types"
+import { Term, Module, TimelineEvent, TimelineEventDict } from "constants/types"
 import { addDays, toDayCount } from "utils/functions"
 import TimelineMobile from "./components/TimelineMobile"
 import { TIMELINE_ACTIVE } from "constants/global"
@@ -24,6 +24,8 @@ interface TimelineProps {
   setTerm: React.Dispatch<React.SetStateAction<Term>>
   onEventClick: (e?: TimelineEvent) => void
   modules: Module[]
+  timelineEvents: TimelineEventDict
+  modulesTracks: ModuleTracks
 }
 
 interface TimelineState {
@@ -96,8 +98,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     )
   }
 
-  handleEventClick(id: number) {
-    const event = this.state.eventsData.find((e) => e.id === id)
+  handleEventClick(module: string, id: number) {
+    const event = this.props.timelineEvents[module][id]
     this.props.onEventClick(event)
   }
 
@@ -117,9 +119,12 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
      *   2. When (1) are the same, comparing module code
      */
     currModules.sort((a, b) => {
-      const makeNumber = (code: string): number => Number(code.replace( /^\D+/g, ''))
-      return b.subscriptionLevel - a.subscriptionLevel 
-        || (makeNumber(a.code) - makeNumber(b.code))
+      const makeNumber = (code: string): number =>
+        Number(code.replace(/^\D+/g, ""))
+      return (
+        b.subscriptionLevel - a.subscriptionLevel ||
+        makeNumber(a.code) - makeNumber(b.code)
+      )
     })
 
     if (
@@ -172,7 +177,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
               modulesTracks={this.state.modulesTracks}
               dateToColumn={(date) => this.dateToColumn(date, termStart)}
               isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
-              onEventClick={(id) => this.handleEventClick(id)}
+              onEventClick={(module, id) => this.handleEventClick(module, id)}
             />
           </div>
         </div>
