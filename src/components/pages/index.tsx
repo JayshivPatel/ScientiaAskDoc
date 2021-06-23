@@ -94,14 +94,19 @@ const StandardView: React.FC<StandardViewProps> = ({
 
     // TODO: use current request() function
 
-    function applyExercisesToTimeline(newEvents, module) {
-      return (exercises) => {
+    function applyExercisesToTimeline(
+      newEvents: { [pair: string]: TimelineEvent[] },
+      moduleCode: string
+    ) {
+      return (exercises: TimelineEvent[]) => {
         if (exercises) {
-          newEvents[module.code] = []
+          newEvents[moduleCode] = []
           exercises.forEach((exercise) => {
-            newEvents[module.code][exercise.id] = dateNeutralized<
-              TimelineEvent
-            >(exercise, "startDate", "endDate")
+            newEvents[moduleCode][exercise.id] = dateNeutralized<TimelineEvent>(
+              exercise,
+              "startDate",
+              "endDate"
+            )
           })
           setTimelineEvents({ ...newEvents })
         }
@@ -114,7 +119,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         request({
           url: api.DOC_MY_EXERCISES(year, module.code),
           method: methods.GET,
-          onSuccess: applyExercisesToTimeline(newEvents, module),
+          onSuccess: applyExercisesToTimeline(newEvents, module.code),
           onError: (message) =>
             console.log(`Failed to obtain exercises: ${message}`),
         })
