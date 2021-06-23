@@ -1,11 +1,13 @@
 const dev = {
   MATERIALS_URL: `http://${window.location.hostname}:5000`,
   CALENDAR_URL: `http://${window.location.hostname}:4000`,
+  DOC_URL: `http://${window.location.hostname}:2000`,
 }
 
 const prod = {
   MATERIALS_URL: "https://api-materials.doc.ic.ac.uk",
   CALENDAR_URL: "",
+  DOC_URL: "",
 }
 
 const config = process.env.NODE_ENV === "production" ? prod : dev
@@ -18,6 +20,8 @@ export const methods = {
 }
 
 export const api = {
+  DOC_MY_EXERCISES: (year: string, courseCode: string) =>
+    `${config.DOC_URL}/me/${year}/courses/${courseCode}/exercises`,
   MATERIALS_LOGIN: `${config.MATERIALS_URL}/auth/login`,
   MATERIALS_COURSES: (year: string) =>
     `${config.MATERIALS_URL}/courses/${year}`,

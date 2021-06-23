@@ -18,7 +18,7 @@ import { request } from "../../utils/api"
 import { api, methods } from "../../constants/routes"
 import { YEAR_OF_NEW_CODES } from "../../constants/doc"
 import { ModuleTracks } from "./Timeline"
-import { toDayCount } from "../../utils/functions"
+import { dateNeutralized, toDayCount } from "../../utils/functions"
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"))
 const ModuleDashboard = React.lazy(() =>
@@ -93,25 +93,33 @@ const StandardView: React.FC<StandardViewProps> = ({
     }
 
     // TODO: use current request() function
-    // useEffect(() => {
-    //     const newEvents: { [pair: string]: TimelineEvent[] } = {}
-    //     for (const module of modules) {
-    //         request<TimelineEvent[]>({
-    //             api: api.CATE_COURSE_EXERCISES(module.code, currentUser),
-    //             method: methods.GET,
-    //         })
-    //             .then(data => {
-    //                 if (data) {
-    //                     newEvents[module.code] = []
-    //                     data.forEach((exercise) => {
-    //                         newEvents[module.code][exercise.id] = dateNeutralized(exercise, 'startDate', 'endDate')
-    //                     })
-    //                     setTimelineEvents({ ...newEvents })
-    //                 }
-    //             })
-    //             .catch(message => console.log(`Failed to obtain exercises: ${message}`))
-    //     }
-    // }, [modules])
+
+    function applyExercisesToTimeline(newEvents, module) {
+      return (exercises) => {
+        if (exercises) {
+          newEvents[module.code] = []
+          exercises.forEach((exercise) => {
+            newEvents[module.code][exercise.id] = dateNeutralized<
+              TimelineEvent
+            >(exercise, "startDate", "endDate")
+          })
+          setTimelineEvents({ ...newEvents })
+        }
+      }
+    }
+
+    useEffect(() => {
+      const newEvents: { [pair: string]: TimelineEvent[] } = {}
+      for (const module of modules) {
+        request({
+          url: api.DOC_MY_EXERCISES(year, module.code),
+          method: methods.GET,
+          onSuccess: applyExercisesToTimeline(newEvents, module),
+          onError: (message) =>
+            console.log(`Failed to obtain exercises: ${message}`),
+        })
+      }
+    }, [modules])
     //
     // useEffect(() => {
     //     let modulesTracks: ModuleTracks = {}

@@ -91,3 +91,12 @@ export enum LinkTitleError {
   EmptyTitle = "empty_title",
   DuplicateTitle = "invalid_url",
 }
+
+/**
+ * A union type contains all keys in type T, whose corresponding value extends type O.
+ *
+ * i.e. All keys of type O
+ */
+export type AllKeysExtends<T, O> = {
+  [K in keyof T]: T[K] extends O ? K : never
+}[keyof T]
