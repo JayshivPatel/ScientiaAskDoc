@@ -21,7 +21,7 @@ export const methods = {
 
 export const api = {
   DOC_MY_EXERCISES: (year: string, courseCode: string) =>
-    `${config.DOC_URL}/me/${year}/courses/${courseCode}/exercises`,
+    `${config.MATERIALS_URL}/me/${year}/courses/${courseCode}/exercises`,
   MATERIALS_LOGIN: `${config.MATERIALS_URL}/auth/login`,
   MATERIALS_COURSES: (year: string) =>
     `${config.MATERIALS_URL}/courses/${year}`,

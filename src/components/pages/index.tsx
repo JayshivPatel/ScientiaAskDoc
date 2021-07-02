@@ -1,7 +1,7 @@
-import React, { Suspense, useEffect, useState } from "react"
-import { Redirect, Route, Switch } from "react-router-dom"
-import "./style.scss"
-import classNames from "classnames"
+import React, { Suspense, useEffect, useState } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import "./style.scss";
+import classNames from "classnames";
 import {
   CalendarEvent,
   Module,
@@ -9,45 +9,45 @@ import {
   Term,
   TimelineEvent,
   TimelineEventDict,
-} from "constants/types"
-import Container from "react-bootstrap/esm/Container"
-import LoadingScreen from "components/suspense/LoadingScreen"
-import RightBar from "components/navbars/RightBar"
-import LeftBar from "components/navbars/LeftBar"
-import { request } from "../../utils/api"
-import { api, methods } from "../../constants/routes"
-import { YEAR_OF_NEW_CODES } from "../../constants/doc"
-import { ModuleTracks } from "./Timeline"
-import { dateNeutralized, toDayCount } from "../../utils/functions"
+} from "constants/types";
+import Container from "react-bootstrap/esm/Container";
+import LoadingScreen from "components/suspense/LoadingScreen";
+import RightBar from "components/navbars/RightBar";
+import LeftBar from "components/navbars/LeftBar";
+import { request } from "../../utils/api";
+import { api, methods } from "../../constants/routes";
+import { YEAR_OF_NEW_CODES } from "../../constants/doc";
+import { ModuleTracks } from "./Timeline";
+import { dateNeutralized, toDayCount } from "../../utils/functions";
 
-const Timeline = React.lazy(() => import("components/pages/Timeline"))
-const ModuleDashboard = React.lazy(() =>
-  import("components/pages/modulePages/ModuleDashboard")
-)
-const Dashboard = React.lazy(() => import("components/pages/Dashboard"))
-const ModuleList = React.lazy(() => import("./ModuleList"))
-const ModuleResources = React.lazy(() =>
-  import("./modulePages/ModuleResources")
-)
-const ModuleFeedback = React.lazy(() => import("./modulePages/ModuleFeedback"))
-const ExamGrading = React.lazy(() => import("./exams/Grading"))
-const ExamPastPapers = React.lazy(() => import("./exams/PastPapers"))
-const ModuleOverview = React.lazy(() => import("./modulePages/ModuleOverview"))
-const ModuleSubmissions = React.lazy(() =>
-  import("./modulePages/ModuleSubmissions")
-)
+const Timeline = React.lazy(() => import("components/pages/Timeline"));
+const ModuleDashboard = React.lazy(
+  () => import("components/pages/modulePages/ModuleDashboard")
+);
+const Dashboard = React.lazy(() => import("components/pages/Dashboard"));
+const ModuleList = React.lazy(() => import("./ModuleList"));
+const ModuleResources = React.lazy(
+  () => import("./modulePages/ModuleResources")
+);
+const ModuleFeedback = React.lazy(() => import("./modulePages/ModuleFeedback"));
+const ExamGrading = React.lazy(() => import("./exams/Grading"));
+const ExamPastPapers = React.lazy(() => import("./exams/PastPapers"));
+const ModuleOverview = React.lazy(() => import("./modulePages/ModuleOverview"));
+const ModuleSubmissions = React.lazy(
+  () => import("./modulePages/ModuleSubmissions")
+);
 
 interface StandardViewProps {
-  toggledLeft: boolean
-  toggledRight: boolean
-  fileView: string
-  initTimelineSideBar: () => void
-  revertTimelineSideBar: () => void
-  onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void
-  onSettingsClick: (event?: React.MouseEvent) => void
-  onEventClick: (e?: TimelineEvent) => void
-  onCalendarClick: (e?: CalendarEvent) => void
-  year: string
+  toggledLeft: boolean;
+  toggledRight: boolean;
+  fileView: string;
+  initTimelineSideBar: () => void;
+  revertTimelineSideBar: () => void;
+  onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void;
+  onSettingsClick: (event?: React.MouseEvent) => void;
+  onEventClick: (e?: TimelineEvent) => void;
+  onCalendarClick: (e?: CalendarEvent) => void;
+  year: string;
 }
 
 const StandardView: React.FC<StandardViewProps> = ({
@@ -62,11 +62,11 @@ const StandardView: React.FC<StandardViewProps> = ({
   onCalendarClick,
   year,
 }: StandardViewProps) => {
-  const [modulesFilter, setModulesFilter] = useState("In Progress")
-  const [timelineTerm, setTimelineTerm] = useState<Term>("Autumn")
-  const [modules, setModules] = useState<Module[]>([])
-  const [timelineEvents, setTimelineEvents] = useState<TimelineEventDict>({})
-  const [modulesTracks, setModulesTracks] = useState<ModuleTracks>({})
+  const [modulesFilter, setModulesFilter] = useState("In Progress");
+  const [timelineTerm, setTimelineTerm] = useState<Term>("Autumn");
+  const [modules, setModules] = useState<Module[]>([]);
+  const [timelineEvents, setTimelineEvents] = useState<TimelineEventDict>({});
+  const [modulesTracks, setModulesTracks] = useState<ModuleTracks>({});
   useEffect(() => {
     const onSuccess = (data: { [k: string]: any }[]) => {
       setModules(
@@ -82,83 +82,81 @@ const StandardView: React.FC<StandardViewProps> = ({
           content: "",
           subscriptionLevel: (Math.floor(Math.random() * 3) + 1) as 1 | 2 | 3,
         }))
-      )
-    }
-
-    const eventsOverlaps = (e1: TimelineEvent, e2: TimelineEvent) => {
-      return (
-        toDayCount(e1.startDate) <= toDayCount(e2.endDate) &&
-        toDayCount(e1.endDate) >= toDayCount(e2.startDate)
-      )
-    }
-
-    // TODO: use current request() function
-
-    function applyExercisesToTimeline(
-      newEvents: { [pair: string]: TimelineEvent[] },
-      moduleCode: string
-    ) {
-      return (exercises: TimelineEvent[]) => {
-        if (exercises) {
-          newEvents[moduleCode] = []
-          exercises.forEach((exercise) => {
-            newEvents[moduleCode][exercise.id] = dateNeutralized<TimelineEvent>(
-              exercise,
-              "startDate",
-              "endDate"
-            )
-          })
-          setTimelineEvents({ ...newEvents })
-        }
-      }
-    }
-
-    useEffect(() => {
-      const newEvents: { [pair: string]: TimelineEvent[] } = {}
-      for (const module of modules) {
-        request({
-          url: api.DOC_MY_EXERCISES(year, module.code),
-          method: methods.GET,
-          onSuccess: applyExercisesToTimeline(newEvents, module.code),
-          onError: (message) =>
-            console.log(`Failed to obtain exercises: ${message}`),
-        })
-      }
-    }, [modules])
-    //
-    // useEffect(() => {
-    //     let modulesTracks: ModuleTracks = {}
-    //     modules.forEach(({ code }) => {
-    //         modulesTracks[code] = [[], []]
-    //     })
-    //
-    //     for (const key in timelineEvents) {
-    //         for (const id in timelineEvents[key]) {
-    //             const event = timelineEvents[key][id]
-    //             const tracks: TimelineEvent[][] = modulesTracks[event.moduleCode] ?? []
-    //             let isPlaced = false
-    //             for (const track of tracks) {
-    //                 if (track.every((te) => !eventsOverlaps(te, event))) {
-    //                     isPlaced = true
-    //                     track.push(event)
-    //                     break
-    //                 }
-    //             }
-    //             if (!isPlaced) {
-    //                 tracks.push([event])
-    //             }
-    //         }
-    //     }
-    //     setModulesTracks(modulesTracks)
-    // }, [timelineEvents])
+      );
+    };
 
     request({
       url: api.MATERIALS_COURSES(year),
       method: methods.GET,
       onSuccess: onSuccess,
       onError: (message) => console.log(`Failed to obtain modules: ${message}`),
-    })
-  }, [year])
+    });
+  }, [year]);
+
+  const eventsOverlaps = (e1: TimelineEvent, e2: TimelineEvent) => {
+    return (
+      toDayCount(e1.startDate) <= toDayCount(e2.endDate) &&
+      toDayCount(e1.endDate) >= toDayCount(e2.startDate)
+    );
+  };
+
+  function applyExercisesToTimeline(
+    newEvents: { [pair: string]: TimelineEvent[] },
+    moduleCode: string
+  ) {
+    return (exercises: TimelineEvent[]) => {
+      if (exercises) {
+        newEvents[moduleCode] = [];
+        exercises.forEach((exercise) => {
+          newEvents[moduleCode][exercise.id] = dateNeutralized<TimelineEvent>(
+            exercise,
+            "startDate",
+            "endDate"
+          );
+        });
+        setTimelineEvents({ ...newEvents });
+      }
+    };
+  }
+
+  useEffect(() => {
+    const newEvents: { [pair: string]: TimelineEvent[] } = {};
+    for (const module of modules) {
+      request({
+        url: api.DOC_MY_EXERCISES(year, module.code),
+        method: methods.GET,
+        onSuccess: applyExercisesToTimeline(newEvents, module.code),
+        onError: (message) =>
+          console.log(`Failed to obtain exercises: ${message}`),
+      });
+    }
+  }, [modules]);
+
+  useEffect(() => {
+    let modulesTracks: ModuleTracks = {};
+    modules.forEach(({ code }) => {
+      modulesTracks[code] = [[], []];
+    });
+
+    for (const key in timelineEvents) {
+      for (const id in timelineEvents[key]) {
+        const event = timelineEvents[key][id];
+        const tracks: TimelineEvent[][] = modulesTracks[event.moduleCode] ?? [];
+        let isPlaced = false;
+        for (const track of tracks) {
+          if (track.every((te) => !eventsOverlaps(te, event))) {
+            isPlaced = true;
+            track.push(event);
+            break;
+          }
+        }
+        if (!isPlaced) {
+          tracks.push([event]);
+        }
+      }
+    }
+    setModulesTracks(modulesTracks);
+  }, [timelineEvents]);
 
   return (
     <div
@@ -166,7 +164,8 @@ const StandardView: React.FC<StandardViewProps> = ({
       className={classNames({
         toggledLeft: toggledLeft,
         toggledRight: toggledRight,
-      })}>
+      })}
+    >
       <LeftBar
         modulesFilter={modulesFilter}
         setModulesFilter={setModulesFilter}
@@ -220,7 +219,7 @@ const StandardView: React.FC<StandardViewProps> = ({
             render={(props) => {
               let canManage =
                 modules.find((module) => module.code === props.match.params.id)
-                  ?.canManage || false
+                  ?.canManage || false;
               return (
                 <Container className={classNames("pageContainer")}>
                   <ModuleResources
@@ -231,7 +230,7 @@ const StandardView: React.FC<StandardViewProps> = ({
                     canManage={canManage}
                   />
                 </Container>
-              )
+              );
             }}
           />
 
@@ -288,7 +287,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         </Switch>
       </Suspense>
     </div>
-  )
-}
+  );
+};
 
-export default StandardView
+export default StandardView;

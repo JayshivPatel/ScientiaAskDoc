@@ -20,7 +20,6 @@ const ModuleRows: React.FC<ModuleRowsProps> = ({
 }) => {
   let timelineBackgrounds: ReactElement[] = []
   let moduleHeadings: ReactElement[] = []
-
   for (let i = 0; i < modulesList.length; i++) {
     const code = modulesList[i].code
     const tracks = modulesTracks[code]
