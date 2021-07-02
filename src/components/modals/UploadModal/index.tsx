@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, {useCallback, useState} from "react"
 import classNames from "classnames"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -9,22 +9,15 @@ import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
 import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
-import { useDropzone } from "react-dropzone"
+import {useDropzone} from "react-dropzone"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-  faCaretDown,
-  faTimes,
-  faFolder,
-  faFolderOpen,
-} from "@fortawesome/free-solid-svg-icons"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faCaretDown, faFolder, faFolderOpen, faTimes,} from "@fortawesome/free-solid-svg-icons"
 
 import styles from "./style.module.scss"
-import ResourceDetailForm, {
-  ResourceDetails,
-} from "components/sections/ResourceDetailForm"
-import { request } from "utils/api"
-import { api, methods } from "constants/routes"
+import ResourceDetailForm, {ResourceDetails,} from "components/sections/ResourceDetailForm"
+import {request} from "utils/api"
+import {api, methods} from "constants/routes"
 
 interface UploadModalProps {
   show: boolean

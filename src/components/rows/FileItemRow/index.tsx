@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, {useEffect, useRef, useState} from "react"
 import styles from "./style.module.scss"
 import classNames from "classnames"
 
 import Row from "react-bootstrap/esm/Row"
 import Badge from "react-bootstrap/Badge"
-import { IconDefinition } from "@fortawesome/free-regular-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {IconDefinition} from "@fortawesome/free-regular-svg-icons"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 
-import { DragHandle } from "components/sections/CategoryList"
-import { faArrowDown } from "@fortawesome/free-solid-svg-icons"
-import useOutsideAlerter from "./useOutsideAlerter"
+import {DragHandle} from "components/sections/CategoryList"
+import {faArrowDown} from "@fortawesome/free-solid-svg-icons"
+import useOutsideAlerter from "../../../hooks/useOutsideAlerter"
 
 export interface FileListItemProps {
   title: string

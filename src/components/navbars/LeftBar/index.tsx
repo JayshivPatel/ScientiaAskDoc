@@ -1,13 +1,9 @@
 import React from "react"
 import styles from "./style.module.scss"
-import { Route, Switch } from "react-router-dom"
+import {Route, Switch} from "react-router-dom"
 import SideBarLinkGroup from "components/groups/SideBarLinkGroup"
-import SideBarFilterGroup from "components/groups/SideBarFilterGroup"
 import SideBarOutlineGroup from "components/groups/SideBarOutlineGroup"
-import SideBarExamsGroup from "components/groups/SideBarExamsGroup"
-import SideBarTermsGroup from "components/groups/SideBarTermsGroup"
-import { Term, TimelineEvent } from "constants/types"
-import WorkDueGroup from "components/groups/WorkDueGroup"
+import {Term, TimelineEvent} from "constants/types"
 
 interface LeftBarProps {
   modulesFilter: string

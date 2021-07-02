@@ -1,11 +1,10 @@
 import React from "react"
-import { Redirect } from "react-router-dom"
+import {Redirect} from "react-router-dom"
 import styles from "./style.module.scss"
-import CalendarGroup from "components/groups/CalendarGroup"
 import SideBarTabGroup from "components/groups/SideBarTabGroup"
-import { faCog, faSignOutAlt } from "@fortawesome/free-solid-svg-icons"
+import {faCog, faSignOutAlt} from "@fortawesome/free-solid-svg-icons"
 import authenticationService from "utils/auth"
-import { CalendarEvent } from "constants/types"
+import {CalendarEvent} from "constants/types"
 
 export interface RightBarState {
   date: Date

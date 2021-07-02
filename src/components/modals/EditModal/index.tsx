@@ -1,17 +1,14 @@
-import React, { useState } from "react"
+import React, {useState} from "react"
 import Modal from "react-bootstrap/Modal"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import ButtonGroup from "react-bootstrap/ButtonGroup"
 
 import styles from "./style.module.scss"
-import ResourceDetailForm, {
-  ResourceDetails,
-} from "components/sections/ResourceDetailForm"
-import { Resource } from "constants/types"
-import { request } from "utils/api"
-import { api, methods } from "constants/routes"
-import {inspect} from "util";
+import ResourceDetailForm, {ResourceDetails,} from "components/sections/ResourceDetailForm"
+import {Resource} from "constants/types"
+import {request} from "utils/api"
+import {api, methods} from "constants/routes"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 

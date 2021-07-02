@@ -1,16 +1,12 @@
-import React, { useState } from "react"
+import React, {useState} from "react"
 
 import Button from "react-bootstrap/Button"
 import ButtonGroup from "react-bootstrap/ButtonGroup"
 import Col from "react-bootstrap/esm/Col"
 import Row from "react-bootstrap/esm/Row"
 
-import { faEdit } from "@fortawesome/free-regular-svg-icons"
-import {
-  faDownload,
-  faTrash,
-  faUpload,
-} from "@fortawesome/free-solid-svg-icons"
+import {faEdit} from "@fortawesome/free-regular-svg-icons"
+import {faDownload, faTrash, faUpload,} from "@fortawesome/free-solid-svg-icons"
 import AlertModal from "components/modals/AlertModal"
 import IconButton from "components/buttons/IconButton"
 import WarningJumbotron from "components/suspense/WarningJumbotron"
@@ -19,12 +15,11 @@ import UploadModal from "components/modals/UploadModal"
 import CategoryList from "components/sections/CategoryList"
 import CategoryHeader from "components/headings/CategoryHeader"
 
-import { request, download } from "utils/api"
-import { api, methods } from "constants/routes"
-import { Folder, Resource, IdBooleanMap } from "constants/types"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { DEFAULT_CATEGORY } from "../../../../../constants/global"
-import { categories } from "../utils"
+import {download, request} from "utils/api"
+import {api, methods} from "constants/routes"
+import {Folder, IdBooleanMap, Resource} from "constants/types"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {categories} from "../utils"
 
 export interface StaffViewProps {
   year: string

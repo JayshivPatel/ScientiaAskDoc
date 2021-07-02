@@ -4,7 +4,13 @@ import styles from "./style.module.scss"
 import classNames from "classnames"
 import Col from "react-bootstrap/Col"
 import { Link } from "react-router-dom"
-import { faSeedling, faSun, faCandyCane, faEgg, faUmbrellaBeach } from "@fortawesome/free-solid-svg-icons"
+import {
+  faCandyCane,
+  faEgg,
+  faSeedling,
+  faSun,
+  faUmbrellaBeach,
+} from "@fortawesome/free-solid-svg-icons"
 import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Module, ProgressStatus, Term } from "constants/types"
@@ -49,6 +55,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
         paddingRight: "0.625rem",
       }}>
       <Card
+        border={!module.hasMaterials ? "danger" : ""}
         className={classNames(styles.moduleCard)}
         as={Link}
         to={`modules/${module.code}`}>
@@ -57,17 +64,26 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
             {module.terms.map((term: Term) => {
               switch (term) {
                 case "Autumn":
-                  return <FontAwesomeIcon icon={faCanadianMapleLeaf} key={"Autumn"} />
+                  return (
+                    <FontAwesomeIcon
+                      icon={faCanadianMapleLeaf}
+                      key={"Autumn"}
+                    />
+                  )
                 case "Spring":
                   return <FontAwesomeIcon icon={faSeedling} key={"Spring"} />
                 case "Summer":
                   return <FontAwesomeIcon icon={faSun} key={"Summer"} />
                 case "Christmas":
-                  return <FontAwesomeIcon icon={faCandyCane} key={"Christmas"} />
+                  return (
+                    <FontAwesomeIcon icon={faCandyCane} key={"Christmas"} />
+                  )
                 case "Easter":
                   return <FontAwesomeIcon icon={faEgg} key={"Easter"} />
                 case "Jun-Sept":
-                  return <FontAwesomeIcon icon={faUmbrellaBeach} key={"Jun-Sept"} />
+                  return (
+                    <FontAwesomeIcon icon={faUmbrellaBeach} key={"Jun-Sept"} />
+                  )
                 default:
                   return ""
               }
