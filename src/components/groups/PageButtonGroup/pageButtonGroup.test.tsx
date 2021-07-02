@@ -10,9 +10,9 @@ describe("<PageButtonGroup />", () => {
     title: string
     icon: IconDefinition
     url: string
-  }[] = [{ title: "Test Title", icon: faFileCode, url: "Test URL" }]
+  }[] = [{ title: "Button1 Title", icon: faFileCode, url: "Button1 URL" }]
   const wrapper = mount(<PageButtonGroup buttons={buttons} />)
-  it("Check button", () => {
+  it("sets up a button according to the given attributes", () => {
     expect(wrapper.find(Button).text()).toBe(buttons[0].title)
     expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(buttons[0].icon)
     expect(wrapper.find(Button).prop("href")).toBe(buttons[0].url)
