@@ -11,18 +11,18 @@ describe("<SideBarCardGroup />", () => {
     { id: 1, type: eventTypes.BlueCard },
     { id: 2, type: eventTypes.BlueCard },
   ]
-  const title = "Test Title"
+  const title = "Card Group Title"
   const onCardClick = jest.fn()
   const wrapper = mount(
     <SideBarCardGroup events={events} title={title} onCardClick={onCardClick} />
   )
-  it("Check events", () => {
+  it("retains the given list of events", () => {
     expect(wrapper.find(SideBarCard).length).toBe(2)
   })
-  it("Check title", () => {
+  it("displays the given title", () => {
     expect(wrapper.find(".sideBarCardGroupHeading").text()).toBe(title)
   })
-  it("Check car onClick", () => {
+  it("triggers the given OnCardClick whenever a card in the group is clicked", () => {
     onCardClick.mockClear()
     wrapper.find(SideBarCard).at(0).simulate("click")
     expect(onCardClick).toHaveBeenCalledTimes(1)
