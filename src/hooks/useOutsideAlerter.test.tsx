@@ -2,8 +2,10 @@ import { renderHook } from "@testing-library/react-hooks"
 import { mount } from "enzyme"
 import React, { useRef } from "react"
 import useOutsideAlerter from "./useOutsideAlerter"
+import each from "jest-each"
+import { MAIN_MOUSE_BTN } from "../constants/global"
 
-const MAIN_MOUSE_BUTTON = 0
+const MOUSE_BUTTONS = [MAIN_MOUSE_BTN, 1, 2, 3, 4]
 
 describe("useOutsiderAlerter hook", () => {
   const mockEventListener = (): any => {
@@ -23,26 +25,29 @@ describe("useOutsiderAlerter hook", () => {
     return <div ref={wrapperRef} />
   }
 
-  it("should trigger the wrapped component's callback when clicking on external element", async () => {
+  it("should trigger the wrapped component's callback when clicking on external element with main mouse button", async () => {
     const callback = jest.fn()
     const map = mockEventListener()
     const externalDOMNode = document.createElement("a")
 
     mount(<ReferenceComponent callback={callback} />)
-    await map.mousedown({ target: externalDOMNode, button: MAIN_MOUSE_BUTTON })
+    await map.mousedown({ target: externalDOMNode, button: MAIN_MOUSE_BTN })
     expect(callback).toBeCalled()
   })
 
-  it("should not trigger the wrapped component's callback when clicking on internal element", async () => {
-    const callback = jest.fn()
-    const map = mockEventListener()
-    const wrappedComponent = mount(<ReferenceComponent callback={callback} />)
-    const internalDOMNode = wrappedComponent
-      .find("ReferenceComponent")
-      .getDOMNode()
-    await map.mousedown({ target: internalDOMNode, button: MAIN_MOUSE_BUTTON })
-    expect(callback).not.toBeCalled()
-  })
+  each(MOUSE_BUTTONS).it(
+    "should not trigger the wrapped component's callback when clicking on internal element",
+    async (btn) => {
+      const callback = jest.fn()
+      const map = mockEventListener()
+      const wrappedComponent = mount(<ReferenceComponent callback={callback} />)
+      const internalDOMNode = wrappedComponent
+        .find("ReferenceComponent")
+        .getDOMNode()
+      await map.mousedown({ target: internalDOMNode, button: btn })
+      expect(callback).not.toBeCalled()
+    }
+  )
 
   it("should remove last event listener on ref change", async () => {
     const callback1 = () => {}
