@@ -69,8 +69,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
   }
 
   render() {
-    console.log(this.props.modulesTracks);
-
     const [termStart, numWeeks] = getTermDates(this.props.term);
     const activeDay = TIMELINE_ACTIVE;
     const trackHeight = 3.25;
