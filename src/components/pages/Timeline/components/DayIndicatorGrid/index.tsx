@@ -1,11 +1,11 @@
-import React from "react"
-import styles from "./style.module.scss"
+import React from "react";
+import styles from "./style.module.scss";
 
 export interface DayIndicatorGridProps {
-  numWeeks: number
-  activeDay: Date
-  activeColumn: number
-  isInTerm: (date: Date) => boolean
+  numWeeks: number;
+  activeDay: Date;
+  activeColumn: number;
+  isInTerm: (date: Date) => boolean;
 }
 
 const DayIndicatorGrid: React.FC<DayIndicatorGridProps> = ({
@@ -18,8 +18,9 @@ const DayIndicatorGrid: React.FC<DayIndicatorGridProps> = ({
     <div
       className={styles.dayIndicatorGrid}
       style={{
-        gridTemplateColumns: `repeat(${numWeeks}, 3rem 3rem 3rem 3rem 3rem 0.625rem`,
-      }}>
+        gridTemplateColumns: `repeat(${numWeeks}, 3rem 3rem 3rem 3rem 3rem 0.625rem)`,
+      }}
+    >
       <div
         className={styles.dayIndicatorColumn}
         style={{
@@ -30,9 +31,10 @@ const DayIndicatorGrid: React.FC<DayIndicatorGridProps> = ({
               ? "hidden"
               : "visible",
           gridColumn: `${activeColumn} / ${activeColumn + 1}`,
-        }}></div>
+        }}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default DayIndicatorGrid
+export default DayIndicatorGrid;
