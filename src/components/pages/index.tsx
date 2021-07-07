@@ -76,7 +76,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           canManage: module.can_manage,
           hasMaterials: module.has_materials,
           // Hardcoded stuff, we don't have this data currently
-          terms: ["Autumn"],
+          terms: ["Autumn", "Summer"],
           progressPercent: Math.floor(Math.random() * 100),
           progressStatus: ProgressStatus.IN_PROGRESS,
           content: "",
