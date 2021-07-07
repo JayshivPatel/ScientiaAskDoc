@@ -76,7 +76,7 @@ const StandardView: React.FC<StandardViewProps> = ({
           canManage: module.can_manage,
           hasMaterials: module.has_materials,
           // Hardcoded stuff, we don't have this data currently
-          terms: ["Autumn", "Summer"],
+          terms: ["Autumn", "Spring", "Summer"],
           progressPercent: Math.floor(Math.random() * 100),
           progressStatus: ProgressStatus.IN_PROGRESS,
           content: "",
@@ -133,15 +133,18 @@ const StandardView: React.FC<StandardViewProps> = ({
   }, [modules]);
 
   useEffect(() => {
-    let modulesTracks: ModuleTracks = {};
+    let freshModuleTracks: ModuleTracks = {};
+    console.log("tracks", freshModuleTracks);
     modules.forEach(({ code }) => {
-      modulesTracks[code] = [[], []];
+      freshModuleTracks[code] = [[], []];
     });
+    console.log("timeline", timelineEvents);
 
     for (const key in timelineEvents) {
       for (const id in timelineEvents[key]) {
         const event = timelineEvents[key][id];
-        const tracks: TimelineEvent[][] = modulesTracks[event.moduleCode] ?? [];
+        const tracks: TimelineEvent[][] =
+          freshModuleTracks[event.moduleCode] ?? [];
         let isPlaced = false;
         for (const track of tracks) {
           if (track.every((te) => !eventsOverlaps(te, event))) {
@@ -155,7 +158,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         }
       }
     }
-    setModulesTracks(modulesTracks);
+    setModulesTracks(freshModuleTracks);
   }, [timelineEvents]);
 
   return (
