@@ -146,14 +146,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     );
   }
 }
-
-function eventsOverlaps(e1: TimelineEvent, e2: TimelineEvent) {
-  return (
-    toDayCount(e1.startDate) <= toDayCount(e2.endDate) &&
-    toDayCount(e1.endDate) >= toDayCount(e2.startDate)
-  );
-}
-
 function getTermDates(term: Term): [Date, number] {
   switch (term) {
     case "Autumn":
