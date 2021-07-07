@@ -133,18 +133,17 @@ const StandardView: React.FC<StandardViewProps> = ({
   }, [modules]);
 
   useEffect(() => {
-    let freshModuleTracks: ModuleTracks = {};
-    console.log("tracks", freshModuleTracks);
+    let moduleTracks: ModuleTracks = {};
+    console.log("tracks", moduleTracks);
     modules.forEach(({ code }) => {
-      freshModuleTracks[code] = [[], []];
+      moduleTracks[code] = [[], []];
     });
     console.log("timeline", timelineEvents);
 
     for (const key in timelineEvents) {
       for (const id in timelineEvents[key]) {
         const event = timelineEvents[key][id];
-        const tracks: TimelineEvent[][] =
-          freshModuleTracks[event.moduleCode] ?? [];
+        const tracks: TimelineEvent[][] = moduleTracks[event.moduleCode] ?? [];
         let isPlaced = false;
         for (const track of tracks) {
           if (track.every((te) => !eventsOverlaps(te, event))) {
@@ -158,7 +157,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         }
       }
     }
-    setModulesTracks(freshModuleTracks);
+    setModulesTracks(moduleTracks);
   }, [timelineEvents]);
 
   return (
