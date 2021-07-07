@@ -8,7 +8,7 @@ import DayIndicatorGrid from "./components/DayIndicatorGrid";
 import EventGrid from "./components/EventGrid";
 import {
   Module,
-  Term,
+  OldTerm,
   TimelineEvent,
   TimelineEventDict,
 } from "constants/types";
@@ -22,8 +22,8 @@ export type ModuleTracks = {
 interface TimelineProps {
   initSideBar: () => void;
   revertSideBar: () => void;
-  term: Term;
-  setTerm: React.Dispatch<React.SetStateAction<Term>>;
+  term: OldTerm;
+  setTerm: React.Dispatch<React.SetStateAction<OldTerm>>;
   onEventClick: (e?: TimelineEvent) => void;
   modules: Module[];
   timelineEvents: TimelineEventDict;
@@ -145,7 +145,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     );
   }
 }
-function getTermDates(term: Term): [Date, number] {
+function getTermDates(term: OldTerm): [Date, number] {
   switch (term) {
     case "Autumn":
       return [new Date("2020-10-05"), 11];

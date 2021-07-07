@@ -5,6 +5,7 @@ import classNames from "classnames";
 import {
   CalendarEvent,
   Module,
+  OldTerm,
   ProgressStatus,
   Term,
   TimelineEvent,
@@ -63,7 +64,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   year,
 }: StandardViewProps) => {
   const [modulesFilter, setModulesFilter] = useState("In Progress");
-  const [timelineTerm, setTimelineTerm] = useState<Term>("Autumn");
+  const [timelineTerm, setTimelineTerm] = useState<OldTerm>("Autumn");
   const [modules, setModules] = useState<Module[]>([]);
   const [timelineEvents, setTimelineEvents] = useState<TimelineEventDict>({});
   const [modulesTracks, setModulesTracks] = useState<ModuleTracks>({});
@@ -90,6 +91,20 @@ const StandardView: React.FC<StandardViewProps> = ({
       method: methods.GET,
       onSuccess: onSuccess,
       onError: (message) => console.log(`Failed to obtain modules: ${message}`),
+    });
+  }, [year]);
+
+  const [terms, setTerms] = useState<Term[]>([]);
+  useEffect(() => {
+    const onSuccess = (data: Term[]) => {
+      setTerms(data);
+    };
+
+    request({
+      url: api.DBC_TERMS(year),
+      method: methods.GET,
+      onSuccess: onSuccess,
+      onError: (message) => console.log(`Failed to obtain terms: ${terms}`),
     });
   }, [year]);
 
