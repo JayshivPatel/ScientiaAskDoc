@@ -14,7 +14,6 @@ import {
 } from "constants/types";
 import { addDays, toDayCount } from "utils/functions";
 import TimelineMobile from "./components/TimelineMobile";
-import { TIMELINE_ACTIVE } from "constants/global";
 
 export type ModuleTracks = {
   [index: string]: TimelineEvent[][];
@@ -70,7 +69,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
 
   render() {
     const [termStart, numWeeks] = getTermDates(this.props.term);
-    const activeDay = TIMELINE_ACTIVE;
+    const activeDay = new Date();
     const trackHeight = 3.25;
     let currModules = this.props.modules.filter(({ terms }) =>
       terms.includes(this.props.term)
