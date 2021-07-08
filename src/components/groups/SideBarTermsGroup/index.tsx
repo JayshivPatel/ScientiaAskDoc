@@ -47,9 +47,9 @@ const SideBarTermsGroup: React.FC<Props> = ({ term, setTerm }) => {
       icon: faSun,
     },
     {
-      title: "Jun-Sept",
-      active: term === "Jun-Sept",
-      onClick: () => setTerm("Jun-Sept"),
+      title: "June-Sept",
+      active: term === "June-Sept",
+      onClick: () => setTerm("June-Sept"),
       icon: faUmbrellaBeach,
     },
   ];

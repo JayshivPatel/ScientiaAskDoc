@@ -157,7 +157,7 @@ function getTermDates(term: OldTerm): [Date, number] {
       return [new Date("2021-12-21"), 3];
     case "Easter":
       return [new Date("2021-03-29"), 5];
-    case "Jun-Sept":
+    case "June-Sept":
       return [new Date("2021-06-28"), 14];
   }
 }

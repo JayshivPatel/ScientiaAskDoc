@@ -82,9 +82,9 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
                   );
                 case "Easter":
                   return <FontAwesomeIcon icon={faEgg} key={"Easter"} />;
-                case "Jun-Sept":
+                case "June-Sept":
                   return (
-                    <FontAwesomeIcon icon={faUmbrellaBeach} key={"Jun-Sept"} />
+                    <FontAwesomeIcon icon={faUmbrellaBeach} key={"June-Sept"} />
                   );
                 default:
                   return "";

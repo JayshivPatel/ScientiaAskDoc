@@ -4,10 +4,10 @@ export type OldTerm =
   | "Summer"
   | "Easter"
   | "Spring"
-  | "Jun-Sept";
+  | "June-Sept";
 
 export type Term = {
-  label: "Autumn" | "Christmas" | "Summer" | "Easter" | "Spring" | "Jun-Sept";
+  label: "Autumn" | "Christmas" | "Summer" | "Easter" | "Spring" | "June-Sept";
   start: Date;
   end: Date;
   weeks: number;

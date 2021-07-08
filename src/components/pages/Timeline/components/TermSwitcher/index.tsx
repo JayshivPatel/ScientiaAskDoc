@@ -94,15 +94,15 @@ const TermSwitcher: React.FC<Props> = ({ term, setTerm, style }) => {
         </Button>
         <Button
           data-tip
-          data-for="Jun-Sept"
+          data-for="June-Sept"
           className={styles.termSwitch}
-          active={term === "Jun-Sept"}
-          onClick={() => setTerm("Jun-Sept")}
+          active={term === "June-Sept"}
+          onClick={() => setTerm("June-Sept")}
           variant="secondary"
         >
           <FontAwesomeIcon icon={faUmbrellaBeach} fixedWidth />
-          <ReactToolTip id="Jun-Sept" place="bottom" effect="solid">
-            Jun-Sept
+          <ReactToolTip id="June-Sept" place="bottom" effect="solid">
+            June-Sept
           </ReactToolTip>
         </Button>
       </ButtonGroup>
