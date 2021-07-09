@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./style.module.scss";
 import TermSwitcher from "../TermSwitcher";
-import { Module, OldTerm } from "constants/types";
+import { Module, Term } from "constants/types";
 import Container from "react-bootstrap/esm/Container";
 import classNames from "classnames";
 import ModuleHeading from "../ModuleHeading";
@@ -10,8 +10,9 @@ import Button from "react-bootstrap/esm/Button";
 
 export interface Props {
   modulesList: Module[];
-  term: OldTerm;
-  setTerm: React.Dispatch<React.SetStateAction<OldTerm>>;
+  term: Term;
+  terms: Term[];
+  setTerm: React.Dispatch<React.SetStateAction<Term>>;
   openDesktopSite: () => void;
 }
 
@@ -19,6 +20,7 @@ const TimelineMobile: React.FC<Props> = ({
   modulesList,
   term,
   setTerm,
+  terms,
   openDesktopSite,
 }) => {
   return (
@@ -27,6 +29,7 @@ const TimelineMobile: React.FC<Props> = ({
       <TermSwitcher
         term={term}
         setTerm={setTerm}
+        terms={terms}
         style={{ paddingLeft: "0rem", paddingRight: "0rem" }}
       />
       {modulesList.map(({ code, title, subscriptionLevel }) => (

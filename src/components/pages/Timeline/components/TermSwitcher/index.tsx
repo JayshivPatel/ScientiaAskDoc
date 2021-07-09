@@ -11,15 +11,17 @@ import {
   faUmbrellaBeach,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
-import { OldTerm } from "constants/types";
+import { Term } from "constants/types";
 import ReactToolTip from "react-tooltip";
 
 interface Props {
-  term: OldTerm;
-  setTerm: React.Dispatch<React.SetStateAction<OldTerm>>;
+  term: Term;
+  setTerm: React.Dispatch<React.SetStateAction<Term>>;
+  terms: Term[];
   style?: React.CSSProperties;
 }
-const TermSwitcher: React.FC<Props> = ({ term, setTerm, style }) => {
+
+const TermSwitcher: React.FC<Props> = ({ term, setTerm, terms, style }) => {
   // Only handles 3 main terms, use leftbar for holidays
   return (
     <div style={style} className={styles.timelineTermSwitcher}>
@@ -28,8 +30,10 @@ const TermSwitcher: React.FC<Props> = ({ term, setTerm, style }) => {
           data-tip
           data-for="Autumn"
           className={styles.termSwitch}
-          active={term === "Autumn"}
-          onClick={() => setTerm("Autumn")}
+          active={term.label === "Autumn"}
+          onClick={() => {
+            setTerm(terms.find((t) => t.label === "Autumn") as Term);
+          }}
           variant="secondary"
         >
           <FontAwesomeIcon icon={faCanadianMapleLeaf} fixedWidth />
@@ -42,8 +46,10 @@ const TermSwitcher: React.FC<Props> = ({ term, setTerm, style }) => {
           data-tip
           data-for="Spring"
           className={styles.termSwitch}
-          active={term === "Spring"}
-          onClick={() => setTerm("Spring")}
+          active={term.label === "Spring"}
+          onClick={() => {
+            setTerm(terms.find((t) => t.label === "Spring") as Term);
+          }}
           variant="secondary"
         >
           <FontAwesomeIcon icon={faSeedling} fixedWidth />
@@ -55,8 +61,10 @@ const TermSwitcher: React.FC<Props> = ({ term, setTerm, style }) => {
           data-tip
           data-for="Summer"
           className={styles.termSwitch}
-          active={term === "Summer"}
-          onClick={() => setTerm("Summer")}
+          active={term.label === "Summer"}
+          onClick={() => {
+            setTerm(terms.find((t) => t.label === "Summer") as Term);
+          }}
           variant="secondary"
         >
           <FontAwesomeIcon icon={faSun} fixedWidth />
@@ -70,8 +78,10 @@ const TermSwitcher: React.FC<Props> = ({ term, setTerm, style }) => {
           data-tip
           data-for="Christmas"
           className={styles.termSwitch}
-          active={term === "Christmas"}
-          onClick={() => setTerm("Christmas")}
+          active={term.label === "Christmas"}
+          onClick={() => {
+            setTerm(terms.find((t) => t.label === "Christmas") as Term);
+          }}
           variant="secondary"
         >
           <FontAwesomeIcon icon={faCandyCane} fixedWidth />
@@ -83,8 +93,10 @@ const TermSwitcher: React.FC<Props> = ({ term, setTerm, style }) => {
           data-tip
           data-for="Easter"
           className={styles.termSwitch}
-          active={term === "Easter"}
-          onClick={() => setTerm("Easter")}
+          active={term.label === "Easter"}
+          onClick={() => {
+            setTerm(terms.find((t) => t.label === "Easter") as Term);
+          }}
           variant="secondary"
         >
           <FontAwesomeIcon icon={faEgg} fixedWidth />
@@ -96,8 +108,10 @@ const TermSwitcher: React.FC<Props> = ({ term, setTerm, style }) => {
           data-tip
           data-for="June-Sept"
           className={styles.termSwitch}
-          active={term === "June-Sept"}
-          onClick={() => setTerm("June-Sept")}
+          active={term.label === "June-Sept"}
+          onClick={() => {
+            setTerm(terms.find((t) => t.label === "June-Sept") as Term);
+          }}
           variant="secondary"
         >
           <FontAwesomeIcon icon={faUmbrellaBeach} fixedWidth />

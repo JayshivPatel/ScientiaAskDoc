@@ -8,7 +8,7 @@ import DayIndicatorGrid from "./components/DayIndicatorGrid";
 import EventGrid from "./components/EventGrid";
 import {
   Module,
-  OldTerm,
+  Term,
   TimelineEvent,
   TimelineEventDict,
 } from "constants/types";
@@ -22,8 +22,9 @@ export type ModuleTracks = {
 interface TimelineProps {
   initSideBar: () => void;
   revertSideBar: () => void;
-  term: OldTerm;
-  setTerm: React.Dispatch<React.SetStateAction<OldTerm>>;
+  term: Term;
+  setTerm: React.Dispatch<React.SetStateAction<Term>>;
+  terms: Term[];
   onEventClick: (e?: TimelineEvent) => void;
   modules: Module[];
   timelineEvents: TimelineEventDict;
@@ -68,11 +69,11 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
   }
 
   render() {
-    const [termStart, numWeeks] = getTermDates(this.props.term);
+    const { start, weeks } = this.props.term;
     const activeDay = new Date();
     const trackHeight = 3.25;
     let currModules = this.props.modules.filter(({ terms }) =>
-      terms.includes(this.props.term)
+      terms.includes(this.props.term.label)
     );
 
     /* sort current modules by:
@@ -97,6 +98,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         <TimelineMobile
           term={this.props.term}
           setTerm={this.props.setTerm}
+          terms={this.props.terms}
           modulesList={currModules}
           openDesktopSite={() => {
             this.setState({ showMobileOnSmallScreens: false });
@@ -110,33 +112,33 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         <div className={styles.timelineContainer}>
           <MyBreadcrumbs />
           <div className={styles.timelineGrid}>
-            <TermSwitcher term={this.props.term} setTerm={this.props.setTerm} />
-            <WeekRow
-              numWeeks={numWeeks}
-              termStart={termStart}
-              activeDay={activeDay}
+            <TermSwitcher
+              term={this.props.term}
+              setTerm={this.props.setTerm}
+              terms={this.props.terms}
             />
+            <WeekRow numWeeks={weeks} termStart={start} activeDay={activeDay} />
             <ModuleRows
-              numWeeks={numWeeks}
+              numWeeks={weeks}
               trackHeight={trackHeight}
               modulesList={currModules}
               modulesTracks={this.props.modulesTracks}
             />
 
             <DayIndicatorGrid
-              numWeeks={numWeeks}
+              numWeeks={weeks}
               activeDay={activeDay}
-              activeColumn={this.dateToColumn(activeDay, termStart)}
-              isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
+              activeColumn={this.dateToColumn(activeDay, start)}
+              isInTerm={(date) => this.isInTerm(date, start, weeks)}
             />
 
             <EventGrid
-              numWeeks={numWeeks}
+              numWeeks={weeks}
               trackHeight={trackHeight}
               modulesList={currModules}
               modulesTracks={this.props.modulesTracks}
-              dateToColumn={(date) => this.dateToColumn(date, termStart)}
-              isInTerm={(date) => this.isInTerm(date, termStart, numWeeks)}
+              dateToColumn={(date) => this.dateToColumn(date, start)}
+              isInTerm={(date) => this.isInTerm(date, start, weeks)}
               onEventClick={(module, id) => this.handleEventClick(module, id)}
             />
           </div>
@@ -145,21 +147,4 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     );
   }
 }
-function getTermDates(term: OldTerm): [Date, number] {
-  switch (term) {
-    case "Autumn":
-      return [new Date("2020-10-05"), 11];
-    case "Spring":
-      return [new Date("2021-01-11"), 11];
-    case "Summer":
-      return [new Date("2021-04-26"), 9];
-    case "Christmas":
-      return [new Date("2021-12-21"), 3];
-    case "Easter":
-      return [new Date("2021-03-29"), 5];
-    case "June-Sept":
-      return [new Date("2021-06-28"), 14];
-  }
-}
-
 export default Timeline;
