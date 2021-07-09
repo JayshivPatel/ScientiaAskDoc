@@ -23,7 +23,6 @@ const ModuleResources = React.lazy(() =>
 const ModuleFeedback = React.lazy(() => import("./modulePages/ModuleFeedback"))
 const ExamGrading = React.lazy(() => import("./exams/Grading"))
 const ExamPastPapers = React.lazy(() => import("./exams/PastPapers"))
-const ModuleOverview = React.lazy(() => import("./modulePages/ModuleOverview"))
 const ModuleSubmissions = React.lazy(() =>
     import("./modulePages/ModuleSubmissions")
 )
@@ -127,16 +126,6 @@ const StandardView: React.FC<StandardViewProps> = ({
                             </Container>
                         )}
                     />
-
-                    <Route
-                        path="/modules/:id/overview"
-                        render={(props) => (
-                            <Container className={classNames("pageContainer")}>
-                                <ModuleOverview year={year} moduleID={props.match.params.id}/>
-                            </Container>
-                        )}
-                    />
-
 
                     <Route
                         path="/modules/:id/resources/:scope?"
