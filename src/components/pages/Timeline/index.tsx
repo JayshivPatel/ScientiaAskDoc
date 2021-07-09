@@ -113,8 +113,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
           <MyBreadcrumbs />
           <div className={styles.timelineGrid}>
             <TermSwitcher
-              term={this.props.term}
-              setTerm={this.props.setTerm}
+              selectedTerm={this.props.term}
+              setSelectedTerm={this.props.setTerm}
               terms={this.props.terms}
             />
             <WeekRow numWeeks={weeks} termStart={start} activeDay={activeDay} />

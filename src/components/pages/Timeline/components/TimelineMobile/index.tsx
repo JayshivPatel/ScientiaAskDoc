@@ -27,8 +27,8 @@ const TimelineMobile: React.FC<Props> = ({
     <Container className={classNames("pageContainer")}>
       <MyBreadcrumbs />
       <TermSwitcher
-        term={term}
-        setTerm={setTerm}
+        selectedTerm={term}
+        setSelectedTerm={setTerm}
         terms={terms}
         style={{ paddingLeft: "0rem", paddingRight: "0rem" }}
       />
