@@ -2,6 +2,7 @@ import React from "react"
 
 import { download, request } from "utils/api"
 import { api, methods } from "constants/routes"
+import Dandruff from "components/headings/Dandruff"
 import SearchBox from "components/headings/SearchBox"
 import QuickAccessView from "./components/QuickAccessView"
 import CurrentDirectoryView from "./components/CurrentDirectoryView"
@@ -22,6 +23,8 @@ import styles from "./style.module.scss"
 import WarningJumbotron from "../../../suspense/WarningJumbotron"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
+
+import { modulesList } from "../../ModuleList/list"
 
 export interface ResourcesProps {
   year: string
@@ -297,12 +300,18 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
     return (
       <>
-        <MyBreadcrumbs />
+        <Dandruff
+          heading={
+            modulesList.find(({ code }) => code === this.props.moduleID)?.title || this.props.moduleID
+          }
+        />
+
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            paddingTop: "0.75rem",
           }}>
           <div style={{ width: "100%" }}>
             <SearchBox
