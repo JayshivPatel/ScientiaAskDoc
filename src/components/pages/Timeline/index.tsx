@@ -22,8 +22,8 @@ export type ModuleTracks = {
 interface TimelineProps {
   initSideBar: () => void;
   revertSideBar: () => void;
-  term: Term;
-  setTerm: React.Dispatch<React.SetStateAction<Term>>;
+  activeTerm: Term;
+  setActiveTerm: React.Dispatch<React.SetStateAction<Term>>;
   terms: Term[];
   onEventClick: (e?: TimelineEvent) => void;
   modules: Module[];
@@ -69,11 +69,11 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
   }
 
   render() {
-    const { start, weeks } = this.props.term;
+    const { start, weeks } = this.props.activeTerm;
     const activeDay = new Date();
     const trackHeight = 3.25;
     let currModules = this.props.modules.filter(({ terms }) =>
-      terms.includes(this.props.term.label)
+      terms.includes(this.props.activeTerm.label)
     );
 
     /* sort current modules by:
@@ -96,8 +96,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     ) {
       return (
         <TimelineMobile
-          term={this.props.term}
-          setTerm={this.props.setTerm}
+          activeTerm={this.props.activeTerm}
+          setActiveTerm={this.props.setActiveTerm}
           terms={this.props.terms}
           modulesList={currModules}
           openDesktopSite={() => {
@@ -113,8 +113,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
           <MyBreadcrumbs />
           <div className={styles.timelineGrid}>
             <TermSwitcher
-              selectedTerm={this.props.term}
-              setSelectedTerm={this.props.setTerm}
+              activeTerm={this.props.activeTerm}
+              setActiveTerm={this.props.setActiveTerm}
               terms={this.props.terms}
             />
             <WeekRow numWeeks={weeks} termStart={start} activeDay={activeDay} />

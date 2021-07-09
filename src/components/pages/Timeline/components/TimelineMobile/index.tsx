@@ -10,16 +10,16 @@ import Button from "react-bootstrap/esm/Button";
 
 export interface Props {
   modulesList: Module[];
-  term: Term;
+  activeTerm: Term;
   terms: Term[];
-  setTerm: React.Dispatch<React.SetStateAction<Term>>;
+  setActiveTerm: React.Dispatch<React.SetStateAction<Term>>;
   openDesktopSite: () => void;
 }
 
 const TimelineMobile: React.FC<Props> = ({
   modulesList,
-  term,
-  setTerm,
+  activeTerm,
+  setActiveTerm,
   terms,
   openDesktopSite,
 }) => {
@@ -27,8 +27,8 @@ const TimelineMobile: React.FC<Props> = ({
     <Container className={classNames("pageContainer")}>
       <MyBreadcrumbs />
       <TermSwitcher
-        selectedTerm={term}
-        setSelectedTerm={setTerm}
+        activeTerm={activeTerm}
+        setActiveTerm={setActiveTerm}
         terms={terms}
         style={{ paddingLeft: "0rem", paddingRight: "0rem" }}
       />

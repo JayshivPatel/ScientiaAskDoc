@@ -43,8 +43,8 @@ const TermSwitcherButton: React.FC<TermSwitcherButtonProps> = ({
 };
 
 interface Props {
-  selectedTerm: Term;
-  setSelectedTerm: React.Dispatch<React.SetStateAction<Term>>;
+  activeTerm: Term;
+  setActiveTerm: React.Dispatch<React.SetStateAction<Term>>;
   terms: Term[];
   style?: React.CSSProperties;
 }
@@ -59,8 +59,8 @@ const termIcons = {
 };
 
 const TermSwitcher: React.FC<Props> = ({
-  selectedTerm,
-  setSelectedTerm,
+  activeTerm,
+  setActiveTerm,
   terms,
   style,
 }) => {
@@ -73,8 +73,8 @@ const TermSwitcher: React.FC<Props> = ({
             <TermSwitcherButton
               key={term.label}
               term={term}
-              activeTerm={selectedTerm}
-              setActiveTerm={setSelectedTerm}
+              activeTerm={activeTerm}
+              setActiveTerm={setActiveTerm}
             />
           ))}
       </ButtonGroup>
@@ -85,8 +85,8 @@ const TermSwitcher: React.FC<Props> = ({
             <TermSwitcherButton
               key={term.label}
               term={term}
-              activeTerm={selectedTerm}
-              setActiveTerm={setSelectedTerm}
+              activeTerm={activeTerm}
+              setActiveTerm={setActiveTerm}
             />
           ))}
       </ButtonGroup>

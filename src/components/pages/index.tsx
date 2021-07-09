@@ -97,7 +97,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   }, [year]);
 
   const KNOWN_NUMBER_OF_TERMS = 6;
-  const [selectedTerm, setSelectedTerm] = useState<Term>(getDefaultTerm());
+  const [activeTerm, setActiveTerm] = useState<Term>(getDefaultTerm());
   const [terms, setTerms] = useState<Term[]>([]);
   useEffect(() => {
     function getCurrentTerm(terms: Term[]): Term {
@@ -125,7 +125,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         })
         .sort((t1, t2) => (t1.end < t2.end ? -1 : 1));
       if (terms.length === KNOWN_NUMBER_OF_TERMS) {
-        setSelectedTerm(getCurrentTerm(terms));
+        setActiveTerm(getCurrentTerm(terms));
         setTerms(terms);
       } else console.error(`Invalid number of terms received: ${terms}`);
     };
@@ -303,8 +303,8 @@ const StandardView: React.FC<StandardViewProps> = ({
             <Timeline
               initSideBar={initTimelineSideBar}
               revertSideBar={revertTimelineSideBar}
-              term={selectedTerm}
-              setTerm={setSelectedTerm}
+              activeTerm={activeTerm}
+              setActiveTerm={setActiveTerm}
               terms={terms}
               onEventClick={onEventClick}
               modules={modules}
