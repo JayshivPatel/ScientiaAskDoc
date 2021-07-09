@@ -36,7 +36,7 @@ const TermSwitcherButton: React.FC<TermSwitcherButtonProps> = ({
     >
       <FontAwesomeIcon icon={termIcons[term.label]} fixedWidth />
       <ReactToolTip id={term.label} place="top" effect="solid">
-        Autumn
+        {term.label}
       </ReactToolTip>
     </Button>
   );
