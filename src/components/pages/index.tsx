@@ -179,11 +179,9 @@ const StandardView: React.FC<StandardViewProps> = ({
 
   useEffect(() => {
     let moduleTracks: ModuleTracks = {};
-    console.log("tracks", moduleTracks);
     modules.forEach(({ code }) => {
       moduleTracks[code] = [[], []];
     });
-    console.log("timeline", timelineEvents);
 
     for (const key in timelineEvents) {
       for (const id in timelineEvents[key]) {
