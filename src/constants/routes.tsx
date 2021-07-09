@@ -20,9 +20,9 @@ export const methods = {
 };
 
 export const api = {
-  DBC_TERMS: (year: string) => `${config.MATERIALS_URL}/periods/${year}`,
+  DBC_TERMS: (year: string) => `${config.MATERIALS_URL}/dbc/periods/${year}`,
   DOC_MY_EXERCISES: (year: string, courseCode: string) =>
-    `${config.MATERIALS_URL}/me/${year}/courses/${courseCode}/exercises`,
+    `${config.MATERIALS_URL}/dbc/me/${year}/courses/${courseCode}/exercises`,
   MATERIALS_LOGIN: `${config.MATERIALS_URL}/auth/login`,
   MATERIALS_COURSES: (year: string) =>
     `${config.MATERIALS_URL}/courses/${year}`,
