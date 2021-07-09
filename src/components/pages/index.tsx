@@ -95,20 +95,32 @@ const StandardView: React.FC<StandardViewProps> = ({
     });
   }, [year]);
 
+  const KNOWN_NUMBER_OF_TERMS = 6;
+  const [selectedTerm, setSelectedTerm] = useState<Term>(getDefaultTerm());
   const [terms, setTerms] = useState<Term[]>([]);
   useEffect(() => {
+    function getCurrentTerm(terms: Term[]) {
+      const today = new Date().getTime();
+      return terms.find(
+        (term) => term.start.getTime() <= today && today <= term.end.getTime()
+      ) as Term;
+    }
+
     const onSuccess = (data: Term[]) => {
-      let deserialisedData = data.map((t) => {
+      let terms = data.map((t) => {
         return { ...t, start: new Date(t.start), end: new Date(t.end) };
       });
-      setTerms(deserialisedData);
+      if (terms.length === KNOWN_NUMBER_OF_TERMS) {
+        setSelectedTerm(getCurrentTerm(terms));
+        setTerms(terms);
+      } else console.error(`Invalid number of terms received: ${terms}`);
     };
 
     request({
       url: api.DBC_TERMS(year),
       method: methods.GET,
       onSuccess: onSuccess,
-      onError: (message) => console.log(`Failed to obtain terms: ${terms}`),
+      onError: (message) => console.log(`Failed to obtain terms: ${message}`),
     });
   }, [year]);
 
