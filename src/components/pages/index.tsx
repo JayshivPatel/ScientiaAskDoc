@@ -105,7 +105,7 @@ const StandardView: React.FC<StandardViewProps> = ({
             <Suspense fallback={<LoadingScreen successful={<></>}/>}>
                 <Switch>
                     <Redirect exact from="/" to="/modules"/>
-                    <Redirect exact from="/modules/:id" to="/modules/:id/dashboard"/>
+                    <Redirect exact from="/modules/:id" to="/modules/:id/resources"/>
 
                     <Route path="/dashboard">
                         <Container className={classNames("pageContainer")}>
