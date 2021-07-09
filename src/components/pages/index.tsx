@@ -20,6 +20,7 @@ import { api, methods } from "../../constants/routes";
 import { YEAR_OF_NEW_CODES } from "../../constants/doc";
 import { ModuleTracks } from "./Timeline";
 import { dateNeutralized, toDayCount } from "../../utils/functions";
+import getDefaultTerm from "./Timeline/defaultTerms";
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"));
 const ModuleDashboard = React.lazy(
@@ -97,7 +98,10 @@ const StandardView: React.FC<StandardViewProps> = ({
   const [terms, setTerms] = useState<Term[]>([]);
   useEffect(() => {
     const onSuccess = (data: Term[]) => {
-      setTerms(data);
+      let deserialisedData = data.map((t) => {
+        return { ...t, start: new Date(t.start), end: new Date(t.end) };
+      });
+      setTerms(deserialisedData);
     };
 
     request({
