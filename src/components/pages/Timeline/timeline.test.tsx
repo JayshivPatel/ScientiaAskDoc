@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 import Timeline from "./index";
-import { Module, ProgressStatus } from "../../../constants/types";
+import { Module, ProgressStatus, Term } from "../../../constants/types";
 import TermSwitcher from "./components/TermSwitcher";
 import ModuleRows from "./components/ModuleRows";
 
@@ -31,11 +31,19 @@ describe("<TimeLine />", () => {
     },
   ];
 
+  const activeTerm: Term = {
+    label: "Autumn",
+    weeks: 11,
+    start: new Date(2020, 10, 4),
+    end: new Date(2020, 12, 20),
+  };
+
   const wrapper = shallow(
     <Timeline
+      terms={[activeTerm]}
       initSideBar={jest.fn()}
       revertSideBar={jest.fn()}
-      activeTerm={"Autumn"}
+      activeTerm={activeTerm}
       setActiveTerm={jest.fn()}
       onEventClick={jest.fn()}
       modules={modules}
@@ -44,8 +52,8 @@ describe("<TimeLine />", () => {
     />
   );
 
-  it("shows 'autumn' as the current term", () => {
-    expect(wrapper.find(TermSwitcher).prop("term")).toBe("Autumn");
+  it("shows selected term as the currently active term", () => {
+    expect(wrapper.find(TermSwitcher).prop("activeTerm")).toBe(activeTerm);
   });
 
   it("shows all given modules", () => {
