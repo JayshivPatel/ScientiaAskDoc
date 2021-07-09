@@ -144,19 +144,4 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
   );
 };
 
-const dummy = [
-  {
-    title: "spec-112-1.pdf",
-    type: "pdf",
-    tags: ["Specification"],
-    id: 1,
-  },
-  {
-    title: "task1_ans.pdf",
-    tags: ["Solution"],
-    type: "pdf",
-    id: 2,
-  },
-];
-
 export default EventModal;
