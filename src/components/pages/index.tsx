@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import moment from "moment";
 import "./style.scss";
 import classNames from "classnames";
 import {
@@ -99,16 +100,27 @@ const StandardView: React.FC<StandardViewProps> = ({
   const [selectedTerm, setSelectedTerm] = useState<Term>(getDefaultTerm());
   const [terms, setTerms] = useState<Term[]>([]);
   useEffect(() => {
-    function getCurrentTerm(terms: Term[]) {
+    function getCurrentTerm(terms: Term[]): Term {
       const today = new Date().getTime();
       return terms.find(
         (term) => term.start.getTime() <= today && today <= term.end.getTime()
       ) as Term;
     }
 
+    function adjustToNextMonday(date: Date): Date {
+      const MONDAY = 1;
+      if (moment(date).isoWeekday() <= MONDAY)
+        return moment(date).isoWeekday(MONDAY).toDate();
+      return moment(date).add(1, "weeks").isoWeekday(MONDAY).toDate();
+    }
+
     const onSuccess = (data: Term[]) => {
       let terms = data.map((t) => {
-        return { ...t, start: new Date(t.start), end: new Date(t.end) };
+        return {
+          ...t,
+          start: adjustToNextMonday(new Date(t.start)),
+          end: new Date(t.end),
+        };
       });
       if (terms.length === KNOWN_NUMBER_OF_TERMS) {
         setSelectedTerm(getCurrentTerm(terms));
@@ -289,8 +301,9 @@ const StandardView: React.FC<StandardViewProps> = ({
             <Timeline
               initSideBar={initTimelineSideBar}
               revertSideBar={revertTimelineSideBar}
-              term={timelineTerm}
-              setTerm={setTimelineTerm}
+              term={selectedTerm}
+              setTerm={setSelectedTerm}
+              terms={terms}
               onEventClick={onEventClick}
               modules={modules}
               timelineEvents={timelineEvents}
