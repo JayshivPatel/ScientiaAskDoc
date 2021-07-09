@@ -115,13 +115,15 @@ const StandardView: React.FC<StandardViewProps> = ({
     }
 
     const onSuccess = (data: Term[]) => {
-      let terms = data.map((t) => {
-        return {
-          ...t,
-          start: adjustToNextMonday(new Date(t.start)),
-          end: new Date(t.end),
-        };
-      });
+      let terms = data
+        .map((t) => {
+          return {
+            ...t,
+            start: adjustToNextMonday(new Date(t.start)),
+            end: new Date(t.end),
+          };
+        })
+        .sort((t1, t2) => (t1.end < t2.end ? -1 : 1));
       if (terms.length === KNOWN_NUMBER_OF_TERMS) {
         setSelectedTerm(getCurrentTerm(terms));
         setTerms(terms);
