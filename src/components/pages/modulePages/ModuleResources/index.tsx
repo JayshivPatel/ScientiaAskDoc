@@ -11,7 +11,6 @@ import ListView from "./components/ListView"
 import queryString from "query-string"
 import StaffView from "./components/StaffView"
 
-import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
 import LoadingScreen from "components/suspense/LoadingScreen"
 import { filterInvisibleResources, folders, openResource, tags } from "./utils"
 import { Resource } from "constants/types"
@@ -24,10 +23,9 @@ import WarningJumbotron from "../../../suspense/WarningJumbotron"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
 
-import { modulesList } from "../../ModuleList/list"
-
 export interface ResourcesProps {
   year: string
+  moduleTitle: string
   moduleID: string
   scope?: string
   view: string
@@ -302,7 +300,9 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       <>
         <Dandruff
           heading={
-            modulesList.find(({ code }) => code === this.props.moduleID)?.title || this.props.moduleID
+            this.props.moduleTitle ?
+              `${this.props.moduleID} - ${this.props.moduleTitle}` :
+              this.props.moduleID
           }
         />
 

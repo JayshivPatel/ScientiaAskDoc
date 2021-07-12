@@ -120,16 +120,28 @@ const StandardView: React.FC<StandardViewProps> = ({
 
                     <Route
                         path="/modules/:id/dashboard"
-                        render={(props) => (
-                            <Container className={classNames("pageContainer")}>
-                                <ModuleDashboard year={year} moduleID={props.match.params.id}/>
-                            </Container>
-                        )}
+                        render={(props) => {
+                            let moduleTitle = 
+                                modules.find((module) => module.code === props.match.params.id)
+                                    ?.title || ""
+                            return (
+                                <Container className={classNames("pageContainer")}>
+                                    <ModuleDashboard
+                                        year={year}
+                                        moduleTitle={moduleTitle}
+                                        moduleID={props.match.params.id}
+                                    />
+                                </Container>
+                            )
+                            }}
                     />
 
                     <Route
                         path="/modules/:id/resources/:scope?"
                         render={(props) => {
+                            let moduleTitle = 
+                                modules.find((module) => module.code === props.match.params.id)
+                                    ?.title || ""
                             let canManage =
                                 modules.find((module) => module.code === props.match.params.id)
                                     ?.canManage || false
@@ -137,6 +149,7 @@ const StandardView: React.FC<StandardViewProps> = ({
                                 <Container className={classNames("pageContainer")}>
                                     <ModuleResources
                                         year={year}
+                                        moduleTitle={moduleTitle}
                                         moduleID={props.match.params.id}
                                         scope={props.match.params.scope}
                                         view={fileView}
