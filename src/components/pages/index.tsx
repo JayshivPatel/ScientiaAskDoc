@@ -23,7 +23,6 @@ const ModuleResources = React.lazy(() =>
 const ModuleFeedback = React.lazy(() => import("./modulePages/ModuleFeedback"))
 const ExamGrading = React.lazy(() => import("./exams/Grading"))
 const ExamPastPapers = React.lazy(() => import("./exams/PastPapers"))
-const ModuleOverview = React.lazy(() => import("./modulePages/ModuleOverview"))
 const ModuleSubmissions = React.lazy(() =>
     import("./modulePages/ModuleSubmissions")
 )
@@ -105,7 +104,7 @@ const StandardView: React.FC<StandardViewProps> = ({
             <Suspense fallback={<LoadingScreen successful={<></>}/>}>
                 <Switch>
                     <Redirect exact from="/" to="/modules"/>
-                    <Redirect exact from="/modules/:id" to="/modules/:id/dashboard"/>
+                    <Redirect exact from="/modules/:id" to="/modules/:id/resources"/>
 
                     <Route path="/dashboard">
                         <Container className={classNames("pageContainer")}>
@@ -121,26 +120,28 @@ const StandardView: React.FC<StandardViewProps> = ({
 
                     <Route
                         path="/modules/:id/dashboard"
-                        render={(props) => (
-                            <Container className={classNames("pageContainer")}>
-                                <ModuleDashboard year={year} moduleID={props.match.params.id}/>
-                            </Container>
-                        )}
+                        render={(props) => {
+                            let moduleTitle = 
+                                modules.find((module) => module.code === props.match.params.id)
+                                    ?.title || ""
+                            return (
+                                <Container className={classNames("pageContainer")}>
+                                    <ModuleDashboard
+                                        year={year}
+                                        moduleTitle={moduleTitle}
+                                        moduleID={props.match.params.id}
+                                    />
+                                </Container>
+                            )
+                            }}
                     />
-
-                    <Route
-                        path="/modules/:id/overview"
-                        render={(props) => (
-                            <Container className={classNames("pageContainer")}>
-                                <ModuleOverview year={year} moduleID={props.match.params.id}/>
-                            </Container>
-                        )}
-                    />
-
 
                     <Route
                         path="/modules/:id/resources/:scope?"
                         render={(props) => {
+                            let moduleTitle = 
+                                modules.find((module) => module.code === props.match.params.id)
+                                    ?.title || ""
                             let canManage =
                                 modules.find((module) => module.code === props.match.params.id)
                                     ?.canManage || false
@@ -148,6 +149,7 @@ const StandardView: React.FC<StandardViewProps> = ({
                                 <Container className={classNames("pageContainer")}>
                                     <ModuleResources
                                         year={year}
+                                        moduleTitle={moduleTitle}
                                         moduleID={props.match.params.id}
                                         scope={props.match.params.scope}
                                         view={fileView}

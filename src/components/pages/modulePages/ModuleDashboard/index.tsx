@@ -5,11 +5,11 @@ import classNames from "classnames"
 import { faGlobe, faUserFriends } from "@fortawesome/free-solid-svg-icons"
 import PageButtonGroup from "components/groups/PageButtonGroup"
 
-import { modulesList } from "../../ModuleList/list"
 import { teachingAims } from "../../ModuleList/aims"
 
 interface Props {
   year: string
+  moduleTitle: string
   moduleID: string
 }
 
@@ -44,7 +44,7 @@ const MODULE_AIMS_PLACEHOLDER = (
 // 	}
 // }
 
-const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
+const ModuleDashboard: React.FC<Props> = ({ year, moduleTitle, moduleID }) => {
   const moduleCode = moduleID.startsWith("CO") ? moduleID.slice(2) : moduleID
 
 	let buttons : any[] = [
@@ -64,7 +64,9 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleID }) => {
     <>
       <Dandruff
         heading={
-          modulesList.find(({ code }) => code === moduleID)?.title || moduleID
+          moduleTitle ?
+            `${moduleID} - ${moduleTitle}` :
+            moduleID
         }
       />
 
