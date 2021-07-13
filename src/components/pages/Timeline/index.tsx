@@ -43,6 +43,10 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     };
   }
 
+  componentDidMount() {
+    this.props.initSideBar();
+  }
+
   componentWillUnmount() {
     this.props.revertSideBar();
     document.documentElement.style.fontSize = `${
