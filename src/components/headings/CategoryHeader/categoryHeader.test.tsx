@@ -4,23 +4,29 @@ import { faFileCode } from "@fortawesome/free-solid-svg-icons"
 import CategoryHeader from "./index"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-describe("<Category Header/>", () => {
-  const heading = "Header text"
-  const selectAllIcon = faFileCode
+describe("<Category Header", () => {
+  const heading = "Test Heading"
   const onSelectAllClick = jest.fn()
   const wrapper = mount(
-    <CategoryHeader
-      heading={heading}
-      selectAllIcon={selectAllIcon}
-      onSelectAllClick={onSelectAllClick}
-    />
+    <CategoryHeader heading={heading} onSelectAllClick={onSelectAllClick} />
   )
-  it("displays given header text and icon for the select-all action", () => {
+  it("Check heading", () => {
     expect(wrapper.find(".sectionHeader").text()).toBe(heading)
-    expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(selectAllIcon)
   })
-  it("triggers given onSelectAllClick when hear is clicked", () => {
+  it("Check click", () => {
+    onSelectAllClick.mockClear()
     wrapper.find(".sectionHeaderContainer").simulate("click")
     expect(onSelectAllClick).toHaveBeenCalled()
+  })
+  it("Check icon", () => {
+    expect(wrapper.find(FontAwesomeIcon)).toHaveLength(0)
+    const selectAllIcon = faFileCode
+    wrapper.setProps({ selectAllIcon: selectAllIcon })
+    expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(selectAllIcon)
+    wrapper.setProps({ checkBoxColor: "red" })
+    expect(wrapper.find(FontAwesomeIcon).prop("style")).toHaveProperty(
+      "color",
+      "red"
+    )
   })
 })

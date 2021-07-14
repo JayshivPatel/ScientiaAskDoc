@@ -2,7 +2,6 @@ import React from "react"
 
 import { download, request } from "utils/api"
 import { api, methods } from "constants/routes"
-import Dandruff from "components/headings/Dandruff"
 import SearchBox from "components/headings/SearchBox"
 import QuickAccessView from "./components/QuickAccessView"
 import CurrentDirectoryView from "./components/CurrentDirectoryView"
@@ -11,6 +10,7 @@ import ListView from "./components/ListView"
 import queryString from "query-string"
 import StaffView from "./components/StaffView"
 
+import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
 import LoadingScreen from "components/suspense/LoadingScreen"
 import { filterInvisibleResources, folders, openResource, tags } from "./utils"
 import { Resource } from "constants/types"
@@ -25,7 +25,6 @@ import Tooltip from "react-bootstrap/Tooltip"
 
 export interface ResourcesProps {
   year: string
-  moduleTitle: string
   moduleID: string
   scope?: string
   view: string
@@ -298,20 +297,12 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
     return (
       <>
-        <Dandruff
-          heading={
-            this.props.moduleTitle ?
-              `${this.props.moduleID} - ${this.props.moduleTitle}` :
-              this.props.moduleID
-          }
-        />
-
+        <MyBreadcrumbs />
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            paddingTop: "0.75rem",
           }}>
           <div style={{ width: "100%" }}>
             <SearchBox

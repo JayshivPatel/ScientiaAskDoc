@@ -13,28 +13,16 @@ describe("<SideBarFilterGrou />", () => {
       modulesFilter={modulesFilter}
     />
   )
-  it("renders as a single <SideBarTabGroup/> with title 'Filter'", () => {
+  it("Check all", () => {
     expect(wrapper.find(SideBarTabGroup)).toHaveLength(1)
     expect(wrapper.find(SideBarTabGroup).prop("title")).toBe("Filter")
-  })
-  it("displays four filter buttons", () => {
     expect(wrapper.find(SideBarTabGroup).prop("buttons").length).toBe(4)
-    expect(
-      wrapper
-        .find(SideBarTabGroup)
-        .prop("buttons")
-        .map((b) => b.title)
-    ).toEqual(["All", "In Progress", "Not Started", "Completed"])
   })
-  it("triggers the modules filter whenever one of the filter buttons is called", () => {
+  it("Check button onClick", () => {
     setModulesFilter.mockClear()
     wrapper.find(Button).at(0).simulate("click")
     expect(setModulesFilter).toHaveBeenCalledTimes(1)
     wrapper.find(Button).at(1).simulate("click")
     expect(setModulesFilter).toHaveBeenCalledTimes(2)
-    wrapper.find(Button).at(2).simulate("click")
-    expect(setModulesFilter).toHaveBeenCalledTimes(3)
-    wrapper.find(Button).at(3).simulate("click")
-    expect(setModulesFilter).toHaveBeenCalledTimes(4)
   })
 })

@@ -22,13 +22,13 @@ describe("<ModuleCard />", () => {
       <ModuleCard module={module} />
     </Router>
   )
-  it("displays module title", () => {
+  it("Check title", () => {
     expect(wrapper.find(Card.Title).text()).toBe(module.title)
   })
-  it("displays autumn icon for autumn term", () => {
+  it("Check term", () => {
     expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(faCanadianMapleLeaf)
   })
-  it("uses 'danger' border style if flag hasMaterials is set to false", () => {
+  it("Check flag hasMaterials", () => {
     expect(wrapper.find(Card).prop("border")).toBe("danger")
   })
 })

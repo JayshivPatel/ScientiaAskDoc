@@ -7,10 +7,11 @@ import FileCard from "./index"
 import Badge from "react-bootstrap/Badge"
 
 describe("<FileCard />", () => {
-  const title = "Card title"
+  const title = "Test Title"
   const type = ""
-  const tags = ["Tag A", "Tag B"]
-  const [tagA, tagB] = tags
+  const tag0 = "Test Tag a"
+  const tag1 = "Test Tag b"
+  const tags = [tag0, tag1]
   const icon = faFileCode
   const onIconClick = jest.fn()
   const onClick = jest.fn()
@@ -28,35 +29,35 @@ describe("<FileCard />", () => {
       onMouseOut={onMouseOut}
     />
   )
-  it("displays given title", () => {
+  it("Check title", () => {
     expect(wrapper.find(Card.Title).text()).toBe(title)
   })
-  it("presents given tags as badges", () => {
-    expect(wrapper.find(Badge).at(0).text()).toBe(tagA)
-    expect(wrapper.find(Badge).at(1).text()).toBe(tagB)
+  it("Check tags", () => {
+    expect(wrapper.find(Badge).at(0).text()).toBe(tag0)
+    expect(wrapper.find(Badge).at(1).text()).toBe(tag1)
   })
-  it("displays the icon it receives in the props", () => {
+  it("Check icon", () => {
     expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(icon)
   })
-  it("triggers onIconClick after click event on icon", () => {
+  it("Check icon onClick", () => {
     onIconClick.mockClear()
     onClick.mockClear()
     wrapper.find(FontAwesomeIcon).simulate("click")
     expect(onIconClick).toHaveBeenCalled()
     expect(onClick).not.toHaveBeenCalled()
   })
-  it("triggers onClick after click event on card", () => {
+  it("Check card onClick", () => {
     onIconClick.mockClear()
     onClick.mockClear()
     wrapper.simulate("click")
     expect(onClick).toHaveBeenCalled()
     expect(onIconClick).not.toHaveBeenCalled()
   })
-  it("supports mouse-over event", () => {
+  it("Check mouse over", () => {
     wrapper.simulate("mouseover")
     expect(onMouseOver).toHaveBeenCalled()
   })
-  it("supports mouse-out event", () => {
+  it("Check mouse out", () => {
     wrapper.simulate("mouseout")
     expect(onMouseOut).toHaveBeenCalled()
   })

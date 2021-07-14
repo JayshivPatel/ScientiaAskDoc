@@ -1,35 +1,36 @@
 import React from "react"
-import {mount} from "enzyme"
-import SideBarCard, {eventTypes} from "./index"
+import { mount } from "enzyme"
+import SideBarCard, { eventTypes } from "./index"
 import Card from "react-bootstrap/Card"
 
 describe("<SideBardCard />", () => {
   const type = eventTypes.BlueCard
   const onClick = jest.fn()
   const wrapper = mount(<SideBarCard type={type} onClick={onClick} />)
-  it("is populated with the right colour class", () => {
+  it("Check type", () => {
     expect(wrapper.find(Card).hasClass("sideBarBlueCard")).toBeTruthy()
     expect(wrapper.find(Card).hasClass("sideBarRedCard")).toBeFalsy()
     expect(wrapper.find(Card).hasClass("sideBarGreenCard")).toBeFalsy()
     expect(wrapper.find(Card).hasClass("sideBarIndigoCard")).toBeFalsy()
     expect(wrapper.find(Card).hasClass("sideBarCyanCard")).toBeFalsy()
   })
-  it("displays title only if one is given", () => {
-    expect(wrapper.contains(<Card.Title />)).toBeFalsy()
-    const title = "Event title"
+  it("Check title", () => {
+    expect(wrapper.contains(<Card.Title></Card.Title>)).toBeFalsy()
+    const title = "Test Title"
     wrapper.setProps({ title: title }).update()
     expect(wrapper.find(Card.Title).text()).toBe(title)
   })
-  it("is treated as an empty card if no subtitle is provided", () => {
-    expect(wrapper.contains(<Card.Subtitle />)).toBeFalsy()
-    expect(wrapper.find(Card).hasClass("sideBarEmptyCard")).toBeTruthy()
-  })
-  it("displays subtitle only if one is given", () => {
-    const subtitle = "Event subtitle"
+  it("Check subtitle", () => {
+    expect(wrapper.contains(<Card.Subtitle></Card.Subtitle>)).toBeFalsy()
+    const subtitle = "Test Subtitle"
     wrapper.setProps({ subtitle: subtitle }).update()
     expect(wrapper.find(Card.Subtitle).text()).toBe(subtitle)
   })
-  it("correctly triggers the given onClick() when clicked", () => {
+  it("Check content", () => {
+    wrapper.setProps({ subtitle: undefined }).update()
+    expect(wrapper.find(Card).hasClass("sideBarEmptyCard")).toBeTruthy()
+  })
+  it("Check card onClick", () => {
     onClick.mockClear()
     wrapper.find(Card).simulate("click")
     expect(onClick).toHaveBeenCalled()

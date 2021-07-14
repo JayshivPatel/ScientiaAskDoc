@@ -309,119 +309,31 @@ const StandardView: React.FC<StandardViewProps> = ({
               timelineEvents={timelineEvents}
               modulesTracks={modulesTracks}
             />
-            <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
-            <Suspense fallback={<LoadingScreen successful={<></>}/>}>
-                <Switch>
-                    <Redirect exact from="/" to="/modules"/>
-                    <Redirect exact from="/modules/:id" to="/modules/:id/resources"/>
+          </Route>
 
-                    <Route path="/dashboard">
-                        <Container className={classNames("pageContainer")}>
-                            <Dashboard/>
-                        </Container>
-                    </Route>
+          <Route path="/exams/grading">
+            <Container className={classNames("pageContainer")}>
+              <ExamGrading />
+            </Container>
+          </Route>
 
-                    <Route exact path="/modules">
-                        <Container className={classNames("pageContainer")}>
-                            <ModuleList modules={modules} modulesFilter={modulesFilter}/>
-                        </Container>
-                    </Route>
-
-                    <Route
-                        path="/modules/:id/dashboard"
-                        render={(props) => {
-                            let moduleTitle = 
-                                modules.find((module) => module.code === props.match.params.id)
-                                    ?.title || ""
-                            return (
-                                <Container className={classNames("pageContainer")}>
-                                    <ModuleDashboard
-                                        year={year}
-                                        moduleTitle={moduleTitle}
-                                        moduleID={props.match.params.id}
-                                    />
-                                </Container>
-                            )
-                            }}
-                    />
-
-                    <Route
-                        path="/modules/:id/resources/:scope?"
-                        render={(props) => {
-                            let moduleTitle = 
-                                modules.find((module) => module.code === props.match.params.id)
-                                    ?.title || ""
-                            let canManage =
-                                modules.find((module) => module.code === props.match.params.id)
-                                    ?.canManage || false
-                            return (
-                                <Container className={classNames("pageContainer")}>
-                                    <ModuleResources
-                                        year={year}
-                                        moduleTitle={moduleTitle}
-                                        moduleID={props.match.params.id}
-                                        scope={props.match.params.scope}
-                                        view={fileView}
-                                        canManage={canManage}
-                                    />
-                                </Container>
-                            )
-                        }}
-                    />
-
-                    <Route
-                        path="/modules/:id/submissions"
-                        render={(props) => (
-                            <Container className={classNames("pageContainer")}>
-                                <ModuleSubmissions
-                                    moduleID={props.match.params.id}
-                                    onEventClick={onEventClick}
-                                />
-                            </Container>
-                        )}
-                    />
-
-                    <Route path="/modules/:id/feedback">
-                        <Container className={classNames("pageContainer")}>
-                            <ModuleFeedback/>
-                        </Container>
-                    </Route>
-
-                    <Route path="/timeline">
-                        <Timeline
-                            initSideBar={initTimelineSideBar}
-                            revertSideBar={revertTimelineSideBar}
-                            term={timelineTerm}
-                            setTerm={setTimelineTerm}
-                            onEventClick={onEventClick}
-                            modules={modules}
-                        />
-                    </Route>
-
-                    <Route path="/exams/grading">
-                        <Container className={classNames("pageContainer")}>
-                            <ExamGrading/>
-                        </Container>
-                    </Route>
-
-                    <Route
-                        path="/exams/papers/:scope?"
-                        render={(props) => (
-                            <Container className={classNames("pageContainer")}>
-                                <ExamPastPapers
-                                    view={fileView}
-                                    scope={props.match.params.scope}
-                                    modules={modules}
-                                />
-                            </Container>
-                        )}
-                    />
-                    <Route path="/exams" render={() => <Redirect to="/exams/papers"/>}/>
-
-                </Switch>
-            </Suspense>
-        </div>
-    )
-}
+          <Route
+            path="/exams/papers/:scope?"
+            render={(props) => (
+              <Container className={classNames("pageContainer")}>
+                <ExamPastPapers
+                  view={fileView}
+                  scope={props.match.params.scope}
+                  modules={modules}
+                />
+              </Container>
+            )}
+          />
+          <Route path="/exams" render={() => <Redirect to="/exams/papers" />} />
+        </Switch>
+      </Suspense>
+    </div>
+  );
+};
 
 export default StandardView;
