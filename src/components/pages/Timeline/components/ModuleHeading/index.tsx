@@ -1,12 +1,12 @@
-import React, { CSSProperties } from "react"
-import Card from "react-bootstrap/Card"
-import styles from "./style.module.scss"
-import { Link } from "react-router-dom"
+import React, { CSSProperties } from "react";
+import Card from "react-bootstrap/Card";
+import styles from "./style.module.scss";
+
 export interface ModuleHeadingprops {
-  moduleCode: string
-  subscriptionLevel: 1 | 2 | 3,
-  title: string
-  style?: CSSProperties
+  moduleCode: string;
+  subscriptionLevel: 1 | 2 | 3;
+  title: string;
+  style?: CSSProperties;
 }
 
 const ModuleHeading: React.FC<ModuleHeadingprops> = ({
@@ -17,10 +17,11 @@ const ModuleHeading: React.FC<ModuleHeadingprops> = ({
 }) => {
   return (
     <Card
+      // as={Link}
+      // to={`modules/${moduleCode}/submissions`}
       style={style}
       className={styles.moduleCard}
-      as={Link}
-      to={`modules/${moduleCode}/submissions`}>
+    >
       <Card.Header>
         <span>{moduleCode}</span>
         <span>{`Level ${subscriptionLevel}`}</span>
@@ -29,7 +30,7 @@ const ModuleHeading: React.FC<ModuleHeadingprops> = ({
         <Card.Text>{title}</Card.Text>
       </Card.Body>
     </Card>
-  )
-}
+  );
+};
 
-export default ModuleHeading
+export default ModuleHeading;

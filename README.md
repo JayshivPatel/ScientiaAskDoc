@@ -23,14 +23,14 @@ nvm use 14
 First, run `yarn install` to install the node modules used for the frontend.
 In order for the API links to work, the following repository branches need to be cloned and run separately:
 
-### 1. materials@api
+### 1. materials@api-for-timeline
 
 Clone *Materials*. 
 
 ```shell
 # Clone the repository and checkout to the relevant branch
 git clone https://gitlab.doc.ic.ac.uk/edtech/materials.git
-git checkout api
+git checkout api-for-timeline
 ```
 
 Follow the instructions in the [README](https://gitlab.doc.ic.ac.uk/edtech/materials/-/blob/api/README.md) to 
