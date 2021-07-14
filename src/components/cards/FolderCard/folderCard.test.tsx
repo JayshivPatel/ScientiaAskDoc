@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import FolderCard from "./index"
 
 describe("<FolderCard />", () => {
-  const title = "Test Title"
+  const title = "Folder Title"
   const icon = faFileCode
   const onIconClick = jest.fn()
   const onClick = jest.fn()
@@ -21,32 +21,32 @@ describe("<FolderCard />", () => {
       onMouseOut={onMouseOut}
     />
   )
-  it("Check title", () => {
+  it("displays folder title", () => {
     expect(wrapper.text()).toBe(title)
   })
 
-  it("Check icon", () => {
+  it("displays given icon", () => {
     expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(icon)
   })
-  it("Check icon onClick", () => {
+  it("only triggers onIconClick when clicking on the icon", () => {
     onIconClick.mockClear()
     onClick.mockClear()
     wrapper.find(FontAwesomeIcon).simulate("click")
     expect(onIconClick).toHaveBeenCalled()
     expect(onClick).not.toHaveBeenCalled()
   })
-  it("Check card onClick", () => {
+  it("only triggers the card's onClick when clicking on the wider card area", () => {
     onIconClick.mockClear()
     onClick.mockClear()
     wrapper.simulate("click")
     expect(onClick).toHaveBeenCalled()
     expect(onIconClick).not.toHaveBeenCalled()
   })
-  it("Check mouse over", () => {
+  it("triggers onMouseOver as expected", () => {
     wrapper.simulate("mouseover")
     expect(onMouseOver).toHaveBeenCalled()
   })
-  it("Check mouse out", () => {
+  it("triggers onMouseOut as expected", () => {
     wrapper.simulate("mouseout")
     expect(onMouseOut).toHaveBeenCalled()
   })

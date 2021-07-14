@@ -6,15 +6,15 @@ import Button from "react-bootstrap/Button"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 describe("<SideBarTabGroup />", () => {
-  const title = "Test Title"
+  const title = "Tab Group Title"
   const buttons = [
-    { title: "Test Button Title", icon: faFileCode, onClick: jest.fn() },
+    { title: "Button Title", icon: faFileCode, onClick: jest.fn() },
   ]
   const wrapper = mount(<SideBarTabGroup title={title} buttons={buttons} />)
-  it("Check title", () => {
+  it("displays given title", () => {
     expect(wrapper.find(".tabGroupHeading").text()).toBe(title)
   })
-  it("Check buttons", () => {
+  it("includes a button with the indicated parameters", () => {
     expect(wrapper.find(Button)).toHaveLength(1)
     expect(wrapper.find(Button).text()).toBe(buttons[0].title)
     expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(buttons[0].icon)

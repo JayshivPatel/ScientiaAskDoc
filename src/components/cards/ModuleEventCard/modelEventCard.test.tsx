@@ -1,28 +1,26 @@
 import React from "react"
-import { mount } from "enzyme"
-import { TimelineEvent } from "../../../constants/types"
+import {mount} from "enzyme"
+import {TimelineEvent} from "../../../constants/types"
 import ModuleEventCard from "./index"
 
 describe("<ModuleEventCard />", () => {
   const timelineEvent: TimelineEvent = {
-    title: "Test Title",
+    title: "Coursework 1",
     id: 0,
-    prefix: "`Test Prefix`",
+    prefix: "CW",
     assessment: "unassessed",
     status: "due",
-    owner: "Test Owner",
+    owner: "mjw03",
     moduleCode: "",
     startDate: new Date(),
     endDate: new Date(),
   }
-  const aciveDay = new Date()
+  const activeDay = new Date()
   const wrapper = mount(
-    <ModuleEventCard event={timelineEvent} activeDay={aciveDay} />
+    <ModuleEventCard event={timelineEvent} activeDay={activeDay} />
   )
-  it("Check prefix", () => {
+  it("displays the given assessment-type details", () => {
     expect(wrapper.find(".eventPrefix").text()).toBe(timelineEvent.prefix)
-  })
-  it("Check assessment", () => {
     expect(wrapper.find(".unassessed").text()).toBe(timelineEvent.assessment)
   })
 })
