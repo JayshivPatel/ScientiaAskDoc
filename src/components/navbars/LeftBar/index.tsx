@@ -1,17 +1,17 @@
-import React from "react"
-import styles from "./style.module.scss"
-import {Route, Switch} from "react-router-dom"
-import SideBarLinkGroup from "components/groups/SideBarLinkGroup"
-import SideBarOutlineGroup from "components/groups/SideBarOutlineGroup"
-import {Term, TimelineEvent} from "constants/types"
+import React from "react";
+import styles from "./style.module.scss";
+import { Route, Switch } from "react-router-dom";
+import SideBarLinkGroup from "components/groups/SideBarLinkGroup";
+import SideBarOutlineGroup from "components/groups/SideBarOutlineGroup";
+import { OldTerm, TimelineEvent } from "constants/types";
 
 interface LeftBarProps {
-  modulesFilter: string
-  setModulesFilter: Function
-  timelineTerm: Term
-  setTimelineTerm: React.Dispatch<React.SetStateAction<Term>>
-  onEventClick: (e?: TimelineEvent) => void
-  year: string
+  modulesFilter: string;
+  setModulesFilter: Function;
+  timelineTerm: OldTerm;
+  setTimelineTerm: React.Dispatch<React.SetStateAction<OldTerm>>;
+  onEventClick: (e?: TimelineEvent) => void;
+  year: string;
 }
 
 const LeftBar: React.FC<LeftBarProps> = ({
@@ -22,7 +22,7 @@ const LeftBar: React.FC<LeftBarProps> = ({
   onEventClick,
   year,
 }) => {
-  const displayYear = `20${year.substring(0, 2)} - 20${year.substring(2, 4)}`
+  const displayYear = `20${year.substring(0, 2)} - 20${year.substring(2, 4)}`;
   return (
     <div id={styles.leftbarWrapper}>
       <p className={styles.leftbarStatus}>{displayYear}</p>
@@ -56,7 +56,7 @@ const LeftBar: React.FC<LeftBarProps> = ({
 
       {/*<WorkDueGroup onEventClick={onEventClick} />*/}
     </div>
-  )
-}
+  );
+};
 
-export default LeftBar
+export default LeftBar;

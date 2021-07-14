@@ -1,15 +1,15 @@
-import React, { ReactElement } from "react"
-import styles from "./style.module.scss"
-import { ModuleTracks } from "../.."
-import ModuleHeading from "../ModuleHeading"
-import classNames from "classnames"
-import { Module } from "constants/types"
+import React, { ReactElement } from "react";
+import styles from "./style.module.scss";
+import { ModuleTracks } from "../..";
+import ModuleHeading from "../ModuleHeading";
+import classNames from "classnames";
+import { Module } from "constants/types";
 
 export interface ModuleRowsProps {
-  numWeeks: number
-  trackHeight: number
-  modulesList: Module[]
-  modulesTracks: ModuleTracks
+  numWeeks: number;
+  trackHeight: number;
+  modulesList: Module[];
+  modulesTracks: ModuleTracks;
 }
 
 const ModuleRows: React.FC<ModuleRowsProps> = ({
@@ -18,12 +18,11 @@ const ModuleRows: React.FC<ModuleRowsProps> = ({
   modulesList,
   modulesTracks,
 }) => {
-  let timelineBackgrounds: ReactElement[] = []
-  let moduleHeadings: ReactElement[] = []
-
+  let timelineBackgrounds: ReactElement[] = [];
+  let moduleHeadings: ReactElement[] = [];
   for (let i = 0; i < modulesList.length; i++) {
-    const code = modulesList[i].code
-    const tracks = modulesTracks[code]
+    const code = modulesList[i].code;
+    const tracks = modulesTracks[code];
     moduleHeadings.push(
       <ModuleHeading
         key={code}
@@ -32,22 +31,23 @@ const ModuleRows: React.FC<ModuleRowsProps> = ({
         subscriptionLevel={modulesList[i].subscriptionLevel}
         title={modulesList[i].title}
       />
-    )
+    );
     const timelineBackgroundsClass = classNames(
       i % 2 === 0
         ? styles.timelineBackgroundEven
         : styles.timelineBackgroundOdd,
       i === 0 ? styles.timelineBackgroundFirst : "",
       i === modulesList.length - 1 ? styles.timelineBackgroundLast : ""
-    )
-    const offset = i === modulesList.length - 1 || i === 0 ? 0.625 / 2 : 0.625
+    );
+    const offset = i === modulesList.length - 1 || i === 0 ? 0.625 / 2 : 0.625;
     for (let j = 0; j < numWeeks; j++) {
       timelineBackgrounds.push(
         <div
           key={code + j}
           style={{ height: `${tracks?.length * trackHeight + offset}rem` }}
-          className={timelineBackgroundsClass}></div>
-      )
+          className={timelineBackgroundsClass}
+        />
+      );
     }
   }
 
@@ -56,11 +56,12 @@ const ModuleRows: React.FC<ModuleRowsProps> = ({
       <div className={styles.timelineModuleColumn}>{moduleHeadings}</div>
       <div
         className={styles.timelineWeekBackground}
-        style={{ gridTemplateColumns: `repeat(${numWeeks}, 15rem)` }}>
+        style={{ gridTemplateColumns: `repeat(${numWeeks}, 15rem)` }}
+      >
         {timelineBackgrounds}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ModuleRows
+export default ModuleRows;
