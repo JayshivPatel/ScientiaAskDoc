@@ -1,83 +1,97 @@
-import React from "react"
-import styles from "./style.module.scss"
-import ButtonGroup from "react-bootstrap/ButtonGroup"
-import Button from "react-bootstrap/Button"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSeedling, faSun, faCandyCane, faEgg, faUmbrellaBeach } from "@fortawesome/free-solid-svg-icons"
-import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons"
-import { Term } from "constants/types"
-import ReactToolTip from "react-tooltip"
+import React from "react";
+import styles from "./style.module.scss";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Button from "react-bootstrap/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCandyCane,
+  faEgg,
+  faSeedling,
+  faSun,
+  faUmbrellaBeach,
+} from "@fortawesome/free-solid-svg-icons";
+import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
+import { Term } from "constants/types";
+import ReactToolTip from "react-tooltip";
+
+interface TermSwitcherButtonProps {
+  term: Term;
+  activeTerm: Term;
+  setActiveTerm: React.Dispatch<React.SetStateAction<Term>>;
+}
+
+const TermSwitcherButton: React.FC<TermSwitcherButtonProps> = ({
+  term,
+  activeTerm,
+  setActiveTerm,
+}) => {
+  return (
+    <Button
+      data-tip
+      data-for={term.label}
+      className={styles.termSwitch}
+      active={activeTerm.label === term.label}
+      onClick={() => setActiveTerm(term)}
+      variant="secondary"
+    >
+      <FontAwesomeIcon icon={termIcons[term.label]} fixedWidth />
+      <ReactToolTip id={term.label} place="top" effect="solid">
+        {term.label}
+      </ReactToolTip>
+    </Button>
+  );
+};
 
 interface Props {
-  term: Term
-  setTerm: React.Dispatch<React.SetStateAction<Term>>
-  style?: React.CSSProperties
+  activeTerm: Term;
+  setActiveTerm: React.Dispatch<React.SetStateAction<Term>>;
+  terms: Term[];
+  style?: React.CSSProperties;
 }
-const TermSwitcher: React.FC<Props> = ({ term, setTerm, style }) => {
-  // Only handles 3 main terms, use leftbar for holidays
+
+const termIcons = {
+  Autumn: faCanadianMapleLeaf,
+  Christmas: faCandyCane,
+  Spring: faSeedling,
+  Easter: faEgg,
+  Summer: faSun,
+  "June-Sept": faUmbrellaBeach,
+};
+
+const TermSwitcher: React.FC<Props> = ({
+  activeTerm,
+  setActiveTerm,
+  terms,
+  style,
+}) => {
   return (
     <div style={style} className={styles.timelineTermSwitcher}>
       <ButtonGroup style={{ float: "right" }}>
-        <Button
-          data-tip data-for="Autumn"
-          className={styles.termSwitch}
-          active={term === "Autumn"}
-          onClick={() => setTerm("Autumn")}
-          variant="secondary">
-          <FontAwesomeIcon icon={faCanadianMapleLeaf} fixedWidth />
-          <ReactToolTip id="Autumn" place="top" effect="solid">Autumn</ReactToolTip>
-        </Button>
-
-        <Button
-          data-tip data-for="Spring"
-          className={styles.termSwitch}
-          active={term === "Spring"}
-          onClick={() => setTerm("Spring")}
-          variant="secondary">
-          <FontAwesomeIcon icon={faSeedling} fixedWidth />
-          <ReactToolTip id="Spring" place="top" effect="solid">Spring</ReactToolTip>
-        </Button>
-        <Button
-          data-tip data-for="Summer"
-          className={styles.termSwitch}
-          active={term === "Summer"}
-          onClick={() => setTerm("Summer")}
-          variant="secondary">
-          <FontAwesomeIcon icon={faSun} fixedWidth />
-          <ReactToolTip id="Summer" place="top" effect="solid">Summer</ReactToolTip>
-        </Button>
+        {terms
+          .filter((_, index) => index % 2 === 0)
+          .map((term) => (
+            <TermSwitcherButton
+              key={term.label}
+              term={term}
+              activeTerm={activeTerm}
+              setActiveTerm={setActiveTerm}
+            />
+          ))}
       </ButtonGroup>
       <ButtonGroup style={{ float: "right" }}>
-        <Button
-          data-tip data-for="Christmas"
-          className={styles.termSwitch}
-          active={term === "Christmas"}
-          onClick={() => setTerm("Christmas")}
-          variant="secondary">
-          <FontAwesomeIcon icon={faCandyCane} fixedWidth />
-          <ReactToolTip id="Christmas" place="bottom" effect="solid">Christmas</ReactToolTip>
-        </Button>
-        <Button
-          data-tip data-for="Easter"
-          className={styles.termSwitch}
-          active={term === "Easter"}
-          onClick={() => setTerm("Easter")}
-          variant="secondary">
-          <FontAwesomeIcon icon={faEgg} fixedWidth />
-          <ReactToolTip id="Easter" place="bottom" effect="solid">Easter</ReactToolTip>
-        </Button>
-        <Button
-          data-tip data-for="Jun-Sept"
-          className={styles.termSwitch}
-          active={term === "Jun-Sept"}
-          onClick={() => setTerm("Jun-Sept")}
-          variant="secondary">
-          <FontAwesomeIcon icon={faUmbrellaBeach} fixedWidth />
-          <ReactToolTip id="Jun-Sept" place="bottom" effect="solid">Jun-Sept</ReactToolTip>
-        </Button>
+        {terms
+          .filter((_, index) => index % 2 !== 0)
+          .map((term) => (
+            <TermSwitcherButton
+              key={term.label}
+              term={term}
+              activeTerm={activeTerm}
+              setActiveTerm={setActiveTerm}
+            />
+          ))}
       </ButtonGroup>
     </div>
-  )
-}
+  );
+};
 
-export default TermSwitcher
+export default TermSwitcher;
