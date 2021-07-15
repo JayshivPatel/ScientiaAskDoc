@@ -98,6 +98,9 @@ const StandardView: React.FC<StandardViewProps> = ({
   const KNOWN_NUMBER_OF_TERMS = 6
   const [activeTerm, setActiveTerm] = useState<Term>(getDefaultTerm())
   const [terms, setTerms] = useState<Term[]>([])
+
+  const [pdfURL, setPdfURL] = useState("")
+
   useEffect(() => {
     function getCurrentTerm(terms: Term[]): Term {
       const today = new Date().getTime()
@@ -226,7 +229,7 @@ const StandardView: React.FC<StandardViewProps> = ({
       <Suspense fallback={<LoadingScreen successful={<></>} />}>
         <Switch>
           <Redirect exact from="/" to="/modules" />
-          <Redirect exact from="/modules/:id" to="/modules/:id/dashboard" />
+          <Redirect exact from="/modules/:id" to="/modules/:id/resources" />
 
           <Route path="/dashboard">
             <Container className={classNames("pageContainer")}>
@@ -253,6 +256,59 @@ const StandardView: React.FC<StandardViewProps> = ({
                     moduleTitle={moduleTitle}
                     moduleID={props.match.params.id}
                   />
+                </Container>
+              )
+            }}
+          />
+
+          <Route
+            path="/modules/:id/resources/:category/:resourceIndex"
+            render={(props) => {
+
+              const onSuccessGetResource = (blob: any) => {
+                setPdfURL(URL.createObjectURL(blob))
+              }
+
+              const onSuccessGetResources = (data: { [k: string]: any }[]) => {
+                const resource = data.find(r => r.index == props.match.params.resourceIndex)
+                const resourceId = resource?.id || -1
+
+                request({
+                  url: api.MATERIALS_RESOURCES_FILE(resourceId),
+                  method: methods.GET,
+                  onSuccess: onSuccessGetResource,
+                  onError: (message) => console.log(`Failed to get resource: ${message}`),
+                  returnBlob: true
+                })
+              }
+              
+              if (pdfURL === "") {
+                request({
+                  url: api.MATERIALS_RESOURCES,
+                  method: methods.GET,
+                  body: {
+                      "year": year,
+                      "course": props.match.params.id,
+                      "category": props.match.params.category
+                  },
+                  onSuccess: onSuccessGetResources,
+                  onError: (message) => console.log(`Failed to obtain modules: ${message}`),
+                })
+              }
+
+              return (
+                <Container className={classNames("pageContainer")}>
+                  <iframe
+                    title="lol"
+                    src={pdfURL}
+                    style={{
+                      position: "absolute",
+                      height: "100vh",
+                      width: "65vw",
+                      overflow: "auto",
+                      border: "none",
+                    }}>
+                  </iframe>
                 </Container>
               )
             }}
