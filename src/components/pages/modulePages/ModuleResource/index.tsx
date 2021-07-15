@@ -60,8 +60,8 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
         title="PDF"
         src={pdfURL}
         className={window.innerWidth <= 1024 ?
-          styles.pdfViewer :
-          styles.pdfViewerMobile}
+          styles.pdfViewerMobile :
+          styles.pdfViewer}
         >
       </iframe>
   )
