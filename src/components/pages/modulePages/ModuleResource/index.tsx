@@ -19,7 +19,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
 
   const [pdfURL, setPdfURL] = useState("")
 
-  const onSuccessGetResources = (data: { [k: string]: any }[]) => {
+  const openResource = (data: { [k: string]: any }[]) => {
     const resource = data.find(r =>
       r.category === category && r.index == index)
     if (resource === undefined) {
@@ -50,7 +50,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
           "course": course,
           "category": category
       },
-      onSuccess: onSuccessGetResources,
+      onSuccess: openResource,
       onError: (message) => console.log(`Failed to obtain modules: ${message}`),
     })
   }
@@ -59,7 +59,9 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
       <iframe
         title="PDF"
         src={pdfURL}
-        className={styles.pdfViewer}
+        className={window.innerWidth <= 1024 ?
+          styles.pdfViewer :
+          styles.pdfViewerMobile}
         >
       </iframe>
   )
