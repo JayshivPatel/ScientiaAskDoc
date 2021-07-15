@@ -297,15 +297,14 @@ const StandardView: React.FC<StandardViewProps> = ({
               }
 
               return (
-                <Container className={classNames("pageContainer")}>
+                <Container className={classNames("pageContainer")} style={{display: "flex", justifyContent: "center"}}>
                   <iframe
                     title="lol"
                     src={pdfURL}
                     style={{
-                      position: "absolute",
-                      height: "100vh",
+                      height: "85vh",
                       width: "65vw",
-                      overflow: "auto",
+                      overflow: "hidden",
                       border: "none",
                     }}>
                   </iframe>
