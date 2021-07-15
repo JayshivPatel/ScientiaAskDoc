@@ -26,12 +26,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
       return
     }
     if (resource.type === "link" || resource.type === "video") {
-      // window.open(resource.path, "_blank")
-      let a = document.createElement("a")
-      a.target = "_blank"
-      a.href = resource.path
-      a.click()
-      a.remove()
+      window.open(resource.path, "_parent")
       return
     }
 
@@ -64,12 +59,8 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
       <iframe
         title="PDF"
         src={pdfURL}
-        style={{
-          height: "85vh",
-          width: "65vw",
-          overflow: "hidden",
-          border: "none",
-        }}>
+        className={styles.pdfViewer}
+        >
       </iframe>
   )
 }
