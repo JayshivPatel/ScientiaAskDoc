@@ -32,6 +32,9 @@ const ModuleList = React.lazy(() => import("./ModuleList"))
 const ModuleResources = React.lazy(
   () => import("./modulePages/ModuleResources")
 )
+const ModuleResource = React.lazy(
+  () => import("./modulePages/ModuleResource")
+)
 const ModuleFeedback = React.lazy(() => import("./modulePages/ModuleFeedback"))
 const ExamGrading = React.lazy(() => import("./exams/Grading"))
 const ExamPastPapers = React.lazy(() => import("./exams/PastPapers"))
@@ -98,8 +101,6 @@ const StandardView: React.FC<StandardViewProps> = ({
   const KNOWN_NUMBER_OF_TERMS = 6
   const [activeTerm, setActiveTerm] = useState<Term>(getDefaultTerm())
   const [terms, setTerms] = useState<Term[]>([])
-
-  const [pdfURL, setPdfURL] = useState("")
 
   useEffect(() => {
     function getCurrentTerm(terms: Term[]): Term {
@@ -262,52 +263,16 @@ const StandardView: React.FC<StandardViewProps> = ({
           />
 
           <Route
-            path="/modules/:id/resources/:category/:resourceIndex"
+            path="/modules/:id/resources/:category/:index"
             render={(props) => {
-
-              const onSuccessGetResource = (blob: any) => {
-                setPdfURL(URL.createObjectURL(blob))
-              }
-
-              const onSuccessGetResources = (data: { [k: string]: any }[]) => {
-                const resource = data.find(r => r.index == props.match.params.resourceIndex)
-                const resourceId = resource?.id || -1
-
-                request({
-                  url: api.MATERIALS_RESOURCES_FILE(resourceId),
-                  method: methods.GET,
-                  onSuccess: onSuccessGetResource,
-                  onError: (message) => console.log(`Failed to get resource: ${message}`),
-                  returnBlob: true
-                })
-              }
-              
-              if (pdfURL === "") {
-                request({
-                  url: api.MATERIALS_RESOURCES,
-                  method: methods.GET,
-                  body: {
-                      "year": year,
-                      "course": props.match.params.id,
-                      "category": props.match.params.category
-                  },
-                  onSuccess: onSuccessGetResources,
-                  onError: (message) => console.log(`Failed to obtain modules: ${message}`),
-                })
-              }
-
               return (
                 <Container className={classNames("pageContainer centerContents")}>
-                  <iframe
-                    title="PDF"
-                    src={pdfURL}
-                    style={{
-                      height: "85vh",
-                      width: "65vw",
-                      overflow: "hidden",
-                      border: "none",
-                    }}>
-                  </iframe>
+                  <ModuleResource
+                    year={year}
+                    course={props.match.params.id}
+                    category={props.match.params.category}
+                    index={props.match.params.index}
+                  />
                 </Container>
               )
             }}
