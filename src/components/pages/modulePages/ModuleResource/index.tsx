@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import styles from "./style.module.scss"
 import { request } from "utils/api"
 import { api, methods } from "../../../../constants/routes"
-import { useHistory } from 'react-router-dom'
 
 export interface ModuleResourceProps {
   year: string,
@@ -33,8 +33,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
       return
     }
 
-    const resourceId = resource?.id || -1
-
+    const resourceId = resource.id
     request({
       url: api.MATERIALS_RESOURCES_FILE(resourceId),
       method: methods.GET,
