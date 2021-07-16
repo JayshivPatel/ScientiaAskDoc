@@ -223,10 +223,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     return prompts
   }
 
-  handleResourceClick(id: number) {
-    openResource(this.state.resources, id)
-  }
-
   render() {
     let scope = this.props.scope || ""
     let studentViewResources = filterInvisibleResources(this.state.resources)
@@ -241,6 +237,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             resources={this.state.resources}
             searchText={this.state.searchText}
             includeInSearchResult={this.includeInSearchResult}
+            onRowClick={openResource}
           />
         )
       }
@@ -266,6 +263,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
                 searchText={this.state.searchText}
                 onDownloadClick={(ids) => this.handleFileDownload(ids)}
                 includeInSearchResult={this.includeInSearchResult}
+                onItemClick={openResource}
               />
 
               <QuickAccessView
@@ -273,6 +271,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
                 scope={scope}
                 searchText={this.state.searchText}
                 onDownloadClick={(ids) => this.handleFileDownload(ids)}
+                onItemClick={openResource}
               />
             </>
           )
@@ -286,6 +285,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               onSectionDownloadClick={(category) =>
                 this.handleSectionDownload(category)
               }
+              onItemClick={openResource}
               includeInSearchResult={this.includeInSearchResult}
             />
           )

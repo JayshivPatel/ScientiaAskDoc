@@ -8,7 +8,7 @@ import "./App.scss";
 import TopBar from "./navbars/TopBar";
 import BottomBar from "./navbars/BottomBar";
 import StandardView from "./pages";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { Router, Redirect, Route, Switch } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import SettingsModal from "./modals/SettingsModal";
 import EventModal from "./modals/EventModal";
@@ -16,6 +16,7 @@ import { CalendarEvent, TimelineEvent } from "constants/types";
 import authenticationService from "../utils/auth";
 import CalendarModal from "./modals/CalendarModal";
 import { TIMELINE_ACTIVE } from "constants/global";
+import history from 'history.js'
 
 type AppState = {
   toggledLeft: boolean;
@@ -163,7 +164,7 @@ class App extends React.Component<{}, AppState> {
           event={this.state.activeModalEvent}
           activeDay={TIMELINE_ACTIVE}
         />
-        <BrowserRouter>
+        <Router history={history}>
           <Switch>
             <Route path="/signin" component={SignIn} />
 
@@ -228,7 +229,7 @@ class App extends React.Component<{}, AppState> {
               }
             />
           </Switch>
-        </BrowserRouter>
+        </Router>
       </>
     );
   }
