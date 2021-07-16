@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styles from "./style.module.scss"
 import { request } from "utils/api"
 import { api, methods } from "../../../../constants/routes"
+import { useHistory } from 'react-router-dom'
 
 export interface ModuleResourceProps {
   year: string,
@@ -17,6 +18,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
   index,
 }) => {
 
+  let history = useHistory()
   const [pdfURL, setPdfURL] = useState("")
 
   const openResource = (data: { [k: string]: any }[]) => {
@@ -26,7 +28,8 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
       return
     }
     if (resource.type === "link" || resource.type === "video") {
-      window.open(resource.path, "_parent")
+      window.open(resource.path, "_blank")
+      history.goBack()
       return
     }
 

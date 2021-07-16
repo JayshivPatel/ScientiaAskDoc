@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button"
 import ButtonGroup from "react-bootstrap/ButtonGroup"
 import Col from "react-bootstrap/esm/Col"
 import Row from "react-bootstrap/esm/Row"
+import { useHistory } from "react-router-dom"
 
 import {faEdit} from "@fortawesome/free-regular-svg-icons"
 import {faDownload, faTrash, faUpload,} from "@fortawesome/free-solid-svg-icons"
@@ -29,7 +30,6 @@ export interface StaffViewProps {
   resources: Resource[]
   searchText: string
   includeInSearchResult: (item: Resource, searchText: string) => boolean
-  onRowClick: (id: number) => void
 }
 
 const StaffView: React.FC<StaffViewProps> = ({
@@ -40,11 +40,27 @@ const StaffView: React.FC<StaffViewProps> = ({
   resources,
   searchText,
   includeInSearchResult,
-  onRowClick,
 }) => {
   const [modal, setModal] = useState("")
   const [resourceID, setResourceID] = useState(-1)
   const [editResource, setEditResource] = useState<Resource>(resources[0])
+  let history = useHistory()
+
+  function openResource(id: number) {
+    const onSuccess = (data: any) => {
+      const course = data.course
+      const category = data.category
+      const index = data.index
+      history.push(`/modules/${course}/resources/${category}/${index}`)
+    }
+    request({
+      url: api.MATERIALS_RESOURCES_ID(id),
+      method: methods.GET,
+      onSuccess,
+      onError: (message) => console.log(`Failed to obtain data for resource ${id}: ${message}`),
+    })
+  }
+  
   const allClosed = () =>
     resources.reduce((map, resource) => {
       return {
@@ -225,7 +241,7 @@ const StaffView: React.FC<StaffViewProps> = ({
                     setShowMenus(newShowMenus)
                   }
                 }}
-                handleRowClick={onRowClick}
+                handleRowClick={openResource}
                 handleIconClick={(id) => {}}
                 handleMouseOver={(id) => {}}
                 handleMouseOut={(id) => {}}
