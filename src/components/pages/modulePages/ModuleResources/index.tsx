@@ -241,7 +241,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             resources={this.state.resources}
             searchText={this.state.searchText}
             includeInSearchResult={this.includeInSearchResult}
-            onRowClick={(id) => this.handleResourceClick(id)}
           />
         )
       }
@@ -266,7 +265,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
                 scope={scope}
                 searchText={this.state.searchText}
                 onDownloadClick={(ids) => this.handleFileDownload(ids)}
-                onItemClick={(id) => this.handleResourceClick(id)}
                 includeInSearchResult={this.includeInSearchResult}
               />
 
@@ -275,7 +273,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
                 scope={scope}
                 searchText={this.state.searchText}
                 onDownloadClick={(ids) => this.handleFileDownload(ids)}
-                onItemClick={(id) => this.handleResourceClick(id)}
               />
             </>
           )
@@ -289,7 +286,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               onSectionDownloadClick={(category) =>
                 this.handleSectionDownload(category)
               }
-              onItemClick={(id) => this.handleResourceClick(id)}
               includeInSearchResult={this.includeInSearchResult}
             />
           )
