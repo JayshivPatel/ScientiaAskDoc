@@ -9,7 +9,6 @@ export interface QuickAccessViewProps {
   searchText: string
   onDownloadClick: (identifiers: number[]) => void
   onItemClick: (identifier: number) => void
-
 }
 
 const QuickAccessView: React.FC<QuickAccessViewProps> = ({
