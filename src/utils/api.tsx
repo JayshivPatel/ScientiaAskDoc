@@ -72,7 +72,6 @@ export async function request(data: RequestData) {
 // Utility that downloads files fetched by request (assumes GET)
 export async function download(url: string, filename: string, body?: any) {
   const onSuccess = (blob: any) => {
-    // TODO: Try to navigate straight to the endpoint url instead of creating an object url
     let url = URL.createObjectURL(blob)
     let a = document.createElement("a")
     a.href = url

@@ -4,9 +4,6 @@ import CategoryList from "components/sections/CategoryList"
 import CategoryHeader from "components/headings/CategoryHeader"
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons"
 import { Folder, Resource } from "constants/types"
-import { api, methods } from "constants/routes"
-import { request } from "utils/api"
-import { useHistory } from "react-router-dom"
 
 export interface ListViewProps {
   folders: Folder[]
@@ -14,6 +11,7 @@ export interface ListViewProps {
   searchText: string
   onDownloadClick: (identifiers: number[]) => void
   onSectionDownloadClick: (title: string) => void
+  onItemClick: (identifier: number) => void
   includeInSearchResult: (item: Resource, searchText: string) => boolean
 }
 
@@ -22,27 +20,9 @@ const ListView: React.FC<ListViewProps> = ({
   resources,
   searchText,
   onDownloadClick,
+  onItemClick,
   includeInSearchResult,
 }) => {
-
-  let history = useHistory()
-
-  function openResource(id: number) {
-    const onSuccess = (data: any) => {
-      const course = data.course
-      const category = data.category
-      const index = data.index
-      history.push(`/modules/${course}/resources/${category}/${index}`)
-    }
-    request({
-      url: api.MATERIALS_RESOURCES_ID(id),
-      method: methods.GET,
-      onSuccess,
-      onError: (message) => console.log(`Failed to obtain data for resource ${id}: ${message}`),
-    })
-  }
-
-
   let filesContent: Resource[] = resources
   if (searchText !== "") {
     filesContent = filesContent.filter((item) =>
@@ -53,7 +33,7 @@ const ListView: React.FC<ListViewProps> = ({
   return (
     <SelectionView
       heading="Resources"
-      onItemClick={openResource}
+      onItemClick={onItemClick}
       onDownloadClick={onDownloadClick}
       selectionItems={filesContent}
       render={(select: SelectionProps) => (
