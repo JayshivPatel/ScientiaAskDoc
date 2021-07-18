@@ -204,21 +204,15 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       { name: "File", value: "type(file)" },
       { name: "Link", value: "type(link)" },
     ]
-    let tagsList = [
-      { name: "New", value: "tag(new)" },
-      { name: "Week 1", value: "tag(week 1)" },
-    ]
+    let tagsList: { name: string; value: string }[] = []
     const prompts = [
       { title: "Types", list: typesList },
       { title: "Tags", list: tagsList },
     ]
 
-    tags(this.state.resources)
-      .filter((tag) => tag.toLowerCase() !== "new")
-      .filter((tag) => !tag.toLowerCase().startsWith("week"))
-      .forEach((tag) => {
-        tagsList.push({ name: titleCase(tag), value: `tag(${tag})` })
-      })
+    tags(this.state.resources).forEach((tag) => {
+      tagsList.push({ name: titleCase(tag), value: `tag(${tag})` })
+    })
 
     return prompts
   }
@@ -300,9 +294,9 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       <>
         <Dandruff
           heading={
-            this.props.moduleTitle ?
-              `${this.props.moduleID} - ${this.props.moduleTitle}` :
-              this.props.moduleID
+            this.props.moduleTitle
+              ? `${this.props.moduleID} - ${this.props.moduleTitle}`
+              : this.props.moduleID
           }
         />
 
