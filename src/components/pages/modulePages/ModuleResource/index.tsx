@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styles from "./style.module.scss"
 import { request } from "utils/api"
@@ -42,20 +42,22 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
       returnBlob: true
     })
   }
-  
-  if (pdfURL === "") {
-    request({
-      url: api.MATERIALS_RESOURCES,
-      method: methods.GET,
-      body: {
-          "year": year,
-          "course": course,
-          "category": category
-      },
-      onSuccess: openResource,
-      onError: (message) => console.log(`Failed to obtain modules: ${message}`),
-    })
-  }
+
+  useEffect(() => {
+    if (pdfURL === "") {
+      request({
+        url: api.MATERIALS_RESOURCES,
+        method: methods.GET,
+        body: {
+            "year": year,
+            "course": course,
+            "category": category
+        },
+        onSuccess: openResource,
+        onError: (message) => console.log(`Failed to obtain modules: ${message}`),
+      })
+    }
+  })
 
   return (
       <iframe
