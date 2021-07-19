@@ -46,7 +46,7 @@ export function filterInvisibleResources(resources: Resource[]): Resource[] {
   )
 }
 
-export function openResource(id: number) {
+export function navigateToResource(id: number) {
   const onSuccess = (resource: Resource) => {
     const course = resource.course
     const category = resource.category
@@ -57,7 +57,8 @@ export function openResource(id: number) {
     url: api.MATERIALS_RESOURCES_ID(id),
     method: methods.GET,
     onSuccess,
-    onError: (message) => console.log(`Failed to obtain data for resource ${id}: ${message}`),
+    onError: (message: string) =>
+      console.log(`Failed to obtain data for resource ${id}: ${message}`),
   })
 }
 

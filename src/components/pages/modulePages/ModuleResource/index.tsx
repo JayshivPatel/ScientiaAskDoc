@@ -37,8 +37,8 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
     request({
       url: api.MATERIALS_RESOURCES_FILE(resourceId),
       method: methods.GET,
-      onSuccess: (blob: any) => setPdfURL(URL.createObjectURL(blob)),
-      onError: (message) => console.log(`Failed to get resource: ${message}`),
+      onSuccess: (blob: Blob) => setPdfURL(URL.createObjectURL(blob)),
+      onError: (message: string) => console.log(`Failed to get resource: ${message}`),
       returnBlob: true
     })
   }
