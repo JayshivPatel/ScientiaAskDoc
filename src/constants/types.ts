@@ -20,9 +20,10 @@ export interface Folder {
 
 export interface Resource {
   title: string;
+  course: string;
   type: "pdf" | "video" | "file" | "link";
   tags: string[];
-  folder: string;
+  category: string;
   id: number;
   downloads: number;
   index: number;

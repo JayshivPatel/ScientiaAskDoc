@@ -19,8 +19,8 @@ const QuickAccessView: React.FC<QuickAccessViewProps> = ({
   onItemClick,
 }) => {
   let quickAccessItems = resources.filter(
-    ({ tags, folder }) =>
-      tags.includes("new") && (scope === "" || scope === folder)
+    ({ tags, category }) =>
+      tags.includes("new") && (scope === "" || scope === category)
   )
 
   if (searchText === "" && scope === "" && quickAccessItems.length > 0) {

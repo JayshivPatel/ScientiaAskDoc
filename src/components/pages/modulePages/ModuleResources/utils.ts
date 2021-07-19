@@ -26,7 +26,7 @@ export function tags(resources: Resource[]) {
 
 export function folders(resources: Resource[]): Folder[] {
   return Array.from(
-    new Set<string>(resources.map((res: Resource) => res.folder))
+    new Set<string>(resources.map((res: Resource) => res.category))
   )
     .sort()
     .map((title, id) => ({ title: title, id: id }))
@@ -47,10 +47,10 @@ export function filterInvisibleResources(resources: Resource[]): Resource[] {
 }
 
 export function openResource(id: number) {
-  const onSuccess = (data: any) => {
-    const course = data.course
-    const category = data.category
-    const index = data.index
+  const onSuccess = (resource: Resource) => {
+    const course = resource.course
+    const category = resource.category
+    const index = resource.index
     history.push(`/modules/${course}/resources/${category}/${index}`)
   }
   request({
