@@ -78,10 +78,11 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
         }
         resourceArr.push({
           title: resource.title,
+          course: resource.course,
           type: altType || resource.type,
           tags: resource.tags,
           downloads: resource.downloads,
-          folder: resource.category,
+          category: resource.category,
           thumbnail: thumbnail,
           id: resource.id,
           path: resource.path,
@@ -153,7 +154,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     } else {
       // No endpoint for multiple category download, reuse zipped selection instead
       let resourceIds = this.state.resources
-        .filter((resource) => resource.folder in categories)
+        .filter((resource) => resource.category in categories)
         .map((resource) => resource.id)
       this.handleFileDownload(resourceIds)
     }

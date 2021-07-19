@@ -94,7 +94,7 @@ const StaffView: React.FC<StaffViewProps> = ({
 
   const titleDuplicated = (category: string, title: string): boolean => {
     return resources.some(
-      (resource) => resource.folder === category && resource.title === title
+      (resource) => resource.category === category && resource.title === title
     )
   }
 
@@ -215,7 +215,7 @@ const StaffView: React.FC<StaffViewProps> = ({
               <CategoryHeader heading={title} />
               <CategoryList
                 categoryItems={filesContent.filter(
-                  (res) => res.folder === title
+                  (res) => res.category === title
                 )}
                 resourceActions={resourceActions}
                 showMenus={showMenus}
