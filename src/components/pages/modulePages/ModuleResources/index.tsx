@@ -12,7 +12,7 @@ import queryString from "query-string"
 import StaffView from "./components/StaffView"
 
 import LoadingScreen from "components/suspense/LoadingScreen"
-import { filterInvisibleResources, folders, openResource, tags } from "./utils"
+import { filterInvisibleResources, folders, navigateToResource, tags } from "./utils"
 import { Resource } from "constants/types"
 import { titleCase } from "utils/functions"
 import Button from "react-bootstrap/esm/Button"
@@ -238,7 +238,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             resources={this.state.resources}
             searchText={this.state.searchText}
             includeInSearchResult={this.includeInSearchResult}
-            onRowClick={openResource}
+            onRowClick={navigateToResource}
           />
         )
       }
@@ -264,7 +264,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
                 searchText={this.state.searchText}
                 onDownloadClick={(ids) => this.handleFileDownload(ids)}
                 includeInSearchResult={this.includeInSearchResult}
-                onItemClick={openResource}
+                onItemClick={navigateToResource}
               />
 
               <QuickAccessView
@@ -272,7 +272,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
                 scope={scope}
                 searchText={this.state.searchText}
                 onDownloadClick={(ids) => this.handleFileDownload(ids)}
-                onItemClick={openResource}
+                onItemClick={navigateToResource}
               />
             </>
           )
@@ -286,7 +286,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               onSectionDownloadClick={(category) =>
                 this.handleSectionDownload(category)
               }
-              onItemClick={openResource}
+              onItemClick={navigateToResource}
               includeInSearchResult={this.includeInSearchResult}
             />
           )
