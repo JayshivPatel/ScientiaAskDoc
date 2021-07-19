@@ -23,7 +23,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
 
   const openResource = (data: { [k: string]: any }[]) => {
     const resource = data.find(r =>
-      r.category === category && r.index == index)
+      r.category === category && r.index === index)
     if (resource === undefined) {
       return
     }

@@ -271,7 +271,7 @@ const StandardView: React.FC<StandardViewProps> = ({
                     year={year}
                     course={props.match.params.id}
                     category={props.match.params.category}
-                    index={props.match.params.index}
+                    index={+props.match.params.index}
                   />
                 </Container>
               )
