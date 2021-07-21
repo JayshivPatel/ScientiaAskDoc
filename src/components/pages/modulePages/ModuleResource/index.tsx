@@ -21,7 +21,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
 
   let history = useHistory()
   const [pdfURL, setPdfURL] = useState("")
-  const [error, setError] = useState(false)
+  const [error, setError] = useState("")
 
   const openResource = (data: { [k: string]: any }[]) => {
     const resource = data.find(r =>
@@ -40,10 +40,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
       url: api.MATERIALS_RESOURCES_FILE(resourceId),
       method: methods.GET,
       onSuccess: (blob: Blob) => setPdfURL(URL.createObjectURL(blob)),
-      onError: (message: string) => {
-        console.log(`Failed to get resource: ${message}`)
-        setError(true)
-      },
+      onError: (message: string) => setError(message),
       returnBlob: true
     })
   }
@@ -59,16 +56,15 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
             "category": category
         },
         onSuccess: openResource,
-        onError: (message: string) => {
-          console.log(`Failed to obtain modules: ${message}`)
-          setError(true)
-        }
+      onError: (message: string) => setError(message),
       })
     }
   })
 
   if (error) {
-    return <WarningJumbotron message="There was an error fetching this resource." />
+    return <WarningJumbotron
+            message={`There was an error fetching this resource: ${error}`}
+           />
   }
   return (
       <iframe
