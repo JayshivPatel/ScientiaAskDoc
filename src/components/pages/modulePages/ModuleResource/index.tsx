@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styles from "./style.module.scss"
 import { request } from "utils/api"
-import { api, methods } from "../../../../constants/routes"
+import { api, methods } from "constants/routes"
 
 export interface ModuleResourceProps {
   year: string,
