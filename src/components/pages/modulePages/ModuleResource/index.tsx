@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styles from "./style.module.scss"
-import { request } from "utils/api"
+import WarningJumbotron from "components/suspense/WarningJumbotron"
 import { api, methods } from "constants/routes"
+import { request } from "utils/api"
 
 export interface ModuleResourceProps {
   year: string,
@@ -20,6 +21,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
 
   let history = useHistory()
   const [pdfURL, setPdfURL] = useState("")
+  const [error, setError] = useState(false)
 
   const openResource = (data: { [k: string]: any }[]) => {
     const resource = data.find(r =>
@@ -38,7 +40,10 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
       url: api.MATERIALS_RESOURCES_FILE(resourceId),
       method: methods.GET,
       onSuccess: (blob: Blob) => setPdfURL(URL.createObjectURL(blob)),
-      onError: (message: string) => console.log(`Failed to get resource: ${message}`),
+      onError: (message: string) => {
+        console.log(`Failed to get resource: ${message}`)
+        setError(true)
+      },
       returnBlob: true
     })
   }
@@ -54,11 +59,17 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
             "category": category
         },
         onSuccess: openResource,
-        onError: (message) => console.log(`Failed to obtain modules: ${message}`),
+        onError: (message: string) => {
+          console.log(`Failed to obtain modules: ${message}`)
+          setError(true)
+        }
       })
     }
   })
 
+  if (error) {
+    return <WarningJumbotron message="There was an error fetching this resource." />
+  }
   return (
       <iframe
         title="PDF"
