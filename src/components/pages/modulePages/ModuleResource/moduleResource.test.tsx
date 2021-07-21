@@ -3,6 +3,7 @@ import { mount } from "enzyme"
 import ModuleResource from "./index"
 import { api } from "constants/routes"
 import { RequestData } from "utils/api-types"
+import WarningJumbotron from "components/suspense/WarningJumbotron"
 
 jest.mock('utils/api')
 const apiCalling = require('utils/api')
@@ -44,22 +45,21 @@ const resourceData = [
   },
 ] 
 
+const year = "1920"
+const course = "40003"
+const category = "Lecture Notes"
+const index = 2
+
 global.URL.createObjectURL = jest.fn(() => 'blob://testurl');
 
-apiCalling.request = jest.fn((data: RequestData) => {
-  if (data.url === api.MATERIALS_RESOURCES) {
-    data.onSuccess(resourceData)
-  } else {
-    data.onSuccess(new Blob())
-  }
-})
-
 describe("<ModuleResource />", () => {
-  const year = "1920"
-  const course = "40003"
-  const category = "Lecture Notes"
-  const index = 2
-
+  apiCalling.request = jest.fn((data: RequestData) => {
+    if (data.url === api.MATERIALS_RESOURCES) {
+      data.onSuccess(resourceData)
+    } else {
+      data.onSuccess(new Blob())
+    }
+  })
 
   const wrapper = mount(
       <ModuleResource
@@ -72,5 +72,24 @@ describe("<ModuleResource />", () => {
 
   it("loads pdf url", async () => {
     expect(wrapper.find("iframe").prop("src")).toBe("blob://testurl")
+  })
+})
+
+describe("<ModuleResource />", () => {
+  apiCalling.request = jest.fn((data: RequestData) => {
+    data.onError("There was an error!")
+  })
+
+  const wrapper = mount(
+      <ModuleResource
+        year={year}
+        course={course}
+        category={category}
+        index={index}
+      />
+  )
+
+  it("warns user on error", async () => {
+    expect(wrapper.find(WarningJumbotron).exists()).toBeTruthy()
   })
 })
