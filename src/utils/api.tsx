@@ -1,18 +1,9 @@
 import authConstants from "constants/auth"
 import { methods } from "constants/routes"
+import { RequestData } from "./api-types"
 
 interface RequestOptions {
   [key: string]: any
-}
-
-export interface RequestData {
-  url: string
-  method: string
-  onSuccess: any
-  onError: (message: string) => void
-  body?: any
-  sendFile?: boolean
-  returnBlob?: boolean
 }
 
 // API calling interface. onSuccess and onError are functions that take in data
