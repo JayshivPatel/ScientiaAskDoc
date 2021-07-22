@@ -8,10 +8,10 @@ import ModuleRows from "./components/ModuleRows";
 describe("<TimeLine />", () => {
   const modules: Module[] = [
     {
-      canManage: false,
+      can_manage: false,
       code: "60020",
       content: "",
-      hasMaterials: false,
+      has_materials: false,
       progressPercent: 7,
       progressStatus: ProgressStatus.IN_PROGRESS,
       subscriptionLevel: 1,
@@ -19,10 +19,10 @@ describe("<TimeLine />", () => {
       title: "Simulation and Modelling",
     },
     {
-      canManage: false,
+      can_manage: false,
       code: "60021",
       content: "",
-      hasMaterials: false,
+      has_materials: false,
       progressPercent: 7,
       progressStatus: ProgressStatus.IN_PROGRESS,
       subscriptionLevel: 1,

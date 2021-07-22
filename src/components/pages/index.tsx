@@ -73,13 +73,13 @@ const StandardView: React.FC<StandardViewProps> = ({
   const [timelineEvents, setTimelineEvents] = useState<TimelineEventDict>({})
   const [modulesTracks, setModulesTracks] = useState<ModuleTracks>({})
   useEffect(() => {
-    const onSuccess = (data: { [k: string]: any }[]) => {
+    const onSuccess = (modules: Module[]) => {
       setModules(
-        data.map((module) => ({
+        modules.map((module) => ({
           title: module.title,
           code: year < YEAR_OF_NEW_CODES ? `CO${module.code}` : module.code,
-          canManage: module.can_manage,
-          hasMaterials: module.has_materials,
+          can_manage: module.can_manage,
+          has_materials: module.has_materials,
           // Hardcoded stuff, we don't have this data currently
           terms: ["Autumn", "Spring", "Summer"],
           progressPercent: Math.floor(Math.random() * 100),
@@ -286,7 +286,7 @@ const StandardView: React.FC<StandardViewProps> = ({
                   ?.title || ""
               let canManage =
                 modules.find((module) => module.code === props.match.params.id)
-                  ?.canManage || false
+                  ?.can_manage || false
               return (
                 <Container className={classNames("pageContainer")}>
                   <ModuleResources
