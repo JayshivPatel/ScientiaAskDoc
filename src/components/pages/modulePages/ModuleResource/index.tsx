@@ -27,24 +27,21 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
   const openResource = (resources: Resource[]) => {
     const resource = resources.find(r =>
       r.category === category && r.index === index)
-    if (resource === undefined) {
-      return
+    if (resource) {
+      if (resource.type === "link" || resource.type === "video") {
+        window.open(resource.path, "_blank")
+        history.goBack()
+      } else {
+        request({
+          url: api.MATERIALS_RESOURCES_FILE(resource.id),
+          method: methods.GET,
+          onSuccess: (blob: Blob) => setPdfURL(URL.createObjectURL(blob)),
+          onError: (message: string) => setError(message),
+          returnBlob: true
+        })
+      }
     }
-    if (resource.type === "link" || resource.type === "video") {
-      window.open(resource.path, "_blank")
-      history.goBack()
-      return
-    }
-
-    const resourceId = resource.id
-    request({
-      url: api.MATERIALS_RESOURCES_FILE(resourceId),
-      method: methods.GET,
-      onSuccess: (blob: Blob) => setPdfURL(URL.createObjectURL(blob)),
-      onError: (message: string) => setError(message),
-      returnBlob: true
-    })
-  }
+}
 
   useEffect(() => {
     if (pdfURL === "") {
