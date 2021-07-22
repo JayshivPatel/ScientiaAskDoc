@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import styles from "./style.module.scss"
 import WarningJumbotron from "components/suspense/WarningJumbotron"
 import { api, methods } from "constants/routes"
+import { Resource } from "constants/types"
 import { request } from "utils/api"
 
 export interface ModuleResourceProps {
@@ -23,8 +24,8 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
   const [pdfURL, setPdfURL] = useState("")
   const [error, setError] = useState("")
 
-  const openResource = (data: { [k: string]: any }[]) => {
-    const resource = data.find(r =>
+  const openResource = (resources: Resource[]) => {
+    const resource = resources.find(r =>
       r.category === category && r.index === index)
     if (resource === undefined) {
       return
