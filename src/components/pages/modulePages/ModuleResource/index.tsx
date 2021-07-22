@@ -41,7 +41,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
         })
       }
     }
-}
+  }
 
   useEffect(() => {
     if (pdfURL === "") {
