@@ -54,11 +54,8 @@ global.URL.createObjectURL = jest.fn(() => 'blob://testurl');
 
 describe("<ModuleResource />", () => {
   apiCalling.request = jest.fn((data: RequestData) => {
-    if (data.url === api.MATERIALS_RESOURCES) {
-      data.onSuccess(resourceData)
-    } else {
-      data.onSuccess(new Blob())
-    }
+    if (data.url === api.MATERIALS_RESOURCES) data.onSuccess(resourceData)
+    else data.onSuccess(new Blob())
   })
 
   const wrapper = mount(
