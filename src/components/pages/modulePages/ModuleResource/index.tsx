@@ -59,20 +59,25 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
     }
   })
 
+  const cssClass = window.innerWidth <= 1024 ?
+    styles.moduleResourceMobile :
+    styles.moduleResource
+
   if (error) {
-    return <WarningJumbotron
-            message={`There was an error fetching this resource: ${error}`}
-           />
+    return (
+      <div className={cssClass}>
+        <WarningJumbotron
+          message={`There was an error fetching this resource: ${error}`}
+        />
+      </div>
+    )
   }
   return (
-      <iframe
-        title="PDF"
-        src={pdfURL}
-        className={window.innerWidth <= 1024 ?
-          styles.pdfViewerMobile :
-          styles.pdfViewer}
-        >
-      </iframe>
+    <iframe
+      title="PDF"
+      src={pdfURL}
+      className={cssClass}
+    />
   )
 }
 
