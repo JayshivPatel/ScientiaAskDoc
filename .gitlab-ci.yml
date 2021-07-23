@@ -25,7 +25,7 @@ unit_test:
 build_docker:
   stage: build
   only:
-    - production@edtech/scientia
+    - master@edtech/scientia
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
   tags:
@@ -42,7 +42,7 @@ build_docker:
 deploy prod:
   stage: deploy
   only:
-    - production@edtech/scientia
+    - master@edtech/scientia
   when: manual
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
