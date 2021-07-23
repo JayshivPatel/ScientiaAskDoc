@@ -2,13 +2,13 @@ import React from "react"
 import ReactDOM from "react-dom"
 import App from "./components/App"
 import * as serviceWorker from "./serviceWorker"
-import { BrowserRouter as Router } from "react-router-dom"
+import { BrowserRouter } from "react-router-dom"
 
 ReactDOM.render(
   <React.Fragment>
-    <Router>
+    <BrowserRouter>
       <App />
-    </Router>
+    </BrowserRouter>
   </React.Fragment>,
   document.getElementById("root")
 )

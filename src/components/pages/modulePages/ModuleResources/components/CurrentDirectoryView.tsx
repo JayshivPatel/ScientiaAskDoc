@@ -22,7 +22,7 @@ const CurrentDirectoryView: React.FC<CurrentDirectoryViewProps> = ({
 }) => {
   let filesContent: Resource[] = resources
   if (scope !== "") {
-    filesContent = filesContent.filter(({ folder }) => folder === scope)
+    filesContent = filesContent.filter(({ category }) => category === scope)
   }
   if (searchText !== "") {
     filesContent = filesContent.filter((item) =>
