@@ -85,3 +85,11 @@ export async function download(url: string, filename: string, body?: any) {
     body,
   })
 }
+
+export function downloadBlob(blob_url: string, filename: string) {
+  let a = document.createElement("a")
+  a.href = blob_url
+  a.download = filename
+  a.click()
+  a.remove()
+}
