@@ -98,7 +98,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
       <iframe
         title="PDF"
         src={pdfInfo.blob_url}
-        className={cssClass}
+        className={styles.pdfViewer}
       />
     </div>
   )

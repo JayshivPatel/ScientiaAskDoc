@@ -1,13 +1,15 @@
 .moduleResource {
   height: 85vh;
   width: 65vw;
-  overflow: hidden;
-  border: none;
 }
 
 .moduleResourceMobile {
   height: 85vh;
   width: 100vw;
-  overflow: hidden;
+}
+
+.pdfViewer {
+  height: 100%;
+  width: 100%;
   border: none;
 }
