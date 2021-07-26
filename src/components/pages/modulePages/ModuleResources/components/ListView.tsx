@@ -40,7 +40,7 @@ const ListView: React.FC<ListViewProps> = ({
         <>
           {folders.map(({ title, id }) => {
             let categoryItems = filesContent.filter(
-              (res) => res.folder === title
+              (res) => res.category === title
             )
             function isAllSelected(): boolean {
               let isSelected = select.state.isSelected

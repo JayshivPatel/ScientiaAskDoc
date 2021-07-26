@@ -9,6 +9,7 @@ import { request } from "../../../../utils/api"
 import { api, methods } from "../../../../constants/routes"
 import { Resource, Folder } from "constants/types"
 import { DEFAULT_CATEGORY } from "../../../../constants/global"
+import history from 'history.js'
 
 export function tags(resources: Resource[]) {
   let tagSet = new Set<string>()
@@ -25,7 +26,7 @@ export function tags(resources: Resource[]) {
 
 export function folders(resources: Resource[]): Folder[] {
   return Array.from(
-    new Set<string>(resources.map((res: Resource) => res.folder))
+    new Set<string>(resources.map((res: Resource) => res.category))
   )
     .sort()
     .map((title, id) => ({ title: title, id: id }))
@@ -45,35 +46,19 @@ export function filterInvisibleResources(resources: Resource[]): Resource[] {
   )
 }
 
-export function openResource(resources: Resource[], id: number) {
-  let resource = resources.find((resource) => resource.id === id)
-  if (resource === undefined) {
-    return
-  }
-  if (resource.type === "link" || resource.type === "video") {
-    window.open(resource.path, "_blank")
-    return
-  }
-
-  // Resource is of file type, get from Materials
-  const onSuccess = (blob: any) => {
-    // TODO: Try to navigate straight to the endpoint url instead of creating an object url
-    let url = URL.createObjectURL(blob)
-    let a = document.createElement("a")
-    a.target = "_blank"
-    a.href = url
-    a.click()
-    a.remove()
-  }
-  const onError = (message: string) => {
-    console.log(message)
+export function navigateToResource(id: number) {
+  const onSuccess = (resource: Resource) => {
+    const course = resource.course
+    const category = resource.category
+    const index = resource.index
+    history.push(`/modules/${course}/resources/${category}/${index}`)
   }
   request({
-    url: api.MATERIALS_RESOURCES_FILE(id),
+    url: api.MATERIALS_RESOURCES_ID(id),
     method: methods.GET,
     onSuccess,
-    onError,
-    returnBlob: true,
+    onError: (message: string) =>
+      console.log(`Failed to obtain data for resource ${id}: ${message}`),
   })
 }
 

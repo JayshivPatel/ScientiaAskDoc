@@ -56,7 +56,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
       }}
     >
       <Card
-        border={!module.hasMaterials ? "danger" : ""}
+        border={!module.has_materials ? "danger" : ""}
         className={classNames(styles.moduleCard)}
         as={Link}
         to={`modules/${module.code}`}

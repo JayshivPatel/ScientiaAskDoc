@@ -32,6 +32,9 @@ const ModuleList = React.lazy(() => import("./ModuleList"))
 const ModuleResources = React.lazy(
   () => import("./modulePages/ModuleResources")
 )
+const ModuleResource = React.lazy(
+  () => import("./modulePages/ModuleResource")
+)
 const ModuleFeedback = React.lazy(() => import("./modulePages/ModuleFeedback"))
 const ExamGrading = React.lazy(() => import("./exams/Grading"))
 const ExamPastPapers = React.lazy(() => import("./exams/PastPapers"))
@@ -70,13 +73,13 @@ const StandardView: React.FC<StandardViewProps> = ({
   const [timelineEvents, setTimelineEvents] = useState<TimelineEventDict>({})
   const [modulesTracks, setModulesTracks] = useState<ModuleTracks>({})
   useEffect(() => {
-    const onSuccess = (data: { [k: string]: any }[]) => {
+    const onSuccess = (modules: Module[]) => {
       setModules(
-        data.map((module) => ({
+        modules.map((module) => ({
           title: module.title,
           code: year < YEAR_OF_NEW_CODES ? `CO${module.code}` : module.code,
-          canManage: module.can_manage,
-          hasMaterials: module.has_materials,
+          can_manage: module.can_manage,
+          has_materials: module.has_materials,
           // Hardcoded stuff, we don't have this data currently
           terms: ["Autumn", "Spring", "Summer"],
           progressPercent: Math.floor(Math.random() * 100),
@@ -98,6 +101,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   const KNOWN_NUMBER_OF_TERMS = 6
   const [activeTerm, setActiveTerm] = useState<Term>(getDefaultTerm())
   const [terms, setTerms] = useState<Term[]>([])
+
   useEffect(() => {
     function getCurrentTerm(terms: Term[]): Term {
       const today = new Date().getTime()
@@ -226,7 +230,7 @@ const StandardView: React.FC<StandardViewProps> = ({
       <Suspense fallback={<LoadingScreen successful={<></>} />}>
         <Switch>
           <Redirect exact from="/" to="/modules" />
-          <Redirect exact from="/modules/:id" to="/modules/:id/dashboard" />
+          <Redirect exact from="/modules/:id" to="/modules/:id/resources" />
 
           <Route path="/dashboard">
             <Container className={classNames("pageContainer")}>
@@ -259,6 +263,22 @@ const StandardView: React.FC<StandardViewProps> = ({
           />
 
           <Route
+            path="/modules/:id/resources/:category/:index"
+            render={(props) => {
+              return (
+                <Container className={classNames("pageContainer centerContents")}>
+                  <ModuleResource
+                    year={year}
+                    course={props.match.params.id}
+                    category={props.match.params.category}
+                    index={+props.match.params.index}
+                  />
+                </Container>
+              )
+            }}
+          />
+
+          <Route
             path="/modules/:id/resources/:scope?"
             render={(props) => {
               let moduleTitle =
@@ -266,7 +286,7 @@ const StandardView: React.FC<StandardViewProps> = ({
                   ?.title || ""
               let canManage =
                 modules.find((module) => module.code === props.match.params.id)
-                  ?.canManage || false
+                  ?.can_manage || false
               return (
                 <Container className={classNames("pageContainer")}>
                   <ModuleResources

@@ -12,7 +12,7 @@ import queryString from "query-string"
 import StaffView from "./components/StaffView"
 
 import LoadingScreen from "components/suspense/LoadingScreen"
-import { filterInvisibleResources, folders, openResource, tags } from "./utils"
+import { filterInvisibleResources, folders, navigateToResource, tags } from "./utils"
 import { Resource } from "constants/types"
 import { titleCase } from "utils/functions"
 import Button from "react-bootstrap/esm/Button"
@@ -78,10 +78,11 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
         }
         resourceArr.push({
           title: resource.title,
+          course: resource.course,
           type: altType || resource.type,
           tags: resource.tags,
           downloads: resource.downloads,
-          folder: resource.category,
+          category: resource.category,
           thumbnail: thumbnail,
           id: resource.id,
           path: resource.path,
@@ -153,7 +154,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     } else {
       // No endpoint for multiple category download, reuse zipped selection instead
       let resourceIds = this.state.resources
-        .filter((resource) => resource.folder in categories)
+        .filter((resource) => resource.category in categories)
         .map((resource) => resource.id)
       this.handleFileDownload(resourceIds)
     }
@@ -217,10 +218,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     return prompts
   }
 
-  handleResourceClick(id: number) {
-    openResource(this.state.resources, id)
-  }
-
   render() {
     let scope = this.props.scope || ""
     let studentViewResources = filterInvisibleResources(this.state.resources)
@@ -235,7 +232,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             resources={this.state.resources}
             searchText={this.state.searchText}
             includeInSearchResult={this.includeInSearchResult}
-            onRowClick={(id) => this.handleResourceClick(id)}
+            onRowClick={navigateToResource}
           />
         )
       }
@@ -260,8 +257,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
                 scope={scope}
                 searchText={this.state.searchText}
                 onDownloadClick={(ids) => this.handleFileDownload(ids)}
-                onItemClick={(id) => this.handleResourceClick(id)}
                 includeInSearchResult={this.includeInSearchResult}
+                onItemClick={navigateToResource}
               />
 
               <QuickAccessView
@@ -269,7 +266,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
                 scope={scope}
                 searchText={this.state.searchText}
                 onDownloadClick={(ids) => this.handleFileDownload(ids)}
-                onItemClick={(id) => this.handleResourceClick(id)}
+                onItemClick={navigateToResource}
               />
             </>
           )
@@ -283,7 +280,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               onSectionDownloadClick={(category) =>
                 this.handleSectionDownload(category)
               }
-              onItemClick={(id) => this.handleResourceClick(id)}
+              onItemClick={navigateToResource}
               includeInSearchResult={this.includeInSearchResult}
             />
           )

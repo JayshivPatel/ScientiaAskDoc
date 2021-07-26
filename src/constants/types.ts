@@ -20,9 +20,10 @@ export interface Folder {
 
 export interface Resource {
   title: string;
+  course: string;
   type: "pdf" | "video" | "file" | "link";
   tags: string[];
-  folder: string;
+  category: string;
   id: number;
   downloads: number;
   index: number;
@@ -43,8 +44,8 @@ export interface BasicResource {
 export interface Module {
   title: string;
   code: string;
-  canManage?: boolean;
-  hasMaterials?: boolean;
+  can_manage?: boolean;
+  has_materials?: boolean;
   terms: OldTerm[];
   progressStatus: ProgressStatus;
   progressPercent: number;

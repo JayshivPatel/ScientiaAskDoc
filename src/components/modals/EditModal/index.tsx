@@ -89,7 +89,7 @@ const EditModal: React.FC<EditModalProps> = ({
             categories={categories}
             defaultTitle={resource.title}
             defaultURL={resource.path}
-            defaultCategory={resource.folder}
+            defaultCategory={resource.category}
             defaultTags={resource.tags.filter(tag => tag !== "new")}
             defaultVisibleAfter={resource.visible_after}
             handleInvalidDetails={setCanSubmitChanges}
