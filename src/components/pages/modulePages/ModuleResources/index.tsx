@@ -147,7 +147,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
   handleFolderDownload(ids: number[]) {
     let categories = folders(this.state.resources)
-      .filter((folder) => folder.id in ids)
+      .filter((folder) => ids.includes(folder.id))
       .map((folder) => folder.title)
     if (categories.length === 1) {
       this.handleSectionDownload(categories[0])
