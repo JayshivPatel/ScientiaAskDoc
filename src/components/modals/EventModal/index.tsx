@@ -1,70 +1,70 @@
-import React from "react";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import styles from "./style.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react"
+import Modal from "react-bootstrap/Modal"
+import Button from "react-bootstrap/Button"
+import styles from "./style.module.scss"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faBullhorn,
   faCheckCircle,
   faEnvelope,
   faExclamationCircle,
   faTimes,
-} from "@fortawesome/free-solid-svg-icons";
-import { TimelineEvent } from "constants/types";
-import { toDayCount, toEventDateTime } from "utils/functions";
+} from "@fortawesome/free-solid-svg-icons"
+import { TimelineEvent } from "constants/types"
+import { toDayCount, toEventDateTime } from "utils/functions"
 
 interface Props {
-  event?: TimelineEvent;
-  show: boolean;
-  onHide: any;
-  activeDay: Date;
+  event?: TimelineEvent
+  show: boolean
+  onHide: any
+  activeDay: Date
 }
 
 const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
-  if (!event) return null;
-  const timeLeft = toDayCount(event.endDate) - toDayCount(activeDay);
-  let assessmentStyle = styles.blueCard;
-  let icon = undefined;
-  let borderColour = "transparent";
-  let displayText: string;
+  if (!event) return null
+  const timeLeft = toDayCount(event.endDate) - toDayCount(activeDay)
+  let assessmentStyle = styles.blueCard
+  let icon = undefined
+  let borderColour = "transparent"
+  let displayText: string
   switch (event.assessment) {
     case "required":
-      assessmentStyle = styles.blueCard;
-      displayText = "Unassessed Submission";
-      break;
+      assessmentStyle = styles.blueCard
+      displayText = "Unassessed Submission"
+      break
     case "assessed":
-      assessmentStyle = styles.tealCard;
-      displayText = "Individual Assessed";
-      break;
+      assessmentStyle = styles.tealCard
+      displayText = "Individual Assessed"
+      break
     case "group":
-      assessmentStyle = styles.redCard;
-      displayText = "Group Assessed";
-      break;
+      assessmentStyle = styles.redCard
+      displayText = "Group Assessed"
+      break
     case "unassessed":
-      assessmentStyle = styles.cyanCard;
-      displayText = "Unassessed";
-      break;
+      assessmentStyle = styles.cyanCard
+      displayText = "Unassessed"
+      break
     case "exam":
-      assessmentStyle = styles.indigoCard;
-      displayText = "Written Exam";
-      break;
+      assessmentStyle = styles.indigoCard
+      displayText = "Written Exam"
+      break
   }
   switch (event.status) {
     case "due":
-      borderColour = "var(--primary-text-color)";
-      break;
+      borderColour = "var(--primary-text-color)"
+      break
     case "unreleased":
-      break;
+      break
     case "late":
-      borderColour = "var(--primary-text-color)";
-      icon = faBullhorn;
-      break;
+      borderColour = "var(--primary-text-color)"
+      icon = faBullhorn
+      break
     case "missed":
-      icon = faExclamationCircle;
-      break;
+      icon = faExclamationCircle
+      break
     case "complete":
-      icon = faCheckCircle;
-      break;
+      icon = faCheckCircle
+      break
   }
   return (
     <Modal
@@ -72,22 +72,19 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
       dialogClassName={styles.modal}
       show={show}
       onHide={onHide}
-      centered
-    >
+      centered>
       <Modal.Header className={styles.modalHeader}>
         <Button
           variant="secondary"
           className={styles.sectionHeaderButton}
           href={`mailto:${event.owner}@ic.ac.uk?subject=Regarding ${event.title}`}
-          target="_blank"
-        >
+          target="_blank">
           <FontAwesomeIcon className={styles.buttonIcon} icon={faEnvelope} />
         </Button>
         <Button
           variant="secondary"
           className={styles.sectionHeaderButton}
-          onClick={onHide}
-        >
+          onClick={onHide}>
           <FontAwesomeIcon className={styles.buttonIcon} icon={faTimes} />
         </Button>
       </Modal.Header>
@@ -98,8 +95,7 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
           <div className={assessmentStyle}>{displayText}</div>
           <div
             className={styles.eventInfoElement}
-            style={{ borderColor: borderColour }}
-          >
+            style={{ borderColor: borderColour }}>
             {event.status}
             {icon && <FontAwesomeIcon className={styles.icon} icon={icon} />}
           </div>
@@ -113,7 +109,7 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
           <span className={styles.endDate}>
             {toEventDateTime(event.endDate)}
           </span>
-          {event.status !== "unreleased" && timeLeft >= 0 && (
+          {event.status === "due" && timeLeft >= 0 && (
             <>
               <span className={styles.daysHeading}>Due In:</span>
               <span className={styles.daysLeft}>{`${timeLeft} days`}</span>
@@ -141,7 +137,7 @@ const EventModal: React.FC<Props> = ({ event, show, onHide, activeDay }) => {
       {/*</Modal.Footer>*/}
       {/*)}*/}
     </Modal>
-  );
-};
+  )
+}
 
-export default EventModal;
+export default EventModal
