@@ -88,4 +88,5 @@ export function downloadBlob(blob_url: string, filename: string) {
   a.download = filename
   a.click()
   a.remove()
+  return a
 }
