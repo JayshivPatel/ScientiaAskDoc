@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import Button from "react-bootstrap/Button"
+import { faDownload } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import styles from "./style.module.scss"
 import WarningJumbotron from "components/suspense/WarningJumbotron"
 import { api, methods } from "constants/routes"
 import { Resource } from "constants/types"
-import { request } from "utils/api"
+import { downloadBlob, request } from "utils/api"
 
 export interface ModuleResourceProps {
   year: string,
@@ -21,7 +24,11 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
 }) => {
 
   let history = useHistory()
-  const [pdfURL, setPdfURL] = useState("")
+  const [pdfInfo, setPdfInfo] = useState({
+    filename: "",
+    api_url: "",
+    blob_url: ""
+  })
   const [error, setError] = useState("")
 
   const openResource = (resources: Resource[]) => {
@@ -35,7 +42,11 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
         request({
           url: api.MATERIALS_RESOURCES_FILE(resource.id),
           method: methods.GET,
-          onSuccess: (blob: Blob) => setPdfURL(URL.createObjectURL(blob)),
+          onSuccess: (blob: Blob) => setPdfInfo({
+            filename: resource.title,
+            api_url: api.MATERIALS_RESOURCES_FILE(resource.id),
+            blob_url: URL.createObjectURL(blob)
+          }),
           onError: (message: string) => setError(message),
           returnBlob: true
         })
@@ -44,7 +55,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
   }
 
   useEffect(() => {
-    if (pdfURL === "") {
+    if (pdfInfo.filename === "") {
       request({
         url: api.MATERIALS_RESOURCES,
         method: methods.GET,
@@ -73,11 +84,23 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
     )
   }
   return (
-    <iframe
-      title="PDF"
-      src={pdfURL}
-      className={cssClass}
-    />
+    <div className={cssClass}>
+      <Button
+        onClick={() => {
+          downloadBlob(pdfInfo.blob_url, pdfInfo.filename)
+        }}
+      >
+        Download
+        <FontAwesomeIcon
+          icon={faDownload}
+        />
+      </Button>
+      <iframe
+        title="PDF"
+        src={pdfInfo.blob_url}
+        className={styles.pdfViewer}
+      />
+    </div>
   )
 }
 
