@@ -63,12 +63,8 @@ export async function request(data: RequestData) {
 // Utility that downloads files fetched by request (assumes GET)
 export async function download(url: string, filename: string, body?: any) {
   const onSuccess = (blob: any) => {
-    let url = URL.createObjectURL(blob)
-    let a = document.createElement("a")
-    a.href = url
-    a.download = filename
-    a.click()
-    a.remove()
+    let blob_url = URL.createObjectURL(blob)
+    downloadBlob(blob_url, filename)
   }
 
   const onError = (message: string) => {
@@ -84,4 +80,13 @@ export async function download(url: string, filename: string, body?: any) {
     returnBlob: true,
     body,
   })
+}
+
+export function downloadBlob(blob_url: string, filename: string) {
+  let a = document.createElement("a")
+  a.href = blob_url
+  a.download = filename
+  a.click()
+  a.remove()
+  return a
 }
