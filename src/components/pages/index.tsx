@@ -10,7 +10,6 @@ import {
   ProgressStatus,
   Term,
   TimelineEvent,
-  TimelineEventDict,
 } from "constants/types"
 import Container from "react-bootstrap/esm/Container"
 import LoadingScreen from "components/suspense/LoadingScreen"
@@ -19,8 +18,6 @@ import LeftBar from "components/navbars/LeftBar"
 import { request } from "../../utils/api"
 import { api, methods } from "../../constants/routes"
 import { YEAR_OF_NEW_CODES } from "../../constants/doc"
-import { ModuleTracks } from "./Timeline"
-import { dateNeutralized, toDayCount } from "../../utils/functions"
 import getDefaultTerm from "./Timeline/defaultTerms"
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"))
@@ -32,9 +29,7 @@ const ModuleList = React.lazy(() => import("./ModuleList"))
 const ModuleResources = React.lazy(
   () => import("./modulePages/ModuleResources")
 )
-const ModuleResource = React.lazy(
-  () => import("./modulePages/ModuleResource")
-)
+const ModuleResource = React.lazy(() => import("./modulePages/ModuleResource"))
 const ModuleFeedback = React.lazy(() => import("./modulePages/ModuleFeedback"))
 const ExamGrading = React.lazy(() => import("./exams/Grading"))
 const ExamPastPapers = React.lazy(() => import("./exams/PastPapers"))
@@ -70,8 +65,6 @@ const StandardView: React.FC<StandardViewProps> = ({
   const [modulesFilter, setModulesFilter] = useState("In Progress")
   const [timelineTerm, setTimelineTerm] = useState<OldTerm>("Autumn")
   const [modules, setModules] = useState<Module[]>([])
-  const [timelineEvents, setTimelineEvents] = useState<TimelineEventDict>({})
-  const [modulesTracks, setModulesTracks] = useState<ModuleTracks>({})
   useEffect(() => {
     const onSuccess = (modules: Module[]) => {
       setModules(
@@ -141,71 +134,6 @@ const StandardView: React.FC<StandardViewProps> = ({
     })
   }, [year])
 
-  const eventsOverlaps = (e1: TimelineEvent, e2: TimelineEvent) => {
-    return (
-      toDayCount(e1.startDate) <= toDayCount(e2.endDate) &&
-      toDayCount(e1.endDate) >= toDayCount(e2.startDate)
-    )
-  }
-
-  function applyExercisesToTimeline(
-    newEvents: { [pair: string]: TimelineEvent[] },
-    moduleCode: string
-  ) {
-    return (exercises: TimelineEvent[]) => {
-      if (exercises) {
-        newEvents[moduleCode] = []
-        exercises.forEach((exercise) => {
-          newEvents[moduleCode][exercise.id] = dateNeutralized<TimelineEvent>(
-            exercise,
-            "startDate",
-            "endDate"
-          )
-        })
-        setTimelineEvents({ ...newEvents })
-      }
-    }
-  }
-
-  useEffect(() => {
-    const newEvents: { [pair: string]: TimelineEvent[] } = {}
-    for (const module of modules) {
-      request({
-        url: api.DOC_MY_EXERCISES(year, module.code),
-        method: methods.GET,
-        onSuccess: applyExercisesToTimeline(newEvents, module.code),
-        onError: (message) =>
-          console.log(`Failed to obtain exercises: ${message}`),
-      })
-    }
-  }, [modules])
-
-  useEffect(() => {
-    let moduleTracks: ModuleTracks = {}
-    modules.forEach(({ code }) => {
-      moduleTracks[code] = [[], []]
-    })
-
-    for (const key in timelineEvents) {
-      for (const id in timelineEvents[key]) {
-        const event = timelineEvents[key][id]
-        const tracks: TimelineEvent[][] = moduleTracks[event.moduleCode] ?? []
-        let isPlaced = false
-        for (const track of tracks) {
-          if (track.every((te) => !eventsOverlaps(te, event))) {
-            isPlaced = true
-            track.push(event)
-            break
-          }
-        }
-        if (!isPlaced) {
-          tracks.push([event])
-        }
-      }
-    }
-    setModulesTracks(moduleTracks)
-  }, [timelineEvents])
-
   return (
     <div
       id="wrapper"
@@ -226,7 +154,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         onSettingsClick={onSettingsClick}
         onCalendarClick={onCalendarClick}
       />
-      <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)}></div>
+      <div id="sidenav-overlay" onClick={(e) => onOverlayClick(e)} />
       <Suspense fallback={<LoadingScreen successful={<></>} />}>
         <Switch>
           <Redirect exact from="/" to="/modules" />
@@ -266,7 +194,9 @@ const StandardView: React.FC<StandardViewProps> = ({
             path="/modules/:id/resources/:category/:index"
             render={(props) => {
               return (
-                <Container className={classNames("pageContainer centerContents")}>
+                <Container
+                  className={classNames("pageContainer centerContents")}
+                >
                   <ModuleResource
                     year={year}
                     course={props.match.params.id}
@@ -329,8 +259,7 @@ const StandardView: React.FC<StandardViewProps> = ({
               terms={terms}
               onEventClick={onEventClick}
               modules={modules}
-              timelineEvents={timelineEvents}
-              modulesTracks={modulesTracks}
+              year={year}
             />
           </Route>
         </Switch>

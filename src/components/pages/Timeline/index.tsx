@@ -7,8 +7,10 @@ import ModuleRows from "./components/ModuleRows"
 import DayIndicatorGrid from "./components/DayIndicatorGrid"
 import EventGrid from "./components/EventGrid"
 import { Module, Term, TimelineEvent, TimelineEventDict } from "constants/types"
-import { addDays, toDayCount } from "utils/functions"
+import { addDays, dateNeutralized, toDayCount } from "utils/functions"
 import TimelineMobile from "./components/TimelineMobile"
+import { request } from "../../../utils/api"
+import { api, methods } from "../../../constants/routes"
 
 export type ModuleTracks = {
   [index: string]: TimelineEvent[][]
@@ -22,8 +24,27 @@ interface TimelineProps {
   terms: Term[]
   onEventClick: (e?: TimelineEvent) => void
   modules: Module[]
-  timelineEvents: TimelineEventDict
-  modulesTracks: ModuleTracks
+  year: string
+}
+
+function dateToColumn(day: Date, termStart: Date) {
+  const dayTime = toDayCount(day)
+  const termStartTime = toDayCount(termStart)
+  return Math.ceil(((dayTime - termStartTime) / 7) * 6) + 1
+}
+
+function isInTerm(date: Date, termStart: Date, numWeeks: number) {
+  return (
+    termStart.getTime() < date.getTime() &&
+    date.getTime() < addDays(termStart, numWeeks * 7).getTime()
+  )
+}
+
+const eventsOverlaps = (e1: TimelineEvent, e2: TimelineEvent) => {
+  return (
+    toDayCount(e1.startDate) <= toDayCount(e2.endDate) &&
+    toDayCount(e1.endDate) >= toDayCount(e2.startDate)
+  )
 }
 
 const Timeline: React.FC<TimelineProps> = ({
@@ -34,27 +55,8 @@ const Timeline: React.FC<TimelineProps> = ({
   terms,
   onEventClick,
   modules,
-  timelineEvents,
-  modulesTracks,
+  year,
 }: TimelineProps) => {
-  function dateToColumn(day: Date, termStart: Date) {
-    const dayTime = toDayCount(day)
-    const termStartTime = toDayCount(termStart)
-    return Math.ceil(((dayTime - termStartTime) / 7) * 6) + 1
-  }
-
-  function isInTerm(date: Date, termStart: Date, numWeeks: number) {
-    return (
-      termStart.getTime() < date.getTime() &&
-      date.getTime() < addDays(termStart, numWeeks * 7).getTime()
-    )
-  }
-
-  function handleEventClick(module: string, id: number) {
-    const event = timelineEvents[module][id]
-    onEventClick(event)
-  }
-
   useEffect(() => {
     initSideBar()
 
@@ -66,7 +68,71 @@ const Timeline: React.FC<TimelineProps> = ({
     }
   }, [])
 
+  function handleEventClick(module: string, id: number) {
+    const event = timelineEvents[module][id]
+    onEventClick(event)
+  }
+
   const [showMobileOnSmallScreens, setShowMobileOnSmallScreens] = useState(true)
+  const [timelineEvents, setTimelineEvents] = useState<TimelineEventDict>({})
+  useEffect(() => {
+    const newEvents: { [pair: string]: TimelineEvent[] } = {}
+    for (const module of modules) {
+      request({
+        url: api.DOC_MY_EXERCISES(year, module.code),
+        method: methods.GET,
+        onSuccess: applyExercisesToTimeline(newEvents, module.code),
+        onError: (message) =>
+          console.log(`Failed to obtain exercises: ${message}`),
+      })
+    }
+  }, [modules])
+
+  function applyExercisesToTimeline(
+    newEvents: { [pair: string]: TimelineEvent[] },
+    moduleCode: string
+  ) {
+    return (exercises: TimelineEvent[]) => {
+      if (exercises) {
+        newEvents[moduleCode] = []
+        exercises.forEach((exercise) => {
+          newEvents[moduleCode][exercise.id] = dateNeutralized<TimelineEvent>(
+            exercise,
+            "startDate",
+            "endDate"
+          )
+        })
+        setTimelineEvents({ ...newEvents })
+      }
+    }
+  }
+
+  const [modulesTracks, setModulesTracks] = useState<ModuleTracks>({})
+  useEffect(() => {
+    let moduleTracks: ModuleTracks = {}
+    modules.forEach(({ code }) => {
+      moduleTracks[code] = [[], []]
+    })
+
+    for (const key in timelineEvents) {
+      for (const id in timelineEvents[key]) {
+        const event = timelineEvents[key][id]
+        const tracks: TimelineEvent[][] = moduleTracks[event.moduleCode] ?? []
+        let isPlaced = false
+        for (const track of tracks) {
+          if (track.every((te) => !eventsOverlaps(te, event))) {
+            isPlaced = true
+            track.push(event)
+            break
+          }
+        }
+        if (!isPlaced) {
+          tracks.push([event])
+        }
+      }
+    }
+    setModulesTracks(moduleTracks)
+  }, [timelineEvents])
 
   const { start, weeks, label } = activeTerm
   const activeDay = new Date()
