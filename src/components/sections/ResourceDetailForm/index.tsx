@@ -10,7 +10,7 @@ import DatePicker from "react-datepicker"
 
 import { titleCase } from "utils/functions"
 import { DEFAULT_CATEGORY } from "../../../constants/global"
-import { URLError, LinkTitleError } from "constants/types"
+import { URLError, TitleError } from "constants/types"
 
 interface ResourceDetailFormProps {
   id: number
@@ -77,7 +77,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   const [tags, setTags] = useState<string[]>(defaultTags || [])
   const [url, setURL] = useState(defaultURL || "")
   const [urlError, setURLError] = useState<URLError | undefined>(undefined)
-  const [linkTitleError, setLinkTitleError] = useState<LinkTitleError | undefined>(undefined)
+  const [titleError, setTitleError] = useState<TitleError | undefined>(undefined)
 
   const validateURL = (url: string) => {
     if (url.trim() === "") {
@@ -85,11 +85,11 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
     }
   }
 
-  const validateLinkTitle = (title: string) => {
+  const validateTitle = (title: string) => {
     if (title.trim() === "") {
-      setLinkTitleError(LinkTitleError.EmptyTitle)
+      setTitleError(TitleError.EmptyTitle)
     } else if (titleDuplicated(category, title) && !(defaultCategory && title === defaultTitle)) {
-      setLinkTitleError(LinkTitleError.DuplicateTitle)
+      setTitleError(TitleError.DuplicateTitle)
     }
   }
 
@@ -103,11 +103,11 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
         return ""
     }
   }
-  const linkTitleErrorMessage = (error: LinkTitleError | undefined) => {
+  const titleErrorMessage = (error: TitleError | undefined) => {
     switch (error) {
-      case LinkTitleError.EmptyTitle:
-        return "Link title cannot be empty!"
-      case LinkTitleError.DuplicateTitle:
+      case TitleError.EmptyTitle:
+        return "Title cannot be empty!"
+      case TitleError.DuplicateTitle:
         return "A resource with this title already exists under this category. Please choose a different title."
       default:
         return ""
@@ -116,15 +116,15 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 
   useEffect(() => {
     handleInvalidDetails && handleInvalidDetails(
-        (isLink && linkTitleError === undefined && urlError === undefined) ||
-        (!isLink && linkTitleError === undefined)
+        (isLink && titleError === undefined && urlError === undefined) ||
+        (!isLink && titleError === undefined)
     )
-  }, [linkTitleError, urlError])
+  }, [titleError, urlError])
 
 
   useEffect(() => {
     validateURL(defaultURL || "")
-    validateLinkTitle(defaultTitle || "")
+    validateTitle(defaultTitle || "")
   }, [])
 
   const updateResourceDetails = () => setResourceDetails({
@@ -179,15 +179,15 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
           type="text"
           placeholder="Enter the Resource Title"
           defaultValue={defaultTitle}
-          isInvalid={!suppressErrorMsg && linkTitleError !== undefined}
+          isInvalid={!suppressErrorMsg && titleError !== undefined}
           onChange={(event) => {
             setSuppressErrorMsg?.(false)
-            validateLinkTitle(event.target.value)
+            validateTitle(event.target.value)
             setTitle(event.target.value)
           }}
         />
         <Form.Control.Feedback type="invalid">
-          {linkTitleErrorMessage(linkTitleError)}
+          {titleErrorMessage(titleError)}
         </Form.Control.Feedback>
       </Form.Group>
 
