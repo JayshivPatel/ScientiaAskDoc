@@ -136,7 +136,6 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   })
 
   useEffect(updateResourceDetails, [title, category, tags, visibleAfter, url])
-  useEffect(updateResourceDetails, [])
 
   const datepicker = (
     <DatePicker
