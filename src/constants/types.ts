@@ -95,9 +95,9 @@ export enum URLError {
   InvalidURL = "invalid_url",
 }
 
-export enum LinkTitleError {
+export enum TitleError {
   EmptyTitle = "empty_title",
-  DuplicateTitle = "invalid_url",
+  DuplicateTitle = "duplicate_title",
 }
 
 /**
