@@ -82,6 +82,8 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   const validateURL = (url: string) => {
     if (url.trim() === "") {
       setURLError(URLError.EmptyURL)
+    } else {
+      setURLError(undefined)
     }
   }
 
@@ -90,6 +92,8 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
       setTitleError(TitleError.EmptyTitle)
     } else if (titleDuplicated(category, title) && !(defaultCategory && title === defaultTitle)) {
       setTitleError(TitleError.DuplicateTitle)
+    } else {
+      setTitleError(undefined)
     }
   }
 
