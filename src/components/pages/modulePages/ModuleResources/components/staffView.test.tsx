@@ -2,12 +2,10 @@ import React from "react"
 import { mount } from "enzyme"
 import StaffView from "./StaffView"
 import CategoryHeader from "components/headings/CategoryHeader"
+import EditModal from "components/modals/EditModal"
+import FileItemRow from "components/rows/FileItemRow"
 import WarningJumbotron from "components/suspense/WarningJumbotron"
 import { Folder, Resource } from "constants/types"
-
-
-import FileItemRow from "components/rows/FileItemRow"
-import EditModal from "components/modals/EditModal"
 
 const folders: Folder[] = [{
   title: 'Lecture Notes',
@@ -92,6 +90,15 @@ describe('<StaffView />', () => {
     const expectedTags = ['Slides', 'Week 1', 'Week 2']
     expect(wrapper.find(EditModal).prop('tags')).toStrictEqual(expectedTags)
   })
+
+  it("shows the correct edit modal when a resource is clicked", () => {
+    // Click the third file
+    wrapper.find(FileItemRow).at(2).simulate('click')
+
+    const expectedResource = 'Cheat Sheet'
+    expect(wrapper.find(EditModal).prop('resource').title).toBe(expectedResource)
+    expect(wrapper.find(EditModal).prop('show')).toBeTruthy()
+  })
 })
 
 describe('<StaffView />', () => {
@@ -110,5 +117,4 @@ describe('<StaffView />', () => {
   it('displays warning when no resources are present', () => {
     expect(wrapper.find(WarningJumbotron).exists()).toBeTruthy()
   })
-
 })
