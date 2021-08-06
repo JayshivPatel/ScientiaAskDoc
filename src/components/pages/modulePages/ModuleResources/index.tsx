@@ -232,7 +232,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             resources={this.state.resources}
             searchText={this.state.searchText}
             includeInSearchResult={this.includeInSearchResult}
-            onRowClick={navigateToResource}
           />
         )
       }
