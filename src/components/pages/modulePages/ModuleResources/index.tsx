@@ -58,7 +58,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
   loadResources() {
     this.setState({ isLoaded: false })
-    const onSuccess = (data: { [k: string]: any }) => {
+    const onSuccess = (data: Resource[]) => {
       let resourceArr: Resource[] = []
       for (const key in data) {
         let resource = data[key]
