@@ -10,7 +10,7 @@ import DatePicker from "react-datepicker"
 
 import { titleCase } from "utils/functions"
 import { DEFAULT_CATEGORY } from "../../../constants/global"
-import { URLError, LinkTitleError } from "constants/types"
+import { URLError, TitleError } from "constants/types"
 
 interface ResourceDetailFormProps {
   id: number
@@ -77,20 +77,23 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   const [tags, setTags] = useState<string[]>(defaultTags || [])
   const [url, setURL] = useState(defaultURL || "")
   const [urlError, setURLError] = useState<URLError | undefined>(undefined)
-  const [linkTitleError, setLinkTitleError] = useState<LinkTitleError | undefined>(undefined)
+  const [titleError, setTitleError] = useState<TitleError | undefined>(undefined)
 
   const validateURL = (url: string) => {
-    if (url.trim() === "") {
-      setURLError(URLError.EmptyURL)
-    }
+    const emptyURL = url.trim() === ""
+    setURLError(emptyURL ? URLError.EmptyURL : undefined)
+    return !emptyURL
   }
 
-  const validateLinkTitle = (title: string) => {
-    if (title.trim() === "") {
-      setLinkTitleError(LinkTitleError.EmptyTitle)
-    } else if (titleDuplicated(category, title) && !(defaultCategory && title === defaultTitle)) {
-      setLinkTitleError(LinkTitleError.DuplicateTitle)
-    }
+  const validateTitle = (title: string) => {
+    const emptyTitle = title.trim() === ""
+    const duplicateTitle = titleDuplicated(category, title) &&
+      !(defaultCategory && title === defaultTitle)
+
+    setTitleError(emptyTitle ? TitleError.EmptyTitle :
+      (duplicateTitle ? TitleError.DuplicateTitle : undefined))
+
+    return !(emptyTitle || duplicateTitle)
   }
 
   const urlErrorMessage = (error: URLError | undefined) => {
@@ -103,11 +106,11 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
         return ""
     }
   }
-  const linkTitleErrorMessage = (error: LinkTitleError | undefined) => {
+  const titleErrorMessage = (error: TitleError | undefined) => {
     switch (error) {
-      case LinkTitleError.EmptyTitle:
-        return "Link title cannot be empty!"
-      case LinkTitleError.DuplicateTitle:
+      case TitleError.EmptyTitle:
+        return "Title cannot be empty!"
+      case TitleError.DuplicateTitle:
         return "A resource with this title already exists under this category. Please choose a different title."
       default:
         return ""
@@ -115,17 +118,14 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   }
 
   useEffect(() => {
+    const titleIsValid = validateTitle(title || "")
+    const urlIsValid = validateURL(url || "")
+
     handleInvalidDetails && handleInvalidDetails(
-        (isLink && linkTitleError === undefined && urlError === undefined) ||
-        (!isLink && linkTitleError === undefined)
+        (isLink && titleIsValid && urlIsValid) ||
+        (!isLink && titleIsValid)
     )
-  }, [linkTitleError, urlError])
-
-
-  useEffect(() => {
-    validateURL(defaultURL || "")
-    validateLinkTitle(defaultTitle || "")
-  }, [])
+  }, [title, url])
 
   const updateResourceDetails = () => setResourceDetails({
     title,
@@ -136,7 +136,6 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   })
 
   useEffect(updateResourceDetails, [title, category, tags, visibleAfter, url])
-  useEffect(updateResourceDetails, [])
 
   const datepicker = (
     <DatePicker
@@ -179,15 +178,15 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
           type="text"
           placeholder="Enter the Resource Title"
           defaultValue={defaultTitle}
-          isInvalid={!suppressErrorMsg && linkTitleError !== undefined}
+          isInvalid={!suppressErrorMsg && titleError !== undefined}
           onChange={(event) => {
             setSuppressErrorMsg?.(false)
-            validateLinkTitle(event.target.value)
+            validateTitle(event.target.value)
             setTitle(event.target.value)
           }}
         />
         <Form.Control.Feedback type="invalid">
-          {linkTitleErrorMessage(linkTitleError)}
+          {titleErrorMessage(titleError)}
         </Form.Control.Feedback>
       </Form.Group>
 
