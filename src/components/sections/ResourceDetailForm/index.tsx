@@ -79,13 +79,13 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   const [urlError, setURLError] = useState<URLError | undefined>(undefined)
   const [titleError, setTitleError] = useState<TitleError | undefined>(undefined)
 
-  const urlIsValid = (url: string) => {
+  const validateURL = (url: string) => {
     const emptyURL = url.trim() === ""
     setURLError(emptyURL ? URLError.EmptyURL : undefined)
     return !emptyURL
   }
 
-  const titleIsValid = (title: string) => {
+  const validateTitle = (title: string) => {
     const emptyTitle = title.trim() === ""
     const duplicateTitle = titleDuplicated(category, title) &&
       !(defaultCategory && title === defaultTitle)
@@ -118,9 +118,12 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   }
 
   useEffect(() => {
+    const titleIsValid = validateTitle(title || "")
+    const urlIsValid = validateURL(url || "")
+
     handleInvalidDetails && handleInvalidDetails(
-        (isLink && titleIsValid(title || "") && urlIsValid(url || "")) ||
-        (!isLink && titleIsValid(title || ""))
+        (isLink && titleIsValid && urlIsValid) ||
+        (!isLink && titleIsValid)
     )
   }, [title, url])
 
@@ -158,7 +161,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
             isInvalid={!suppressErrorMsg && urlError !== undefined}
             onChange={(event) => {
               setSuppressErrorMsg?.(false)
-              urlIsValid(event.target.value)
+              validateURL(event.target.value)
               setURL(event.target.value)
             }}
           />
@@ -178,7 +181,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
           isInvalid={!suppressErrorMsg && titleError !== undefined}
           onChange={(event) => {
             setSuppressErrorMsg?.(false)
-            titleIsValid(event.target.value)
+            validateTitle(event.target.value)
             setTitle(event.target.value)
           }}
         />
