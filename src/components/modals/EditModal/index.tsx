@@ -44,6 +44,7 @@ const EditModal: React.FC<EditModalProps> = ({
         title: details.title,
         tags: details.tags,
         category: details.category,
+        index: resource.index,
       }
       if (resource.type === "link") {
         payload.path = details.url
