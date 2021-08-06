@@ -65,10 +65,10 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
             "category": category
         },
         onSuccess: openResource,
-      onError: (message: string) => setError(message),
+        onError: (message: string) => setError(message),
       })
     }
-  })
+  }, [pdfInfo])
 
   const cssClass = window.innerWidth <= 1024 ?
     styles.moduleResourceMobile :
