@@ -5,7 +5,6 @@ import ButtonGroup from "react-bootstrap/ButtonGroup"
 import Col from "react-bootstrap/esm/Col"
 import Row from "react-bootstrap/esm/Row"
 
-import {faEdit} from "@fortawesome/free-regular-svg-icons"
 import {faDownload, faTrash, faUpload,} from "@fortawesome/free-solid-svg-icons"
 import AlertModal from "components/modals/AlertModal"
 import IconButton from "components/buttons/IconButton"
@@ -29,7 +28,6 @@ export interface StaffViewProps {
   resources: Resource[]
   searchText: string
   includeInSearchResult: (item: Resource, searchText: string) => boolean
-  onRowClick: (id: number) => void
 }
 
 const StaffView: React.FC<StaffViewProps> = ({
@@ -40,7 +38,6 @@ const StaffView: React.FC<StaffViewProps> = ({
   resources,
   searchText,
   includeInSearchResult,
-  onRowClick,
 }) => {
   const [modal, setModal] = useState("")
   const [resourceID, setResourceID] = useState(-1)
@@ -100,16 +97,6 @@ const StaffView: React.FC<StaffViewProps> = ({
 
   const resourceActions = (id: number, filename: string) => (
     <ButtonGroup>
-      <IconButton
-        tooltip="Edit"
-        onClick={() => {
-          setEditResource(
-            resources.find((res) => res.id === id) || resources[0]
-          )
-          setModal("edit")
-        }}
-        icon={faEdit}
-      />
       <IconButton
         tooltip="Delete"
         onClick={async () => {
@@ -226,7 +213,12 @@ const StaffView: React.FC<StaffViewProps> = ({
                     setShowMenus(newShowMenus)
                   }
                 }}
-                handleRowClick={onRowClick}
+                handleRowClick={(id) => {
+                  setEditResource(
+                    resources.find((res) => res.id === id) || resources[0]
+                  )
+                  setModal("edit")
+                }}
                 handleIconClick={(id) => {}}
                 handleMouseOver={(id) => {}}
                 handleMouseOut={(id) => {}}
