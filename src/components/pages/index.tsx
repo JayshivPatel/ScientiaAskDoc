@@ -244,11 +244,19 @@ const StandardView: React.FC<StandardViewProps> = ({
             )}
           />
 
-          <Route path="/modules/:id/feedback">
-            <Container className={classNames("pageContainer")}>
-              <ModuleFeedback />
-            </Container>
-          </Route>
+          <Route
+            path="/modules/:id/feedback"
+            render={(props) => {
+              return (
+                <Container className={classNames("pageContainer")}>
+                  <ModuleFeedback
+                    year={year}
+                    moduleID={props.match.params.id}
+                  />
+                </Container>
+              )
+            }}
+          />
 
           <Route path="/timeline">
             <Timeline
