@@ -1,25 +1,29 @@
 const dev = {
   MATERIALS_URL: `http://${window.location.hostname}:5000`,
+  EMARKING_URL: `http://${window.location.hostname}:5001`,
   CALENDAR_URL: `http://${window.location.hostname}:4000`,
   DOC_URL: `http://${window.location.hostname}:2000`,
-};
+}
 
 const prod = {
   MATERIALS_URL: "https://api-materials.doc.ic.ac.uk",
+  EMARKING_URL: "https://api-emarking.doc.ic.ac.uk",
   CALENDAR_URL: "",
   DOC_URL: "",
-};
+}
 
-const config = process.env.NODE_ENV === "production" ? prod : dev;
+const config = process.env.NODE_ENV === "production" ? prod : dev
 
 export const methods = {
   GET: "GET",
   POST: "POST",
   PUT: "PUT",
   DELETE: "DELETE",
-};
+}
 
 export const api = {
+  EMARKING_FEEDBACK: `${config.EMARKING_URL}/me/feedback`,
+  EMARKING_LOGIN: `${config.EMARKING_URL}/auth/login`,
   DBC_TERMS: (year: string) => `${config.MATERIALS_URL}/dbc/periods/${year}`,
   DOC_MY_EXERCISES: (year: string, courseCode: string) =>
     `${config.MATERIALS_URL}/dbc/me/${year}/courses/${courseCode}/exercises`,
@@ -35,4 +39,4 @@ export const api = {
   MATERIALS_ZIPPED_SELECTION:
     config.MATERIALS_URL + "/resources/zipped/selection",
   CALENDAR_EVENTS: (id: string) => `${config.CALENDAR_URL}/${id}`,
-};
+}
