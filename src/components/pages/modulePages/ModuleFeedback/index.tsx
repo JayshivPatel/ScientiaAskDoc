@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react"
 import styles from "./style.module.scss"
-
-import classNames from "classnames"
 import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
 
 import InputGroup from "react-bootstrap/InputGroup"
 import FormControl from "react-bootstrap/FormControl"
 import Button from "react-bootstrap/Button"
-import Badge from "react-bootstrap/Badge"
 import Card from "react-bootstrap/Card"
 import Row from "react-bootstrap/esm/Row"
 import Col from "react-bootstrap/esm/Col"
@@ -29,7 +26,7 @@ const ModuleFeedback: React.FC<ModuleFeedbackProps> = ({
   const [feedbackItems, setFeedbackItems] = useState<Feedback[]>([])
   useEffect(() => {
     request({
-      url: api.EMARKING_FEEDBACK,
+      endpoint: api.EMARKING_FEEDBACK,
       method: methods.GET,
       body: { year: year, course: moduleID },
       onSuccess: (feedback: Feedback[]) => {
