@@ -12,7 +12,12 @@ import queryString from "query-string"
 import StaffView from "./components/StaffView"
 
 import LoadingScreen from "components/suspense/LoadingScreen"
-import { filterInvisibleResources, folders, navigateToResource, tags } from "./utils"
+import {
+  filterInvisibleResources,
+  folders,
+  navigateToResource,
+  tags,
+} from "./utils"
 import { Resource } from "constants/types"
 import { titleCase } from "utils/functions"
 import Button from "react-bootstrap/esm/Button"
@@ -107,7 +112,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     }
 
     request({
-      url: api.MATERIALS_RESOURCES,
+      endpoint: api.MATERIALS_RESOURCES,
       method: methods.GET,
       onSuccess,
       onError,
@@ -302,7 +307,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             alignItems: "center",
             justifyContent: "space-between",
             paddingTop: "0.75rem",
-          }}>
+          }}
+        >
           <div style={{ width: "100%" }}>
             <SearchBox
               searchText={this.state.searchText}
@@ -316,17 +322,20 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               overlay={
                 <Tooltip
                   id={`${this.props.moduleID}-view-toggle-tooltip`}
-                  style={{ zIndex: 10000 }}>
+                  style={{ zIndex: 10000 }}
+                >
                   Toggle {this.state.staffView ? "Student" : "Staff"} View
                 </Tooltip>
-              }>
+              }
+            >
               <Button
                 onClick={() =>
                   this.setState({ staffView: !this.state.staffView })
                 }
                 variant="secondary"
                 style={{ marginLeft: "0.625rem" }}
-                className={styles.sectionHeaderButton}>
+                className={styles.sectionHeaderButton}
+              >
                 <FontAwesomeIcon icon={faExchangeAlt} />
               </Button>
             </OverlayTrigger>

@@ -23,7 +23,7 @@ const CalendarGroup: React.FC<Props> = ({
     timeRange.intervalStart = CALENDAR_ACTIVE
     timeRange.intervalEnd = addDays(timeRange.intervalStart, 1)
 
-    let url: URL = new URL(api.CALENDAR_EVENTS(calendarID))
+    let url: URL = new URL(api.CALENDAR_EVENTS(calendarID).url)
     Object.keys(timeRange).forEach((key) =>
       url.searchParams.append(key, timeRange[key])
     )
