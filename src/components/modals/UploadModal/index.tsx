@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react"
+import React, { useCallback, useState } from "react"
 import classNames from "classnames"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -9,15 +9,22 @@ import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
 import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
-import {useDropzone} from "react-dropzone"
+import { useDropzone } from "react-dropzone"
 
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faCaretDown, faFolder, faFolderOpen, faTimes,} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {
+  faCaretDown,
+  faFolder,
+  faFolderOpen,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons"
 
 import styles from "./style.module.scss"
-import ResourceDetailForm, {ResourceDetails,} from "components/sections/ResourceDetailForm"
-import {request} from "utils/api"
-import {api, methods} from "constants/routes"
+import ResourceDetailForm, {
+  ResourceDetails,
+} from "components/sections/ResourceDetailForm"
+import { request } from "utils/api"
+import { api, methods } from "constants/routes"
 
 interface UploadModalProps {
   show: boolean
@@ -97,7 +104,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
     formData.append("file", file)
     return (data: { [k: string]: number }) => {
       request({
-        url: api.MATERIALS_RESOURCES_FILE(data["id"]),
+        endpoint: api.MATERIALS_RESOURCES_FILE(data.id),
         method: methods.PUT,
         onSuccess: () => {},
         onError: () => removeFile(file),
@@ -147,7 +154,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
               return Promise.resolve()
             }
             return request({
-              url: api.MATERIALS_RESOURCES,
+              endpoint: api.MATERIALS_RESOURCES,
               method: methods.POST,
               onSuccess: submitFileForResource(file),
               onError: onError(resourceDetails[index]),
@@ -167,7 +174,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
       case "link": {
         // The title and url of the new link must be validated before uploading
           await request({
-            url: api.MATERIALS_RESOURCES,
+            endpoint: api.MATERIALS_RESOURCES,
             method: methods.POST,
             onSuccess: hideAndReload,
             onError: onError(linkResource),

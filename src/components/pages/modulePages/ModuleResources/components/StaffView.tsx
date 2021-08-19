@@ -1,11 +1,15 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 
 import Button from "react-bootstrap/Button"
 import ButtonGroup from "react-bootstrap/ButtonGroup"
 import Col from "react-bootstrap/esm/Col"
 import Row from "react-bootstrap/esm/Row"
 
-import {faDownload, faTrash, faUpload,} from "@fortawesome/free-solid-svg-icons"
+import {
+  faDownload,
+  faTrash,
+  faUpload,
+} from "@fortawesome/free-solid-svg-icons"
 import AlertModal from "components/modals/AlertModal"
 import IconButton from "components/buttons/IconButton"
 import WarningJumbotron from "components/suspense/WarningJumbotron"
@@ -14,11 +18,11 @@ import UploadModal from "components/modals/UploadModal"
 import CategoryList from "components/sections/CategoryList"
 import CategoryHeader from "components/headings/CategoryHeader"
 
-import {download, request} from "utils/api"
-import {api, methods} from "constants/routes"
-import {Folder, IdBooleanMap, Resource} from "constants/types"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {categories} from "../utils"
+import { download, request } from "utils/api"
+import { api, methods } from "constants/routes"
+import { Folder, IdBooleanMap, Resource } from "constants/types"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { categories } from "../utils"
 
 export interface StaffViewProps {
   year: string
@@ -42,7 +46,7 @@ const StaffView: React.FC<StaffViewProps> = ({
   const [modal, setModal] = useState("")
   const [resourceID, setResourceID] = useState(-1)
   const [editResource, setEditResource] = useState<Resource>(resources[0])
-  
+
   const allClosed = () =>
     resources.reduce((map, resource) => {
       return {
@@ -79,7 +83,7 @@ const StaffView: React.FC<StaffViewProps> = ({
     formData.append("file", fileUploaded)
 
     await request({
-      url: api.MATERIALS_RESOURCES_FILE(resourceID),
+      endpoint: api.MATERIALS_RESOURCES_FILE(resourceID),
       method: methods.PUT,
       onSuccess: () => {},
       onError: () => {},
@@ -101,7 +105,7 @@ const StaffView: React.FC<StaffViewProps> = ({
         tooltip="Delete"
         onClick={async () => {
           await request({
-            url: api.MATERIALS_RESOURCES_ID(id),
+            endpoint: api.MATERIALS_RESOURCES_ID(id),
             method: methods.DELETE,
             onSuccess: () => {},
             onError: () => {},
@@ -166,7 +170,7 @@ const StaffView: React.FC<StaffViewProps> = ({
         confirmLabel="Delete All Resources"
         confirmOnClick={() =>
           request({
-            url: api.MATERIALS_RESOURCES,
+            endpoint: api.MATERIALS_RESOURCES,
             method: methods.DELETE,
             onSuccess: () => {
               closeModal()

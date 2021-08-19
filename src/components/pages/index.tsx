@@ -84,7 +84,7 @@ const StandardView: React.FC<StandardViewProps> = ({
     }
 
     request({
-      url: api.MATERIALS_COURSES(year),
+      endpoint: api.MATERIALS_COURSES(year),
       method: methods.GET,
       onSuccess: onSuccess,
       onError: (message) => console.log(`Failed to obtain modules: ${message}`),
@@ -127,7 +127,7 @@ const StandardView: React.FC<StandardViewProps> = ({
     }
 
     request({
-      url: api.DBC_TERMS(year),
+      endpoint: api.DBC_TERMS(year),
       method: methods.GET,
       onSuccess: onSuccess,
       onError: (message) => console.log(`Failed to obtain terms: ${message}`),

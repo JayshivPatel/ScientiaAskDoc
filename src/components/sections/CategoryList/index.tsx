@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect, useState } from "react"
 
 import {
   SortableContainer,
@@ -6,7 +6,7 @@ import {
   SortableHandle,
 } from "react-sortable-hoc"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons"
+import { faCheckSquare, faSquare } from "@fortawesome/free-regular-svg-icons"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 
 import FileItemRow from "components/rows/FileItemRow"
@@ -114,7 +114,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
 
     newResources.slice(minIndex, maxIndex).forEach((resource, i) => {
       request({
-        url: api.MATERIALS_RESOURCES_ID(resource.id),
+        endpoint: api.MATERIALS_RESOURCES_ID(resource.id),
         method: methods.PUT,
         onSuccess: () => {},
         onError: () => {},

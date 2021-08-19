@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { StaticContext } from "react-router"
-import { RouteComponentProps, Redirect } from "react-router-dom"
+import { Redirect, RouteComponentProps } from "react-router-dom"
 
 import styles from "./style.module.scss"
 import Navbar from "react-bootstrap/Navbar"
@@ -10,7 +10,6 @@ import FormControl from "react-bootstrap/FormControl"
 import Button from "react-bootstrap/Button"
 
 import authenticationService from "utils/auth"
-import { api } from "constants/routes"
 
 type Props = RouteComponentProps<
   {},
@@ -27,9 +26,7 @@ const SignIn: React.FC<Props> = ({ location }) => {
 
   const handleSubmit = async () => {
     // Pending SSO reimplementation of EdTech services authentication
-    if (
-      await authenticationService.login(username, password, api.MATERIALS_LOGIN)
-    ) {
+    if (await authenticationService.loginAll(username, password)) {
       setRedirect(true)
     } else {
       // TODO: Deal with failed login
@@ -50,7 +47,8 @@ const SignIn: React.FC<Props> = ({ location }) => {
         className={styles.navBar}
         sticky="top"
         expand="lg"
-        variant="light">
+        variant="light"
+      >
         <Container style={{ display: "flex", justifyContent: "center" }}>
           <img
             src="/images/logo.svg"
@@ -70,7 +68,8 @@ const SignIn: React.FC<Props> = ({ location }) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}>
+          }}
+        >
           <h1 className={styles.brandName}>Scientia</h1>
           <i className={styles.tagLine}>A Unified DoC EdTech Platform</i>
         </div>
@@ -79,7 +78,8 @@ const SignIn: React.FC<Props> = ({ location }) => {
             marginRight: "0.9375rem",
             marginLeft: "0.9375rem",
             marginTop: "1.25rem",
-          }}>
+          }}
+        >
           <p className={styles.inputBarHeading}>Username</p>
           <InputGroup className="mb-3">
             <FormControl
@@ -105,7 +105,8 @@ const SignIn: React.FC<Props> = ({ location }) => {
           <Button
             variant="secondary"
             className={styles.inputButton}
-            onClick={handleSubmit}>
+            onClick={handleSubmit}
+          >
             Sign In
           </Button>
         </div>
