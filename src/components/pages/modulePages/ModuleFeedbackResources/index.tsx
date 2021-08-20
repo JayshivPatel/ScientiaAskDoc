@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react"
-import styles from "./style.module.scss"
-import Card from "react-bootstrap/Card"
 import Row from "react-bootstrap/esm/Row"
 import Col from "react-bootstrap/esm/Col"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFile } from "@fortawesome/free-solid-svg-icons"
 import { Feedback } from "../../../../constants/types"
 import { request } from "../../../../utils/api"
@@ -11,6 +8,8 @@ import { api, methods } from "../../../../constants/routes"
 import WarningJumbotron from "../../../suspense/WarningJumbotron"
 import Dandruff from "../../../headings/Dandruff"
 import LoadingScreen from "../../../suspense/LoadingScreen"
+import FileCard from "../../../cards/FileCard"
+import history from "../../../../history"
 
 interface ModuleFeedbackProps {
   year: string
@@ -18,7 +17,11 @@ interface ModuleFeedbackProps {
   moduleID: string
 }
 
-const ModuleFeedback: React.FC<ModuleFeedbackProps> = ({
+const navigateToFeedback = (feedback: Feedback) => {
+  history.push(`/modules/${feedback.course}/feedback/${feedback.exercise}`)
+}
+
+const ModuleFeedbackResources: React.FC<ModuleFeedbackProps> = ({
   year,
   moduleTitle,
   moduleID,
@@ -50,33 +53,31 @@ const ModuleFeedback: React.FC<ModuleFeedbackProps> = ({
       )
     }
     return (
-      <Row style={{ marginRight: "-0.625rem", marginLeft: "-0.625rem" }}>
-        {feedbackItems
-          // Show feedback from most to least recent
-          .sort((f1, f2) => f2.id - f1.id)
-          .map((feedback: Feedback) => (
-            <Col
-              xs={12}
-              sm={6}
-              md={6}
-              lg={4}
-              xl={3}
-              key={feedback.id}
-              style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}
-            >
-              <Card className={styles.quickViewCard}>
-                <Card.Img variant="top" src="/images/light/banner/pdf.png" />
-                <Card.Body>
-                  <Card.Title>{feedback.exercise_title}</Card.Title>
-                  <FontAwesomeIcon
-                    style={{ fontSize: "1.125rem" }}
-                    icon={faFile}
-                  />
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-      </Row>
+      <div style={{ paddingTop: "0.75rem" }}>
+        <Row style={{ marginRight: "-0.625rem", marginLeft: "-0.625rem" }}>
+          {feedbackItems
+            // Show feedback from most to least recent
+            .sort((f1, f2) => f2.id - f1.id)
+            .map((feedback: Feedback) => (
+              <Col
+                xs={12}
+                sm={6}
+                md={6}
+                lg={4}
+                xl={3}
+                key={feedback.id}
+                style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}
+              >
+                <FileCard
+                  title={feedback.exercise_title}
+                  type={"pdf"}
+                  icon={faFile}
+                  onClick={() => navigateToFeedback(feedback)}
+                />
+              </Col>
+            ))}
+        </Row>
+      </div>
     )
   }
 
@@ -91,4 +92,4 @@ const ModuleFeedback: React.FC<ModuleFeedbackProps> = ({
   )
 }
 
-export default ModuleFeedback
+export default ModuleFeedbackResources

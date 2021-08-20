@@ -33,6 +33,10 @@ export const api = {
     auth: AuthService.EMARKING,
     url: `${config.EMARKING_URL}/me/feedback`,
   },
+  EMARKING_FEEDBACK_FILE: (id: number): ApiEndpoint => ({
+    auth: AuthService.EMARKING,
+    url: `${config.EMARKING_URL}/feedback/${id}/file`,
+  }),
   EMARKING_LOGIN: {
     auth: AuthService.EMARKING,
     url: `${config.EMARKING_URL}/auth/login`,
