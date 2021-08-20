@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from "react"
 import styles from "./style.module.scss"
-import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
-
-import InputGroup from "react-bootstrap/InputGroup"
-import FormControl from "react-bootstrap/FormControl"
-import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
 import Row from "react-bootstrap/esm/Row"
 import Col from "react-bootstrap/esm/Col"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFile, faInfoCircle } from "@fortawesome/free-solid-svg-icons"
+import { faFile } from "@fortawesome/free-solid-svg-icons"
 import { Feedback } from "../../../../constants/types"
 import { request } from "../../../../utils/api"
 import { api, methods } from "../../../../constants/routes"
+import WarningJumbotron from "../../../suspense/WarningJumbotron"
+import Dandruff from "../../../headings/Dandruff"
+import LoadingScreen from "../../../suspense/LoadingScreen"
 
 interface ModuleFeedbackProps {
   year: string
+  moduleTitle: string
   moduleID: string
 }
 
 const ModuleFeedback: React.FC<ModuleFeedbackProps> = ({
   year,
+  moduleTitle,
   moduleID,
 }: ModuleFeedbackProps) => {
+  const [isLoaded, setIsLoaded] = useState<Boolean>(false)
+  const [error, setError] = useState<string>("")
+
   const [feedbackItems, setFeedbackItems] = useState<Feedback[]>([])
   useEffect(() => {
     request({
@@ -31,28 +34,22 @@ const ModuleFeedback: React.FC<ModuleFeedbackProps> = ({
       body: { year: year, course: moduleID },
       onSuccess: (feedback: Feedback[]) => {
         setFeedbackItems(feedback)
+        setIsLoaded(true)
       },
-      onError: (message) =>
-        console.log(`Failed to obtain feedback ${moduleID}: ${message}`),
+      onError: (message) => {
+        setError(message)
+        setIsLoaded(true)
+      },
     })
   }, [year, moduleID])
 
-  return (
-    <>
-      <MyBreadcrumbs />
-      <InputGroup>
-        <FormControl
-          className={styles.searchBar}
-          aria-label="Search"
-          placeholder="Search..."
-        />
-        <InputGroup.Append>
-          <Button className={styles.searchBarIcon}>
-            <FontAwesomeIcon size="1x" icon={faInfoCircle} />
-          </Button>
-        </InputGroup.Append>
-      </InputGroup>
-
+  const view = () => {
+    if (feedbackItems.length === 0) {
+      return (
+        <WarningJumbotron message="No feedback has been released for this course yet." />
+      )
+    }
+    return (
       <Row style={{ marginRight: "-0.625rem", marginLeft: "-0.625rem" }}>
         {feedbackItems.map((feedback: Feedback) => (
           <Col
@@ -77,6 +74,16 @@ const ModuleFeedback: React.FC<ModuleFeedbackProps> = ({
           </Col>
         ))}
       </Row>
+    )
+  }
+
+  return (
+    <>
+      <Dandruff
+        heading={moduleTitle ? `${moduleID} - ${moduleTitle}` : moduleID}
+      />
+
+      <LoadingScreen error={error} isLoaded={isLoaded} successful={view()} />
     </>
   )
 }

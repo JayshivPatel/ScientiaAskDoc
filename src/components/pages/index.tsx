@@ -247,10 +247,14 @@ const StandardView: React.FC<StandardViewProps> = ({
           <Route
             path="/modules/:id/feedback"
             render={(props) => {
+              let moduleTitle =
+                modules.find((module) => module.code === props.match.params.id)
+                  ?.title || ""
               return (
                 <Container className={classNames("pageContainer")}>
                   <ModuleFeedback
                     year={year}
+                    moduleTitle={moduleTitle}
                     moduleID={props.match.params.id}
                   />
                 </Container>
