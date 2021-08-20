@@ -51,28 +51,31 @@ const ModuleFeedback: React.FC<ModuleFeedbackProps> = ({
     }
     return (
       <Row style={{ marginRight: "-0.625rem", marginLeft: "-0.625rem" }}>
-        {feedbackItems.map((feedback: Feedback) => (
-          <Col
-            xs={12}
-            sm={6}
-            md={6}
-            lg={4}
-            xl={3}
-            key={feedback.id}
-            style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}
-          >
-            <Card className={styles.quickViewCard}>
-              <Card.Img variant="top" src="/images/light/banner/pdf.png" />
-              <Card.Body>
-                <Card.Title>{feedback.exercise_title}</Card.Title>
-                <FontAwesomeIcon
-                  style={{ fontSize: "1.125rem" }}
-                  icon={faFile}
-                />
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
+        {feedbackItems
+          // Show feedback from most to least recent
+          .sort((f1, f2) => f2.id - f1.id)
+          .map((feedback: Feedback) => (
+            <Col
+              xs={12}
+              sm={6}
+              md={6}
+              lg={4}
+              xl={3}
+              key={feedback.id}
+              style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}
+            >
+              <Card className={styles.quickViewCard}>
+                <Card.Img variant="top" src="/images/light/banner/pdf.png" />
+                <Card.Body>
+                  <Card.Title>{feedback.exercise_title}</Card.Title>
+                  <FontAwesomeIcon
+                    style={{ fontSize: "1.125rem" }}
+                    icon={faFile}
+                  />
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
       </Row>
     )
   }
