@@ -1,29 +1,29 @@
-import React from "react";
-import styles from "./style.module.scss";
-import { ModuleTracks } from "../..";
-import EventCard from "../EventCard";
-import { Module } from "constants/types";
+import React from "react"
+import styles from "./style.module.scss"
+import { ModuleTracks } from "../.."
+import EventCard from "../EventCard"
+import { Module } from "constants/types"
 
 export interface EventGridProps {
-  numWeeks: number;
-  trackHeight: number;
-  modulesList: Module[];
-  modulesTracks: ModuleTracks;
-  dateToColumn: (date: Date) => number;
-  isInTerm: (date: Date) => boolean;
-  onEventClick: (module: string, id: number) => void;
+  numWeeks: number
+  trackHeight: number
+  modulesList: Module[]
+  modulesTracks: ModuleTracks
+  dateToColumn: (date: Date) => number
+  isInTerm: (date: Date) => boolean
+  onEventClick: (module: string, id: number) => void
 }
 
 interface EventDisplay {
-  title: string;
-  courseCode: string;
-  id: number;
-  prefix: string;
-  status: string;
-  assessment: string;
-  startColumn: number;
-  endColumn: number;
-  rowNumber: number;
+  title: string
+  courseCode: string
+  id: number
+  prefix: string
+  status: string
+  assessment: string
+  startColumn: number
+  endColumn: number
+  rowNumber: number
 }
 
 const EventGrid: React.FC<EventGridProps> = ({
@@ -35,16 +35,16 @@ const EventGrid: React.FC<EventGridProps> = ({
   isInTerm,
   onEventClick,
 }) => {
-  let eventPositions: EventDisplay[] = [];
-  let gridTemplateRows: string = "";
-  let currRow = 1;
+  let eventPositions: EventDisplay[] = []
+  let gridTemplateRows: string = ""
+  let currRow = 1
   for (let i = 0; i < modulesList.length; i++) {
-    const code = modulesList[i].code;
-    const moduleTracks = modulesTracks[code] ?? [];
+    const code = modulesList[i].code
+    const moduleTracks = modulesTracks[code] ?? []
 
     for (const moduleTrack of moduleTracks) {
       for (const event of moduleTrack) {
-        if (!isInTerm(event.startDate) && !isInTerm(event.endDate)) continue;
+        if (!isInTerm(event.startDate) && !isInTerm(event.endDate)) continue
         eventPositions.push({
           title: event.title,
           courseCode: event.moduleCode,
@@ -55,14 +55,17 @@ const EventGrid: React.FC<EventGridProps> = ({
           startColumn: dateToColumn(event.startDate),
           endColumn: dateToColumn(event.endDate) + 1,
           rowNumber: currRow,
-        });
+        })
       }
-      gridTemplateRows += `${trackHeight}rem `;
-      currRow += 1;
+      eventPositions.sort((a, b) =>
+        a.courseCode < b.courseCode ? -1 : a.courseCode > b.courseCode ? 1 : 0
+      )
+      gridTemplateRows += `${trackHeight}rem `
+      currRow += 1
     }
     gridTemplateRows +=
-      i === 0 || i === modulesList.length - 1 ? "0.3125rem " : "0.625rem ";
-    currRow += 1;
+      i === 0 || i === modulesList.length - 1 ? "0.3125rem " : "0.625rem "
+    currRow += 1
   }
 
   return (
@@ -71,8 +74,7 @@ const EventGrid: React.FC<EventGridProps> = ({
       style={{
         gridTemplateColumns: `repeat(${numWeeks}, 3rem 3rem 3rem 3rem 3rem 0.625rem)`,
         gridTemplateRows: gridTemplateRows,
-      }}
-    >
+      }}>
       {eventPositions.map(
         (
           {
@@ -98,14 +100,14 @@ const EventGrid: React.FC<EventGridProps> = ({
             endColumn={endColumn}
             rowNumber={rowNumber}
             onClick={(e) => {
-              e.preventDefault();
-              onEventClick(courseCode, id);
+              e.preventDefault()
+              onEventClick(courseCode, id)
             }}
           />
         )
       )}
     </div>
-  );
-};
+  )
+}
 
-export default EventGrid;
+export default EventGrid
