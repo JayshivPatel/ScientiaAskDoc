@@ -1,5 +1,5 @@
 import authConstants from "constants/auth"
-import { methods } from "constants/routes"
+import { ApiEndpoint, methods } from "constants/routes"
 import { RequestData } from "./api-types"
 
 interface RequestOptions {
@@ -12,7 +12,7 @@ interface RequestOptions {
 // Note: will trigger CORS OPTIONS preflight due to the Authorization header
 export async function request(data: RequestData) {
   let headers: { [key: string]: string } = {
-    Authorization: authConstants.ACCESS_TOKEN_HEADER(),
+    Authorization: authConstants.ACCESS_TOKEN_HEADER(data.endpoint.auth),
     // "Access-Control-Allow-Origin": "*", THIS SHOULD NOT BE NEEDED HERE
   }
 
@@ -20,19 +20,20 @@ export async function request(data: RequestData) {
     headers["Content-Type"] = "application/json"
   }
 
-  var options: RequestOptions = {
+  let options: RequestOptions = {
     method: data.method,
     mode: "cors",
     headers: headers,
   }
 
+  let url = data.endpoint.url
   if (data.method === methods.GET || data.method === methods.DELETE) {
-    data.url = data.url + "?" + new URLSearchParams(data.body)
+    url = `${url}?${new URLSearchParams(data.body)}`
   } else {
     options.body = data.sendFile ? data.body : JSON.stringify(data.body)
   }
 
-  return fetch(data.url, options)
+  return fetch(url, options)
     .then((response) => {
       if (!response.ok) {
         throw response
@@ -61,7 +62,11 @@ export async function request(data: RequestData) {
 }
 
 // Utility that downloads files fetched by request (assumes GET)
-export async function download(url: string, filename: string, body?: any) {
+export async function download(
+  endpoint: ApiEndpoint,
+  filename: string,
+  body?: any
+) {
   const onSuccess = (blob: any) => {
     let blob_url = URL.createObjectURL(blob)
     downloadBlob(blob_url, filename)
@@ -73,7 +78,7 @@ export async function download(url: string, filename: string, body?: any) {
   }
 
   request({
-    url: url,
+    endpoint: endpoint,
     method: methods.GET,
     onSuccess,
     onError,

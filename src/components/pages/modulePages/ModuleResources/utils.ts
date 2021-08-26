@@ -7,9 +7,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { request } from "../../../../utils/api"
 import { api, methods } from "../../../../constants/routes"
-import { Resource, Folder } from "constants/types"
+import { Folder, Resource } from "constants/types"
 import { DEFAULT_CATEGORY } from "../../../../constants/global"
-import history from 'history.js'
+import history from "history.js"
 
 export function tags(resources: Resource[]) {
   let tagSet = new Set<string>()
@@ -54,7 +54,7 @@ export function navigateToResource(id: number) {
     history.push(`/modules/${course}/resources/${category}/${index}`)
   }
   request({
-    url: api.MATERIALS_RESOURCES_ID(id),
+    endpoint: api.MATERIALS_RESOURCES_ID(id),
     method: methods.GET,
     onSuccess,
     onError: (message: string) =>

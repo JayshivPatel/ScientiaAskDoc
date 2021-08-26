@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useEffect, useState } from "react"
+import { useHistory } from "react-router-dom"
 import Button from "react-bootstrap/Button"
 import { faDownload } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -10,9 +10,9 @@ import { Resource } from "constants/types"
 import { downloadBlob, request } from "utils/api"
 
 export interface ModuleResourceProps {
-  year: string,
-  course: string,
-  category: string,
+  year: string
+  course: string
+  category: string
   index: number
 }
 
@@ -40,11 +40,11 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
         history.goBack()
       } else {
         request({
-          url: api.MATERIALS_RESOURCES_FILE(resource.id),
+          endpoint: api.MATERIALS_RESOURCES_FILE(resource.id),
           method: methods.GET,
           onSuccess: (blob: Blob) => setPdfInfo({
             filename: resource.title,
-            api_url: api.MATERIALS_RESOURCES_FILE(resource.id),
+            api_url: api.MATERIALS_RESOURCES_FILE(resource.id).url,
             blob_url: URL.createObjectURL(blob)
           }),
           onError: (message: string) => setError(message),
@@ -57,7 +57,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
   useEffect(() => {
     if (pdfInfo.filename === "") {
       request({
-        url: api.MATERIALS_RESOURCES,
+        endpoint: api.MATERIALS_RESOURCES,
         method: methods.GET,
         body: {
             "year": year,

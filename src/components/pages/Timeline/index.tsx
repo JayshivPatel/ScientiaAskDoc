@@ -79,7 +79,7 @@ const Timeline: React.FC<TimelineProps> = ({
     const newEvents: { [pair: string]: TimelineEvent[] } = {}
     for (const module of modules) {
       request({
-        url: api.DOC_MY_EXERCISES(year, module.code),
+        endpoint: api.DOC_MY_EXERCISES(year, module.code),
         method: methods.GET,
         onSuccess: applyExercisesToTimeline(newEvents, module.code),
         onError: (message) =>

@@ -1,5 +1,7 @@
+import { ApiEndpoint } from "../constants/routes"
+
 export interface RequestData {
-  url: string
+  endpoint: ApiEndpoint
   method: string
   onSuccess: any
   onError: (message: string) => void
