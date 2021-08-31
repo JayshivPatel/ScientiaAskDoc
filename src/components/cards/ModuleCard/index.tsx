@@ -60,35 +60,6 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }: ModuleCardProps) => {
         as={Link}
         to={`modules/${module.code}`}>
         <Card.Header>
-          {/*<div className={styles.termIcons}>*/}
-          {/*  {module.terms.map((term: OldTerm) => {*/}
-          {/*    switch (term) {*/}
-          {/*      case "Autumn":*/}
-          {/*        return (*/}
-          {/*          <FontAwesomeIcon*/}
-          {/*            icon={faCanadianMapleLeaf}*/}
-          {/*            key={"Autumn"}*/}
-          {/*          />*/}
-          {/*        );*/}
-          {/*      case "Spring":*/}
-          {/*        return <FontAwesomeIcon icon={faSeedling} key={"Spring"} />;*/}
-          {/*      case "Summer":*/}
-          {/*        return <FontAwesomeIcon icon={faSun} key={"Summer"} />;*/}
-          {/*      case "Christmas":*/}
-          {/*        return (*/}
-          {/*          <FontAwesomeIcon icon={faCandyCane} key={"Christmas"} />*/}
-          {/*        );*/}
-          {/*      case "Easter":*/}
-          {/*        return <FontAwesomeIcon icon={faEgg} key={"Easter"} />;*/}
-          {/*      case "June-Sept":*/}
-          {/*        return (*/}
-          {/*          <FontAwesomeIcon icon={faUmbrellaBeach} key={"June-Sept"} />*/}
-          {/*        );*/}
-          {/*      default:*/}
-          {/*        return "";*/}
-          {/*    }*/}
-          {/*  })}*/}
-          {/*</div>*/}
           <span>{module.code}</span>
         </Card.Header>
         <Card.Img style={{ borderRadius: 0 }} variant="top" src={thumbnail} />
