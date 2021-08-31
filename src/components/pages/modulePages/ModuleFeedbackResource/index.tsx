@@ -60,7 +60,10 @@ const ModuleFeedbackResource: React.FC<ModuleFeedbackResourceProps> = ({
           course: course,
         },
         onSuccess: openFeedback,
-        onError: (message: string) => setError(message),
+        onError: (message: string) => {
+          setError(message)
+          setIsLoaded(true)
+        },
       })
     }
   }, [pdfInfo])
