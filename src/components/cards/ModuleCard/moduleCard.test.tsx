@@ -25,7 +25,7 @@ describe("<ModuleCard />", () => {
   it("displays module title", () => {
     expect(wrapper.find(Card.Title).text()).toBe(module.title)
   })
-  it("displays autumn icon for autumn term", () => {
+  it.skip("displays autumn icon for autumn term", () => {
     expect(wrapper.find(FontAwesomeIcon).prop("icon")).toBe(faCanadianMapleLeaf)
   })
   it("uses 'danger' border style if flag hasMaterials is set to false", () => {
