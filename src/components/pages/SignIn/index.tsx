@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { StaticContext } from "react-router"
 import { Redirect, RouteComponentProps } from "react-router-dom"
 
@@ -40,6 +40,13 @@ const SignIn: React.FC<Props> = ({ location }) => {
     }
   }
 
+  useEffect(() => {
+    const userInfo = sessionStorage.getItem("userInfo-materials")
+    if (userInfo) {
+      setRedirect(true)
+    }
+  }, [])
+
   if (redirect) return <Redirect to={from} />
   return (
     <>
@@ -47,8 +54,7 @@ const SignIn: React.FC<Props> = ({ location }) => {
         className={styles.navBar}
         sticky="top"
         expand="lg"
-        variant="light"
-      >
+        variant="light">
         <Container style={{ display: "flex", justifyContent: "center" }}>
           <img
             src="/images/logo.svg"
@@ -68,8 +74,7 @@ const SignIn: React.FC<Props> = ({ location }) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}
-        >
+          }}>
           <h1 className={styles.brandName}>Scientia</h1>
           <i className={styles.tagLine}>A Unified DoC EdTech Platform</i>
         </div>
@@ -78,8 +83,7 @@ const SignIn: React.FC<Props> = ({ location }) => {
             marginRight: "0.9375rem",
             marginLeft: "0.9375rem",
             marginTop: "1.25rem",
-          }}
-        >
+          }}>
           <p className={styles.inputBarHeading}>Username</p>
           <InputGroup className="mb-3">
             <FormControl
@@ -105,8 +109,7 @@ const SignIn: React.FC<Props> = ({ location }) => {
           <Button
             variant="secondary"
             className={styles.inputButton}
-            onClick={handleSubmit}
-          >
+            onClick={handleSubmit}>
             Sign In
           </Button>
         </div>
