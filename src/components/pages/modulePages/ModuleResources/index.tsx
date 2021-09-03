@@ -1,4 +1,8 @@
 import React from "react"
+import Button from "react-bootstrap/esm/Button"
+import OverlayTrigger from "react-bootstrap/OverlayTrigger"
+import Tooltip from "react-bootstrap/Tooltip"
+import { Helmet } from "react-helmet"
 
 import { download, request } from "utils/api"
 import { api, methods } from "constants/routes"
@@ -10,7 +14,6 @@ import FoldersView from "./components/FoldersView"
 import ListView from "./components/ListView"
 import queryString from "query-string"
 import StaffView from "./components/StaffView"
-
 import LoadingScreen from "components/suspense/LoadingScreen"
 import {
   filterInvisibleResources,
@@ -20,13 +23,10 @@ import {
 } from "./utils"
 import { Resource } from "constants/types"
 import { titleCase } from "utils/functions"
-import Button from "react-bootstrap/esm/Button"
 import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import styles from "./style.module.scss"
 import WarningJumbotron from "../../../suspense/WarningJumbotron"
-import OverlayTrigger from "react-bootstrap/OverlayTrigger"
-import Tooltip from "react-bootstrap/Tooltip"
 
 export interface ResourcesProps {
   year: string
@@ -293,6 +293,9 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
     return (
       <>
+        <Helmet>
+          <title>Resources | {this.props.moduleTitle} | Scientia</title>
+        </Helmet>
         <Dandruff
           heading={
             this.props.moduleTitle
@@ -307,8 +310,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             alignItems: "center",
             justifyContent: "space-between",
             paddingTop: "0.75rem",
-          }}
-        >
+          }}>
           <div style={{ width: "100%" }}>
             <SearchBox
               searchText={this.state.searchText}
@@ -322,20 +324,17 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               overlay={
                 <Tooltip
                   id={`${this.props.moduleID}-view-toggle-tooltip`}
-                  style={{ zIndex: 10000 }}
-                >
+                  style={{ zIndex: 10000 }}>
                   Toggle {this.state.staffView ? "Student" : "Staff"} View
                 </Tooltip>
-              }
-            >
+              }>
               <Button
                 onClick={() =>
                   this.setState({ staffView: !this.state.staffView })
                 }
                 variant="secondary"
                 style={{ marginLeft: "0.625rem" }}
-                className={styles.sectionHeaderButton}
-              >
+                className={styles.sectionHeaderButton}>
                 <FontAwesomeIcon icon={faExchangeAlt} />
               </Button>
             </OverlayTrigger>

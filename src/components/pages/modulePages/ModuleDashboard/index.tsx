@@ -1,4 +1,5 @@
 import React from "react"
+import { Helmet } from "react-helmet"
 import Dandruff from "components/headings/Dandruff"
 import styles from "./style.module.scss"
 import classNames from "classnames"
@@ -47,27 +48,26 @@ const MODULE_AIMS_PLACEHOLDER = (
 const ModuleDashboard: React.FC<Props> = ({ year, moduleTitle, moduleID }) => {
   const moduleCode = moduleID.startsWith("CO") ? moduleID.slice(2) : moduleID
 
-	let buttons : any[] = [
-		{
-			title: "Syllabus",
-			icon: faGlobe,
-			url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
-		},
-		{
-			title: "Piazza",
-			icon: faUserFriends,
-			url: `https://piazza.com/imperial.ac.uk/fall2021/comp${moduleID}`,
-		},
-	]
+  let buttons: any[] = [
+    {
+      title: "Syllabus",
+      icon: faGlobe,
+      url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
+    },
+    {
+      title: "Piazza",
+      icon: faUserFriends,
+      url: `https://piazza.com/imperial.ac.uk/fall2021/comp${moduleID}`,
+    },
+  ]
 
   return (
     <>
+      <Helmet>
+        <title>Dashboard | {moduleTitle} | Scientia</title>
+      </Helmet>
       <Dandruff
-        heading={
-          moduleTitle ?
-            `${moduleID} - ${moduleTitle}` :
-            moduleID
-        }
+        heading={moduleTitle ? `${moduleID} - ${moduleTitle}` : moduleID}
       />
 
       <h4 className={classNames(styles.moduleSectionHeader)}>Module Aims</h4>

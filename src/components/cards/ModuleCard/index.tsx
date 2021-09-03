@@ -4,16 +4,7 @@ import styles from "./style.module.scss"
 import classNames from "classnames"
 import Col from "react-bootstrap/Col"
 import { Link } from "react-router-dom"
-import {
-  faCandyCane,
-  faEgg,
-  faSeedling,
-  faSun,
-  faUmbrellaBeach,
-} from "@fortawesome/free-solid-svg-icons"
-import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Module, OldTerm, ProgressStatus } from "constants/types"
+import { Module, ProgressStatus } from "constants/types"
 import { theme } from "../../../utils/functions"
 import { thumbnails } from "../../../constants/thumbnails"
 

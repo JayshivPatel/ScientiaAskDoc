@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import Button from "react-bootstrap/Button"
+import { Helmet } from "react-helmet"
 import { faDownload } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import styles from "./style.module.scss"
@@ -10,6 +11,7 @@ import { Resource } from "constants/types"
 import { downloadBlob, request } from "utils/api"
 
 export interface ModuleResourceProps {
+  moduleTitle: string
   year: string
   course: string
   category: string
@@ -17,23 +19,24 @@ export interface ModuleResourceProps {
 }
 
 const ModuleResource: React.FC<ModuleResourceProps> = ({
+  moduleTitle,
   year,
   course,
   category,
   index,
 }) => {
-
   let history = useHistory()
   const [pdfInfo, setPdfInfo] = useState({
     filename: "",
     api_url: "",
-    blob_url: ""
+    blob_url: "",
   })
   const [error, setError] = useState("")
 
   const openResource = (resources: Resource[]) => {
-    const resource = resources.find(r =>
-      r.category === category && r.index === index)
+    const resource = resources.find(
+      (r) => r.category === category && r.index === index
+    )
     if (resource) {
       if (resource.type === "link" || resource.type === "video") {
         window.open(resource.path, "_blank")
@@ -42,13 +45,14 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
         request({
           endpoint: api.MATERIALS_RESOURCES_FILE(resource.id),
           method: methods.GET,
-          onSuccess: (blob: Blob) => setPdfInfo({
-            filename: resource.title,
-            api_url: api.MATERIALS_RESOURCES_FILE(resource.id).url,
-            blob_url: URL.createObjectURL(blob)
-          }),
+          onSuccess: (blob: Blob) =>
+            setPdfInfo({
+              filename: resource.title,
+              api_url: api.MATERIALS_RESOURCES_FILE(resource.id).url,
+              blob_url: URL.createObjectURL(blob),
+            }),
           onError: (message: string) => setError(message),
-          returnBlob: true
+          returnBlob: true,
         })
       }
     }
@@ -60,9 +64,9 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
         endpoint: api.MATERIALS_RESOURCES,
         method: methods.GET,
         body: {
-            "year": year,
-            "course": course,
-            "category": category
+          year: year,
+          course: course,
+          category: category,
         },
         onSuccess: openResource,
         onError: (message: string) => setError(message),
@@ -70,9 +74,10 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
     }
   }, [pdfInfo])
 
-  const cssClass = window.innerWidth <= 1024 ?
-    styles.moduleResourceMobile :
-    styles.moduleResource
+  const cssClass =
+    window.innerWidth <= 1024
+      ? styles.moduleResourceMobile
+      : styles.moduleResource
 
   if (error) {
     return (
@@ -84,23 +89,27 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
     )
   }
   return (
-    <div className={cssClass}>
-      <Button
-        onClick={() => {
-          downloadBlob(pdfInfo.blob_url, pdfInfo.filename)
-        }}
-      >
-        Download
-        <FontAwesomeIcon
-          icon={faDownload}
+    <>
+      <Helmet>
+        <title>
+          {pdfInfo.filename} | {moduleTitle} | Scientia
+        </title>
+      </Helmet>
+      <div className={cssClass}>
+        <Button
+          onClick={() => {
+            downloadBlob(pdfInfo.blob_url, pdfInfo.filename)
+          }}>
+          Download
+          <FontAwesomeIcon icon={faDownload} />
+        </Button>
+        <iframe
+          title="PDF"
+          src={pdfInfo.blob_url}
+          className={styles.pdfViewer}
         />
-      </Button>
-      <iframe
-        title="PDF"
-        src={pdfInfo.blob_url}
-        className={styles.pdfViewer}
-      />
-    </div>
+      </div>
+    </>
   )
 }
 
