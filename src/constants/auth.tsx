@@ -7,8 +7,9 @@ const authConstants = {
 
 export enum AuthService {
   MATERIALS = "materials",
+  EMARKING = "emarking",
 }
 
-export const authServices = [AuthService.MATERIALS]
+export const authServices = [AuthService.MATERIALS, AuthService.EMARKING]
 
 export default authConstants

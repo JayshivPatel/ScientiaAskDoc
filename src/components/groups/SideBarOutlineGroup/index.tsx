@@ -1,7 +1,11 @@
 import React from "react"
 import SideBarTabGroup from "components/groups/SideBarTabGroup"
-import {faArchive, faHome,} from "@fortawesome/free-solid-svg-icons"
-import {useParams} from "react-router-dom"
+import {
+  faArchive,
+  faHighlighter,
+  faHome,
+} from "@fortawesome/free-solid-svg-icons"
+import { useParams } from "react-router-dom"
 
 const SideBarOutlineGroup: React.FC = () => {
   let { id } = useParams()
@@ -27,11 +31,11 @@ const SideBarOutlineGroup: React.FC = () => {
     //   activeURL: `/modules/${id}/submissions`,
     //   icon: faUpload,
     // },
-    // {
-    //   title: "Feedback",
-    //   activeURL: `/modules/${id}/feedback`,
-    //   icon: faHighlighter,
-    // },
+    {
+      title: "Feedback",
+      activeURL: `/modules/${id}/feedback`,
+      icon: faHighlighter,
+    },
   ]
 
   return <SideBarTabGroup title="Outline" buttons={outlineButtons} />

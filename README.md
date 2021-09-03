@@ -23,20 +23,34 @@ nvm use 14
 First, run `yarn install` to install the node modules used for the frontend.
 In order for the API links to work, the following repository branches need to be cloned and run separately:
 
-### 1. materials@api-for-timeline
+### 1. materials@api
 
 Clone *Materials*. 
 
 ```shell
 # Clone the repository and checkout to the relevant branch
 git clone https://gitlab.doc.ic.ac.uk/edtech/materials.git
-git checkout api-for-timeline
+git checkout api
 ```
 
 Follow the instructions in the [README](https://gitlab.doc.ic.ac.uk/edtech/materials/-/blob/api/README.md) to 
 run the app on port 5000. Check that you meet the system requirements (near the top of the README) before attempting this.
 
-### 2. scientia-calendar
+### 2. emarking@api
+
+Clone *Emarking*.
+
+```shell
+# Clone the repository and checkout to the relevant branch
+git clone https://gitlab.doc.ic.ac.uk/edtech/emarking.git
+git checkout api
+```
+
+Follow the instructions in the [README](https://gitlab.doc.ic.ac.uk/edtech/emarking/-/blob/api/README.md) to
+run the app on port 5001. Check that you meet the system requirements (near the top of the README) before attempting this.
+
+
+### 3. scientia-calendar
 
 ```shell
 # Clone the repository
@@ -48,16 +62,6 @@ npm install
 nodemon index.js
 ```
 
-### 3. Gather past paper data
-
-The jsons containing past exam papers exists in `public/jsons`, but the information might be outdated when you're running the project. To refresh the data:
-
-1. Delete `20XX-20XX.json` and `folders.json` from `public/jsons`.
-2. Open [https://exams.doc.ic.ac.uk/](https://exams.doc.ic.ac.uk/).
-3. Copy `scripts/pastpapers.js` into the browser console, and press enter to run.
-4. Remember to enable multiple file download for the site.
-5. Copy the downloaded jsons back to `public/jsons`.
-6. Profit.
 
 ## To run frontend
 

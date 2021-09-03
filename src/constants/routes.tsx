@@ -2,12 +2,14 @@ import { AuthService } from "./auth"
 
 const dev = {
   MATERIALS_URL: `http://${window.location.hostname}:5000`,
+  EMARKING_URL: `http://${window.location.hostname}:5001`,
   CALENDAR_URL: `http://${window.location.hostname}:4000`,
   DOC_URL: `http://${window.location.hostname}:2000`,
 }
 
 const prod = {
   MATERIALS_URL: "https://api-materials.doc.ic.ac.uk",
+  EMARKING_URL: "https://api-emarking.doc.ic.ac.uk",
   CALENDAR_URL: "",
   DOC_URL: "",
 }
@@ -27,6 +29,18 @@ export interface ApiEndpoint {
 }
 
 export const api = {
+  EMARKING_FEEDBACK: {
+    auth: AuthService.EMARKING,
+    url: `${config.EMARKING_URL}/me/feedback`,
+  },
+  EMARKING_FEEDBACK_FILE: (id: number): ApiEndpoint => ({
+    auth: AuthService.EMARKING,
+    url: `${config.EMARKING_URL}/feedback/${id}/file`,
+  }),
+  EMARKING_LOGIN: {
+    auth: AuthService.EMARKING,
+    url: `${config.EMARKING_URL}/auth/login`,
+  },
   DBC_TERMS: (year: string): ApiEndpoint => ({
     auth: AuthService.MATERIALS,
     url: `${config.MATERIALS_URL}/dbc/periods/${year}`,

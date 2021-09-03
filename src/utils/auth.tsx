@@ -75,7 +75,7 @@ const logout = () => removeDataFromStorage()
  */
 async function loginAll(username: string, password: string): Promise<boolean> {
   const results = await Promise.all(
-    [api.MATERIALS_LOGIN].map((login_endpoint) =>
+    [api.MATERIALS_LOGIN, api.EMARKING_LOGIN].map((login_endpoint) =>
       login(username, password, login_endpoint)
     )
   )

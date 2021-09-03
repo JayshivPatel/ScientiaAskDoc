@@ -30,7 +30,12 @@ const ModuleResources = React.lazy(
   () => import("./modulePages/ModuleResources")
 )
 const ModuleResource = React.lazy(() => import("./modulePages/ModuleResource"))
-const ModuleFeedback = React.lazy(() => import("./modulePages/ModuleFeedback"))
+const ModuleFeedbackResources = React.lazy(
+  () => import("./modulePages/ModuleFeedbackResources")
+)
+const ModuleFeedbackResource = React.lazy(
+  () => import("./modulePages/ModuleFeedbackResource")
+)
 const ExamGrading = React.lazy(() => import("./exams/Grading"))
 const ExamPastPapers = React.lazy(() => import("./exams/PastPapers"))
 const ModuleSubmissions = React.lazy(
@@ -244,11 +249,40 @@ const StandardView: React.FC<StandardViewProps> = ({
             )}
           />
 
-          <Route path="/modules/:id/feedback">
-            <Container className={classNames("pageContainer")}>
-              <ModuleFeedback />
-            </Container>
-          </Route>
+          <Route
+            path="/modules/:id/feedback/:exercise"
+            render={(props) => {
+              return (
+                <Container
+                  className={classNames("pageContainer centerContents")}
+                >
+                  <ModuleFeedbackResource
+                    year={year}
+                    course={props.match.params.id}
+                    exercise={parseInt(props.match.params.exercise)}
+                  />
+                </Container>
+              )
+            }}
+          />
+
+          <Route
+            path="/modules/:id/feedback"
+            render={(props) => {
+              let moduleTitle =
+                modules.find((module) => module.code === props.match.params.id)
+                  ?.title || ""
+              return (
+                <Container className={classNames("pageContainer")}>
+                  <ModuleFeedbackResources
+                    year={year}
+                    moduleTitle={moduleTitle}
+                    moduleID={props.match.params.id}
+                  />
+                </Container>
+              )
+            }}
+          />
 
           <Route path="/timeline">
             <Timeline
