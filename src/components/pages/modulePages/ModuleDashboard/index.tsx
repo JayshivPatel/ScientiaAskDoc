@@ -64,7 +64,7 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleTitle, moduleID }) => {
   return (
     <>
       <Helmet>
-        <title>Dashboard | {moduleTitle} | Scientia</title>
+        <title>Overview | {moduleTitle} | Scientia</title>
       </Helmet>
       <Dandruff
         heading={moduleTitle ? `${moduleID} - ${moduleTitle}` : moduleID}

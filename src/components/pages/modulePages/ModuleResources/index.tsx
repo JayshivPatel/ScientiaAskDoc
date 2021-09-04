@@ -294,7 +294,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     return (
       <>
         <Helmet>
-          <title>Resources | {this.props.moduleTitle} | Scientia</title>
+          <title>Materials | {this.props.moduleTitle} | Scientia</title>
         </Helmet>
         <Dandruff
           heading={
