@@ -20,7 +20,9 @@ const ModuleRow: React.FC<ModuleRowProps> = ({ module }: ModuleRowProps) => {
             !module.has_materials ? styles.noMaterials : ""
           )}
           onClick={() => history.push(`/modules/${module.code}`)}>
-          <div className={styles.moduleTitle}>{module.title}</div>
+          <div id="title" className={styles.moduleTitle}>
+            {module.title}
+          </div>
           <div>{module.code}</div>
         </Button>
       </Row>
