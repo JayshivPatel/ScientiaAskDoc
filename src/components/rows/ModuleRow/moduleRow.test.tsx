@@ -6,7 +6,7 @@ import ModuleRow from "./index"
 import styles from "./style.module.scss"
 import { Module, ProgressStatus } from "../../../constants/types"
 
-describe("<ModuleCard />", () => {
+describe("<ModuleRow />", () => {
   const module: Module = {
     title: "Test Title",
     code: "CO60050",
