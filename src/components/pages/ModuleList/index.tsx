@@ -28,18 +28,6 @@ const ModuleList: React.FC<ModuleListProps> = ({
   return (
     <>
       <Dandruff heading="Modules" />
-      {/*
-          <h4 className={classNames(styles.moduleSectionHeader)}>
-            First Year Undergraduate
-          </h4>
-          <p className={classNames(styles.moduleParagraph)}>
-            There are eight core modules, each with their own coursework and written
-            examination: Introduction to Computer Systems, Introduction to Computer
-            Architecture, Logic, Reasoning about Programs, Mathematics I, Discrete
-            Structures, Graphs and Algorithms, Introduction to Databases.
-          </p>
-      */}
-
       <h4 className={classNames(styles.moduleSectionHeader)}>Your modules</h4>
       <p className={classNames(styles.moduleParagraph)}>
         These are the modules you are currently enrolled for. Click on any to
