@@ -16,6 +16,15 @@ const ModuleList: React.FC<ModuleListProps> = ({
   modules,
   modulesFilter,
 }: ModuleListProps) => {
+  const compareModules = (module1: Module, module2: Module) => {
+    if (module1.code > module2.code) {
+      return 1
+    } else if (module1.code === module2.code) {
+      return 0
+    }
+    return -1
+  }
+
   return (
     <>
       <Dandruff heading="Modules" />
@@ -42,6 +51,7 @@ const ModuleList: React.FC<ModuleListProps> = ({
             ({ progressStatus }) =>
               modulesFilter === "" || progressStatus === modulesFilter
           )
+          .sort((module1, module2) => compareModules(module1, module2))
           .map((module) => (
             <ModuleRow module={module} key={module.code} />
           ))}
