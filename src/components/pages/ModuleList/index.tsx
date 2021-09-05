@@ -1,10 +1,10 @@
 import React from "react"
 import styles from "./style.module.scss"
-import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
 
 import classNames from "classnames"
 
-import ModuleCard from "components/cards/ModuleCard"
+import ModuleRow from "components/rows/ModuleRow"
 import Dandruff from "components/headings/Dandruff"
 import { Module } from "constants/types"
 
@@ -37,16 +37,16 @@ const ModuleList: React.FC<ModuleListProps> = ({
         These are the modules you are currently enrolled for. Click on any to
         access the relevant teaching materials and resources.
       </p>
-      <Row style={{ marginLeft: "-0.625rem", marginRight: "-0.625rem" }}>
+      <div role="group">
         {modules
           .filter(
             ({ progressStatus }) =>
               modulesFilter === "" || progressStatus === modulesFilter
           )
           .map((module) => (
-            <ModuleCard module={module} key={module.code} />
+            <ModuleRow module={module} key={module.code} />
           ))}
-      </Row>
+      </div>
     </>
   )
 }

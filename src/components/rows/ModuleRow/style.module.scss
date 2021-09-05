@@ -1,0 +1,20 @@
+@import "assets/scss/global";
+
+.moduleContainer {
+  display: "flex";
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.moduleRow {
+  margin: 0.1rem 1.25rem;
+}
+
+.moduleTitle {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: medium;
+  font-weight: 500;
+}
