@@ -1,6 +1,5 @@
 import React from "react"
 import styles from "./style.module.scss"
-import Col from "react-bootstrap/Col"
 
 import classNames from "classnames"
 
