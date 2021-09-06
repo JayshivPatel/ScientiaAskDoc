@@ -18,12 +18,8 @@ const ModuleList: React.FC<ModuleListProps> = ({
   modulesFilter,
 }: ModuleListProps) => {
   const compareModules = (module1: Module, module2: Module) => {
-    if (module1.code > module2.code) {
-      return 1
-    } else if (module1.code === module2.code) {
-      return 0
-    }
-    return -1
+    let code1 = module1.code, code2 = module2.code
+    return (code1 > code2) ? 1 : (code1 === code2) ? 0 : -1
   }
 
   return (
