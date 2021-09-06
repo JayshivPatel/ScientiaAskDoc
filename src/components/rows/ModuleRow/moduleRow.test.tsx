@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button"
 import { BrowserRouter as Router } from "react-router-dom"
 import ModuleRow from "./index"
 import styles from "./style.module.scss"
-import { Module, ProgressStatus } from "../../../constants/types"
+import { Module } from "constants/types"
 
 describe("<ModuleRow />", () => {
   const module: Module = {
@@ -12,8 +12,6 @@ describe("<ModuleRow />", () => {
     code: "CO60050",
     terms: ["Autumn"],
     has_materials: false,
-    progressStatus: ProgressStatus.IN_PROGRESS,
-    progressPercent: 50,
     content: "Test Content",
     subscriptionLevel: 1,
   }

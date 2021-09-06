@@ -1,18 +1,10 @@
 import React, { Suspense, useEffect, useState } from "react"
 import Container from "react-bootstrap/esm/Container"
-import { Helmet } from "react-helmet"
 import { Redirect, Route, Switch } from "react-router-dom"
 import moment from "moment"
 import "./style.scss"
 import classNames from "classnames"
-import {
-  CalendarEvent,
-  Module,
-  OldTerm,
-  ProgressStatus,
-  Term,
-  TimelineEvent,
-} from "constants/types"
+import { CalendarEvent, Module, Term, TimelineEvent } from "constants/types"
 import LoadingScreen from "components/suspense/LoadingScreen"
 import RightBar from "components/navbars/RightBar"
 import LeftBar from "components/navbars/LeftBar"
@@ -79,8 +71,6 @@ const StandardView: React.FC<StandardViewProps> = ({
           has_materials: module.has_materials,
           // Hardcoded stuff, we don't have this data currently
           terms: ["Autumn", "Spring", "Summer"],
-          progressPercent: Math.floor(Math.random() * 100),
-          progressStatus: ProgressStatus.IN_PROGRESS,
           content: "",
           subscriptionLevel: (Math.floor(Math.random() * 3) + 1) as 1 | 2 | 3,
         }))

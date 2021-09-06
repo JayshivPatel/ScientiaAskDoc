@@ -47,8 +47,6 @@ export interface Module {
   can_manage?: boolean
   has_materials?: boolean
   terms: OldTerm[]
-  progressStatus: ProgressStatus
-  progressPercent: number
   content: string
   subscriptionLevel: 1 | 2 | 3
 }
@@ -78,12 +76,6 @@ export interface CalendarEvent {
   start: Date
   end: Date
   catorgory: string
-}
-
-export enum ProgressStatus {
-  NOT_STARTED = "Not Started",
-  IN_PROGRESS = "In Progress",
-  COMPLETED = "Completed",
 }
 
 export interface Feedback {

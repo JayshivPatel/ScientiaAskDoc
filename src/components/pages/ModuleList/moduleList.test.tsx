@@ -3,7 +3,7 @@ import { mount } from "enzyme"
 import { BrowserRouter as Router } from "react-router-dom"
 import ModuleList from "./index"
 import ModuleRow from "components/rows/ModuleRow"
-import { Module, ProgressStatus } from "constants/types"
+import { Module } from "constants/types"
 
 describe("<ModuleList />", () => {
   const modules: Module[] = [
@@ -12,8 +12,6 @@ describe("<ModuleList />", () => {
       code: "40006",
       terms: ["Autumn"],
       has_materials: false,
-      progressStatus: ProgressStatus.IN_PROGRESS,
-      progressPercent: 50,
       content: "Test Content",
       subscriptionLevel: 1,
     },
@@ -22,8 +20,6 @@ describe("<ModuleList />", () => {
       code: "40004",
       terms: ["Autumn"],
       has_materials: false,
-      progressStatus: ProgressStatus.IN_PROGRESS,
-      progressPercent: 50,
       content: "Test Content",
       subscriptionLevel: 1,
     },
@@ -32,8 +28,6 @@ describe("<ModuleList />", () => {
       code: "40008",
       terms: ["Autumn"],
       has_materials: false,
-      progressStatus: ProgressStatus.IN_PROGRESS,
-      progressPercent: 50,
       content: "Test Content",
       subscriptionLevel: 1,
     },
