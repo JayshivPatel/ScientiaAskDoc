@@ -1,5 +1,6 @@
 import React from "react"
 import styles from "./style.module.scss"
+import { Helmet } from "react-helmet"
 
 import classNames from "classnames"
 
@@ -27,6 +28,9 @@ const ModuleList: React.FC<ModuleListProps> = ({
 
   return (
     <>
+      <Helmet>
+        <title>Modules | Scientia</title>
+      </Helmet>
       <Dandruff heading="Modules" />
       <h4 className={classNames(styles.moduleSectionHeader)}>Your modules</h4>
       <p className={classNames(styles.moduleParagraph)}>

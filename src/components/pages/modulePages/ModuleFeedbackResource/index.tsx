@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Button from "react-bootstrap/Button"
+import { Helmet } from "react-helmet"
 import { faDownload } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import styles from "./style.module.scss"
@@ -9,12 +10,14 @@ import { downloadBlob, request } from "utils/api"
 import LoadingScreen from "../../../suspense/LoadingScreen"
 
 export interface ModuleFeedbackResourceProps {
+  moduleTitle: string
   year: string
   course: string
   exercise: number
 }
 
 const ModuleFeedbackResource: React.FC<ModuleFeedbackResourceProps> = ({
+  moduleTitle,
   year,
   course,
   exercise,
@@ -77,8 +80,7 @@ const ModuleFeedbackResource: React.FC<ModuleFeedbackResourceProps> = ({
         <Button
           onClick={() => {
             downloadBlob(pdfInfo.blob_url, pdfInfo.filename)
-          }}
-        >
+          }}>
           Download
           <FontAwesomeIcon icon={faDownload} />
         </Button>
@@ -91,7 +93,16 @@ const ModuleFeedbackResource: React.FC<ModuleFeedbackResourceProps> = ({
     )
   }
 
-  return <LoadingScreen error={error} isLoaded={isLoaded} successful={view()} />
+  return (
+    <>
+      <Helmet>
+        <title>
+          {pdfInfo.filename} | {moduleTitle} | Scientia
+        </title>
+      </Helmet>
+      <LoadingScreen error={error} isLoaded={isLoaded} successful={view()} />
+    </>
+  )
 }
 
 export default ModuleFeedbackResource

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { Helmet } from "react-helmet"
 import MyBreadcrumbs from "components/headings/MyBreadcrumbs"
 import styles from "./style.module.scss"
 import TermSwitcher from "./components/TermSwitcher"
@@ -172,6 +173,9 @@ const Timeline: React.FC<TimelineProps> = ({
   }
   return (
     <>
+      <Helmet>
+        <title>Timeline | Scientia</title>
+      </Helmet>
       <div className={styles.timelineContainer}>
         <MyBreadcrumbs />
         <div className={styles.timelineGrid}>
