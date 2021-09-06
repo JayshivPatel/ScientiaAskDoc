@@ -27,6 +27,7 @@ const feedbackData = [
   },
 ]
 
+const moduleTitle = "Introduction to Logic"
 const year = "1920"
 const course = "40003"
 const exercise = 2
@@ -41,7 +42,12 @@ describe("<ModuleFeedbackResource />", () => {
   })
 
   const wrapper = mount(
-    <ModuleFeedbackResource year={year} course={course} exercise={exercise} />
+    <ModuleFeedbackResource
+      moduleTitle={moduleTitle}
+      year={year}
+      course={course}
+      exercise={exercise}
+    />
   )
 
   it("loads pdf url", async () => {
@@ -56,7 +62,12 @@ describe("<ModuleFeedbackResource />", () => {
   })
 
   const wrapper = mount(
-    <ModuleFeedbackResource year={year} course={course} exercise={exercise} />
+    <ModuleFeedbackResource
+      moduleTitle={moduleTitle}
+      year={year}
+      course={course}
+      exercise={exercise}
+    />
   )
 
   it("warns user on error", async () => {

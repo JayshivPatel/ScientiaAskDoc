@@ -1,4 +1,6 @@
 import React, { Suspense, useEffect, useState } from "react"
+import Container from "react-bootstrap/esm/Container"
+import { Helmet } from "react-helmet"
 import { Redirect, Route, Switch } from "react-router-dom"
 import moment from "moment"
 import "./style.scss"
@@ -11,7 +13,6 @@ import {
   Term,
   TimelineEvent,
 } from "constants/types"
-import Container from "react-bootstrap/esm/Container"
 import LoadingScreen from "components/suspense/LoadingScreen"
 import RightBar from "components/navbars/RightBar"
 import LeftBar from "components/navbars/LeftBar"
@@ -145,8 +146,7 @@ const StandardView: React.FC<StandardViewProps> = ({
       className={classNames({
         toggledLeft: toggledLeft,
         toggledRight: toggledRight,
-      })}
-    >
+      })}>
       <LeftBar
         modulesFilter={modulesFilter}
         setModulesFilter={setModulesFilter}
@@ -198,11 +198,14 @@ const StandardView: React.FC<StandardViewProps> = ({
           <Route
             path="/modules/:id/resources/:category/:index"
             render={(props) => {
+              let moduleTitle =
+                modules.find((module) => module.code === props.match.params.id)
+                  ?.title || ""
               return (
                 <Container
-                  className={classNames("pageContainer centerContents")}
-                >
+                  className={classNames("pageContainer centerContents")}>
                   <ModuleResource
+                    moduleTitle={moduleTitle}
                     year={year}
                     course={props.match.params.id}
                     category={props.match.params.category}
@@ -252,11 +255,14 @@ const StandardView: React.FC<StandardViewProps> = ({
           <Route
             path="/modules/:id/feedback/:exercise"
             render={(props) => {
+              let moduleTitle =
+                modules.find((module) => module.code === props.match.params.id)
+                  ?.title || ""
               return (
                 <Container
-                  className={classNames("pageContainer centerContents")}
-                >
+                  className={classNames("pageContainer centerContents")}>
                   <ModuleFeedbackResource
+                    moduleTitle={moduleTitle}
                     year={year}
                     course={props.match.params.id}
                     exercise={parseInt(props.match.params.exercise)}

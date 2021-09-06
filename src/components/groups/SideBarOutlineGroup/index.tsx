@@ -22,7 +22,7 @@ const SideBarOutlineGroup: React.FC = () => {
     // 	icon: faList,
     // },
     {
-      title: "Course Materials",
+      title: "Materials",
       activeURL: `/modules/${id}/resources`,
       icon: faArchive,
     },

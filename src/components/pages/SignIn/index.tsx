@@ -8,6 +8,7 @@ import Container from "react-bootstrap/Container"
 import InputGroup from "react-bootstrap/InputGroup"
 import FormControl from "react-bootstrap/FormControl"
 import Button from "react-bootstrap/Button"
+import { Helmet } from "react-helmet"
 
 import authenticationService from "utils/auth"
 
@@ -49,6 +50,9 @@ const SignIn: React.FC<Props> = ({ location }) => {
   if (redirect) return <Redirect to={from} />
   return (
     <>
+      <Helmet>
+        <title>Sign In | Scientia</title>
+      </Helmet>
       <Navbar
         className={styles.navBar}
         sticky="top"

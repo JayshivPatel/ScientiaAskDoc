@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { Helmet } from "react-helmet"
 import { Feedback } from "../../../../constants/types"
 import { request } from "../../../../utils/api"
 import { api, methods } from "../../../../constants/routes"
@@ -43,6 +44,9 @@ const ModuleFeedbackResources: React.FC<ModuleFeedbackProps> = ({
 
   return (
     <>
+      <Helmet>
+        <title>Feedback | {moduleTitle} | Scientia</title>
+      </Helmet>
       <Dandruff
         heading={moduleTitle ? `${moduleID} - ${moduleTitle}` : moduleID}
       />

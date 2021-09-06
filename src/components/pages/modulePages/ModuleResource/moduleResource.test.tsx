@@ -37,6 +37,7 @@ const resourceData = [
   },
 ]
 
+const moduleTitle = "Introduction to Logic"
 const year = "1920"
 const course = "40003"
 const category = "Lecture Notes"
@@ -52,6 +53,7 @@ describe("<ModuleResource />", () => {
 
   const wrapper = mount(
     <ModuleResource
+      moduleTitle={moduleTitle}
       year={year}
       course={course}
       category={category}
@@ -71,6 +73,7 @@ describe("<ModuleResource />", () => {
 
   const wrapper = mount(
     <ModuleResource
+      moduleTitle={moduleTitle}
       year={year}
       course={course}
       category={category}

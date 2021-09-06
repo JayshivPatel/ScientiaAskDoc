@@ -1,6 +1,7 @@
 import React from "react"
 import styles from "./style.module.scss"
 import Row from "react-bootstrap/Row"
+import { Helmet } from "react-helmet"
 
 import classNames from "classnames"
 
@@ -19,6 +20,9 @@ const ModuleList: React.FC<ModuleListProps> = ({
 }: ModuleListProps) => {
   return (
     <>
+      <Helmet>
+        <title>Modules | Scientia</title>
+      </Helmet>
       <Dandruff heading="Modules" />
       {/*
           <h4 className={classNames(styles.moduleSectionHeader)}>
