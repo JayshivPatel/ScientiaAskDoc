@@ -68,8 +68,6 @@ const StandardView: React.FC<StandardViewProps> = ({
   onCalendarClick,
   year,
 }: StandardViewProps) => {
-  const [modulesFilter, setModulesFilter] = useState("In Progress")
-  const [timelineTerm, setTimelineTerm] = useState<OldTerm>("Autumn")
   const [modules, setModules] = useState<Module[]>([])
   useEffect(() => {
     const onSuccess = (modules: Module[]) => {
@@ -147,14 +145,7 @@ const StandardView: React.FC<StandardViewProps> = ({
         toggledLeft: toggledLeft,
         toggledRight: toggledRight,
       })}>
-      <LeftBar
-        modulesFilter={modulesFilter}
-        setModulesFilter={setModulesFilter}
-        timelineTerm={timelineTerm}
-        setTimelineTerm={setTimelineTerm}
-        onEventClick={onEventClick}
-        year={year}
-      />
+      <LeftBar year={year} />
       <RightBar
         onSettingsClick={onSettingsClick}
         onCalendarClick={onCalendarClick}
@@ -173,7 +164,7 @@ const StandardView: React.FC<StandardViewProps> = ({
 
           <Route exact path="/modules">
             <Container className={classNames("pageContainer")}>
-              <ModuleList modules={modules} modulesFilter={modulesFilter} />
+              <ModuleList modules={modules} />
             </Container>
           </Route>
 
