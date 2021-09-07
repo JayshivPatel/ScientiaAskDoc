@@ -1,7 +1,7 @@
 import React from "react"
 import { shallow } from "enzyme"
 import Timeline from "./index"
-import { Module, ProgressStatus, Term } from "../../../constants/types"
+import { Module, Term } from "constants/types"
 import TermSwitcher from "./components/TermSwitcher"
 import ModuleRows from "./components/ModuleRows"
 
@@ -12,8 +12,6 @@ describe("<TimeLine />", () => {
       code: "60020",
       content: "",
       has_materials: false,
-      progressPercent: 7,
-      progressStatus: ProgressStatus.IN_PROGRESS,
       subscriptionLevel: 1,
       terms: ["Autumn"],
       title: "Simulation and Modelling",
@@ -23,8 +21,6 @@ describe("<TimeLine />", () => {
       code: "60021",
       content: "",
       has_materials: false,
-      progressPercent: 7,
-      progressStatus: ProgressStatus.IN_PROGRESS,
       subscriptionLevel: 1,
       terms: ["Autumn"],
       title: "Software Engineering",
