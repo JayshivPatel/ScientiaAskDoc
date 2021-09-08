@@ -81,7 +81,6 @@ const ModulesRoutes: React.FC<YearDependentRoutesProps> = ({
     })
   }, [year])
 
-
   return (
     <Switch>
       <Route exact path={`${path}/modules`}>
@@ -89,6 +88,105 @@ const ModulesRoutes: React.FC<YearDependentRoutesProps> = ({
           <ModuleList modules={modules} />
         </Container>
       </Route>
+
+      <Route
+        path={`${path}/modules/:id/dashboard`}
+        render={(props) => {
+          let moduleTitle =
+            modules.find((module) => module.code === props.match.params.id)
+              ?.title || ""
+          return (
+            <Container className={classNames("pageContainer")}>
+              <ModuleDashboard
+                year={year}
+                moduleTitle={moduleTitle}
+                moduleID={props.match.params.id}
+              />
+            </Container>
+          )
+        }}
+      />
+
+      <Route
+        path={`${path}/modules/:id/resources/:category/:index`}
+        render={(props) => {
+          let moduleTitle =
+            modules.find((module) => module.code === props.match.params.id)
+              ?.title || ""
+          return (
+            <Container className={classNames("pageContainer centerContents")}>
+              <ModuleResource
+                moduleTitle={moduleTitle}
+                year={year}
+                course={props.match.params.id}
+                category={props.match.params.category}
+                index={+props.match.params.index}
+              />
+            </Container>
+          )
+        }}
+      />
+
+      <Route
+        path={`${path}/modules/:id/resources/:scope?`}
+        render={(props) => {
+          let moduleTitle =
+            modules.find((module) => module.code === props.match.params.id)
+              ?.title || ""
+          let canManage =
+            modules.find((module) => module.code === props.match.params.id)
+              ?.can_manage || false
+          return (
+            <Container className={classNames("pageContainer")}>
+              <ModuleResources
+                year={year}
+                moduleTitle={moduleTitle}
+                moduleID={props.match.params.id}
+                scope={props.match.params.scope}
+                view={localStorage.getItem("fileView") || "card"}
+                canManage={canManage}
+              />
+            </Container>
+          )
+        }}
+      />
+
+      <Route
+        path={`${path}/modules/:id/feedback/:exercise`}
+        render={(props) => {
+          let moduleTitle =
+            modules.find((module) => module.code === props.match.params.id)
+              ?.title || ""
+          return (
+            <Container className={classNames("pageContainer centerContents")}>
+              <ModuleFeedbackResource
+                moduleTitle={moduleTitle}
+                year={year}
+                course={props.match.params.id}
+                exercise={parseInt(props.match.params.exercise)}
+              />
+            </Container>
+          )
+        }}
+      />
+
+      <Route
+        path={`${path}/modules/:id/feedback`}
+        render={(props) => {
+          let moduleTitle =
+            modules.find((module) => module.code === props.match.params.id)
+              ?.title || ""
+          return (
+            <Container className={classNames("pageContainer")}>
+              <ModuleFeedbackResources
+                year={year}
+                moduleTitle={moduleTitle}
+                moduleID={props.match.params.id}
+              />
+            </Container>
+          )
+        }}
+      />
     </Switch>
   )
 }
@@ -203,14 +301,6 @@ const StandardView: React.FC<StandardViewProps> = ({
               <ModuleList modules={modules} />
             </Container>
           </Route>
-
-          <Route
-            path="/:year"
-            render={(props) => {
-              let year = props.match.params.year
-              return <ModulesRoutes year={year} />
-            }}
-          />
 
           <Route
             path="/modules/:id/dashboard"
@@ -339,6 +429,14 @@ const StandardView: React.FC<StandardViewProps> = ({
               year={year}
             />
           </Route>
+
+          <Route
+            path="/:year"
+            render={(props) => {
+              let year = props.match.params.year
+              return <ModulesRoutes year={year} />
+            }}
+          />
         </Switch>
       </Suspense>
     </div>
