@@ -3,8 +3,8 @@ import Modal from "react-bootstrap/Modal"
 import Button from "react-bootstrap/Button"
 import useLocalStorage from "react-use-localstorage"
 import styles from "./style.module.scss"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faTimes} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faTimes } from "@fortawesome/free-solid-svg-icons"
 import TextEntrySetting from "./components/TextEntrySetting"
 import ButtonGroupSetting from "./components/ButtonGroupSetting"
 import DropDownSetting from "./components/DropDownSetting"
@@ -104,10 +104,9 @@ const SettingsModal: React.FC<Props> = ({
             onChange={setYear}
             value={year}
             options={[
+              { value: "2122", text: "2021 - 2022" },
               { value: "2021", text: "2020 - 2021" },
               { value: "1920", text: "2019 - 2020" },
-              { value: "1819", text: "2018 - 2019" },
-              { value: "1718", text: "2017 - 2018" },
             ]}
           />
 
