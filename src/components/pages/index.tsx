@@ -12,6 +12,8 @@ import { request } from "../../utils/api"
 import { api, methods } from "../../constants/routes"
 import { YEAR_OF_NEW_CODES } from "../../constants/doc"
 import getDefaultTerm from "./Timeline/defaultTerms"
+import ModulesSubRouter from "./subrouters/ModulesSubRouter"
+import { TimelineSubRoute } from "./subrouters/TimelineSubRoute"
 
 const Timeline = React.lazy(() => import("components/pages/Timeline"))
 const ModuleDashboard = React.lazy(
@@ -50,10 +52,16 @@ interface StandardViewProps {
 
 interface YearDependentRoutesProps {
   year: string
+  timelineConfig: {
+    onEventClick: (e?: TimelineEvent) => void
+    initSideBar: () => void
+    revertSideBar: () => void
+  }
 }
 
-const ModulesRoutes: React.FC<YearDependentRoutesProps> = ({
+const YearDependentSubRoutes: React.FC<YearDependentRoutesProps> = ({
   year,
+  timelineConfig,
 }: YearDependentRoutesProps) => {
   let { path, url } = useRouteMatch()
   const [modules, setModules] = useState<Module[]>([])
@@ -83,107 +91,19 @@ const ModulesRoutes: React.FC<YearDependentRoutesProps> = ({
 
   return (
     <Switch>
-      <Route exact path={`${path}/modules`}>
-        <Container className={classNames("pageContainer")}>
-          <ModuleList modules={modules} />
-        </Container>
+      <Route path={`${path}/modules`}>
+        <ModulesSubRouter year={year} modules={modules} />
       </Route>
 
       <Route
-        path={`${path}/modules/:id/dashboard`}
+        path={`${path}/timeline`}
         render={(props) => {
-          let moduleTitle =
-            modules.find((module) => module.code === props.match.params.id)
-              ?.title || ""
           return (
-            <Container className={classNames("pageContainer")}>
-              <ModuleDashboard
-                year={year}
-                moduleTitle={moduleTitle}
-                moduleID={props.match.params.id}
-              />
-            </Container>
-          )
-        }}
-      />
-
-      <Route
-        path={`${path}/modules/:id/resources/:category/:index`}
-        render={(props) => {
-          let moduleTitle =
-            modules.find((module) => module.code === props.match.params.id)
-              ?.title || ""
-          return (
-            <Container className={classNames("pageContainer centerContents")}>
-              <ModuleResource
-                moduleTitle={moduleTitle}
-                year={year}
-                course={props.match.params.id}
-                category={props.match.params.category}
-                index={+props.match.params.index}
-              />
-            </Container>
-          )
-        }}
-      />
-
-      <Route
-        path={`${path}/modules/:id/resources/:scope?`}
-        render={(props) => {
-          let moduleTitle =
-            modules.find((module) => module.code === props.match.params.id)
-              ?.title || ""
-          let canManage =
-            modules.find((module) => module.code === props.match.params.id)
-              ?.can_manage || false
-          return (
-            <Container className={classNames("pageContainer")}>
-              <ModuleResources
-                year={year}
-                moduleTitle={moduleTitle}
-                moduleID={props.match.params.id}
-                scope={props.match.params.scope}
-                view={localStorage.getItem("fileView") || "card"}
-                canManage={canManage}
-              />
-            </Container>
-          )
-        }}
-      />
-
-      <Route
-        path={`${path}/modules/:id/feedback/:exercise`}
-        render={(props) => {
-          let moduleTitle =
-            modules.find((module) => module.code === props.match.params.id)
-              ?.title || ""
-          return (
-            <Container className={classNames("pageContainer centerContents")}>
-              <ModuleFeedbackResource
-                moduleTitle={moduleTitle}
-                year={year}
-                course={props.match.params.id}
-                exercise={parseInt(props.match.params.exercise)}
-              />
-            </Container>
-          )
-        }}
-      />
-
-      <Route
-        path={`${path}/modules/:id/feedback`}
-        render={(props) => {
-          let moduleTitle =
-            modules.find((module) => module.code === props.match.params.id)
-              ?.title || ""
-          return (
-            <Container className={classNames("pageContainer")}>
-              <ModuleFeedbackResources
-                year={year}
-                moduleTitle={moduleTitle}
-                moduleID={props.match.params.id}
-              />
-            </Container>
+            <TimelineSubRoute
+              timelineConfig={timelineConfig}
+              modules={modules}
+              year={props.match.params.year}
+            />
           )
         }}
       />
@@ -270,6 +190,12 @@ const StandardView: React.FC<StandardViewProps> = ({
       onError: (message) => console.log(`Failed to obtain terms: ${message}`),
     })
   }, [year])
+
+  const timelineConfig = {
+    onEventClick: onEventClick,
+    initSideBar: initTimelineSideBar,
+    revertSideBar: revertTimelineSideBar,
+  }
 
   return (
     <div
@@ -433,8 +359,12 @@ const StandardView: React.FC<StandardViewProps> = ({
           <Route
             path="/:year"
             render={(props) => {
-              let year = props.match.params.year
-              return <ModulesRoutes year={year} />
+              return (
+                <YearDependentSubRoutes
+                  year={props.match.params.year}
+                  timelineConfig={timelineConfig}
+                />
+              )
             }}
           />
         </Switch>
