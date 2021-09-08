@@ -9,6 +9,7 @@ import TextEntrySetting from "./components/TextEntrySetting"
 import ButtonGroupSetting from "./components/ButtonGroupSetting"
 import DropDownSetting from "./components/DropDownSetting"
 import SettingsSection from "./components/SettingsSection"
+import { ENABLED_ACADEMIC_YEARS } from "../../../constants/doc"
 
 interface Props {
   show: boolean
@@ -37,6 +38,10 @@ const SettingsModal: React.FC<Props> = ({
   )
 
   const [theme, setTheme] = useLocalStorage("theme", "default")
+  const availableYears = ENABLED_ACADEMIC_YEARS.map((shortYear) => {
+    let [start, end] = [shortYear.slice(0, 2), shortYear.slice(2, 4)]
+    return { value: shortYear, text: `20${start} - 20${end}` }
+  })
   // const [calendarID, setCalendarID] = useLocalStorage("calendarID", "")
 
   return (
@@ -45,13 +50,15 @@ const SettingsModal: React.FC<Props> = ({
       dialogClassName={styles.modal}
       show={show}
       onHide={onHide}
-      centered>
+      centered
+    >
       <Modal.Header className={styles.modalHeader}>
         <Modal.Title>Settings</Modal.Title>
         <Button
           variant="secondary"
           className={styles.sectionHeaderButton}
-          onClick={onHide}>
+          onClick={onHide}
+        >
           <FontAwesomeIcon className={styles.buttonIcon} icon={faTimes} />
         </Button>
       </Modal.Header>
@@ -103,11 +110,7 @@ const SettingsModal: React.FC<Props> = ({
             heading="Year"
             onChange={setYear}
             value={year}
-            options={[
-              { value: "2122", text: "2021 - 2022" },
-              { value: "2021", text: "2020 - 2021" },
-              { value: "1920", text: "2019 - 2020" },
-            ]}
+            options={availableYears}
           />
 
           {/*
