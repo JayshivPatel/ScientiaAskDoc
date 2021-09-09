@@ -34,7 +34,7 @@ const ModulesSubRouter: React.FC<ModulesSubRouterProps> = ({
     <Switch>
       <Route exact path={path}>
         <Container className={classNames("pageContainer")}>
-          <ModuleList modules={modules} />
+          <ModuleList modules={modules} year={year} />
         </Container>
       </Route>
 
