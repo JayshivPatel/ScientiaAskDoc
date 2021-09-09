@@ -25,10 +25,6 @@ const LeftBar: React.FC<LeftBarProps> = ({ year }) => {
 					<Route path="/exams">
 					  <SideBarExamsGroup />
 					</Route>
-
-					<Route path="/timeline">
-					  <SideBarTermsGroup term={timelineTerm} setTerm={setTimelineTerm} />
-					</Route>
 				 */}
         <Route path="/">
           <SideBarLinkGroup />
