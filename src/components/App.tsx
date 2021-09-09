@@ -1,41 +1,41 @@
-import React from "react";
+import React from "react"
 import {
   faCalendarWeek,
   faChalkboardTeacher,
   IconDefinition,
-} from "@fortawesome/free-solid-svg-icons";
-import "./App.scss";
-import TopBar from "./navbars/TopBar";
-import BottomBar from "./navbars/BottomBar";
-import StandardView from "./pages";
-import { Router, Redirect, Route, Switch } from "react-router-dom";
-import SignIn from "./pages/SignIn";
-import SettingsModal from "./modals/SettingsModal";
-import EventModal from "./modals/EventModal";
-import { CalendarEvent, TimelineEvent } from "constants/types";
-import authenticationService from "../utils/auth";
-import CalendarModal from "./modals/CalendarModal";
-import { TIMELINE_ACTIVE } from "constants/global";
-import history from 'history.js'
+} from "@fortawesome/free-solid-svg-icons"
+import "./App.scss"
+import TopBar from "./navbars/TopBar"
+import BottomBar from "./navbars/BottomBar"
+import StandardView from "./pages"
+import { Redirect, Route, Router, Switch } from "react-router-dom"
+import SignIn from "./pages/SignIn"
+import SettingsModal from "./modals/SettingsModal"
+import EventModal from "./modals/EventModal"
+import { CalendarEvent, TimelineEvent } from "constants/types"
+import authenticationService from "../utils/auth"
+import CalendarModal from "./modals/CalendarModal"
+import { TIMELINE_ACTIVE } from "constants/global"
+import history from "history.js"
 
 type AppState = {
-  toggledLeft: boolean;
-  toggledRight: boolean;
-  showSettings: boolean;
-  fileView: string;
-  showEventModal: boolean;
-  showCalendarModal: boolean;
-  activeModalEvent?: TimelineEvent;
-  activeCalendarEvent?: CalendarEvent;
-  year: string;
-};
+  toggledLeft: boolean
+  toggledRight: boolean
+  showSettings: boolean
+  fileView: string
+  showEventModal: boolean
+  showCalendarModal: boolean
+  activeModalEvent?: TimelineEvent
+  activeCalendarEvent?: CalendarEvent
+  year: string
+}
 
 class App extends React.Component<{}, AppState> {
-  width = window.innerWidth;
-  isTimelineView = false;
+  width = window.innerWidth
+  isTimelineView = false
 
   constructor(props: {}) {
-    super(props);
+    super(props)
     this.state = {
       toggledLeft: false,
       toggledRight: false,
@@ -45,59 +45,59 @@ class App extends React.Component<{}, AppState> {
       activeModalEvent: undefined,
       fileView: localStorage.getItem("fileView") || "card",
       year: "2021",
-    };
+    }
   }
 
   componentDidMount() {
     document.documentElement.style.fontSize = `${
       localStorage.getItem("interfaceSize") || "90"
-    }%`;
+    }%`
 
-    const currentTheme = localStorage.getItem("theme");
+    const currentTheme = localStorage.getItem("theme")
     if (currentTheme === "light" || currentTheme === "dark") {
-      document.documentElement.setAttribute("data-theme", currentTheme);
+      document.documentElement.setAttribute("data-theme", currentTheme)
     } else {
-      let mq = window.matchMedia("(prefers-color-scheme: dark)");
-      mq.addListener((mq) => this.setDarkTheme(mq.matches));
-      this.setDarkTheme(mq.matches);
+      let mq = window.matchMedia("(prefers-color-scheme: dark)")
+      mq.addListener((mq) => this.setDarkTheme(mq.matches))
+      this.setDarkTheme(mq.matches)
     }
 
     window.addEventListener("resize", () => {
       if (window.innerWidth !== this.width) {
-        this.width = window.innerWidth;
-        this.showOrHideSideBars();
+        this.width = window.innerWidth
+        this.showOrHideSideBars()
       }
-    });
-    this.showOrHideSideBars();
+    })
+    this.showOrHideSideBars()
   }
 
   setDarkTheme(toSet: boolean) {
     document.documentElement.setAttribute(
       "data-theme",
       toSet ? "dark" : "light"
-    );
+    )
   }
 
   toggleLeftBar() {
     if (window.innerWidth <= 1024) {
       this.setState({
         toggledRight: false,
-      });
+      })
     }
     this.setState((state) => ({
       toggledLeft: !state.toggledLeft,
-    }));
+    }))
   }
 
   toggleRightBar() {
     if (window.innerWidth <= 1024) {
       this.setState({
         toggledLeft: false,
-      });
+      })
     }
     this.setState((state) => ({
       toggledRight: !state.toggledRight,
-    }));
+    }))
   }
 
   showOrHideSideBars() {
@@ -105,39 +105,47 @@ class App extends React.Component<{}, AppState> {
       this.setState({
         toggledLeft: false,
         toggledRight: false,
-      });
+      })
     } else {
       this.setState({
         toggledLeft: true,
         toggledRight: true,
-      });
+      })
     }
   }
 
   setFileView(view: string) {
-    this.setState({ fileView: view });
-    localStorage.setItem("fileView", view);
+    this.setState({ fileView: view })
+    localStorage.setItem("fileView", view)
   }
 
   showEventModal(e?: TimelineEvent) {
-    this.setState({ showEventModal: true, activeModalEvent: e });
+    this.setState({ showEventModal: true, activeModalEvent: e })
   }
 
   showCalendarModal(e?: CalendarEvent) {
-    this.setState({ showCalendarModal: true, activeCalendarEvent: e });
+    this.setState({ showCalendarModal: true, activeCalendarEvent: e })
   }
 
   render() {
     const horizontalBarPages: {
-      name: string;
-      path: string;
-      icon: IconDefinition;
+      name: string
+      path: string
+      icon: IconDefinition
     }[] = [
       /* { name: "Dashboard", path: "/dashboard", icon: faHome }, */
-      { name: "Modules", path: "/modules", icon: faChalkboardTeacher },
-      { name: "Timeline", path: "/timeline", icon: faCalendarWeek },
+      {
+        name: "Modules",
+        path: `/${this.state.year}/modules`,
+        icon: faChalkboardTeacher,
+      },
+      {
+        name: "Timeline",
+        path: `/${this.state.year}/timeline`,
+        icon: faCalendarWeek,
+      },
       /* { name: "Exams", path: "/exams", icon: faBookOpen }, */
-    ];
+    ]
 
     return (
       <>
@@ -176,12 +184,12 @@ class App extends React.Component<{}, AppState> {
                     <TopBar
                       pages={horizontalBarPages}
                       onFavIconClick={(e) => {
-                        e.preventDefault();
-                        this.toggleLeftBar();
+                        e.preventDefault()
+                        this.toggleLeftBar()
                       }}
                       onUserIconClick={(e) => {
-                        e.preventDefault();
-                        this.toggleRightBar();
+                        e.preventDefault()
+                        this.toggleRightBar()
                       }}
                     />
 
@@ -198,19 +206,19 @@ class App extends React.Component<{}, AppState> {
                       toggledLeft={this.state.toggledLeft}
                       toggledRight={this.state.toggledRight}
                       initTimelineSideBar={() => {
-                        this.isTimelineView = true;
-                        this.showOrHideSideBars();
+                        this.isTimelineView = true
+                        this.showOrHideSideBars()
                       }}
                       revertTimelineSideBar={() => {
-                        this.isTimelineView = false;
-                        this.showOrHideSideBars();
+                        this.isTimelineView = false
+                        this.showOrHideSideBars()
                       }}
                       onOverlayClick={(e) => {
-                        e.preventDefault();
+                        e.preventDefault()
                         this.setState({
                           toggledLeft: false,
                           toggledRight: false,
-                        });
+                        })
                       }}
                       fileView={this.state.fileView}
                       year={this.state.year}
@@ -231,8 +239,8 @@ class App extends React.Component<{}, AppState> {
           </Switch>
         </Router>
       </>
-    );
+    )
   }
 }
 
-export default App;
+export default App
