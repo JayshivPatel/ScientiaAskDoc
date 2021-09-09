@@ -48,10 +48,14 @@ export function filterInvisibleResources(resources: Resource[]): Resource[] {
 
 export function navigateToResource(id: number) {
   const onSuccess = (resource: Resource) => {
-    const course = resource.course
-    const category = resource.category
-    const index = resource.index
-    history.push(`/modules/${course}/resources/${category}/${index}`)
+    if (resource.type === "link" || resource.type === "video") {
+      window.open(resource.path, "_blank")
+    } else {
+      const course = resource.course
+      const category = resource.category
+      const index = resource.index
+      history.push(`/modules/${course}/resources/${category}/${index}`)
+    }
   }
   request({
     endpoint: api.MATERIALS_RESOURCES_ID(id),
