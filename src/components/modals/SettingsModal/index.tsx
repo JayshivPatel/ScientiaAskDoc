@@ -38,7 +38,9 @@ const SettingsModal: React.FC<Props> = ({
   )
 
   const [theme, setTheme] = useLocalStorage("theme", "default")
-  const availableYears = ENABLED_ACADEMIC_YEARS.map((shortYear) => {
+  const availableYears = ENABLED_ACADEMIC_YEARS.sort(
+    (y1, y2) => parseInt(y2) - parseInt(y1)
+  ).map((shortYear) => {
     let [start, end] = [shortYear.slice(0, 2), shortYear.slice(2, 4)]
     return { value: shortYear, text: `20${start} - 20${end}` }
   })
