@@ -8,12 +8,12 @@ import {
 import { useParams } from "react-router-dom"
 
 const SideBarOutlineGroup: React.FC = () => {
-  let { id } = useParams()
+  let { year, id } = useParams()
 
   let outlineButtons = [
     {
       title: "Overview",
-      activeURL: `/modules/${id}/dashboard`,
+      activeURL: `/${year}/modules/${id}/dashboard`,
       icon: faHome,
     },
     // {
@@ -23,7 +23,7 @@ const SideBarOutlineGroup: React.FC = () => {
     // },
     {
       title: "Materials",
-      activeURL: `/modules/${id}/resources`,
+      activeURL: `/${year}/modules/${id}/resources`,
       icon: faArchive,
     },
     // {
@@ -33,7 +33,7 @@ const SideBarOutlineGroup: React.FC = () => {
     // },
     {
       title: "Feedback",
-      activeURL: `/modules/${id}/feedback`,
+      activeURL: `/${year}/modules/${id}/feedback`,
       icon: faHighlighter,
     },
   ]
