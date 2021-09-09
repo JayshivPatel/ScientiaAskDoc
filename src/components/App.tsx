@@ -127,6 +127,12 @@ class App extends React.Component<{}, AppState> {
     this.setState({ showCalendarModal: true, activeCalendarEvent: e })
   }
 
+  changeYear(year: string) {
+    let previousYear = this.state.year
+    this.setState({ year: year })
+    history.push(history.location.pathname.replace(previousYear, year))
+  }
+
   render() {
     const horizontalBarPages: {
       name: string
@@ -157,7 +163,7 @@ class App extends React.Component<{}, AppState> {
           onListViewClick={() => this.setFileView("list")}
           setDarkTheme={(b) => this.setDarkTheme(b)}
           year={this.state.year}
-          setYear={(year: string) => this.setState({ year: year })}
+          setYear={(year: string) => this.changeYear(year)}
         />
 
         <CalendarModal
