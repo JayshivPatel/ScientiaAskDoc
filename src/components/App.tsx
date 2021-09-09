@@ -220,7 +220,6 @@ class App extends React.Component<{}, AppState> {
                           toggledRight: false,
                         })
                       }}
-                      fileView={this.state.fileView}
                       year={this.state.year}
                     />
 
