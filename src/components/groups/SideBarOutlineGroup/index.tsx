@@ -18,7 +18,7 @@ const SideBarOutlineGroup: React.FC = () => {
     },
     // {
     // 	title: "Overview",
-    // 	activeURL: `/modules/${id}/overview`,
+    // 	activeURL: `${year}/modules/${id}/overview`,
     // 	icon: faList,
     // },
     {
@@ -28,7 +28,7 @@ const SideBarOutlineGroup: React.FC = () => {
     },
     // {
     //   title: "Submissions",
-    //   activeURL: `/modules/${id}/submissions`,
+    //   activeURL: `${year}/modules/${id}/submissions`,
     //   icon: faUpload,
     // },
     {
