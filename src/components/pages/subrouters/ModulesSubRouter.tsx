@@ -28,6 +28,8 @@ const ModulesSubRouter: React.FC<ModulesSubRouterProps> = ({
   year,
   modules,
 }: ModulesSubRouterProps) => {
+
+  // path is /:year/modules
   let { path, url } = useRouteMatch()
 
   return (
