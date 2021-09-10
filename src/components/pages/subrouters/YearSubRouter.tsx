@@ -52,18 +52,13 @@ const YearSubRouter: React.FC<YearSubRouter> = ({
         <ModulesSubRouter year={year} modules={modules} />
       </Route>
 
-      <Route
-        path={`${path}/timeline`}
-        render={(props) => {
-          return (
-            <TimelineSubRoute
-              timelineConfig={timelineConfig}
-              modules={modules}
-              year={props.match.params.year}
-            />
-          )
-        }}
-      />
+      <Route path={`${path}/timeline`}>
+        <TimelineSubRoute
+          timelineConfig={timelineConfig}
+          modules={modules}
+          year={year}
+        />
+      </Route>
     </Switch>
   )
 }
