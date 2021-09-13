@@ -3,7 +3,6 @@ import styles from "./style.module.scss"
 import { Route, Switch } from "react-router-dom"
 import SideBarLinkGroup from "components/groups/SideBarLinkGroup"
 import SideBarOutlineGroup from "components/groups/SideBarOutlineGroup"
-import { OldTerm, TimelineEvent } from "constants/types"
 
 interface LeftBarProps {
   year: string
@@ -15,20 +14,16 @@ const LeftBar: React.FC<LeftBarProps> = ({ year }) => {
     <div id={styles.leftbarWrapper}>
       <p className={styles.leftbarStatus}>{displayYear}</p>
       <Switch>
-        <Route path="/modules/:id">
+        <Route path="/:year/modules/:id">
           <SideBarOutlineGroup />
         </Route>
 
-        <Route exact path="/modules">
+        <Route exact path="/:year/modules">
           <SideBarLinkGroup />
         </Route>
         {/*
 					<Route path="/exams">
 					  <SideBarExamsGroup />
-					</Route>
-
-					<Route path="/timeline">
-					  <SideBarTermsGroup term={timelineTerm} setTerm={setTimelineTerm} />
 					</Route>
 				 */}
         <Route path="/">

@@ -12,7 +12,9 @@ interface FileCardsViewProps {
 }
 
 const navigateToFeedback = (feedback: Feedback) => {
-  history.push(`/modules/${feedback.course}/feedback/${feedback.exercise}`)
+  history.push(
+    `/${feedback.year}/modules/${feedback.course}/feedback/${feedback.exercise}`
+  )
 }
 
 const FileCardsView: React.FC<FileCardsViewProps> = ({

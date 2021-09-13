@@ -10,10 +10,12 @@ import { Module } from "constants/types"
 
 export interface ModuleListProps {
   modules: Module[]
+  year: string
 }
 
 const ModuleList: React.FC<ModuleListProps> = ({
   modules,
+  year,
 }: ModuleListProps) => {
   const compareModules = (module1: Module, module2: Module) => {
     let code1 = module1.code,
@@ -36,7 +38,7 @@ const ModuleList: React.FC<ModuleListProps> = ({
         {modules
           .sort((module1, module2) => compareModules(module1, module2))
           .map((module) => (
-            <ModuleRow module={module} key={module.code} />
+            <ModuleRow module={module} key={module.code} year={year} />
           ))}
       </div>
     </>

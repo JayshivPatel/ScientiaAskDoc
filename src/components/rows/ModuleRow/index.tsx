@@ -8,9 +8,13 @@ import history from "../../../history"
 
 export interface ModuleRowProps {
   module: Module
+  year: string
 }
 
-const ModuleRow: React.FC<ModuleRowProps> = ({ module }: ModuleRowProps) => {
+const ModuleRow: React.FC<ModuleRowProps> = ({
+  module,
+  year,
+}: ModuleRowProps) => {
   return (
     <div className={styles.moduleContainer}>
       <Row className={styles.moduleRow}>
@@ -19,7 +23,8 @@ const ModuleRow: React.FC<ModuleRowProps> = ({ module }: ModuleRowProps) => {
             styles.moduleButton,
             !module.has_materials ? styles.noMaterials : ""
           )}
-          onClick={() => history.push(`/modules/${module.code}`)}>
+          onClick={() => history.push(`/${year}/modules/${module.code}`)}
+        >
           <div id="title" className={styles.moduleTitle}>
             {module.title}
           </div>
