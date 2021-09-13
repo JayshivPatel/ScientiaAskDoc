@@ -15,18 +15,14 @@ import ListView from "./components/ListView"
 import queryString from "query-string"
 import StaffView from "./components/StaffView"
 import LoadingScreen from "components/suspense/LoadingScreen"
-import {
-  filterInvisibleResources,
-  folders,
-  navigateToResource,
-  tags,
-} from "./utils"
+import { filterInvisibleResources, folders, tags } from "./utils"
 import { Resource } from "constants/types"
 import { titleCase } from "utils/functions"
 import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import styles from "./style.module.scss"
 import WarningJumbotron from "../../../suspense/WarningJumbotron"
+import history from "../../../../history"
 
 export interface ResourcesProps {
   year: string
@@ -59,6 +55,28 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       resources: [],
       searchText: "",
     }
+  }
+
+  navigateToResource(id: number) {
+    const onSuccess = (resource: Resource) => {
+      if (resource.type === "link" || resource.type === "video") {
+        window.open(resource.path, "_blank")
+      } else {
+        const course = resource.course
+        const category = resource.category
+        const index = resource.index
+        history.push(
+          `/${this.props.year}/modules/${course}/resources/${category}/${index}`
+        )
+      }
+    }
+    request({
+      endpoint: api.MATERIALS_RESOURCES_ID(id),
+      method: methods.GET,
+      onSuccess,
+      onError: (message: string) =>
+        console.log(`Failed to obtain data for resource ${id}: ${message}`),
+    })
   }
 
   loadResources() {
@@ -262,7 +280,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
                 searchText={this.state.searchText}
                 onDownloadClick={(ids) => this.handleFileDownload(ids)}
                 includeInSearchResult={this.includeInSearchResult}
-                onItemClick={navigateToResource}
+                onItemClick={(id) => this.navigateToResource(id)}
               />
 
               <QuickAccessView
@@ -270,7 +288,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
                 scope={scope}
                 searchText={this.state.searchText}
                 onDownloadClick={(ids) => this.handleFileDownload(ids)}
-                onItemClick={navigateToResource}
+                onItemClick={(id) => this.navigateToResource(id)}
               />
             </>
           )
@@ -284,7 +302,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               onSectionDownloadClick={(category) =>
                 this.handleSectionDownload(category)
               }
-              onItemClick={navigateToResource}
+              onItemClick={(id) => this.navigateToResource(id)}
               includeInSearchResult={this.includeInSearchResult}
             />
           )

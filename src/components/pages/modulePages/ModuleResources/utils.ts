@@ -5,11 +5,8 @@ import {
   faLink,
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons"
-import { request } from "../../../../utils/api"
-import { api, methods } from "../../../../constants/routes"
 import { Folder, Resource } from "constants/types"
 import { DEFAULT_CATEGORY } from "../../../../constants/global"
-import history from "history.js"
 
 export function tags(resources: Resource[]) {
   let tagSet = new Set<string>()
@@ -44,26 +41,6 @@ export function filterInvisibleResources(resources: Resource[]): Resource[] {
   return resources.filter(
     (resource) => resource.visible_after.getTime() - Date.now() <= 0
   )
-}
-
-export function navigateToResource(id: number) {
-  const onSuccess = (resource: Resource) => {
-    if (resource.type === "link" || resource.type === "video") {
-      window.open(resource.path, "_blank")
-    } else {
-      const course = resource.course
-      const category = resource.category
-      const index = resource.index
-      history.push(`/modules/${course}/resources/${category}/${index}`)
-    }
-  }
-  request({
-    endpoint: api.MATERIALS_RESOURCES_ID(id),
-    method: methods.GET,
-    onSuccess,
-    onError: (message: string) =>
-      console.log(`Failed to obtain data for resource ${id}: ${message}`),
-  })
 }
 
 export function resourceTypeToIcon(type: string): IconDefinition {
