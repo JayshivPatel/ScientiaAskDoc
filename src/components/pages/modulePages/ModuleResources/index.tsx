@@ -59,13 +59,16 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
   navigateToResource(id: number) {
     const onSuccess = (resource: Resource) => {
-      const course = resource.course
-      const category = resource.category
-      const index = resource.index
-
-      history.push(
-        `/${this.props.year}/modules/${course}/resources/${category}/${index}`
-      )
+      if (resource.type === "link" || resource.type === "video") {
+        window.open(resource.path, "_blank")
+      } else {
+        const course = resource.course
+        const category = resource.category
+        const index = resource.index
+        history.push(
+          `/${this.props.year}/modules/${course}/resources/${category}/${index}`
+        )
+      }
     }
     request({
       endpoint: api.MATERIALS_RESOURCES_ID(id),
@@ -325,8 +328,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             alignItems: "center",
             justifyContent: "space-between",
             paddingTop: "0.75rem",
-          }}
-        >
+          }}>
           <div style={{ width: "100%" }}>
             <SearchBox
               searchText={this.state.searchText}
@@ -340,20 +342,17 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               overlay={
                 <Tooltip
                   id={`${this.props.moduleID}-view-toggle-tooltip`}
-                  style={{ zIndex: 10000 }}
-                >
+                  style={{ zIndex: 10000 }}>
                   Toggle {this.state.staffView ? "Student" : "Staff"} View
                 </Tooltip>
-              }
-            >
+              }>
               <Button
                 onClick={() =>
                   this.setState({ staffView: !this.state.staffView })
                 }
                 variant="secondary"
                 style={{ marginLeft: "0.625rem" }}
-                className={styles.sectionHeaderButton}
-              >
+                className={styles.sectionHeaderButton}>
                 <FontAwesomeIcon icon={faExchangeAlt} />
               </Button>
             </OverlayTrigger>

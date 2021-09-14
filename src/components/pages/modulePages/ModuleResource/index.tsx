@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { useHistory } from "react-router-dom"
 import Button from "react-bootstrap/Button"
 import { Helmet } from "react-helmet"
 import { faDownload } from "@fortawesome/free-solid-svg-icons"
@@ -25,7 +24,6 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
   category,
   index,
 }) => {
-  let history = useHistory()
   const [pdfInfo, setPdfInfo] = useState({
     filename: "",
     api_url: "",
@@ -38,23 +36,18 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
       (r) => r.category === category && r.index === index
     )
     if (resource) {
-      if (resource.type === "link" || resource.type === "video") {
-        window.open(resource.path, "_blank")
-        history.goBack()
-      } else {
-        request({
-          endpoint: api.MATERIALS_RESOURCES_FILE(resource.id),
-          method: methods.GET,
-          onSuccess: (blob: Blob) =>
-            setPdfInfo({
-              filename: resource.title,
-              api_url: api.MATERIALS_RESOURCES_FILE(resource.id).url,
-              blob_url: URL.createObjectURL(blob),
-            }),
-          onError: (message: string) => setError(message),
-          returnBlob: true,
-        })
-      }
+      request({
+        endpoint: api.MATERIALS_RESOURCES_FILE(resource.id),
+        method: methods.GET,
+        onSuccess: (blob: Blob) =>
+          setPdfInfo({
+            filename: resource.title,
+            api_url: api.MATERIALS_RESOURCES_FILE(resource.id).url,
+            blob_url: URL.createObjectURL(blob),
+          }),
+        onError: (message: string) => setError(message),
+        returnBlob: true,
+      })
     }
   }
 
