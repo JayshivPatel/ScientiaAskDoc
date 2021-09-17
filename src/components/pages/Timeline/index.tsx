@@ -12,6 +12,7 @@ import { addDays, dateNeutralized, toDayCount } from "utils/functions"
 import TimelineMobile from "./components/TimelineMobile"
 import { request } from "../../../utils/api"
 import { api, methods } from "../../../constants/routes"
+import { Alert } from "react-bootstrap"
 
 export type ModuleTracks = {
   [index: string]: TimelineEvent[][]
@@ -178,6 +179,11 @@ const Timeline: React.FC<TimelineProps> = ({
       </Helmet>
       <div className={styles.timelineContainer}>
         <MyBreadcrumbs />
+        <Alert variant="primary">
+          🚧 This feature is currently under development. For the most
+          up-to-date timeline view, please continue using{" "}
+          <Alert.Link href="https://cate.doc.ic.ac.uk">CATE</Alert.Link>.
+        </Alert>
         <div className={styles.timelineGrid}>
           <TermSwitcher
             activeTerm={activeTerm}
