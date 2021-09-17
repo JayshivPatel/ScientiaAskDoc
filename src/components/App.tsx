@@ -17,6 +17,7 @@ import authenticationService from "../utils/auth"
 import CalendarModal from "./modals/CalendarModal"
 import { TIMELINE_ACTIVE } from "constants/global"
 import history from "history.js"
+import { ENABLED_ACADEMIC_YEARS } from "../constants/doc"
 
 type AppState = {
   toggledLeft: boolean
@@ -44,7 +45,9 @@ class App extends React.Component<{}, AppState> {
       showCalendarModal: false,
       activeModalEvent: undefined,
       fileView: localStorage.getItem("fileView") || "card",
-      year: "2021",
+      year: Math.max(
+        ...ENABLED_ACADEMIC_YEARS.map((y) => parseInt(y))
+      ).toString(),
     }
   }
 
