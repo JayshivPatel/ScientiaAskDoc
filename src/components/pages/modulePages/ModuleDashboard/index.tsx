@@ -9,16 +9,16 @@ import PageButtonGroup from "components/groups/PageButtonGroup"
 import { teachingAims } from "../../ModuleList/aims"
 
 interface Props {
-  year: string
-  moduleTitle: string
-  moduleID: string
+	year: string
+	moduleTitle: string
+	moduleID: string
 }
 
 const MODULE_AIMS_PLACEHOLDER = (
-  <p>
-    No description of the module aims could be found at this time for this
-    module.
-  </p>
+	<p>
+		No description of the module aims could be found at this time for this
+		module.
+	</p>
 )
 
 // ------------ NO WAY TO GET THIS TO WORK WITH CORS UNFORTUNATELY :(
@@ -46,46 +46,46 @@ const MODULE_AIMS_PLACEHOLDER = (
 // }
 
 const ModuleDashboard: React.FC<Props> = ({ year, moduleTitle, moduleID }) => {
-  const moduleCode = moduleID.startsWith("CO") ? moduleID.slice(2) : moduleID
+	const moduleCode = moduleID.match(/^CO\d+/) ? moduleID.slice(2) : moduleID
 
-  let buttons: any[] = [
-    {
-      title: "Syllabus",
-      icon: faGlobe,
-      url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
-    },
-    {
-      title: "Piazza",
-      icon: faUserFriends,
-      url: `https://piazza.com/imperial.ac.uk/fall2021/comp${moduleID}`,
-    },
-  ]
+	let buttons: any[] = [
+		{
+			title: "Syllabus",
+			icon: faGlobe,
+			url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
+		},
+		{
+			title: "Piazza",
+			icon: faUserFriends,
+			url: `https://piazza.com/imperial.ac.uk/fall2021/comp${moduleID}`,
+		},
+	]
 
-  return (
-    <>
-      <Helmet>
-        <title>Overview | {moduleTitle} | Scientia</title>
-      </Helmet>
-      <Dandruff
-        heading={moduleTitle ? `${moduleID} - ${moduleTitle}` : moduleID}
-      />
+	return (
+		<>
+			<Helmet>
+				<title>Overview | {moduleTitle} | Scientia</title>
+			</Helmet>
+			<Dandruff
+				heading={moduleTitle ? `${moduleID} - ${moduleTitle}` : moduleID}
+			/>
 
-      <h4 className={classNames(styles.moduleSectionHeader)}>Module Aims</h4>
-      <div
-        className={styles.moduleDashboardText}
-        style={{ paddingTop: "0.75rem" }}>
-        {teachingAims[moduleCode] || MODULE_AIMS_PLACEHOLDER}
-      </div>
+			<h4 className={classNames(styles.moduleSectionHeader)}>Module Aims</h4>
+			<div
+				className={styles.moduleDashboardText}
+				style={{ paddingTop: "0.75rem" }}>
+				{teachingAims[moduleCode] || MODULE_AIMS_PLACEHOLDER}
+			</div>
 
-      <h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
-      <PageButtonGroup buttons={buttons} style={{ marginTop: "1.25rem" }} />
-      {/*
+			<h4 className={classNames(styles.moduleSectionHeader)}>Links</h4>
+			<PageButtonGroup buttons={buttons} style={{ marginTop: "1.25rem" }} />
+			{/*
           <div className={classNames(styles.moduleSectionHeader)}>
             <TutorCardGroup title="Module Leaders" tutors={leaders} />
           </div>
         */}
-    </>
-  )
+		</>
+	)
 }
 
 export default ModuleDashboard
