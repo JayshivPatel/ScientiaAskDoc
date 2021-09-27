@@ -32,9 +32,9 @@ const LeftBarDashboard: React.FC = () => {
       externalURL: "https://imperial.cloud.panopto.eu/Panopto/",
     },
     {
-      title: "DocPA",
+      title: "Peer Assessment",
       icon: faStarHalfAlt,
-      externalURL: "https://docpa.doc.ic.ac.uk/",
+      externalURL: "https://peer-assessment.doc.ic.ac.uk/",
     },
     {
       title: "LabTS",
