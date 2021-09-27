@@ -22,9 +22,9 @@ const LeftBarDashboard: React.FC = () => {
       externalURL: "https://outlook.office.com/",
     },
     {
-      title: "Piazza",
+      title: "EdStem",
       icon: faUserFriends,
-      externalURL: "https://piazza.com/",
+      externalURL: "https://edstem.org/us/dashboard",
     },
     {
       title: "Panopto",

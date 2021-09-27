@@ -55,9 +55,9 @@ const ModuleDashboard: React.FC<Props> = ({ year, moduleTitle, moduleID }) => {
 			url: `https://www.imperial.ac.uk/computing/current-students/courses/${moduleCode}/`,
 		},
 		{
-			title: "Piazza",
+			title: "EdStem",
 			icon: faUserFriends,
-			url: `https://piazza.com/imperial.ac.uk/fall2021/comp${moduleID}`,
+			url: `https://edstem.org/us/dashboard`,
 		},
 	]
 
