@@ -73,10 +73,6 @@ export const api = {
     auth: AuthService.MATERIALS,
     url: `${config.MATERIALS_URL}/resources/zipped`,
   },
-  MATERIALS_ZIPPED_SELECTION: {
-    auth: AuthService.MATERIALS,
-    url: `${config.MATERIALS_URL}/resources/zipped/selection`,
-  },
   CALENDAR_EVENTS: (id: string): ApiEndpoint => ({
     auth: AuthService.MATERIALS,
     url: `${config.CALENDAR_URL}/${id}`,
