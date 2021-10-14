@@ -1,6 +1,7 @@
 import { Module, TimelineEvent } from "../../../constants/types"
 import { YEAR_OF_NEW_CODES } from "../../../constants/doc"
 import { request } from "../../../utils/api"
+import { ENABLED_ACADEMIC_YEARS } from "../../../constants/doc"
 import { api, methods } from "../../../constants/routes"
 import ModulesSubRouter from "./ModulesSubRouter"
 import { TimelineSubRoute } from "./TimelineSubRoute"
@@ -9,6 +10,7 @@ import { Route, Switch, useRouteMatch } from "react-router-dom"
 
 interface YearSubRouter {
   year: string
+  setYear: (year: string) => void
   timelineConfig: {
     onEventClick: (e?: TimelineEvent) => void
     initSideBar: () => void
@@ -18,6 +20,7 @@ interface YearSubRouter {
 
 const YearSubRouter: React.FC<YearSubRouter> = ({
   year,
+  setYear,
   timelineConfig,
 }: YearSubRouter) => {
   let { path, url } = useRouteMatch()
@@ -36,6 +39,10 @@ const YearSubRouter: React.FC<YearSubRouter> = ({
           subscriptionLevel: (Math.floor(Math.random() * 3) + 1) as 1 | 2 | 3,
         }))
       )
+    }
+
+    if (ENABLED_ACADEMIC_YEARS.includes(year)) {
+      setYear(year)
     }
 
     request({

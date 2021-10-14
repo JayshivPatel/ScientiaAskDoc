@@ -230,6 +230,7 @@ class App extends React.Component<{}, AppState> {
                         })
                       }}
                       year={this.state.year}
+                      setYear={(year: string) => this.changeYear(year)}
                     />
 
                     <BottomBar pages={horizontalBarPages} />

@@ -22,6 +22,7 @@ interface StandardViewProps {
   onEventClick: (e?: TimelineEvent) => void
   onCalendarClick: (e?: CalendarEvent) => void
   year: string
+  setYear: (year: string) => void
 }
 
 const StandardView: React.FC<StandardViewProps> = ({
@@ -34,6 +35,7 @@ const StandardView: React.FC<StandardViewProps> = ({
   onEventClick,
   onCalendarClick,
   year,
+  setYear,
 }: StandardViewProps) => {
   const timelineConfig = {
     onEventClick: onEventClick,
@@ -47,8 +49,7 @@ const StandardView: React.FC<StandardViewProps> = ({
       className={classNames({
         toggledLeft: toggledLeft,
         toggledRight: toggledRight,
-      })}
-    >
+      })}>
       <LeftBar year={year} />
       <RightBar
         onSettingsClick={onSettingsClick}
@@ -77,6 +78,7 @@ const StandardView: React.FC<StandardViewProps> = ({
               return (
                 <YearSubRouter
                   year={props.match.params.year}
+                  setYear={setYear}
                   timelineConfig={timelineConfig}
                 />
               )
