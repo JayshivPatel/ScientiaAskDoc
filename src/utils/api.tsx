@@ -28,9 +28,9 @@ export async function request(data: RequestData) {
 
   let url = data.endpoint.url
   if (data.method === methods.GET || data.method === methods.DELETE) {
-    const params = new URLSearchParams(data.queryString)
-    const bodyParams = new URLSearchParams(data.body)
-    for (const [key, val] of bodyParams.entries()) {
+    const params = new URLSearchParams(data.body)
+    const addParams = new URLSearchParams(data.queryString)
+    for (const [key, val] of addParams.entries()) {
       params.append(key, val)
     }
     url = `${url}?${params}`
