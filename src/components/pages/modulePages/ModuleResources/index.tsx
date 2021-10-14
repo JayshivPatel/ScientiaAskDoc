@@ -160,11 +160,15 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       download(api.MATERIALS_RESOURCES_FILE(indices[0]), filename)
     } else {
       // Multiple files to download, call zipped endpoint with ids
+      const idParams = new URLSearchParams()
+      indices.forEach(index => {
+        idParams.append("id", index.toString())
+      })
+
       download(api.MATERIALS_ZIPPED, "materials.zip", {
-        id: indices,
         course: this.moduleCode,
         year: this.props.year,
-      })
+      }, idParams.toString())
     }
   }
 

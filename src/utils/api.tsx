@@ -7,8 +7,8 @@ interface RequestOptions {
 }
 
 // API calling interface. onSuccess and onError are functions that take in data
-// and error parameters respectively. Body is process as query parameters if
-// method is GET
+// and error parameters respectively. body and queryString are combined and 
+// processed as query parameters if method is GET
 // Note: will trigger CORS OPTIONS preflight due to the Authorization header
 export async function request(data: RequestData) {
   let headers: { [key: string]: string } = {
@@ -28,7 +28,12 @@ export async function request(data: RequestData) {
 
   let url = data.endpoint.url
   if (data.method === methods.GET || data.method === methods.DELETE) {
-    url = `${url}?${new URLSearchParams(data.body)}`
+    const params = new URLSearchParams(data.queryString)
+    const bodyParams = new URLSearchParams(data.body)
+    for (const [key, val] of bodyParams.entries()) {
+      params.append(key, val)
+    }
+    url = `${url}?${params}`
   } else {
     options.body = data.sendFile ? data.body : JSON.stringify(data.body)
   }
@@ -65,7 +70,8 @@ export async function request(data: RequestData) {
 export async function download(
   endpoint: ApiEndpoint,
   filename: string,
-  body?: any
+  body?: any,
+  queryString?: string
 ) {
   const onSuccess = (blob: any) => {
     let blob_url = URL.createObjectURL(blob)
@@ -84,6 +90,7 @@ export async function download(
     onError,
     returnBlob: true,
     body,
+    queryString
   })
 }
 

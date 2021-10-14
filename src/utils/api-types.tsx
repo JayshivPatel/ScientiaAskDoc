@@ -6,6 +6,7 @@ export interface RequestData {
   onSuccess: any
   onError: (message: string) => void
   body?: any
+  queryString?: string
   sendFile?: boolean
   returnBlob?: boolean
 }
