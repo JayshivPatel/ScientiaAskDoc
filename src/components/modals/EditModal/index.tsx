@@ -75,9 +75,9 @@ const EditModal: React.FC<EditModalProps> = ({
       <Modal.Header>
         <Modal.Title style={{ fontSize: "1.25rem" }}>Edit Resource</Modal.Title>
         <Button
-            variant="secondary"
-            className={styles.sectionHeaderButton}
-            onClick={onHide}>
+          variant="secondary"
+          className={styles.sectionHeaderButton}
+          onClick={onHide}>
           <FontAwesomeIcon className={styles.buttonIcon} icon={faTimes} />
         </Button>
       </Modal.Header>
@@ -87,13 +87,13 @@ const EditModal: React.FC<EditModalProps> = ({
           <ResourceDetailForm
             id={resource.id}
             key={resource.id}
-            isLink={resource.type === "link"}
+            isLink={resource.type === "link" || resource.type === "video"}
             tagList={tags}
             categories={categories}
             defaultTitle={resource.title}
             defaultURL={resource.path}
             defaultCategory={resource.category}
-            defaultTags={resource.tags.filter(tag => tag !== "new")}
+            defaultTags={resource.tags.filter((tag) => tag !== "new")}
             defaultVisibleAfter={resource.visible_after}
             handleInvalidDetails={setCanSubmitChanges}
             titleDuplicated={titleDuplicated}
