@@ -55,12 +55,12 @@ const UploadModal: React.FC<UploadModalProps> = ({
   const [resourceDetails, setResourceDetails] = useState<{
     [id: number]: ResourceDetails
   }>({})
-  const MAX_SIZE = 50 * (2 ** 10) * (2 ** 10); // 50MB
+  const MAX_SIZE = 50 * 2 ** 10 * 2 ** 10 // 50MB
   const [canUploadFile, setCanUploadFile] = useState<boolean>(false)
   const [canUploadLink, setCanUploadLink] = useState<boolean>(false)
   const [suppressErrorMsg, setSuppressErrorMsg] = useState<boolean>(true)
-  const linkResourceDetailsID = -1;
-  const linkResource = resourceDetails[linkResourceDetailsID];
+  const linkResourceDetailsID = -1
+  const linkResource = resourceDetails[linkResourceDetailsID]
   const prettyBytes = require("pretty-bytes")
 
   const onDrop = useCallback(
@@ -173,14 +173,14 @@ const UploadModal: React.FC<UploadModalProps> = ({
       }
       case "link": {
         // The title and url of the new link must be validated before uploading
-          await request({
-            endpoint: api.MATERIALS_RESOURCES,
-            method: methods.POST,
-            onSuccess: hideAndReload,
-            onError: onError(linkResource),
-            body: makePayload(linkResource),
-          })
-          break
+        await request({
+          endpoint: api.MATERIALS_RESOURCES,
+          method: methods.POST,
+          onSuccess: hideAndReload,
+          onError: onError(linkResource),
+          body: makePayload(linkResource),
+        })
+        break
       }
     }
   }
@@ -232,7 +232,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
                 <p>Click here or drag and drop files to upload.</p>
               </div>
 
-              <Accordion>
+              <Accordion defaultActiveKey="0">
                 {acceptedFiles.length > 0 &&
                   acceptedFiles.map(
                     (file, index) =>
@@ -264,7 +264,9 @@ const UploadModal: React.FC<UploadModalProps> = ({
                             </Row>
                           </Accordion.Toggle>
 
-                          <Accordion.Collapse eventKey={`${index}`} className={styles.collapse}>
+                          <Accordion.Collapse
+                            eventKey={`${index}`}
+                            className={styles.collapse}>
                             <Card.Body>
                               <ResourceDetailForm
                                 id={index}
@@ -294,7 +296,9 @@ const UploadModal: React.FC<UploadModalProps> = ({
                 tagList={tags}
                 isLink={true}
                 titleDuplicated={titleDuplicated}
-                setResourceDetails={updateResourceDetails(linkResourceDetailsID)}
+                setResourceDetails={updateResourceDetails(
+                  linkResourceDetailsID
+                )}
                 defaultTitle={linkResource?.title}
                 defaultURL={linkResource?.url}
                 defaultCategory={linkResource?.category}
@@ -302,7 +306,9 @@ const UploadModal: React.FC<UploadModalProps> = ({
                 defaultVisibleAfter={linkResource?.visibleAfter}
                 suppressErrorMsg={suppressErrorMsg}
                 setSuppressErrorMsg={setSuppressErrorMsg}
-                handleInvalidDetails={(areDetailsValid: boolean) => {setCanUploadLink(areDetailsValid)}}
+                handleInvalidDetails={(areDetailsValid: boolean) => {
+                  setCanUploadLink(areDetailsValid)
+                }}
               />
             </Tab>
           </Tabs>
@@ -313,7 +319,12 @@ const UploadModal: React.FC<UploadModalProps> = ({
             className={styles.buttonUpload}
             style={{ marginBottom: "0rem" }}
             type="submit"
-            disabled={!((tab === "file" && canUploadFile) || (tab !== "file" && canUploadLink))}
+            disabled={
+              !(
+                (tab === "file" && canUploadFile) ||
+                (tab !== "file" && canUploadLink)
+              )
+            }
             variant="secondary">
             Upload
           </Button>
