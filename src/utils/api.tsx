@@ -6,14 +6,24 @@ interface RequestOptions {
   [key: string]: any
 }
 
+export function parseQueryParams(rawParams: {
+  [key: string]: any
+}): URLSearchParams {
+  let queryParams = new URLSearchParams()
+  for (const [key, val] of Object.entries(rawParams)) {
+    if (Array.isArray(val))
+      for (const item of val) queryParams.append(key, item)
+    else queryParams.append(key, val)
+  }
+  return queryParams
+}
+
 // API calling interface. onSuccess and onError are functions that take in data
-// and error parameters respectively. Body is process as query parameters if
-// method is GET
+// and error parameters respectively. Body is processed as query string if method is GET.
 // Note: will trigger CORS OPTIONS preflight due to the Authorization header
 export async function request(data: RequestData) {
   let headers: { [key: string]: string } = {
     Authorization: authConstants.ACCESS_TOKEN_HEADER(data.endpoint.auth),
-    // "Access-Control-Allow-Origin": "*", THIS SHOULD NOT BE NEEDED HERE
   }
 
   if (!data.sendFile) {
@@ -27,10 +37,12 @@ export async function request(data: RequestData) {
   }
 
   let url = data.endpoint.url
-  if (data.method === methods.GET || data.method === methods.DELETE) {
-    url = `${url}?${new URLSearchParams(data.body)}`
-  } else {
-    options.body = data.sendFile ? data.body : JSON.stringify(data.body)
+  if (data.body) {
+    if (data.method === methods.GET || data.method === methods.DELETE) {
+      url = `${url}?${parseQueryParams(data.body)}`
+    } else {
+      options.body = data.sendFile ? data.body : JSON.stringify(data.body)
+    }
   }
 
   return fetch(url, options)

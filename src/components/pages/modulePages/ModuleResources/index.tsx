@@ -159,7 +159,6 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       )[0].title
       download(api.MATERIALS_RESOURCES_FILE(indices[0]), filename)
     } else {
-      // Multiple files to download, call zipped endpoint with ids
       download(api.MATERIALS_ZIPPED, "materials.zip", {
         id: indices,
         course: this.moduleCode,
