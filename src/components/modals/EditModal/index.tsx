@@ -1,8 +1,8 @@
 import React, { useState } from "react"
-import Modal from "react-bootstrap/Modal"
-import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import ButtonGroup from "react-bootstrap/ButtonGroup"
+import Form from "react-bootstrap/Form"
+import Modal from "react-bootstrap/Modal"
 
 import styles from "./style.module.scss"
 import ResourceDetailForm, {
@@ -12,7 +12,12 @@ import { Resource } from "constants/types"
 import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faTimes } from "@fortawesome/free-solid-svg-icons"
+import {
+  faDownload,
+  faTimes,
+  faTrash,
+  faUpload,
+} from "@fortawesome/free-solid-svg-icons"
 
 interface EditModalProps {
   show: boolean
@@ -102,6 +107,29 @@ const EditModal: React.FC<EditModalProps> = ({
         </Modal.Body>
 
         <Modal.Footer>
+          <ButtonGroup className="btn-block">
+            <Button onClick={onHide} variant="secondary">
+              <FontAwesomeIcon
+                style={{ marginRight: "0.3125rem" }}
+                icon={faDownload}
+              />
+              Download
+            </Button>
+            <Button onClick={onHide} variant="secondary">
+              <FontAwesomeIcon
+                style={{ marginRight: "0.3125rem" }}
+                icon={faUpload}
+              />
+              Reupload
+            </Button>
+            <Button onClick={onHide} variant="danger">
+              <FontAwesomeIcon
+                style={{ marginRight: "0.3125rem" }}
+                icon={faTrash}
+              />
+              Delete
+            </Button>
+          </ButtonGroup>
           <ButtonGroup className="btn-block">
             <Button onClick={onHide} variant="secondary">
               Cancel
