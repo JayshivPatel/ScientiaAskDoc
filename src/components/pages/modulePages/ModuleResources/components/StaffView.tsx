@@ -75,38 +75,6 @@ const StaffView: React.FC<StaffViewProps> = ({
     )
   }
 
-  const resourceActions = (id: number, filename: string) => (
-    <ButtonGroup>
-      <IconButton
-        tooltip="Delete"
-        onClick={async () => {
-          await request({
-            endpoint: api.MATERIALS_RESOURCES_ID(id),
-            method: methods.DELETE,
-            onSuccess: () => {},
-            onError: () => {},
-          })
-          reload()
-        }}
-        icon={faTrash}
-      />
-      {filename && (
-        <>
-          <IconButton
-            tooltip="Download"
-            onClick={() => download(api.MATERIALS_RESOURCES_FILE(id), filename)}
-            icon={faDownload}
-          />
-          <IconButton
-            tooltip="Reupload"
-            onClick={() => {}} // handleReuploadClick(id)}
-            icon={faUpload}
-          />
-        </>
-      )}
-    </ButtonGroup>
-  )
-
   return (
     <>
       <Row style={{ marginTop: "0.625rem" }}>
@@ -180,7 +148,6 @@ const StaffView: React.FC<StaffViewProps> = ({
                 categoryItems={filesContent.filter(
                   (res) => res.category === title
                 )}
-                resourceActions={resourceActions}
                 showMenus={showMenus}
                 setShowMenus={(id) => {
                   return (show: boolean) => {
