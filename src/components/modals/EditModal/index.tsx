@@ -43,13 +43,8 @@ const EditModal: React.FC<EditModalProps> = ({
   const updateResourceDetails = (details: ResourceDetails) => {
     setDetails(details)
   }
-
   const hiddenFileInput = React.createRef<HTMLInputElement>()
-  const handleReuploadClick = () => {
-    if (hiddenFileInput.current) {
-      hiddenFileInput.current.click()
-    }
-  }
+
   const reuploadFile = async (event: any) => {
     const fileUploaded = event.target.files[0]
     let formData = new FormData()
@@ -63,6 +58,23 @@ const EditModal: React.FC<EditModalProps> = ({
       body: formData,
       sendFile: true,
     })
+    reloadResources()
+  }
+
+  const handleReupload = () => {
+    if (hiddenFileInput.current) {
+      hiddenFileInput.current.click()
+    }
+  }
+
+  const handleDelete = async () => {
+    await request({
+      endpoint: api.MATERIALS_RESOURCES_ID(resource.id),
+      method: methods.DELETE,
+      onSuccess: () => {},
+      onError: () => {},
+    })
+    hideModal()
     reloadResources()
   }
 
@@ -144,32 +156,21 @@ const EditModal: React.FC<EditModalProps> = ({
               }
               variant="secondary">
               <FontAwesomeIcon
-                style={{ marginRight: "0.3125rem" }}
+                className={styles.textIconRight}
                 icon={faDownload}
               />
               Download
             </Button>
-            <Button onClick={handleReuploadClick} variant="secondary">
+            <Button onClick={handleReupload} variant="secondary">
               <FontAwesomeIcon
-                style={{ marginRight: "0.3125rem" }}
+                className={styles.textIconRight}
                 icon={faUpload}
               />
               Reupload
             </Button>
-            <Button
-              onClick={async () => {
-                await request({
-                  endpoint: api.MATERIALS_RESOURCES_ID(resource.id),
-                  method: methods.DELETE,
-                  onSuccess: () => {},
-                  onError: () => {},
-                })
-                hideModal()
-                reloadResources()
-              }}
-              variant="danger">
+            <Button onClick={handleDelete} variant="danger">
               <FontAwesomeIcon
-                style={{ marginRight: "0.3125rem" }}
+                className={styles.textIconRight}
                 icon={faTrash}
               />
               Delete
