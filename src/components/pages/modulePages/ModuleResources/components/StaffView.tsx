@@ -44,7 +44,6 @@ const StaffView: React.FC<StaffViewProps> = ({
   includeInSearchResult,
 }) => {
   const [modal, setModal] = useState("")
-  const [resourceID, setResourceID] = useState(-1)
   const [editResource, setEditResource] = useState<Resource>(resources[0])
 
   const allClosed = () =>
@@ -69,29 +68,6 @@ const StaffView: React.FC<StaffViewProps> = ({
   tags = Array.from(new Set(tags))
   // Remove reserved tag `new` from selection pool, then arrange alphabetically
   tags = tags.filter((tag) => tag !== "new").sort()
-
-  const hiddenFileInput = React.createRef<HTMLInputElement>()
-  const handleReuploadClick = (id: number) => {
-    if (hiddenFileInput.current) {
-      setResourceID(id)
-      hiddenFileInput.current.click()
-    }
-  }
-  const reuploadFile = async (event: any) => {
-    const fileUploaded = event.target.files[0]
-    let formData = new FormData()
-    formData.append("file", fileUploaded)
-
-    await request({
-      endpoint: api.MATERIALS_RESOURCES_FILE(resourceID),
-      method: methods.PUT,
-      onSuccess: () => {},
-      onError: () => {},
-      body: formData,
-      sendFile: true,
-    })
-    reload()
-  }
 
   const titleDuplicated = (category: string, title: string): boolean => {
     return resources.some(
@@ -123,7 +99,7 @@ const StaffView: React.FC<StaffViewProps> = ({
           />
           <IconButton
             tooltip="Reupload"
-            onClick={() => handleReuploadClick(id)}
+            onClick={() => {}} // handleReuploadClick(id)}
             icon={faUpload}
           />
         </>
@@ -147,7 +123,6 @@ const StaffView: React.FC<StaffViewProps> = ({
           </Button>
         </Col>
       </Row>
-      <input type="file" ref={hiddenFileInput} onChange={reuploadFile} hidden />
       <UploadModal
         show={modal === "upload"}
         onHide={closeModal}
@@ -191,14 +166,11 @@ const StaffView: React.FC<StaffViewProps> = ({
         <>
           <EditModal
             show={modal === "edit"}
-            onHide={closeModal}
-            hideAndReload={() => {
-              closeModal()
-              reload()
-            }}
-            tags={tags}
-            categories={categories(folders)}
             resource={editResource}
+            categories={categories(folders)}
+            tags={tags}
+            hideModal={closeModal}
+            reloadResources={reload}
             titleDuplicated={titleDuplicated}
           />
           {folders.map(({ title, id }) => (
