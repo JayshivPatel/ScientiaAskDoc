@@ -122,7 +122,17 @@ const EditModal: React.FC<EditModalProps> = ({
               />
               Reupload
             </Button>
-            <Button onClick={onHide} variant="danger">
+            <Button
+              onClick={async () => {
+                await request({
+                  endpoint: api.MATERIALS_RESOURCES_ID(resource.id),
+                  method: methods.DELETE,
+                  onSuccess: () => {},
+                  onError: () => {},
+                })
+                hideAndReload()
+              }}
+              variant="danger">
               <FontAwesomeIcon
                 style={{ marginRight: "0.3125rem" }}
                 icon={faTrash}
