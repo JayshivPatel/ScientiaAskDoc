@@ -26,7 +26,7 @@ const QuickAccessView: React.FC<QuickAccessViewProps> = ({
   if (searchText === "" && scope === "" && quickAccessItems.length > 0) {
     return (
       <SelectionView
-        heading="Quick Access"
+        heading="Latest Uploads"
         onItemClick={onItemClick}
         onDownloadClick={onDownloadClick}
         selectionItems={quickAccessItems}
