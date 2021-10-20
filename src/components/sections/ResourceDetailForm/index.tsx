@@ -69,7 +69,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   const [tagOptions, setTagOptions] = useState<Option[]>(
     tagList.map(createOption)
   )
-  const [showPicker, setShowPicker] = useState(
+  const [datePickerEnabled, setDatePickerEnabled] = useState(
     defaultVisibleAfter !== undefined
   )
   const [visibleAfter, setVisibleAfter] = useState<Date>(
@@ -153,6 +153,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   const datepicker = (
     <DatePicker
       selected={visibleAfter}
+      disabled={!datePickerEnabled}
       onChange={(date: Date) => {
         setVisibleAfter(date)
       }}
@@ -295,9 +296,9 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
               label="Visible now"
               onClick={() => {
                 setVisibleAfter(new Date())
-                setShowPicker(false)
+                setDatePickerEnabled(false)
               }}
-              defaultChecked={!showPicker}
+              defaultChecked={!datePickerEnabled}
             />
           </Col>
         </Row>
@@ -307,19 +308,17 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
               type="radio"
               name="visibilityRadio"
               label="Visible after:"
-              onClick={() => setShowPicker(true)}
-              defaultChecked={showPicker}
+              onClick={() => setDatePickerEnabled(true)}
+              defaultChecked={datePickerEnabled}
             />
           </Col>
-          {showPicker && (
-            <Col>
-              {datepicker}
-              <p className={styles.mutedText}>
-                Course managers will still be able to view all "invisible"
-                resources.
-              </p>
-            </Col>
-          )}
+          <Col>
+            {datepicker}
+            <p className={styles.mutedText}>
+              Course managers will still be able to view all "invisible"
+              resources.
+            </p>
+          </Col>
         </Row>
       </Form.Group>
     </>
