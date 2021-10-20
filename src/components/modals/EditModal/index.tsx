@@ -1,42 +1,81 @@
 import React, { useState } from "react"
-import Modal from "react-bootstrap/Modal"
-import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import ButtonGroup from "react-bootstrap/ButtonGroup"
+import Form from "react-bootstrap/Form"
+import Modal from "react-bootstrap/Modal"
 
 import styles from "./style.module.scss"
 import ResourceDetailForm, {
   ResourceDetails,
 } from "components/sections/ResourceDetailForm"
 import { Resource } from "constants/types"
-import { request } from "utils/api"
+import { download, request } from "utils/api"
 import { api, methods } from "constants/routes"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faTimes } from "@fortawesome/free-solid-svg-icons"
+import {
+  faDownload,
+  faTimes,
+  faTrash,
+  faUpload,
+} from "@fortawesome/free-solid-svg-icons"
 
 interface EditModalProps {
   show: boolean
-  onHide: any
-  hideAndReload: () => void
-  tags: string[]
-  categories: string[]
   resource: Resource
+  categories: string[]
+  tags: string[]
+  hideModal: () => void
+  reloadResources: () => void
   titleDuplicated: (category: string, title: string) => boolean
 }
 
 const EditModal: React.FC<EditModalProps> = ({
   show,
-  onHide,
-  hideAndReload,
-  tags,
-  categories,
   resource,
+  categories,
+  tags,
+  hideModal,
+  reloadResources,
   titleDuplicated,
 }) => {
   const [details, setDetails] = useState<ResourceDetails>()
   const [canSubmitChanges, setCanSubmitChanges] = useState<boolean>(false)
   const updateResourceDetails = (details: ResourceDetails) => {
     setDetails(details)
+  }
+  const hiddenFileInput = React.createRef<HTMLInputElement>()
+
+  const reuploadFile = async (event: any) => {
+    const fileUploaded = event.target.files[0]
+    let formData = new FormData()
+    formData.append("file", fileUploaded)
+
+    await request({
+      endpoint: api.MATERIALS_RESOURCES_FILE(resource.id),
+      method: methods.PUT,
+      onSuccess: () => {},
+      onError: () => {},
+      body: formData,
+      sendFile: true,
+    })
+    reloadResources()
+  }
+
+  const handleReupload = () => {
+    if (hiddenFileInput.current) {
+      hiddenFileInput.current.click()
+    }
+  }
+
+  const handleDelete = async () => {
+    await request({
+      endpoint: api.MATERIALS_RESOURCES_ID(resource.id),
+      method: methods.DELETE,
+      onSuccess: () => {},
+      onError: () => {},
+    })
+    hideModal()
+    reloadResources()
   }
 
   const handleSubmit = async (event: any) => {
@@ -57,7 +96,10 @@ const EditModal: React.FC<EditModalProps> = ({
       request({
         endpoint: api.MATERIALS_RESOURCES_ID(resource.id),
         method: methods.PUT,
-        onSuccess: hideAndReload,
+        onSuccess: () => {
+          hideModal()
+          reloadResources()
+        },
         onError: () => {},
         body: payload,
       })
@@ -69,7 +111,7 @@ const EditModal: React.FC<EditModalProps> = ({
       style={{ zIndex: "10000" }}
       size="lg"
       show={show}
-      onHide={onHide}
+      onHide={hideModal}
       centered
       className={styles.editModal}>
       <Modal.Header>
@@ -77,10 +119,12 @@ const EditModal: React.FC<EditModalProps> = ({
         <Button
           variant="secondary"
           className={styles.sectionHeaderButton}
-          onClick={onHide}>
+          onClick={hideModal}>
           <FontAwesomeIcon className={styles.buttonIcon} icon={faTimes} />
         </Button>
       </Modal.Header>
+
+      <input type="file" ref={hiddenFileInput} onChange={reuploadFile} hidden />
 
       <Form onSubmit={handleSubmit}>
         <Modal.Body>
@@ -103,7 +147,37 @@ const EditModal: React.FC<EditModalProps> = ({
 
         <Modal.Footer>
           <ButtonGroup className="btn-block">
-            <Button onClick={onHide} variant="secondary">
+            <Button
+              onClick={() =>
+                download(
+                  api.MATERIALS_RESOURCES_FILE(resource.id),
+                  resource.title
+                )
+              }
+              variant="secondary">
+              <FontAwesomeIcon
+                className={styles.textIconRight}
+                icon={faDownload}
+              />
+              Download
+            </Button>
+            <Button onClick={handleReupload} variant="secondary">
+              <FontAwesomeIcon
+                className={styles.textIconRight}
+                icon={faUpload}
+              />
+              Reupload
+            </Button>
+            <Button onClick={handleDelete} variant="danger">
+              <FontAwesomeIcon
+                className={styles.textIconRight}
+                icon={faTrash}
+              />
+              Delete
+            </Button>
+          </ButtonGroup>
+          <ButtonGroup className="btn-block">
+            <Button onClick={hideModal} variant="secondary">
               Cancel
             </Button>
             <Button type="submit" disabled={!canSubmitChanges} variant="info">
