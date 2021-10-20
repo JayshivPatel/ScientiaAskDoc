@@ -56,8 +56,8 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   defaultURL,
   defaultCategory,
   defaultTags,
-  defaultVisibleAfter, 
-  suppressErrorMsg, 
+  defaultVisibleAfter,
+  suppressErrorMsg,
   setSuppressErrorMsg,
   handleInvalidDetails,
   titleDuplicated,
@@ -69,15 +69,21 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
   const [tagOptions, setTagOptions] = useState<Option[]>(
     tagList.map(createOption)
   )
-  const [showPicker, setShowPicker] = useState(defaultVisibleAfter !== undefined)
-  const [visibleAfter, setVisibleAfter] = useState<Date>(defaultVisibleAfter || new Date())
+  const [datePickerEnabled, setDatePickerEnabled] = useState(
+    defaultVisibleAfter !== undefined
+  )
+  const [visibleAfter, setVisibleAfter] = useState<Date>(
+    defaultVisibleAfter || new Date()
+  )
 
   const [title, setTitle] = useState<string>(defaultTitle || "")
   const [category, setCategory] = useState(defaultCategory || DEFAULT_CATEGORY)
   const [tags, setTags] = useState<string[]>(defaultTags || [])
   const [url, setURL] = useState(defaultURL || "")
   const [urlError, setURLError] = useState<URLError | undefined>(undefined)
-  const [titleError, setTitleError] = useState<TitleError | undefined>(undefined)
+  const [titleError, setTitleError] = useState<TitleError | undefined>(
+    undefined
+  )
 
   const validateURL = (url: string) => {
     const emptyURL = url.trim() === ""
@@ -87,11 +93,17 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
 
   const validateTitle = (title: string) => {
     const emptyTitle = title.trim() === ""
-    const duplicateTitle = titleDuplicated(category, title) &&
+    const duplicateTitle =
+      titleDuplicated(category, title) &&
       !(defaultCategory && title === defaultTitle)
 
-    setTitleError(emptyTitle ? TitleError.EmptyTitle :
-      (duplicateTitle ? TitleError.DuplicateTitle : undefined))
+    setTitleError(
+      emptyTitle
+        ? TitleError.EmptyTitle
+        : duplicateTitle
+        ? TitleError.DuplicateTitle
+        : undefined
+    )
 
     return !(emptyTitle || duplicateTitle)
   }
@@ -121,25 +133,27 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
     const titleIsValid = validateTitle(title || "")
     const urlIsValid = validateURL(url || "")
 
-    handleInvalidDetails && handleInvalidDetails(
-        (isLink && titleIsValid && urlIsValid) ||
-        (!isLink && titleIsValid)
-    )
+    handleInvalidDetails &&
+      handleInvalidDetails(
+        (isLink && titleIsValid && urlIsValid) || (!isLink && titleIsValid)
+      )
   }, [title, url])
 
-  const updateResourceDetails = () => setResourceDetails({
-    title,
-    category,
-    tags,
-    visibleAfter,
-    url,
-  })
+  const updateResourceDetails = () =>
+    setResourceDetails({
+      title,
+      category,
+      tags,
+      visibleAfter,
+      url,
+    })
 
   useEffect(updateResourceDetails, [title, category, tags, visibleAfter, url])
 
   const datepicker = (
     <DatePicker
       selected={visibleAfter}
+      disabled={!datePickerEnabled}
       onChange={(date: Date) => {
         setVisibleAfter(date)
       }}
@@ -198,11 +212,14 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
             value={createOption(category)}
             options={categoryOptions}
             styles={{
-              singleValue: base => ({
+              singleValue: (base) => ({
                 ...base,
                 color: "var(--primary-text-color)",
               }),
-              menuList: base => ({ ...base, backgroundColor: "var(--primary-button)"})
+              menuList: (base) => ({
+                ...base,
+                backgroundColor: "var(--primary-button)",
+              }),
             }}
             createOptionPosition="first"
             onCreateOption={(inputValue) => {
@@ -240,8 +257,14 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
           menuPortalTarget={document.body}
           styles={{
             menuPortal: (styles) => ({ ...styles, zIndex: 10001 }),
-            singleValue: base => ({ ...base, color: "var(--primary-text-color)"}),
-            menuList: base => ({ ...base, backgroundColor: "var(--primary-button)"})
+            singleValue: (base) => ({
+              ...base,
+              color: "var(--primary-text-color)",
+            }),
+            menuList: (base) => ({
+              ...base,
+              backgroundColor: "var(--primary-button)",
+            }),
           }}
           options={tagOptions}
           createOptionPosition="first"
@@ -267,22 +290,35 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
       <Form.Group>
         <Row>
           <Col md="auto">
-            <Form.Switch
-              id={`${id}-visibilityPickerSwitch`}
-              label={showPicker ? "Visible after" : "Visible immediately"}
-              onClick={() => setShowPicker(!showPicker)}
-              defaultChecked={showPicker}
+            <Form.Check
+              type="radio"
+              name="visibilityRadio"
+              label="Visible now"
+              onClick={() => {
+                setVisibleAfter(new Date())
+                setDatePickerEnabled(false)
+              }}
+              defaultChecked={!datePickerEnabled}
             />
           </Col>
-          {showPicker && (
-            <Col>
-              {datepicker}
-              <p className={styles.mutedText}>
-                Course managers will still be able to view all "invisible"
-                resources.
-              </p>
-            </Col>
-          )}
+        </Row>
+        <Row>
+          <Col md="auto">
+            <Form.Check
+              type="radio"
+              name="visibilityRadio"
+              label="Visible after:"
+              onClick={() => setDatePickerEnabled(true)}
+              defaultChecked={datePickerEnabled}
+            />
+          </Col>
+          <Col>
+            {datepicker}
+            <p className={styles.mutedText}>
+              Course managers will still be able to view all "invisible"
+              resources.
+            </p>
+          </Col>
         </Row>
       </Form.Group>
     </>
