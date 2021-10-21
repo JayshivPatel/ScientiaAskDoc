@@ -1,14 +1,14 @@
-import React, {useEffect, useRef, useState} from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styles from "./style.module.scss"
 import classNames from "classnames"
 
 import Row from "react-bootstrap/esm/Row"
 import Badge from "react-bootstrap/Badge"
-import {IconDefinition} from "@fortawesome/free-regular-svg-icons"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import { IconDefinition } from "@fortawesome/free-regular-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-import {DragHandle} from "components/sections/CategoryList"
-import {faArrowDown} from "@fortawesome/free-solid-svg-icons"
+import { DragHandle } from "components/sections/CategoryList"
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons"
 import useOutsideAlerter from "../../../hooks/useOutsideAlerter"
 
 export interface FileListItemProps {
@@ -17,7 +17,7 @@ export interface FileListItemProps {
   tags: string[]
   downloads?: number
   invisible?: boolean
-  resourceActions?: any
+  displayingForStaff?: boolean
   showMenu?: boolean
   setShowMenu?: (show: boolean) => void
   onIconClick?: (event: React.MouseEvent) => void
@@ -32,7 +32,7 @@ const FileItemRow: React.FC<FileListItemProps> = ({
   tags,
   downloads,
   invisible,
-  resourceActions,
+  displayingForStaff = false,
   showMenu,
   setShowMenu,
   onIconClick,
@@ -42,8 +42,8 @@ const FileItemRow: React.FC<FileListItemProps> = ({
 }) => {
   const [xPos, setXPos] = useState("0px")
   const [yPos, setYPos] = useState("0px")
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  useOutsideAlerter(wrapperRef, () => setShowMenu?.(false));
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  useOutsideAlerter(wrapperRef, () => setShowMenu?.(false))
 
   const handleClick = () => {
     setShowMenu && showMenu && setShowMenu(false)
@@ -62,27 +62,16 @@ const FileItemRow: React.FC<FileListItemProps> = ({
 
   return (
     <>
-      {showMenu && resourceActions && (
-        <div
-          ref={wrapperRef}
-          className={styles.resourceMenu}
-          style={{
-            top: yPos,
-            left: xPos,
-          }}>
-          {resourceActions}
-        </div>
-      )}
       <div
         style={invisible ? { opacity: "50%" } : {}}
         className={styles.listItem}
         onClick={onClick}
         onMouseOut={onMouseOut}
         onMouseOver={onMouseOver}
-        onContextMenu={resourceActions && handleContextMenu}>
+      >
         <Row className={styles.listRow}>
           <div className={styles.listItemTitle}>
-            {resourceActions ? (
+            {displayingForStaff ? (
               <div className={styles.centeredFlex}>
                 <DragHandle />
                 {title}
@@ -99,7 +88,8 @@ const FileItemRow: React.FC<FileListItemProps> = ({
                 className={classNames(
                   styles.fileTag,
                   tag === "new" ? styles.tagTeal : styles.tagBlue
-                )}>
+                )}
+              >
                 {tag}
               </Badge>
             ))}

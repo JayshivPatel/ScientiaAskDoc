@@ -21,8 +21,8 @@ export interface CategoryListProps {
   categoryItems: Resource[]
   select?: SelectionProps
   showMenus?: IdBooleanMap
+  displayingForStaff?: boolean
   setShowMenus?: (id: number) => (show: boolean) => void
-  resourceActions?: (id: number, filename: string) => any
   handleRowClick: (id: number) => void
   handleIconClick: (id: number) => void
   handleMouseOver: (id: number) => void
@@ -50,7 +50,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
   select,
   showMenus,
   setShowMenus,
-  resourceActions,
+  displayingForStaff = false,
   handleRowClick,
   handleIconClick,
   handleMouseOver,
@@ -82,7 +82,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
           downloads={undefined}
           invisible={visible_after.getTime() - Date.now() > 0}
           title={title}
-          resourceActions={resourceActions ? resourceActions(id, title) : null}
+          displayingForStaff={displayingForStaff}
           key={index}
         />
       )
@@ -127,7 +127,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
 
   return (
     <div style={{ marginLeft: ".25rem" }}>
-      {resourceActions ? (
+      {displayingForStaff ? (
         <SortableList
           items={listItems}
           onSortEnd={onSortEnd}

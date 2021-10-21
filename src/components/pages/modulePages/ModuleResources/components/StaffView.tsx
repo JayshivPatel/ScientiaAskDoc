@@ -1,24 +1,18 @@
 import React, { useState } from "react"
 
 import Button from "react-bootstrap/Button"
-import ButtonGroup from "react-bootstrap/ButtonGroup"
 import Col from "react-bootstrap/esm/Col"
 import Row from "react-bootstrap/esm/Row"
 
-import {
-  faDownload,
-  faTrash,
-  faUpload,
-} from "@fortawesome/free-solid-svg-icons"
+import { faTrash, faUpload } from "@fortawesome/free-solid-svg-icons"
 import AlertModal from "components/modals/AlertModal"
-import IconButton from "components/buttons/IconButton"
 import WarningJumbotron from "components/suspense/WarningJumbotron"
 import EditModal from "components/modals/EditModal"
 import UploadModal from "components/modals/UploadModal"
 import CategoryList from "components/sections/CategoryList"
 import CategoryHeader from "components/headings/CategoryHeader"
 
-import { download, request } from "utils/api"
+import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 import { Folder, IdBooleanMap, Resource } from "constants/types"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -145,6 +139,7 @@ const StaffView: React.FC<StaffViewProps> = ({
             <div key={id}>
               <CategoryHeader heading={title} />
               <CategoryList
+                displayingForStaff={true}
                 categoryItems={filesContent.filter(
                   (res) => res.category === title
                 )}
