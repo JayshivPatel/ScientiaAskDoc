@@ -47,10 +47,10 @@ const CurrentDirectoryRow: React.FC<{ select: SelectionProps }> = ({
                     : faSquare
                   : resourceTypeToIcon(type)
               }
-              onClick={() => select.handleCardClick(id)}
+              onClick={() => select.handleItemClick(id)}
               onIconClick={(e) => {
                 e.stopPropagation()
-                select.handleIconClick(id)
+                select.handleSelectIconClick(id)
               }}
               onMouseOver={() => select.handleMouseOver(id)}
               onMouseOut={() => select.handleMouseOut(id)}

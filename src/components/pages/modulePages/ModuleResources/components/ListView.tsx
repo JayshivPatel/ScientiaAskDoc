@@ -72,8 +72,8 @@ const ListView: React.FC<ListViewProps> = ({
                 />
                 <CategoryList
                   categoryItems={categoryItems}
-                  handleRowClick={select.handleCardClick}
-                  handleIconClick={select.handleIconClick}
+                  handleRowClick={select.handleItemClick}
+                  handleIconClick={select.handleSelectIconClick}
                   handleMouseOver={select.handleMouseOver}
                   handleMouseOut={select.handleMouseOut}
                   select={select}

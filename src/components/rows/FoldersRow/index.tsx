@@ -33,9 +33,9 @@ const FoldersRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
             }
             onIconClick={(e) => {
               e.stopPropagation()
-              select.handleIconClick(id)
+              select.handleSelectIconClick(id)
             }}
-            onClick={() => select.handleCardClick(id)}
+            onClick={() => select.handleItemClick(id)}
             onMouseOver={() => select.handleMouseOver(id)}
             onMouseOut={() => select.handleMouseOut(id)}
           />

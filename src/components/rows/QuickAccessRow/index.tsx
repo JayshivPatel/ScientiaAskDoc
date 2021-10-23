@@ -47,10 +47,10 @@ const QuickAccessRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
                     : faSquare
                   : resourceTypeToIcon(type)
               }
-              onClick={() => select.handleCardClick(id)}
+              onClick={() => select.handleItemClick(id)}
               onIconClick={(e) => {
                 e.stopPropagation()
-                select.handleIconClick(id)
+                select.handleSelectIconClick(id)
               }}
               thumbnail={thumbnail}
               onMouseOver={() => select.handleMouseOver(id)}

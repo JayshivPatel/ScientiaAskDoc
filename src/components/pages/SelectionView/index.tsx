@@ -17,8 +17,8 @@ export interface SelectionProps {
   state: MyState
   setIsSelected: (selection: IdBooleanMap) => void
   isAnySelected: () => boolean
-  handleCardClick: (id: number) => void
-  handleIconClick: (id: number) => void
+  handleItemClick: (id: number) => void
+  handleSelectIconClick: (id: number) => void
   handleMouseOver: (id: number) => void
   handleMouseOut: (id: number) => void
   disableSelection?: boolean
@@ -76,9 +76,21 @@ class SelectionView extends React.Component<SelectionViewProps, MyState> {
     return true
   }
 
-  handleIconClick(id: number) {
+  handleMouseOver(id: number) {
+    let isHoveringOver = this.state.isHoveringOver
+    isHoveringOver[id] = true
+    this.setState({ isHoveringOver })
+  }
+
+  handleMouseOut(id: number) {
+    let isHoveringOver = this.state.isHoveringOver
+    isHoveringOver[id] = false
+    this.setState({ isHoveringOver })
+  }
+
+  handleSelectIconClick(id: number) {
     if (this.props.disableSelection) {
-      this.handleCardClick(id)
+      this.handleItemClick(id)
       return
     }
     let isSelected = this.state.isSelected
@@ -86,6 +98,14 @@ class SelectionView extends React.Component<SelectionViewProps, MyState> {
     isSelected[id] = !isSelected[id]
     isHoveringOver[id] = false
     this.setState({ isSelected, isHoveringOver })
+  }
+
+  handleItemClick(id: number) {
+    if (this.isAnySelected()) {
+      this.handleSelectIconClick(id)
+      return
+    }
+    this.props.onItemClick(id)
   }
 
   handleDownloadClick(e: React.MouseEvent) {
@@ -109,34 +129,14 @@ class SelectionView extends React.Component<SelectionViewProps, MyState> {
     this.setState({ isSelected })
   }
 
-  handleCardClick(id: number) {
-    if (this.isAnySelected()) {
-      this.handleIconClick(id)
-      return
-    }
-    this.props.onItemClick(id)
-  }
-
-  handleMouseOver(id: number) {
-    let isHoveringOver = this.state.isHoveringOver
-    isHoveringOver[id] = true
-    this.setState({ isHoveringOver })
-  }
-
-  handleMouseOut(id: number) {
-    let isHoveringOver = this.state.isHoveringOver
-    isHoveringOver[id] = false
-    this.setState({ isHoveringOver })
-  }
-
   render() {
     let selection: SelectionProps = {
       selectionItems: this.props.selectionItems,
       state: this.state,
       setIsSelected: (selection) => this.setState({ isSelected: selection }),
       isAnySelected: () => this.isAnySelected(),
-      handleCardClick: (id: number) => this.handleCardClick(id),
-      handleIconClick: (id: number) => this.handleIconClick(id),
+      handleItemClick: (id: number) => this.handleItemClick(id),
+      handleSelectIconClick: (id: number) => this.handleSelectIconClick(id),
       handleMouseOver: (id: number) => this.handleMouseOver(id),
       handleMouseOut: (id: number) => this.handleMouseOut(id),
       disableSelection: this.props.disableSelection,
