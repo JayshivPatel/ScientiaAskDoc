@@ -24,7 +24,7 @@ export interface SelectionProps {
   disableSelection?: boolean
 }
 
-export interface MyProps {
+export interface SelectionViewProps {
   selectionItems: SelectionItem[]
   render: (selection: SelectionProps) => any
   heading: string
@@ -38,8 +38,8 @@ interface MyState {
   isHoveringOver: IdBooleanMap
 }
 
-class SelectionView extends React.Component<MyProps, MyState> {
-  constructor(props: MyProps) {
+class SelectionView extends React.Component<SelectionViewProps, MyState> {
+  constructor(props: SelectionViewProps) {
     super(props)
     this.state = { isSelected: [], isHoveringOver: [] }
   }
@@ -81,8 +81,8 @@ class SelectionView extends React.Component<MyProps, MyState> {
       this.handleCardClick(id)
       return
     }
-    let isSelected = JSON.parse(JSON.stringify(this.state.isSelected))
-    let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver))
+    let isSelected = this.state.isSelected
+    let isHoveringOver = this.state.isHoveringOver
     isSelected[id] = !isSelected[id]
     isHoveringOver[id] = false
     this.setState({ isSelected, isHoveringOver })
@@ -101,7 +101,7 @@ class SelectionView extends React.Component<MyProps, MyState> {
 
   handleSelectAllClick() {
     let items = this.props.selectionItems
-    let isSelected = JSON.parse(JSON.stringify(this.state.isSelected))
+    let isSelected = this.state.isSelected
     let setValue = !this.isAllSelected()
     for (let item in items) {
       isSelected[items[item].id] = setValue
@@ -118,13 +118,13 @@ class SelectionView extends React.Component<MyProps, MyState> {
   }
 
   handleMouseOver(id: number) {
-    let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver))
+    let isHoveringOver = this.state.isHoveringOver
     isHoveringOver[id] = true
     this.setState({ isHoveringOver })
   }
 
   handleMouseOut(id: number) {
-    let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver))
+    let isHoveringOver = this.state.isHoveringOver
     isHoveringOver[id] = false
     this.setState({ isHoveringOver })
   }
