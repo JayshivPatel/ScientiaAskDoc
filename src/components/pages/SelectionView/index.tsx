@@ -137,7 +137,7 @@ const SelectionView: React.FC<SelectionViewProps> = ({
         onSelectAllClick={() => handleSelectAllClick()}
         selectAllIcon={isAllSelected() ? faCheckSquare : faSquare}
         disableSelection={disableSelection}
-        checkBoxColur={
+        checkBoxColour={
           isAnySelected()
             ? "var(--secondary-text-color)"
             : "var(--secondary-button-text)"
