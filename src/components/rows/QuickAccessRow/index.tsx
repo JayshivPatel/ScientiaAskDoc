@@ -41,8 +41,8 @@ const QuickAccessRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
               tags={tags}
               icon={
                 !select.disableSelection &&
-                (select.isAnySelected() || select.state.isHoveringOver[id])
-                  ? select.state.isSelected[id]
+                (select.isAnySelected() || select.hoveringOver[id])
+                  ? select.selected[id]
                     ? faCheckSquare
                     : faSquare
                   : resourceTypeToIcon(type)

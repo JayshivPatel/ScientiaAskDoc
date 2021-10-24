@@ -25,8 +25,8 @@ const FoldersRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
             title={title}
             icon={
               !select.disableSelection &&
-              (select.isAnySelected() || select.state.isHoveringOver[id])
-                ? select.state.isSelected[id]
+              (select.isAnySelected() || select.hoveringOver[id])
+                ? select.selected[id]
                   ? faCheckSquare
                   : faSquare
                 : faFolder
