@@ -55,21 +55,11 @@ const SelectionView: React.FC<SelectionViewProps> = ({
   const [hoveringOver, setHoveringOver] = useState<IdBooleanMap>(initMap())
 
   const isAnySelected = (): boolean => {
-    for (let item of selectionItems) {
-      if (selected[item.id]) {
-        return true
-      }
-    }
-    return false
+    return Object.values(selected).some((b) => b)
   }
 
   const isAllSelected = (): boolean => {
-    for (let item of selectionItems) {
-      if (!selected[item.id]) {
-        return false
-      }
-    }
-    return true
+    return Object.values(selected).every((b) => b)
   }
 
   const handleMouseOver = (id: number): void => {
