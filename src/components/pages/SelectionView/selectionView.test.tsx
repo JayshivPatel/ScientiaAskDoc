@@ -52,6 +52,12 @@ describe("<SelectionView />", () => {
       selectionItems
     )
   })
+
+  it("initialises with no selected items", () => {
+    expect(
+      wrapper.find(DummyComponent).prop("select").isAnySelected()
+    ).toBeFalsy()
+  })
 })
 
 describe("<SelectionView />", () => {
