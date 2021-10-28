@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { DragHandle } from "components/sections/CategoryList"
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons"
 import useOutsideAlerter from "../../../hooks/useOutsideAlerter"
+import { Button } from "react-bootstrap"
 
 export interface FileListItemProps {
   title: string
@@ -40,20 +41,13 @@ const FileItemRow: React.FC<FileListItemProps> = ({
   onMouseOver,
   onMouseOut,
 }) => {
-  const [xPos, setXPos] = useState("0px")
-  const [yPos, setYPos] = useState("0px")
+  const [hovering, setHovering] = useState(false)
+
   const wrapperRef = useRef<HTMLDivElement>(null)
   useOutsideAlerter(wrapperRef, () => setShowMenu?.(false))
 
   const handleClick = () => {
     setShowMenu && showMenu && setShowMenu(false)
-  }
-
-  const handleContextMenu = (e: React.MouseEvent) => {
-    e.preventDefault()
-    setXPos(`${e.pageX - 5}px`)
-    setYPos(`${e.pageY - 5}px`)
-    setShowMenu && setShowMenu(true)
   }
 
   useEffect(() => {
@@ -66,9 +60,18 @@ const FileItemRow: React.FC<FileListItemProps> = ({
         style={invisible ? { opacity: "50%" } : {}}
         className={styles.listItem}
         onClick={onClick}
-        onMouseOut={onMouseOut}
-        onMouseOver={onMouseOver}
-      >
+        onMouseOver={(event: React.MouseEvent) => {
+          setHovering(true)
+          if (onMouseOver) {
+            onMouseOver(event)
+          }
+        }}
+        onMouseOut={(event: React.MouseEvent) => {
+          setHovering(false)
+          if (onMouseOut) {
+            onMouseOut(event)
+          }
+        }}>
         <Row className={styles.listRow}>
           <div className={styles.listItemTitle}>
             {displayingForStaff ? (
@@ -80,6 +83,13 @@ const FileItemRow: React.FC<FileListItemProps> = ({
               title
             )}
           </div>
+          {displayingForStaff && hovering && (
+            <Button
+              className={classNames(styles.centeredFlex, styles.editButton)}
+              variant="info">
+              Edit
+            </Button>
+          )}
           <div className={styles.centeredFlex}>
             {tags.map((tag) => (
               <Badge
@@ -88,8 +98,7 @@ const FileItemRow: React.FC<FileListItemProps> = ({
                 className={classNames(
                   styles.fileTag,
                   tag === "new" ? styles.tagTeal : styles.tagBlue
-                )}
-              >
+                )}>
                 {tag}
               </Badge>
             ))}
