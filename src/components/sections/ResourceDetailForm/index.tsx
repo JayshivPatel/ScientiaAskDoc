@@ -159,7 +159,7 @@ const ResourceDetailForm: React.FC<ResourceDetailFormProps> = ({
       }}
       showTimeInput
       timeFormat="HH:mm"
-      dateFormat="MMMM d, yyyy HH:mm 'UTC'"
+      dateFormat="MMMM d, yyyy HH:mm"
     />
   )
   return (
