@@ -55,7 +55,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
   handleMouseOver,
   handleMouseOut,
 }) => {
-  const initListItems = (items: Resource[]) => {
+  const displayListItems = (items: Resource[]) => {
     return items.map(
       ({ title, type, tags, downloads, visible_after, id, index }) => {
         if (type === undefined || tags === undefined) return null
@@ -89,12 +89,6 @@ const CategoryList: React.FC<CategoryListProps> = ({
   }
 
   const [resources, setResources] = useState(categoryItems)
-  const [listItems, setListItems] = useState(initListItems(resources))
-
-  useEffect(() => {
-    setListItems(initListItems(resources))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showMenus, setShowMenus, resources])
 
   const onSortEnd = ({
     oldIndex,
@@ -133,13 +127,13 @@ const CategoryList: React.FC<CategoryListProps> = ({
     <div style={{ marginLeft: ".25rem" }}>
       {displayingForStaff ? (
         <SortableList
-          items={listItems}
+          items={displayListItems(resources)}
           onSortEnd={onSortEnd}
           onSortStart={(_, event) => event.preventDefault()}
           useDragHandle
         />
       ) : (
-        listItems
+        displayListItems(resources)
       )}
     </div>
   )
