@@ -103,7 +103,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
     oldIndex: number
     newIndex: number
   }) => {
-    let resourceToChange = resources.find((r) => r.index == oldIndex)!
+    let resourceToChange = resources[oldIndex]
     request({
       endpoint: api.MATERIALS_RESOURCES_ID(resourceToChange.id),
       method: methods.PUT,
