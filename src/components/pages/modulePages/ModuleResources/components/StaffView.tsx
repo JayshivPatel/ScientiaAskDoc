@@ -6,7 +6,7 @@ import Row from "react-bootstrap/esm/Row"
 
 import { faTrash, faUpload } from "@fortawesome/free-solid-svg-icons"
 import AlertModal from "components/modals/AlertModal"
-import WarningJumbotron from "components/suspense/WarningJumbotron"
+import UploadJumbotron from "components/suspense/UploadJumbotron"
 import EditModal from "components/modals/EditModal"
 import UploadModal from "components/modals/UploadModal"
 import CategoryList from "components/sections/CategoryList"
@@ -123,7 +123,10 @@ const StaffView: React.FC<StaffViewProps> = ({
       />
 
       {resources.length === 0 ? (
-        <WarningJumbotron message="No resources have been uploaded for this course yet." />
+        <UploadJumbotron
+          message="No resources have been uploaded for this course yet."
+          onClick={() => setModal("upload")}
+        />
       ) : (
         <>
           <EditModal
