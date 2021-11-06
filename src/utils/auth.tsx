@@ -10,8 +10,8 @@ function storeDataInStorage(
   service: AuthService,
   data: { access_token: string; user_info: any }
 ) {
-  sessionStorage.setItem(authConstants.ACCESS_TOKEN(service), data.access_token)
-  sessionStorage.setItem(
+  localStorage.setItem(authConstants.ACCESS_TOKEN(service), data.access_token)
+  localStorage.setItem(
     authConstants.USER_INFO(service),
     JSON.stringify(data.user_info)
   )
@@ -22,8 +22,8 @@ function storeDataInStorage(
  */
 function removeDataFromStorage() {
   authServices.map((service) => {
-    sessionStorage.removeItem(authConstants.ACCESS_TOKEN(service))
-    sessionStorage.removeItem(authConstants.USER_INFO(service))
+    localStorage.removeItem(authConstants.ACCESS_TOKEN(service))
+    localStorage.removeItem(authConstants.USER_INFO(service))
   })
 }
 
@@ -32,7 +32,7 @@ function removeDataFromStorage() {
  * @param service The relevant auth service
  */
 function getUserInfo(service: AuthService = AuthService.MATERIALS) {
-  const info = sessionStorage.getItem(authConstants.USER_INFO(service))
+  const info = localStorage.getItem(authConstants.USER_INFO(service))
   if (info) {
     return JSON.parse(info)
   }
@@ -88,7 +88,7 @@ async function loginAll(username: string, password: string): Promise<boolean> {
  */
 const userIsLoggedIn = (services: AuthService[] = [AuthService.MATERIALS]) => {
   for (const service of services) {
-    if (sessionStorage.getItem(authConstants.ACCESS_TOKEN(service)) === null) {
+    if (localStorage.getItem(authConstants.ACCESS_TOKEN(service)) === null) {
       return false
     }
   }

@@ -42,7 +42,7 @@ const SignIn: React.FC<Props> = ({ location }) => {
   }
 
   useEffect(() => {
-    if (sessionStorage.getItem("userInfo-materials") !== null) {
+    if (localStorage.getItem("userInfo-materials") !== null) {
       setRedirect(true)
     }
   }, [])
