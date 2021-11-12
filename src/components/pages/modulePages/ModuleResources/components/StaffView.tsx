@@ -24,6 +24,7 @@ export interface StaffViewProps {
   folders: Folder[]
   reload: () => void
   resources: Resource[]
+  setResources: (resources: Resource[]) => void
   searchText: string
   includeInSearchResult: (item: Resource, searchText: string) => boolean
 }
@@ -34,6 +35,7 @@ const StaffView: React.FC<StaffViewProps> = ({
   folders,
   reload,
   resources,
+  setResources,
   searchText,
   includeInSearchResult,
 }) => {
@@ -67,6 +69,12 @@ const StaffView: React.FC<StaffViewProps> = ({
     return resources.some(
       (resource) => resource.category === category && resource.title === title
     )
+  }
+
+  const updateResources = (changedResources: Resource[]): void => {
+    const changesMap = new Map(changedResources.map((r) => [r.id, r]))
+    let newResources = resources.map((r) => changesMap.get(r.id) || r)
+    setResources(newResources)
   }
 
   return (
@@ -143,6 +151,7 @@ const StaffView: React.FC<StaffViewProps> = ({
                 categoryItems={filesContent.filter(
                   (res) => res.category === title
                 )}
+                setCategoryItems={updateResources}
                 showMenus={showMenus}
                 setShowMenus={(id) => {
                   return (show: boolean) => {

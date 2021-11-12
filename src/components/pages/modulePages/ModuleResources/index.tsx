@@ -55,6 +55,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
       resources: [],
       searchText: "",
     }
+    this.setResources = this.setResources.bind(this)
   }
 
   navigateToResource(id: number) {
@@ -240,6 +241,10 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
     return prompts
   }
 
+  setResources(resources: Resource[]): void {
+    this.setState({ resources: resources })
+  }
+
   render() {
     let scope = this.props.scope || ""
     let studentViewResources = filterInvisibleResources(this.state.resources)
@@ -252,6 +257,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             folders={folders(this.state.resources)}
             reload={() => this.loadResources()}
             resources={this.state.resources}
+            setResources={this.setResources}
             searchText={this.state.searchText}
             includeInSearchResult={this.includeInSearchResult}
           />
@@ -296,6 +302,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             <ListView
               folders={folders(studentViewResources)}
               resources={studentViewResources}
+              setResources={this.setResources}
               searchText={this.state.searchText}
               onDownloadClick={(ids) => this.handleFileDownload(ids)}
               onSectionDownloadClick={(category) =>
@@ -327,7 +334,8 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             alignItems: "center",
             justifyContent: "space-between",
             paddingTop: "0.75rem",
-          }}>
+          }}
+        >
           <div style={{ width: "100%" }}>
             <SearchBox
               searchText={this.state.searchText}
@@ -341,17 +349,20 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               overlay={
                 <Tooltip
                   id={`${this.props.moduleID}-view-toggle-tooltip`}
-                  style={{ zIndex: 10000 }}>
+                  style={{ zIndex: 10000 }}
+                >
                   Toggle {this.state.staffView ? "Student" : "Staff"} View
                 </Tooltip>
-              }>
+              }
+            >
               <Button
                 onClick={() =>
                   this.setState({ staffView: !this.state.staffView })
                 }
                 variant="secondary"
                 style={{ marginLeft: "0.625rem" }}
-                className={styles.sectionHeaderButton}>
+                className={styles.sectionHeaderButton}
+              >
                 <FontAwesomeIcon icon={faExchangeAlt} />
               </Button>
             </OverlayTrigger>
