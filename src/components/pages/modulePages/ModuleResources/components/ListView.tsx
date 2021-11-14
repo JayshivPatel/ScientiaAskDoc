@@ -2,12 +2,13 @@ import React from "react"
 import SelectionView, { SelectionProps } from "components/pages/SelectionView"
 import CategoryList from "components/sections/CategoryList"
 import CategoryHeader from "components/headings/CategoryHeader"
-import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons"
+import { faCheckSquare, faSquare } from "@fortawesome/free-regular-svg-icons"
 import { Folder, Resource } from "constants/types"
 
 export interface ListViewProps {
   folders: Folder[]
   resources: Resource[]
+  setResources: (resources: Resource[]) => void
   searchText: string
   onDownloadClick: (identifiers: number[]) => void
   onSectionDownloadClick: (title: string) => void
@@ -18,6 +19,7 @@ export interface ListViewProps {
 const ListView: React.FC<ListViewProps> = ({
   folders,
   resources,
+  setResources,
   searchText,
   onDownloadClick,
   onItemClick,
@@ -69,6 +71,7 @@ const ListView: React.FC<ListViewProps> = ({
                 />
                 <CategoryList
                   categoryItems={categoryItems}
+                  setCategoryItems={setResources}
                   handleRowClick={select.handleItemClick}
                   handleIconClick={select.handleSelectIconClick}
                   handleMouseOver={select.handleMouseOver}
