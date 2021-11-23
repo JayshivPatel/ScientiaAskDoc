@@ -49,7 +49,6 @@ async function login(
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
     },
     body: JSON.stringify({ username, password }),
   })
