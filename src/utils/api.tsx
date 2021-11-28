@@ -40,19 +40,6 @@ export async function request(data: RequestData) {
     }
   }
 
-  const access_token = localStorage.getItem(
-    authConstants.ACCESS_TOKEN(authService)
-  )
-  if (access_token != null) {
-    console.log(`access token expires: ${getJWTExpiry(access_token)}`)
-  }
-  const refresh_token = localStorage.getItem(
-    authConstants.REFRESH_TOKEN(authService)
-  )
-  if (refresh_token != null) {
-    console.log(`refresh token expires: ${getJWTExpiry(refresh_token)}`)
-  }
-
   let headers: { [key: string]: string } = {
     Authorization: authConstants.ACCESS_TOKEN_HEADER(authService),
   }
