@@ -1,6 +1,8 @@
 import authConstants from "constants/auth"
-import { ApiEndpoint, methods } from "constants/routes"
+import { ApiEndpoint, methods, refresh_routes } from "constants/routes"
 import { RequestData } from "./api-types"
+import authenticationService from "./auth"
+import { getJWTExpiry } from "./jwt"
 
 interface RequestOptions {
   [key: string]: any
@@ -18,12 +20,41 @@ export function parseQueryParams(rawParams: {
   return queryParams
 }
 
-// API calling interface. onSuccess and onError are functions that take in data
-// and error parameters respectively. Body is processed as query string if method is GET.
-// Note: will trigger CORS OPTIONS preflight due to the Authorization header
+/**
+ * API calling interface.
+ * Access token is passed as Authorization header to the API. If the access
+ * token has expired, we call the /refresh route in the API to generate a new
+ * one with our refresh token. See 'Explicit Refreshing' in
+ * https://flask-jwt-extended.readthedocs.io/en/stable/refreshing_tokens/.
+ * Body is processed as query string if method is GET.
+ * Note: will trigger CORS OPTIONS preflight due to the Authorization header
+ */
 export async function request(data: RequestData) {
+  const authService = data.endpoint.auth
+
+  if (!authenticationService.userHasAccess(authService)) {
+    const refreshRoute = refresh_routes[authService]
+    const success = await authenticationService.refresh(refreshRoute)
+    if (!success) {
+      console.log("Failed to refresh authentication token.")
+    }
+  }
+
+  const access_token = localStorage.getItem(
+    authConstants.ACCESS_TOKEN(authService)
+  )
+  if (access_token != null) {
+    console.log(`access token expires: ${getJWTExpiry(access_token)}`)
+  }
+  const refresh_token = localStorage.getItem(
+    authConstants.REFRESH_TOKEN(authService)
+  )
+  if (refresh_token != null) {
+    console.log(`refresh token expires: ${getJWTExpiry(refresh_token)}`)
+  }
+
   let headers: { [key: string]: string } = {
-    Authorization: authConstants.ACCESS_TOKEN_HEADER(data.endpoint.auth),
+    Authorization: authConstants.ACCESS_TOKEN_HEADER(authService),
   }
 
   if (!data.sendFile) {
