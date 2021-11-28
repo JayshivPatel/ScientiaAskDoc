@@ -101,7 +101,7 @@ const userIsLoggedIn = (): boolean => {
 }
 
 /**
- * Check if user has access via an access token to the given auth service
+ * Check if user has access to the given auth service via an access token
  * @param services the auth service that you wish to check user's login status
  * on it.
  */
