@@ -1,0 +1,11 @@
+@import "assets/scss/custom";
+
+.jumbotron {
+  background: var(--secondary-background-color);
+  color: var(--primary-text-color);
+  margin-top: 2rem;
+}
+
+.clickable {
+  cursor: pointer;
+}
