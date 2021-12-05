@@ -12,6 +12,6 @@ export function getJWTExpiry(jwt: string) {
 
 export function jwtHasNotExpired(jwt: string) {
   const expiration = getJWTExpiry(jwt)
-  const now = new Date()
+  const now = new Date(Date.now())
   return expiration.getTime() > now.getTime()
 }
