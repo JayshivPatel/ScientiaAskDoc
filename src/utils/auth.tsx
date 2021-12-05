@@ -94,8 +94,7 @@ async function loginAll(username: string, password: string): Promise<boolean> {
  * token with the Materials API
  */
 const userIsLoggedIn = (): boolean => {
-  const materialsService = AuthService.MATERIALS
-  const refreshTokenKey = authConstants.REFRESH_TOKEN(materialsService)
+  const refreshTokenKey = authConstants.REFRESH_TOKEN(AuthService.MATERIALS)
   const jwt = localStorage.getItem(refreshTokenKey)
   return jwt != null && jwtHasNotExpired(jwt)
 }
