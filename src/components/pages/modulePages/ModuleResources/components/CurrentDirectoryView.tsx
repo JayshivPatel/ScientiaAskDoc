@@ -20,7 +20,7 @@ const CurrentDirectoryView: React.FC<CurrentDirectoryViewProps> = ({
   onItemClick,
   includeInSearchResult,
 }) => {
-  let filesContent: Resource[] = resources
+  let filesContent: Resource[] = resources.sort((a, b) => a.index - b.index)
   if (scope !== "") {
     filesContent = filesContent.filter(({ category }) => category === scope)
   }
