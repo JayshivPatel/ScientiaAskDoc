@@ -2,7 +2,6 @@ import authConstants from "constants/auth"
 import { ApiEndpoint, methods, refresh_routes } from "constants/routes"
 import { RequestData } from "./api-types"
 import authenticationService from "./auth"
-import { getJWTExpiry } from "./jwt"
 
 interface RequestOptions {
   [key: string]: any
@@ -36,7 +35,8 @@ export async function request(data: RequestData) {
     const refreshRoute = refresh_routes[authService]
     const success = await authenticationService.refresh(refreshRoute)
     if (!success) {
-      console.error("Failed to refresh authentication token.")
+      alert("Failed to refresh authentication token. Try logging in again.")
+      authenticationService.logout()
     }
   }
 
