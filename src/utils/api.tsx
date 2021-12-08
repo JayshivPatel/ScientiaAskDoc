@@ -36,7 +36,7 @@ export async function request(data: RequestData) {
     const refreshRoute = refresh_routes[authService]
     const success = await authenticationService.refresh(refreshRoute)
     if (!success) {
-      console.log("Failed to refresh authentication token.")
+      console.error("Failed to refresh authentication token.")
     }
   }
 
