@@ -198,12 +198,11 @@ code {
   border-radius: 0.5rem !important;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
 
-  transition: 0.2s background;
-  -webkit-transition: 0.2s background;
-  -moz-transition: 0.2s background;
+  transition: 0.3s background;
+  -webkit-transition: 0.3s background;
+  -moz-transition: 0.3s background;
 }
 
 .btn-primary.active,
