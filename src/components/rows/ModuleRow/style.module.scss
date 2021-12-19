@@ -1,32 +1,59 @@
 @import "assets/scss/global";
 
-.moduleContainer {
-  display: "flex";
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-}
-
 .moduleRow {
-  margin: 0.1rem 1.25rem;
+  margin: 0;
+  transition: transform 250ms cubic-bezier(0.2, 0.8, 0.4, 1);
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: scale(1.01);
+    }
+    &:active {
+      transform: scale(0.99);
+    }
+  }
 }
 
 .moduleButton:active {
-  height: 4rem;
+  height: 3rem;
 }
 
 .moduleButton {
-  height: 4rem;
+  height: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.leftContainer {
+  display: flex;
+  align-items: center;
+  min-width: 0;
 }
 
 .noMaterials {
-  border: 0.1rem solid red;
+  fill: none;
+  color: var(--no-resource-indicator);
+  margin-right: 0.75rem;
+  font-size: xx-small;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+}
+
+.materials {
+  color: var(--background-color);
+  margin-right: 0.75rem;
+  font-size: xx-small;
 }
 
 .moduleTitle {
   white-space: nowrap !important;
-  overflow: hidden !important;
   text-overflow: ellipsis !important;
+  overflow: hidden;
   font-size: medium;
-  font-weight: 500;
+  margin-right: 0.5rem;
+  min-width: 0;
+}
+
+.rightContainer {
+  color: var(--tertiary-text-color);
 }
