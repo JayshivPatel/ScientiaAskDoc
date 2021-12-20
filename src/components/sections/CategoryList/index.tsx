@@ -22,8 +22,6 @@ export interface CategoryListProps {
   select?: SelectionProps
   displayingForStaff?: boolean
   setEditModal?: () => void
-  showMenus?: IdBooleanMap
-  setShowMenus?: (id: number) => (show: boolean) => void
   handleRowClick: (id: number) => void
   handleIconClick: (id: number) => void
   handleMouseOver: (id: number) => void
@@ -50,8 +48,6 @@ const CategoryList: React.FC<CategoryListProps> = ({
   categoryItems,
   setCategoryItems,
   select,
-  showMenus,
-  setShowMenus,
   displayingForStaff = false,
   setEditModal,
   handleRowClick,
@@ -78,8 +74,6 @@ const CategoryList: React.FC<CategoryListProps> = ({
             onMouseOver={() => handleMouseOver(id)}
             onMouseOut={() => handleMouseOut(id)}
             onIconClick={() => handleIconClick(id)}
-            showMenu={showMenus && showMenus[id]}
-            setShowMenu={setShowMenus && setShowMenus(id)}
             icon={icon}
             tags={tags}
             downloads={undefined}

@@ -20,8 +20,6 @@ export interface FileListItemProps {
   invisible?: boolean
   displayingForStaff?: boolean
   setEditModal?: () => void
-  showMenu?: boolean
-  setShowMenu?: (show: boolean) => void
   onIconClick?: (event: React.MouseEvent) => void
   onClick?: (event: React.MouseEvent) => void
   onMouseOver?: (event: React.MouseEvent) => void
@@ -36,24 +34,11 @@ const FileItemRow: React.FC<FileListItemProps> = ({
   invisible,
   displayingForStaff = false,
   setEditModal = () => {},
-  showMenu,
-  setShowMenu,
   onIconClick,
   onClick,
   onMouseOver,
   onMouseOut,
 }) => {
-  const wrapperRef = useRef<HTMLDivElement>(null)
-  useOutsideAlerter(wrapperRef, () => setShowMenu?.(false))
-
-  const handleClick = () => {
-    setShowMenu && showMenu && setShowMenu(false)
-  }
-
-  useEffect(() => {
-    document.addEventListener("click", handleClick)
-  }, [])
-
   return (
     <>
       <div

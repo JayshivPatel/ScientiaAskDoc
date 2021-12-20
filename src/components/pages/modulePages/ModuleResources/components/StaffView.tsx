@@ -163,14 +163,6 @@ const StaffView: React.FC<StaffViewProps> = ({
                   (res) => res.category === title
                 )}
                 setCategoryItems={updateResources}
-                showMenus={showMenus}
-                setShowMenus={(id) => {
-                  return (show: boolean) => {
-                    let newShowMenus: IdBooleanMap = allClosed()
-                    newShowMenus[id] = show
-                    setShowMenus(newShowMenus)
-                  }
-                }}
                 handleRowClick={(id) => {
                   onItemClick(id)
                 }}
