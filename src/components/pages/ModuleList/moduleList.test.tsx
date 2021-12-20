@@ -39,9 +39,6 @@ describe("<ModuleList />", () => {
     </Router>
   )
 
-  it("displays a title", () => {
-    expect(wrapper.find("h4").text()).toContain("module")
-  })
   it("sorts modules by module code", () => {
     const expectedModuleCodes = ["40004", "40006", "40008"]
     const actualModuleCodes = wrapper
