@@ -19,6 +19,7 @@ export interface FileListItemProps {
   downloads?: number
   invisible?: boolean
   displayingForStaff?: boolean
+  setEditModal?: () => void
   showMenu?: boolean
   setShowMenu?: (show: boolean) => void
   onIconClick?: (event: React.MouseEvent) => void
@@ -34,6 +35,7 @@ const FileItemRow: React.FC<FileListItemProps> = ({
   downloads,
   invisible,
   displayingForStaff = false,
+  setEditModal = () => {},
   showMenu,
   setShowMenu,
   onIconClick,
@@ -41,8 +43,6 @@ const FileItemRow: React.FC<FileListItemProps> = ({
   onMouseOver,
   onMouseOut,
 }) => {
-  const [hovering, setHovering] = useState(false)
-
   const wrapperRef = useRef<HTMLDivElement>(null)
   useOutsideAlerter(wrapperRef, () => setShowMenu?.(false))
 
@@ -61,13 +61,11 @@ const FileItemRow: React.FC<FileListItemProps> = ({
         className={styles.listItem}
         onClick={onClick}
         onMouseOver={(event: React.MouseEvent) => {
-          setHovering(true)
           if (onMouseOver) {
             onMouseOver(event)
           }
         }}
         onMouseOut={(event: React.MouseEvent) => {
-          setHovering(false)
           if (onMouseOut) {
             onMouseOut(event)
           }
@@ -83,9 +81,17 @@ const FileItemRow: React.FC<FileListItemProps> = ({
               title
             )}
           </div>
-          {displayingForStaff && hovering && (
+          {displayingForStaff && (
             <Button
-              className={classNames(styles.centeredFlex, styles.editButton)}
+              className={classNames(
+                styles.editButton,
+                styles.centeredFlex,
+                styles.centeredChildren
+              )}
+              onClick={(e) => {
+                e.stopPropagation()
+                setEditModal()
+              }}
               variant="info">
               Edit
             </Button>

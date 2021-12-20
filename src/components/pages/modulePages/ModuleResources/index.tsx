@@ -258,6 +258,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             reload={() => this.loadResources()}
             resources={this.state.resources}
             setResources={this.setResources}
+            onItemClick={(id) => this.navigateToResource(id)}
             searchText={this.state.searchText}
             includeInSearchResult={this.includeInSearchResult}
           />
@@ -334,8 +335,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             alignItems: "center",
             justifyContent: "space-between",
             paddingTop: "0.75rem",
-          }}
-        >
+          }}>
           <div style={{ width: "100%" }}>
             <SearchBox
               searchText={this.state.searchText}
@@ -349,20 +349,17 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               overlay={
                 <Tooltip
                   id={`${this.props.moduleID}-view-toggle-tooltip`}
-                  style={{ zIndex: 10000 }}
-                >
+                  style={{ zIndex: 10000 }}>
                   Toggle {this.state.staffView ? "Student" : "Staff"} View
                 </Tooltip>
-              }
-            >
+              }>
               <Button
                 onClick={() =>
                   this.setState({ staffView: !this.state.staffView })
                 }
                 variant="secondary"
                 style={{ marginLeft: "0.625rem" }}
-                className={styles.sectionHeaderButton}
-              >
+                className={styles.sectionHeaderButton}>
                 <FontAwesomeIcon icon={faExchangeAlt} />
               </Button>
             </OverlayTrigger>

@@ -20,8 +20,9 @@ export interface CategoryListProps {
   categoryItems: Resource[]
   setCategoryItems: (resources: Resource[]) => void
   select?: SelectionProps
-  showMenus?: IdBooleanMap
   displayingForStaff?: boolean
+  setEditModal?: () => void
+  showMenus?: IdBooleanMap
   setShowMenus?: (id: number) => (show: boolean) => void
   handleRowClick: (id: number) => void
   handleIconClick: (id: number) => void
@@ -52,6 +53,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
   showMenus,
   setShowMenus,
   displayingForStaff = false,
+  setEditModal,
   handleRowClick,
   handleIconClick,
   handleMouseOver,
@@ -84,6 +86,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
             invisible={visible_after.getTime() - Date.now() > 0}
             title={title}
             displayingForStaff={displayingForStaff}
+            setEditModal={setEditModal}
             key={index}
           />
         )

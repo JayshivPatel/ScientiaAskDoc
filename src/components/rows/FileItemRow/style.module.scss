@@ -30,7 +30,7 @@
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
-  width: 80% !important;
+  width: 75% !important;
   margin-right: 0.25rem;
 }
 
@@ -38,9 +38,6 @@
   margin-right: 0rem;
 }
 
-.resourceMenu {
-  position: absolute;
-  box-shadow: 0px 8px 10px #999999;
-  border-radius: 8px;
-  z-index: 10000;
+.editButton {
+  width: 10rem;
 }

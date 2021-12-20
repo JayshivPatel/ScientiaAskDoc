@@ -25,6 +25,7 @@ export interface StaffViewProps {
   reload: () => void
   resources: Resource[]
   setResources: (resources: Resource[]) => void
+  onItemClick: (id: number) => void
   searchText: string
   includeInSearchResult: (item: Resource, searchText: string) => boolean
 }
@@ -36,6 +37,7 @@ const StaffView: React.FC<StaffViewProps> = ({
   reload,
   resources,
   setResources,
+  onItemClick,
   searchText,
   includeInSearchResult,
 }) => {
@@ -151,6 +153,12 @@ const StaffView: React.FC<StaffViewProps> = ({
               <CategoryHeader heading={title} />
               <CategoryList
                 displayingForStaff={true}
+                setEditModal={() => {
+                  setEditResource(
+                    resources.find((res) => res.id === id) || resources[0]
+                  )
+                  setModal("edit")
+                }}
                 categoryItems={filesContent.filter(
                   (res) => res.category === title
                 )}
@@ -164,10 +172,7 @@ const StaffView: React.FC<StaffViewProps> = ({
                   }
                 }}
                 handleRowClick={(id) => {
-                  setEditResource(
-                    resources.find((res) => res.id === id) || resources[0]
-                  )
-                  setModal("edit")
+                  onItemClick(id)
                 }}
                 handleIconClick={(id) => {}}
                 handleMouseOver={(id) => {}}
