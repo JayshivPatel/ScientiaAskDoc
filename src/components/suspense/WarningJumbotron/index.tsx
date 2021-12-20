@@ -5,7 +5,11 @@ import Jumbotron from "react-bootstrap/Jumbotron"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
 
-const WarningJumbotron: React.FC<{ message: string }> = ({ message }) => {
+interface WarningJumbotronProps {
+  message: string
+}
+
+const WarningJumbotron: React.FC<WarningJumbotronProps> = ({ message }) => {
   return (
     <Jumbotron className={styles.jumbotron}>
       <h4>

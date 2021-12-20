@@ -25,7 +25,7 @@ const AlertModal: React.FC<ModalProps> = ({
   return (
     <Modal show={show} onHide={onHide} style={{ zIndex: "10000" }} centered>
       <Alert
-        variant={variant ? variant : "warning"}
+        variant={variant ? variant : "danger"}
         style={{ marginBottom: "0px" }}>
         <Alert.Heading>{title}</Alert.Heading>
         <p>{message}</p>
@@ -36,7 +36,7 @@ const AlertModal: React.FC<ModalProps> = ({
           </Button>
           <Button
             onClick={confirmOnClick}
-            variant={`outline-${variant ? variant : "warning"}`}>
+            variant={`outline-${variant ? variant : "danger"}`}>
             {confirmLabel}
           </Button>
         </div>

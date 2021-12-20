@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 
 import {
   SortableContainer,
@@ -18,6 +18,7 @@ import { api, methods } from "constants/routes"
 
 export interface CategoryListProps {
   categoryItems: Resource[]
+  setCategoryItems: (resources: Resource[]) => void
   select?: SelectionProps
   showMenus?: IdBooleanMap
   displayingForStaff?: boolean
@@ -46,6 +47,7 @@ const SortableList = SortableContainer(({ items }: { items: any[] }) => (
 
 const CategoryList: React.FC<CategoryListProps> = ({
   categoryItems,
+  setCategoryItems,
   select,
   showMenus,
   setShowMenus,
@@ -55,9 +57,10 @@ const CategoryList: React.FC<CategoryListProps> = ({
   handleMouseOver,
   handleMouseOut,
 }) => {
-  const initListItems = (items: Resource[]) => {
-    return items.map(
-      ({ title, type, tags, downloads, visible_after, id, index }) => {
+  const displayListItems = (items: Resource[]) => {
+    return items
+      .sort((a, b) => a.index - b.index)
+      .map(({ title, type, tags, downloads, visible_after, id, index }) => {
         if (type === undefined || tags === undefined) return null
 
         let icon =
@@ -84,17 +87,8 @@ const CategoryList: React.FC<CategoryListProps> = ({
             key={index}
           />
         )
-      }
-    )
+      })
   }
-
-  const [resources, setResources] = useState(categoryItems)
-  const [listItems, setListItems] = useState(initListItems(resources))
-
-  useEffect(() => {
-    setListItems(initListItems(resources))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showMenus, setShowMenus, resources])
 
   const onSortEnd = ({
     oldIndex,
@@ -103,12 +97,14 @@ const CategoryList: React.FC<CategoryListProps> = ({
     oldIndex: number
     newIndex: number
   }) => {
-    let resourceToChange = resources.find((r) => r.index == oldIndex)!
+    let resourceToChange = categoryItems[oldIndex]
     request({
       endpoint: api.MATERIALS_RESOURCES_ID(resourceToChange.id),
       method: methods.PUT,
       onSuccess: () => {
-        setResources(reindexResources(resources, resourceToChange, newIndex))
+        setCategoryItems(
+          reindexResources(categoryItems, resourceToChange, newIndex)
+        )
       },
       onError: () => {},
       body: {
@@ -133,13 +129,13 @@ const CategoryList: React.FC<CategoryListProps> = ({
     <div style={{ marginLeft: ".25rem" }}>
       {displayingForStaff ? (
         <SortableList
-          items={listItems}
+          items={displayListItems(categoryItems)}
           onSortEnd={onSortEnd}
           onSortStart={(_, event) => event.preventDefault()}
           useDragHandle
         />
       ) : (
-        listItems
+        displayListItems(categoryItems)
       )}
     </div>
   )
