@@ -82,14 +82,14 @@ const StaffView: React.FC<StaffViewProps> = ({
       <Row style={{ marginTop: "0.625rem" }}>
         <Col style={{ paddingRight: "0.3125rem" }}>
           <Button onClick={() => setModal("upload")} block>
+            <FontAwesomeIcon style={{ marginRight: "0.5rem" }} icon={faUpload} />
             Upload
-            <FontAwesomeIcon style={{ float: "right" }} icon={faUpload} />
           </Button>
         </Col>
         <Col style={{ paddingLeft: "0.3125rem" }}>
           <Button onClick={() => setModal("alert")} block>
+            <FontAwesomeIcon style={{ marginRight: "0.5rem" }} icon={faTrash} />
             Remove All
-            <FontAwesomeIcon style={{ float: "right" }} icon={faTrash} />
           </Button>
         </Col>
       </Row>
