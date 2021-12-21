@@ -145,9 +145,10 @@ const StaffView: React.FC<StaffViewProps> = ({
               <CategoryHeader heading={title} />
               <CategoryList
                 displayingForStaff={true}
-                onEditClick={() => {
+                onEditClick={(resourceId: number) => {
                   setEditResource(
-                    resources.find((res) => res.id === id) || resources[0]
+                    resources.find((res) => res.id === resourceId) ||
+                      resources[0]
                   )
                   setModal("edit")
                 }}

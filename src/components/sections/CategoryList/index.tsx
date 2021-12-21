@@ -21,7 +21,7 @@ export interface CategoryListProps {
   setCategoryItems: (resources: Resource[]) => void
   select?: SelectionProps
   displayingForStaff?: boolean
-  onEditClick?: () => void
+  onEditClick?: (id: number) => void
   handleRowClick: (id: number) => void
   handleIconClick: (id: number) => void
   handleMouseOver: (id: number) => void
@@ -80,7 +80,11 @@ const CategoryList: React.FC<CategoryListProps> = ({
             invisible={visible_after.getTime() - Date.now() > 0}
             title={title}
             displayingForStaff={displayingForStaff}
-            onEditClick={onEditClick}
+            onEditClick={() => {
+              if (onEditClick) {
+                onEditClick(id)
+              }
+            }}
             key={index}
           />
         )
