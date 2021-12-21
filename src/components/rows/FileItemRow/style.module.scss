@@ -30,14 +30,17 @@
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
-  width: 75% !important;
-  margin-right: 0.25rem;
-}
-
-.fileTag:last-child {
-  margin-right: 0rem;
+  width: 80% !important;
 }
 
 .editButton {
   width: 10rem;
+}
+
+.fileTag {
+  float: right;
+}
+
+.tagBox {
+  width: 20% !important;
 }

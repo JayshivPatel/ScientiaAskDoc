@@ -80,7 +80,7 @@ const FileItemRow: React.FC<FileListItemProps> = ({
               Edit
             </Button>
           )}
-          <div className={styles.centeredFlex}>
+          <div className={classNames(styles.tagBox)}>
             {tags.map((tag) => (
               <Badge
                 pill
@@ -92,22 +92,22 @@ const FileItemRow: React.FC<FileListItemProps> = ({
                 {tag}
               </Badge>
             ))}
-            {downloads !== undefined && (
-              <Badge variant="light" className={styles.fileTag}>
-                <FontAwesomeIcon icon={faArrowDown} />
-                {downloads}
-              </Badge>
-            )}
-            <FontAwesomeIcon
-              style={{ fontSize: "1.125rem" }}
-              icon={icon}
-              onClick={(e) => {
-                e.stopPropagation()
-                if (onIconClick !== undefined) onIconClick(e)
-              }}
-              fixedWidth
-            />
           </div>
+          {downloads !== undefined && (
+            <Badge variant="light" className={styles.fileTag}>
+              <FontAwesomeIcon icon={faArrowDown} />
+              {downloads}
+            </Badge>
+          )}
+          <FontAwesomeIcon
+            style={{ fontSize: "1.125rem" }}
+            icon={icon}
+            onClick={(e) => {
+              e.stopPropagation()
+              if (onIconClick !== undefined) onIconClick(e)
+            }}
+            fixedWidth
+          />
         </Row>
       </div>
     </>
