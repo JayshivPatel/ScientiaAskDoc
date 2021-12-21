@@ -1,10 +1,11 @@
-import React from "react"
-import Row from "react-bootstrap/Row"
-import Button from "react-bootstrap/Button"
-import classNames from "classnames"
+import { faCircle } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Module } from "constants/types"
-import styles from "./style.module.scss"
+import React from "react"
+import Button from "react-bootstrap/Button"
+import Row from "react-bootstrap/Row"
 import history from "../../../history"
+import styles from "./style.module.scss"
 
 export interface ModuleRowProps {
   module: Module
@@ -16,22 +17,23 @@ const ModuleRow: React.FC<ModuleRowProps> = ({
   year,
 }: ModuleRowProps) => {
   return (
-    <div className={styles.moduleContainer}>
-      <Row className={styles.moduleRow}>
-        <Button
-          className={classNames(
-            styles.moduleButton,
-            !module.has_materials ? styles.noMaterials : ""
-          )}
-          onClick={() => history.push(`/${year}/modules/${module.code}`)}
-        >
-          <div id="title" className={styles.moduleTitle}>
-            {module.title}
-          </div>
-          <div>{module.code}</div>
-        </Button>
-      </Row>
-    </div>
+    <Row className={styles.moduleRow}>
+      <Button
+        className={styles.moduleButton}
+        onClick={() => history.push(`/${year}/modules/${module.code}`)}
+      >
+        <div id="title" className={styles.leftContainer}>
+          <FontAwesomeIcon
+            className={
+              !module.has_materials ? styles.noMaterials : styles.materials
+            }
+            icon={faCircle}
+          />
+          <span className={styles.moduleTitle}>{module.title}</span>
+        </div>
+        <div className={styles.rightContainer}>{module.code}</div>
+      </Button>
+    </Row>
   )
 }
 

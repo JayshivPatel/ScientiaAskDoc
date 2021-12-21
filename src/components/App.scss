@@ -92,6 +92,7 @@ code {
   --indigo-text: #{$indigo-700};
 
   --day-indicator-column: #{rgba($gray-500, 0.25)};
+  --no-resource-indicator: #{$yellow-500};
 }
 
 [data-theme="dark"] {
@@ -170,6 +171,7 @@ code {
   --deadline-text: #{$teal-300};
 
   --day-indicator-column: #{rgba($gray-500, 0.25)};
+  --no-resource-indicator: #{$yellow-500};
 }
 
 .btn-primary.focus,
