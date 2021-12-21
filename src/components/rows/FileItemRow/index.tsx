@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React from "react"
 import styles from "./style.module.scss"
 import classNames from "classnames"
 
@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { DragHandle } from "components/sections/CategoryList"
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons"
-import useOutsideAlerter from "../../../hooks/useOutsideAlerter"
 import { Button } from "react-bootstrap"
 
 export interface FileListItemProps {
@@ -19,7 +18,7 @@ export interface FileListItemProps {
   downloads?: number
   invisible?: boolean
   displayingForStaff?: boolean
-  setEditModal?: () => void
+  onEditClick?: () => void
   onIconClick?: (event: React.MouseEvent) => void
   onClick?: (event: React.MouseEvent) => void
   onMouseOver?: (event: React.MouseEvent) => void
@@ -33,7 +32,7 @@ const FileItemRow: React.FC<FileListItemProps> = ({
   downloads,
   invisible,
   displayingForStaff = false,
-  setEditModal = () => {},
+  onEditClick = () => {},
   onIconClick,
   onClick,
   onMouseOver,
@@ -75,7 +74,7 @@ const FileItemRow: React.FC<FileListItemProps> = ({
               )}
               onClick={(e) => {
                 e.stopPropagation()
-                setEditModal()
+                onEditClick()
               }}
               variant="info">
               Edit

@@ -12,7 +12,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons"
 import FileItemRow from "components/rows/FileItemRow"
 import { SelectionProps } from "components/pages/SelectionView"
 import { resourceTypeToIcon } from "../../pages/modulePages/ModuleResources/utils"
-import { IdBooleanMap, Resource } from "constants/types"
+import { Resource } from "constants/types"
 import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 
@@ -21,7 +21,7 @@ export interface CategoryListProps {
   setCategoryItems: (resources: Resource[]) => void
   select?: SelectionProps
   displayingForStaff?: boolean
-  setEditModal?: () => void
+  onEditClick?: () => void
   handleRowClick: (id: number) => void
   handleIconClick: (id: number) => void
   handleMouseOver: (id: number) => void
@@ -49,7 +49,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
   setCategoryItems,
   select,
   displayingForStaff = false,
-  setEditModal,
+  onEditClick,
   handleRowClick,
   handleIconClick,
   handleMouseOver,
@@ -80,7 +80,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
             invisible={visible_after.getTime() - Date.now() > 0}
             title={title}
             displayingForStaff={displayingForStaff}
-            setEditModal={setEditModal}
+            onEditClick={onEditClick}
             key={index}
           />
         )
