@@ -51,7 +51,7 @@ const StaffView: React.FC<StaffViewProps> = ({
         [resource.id]: false,
       }
     }, {})
-  const [showMenus, setShowMenus] = useState<IdBooleanMap>(allClosed())
+
   const closeModal = () => setModal("")
 
   let filesContent: Resource[] = resources
