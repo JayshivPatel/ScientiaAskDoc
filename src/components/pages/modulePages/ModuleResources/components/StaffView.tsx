@@ -44,14 +44,6 @@ const StaffView: React.FC<StaffViewProps> = ({
   const [modal, setModal] = useState("")
   const [editResource, setEditResource] = useState<Resource>(resources[0])
 
-  const allClosed = () =>
-    resources.reduce((map, resource) => {
-      return {
-        ...map,
-        [resource.id]: false,
-      }
-    }, {})
-
   const closeModal = () => setModal("")
 
   let filesContent: Resource[] = resources
