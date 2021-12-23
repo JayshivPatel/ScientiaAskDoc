@@ -1,6 +1,7 @@
 import { AuthService } from "./auth"
 
 const dev = {
+  SCIENTIA_URL: `http://${window.location.hostname}:3000`,
   MATERIALS_URL: `http://${window.location.hostname}:5000`,
   EMARKING_URL: `http://${window.location.hostname}:5001`,
   CALENDAR_URL: `http://${window.location.hostname}:4000`,
@@ -8,6 +9,7 @@ const dev = {
 }
 
 const prod = {
+  SCIENTIA_URL: "https://scientia.doc.ic.ac.uk",
   MATERIALS_URL: "https://api-materials.doc.ic.ac.uk",
   EMARKING_URL: "https://api-emarking.doc.ic.ac.uk",
   CALENDAR_URL: "",
@@ -15,6 +17,8 @@ const prod = {
 }
 
 const config = process.env.NODE_ENV === "production" ? prod : dev
+
+export const scientia_url = config.SCIENTIA_URL
 
 export const methods = {
   GET: "GET",

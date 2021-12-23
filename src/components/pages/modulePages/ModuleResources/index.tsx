@@ -5,7 +5,7 @@ import Tooltip from "react-bootstrap/Tooltip"
 import { Helmet } from "react-helmet"
 
 import { download, request } from "utils/api"
-import { api, methods } from "constants/routes"
+import { api, methods, scientia_url } from "constants/routes"
 import Dandruff from "components/headings/Dandruff"
 import SearchBox from "components/headings/SearchBox"
 import QuickAccessView from "./components/QuickAccessView"
@@ -22,7 +22,6 @@ import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import styles from "./style.module.scss"
 import WarningJumbotron from "../../../suspense/WarningJumbotron"
-import history from "../../../../history"
 
 export interface ResourcesProps {
   year: string
@@ -60,16 +59,18 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
 
   navigateToResource(id: number) {
     const onSuccess = (resource: Resource) => {
+      let resource_path = ""
       if (resource.type === "link" || resource.type === "video") {
-        window.open(resource.path, "_blank")
+        resource_path = resource.path
       } else {
         const course = resource.course
         const category = resource.category
         const index = resource.index
-        history.push(
+        resource_path =
+          scientia_url +
           `/${this.props.year}/modules/${course}/resources/${category}/${index}`
-        )
       }
+      window.open(resource_path, "_blank")
     }
     request({
       endpoint: api.MATERIALS_RESOURCES_ID(id),
@@ -334,8 +335,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             alignItems: "center",
             justifyContent: "space-between",
             paddingTop: "0.75rem",
-          }}
-        >
+          }}>
           <div style={{ width: "100%" }}>
             <SearchBox
               searchText={this.state.searchText}
@@ -349,20 +349,17 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
               overlay={
                 <Tooltip
                   id={`${this.props.moduleID}-view-toggle-tooltip`}
-                  style={{ zIndex: 10000 }}
-                >
+                  style={{ zIndex: 10000 }}>
                   Toggle {this.state.staffView ? "Student" : "Staff"} View
                 </Tooltip>
-              }
-            >
+              }>
               <Button
                 onClick={() =>
                   this.setState({ staffView: !this.state.staffView })
                 }
                 variant="secondary"
                 style={{ marginLeft: "0.625rem" }}
-                className={styles.sectionHeaderButton}
-              >
+                className={styles.sectionHeaderButton}>
                 <FontAwesomeIcon icon={faExchangeAlt} />
               </Button>
             </OverlayTrigger>
