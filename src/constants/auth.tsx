@@ -1,8 +1,10 @@
 const authConstants = {
   ACCESS_TOKEN_HEADER: (service: AuthService) =>
-    `Bearer ${sessionStorage.getItem(authConstants.ACCESS_TOKEN(service))}`,
-  ACCESS_TOKEN: (service: AuthService) => `currentUser-${service}`,
-  USER_INFO: (service: AuthService) => `userInfo-${service}`,
+    `Bearer ${localStorage.getItem(authConstants.ACCESS_TOKEN(service))}`,
+  REFRESH_TOKEN_HEADER: (service: AuthService) =>
+    `Bearer ${localStorage.getItem(authConstants.REFRESH_TOKEN(service))}`,
+  ACCESS_TOKEN: (service: AuthService) => `accessToken-${service}`,
+  REFRESH_TOKEN: (service: AuthService) => `refreshToken-${service}`,
 }
 
 export enum AuthService {

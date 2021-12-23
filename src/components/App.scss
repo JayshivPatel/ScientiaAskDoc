@@ -92,10 +92,11 @@ code {
   --indigo-text: #{$indigo-700};
 
   --day-indicator-column: #{rgba($gray-500, 0.25)};
+  --no-resource-indicator: #{$yellow-500};
 }
 
 [data-theme="dark"] {
-  --background-color: #{$gray-900};
+  --background-color: #1B1F22;
   --secondary-background-color: #{$gray-800};
 
   --checker-even-color: #{$gray-800};
@@ -112,8 +113,8 @@ code {
   --border-color-hover: #{$gray-600};
   --border-color-focus: #{$gray-600};
 
-  --primary-button: #{$gray-800};
-  --primary-button-hover: #{$gray-700};
+  --primary-button: #202428;
+  --primary-button-hover: #{$gray-800};
   --primary-button-active: #{$white};
 
   --primary-button-text: #{$white};
@@ -170,6 +171,7 @@ code {
   --deadline-text: #{$teal-300};
 
   --day-indicator-column: #{rgba($gray-500, 0.25)};
+  --no-resource-indicator: #{$yellow-500};
 }
 
 .btn-primary.focus,
@@ -198,7 +200,6 @@ code {
   border-radius: 0.5rem !important;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
 
   transition: 0.2s background;

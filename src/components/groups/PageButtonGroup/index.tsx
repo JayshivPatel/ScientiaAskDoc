@@ -31,8 +31,8 @@ const PageButtonGroup: React.FC<ButtonGroupProps> = ({
             key={i}
             style={{ paddingRight: "0.625rem", paddingLeft: "0.625rem" }}>
             <Button href={url} target="_blank">
+              <FontAwesomeIcon style={{ fontSize: "1.125rem", marginRight: "0.5rem" }} icon={icon} />
               {title}
-              <FontAwesomeIcon style={{ fontSize: "1.125rem" }} icon={icon} />
             </Button>
           </Col>
         ))}
