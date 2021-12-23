@@ -1,5 +1,6 @@
 import authConstants, { AuthService, authServices } from "../constants/auth"
 import { api, ApiEndpoint } from "../constants/routes"
+import { jwtHasNotExpired } from "./jwt"
 
 /**
  * Store access token and user info of the given auth service.
@@ -8,13 +9,15 @@ import { api, ApiEndpoint } from "../constants/routes"
  */
 function storeDataInStorage(
   service: AuthService,
-  data: { access_token: string; user_info: any }
+  data: { access_token: string; refresh_token?: string }
 ) {
-  sessionStorage.setItem(authConstants.ACCESS_TOKEN(service), data.access_token)
-  sessionStorage.setItem(
-    authConstants.USER_INFO(service),
-    JSON.stringify(data.user_info)
-  )
+  localStorage.setItem(authConstants.ACCESS_TOKEN(service), data.access_token)
+  if (data.refresh_token) {
+    localStorage.setItem(
+      authConstants.REFRESH_TOKEN(service),
+      data.refresh_token
+    )
+  }
 }
 
 /**
@@ -22,21 +25,9 @@ function storeDataInStorage(
  */
 function removeDataFromStorage() {
   authServices.map((service) => {
-    sessionStorage.removeItem(authConstants.ACCESS_TOKEN(service))
-    sessionStorage.removeItem(authConstants.USER_INFO(service))
+    localStorage.removeItem(authConstants.ACCESS_TOKEN(service))
+    localStorage.removeItem(authConstants.REFRESH_TOKEN(service))
   })
-}
-
-/**
- * Get user info under the given auth service
- * @param service The relevant auth service
- */
-function getUserInfo(service: AuthService = AuthService.MATERIALS) {
-  const info = sessionStorage.getItem(authConstants.USER_INFO(service))
-  if (info) {
-    return JSON.parse(info)
-  }
-  return {}
 }
 
 async function login(
@@ -49,7 +40,6 @@ async function login(
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
     },
     body: JSON.stringify({ username, password }),
   })
@@ -57,16 +47,33 @@ async function login(
     const data = await response.json()
     storeDataInStorage(login_endpoint.auth, {
       ...data,
-      user_info: {
-        username: username,
-      },
     })
-    return true
   }
-  return false
+  return response.ok
 }
 
 const logout = () => removeDataFromStorage()
+
+async function refresh(refresh_endpoint: ApiEndpoint) {
+  const refresh_auth_header = authConstants.REFRESH_TOKEN_HEADER(
+    refresh_endpoint.auth
+  )
+  const response = await fetch(refresh_endpoint.url, {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: refresh_auth_header,
+    },
+  })
+  if (response.ok) {
+    const data = await response.json()
+    storeDataInStorage(refresh_endpoint.auth, {
+      ...data,
+    })
+  }
+  return response.ok
+}
 
 /**
  * Login to all services
@@ -83,22 +90,31 @@ async function loginAll(username: string, password: string): Promise<boolean> {
 }
 
 /**
- * Check if user is logged in to the given auth service
- * @param services the auth service that you wish to check user's login status on it.
+ * Check if user is logged in to Scientia by seeing if they hold a refresh
+ * token with the Materials API
  */
-const userIsLoggedIn = (services: AuthService[] = [AuthService.MATERIALS]) => {
-  for (const service of services) {
-    if (sessionStorage.getItem(authConstants.ACCESS_TOKEN(service)) === null) {
-      return false
-    }
-  }
-  return true
+const userIsLoggedIn = (): boolean => {
+  const refreshTokenKey = authConstants.REFRESH_TOKEN(AuthService.MATERIALS)
+  const jwt = localStorage.getItem(refreshTokenKey)
+  return jwt != null && jwtHasNotExpired(jwt)
+}
+
+/**
+ * Check if user has access to the given auth service via an access token
+ * @param services the auth service that you wish to check user's login status
+ * on it.
+ */
+const userHasAccess = (service: AuthService): boolean => {
+  const accessTokenKey = authConstants.ACCESS_TOKEN(service)
+  const jwt = localStorage.getItem(accessTokenKey)
+  return jwt != null && jwtHasNotExpired(jwt)
 }
 
 export default {
   login,
   loginAll,
   logout,
+  refresh,
   userIsLoggedIn,
-  getUserInfo,
+  userHasAccess,
 }

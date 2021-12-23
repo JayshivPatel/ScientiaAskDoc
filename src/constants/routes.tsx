@@ -41,6 +41,10 @@ export const api = {
     auth: AuthService.EMARKING,
     url: `${config.EMARKING_URL}/auth/login`,
   },
+  EMARKING_REFRESH: {
+    auth: AuthService.EMARKING,
+    url: `${config.EMARKING_URL}/auth/refresh`,
+  },
   DBC_TERMS: (year: string): ApiEndpoint => ({
     auth: AuthService.MATERIALS,
     url: `${config.MATERIALS_URL}/dbc/periods/${year}`,
@@ -52,6 +56,10 @@ export const api = {
   MATERIALS_LOGIN: {
     auth: AuthService.MATERIALS,
     url: `${config.MATERIALS_URL}/auth/login`,
+  },
+  MATERIALS_REFRESH: {
+    auth: AuthService.MATERIALS,
+    url: `${config.MATERIALS_URL}/auth/refresh`,
   },
   MATERIALS_COURSES: (year: string): ApiEndpoint => ({
     auth: AuthService.MATERIALS,
@@ -77,4 +85,9 @@ export const api = {
     auth: AuthService.MATERIALS,
     url: `${config.CALENDAR_URL}/${id}`,
   }),
+}
+
+export const refresh_routes = {
+  materials: api.MATERIALS_REFRESH,
+  emarking: api.EMARKING_REFRESH,
 }

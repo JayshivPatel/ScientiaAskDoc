@@ -19,7 +19,7 @@
   margin-top: 3.8125rem;
   padding-bottom: 1.875rem;
   background: var(--background-color);
-  box-shadow: 0 0.125rem 0.625rem 0 var(--box-shadow-color);
+  border-right: 1px solid var(--secondary-background-color);
 }
 
 :global(#wrapper.toggledLeft) #leftbarWrapper {

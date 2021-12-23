@@ -41,8 +41,8 @@ const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
             to={activeURL}
             activeClassName={"active"}
             key={title}>
-            {title}
             {FAicon}
+            {title}
           </Button>
         )
       }
@@ -50,8 +50,8 @@ const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
       if (externalURL !== undefined) {
         return (
           <Button href={externalURL} target="_blank" key={title}>
-            {title}
             {FAicon}
+            {title}
           </Button>
         )
       }
@@ -61,8 +61,8 @@ const SideBarTabGroup: React.FC<SideBarTabGroupProp> = ({
           className={classNames({ active: active })}
           onClick={onClick}
           key={title}>
-          {title}
           {FAicon}
+          {title}
         </Button>
       )
     }

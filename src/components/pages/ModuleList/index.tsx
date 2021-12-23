@@ -1,9 +1,7 @@
 import React from "react"
 import styles from "./style.module.scss"
 import { Helmet } from "react-helmet"
-
 import classNames from "classnames"
-
 import ModuleRow from "components/rows/ModuleRow"
 import Dandruff from "components/headings/Dandruff"
 import { Module } from "constants/types"
@@ -29,12 +27,13 @@ const ModuleList: React.FC<ModuleListProps> = ({
         <title>Modules | Scientia</title>
       </Helmet>
       <Dandruff heading="Modules" />
-      <h4 className={classNames(styles.moduleSectionHeader)}>Your modules</h4>
       <p className={classNames(styles.moduleParagraph)}>
         These are the modules you are currently enrolled for. Click on any to
-        access the relevant teaching materials and resources.
+        access the relevant teaching materials and resources. A yellow dot
+        indicates that a module's under construction and doesn't house any
+        resources at the moment.
       </p>
-      <div role="group">
+      <div>
         {modules
           .sort((module1, module2) => compareModules(module1, module2))
           .map((module) => (

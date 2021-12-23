@@ -6,7 +6,7 @@ import Row from "react-bootstrap/esm/Row"
 
 import { faTrash, faUpload } from "@fortawesome/free-solid-svg-icons"
 import AlertModal from "components/modals/AlertModal"
-import WarningJumbotron from "components/suspense/WarningJumbotron"
+import UploadJumbotron from "components/suspense/UploadJumbotron"
 import EditModal from "components/modals/EditModal"
 import UploadModal from "components/modals/UploadModal"
 import CategoryList from "components/sections/CategoryList"
@@ -82,14 +82,14 @@ const StaffView: React.FC<StaffViewProps> = ({
       <Row style={{ marginTop: "0.625rem" }}>
         <Col style={{ paddingRight: "0.3125rem" }}>
           <Button onClick={() => setModal("upload")} block>
+            <FontAwesomeIcon style={{ marginRight: "0.5rem" }} icon={faUpload} />
             Upload
-            <FontAwesomeIcon style={{ float: "right" }} icon={faUpload} />
           </Button>
         </Col>
         <Col style={{ paddingLeft: "0.3125rem" }}>
           <Button onClick={() => setModal("alert")} block>
+            <FontAwesomeIcon style={{ marginRight: "0.5rem" }} icon={faTrash} />
             Remove All
-            <FontAwesomeIcon style={{ float: "right" }} icon={faTrash} />
           </Button>
         </Col>
       </Row>
@@ -131,7 +131,10 @@ const StaffView: React.FC<StaffViewProps> = ({
       />
 
       {resources.length === 0 ? (
-        <WarningJumbotron message="No resources have been uploaded for this course yet." />
+        <UploadJumbotron
+          message="No resources have been uploaded for this course yet."
+          onClick={() => setModal("upload")}
+        />
       ) : (
         <>
           <EditModal
