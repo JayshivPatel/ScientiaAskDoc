@@ -82,11 +82,8 @@ const SelectionView: React.FC<SelectionViewProps> = ({
   }
 
   const handleItemClick = (id: number): void => {
-    if (isAnySelected()) {
-      handleSelectIconClick(id)
-      return
-    }
-    onItemClick(id)
+    if (isAnySelected()) handleSelectIconClick(id)
+    else onItemClick(id)
   }
 
   const handleDownloadClick = (e: React.MouseEvent): void => {
