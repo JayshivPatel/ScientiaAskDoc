@@ -14,9 +14,9 @@ export interface SelectionItem {
 
 export interface SelectionProps {
   selectionItems: SelectionItem[]
-  selected: IdBooleanMap
-  setSelected: (selection: IdBooleanMap) => void
-  hoveringOver: IdBooleanMap
+  selected: Set<number>
+  setSelected: (selection: Set<number>) => void
+  hoveringOver: Set<number>
   isAnySelected: () => boolean
   handleItemClick: (id: number) => void
   handleSelectIconClick: (id: number) => void
@@ -42,35 +42,24 @@ const SelectionView: React.FC<SelectionViewProps> = ({
   onItemClick,
   disableSelection,
 }) => {
-  const initMap = (): IdBooleanMap => {
-    const selectionItemIds = selectionItems.map((item) => item.id)
-    let allFalse: IdBooleanMap = {}
-    for (let id of selectionItemIds) {
-      allFalse[id] = false
-    }
-    return allFalse
-  }
-
-  const [selected, setSelected] = useState<IdBooleanMap>(initMap())
-  const [hoveringOver, setHoveringOver] = useState<IdBooleanMap>(initMap())
+  const [selected, setSelected] = useState<Set<number>>(new Set())
+  const [hoveringOver, setHoveringOver] = useState<Set<number>>(new Set())
 
   const isAnySelected = (): boolean => {
-    return Object.values(selected).some((b) => b)
+    return selected.size > 0
   }
 
   const isAllSelected = (): boolean => {
-    return Object.values(selected).every((b) => b)
+    return selected.size === selectionItems.length
   }
 
   const handleMouseOver = (id: number): void => {
-    let newHoveringOver = { ...hoveringOver }
-    newHoveringOver[id] = true
-    setHoveringOver(newHoveringOver)
+    setHoveringOver(new Set(hoveringOver).add(id))
   }
 
   const handleMouseOut = (id: number): void => {
-    let newHoveringOver = { ...hoveringOver }
-    newHoveringOver[id] = false
+    let newHoveringOver = new Set(hoveringOver)
+    newHoveringOver.delete(id)
     setHoveringOver(newHoveringOver)
   }
 
@@ -79,11 +68,16 @@ const SelectionView: React.FC<SelectionViewProps> = ({
       handleItemClick(id)
       return
     }
-    let newSelected = { ...selected }
-    let newHoveringOver = { ...hoveringOver }
-    newSelected[id] = !selected[id]
-    newHoveringOver[id] = false
+    let newSelected = new Set(selected)
+    if (selected.has(id)) {
+      newSelected.delete(id)
+    } else {
+      newSelected.add(id)
+    }
     setSelected(newSelected)
+
+    let newHoveringOver = new Set(hoveringOver)
+    newHoveringOver.delete(id)
     setHoveringOver(newHoveringOver)
   }
 
@@ -97,22 +91,16 @@ const SelectionView: React.FC<SelectionViewProps> = ({
 
   const handleDownloadClick = (e: React.MouseEvent): void => {
     e.preventDefault()
-    let indices: number[] = []
-    for (let key in selected) {
-      if (selected[key]) {
-        indices.push(parseInt(key))
-      }
-    }
+    let indices: number[] = Array.from(selected.values())
     onDownloadClick(indices)
   }
 
   const handleSelectAllClick = (): void => {
-    let newSelected = { ...selected }
-    let setValue = !isAllSelected()
-    for (let item of selectionItems) {
-      newSelected[item.id] = setValue
+    if (isAllSelected()) {
+      setSelected(new Set())
+    } else {
+      setSelected(new Set(selectionItems.map((item) => item.id)))
     }
-    setSelected(newSelected)
   }
 
   const selectionProps: SelectionProps = {

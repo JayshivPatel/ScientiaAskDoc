@@ -45,16 +45,17 @@ const ListView: React.FC<ListViewProps> = ({
               (res) => res.category === title
             )
             function isAllSelected(): boolean {
-              return categoryItems.every((item) => select.selected[item.id])
+              return categoryItems.every((item) => select.selected.has(item.id))
             }
 
             function onSelectAllClick() {
-              let setValue = !isAllSelected()
-              let newSelected = { ...select.selected }
-              for (let item of categoryItems) {
-                newSelected[item.id] = setValue
+              if (isAllSelected()) {
+                select.setSelected(new Set())
+              } else {
+                select.setSelected(
+                  new Set(categoryItems.map((item) => item.id))
+                )
               }
-              select.setSelected(newSelected)
             }
 
             return (
