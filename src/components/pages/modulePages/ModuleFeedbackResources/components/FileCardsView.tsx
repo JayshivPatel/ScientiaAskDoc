@@ -5,16 +5,17 @@ import { faFile } from "@fortawesome/free-solid-svg-icons"
 import WarningJumbotron from "../../../../suspense/WarningJumbotron"
 import { Feedback } from "../../../../../constants/types"
 import FileCard from "../../../../cards/FileCard"
-import history from "../../../../../history"
+import { scientia_url } from "constants/routes"
 
 interface FileCardsViewProps {
   feedbackItems: Feedback[]
 }
 
 const navigateToFeedback = (feedback: Feedback) => {
-  history.push(
+  const feedback_path =
+    scientia_url +
     `/${feedback.year}/modules/${feedback.course}/feedback/${feedback.exercise}`
-  )
+  window.open(feedback_path, "_blank")
 }
 
 const FileCardsView: React.FC<FileCardsViewProps> = ({
@@ -39,8 +40,7 @@ const FileCardsView: React.FC<FileCardsViewProps> = ({
               lg={4}
               xl={3}
               key={feedback.id}
-              style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}
-            >
+              style={{ paddingLeft: "0.625rem", paddingRight: "0.625rem" }}>
               <FileCard
                 title={feedback.exercise_title}
                 type={"pdf"}
