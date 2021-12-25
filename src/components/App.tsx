@@ -33,7 +33,7 @@ type AppState = {
 
 class App extends React.Component<{}, AppState> {
   width = window.innerWidth
-  isTimelineView = false
+  showSidebars = true
 
   constructor(props: {}) {
     super(props)
@@ -68,10 +68,10 @@ class App extends React.Component<{}, AppState> {
     window.addEventListener("resize", () => {
       if (window.innerWidth !== this.width) {
         this.width = window.innerWidth
-        this.showOrHideSideBars()
+        this.configureSidebars()
       }
     })
-    this.showOrHideSideBars()
+    this.configureSidebars()
   }
 
   setDarkTheme(toSet: boolean) {
@@ -103,8 +103,8 @@ class App extends React.Component<{}, AppState> {
     }))
   }
 
-  showOrHideSideBars() {
-    if (window.innerWidth <= 1024 || this.isTimelineView) {
+  configureSidebars() {
+    if (window.innerWidth <= 1024 || !this.showSidebars) {
       this.setState({
         toggledLeft: false,
         toggledRight: false,
@@ -206,7 +206,7 @@ class App extends React.Component<{}, AppState> {
                       onSettingsClick={() =>
                         this.setState({ showSettings: true })
                       }
-                      onEventClick={(e?: TimelineEvent) =>
+                      onTimelineEventClick={(e?: TimelineEvent) =>
                         this.showEventModal(e)
                       }
                       onCalendarClick={(e?: CalendarEvent) =>
@@ -214,13 +214,13 @@ class App extends React.Component<{}, AppState> {
                       }
                       toggledLeft={this.state.toggledLeft}
                       toggledRight={this.state.toggledRight}
-                      initTimelineSideBar={() => {
-                        this.isTimelineView = true
-                        this.showOrHideSideBars()
+                      showSidebars={() => {
+                        this.showSidebars = true
+                        this.configureSidebars()
                       }}
-                      revertTimelineSideBar={() => {
-                        this.isTimelineView = false
-                        this.showOrHideSideBars()
+                      hideSidebars={() => {
+                        this.showSidebars = false
+                        this.configureSidebars()
                       }}
                       onOverlayClick={(e) => {
                         e.preventDefault()

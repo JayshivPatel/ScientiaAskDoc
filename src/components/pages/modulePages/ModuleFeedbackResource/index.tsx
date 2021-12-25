@@ -14,6 +14,8 @@ export interface ModuleFeedbackResourceProps {
   year: string
   course: string
   exercise: number
+  showSidebars: () => void
+  hideSidebars: () => void
 }
 
 const ModuleFeedbackResource: React.FC<ModuleFeedbackResourceProps> = ({
@@ -21,6 +23,8 @@ const ModuleFeedbackResource: React.FC<ModuleFeedbackResourceProps> = ({
   year,
   course,
   exercise,
+  showSidebars,
+  hideSidebars,
 }) => {
   const [pdfInfo, setPdfInfo] = useState({
     filename: "",
@@ -52,6 +56,13 @@ const ModuleFeedbackResource: React.FC<ModuleFeedbackResourceProps> = ({
       })
     }
   }
+
+  useEffect(() => {
+    hideSidebars()
+    return function cleanup() {
+      showSidebars()
+    }
+  })
 
   useEffect(() => {
     if (pdfInfo.filename === "") {

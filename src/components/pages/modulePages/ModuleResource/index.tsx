@@ -15,6 +15,8 @@ export interface ModuleResourceProps {
   course: string
   category: string
   index: number
+  showSidebars: () => void
+  hideSidebars: () => void
 }
 
 const ModuleResource: React.FC<ModuleResourceProps> = ({
@@ -23,6 +25,8 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
   course,
   category,
   index,
+  showSidebars,
+  hideSidebars,
 }) => {
   const [pdfInfo, setPdfInfo] = useState({
     filename: "",
@@ -50,6 +54,13 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
       })
     }
   }
+
+  useEffect(() => {
+    hideSidebars()
+    return function cleanup() {
+      showSidebars()
+    }
+  })
 
   useEffect(() => {
     if (pdfInfo.filename === "") {

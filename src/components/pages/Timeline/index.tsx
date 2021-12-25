@@ -19,12 +19,12 @@ export type ModuleTracks = {
 }
 
 interface TimelineProps {
-  initSideBar: () => void
-  revertSideBar: () => void
+  showSidebars: () => void
+  hideSidebars: () => void
   activeTerm: Term
   setActiveTerm: React.Dispatch<React.SetStateAction<Term>>
   terms: Term[]
-  onEventClick: (e?: TimelineEvent) => void
+  onTimelineEventClick: (e?: TimelineEvent) => void
   modules: Module[]
   year: string
 }
@@ -50,20 +50,19 @@ const eventsOverlaps = (e1: TimelineEvent, e2: TimelineEvent) => {
 }
 
 const Timeline: React.FC<TimelineProps> = ({
-  initSideBar,
-  revertSideBar,
+  showSidebars,
+  hideSidebars,
   activeTerm,
   setActiveTerm,
   terms,
-  onEventClick,
+  onTimelineEventClick,
   modules,
   year,
 }: TimelineProps) => {
   useEffect(() => {
-    initSideBar()
-
+    hideSidebars()
     return function cleanup() {
-      revertSideBar()
+      showSidebars()
       document.documentElement.style.fontSize = `${
         localStorage.getItem("interfaceSize") || "90"
       }%`
@@ -72,7 +71,7 @@ const Timeline: React.FC<TimelineProps> = ({
 
   function handleEventClick(module: string, id: number) {
     const event = timelineEvents[module][id]
-    onEventClick(event)
+    onTimelineEventClick(event)
   }
 
   const [showMobileOnSmallScreens, setShowMobileOnSmallScreens] = useState(true)
