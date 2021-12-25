@@ -60,7 +60,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
     return function cleanup() {
       showSidebars()
     }
-  })
+  }, [])
 
   useEffect(() => {
     if (pdfInfo.filename === "") {

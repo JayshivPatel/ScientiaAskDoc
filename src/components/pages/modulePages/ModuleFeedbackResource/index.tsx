@@ -62,7 +62,7 @@ const ModuleFeedbackResource: React.FC<ModuleFeedbackResourceProps> = ({
     return function cleanup() {
       showSidebars()
     }
-  })
+  }, [])
 
   useEffect(() => {
     if (pdfInfo.filename === "") {
