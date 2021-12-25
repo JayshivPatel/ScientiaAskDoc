@@ -78,14 +78,9 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
     }
   }, [pdfInfo])
 
-  const cssClass =
-    window.innerWidth <= 1024
-      ? styles.moduleResourceMobile
-      : styles.moduleResource
-
   if (error) {
     return (
-      <div className={cssClass}>
+      <div className={styles.moduleResource}>
         <WarningJumbotron
           message={`There was an error fetching this resource: ${error}`}
         />
@@ -99,7 +94,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
           {pdfInfo.filename} | {moduleTitle} | Scientia
         </title>
       </Helmet>
-      <div className={cssClass}>
+      <div className={styles.moduleResource}>
         <Button
           onClick={() => {
             downloadBlob(pdfInfo.blob_url, pdfInfo.filename)

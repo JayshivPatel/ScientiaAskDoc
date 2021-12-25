@@ -82,12 +82,9 @@ const ModuleFeedbackResource: React.FC<ModuleFeedbackResourceProps> = ({
     }
   }, [pdfInfo])
 
-  const cssClass =
-    window.innerWidth <= 1024 ? styles.moduleResourceMobile : styles.fileDisplay
-
   const view = () => {
     return (
-      <div className={cssClass}>
+      <div className={styles.moduleFeedback}>
         <Button
           onClick={() => {
             downloadBlob(pdfInfo.blob_url, pdfInfo.filename)
