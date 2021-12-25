@@ -58,6 +58,8 @@ describe("<ModuleResource />", () => {
       course={course}
       category={category}
       index={index}
+      showSidebars={() => {}}
+      hideSidebars={() => {}}
     />
   )
 
@@ -78,6 +80,8 @@ describe("<ModuleResource />", () => {
       course={course}
       category={category}
       index={index}
+      showSidebars={() => {}}
+      hideSidebars={() => {}}
     />
   )
 
