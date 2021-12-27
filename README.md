@@ -20,6 +20,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 - [Node](https://nodejs.org/en/) 16.X
 - [Yarn](https://yarnpkg.com/)
+- [Playwright](https://https://playwright.dev/) — `npx playwright install` (Optional)
 
 ## Setup
 
