@@ -8,8 +8,8 @@
   <div align="center">A Unified DoC EdTech Platform</div>
 </div>
 
-
 ---
+
 Spearheaded by the [DoC EdTech Lab](https://edtech.pages.doc.ic.ac.uk/), Scientia is a platform that focuses on ehancing the remote learning experience for staff and students alike.
 
 _🚧 This platform is currently under development! 🚧_
@@ -17,8 +17,13 @@ _🚧 This platform is currently under development! 🚧_
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Requirements
+
 - [Node](https://nodejs.org/en/) 16.X
 - [Yarn](https://yarnpkg.com/)
+
+## Setup
+
+Please run `yarn install` to install the required node modules. In addition, please run `yarn prepare` to setup [husky](https://typicode.github.io/husky/#/).
 
 ## Getting Started
 
