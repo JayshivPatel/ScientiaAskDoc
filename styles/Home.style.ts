@@ -1,9 +1,5 @@
 import { styled } from './stitches.config'
 
-export const Container = styled('div', {
-  padding: '0 2rem',
-})
-
 export const Main = styled('main', {
   minHeight: '100vh',
   padding: '4rem 0',
@@ -12,21 +8,6 @@ export const Main = styled('main', {
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-})
-
-export const Footer = styled('footer', {
-  display: 'flex',
-  flex: 1,
-  padding: '2rem 0',
-  borderTop: '1px solid #eaeaea',
-  justifyContent: 'center',
-  alignItems: 'center',
-  '& a': {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexGrow: 1,
-  },
 })
 
 export const Title = styled('h1', {
@@ -93,9 +74,4 @@ export const Card = styled('a', {
     fontSize: '1.25rem',
     lineHeight: 1.5,
   },
-})
-
-export const Logo = styled('span', {
-  height: '1em',
-  marginLeft: '0.5rem',
 })
