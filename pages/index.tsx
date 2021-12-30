@@ -1,12 +1,5 @@
 import type { NextPage } from 'next'
-import {
-  Main,
-  Title,
-  Description,
-  Code,
-  Grid,
-  Card,
-} from '../styles/Home.style'
+import { Main, Title, Description, Code, Grid, Card } from '../styles/Home.style'
 
 const Home: NextPage = () => {
   return (

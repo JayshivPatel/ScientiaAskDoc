@@ -16,12 +16,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         >
           Powered by{' '}
           <Logo>
-            <Image
-              src="/scientia.svg"
-              alt="Scientia Logo"
-              width={16}
-              height={16}
-            />
+            <Image src="/scientia.svg" alt="Scientia Logo" width={16} height={16} />
           </Logo>
         </a>
       </Footer>
