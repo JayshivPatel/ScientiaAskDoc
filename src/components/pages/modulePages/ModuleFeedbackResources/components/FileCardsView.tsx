@@ -5,7 +5,6 @@ import { faFile } from "@fortawesome/free-solid-svg-icons"
 import WarningJumbotron from "../../../../suspense/WarningJumbotron"
 import { Feedback } from "../../../../../constants/types"
 import FileCard from "../../../../cards/FileCard"
-import { scientia_url } from "constants/routes"
 
 interface FileCardsViewProps {
   feedbackItems: Feedback[]
@@ -13,7 +12,7 @@ interface FileCardsViewProps {
 
 const navigateToFeedback = (feedback: Feedback) => {
   const feedback_path =
-    scientia_url +
+    window.location.origin +
     `/${feedback.year}/modules/${feedback.course}/feedback/${feedback.exercise}`
   window.open(feedback_path, "_blank")
 }

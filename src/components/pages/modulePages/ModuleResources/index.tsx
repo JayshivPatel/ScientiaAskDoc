@@ -5,7 +5,7 @@ import Tooltip from "react-bootstrap/Tooltip"
 import { Helmet } from "react-helmet"
 
 import { download, request } from "utils/api"
-import { api, methods, scientia_url } from "constants/routes"
+import { api, methods } from "constants/routes"
 import Dandruff from "components/headings/Dandruff"
 import SearchBox from "components/headings/SearchBox"
 import QuickAccessView from "./components/QuickAccessView"
@@ -67,7 +67,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
         const category = resource.category
         const index = resource.index
         resource_path =
-          scientia_url +
+          window.location.origin +
           `/${this.props.year}/modules/${course}/resources/${category}/${index}`
       }
       window.open(resource_path, "_blank")
