@@ -25,17 +25,17 @@ const FoldersRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
             title={title}
             icon={
               !select.disableSelection &&
-              (select.isAnySelected() || select.state.isHoveringOver[id])
-                ? select.state.isSelected[id]
+              (select.isAnySelected() || select.hoveringOver.has(id))
+                ? select.selected.has(id)
                   ? faCheckSquare
                   : faSquare
                 : faFolder
             }
             onIconClick={(e) => {
               e.stopPropagation()
-              select.handleIconClick(id)
+              select.handleSelectIconClick(id)
             }}
-            onClick={() => select.handleCardClick(id)}
+            onClick={() => select.handleItemClick(id)}
             onMouseOver={() => select.handleMouseOver(id)}
             onMouseOut={() => select.handleMouseOut(id)}
           />
