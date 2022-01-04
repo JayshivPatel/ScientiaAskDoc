@@ -1,4 +1,5 @@
 import React from "react"
+import { BrowserRouter as Router } from "react-router-dom"
 import { mount } from "enzyme"
 import ModuleResource from "./index"
 import { api } from "constants/routes"
@@ -52,15 +53,17 @@ describe("<ModuleResource />", () => {
   })
 
   const wrapper = mount(
-    <ModuleResource
-      moduleTitle={moduleTitle}
-      year={year}
-      course={course}
-      category={category}
-      index={index}
-      showSidebars={() => {}}
-      hideSidebars={() => {}}
-    />
+    <Router>
+      <ModuleResource
+        moduleTitle={moduleTitle}
+        year={year}
+        course={course}
+        category={category}
+        index={index}
+        showSidebars={() => {}}
+        hideSidebars={() => {}}
+      />
+    </Router>
   )
 
   it("loads pdf url", async () => {
@@ -74,15 +77,17 @@ describe("<ModuleResource />", () => {
   })
 
   const wrapper = mount(
-    <ModuleResource
-      moduleTitle={moduleTitle}
-      year={year}
-      course={course}
-      category={category}
-      index={index}
-      showSidebars={() => {}}
-      hideSidebars={() => {}}
-    />
+    <Router>
+      <ModuleResource
+        moduleTitle={moduleTitle}
+        year={year}
+        course={course}
+        category={category}
+        index={index}
+        showSidebars={() => {}}
+        hideSidebars={() => {}}
+      />
+    </Router>
   )
 
   it("warns user on error", async () => {

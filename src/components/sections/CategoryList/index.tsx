@@ -64,8 +64,8 @@ const CategoryList: React.FC<CategoryListProps> = ({
         if (type === undefined || tags === undefined) return null
 
         let icon =
-          select && (select.isAnySelected() || select.state.isHoveringOver[id])
-            ? select.state.isSelected[id]
+          select && (select.isAnySelected() || select.hoveringOver.has(id))
+            ? select.selected.has(id)
               ? faCheckSquare
               : faSquare
             : resourceTypeToIcon(type)

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import ResourceSectionHeader from "./components/SectionHeader"
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons"
 import { IdBooleanMap } from "constants/types"
@@ -14,17 +14,18 @@ export interface SelectionItem {
 
 export interface SelectionProps {
   selectionItems: SelectionItem[]
-  state: MyState
-  setIsSelected: (selection: IdBooleanMap) => void
+  selected: Set<number>
+  setSelected: (selection: Set<number>) => void
+  hoveringOver: Set<number>
   isAnySelected: () => boolean
-  handleCardClick: (id: number) => void
-  handleIconClick: (id: number) => void
+  handleItemClick: (id: number) => void
+  handleSelectIconClick: (id: number) => void
   handleMouseOver: (id: number) => void
   handleMouseOut: (id: number) => void
   disableSelection?: boolean
 }
 
-export interface MyProps {
+export interface SelectionViewProps {
   selectionItems: SelectionItem[]
   render: (selection: SelectionProps) => any
   heading: string
@@ -33,135 +34,104 @@ export interface MyProps {
   disableSelection?: boolean
 }
 
-interface MyState {
-  isSelected: IdBooleanMap
-  isHoveringOver: IdBooleanMap
-}
+const SelectionView: React.FC<SelectionViewProps> = ({
+  selectionItems,
+  render,
+  heading,
+  onDownloadClick,
+  onItemClick,
+  disableSelection,
+}) => {
+  const [selected, setSelected] = useState<Set<number>>(new Set())
+  const [hoveringOver, setHoveringOver] = useState<Set<number>>(new Set())
 
-class SelectionView extends React.Component<MyProps, MyState> {
-  constructor(props: MyProps) {
-    super(props)
-    this.state = { isSelected: [], isHoveringOver: [] }
+  const isAnySelected = (): boolean => {
+    return selected.size > 0
   }
 
-  componentDidMount() {
-    let isSelected: IdBooleanMap = []
-    let isHoveringOver: IdBooleanMap = []
-    this.props.selectionItems.forEach(({ id }: { id: number }) => {
-      isSelected[id] = false
-      isHoveringOver[id] = false
-    })
-    this.setState({ isSelected, isHoveringOver })
+  const isAllSelected = (): boolean => {
+    return selected.size === selectionItems.length
   }
 
-  isAnySelected(): boolean {
-    let items = this.props.selectionItems
-    let isSelected = this.state.isSelected
-    for (let item in items) {
-      if (isSelected[items[item].id]) {
-        return true
-      }
-    }
-    return false
+  const handleMouseOver = (id: number): void => {
+    setHoveringOver(new Set(hoveringOver).add(id))
   }
 
-  isAllSelected(): boolean {
-    let items = this.props.selectionItems
-    let isSelected = this.state.isSelected
-    for (let item in items) {
-      if (!isSelected[items[item].id]) {
-        return false
-      }
-    }
-    return true
+  const handleMouseOut = (id: number): void => {
+    let newHoveringOver = new Set(hoveringOver)
+    newHoveringOver.delete(id)
+    setHoveringOver(newHoveringOver)
   }
 
-  handleIconClick(id: number) {
-    if (this.props.disableSelection) {
-      this.handleCardClick(id)
+  const handleSelectIconClick = (id: number): void => {
+    if (disableSelection) {
+      handleItemClick(id)
       return
     }
-    let isSelected = JSON.parse(JSON.stringify(this.state.isSelected))
-    let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver))
-    isSelected[id] = !isSelected[id]
-    isHoveringOver[id] = false
-    this.setState({ isSelected, isHoveringOver })
+    let newSelected = new Set(selected)
+    if (selected.has(id)) {
+      newSelected.delete(id)
+    } else {
+      newSelected.add(id)
+    }
+    setSelected(newSelected)
+
+    let newHoveringOver = new Set(hoveringOver)
+    newHoveringOver.delete(id)
+    setHoveringOver(newHoveringOver)
   }
 
-  handleDownloadClick(e: React.MouseEvent) {
+  const handleItemClick = (id: number): void => {
+    if (isAnySelected()) handleSelectIconClick(id)
+    else onItemClick(id)
+  }
+
+  const handleDownloadClick = (e: React.MouseEvent): void => {
     e.preventDefault()
-    let indices: number[] = []
-    for (let key in this.state.isSelected) {
-      if (this.state.isSelected[key]) {
-        indices.push(parseInt(key))
-      }
+    let indices: number[] = Array.from(selected.values())
+    onDownloadClick(indices)
+  }
+
+  const handleSelectAllClick = (): void => {
+    if (isAllSelected()) {
+      setSelected(new Set())
+    } else {
+      setSelected(new Set(selectionItems.map((item) => item.id)))
     }
-    this.props.onDownloadClick(indices)
   }
 
-  handleSelectAllClick() {
-    let items = this.props.selectionItems
-    let isSelected = JSON.parse(JSON.stringify(this.state.isSelected))
-    let setValue = !this.isAllSelected()
-    for (let item in items) {
-      isSelected[items[item].id] = setValue
-    }
-    this.setState({ isSelected })
+  const selectionProps: SelectionProps = {
+    selectionItems: selectionItems,
+    selected: selected,
+    setSelected: (selection) => setSelected(selection),
+    hoveringOver: hoveringOver,
+    isAnySelected: () => isAnySelected(),
+    handleItemClick: (id: number) => handleItemClick(id),
+    handleSelectIconClick: (id: number) => handleSelectIconClick(id),
+    handleMouseOver: (id: number) => handleMouseOver(id),
+    handleMouseOut: (id: number) => handleMouseOut(id),
+    disableSelection: disableSelection,
   }
 
-  handleCardClick(id: number) {
-    if (this.isAnySelected()) {
-      this.handleIconClick(id)
-      return
-    }
-    this.props.onItemClick(id)
-  }
+  return (
+    <>
+      <ResourceSectionHeader
+        heading={heading}
+        onDownloadClick={(e) => handleDownloadClick(e)}
+        showDownload={isAnySelected()}
+        onSelectAllClick={() => handleSelectAllClick()}
+        selectAllIcon={isAllSelected() ? faCheckSquare : faSquare}
+        disableSelection={disableSelection}
+        checkBoxColour={
+          isAnySelected()
+            ? "var(--secondary-text-color)"
+            : "var(--secondary-button-text)"
+        }
+      />
 
-  handleMouseOver(id: number) {
-    let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver))
-    isHoveringOver[id] = true
-    this.setState({ isHoveringOver })
-  }
-
-  handleMouseOut(id: number) {
-    let isHoveringOver = JSON.parse(JSON.stringify(this.state.isHoveringOver))
-    isHoveringOver[id] = false
-    this.setState({ isHoveringOver })
-  }
-
-  render() {
-    let selection: SelectionProps = {
-      selectionItems: this.props.selectionItems,
-      state: this.state,
-      setIsSelected: (selection) => this.setState({ isSelected: selection }),
-      isAnySelected: () => this.isAnySelected(),
-      handleCardClick: (id: number) => this.handleCardClick(id),
-      handleIconClick: (id: number) => this.handleIconClick(id),
-      handleMouseOver: (id: number) => this.handleMouseOver(id),
-      handleMouseOut: (id: number) => this.handleMouseOut(id),
-      disableSelection: this.props.disableSelection,
-    }
-
-    return (
-      <>
-        <ResourceSectionHeader
-          heading={this.props.heading}
-          onDownloadClick={(e) => this.handleDownloadClick(e)}
-          showDownload={this.isAnySelected()}
-          onSelectAllClick={() => this.handleSelectAllClick()}
-          selectAllIcon={this.isAllSelected() ? faCheckSquare : faSquare}
-          disableSelection={this.props.disableSelection}
-          checkBoxColur={
-            this.isAnySelected()
-              ? "var(--secondary-text-color)"
-              : "var(--secondary-button-text)"
-          }
-        />
-
-        {this.props.render(selection)}
-      </>
-    )
-  }
+      {render(selectionProps)}
+    </>
+  )
 }
 
 export default SelectionView

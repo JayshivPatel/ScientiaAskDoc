@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react"
-import Button from "react-bootstrap/Button"
 import { Helmet } from "react-helmet"
-import { faDownload } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import styles from "./style.module.scss"
 import { api, methods } from "constants/routes"
+import Dandruff from "components/headings/Dandruff"
 import { Feedback } from "constants/types"
-import { downloadBlob, request } from "utils/api"
+import { request } from "utils/api"
 import LoadingScreen from "../../../suspense/LoadingScreen"
 
 export interface ModuleFeedbackResourceProps {
@@ -85,13 +83,7 @@ const ModuleFeedbackResource: React.FC<ModuleFeedbackResourceProps> = ({
   const view = () => {
     return (
       <div className={styles.moduleFeedback}>
-        <Button
-          onClick={() => {
-            downloadBlob(pdfInfo.blob_url, pdfInfo.filename)
-          }}>
-          Download
-          <FontAwesomeIcon icon={faDownload} />
-        </Button>
+        <Dandruff heading={pdfInfo.filename} />
         <iframe
           title="PDF"
           src={pdfInfo.blob_url}
