@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react"
-import Button from "react-bootstrap/Button"
 import { Helmet } from "react-helmet"
-import { faDownload } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import styles from "./style.module.scss"
+import Dandruff from "components/headings/Dandruff"
 import WarningJumbotron from "components/suspense/WarningJumbotron"
 import { api, methods } from "constants/routes"
 import { Resource } from "constants/types"
-import { downloadBlob, request } from "utils/api"
+import { request } from "utils/api"
 
 export interface ModuleResourceProps {
   moduleTitle: string
@@ -89,13 +87,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
         </title>
       </Helmet>
       <div className={cssClass}>
-        <Button
-          onClick={() => {
-            downloadBlob(pdfInfo.blob_url, pdfInfo.filename)
-          }}>
-          Download
-          <FontAwesomeIcon icon={faDownload} />
-        </Button>
+        <Dandruff heading={pdfInfo.filename} />
         <iframe
           title="PDF"
           src={pdfInfo.blob_url}

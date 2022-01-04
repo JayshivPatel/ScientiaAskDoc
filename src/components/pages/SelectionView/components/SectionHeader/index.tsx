@@ -12,7 +12,7 @@ export interface SectionHeaderProps {
   showDownload: Boolean
   onDownloadClick: (event: React.MouseEvent) => void
   onSelectAllClick: (event: React.MouseEvent) => void
-  checkBoxColur: string
+  checkBoxColour: string
   disableSelection?: boolean
 }
 
@@ -22,7 +22,7 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
   selectAllIcon,
   onDownloadClick,
   onSelectAllClick,
-  checkBoxColur,
+  checkBoxColour,
   disableSelection,
 }: SectionHeaderProps) => {
   let show = showDownload.valueOf()
@@ -44,7 +44,7 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
                   onClick={onDownloadClick}>
                   <FontAwesomeIcon
                     className={styles.buttonIcon}
-                    style={{ color: checkBoxColur }}
+                    style={{ color: checkBoxColour }}
                     icon={faDownload}
                   />
                 </Button>
@@ -58,7 +58,7 @@ const ResourceSectionHeader: React.FC<SectionHeaderProps> = ({
               aria-expanded={show}>
               <FontAwesomeIcon
                 className={styles.buttonIcon}
-                style={{ color: checkBoxColur }}
+                style={{ color: checkBoxColour }}
                 icon={selectAllIcon}
               />
             </Button>

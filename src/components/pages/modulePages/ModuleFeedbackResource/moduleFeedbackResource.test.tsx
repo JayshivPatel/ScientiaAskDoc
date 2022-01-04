@@ -1,9 +1,10 @@
 import React from "react"
+import { BrowserRouter as Router } from "react-router-dom"
 import { mount } from "enzyme"
 import ModuleFeedbackResource from "./index"
+import WarningJumbotron from "components/suspense/WarningJumbotron"
 import { api } from "constants/routes"
 import { RequestData } from "utils/api-types"
-import WarningJumbotron from "components/suspense/WarningJumbotron"
 
 jest.mock("utils/api")
 const apiCalling = require("utils/api")
@@ -42,12 +43,14 @@ describe("<ModuleFeedbackResource />", () => {
   })
 
   const wrapper = mount(
-    <ModuleFeedbackResource
-      moduleTitle={moduleTitle}
-      year={year}
-      course={course}
-      exercise={exercise}
-    />
+    <Router>
+      <ModuleFeedbackResource
+        moduleTitle={moduleTitle}
+        year={year}
+        course={course}
+        exercise={exercise}
+      />
+    </Router>
   )
 
   it("loads pdf url", async () => {
@@ -62,12 +65,14 @@ describe("<ModuleFeedbackResource />", () => {
   })
 
   const wrapper = mount(
-    <ModuleFeedbackResource
-      moduleTitle={moduleTitle}
-      year={year}
-      course={course}
-      exercise={exercise}
-    />
+    <Router>
+      <ModuleFeedbackResource
+        moduleTitle={moduleTitle}
+        year={year}
+        course={course}
+        exercise={exercise}
+      />
+    </Router>
   )
 
   it("warns user on error", async () => {
