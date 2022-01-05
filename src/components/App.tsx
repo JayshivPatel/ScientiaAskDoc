@@ -157,7 +157,7 @@ class App extends React.Component<{}, AppState> {
     ]
 
     return (
-      <>
+      <div style={{ width: "100vw", height: "100vh" }}>
         <SettingsModal
           show={this.state.showSettings}
           onHide={() => this.setState({ showSettings: false })}
@@ -189,7 +189,13 @@ class App extends React.Component<{}, AppState> {
               path="/"
               render={(props) =>
                 authenticationService.userIsLoggedIn() ? (
-                  <>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      height: "100%",
+                    }}
+                  >
                     <TopBar
                       pages={horizontalBarPages}
                       onFavIconClick={(e) => {
@@ -234,7 +240,7 @@ class App extends React.Component<{}, AppState> {
                     />
 
                     <BottomBar pages={horizontalBarPages} />
-                  </>
+                  </div>
                 ) : (
                   <Redirect
                     to={{
@@ -247,7 +253,7 @@ class App extends React.Component<{}, AppState> {
             />
           </Switch>
         </Router>
-      </>
+      </div>
     )
   }
 }
