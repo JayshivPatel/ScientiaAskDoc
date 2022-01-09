@@ -41,16 +41,16 @@ const QuickAccessRow: React.FC<{ select: SelectionProps }> = ({ select }) => {
               tags={tags}
               icon={
                 !select.disableSelection &&
-                (select.isAnySelected() || select.state.isHoveringOver[id])
-                  ? select.state.isSelected[id]
+                (select.isAnySelected() || select.hoveringOver.has(id))
+                  ? select.selected.has(id)
                     ? faCheckSquare
                     : faSquare
                   : resourceTypeToIcon(type)
               }
-              onClick={() => select.handleCardClick(id)}
+              onClick={() => select.handleItemClick(id)}
               onIconClick={(e) => {
                 e.stopPropagation()
-                select.handleIconClick(id)
+                select.handleSelectIconClick(id)
               }}
               thumbnail={thumbnail}
               onMouseOver={() => select.handleMouseOver(id)}

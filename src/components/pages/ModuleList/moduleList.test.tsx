@@ -35,7 +35,7 @@ describe("<ModuleList />", () => {
 
   const wrapper = mount(
     <Router>
-      <ModuleList modules={modules} />
+      <ModuleList modules={modules} year={"2122"} />
     </Router>
   )
 
