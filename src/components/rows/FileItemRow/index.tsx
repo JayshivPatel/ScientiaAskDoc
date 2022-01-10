@@ -51,16 +51,8 @@ const FileItemRow: React.FC<FileListItemProps> = ({
         style={invisible ? { opacity: "50%" } : {}}
         className={styles.listItem}
         onClick={onClick}
-        onMouseOver={(event: React.MouseEvent) => {
-          if (onMouseOver) {
-            onMouseOver(event)
-          }
-        }}
-        onMouseOut={(event: React.MouseEvent) => {
-          if (onMouseOut) {
-            onMouseOut(event)
-          }
-        }}>
+        onMouseOver={onMouseOver}
+        onMouseOut={onMouseOut}>
         <Row className={styles.listRow}>
           <div className={styles.listItemTitle}>
             {displayingForStaff ? (
