@@ -91,15 +91,6 @@ const FileItemRow: React.FC<FileListItemProps> = ({
               {downloads}
             </Badge>
           )}
-          <FontAwesomeIcon
-            style={{ fontSize: "1.125rem" }}
-            icon={icon}
-            onClick={(e) => {
-              e.stopPropagation()
-              if (onIconClick !== undefined) onIconClick(e)
-            }}
-            fixedWidth
-          />
           {displayingForStaff && (
             <OverlayTrigger
               placement="top"
@@ -116,6 +107,15 @@ const FileItemRow: React.FC<FileListItemProps> = ({
               />
             </OverlayTrigger>
           )}
+          <FontAwesomeIcon
+            style={{ fontSize: "1.125rem" }}
+            icon={icon}
+            onClick={(e) => {
+              e.stopPropagation()
+              if (onIconClick !== undefined) onIconClick(e)
+            }}
+            fixedWidth
+          />
         </Row>
       </div>
     </>
