@@ -18,6 +18,9 @@ import CalendarModal from "./modals/CalendarModal"
 import { TIMELINE_ACTIVE } from "constants/global"
 import history from "history.js"
 import { ENABLED_ACADEMIC_YEARS } from "../constants/doc"
+import { KBarProvider } from "kbar"
+import CommandBar from "./navbars/CommandBar"
+import { initialActions } from "constants/actions"
 
 type AppState = {
   toggledLeft: boolean
@@ -189,7 +192,9 @@ class App extends React.Component<{}, AppState> {
               path="/"
               render={(props) =>
                 authenticationService.userIsLoggedIn() ? (
-                  <>
+                  <KBarProvider actions={initialActions}>
+                    <CommandBar />
+
                     <TopBar
                       pages={horizontalBarPages}
                       onFavIconClick={(e) => {
@@ -234,7 +239,7 @@ class App extends React.Component<{}, AppState> {
                     />
 
                     <BottomBar pages={horizontalBarPages} />
-                  </>
+                  </KBarProvider>
                 ) : (
                   <Redirect
                     to={{

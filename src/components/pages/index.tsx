@@ -7,7 +7,6 @@ import { CalendarEvent, TimelineEvent } from "constants/types"
 import LoadingScreen from "components/suspense/LoadingScreen"
 import RightBar from "components/navbars/RightBar"
 import LeftBar from "components/navbars/LeftBar"
-
 import YearSubRouter from "./subrouters/YearSubRouter"
 
 const Dashboard = React.lazy(() => import("components/pages/Dashboard"))
@@ -49,7 +48,8 @@ const StandardView: React.FC<StandardViewProps> = ({
       className={classNames({
         toggledLeft: toggledLeft,
         toggledRight: toggledRight,
-      })}>
+      })}
+    >
       <LeftBar year={year} />
       <RightBar
         onSettingsClick={onSettingsClick}
