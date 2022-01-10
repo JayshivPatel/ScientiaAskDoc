@@ -1,15 +1,10 @@
-.fileDisplay {
-  height: 85vh;
-  width: 65vw;
-}
-
-.moduleResourceMobile {
-  height: 85vh;
-  width: 100vw;
+.moduleFeedback {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .pdfViewer {
-  height: 100%;
-  width: 100%;
+  flex-grow: 1;
   border: none;
 }

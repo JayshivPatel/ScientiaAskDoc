@@ -1,11 +1,14 @@
 #wrapper {
+  position: relative;
+  flex-grow: 1;
   padding-left: 0;
   padding-right: 0;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
   -o-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
-  z-index: 5050;
+  z-index: 5001;
+  margin-top: 3.8125rem
 }
 
 #sidenav-overlay {
@@ -26,6 +29,7 @@
 
 @media (min-width: 62rem) {
   #wrapper {
+    flex-grow: 1;
     padding-left: 0;
     padding-right: 0;
   }
@@ -49,12 +53,13 @@
 
 .pageContainer {
   padding-top: 1.875rem;
-  margin-bottom: 10rem !important;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+  padding-bottom: 1.5rem;
+  height: 100%;
+  max-width: 100%;
 }
 
 .centerContents {
   display: flex;
-  justify-content: "center"
 }

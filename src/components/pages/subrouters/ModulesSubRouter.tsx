@@ -1,4 +1,4 @@
-import { Module } from "../../../constants/types"
+import { Module, TimelineEvent } from "constants/types"
 import { Route, Switch, useRouteMatch } from "react-router-dom"
 import React from "react"
 import Container from "react-bootstrap/esm/Container"
@@ -22,13 +22,16 @@ const ModuleDashboard = React.lazy(
 interface ModulesSubRouterProps {
   year: string
   modules: Module[]
+  showSidebars: () => void
+  hideSidebars: () => void
 }
 
 const ModulesSubRouter: React.FC<ModulesSubRouterProps> = ({
   year,
   modules,
+  showSidebars,
+  hideSidebars,
 }: ModulesSubRouterProps) => {
-
   // path is /:year/modules
   let { path, url } = useRouteMatch()
 
@@ -72,6 +75,8 @@ const ModulesSubRouter: React.FC<ModulesSubRouterProps> = ({
                 course={props.match.params.id}
                 category={props.match.params.category}
                 index={+props.match.params.index}
+                showSidebars={showSidebars}
+                hideSidebars={hideSidebars}
               />
             </Container>
           )
@@ -115,6 +120,8 @@ const ModulesSubRouter: React.FC<ModulesSubRouterProps> = ({
                 year={year}
                 course={props.match.params.id}
                 exercise={parseInt(props.match.params.exercise)}
+                showSidebars={showSidebars}
+                hideSidebars={hideSidebars}
               />
             </Container>
           )

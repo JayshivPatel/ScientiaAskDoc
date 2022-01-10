@@ -12,6 +12,8 @@ export interface ModuleFeedbackResourceProps {
   year: string
   course: string
   exercise: number
+  showSidebars: () => void
+  hideSidebars: () => void
 }
 
 const ModuleFeedbackResource: React.FC<ModuleFeedbackResourceProps> = ({
@@ -19,6 +21,8 @@ const ModuleFeedbackResource: React.FC<ModuleFeedbackResourceProps> = ({
   year,
   course,
   exercise,
+  showSidebars,
+  hideSidebars,
 }) => {
   const [pdfInfo, setPdfInfo] = useState({
     filename: "",
@@ -52,6 +56,13 @@ const ModuleFeedbackResource: React.FC<ModuleFeedbackResourceProps> = ({
   }
 
   useEffect(() => {
+    hideSidebars()
+    return function cleanup() {
+      showSidebars()
+    }
+  }, [])
+
+  useEffect(() => {
     if (pdfInfo.filename === "") {
       request({
         endpoint: api.EMARKING_FEEDBACK,
@@ -69,12 +80,9 @@ const ModuleFeedbackResource: React.FC<ModuleFeedbackResourceProps> = ({
     }
   }, [pdfInfo])
 
-  const cssClass =
-    window.innerWidth <= 1024 ? styles.moduleResourceMobile : styles.fileDisplay
-
   const view = () => {
     return (
-      <div className={cssClass}>
+      <div className={styles.moduleFeedback}>
         <Dandruff heading={pdfInfo.filename} />
         <iframe
           title="PDF"
