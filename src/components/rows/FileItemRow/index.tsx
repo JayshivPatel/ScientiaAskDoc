@@ -4,12 +4,13 @@ import classNames from "classnames"
 
 import Row from "react-bootstrap/esm/Row"
 import Badge from "react-bootstrap/Badge"
+import OverlayTrigger from "react-bootstrap/OverlayTrigger"
+import Tooltip from "react-bootstrap/Tooltip"
 import { IconDefinition } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { DragHandle } from "components/sections/CategoryList"
-import { faArrowDown } from "@fortawesome/free-solid-svg-icons"
-import { Button } from "react-bootstrap"
+import { faArrowDown, faEdit } from "@fortawesome/free-solid-svg-icons"
 
 export interface FileListItemProps {
   title: string
@@ -38,6 +39,12 @@ const FileItemRow: React.FC<FileListItemProps> = ({
   onMouseOver,
   onMouseOut,
 }) => {
+  const renderEditTooltip = (props: any) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Edit resource
+    </Tooltip>
+  )
+
   return (
     <>
       <div
@@ -65,21 +72,6 @@ const FileItemRow: React.FC<FileListItemProps> = ({
               title
             )}
           </div>
-          {displayingForStaff && (
-            <Button
-              className={classNames(
-                styles.editButton,
-                styles.centeredFlex,
-                styles.centeredChildren
-              )}
-              onClick={(e) => {
-                e.stopPropagation()
-                onEditClick()
-              }}
-              variant="info">
-              Edit
-            </Button>
-          )}
           <div className={classNames(styles.tagBox)}>
             {tags.map((tag) => (
               <Badge
@@ -108,6 +100,22 @@ const FileItemRow: React.FC<FileListItemProps> = ({
             }}
             fixedWidth
           />
+          {displayingForStaff && (
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderEditTooltip}>
+              <FontAwesomeIcon
+                style={{ fontSize: "1.125rem" }}
+                icon={faEdit}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onEditClick()
+                }}
+                fixedWidth
+              />
+            </OverlayTrigger>
+          )}
         </Row>
       </div>
     </>
