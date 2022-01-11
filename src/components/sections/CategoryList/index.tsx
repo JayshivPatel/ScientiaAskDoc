@@ -12,7 +12,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons"
 import FileItemRow from "components/rows/FileItemRow"
 import { SelectionProps } from "components/pages/SelectionView"
 import { resourceTypeToIcon } from "../../pages/modulePages/ModuleResources/utils"
-import { IdBooleanMap, Resource } from "constants/types"
+import { Resource } from "constants/types"
 import { request } from "utils/api"
 import { api, methods } from "constants/routes"
 
@@ -20,9 +20,8 @@ export interface CategoryListProps {
   categoryItems: Resource[]
   setCategoryItems: (resources: Resource[]) => void
   select?: SelectionProps
-  showMenus?: IdBooleanMap
   displayingForStaff?: boolean
-  setShowMenus?: (id: number) => (show: boolean) => void
+  onEditClick?: (id: number) => void
   handleRowClick: (id: number) => void
   handleIconClick: (id: number) => void
   handleMouseOver: (id: number) => void
@@ -49,9 +48,8 @@ const CategoryList: React.FC<CategoryListProps> = ({
   categoryItems,
   setCategoryItems,
   select,
-  showMenus,
-  setShowMenus,
   displayingForStaff = false,
+  onEditClick,
   handleRowClick,
   handleIconClick,
   handleMouseOver,
@@ -76,14 +74,17 @@ const CategoryList: React.FC<CategoryListProps> = ({
             onMouseOver={() => handleMouseOver(id)}
             onMouseOut={() => handleMouseOut(id)}
             onIconClick={() => handleIconClick(id)}
-            showMenu={showMenus && showMenus[id]}
-            setShowMenu={setShowMenus && setShowMenus(id)}
             icon={icon}
             tags={tags}
             downloads={undefined}
             invisible={visible_after.getTime() - Date.now() > 0}
             title={title}
             displayingForStaff={displayingForStaff}
+            onEditClick={() => {
+              if (onEditClick) {
+                onEditClick(id)
+              }
+            }}
             key={index}
           />
         )

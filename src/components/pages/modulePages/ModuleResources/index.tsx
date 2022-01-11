@@ -259,6 +259,7 @@ class ModuleResources extends React.Component<ResourcesProps, ResourceState> {
             reload={() => this.loadResources()}
             resources={this.state.resources}
             setResources={this.setResources}
+            onItemClick={(id) => this.navigateToResource(id)}
             searchText={this.state.searchText}
             includeInSearchResult={this.includeInSearchResult}
           />

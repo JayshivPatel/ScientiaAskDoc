@@ -25,6 +25,7 @@ export interface StaffViewProps {
   reload: () => void
   resources: Resource[]
   setResources: (resources: Resource[]) => void
+  onItemClick: (id: number) => void
   searchText: string
   includeInSearchResult: (item: Resource, searchText: string) => boolean
 }
@@ -36,20 +37,13 @@ const StaffView: React.FC<StaffViewProps> = ({
   reload,
   resources,
   setResources,
+  onItemClick,
   searchText,
   includeInSearchResult,
 }) => {
   const [modal, setModal] = useState("")
   const [editResource, setEditResource] = useState<Resource>(resources[0])
 
-  const allClosed = () =>
-    resources.reduce((map, resource) => {
-      return {
-        ...map,
-        [resource.id]: false,
-      }
-    }, {})
-  const [showMenus, setShowMenus] = useState<IdBooleanMap>(allClosed())
   const closeModal = () => setModal("")
 
   let filesContent: Resource[] = resources
@@ -151,23 +145,19 @@ const StaffView: React.FC<StaffViewProps> = ({
               <CategoryHeader heading={title} />
               <CategoryList
                 displayingForStaff={true}
+                onEditClick={(resourceId: number) => {
+                  setEditResource(
+                    resources.find((res) => res.id === resourceId) ||
+                      resources[0]
+                  )
+                  setModal("edit")
+                }}
                 categoryItems={filesContent.filter(
                   (res) => res.category === title
                 )}
                 setCategoryItems={updateResources}
-                showMenus={showMenus}
-                setShowMenus={(id) => {
-                  return (show: boolean) => {
-                    let newShowMenus: IdBooleanMap = allClosed()
-                    newShowMenus[id] = show
-                    setShowMenus(newShowMenus)
-                  }
-                }}
                 handleRowClick={(id) => {
-                  setEditResource(
-                    resources.find((res) => res.id === id) || resources[0]
-                  )
-                  setModal("edit")
+                  onItemClick(id)
                 }}
                 handleIconClick={(id) => {}}
                 handleMouseOver={(id) => {}}

@@ -31,16 +31,12 @@
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   width: 80% !important;
-  margin-right: 0.25rem;
 }
 
-.fileTag:last-child {
-  margin-right: 0rem;
+.fileTag {
+  float: right;
 }
 
-.resourceMenu {
-  position: absolute;
-  box-shadow: 0px 8px 10px #999999;
-  border-radius: 8px;
-  z-index: 10000;
+.tagBox {
+  width: 50% !important;
 }

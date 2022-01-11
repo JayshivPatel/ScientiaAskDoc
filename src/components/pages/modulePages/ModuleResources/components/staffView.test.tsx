@@ -57,6 +57,8 @@ const resources: Resource[] = [
   },
 ]
 
+const onItemClickSpy = jest.fn()
+
 describe("<StaffView />", () => {
   const wrapper = mount(
     <StaffView
@@ -65,6 +67,8 @@ describe("<StaffView />", () => {
       folders={folders}
       reload={jest.fn()}
       resources={resources}
+      setResources={jest.fn()}
+      onItemClick={onItemClickSpy}
       searchText=""
       includeInSearchResult={jest.fn()}
     />
@@ -83,15 +87,11 @@ describe("<StaffView />", () => {
     expect(wrapper.find(EditModal).prop("tags")).toStrictEqual(expectedTags)
   })
 
-  it("shows the correct edit modal when a resource is clicked", () => {
+  it("calls onItemClick handler when a resource is clicked", () => {
     // Click the third file
     wrapper.find(FileItemRow).at(2).simulate("click")
 
-    const expectedResource = "Cheat Sheet"
-    expect(wrapper.find(EditModal).prop("resource").title).toBe(
-      expectedResource
-    )
-    expect(wrapper.find(EditModal).prop("show")).toBeTruthy()
+    expect(onItemClickSpy).toBeCalledTimes(1)
   })
 })
 
@@ -103,6 +103,8 @@ describe("<StaffView />", () => {
       folders={folders}
       reload={jest.fn()}
       resources={[]}
+      setResources={jest.fn()}
+      onItemClick={jest.fn()}
       searchText=""
       includeInSearchResult={jest.fn()}
     />
