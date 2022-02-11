@@ -50,7 +50,7 @@ Follow the instructions in the [README](https://gitlab.doc.ic.ac.uk/edtech/emark
 run the app on port 5001. Check that you meet the system requirements (near the top of the README) before attempting this.
 
 
-### 3. scientia-calendar
+### 3. scientia-calendar (Optional)
 
 ```shell
 # Clone the repository
