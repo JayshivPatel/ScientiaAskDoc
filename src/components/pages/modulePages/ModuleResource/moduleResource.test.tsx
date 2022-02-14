@@ -60,8 +60,6 @@ describe("<ModuleResource />", () => {
         course={course}
         category={category}
         index={index}
-        showSidebars={() => {}}
-        hideSidebars={() => {}}
       />
     </Router>
   )
@@ -84,8 +82,6 @@ describe("<ModuleResource />", () => {
         course={course}
         category={category}
         index={index}
-        showSidebars={() => {}}
-        hideSidebars={() => {}}
       />
     </Router>
   )

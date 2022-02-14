@@ -1,5 +1,6 @@
 @import "assets/scss/custom";
 
+.breadcrumb,
 :global(.breadcrumb) {
   background: var(--background-color) !important;
   text-transform: uppercase;

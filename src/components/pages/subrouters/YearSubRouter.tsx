@@ -11,17 +11,17 @@ import { Route, Switch, useRouteMatch } from "react-router-dom"
 interface YearSubRouter {
   year: string
   setYear: (year: string) => void
-  showSidebars: () => void
-  hideSidebars: () => void
-  onTimelineEventClick: (e?: TimelineEvent) => void
+  timelineConfig: {
+    onEventClick: (e?: TimelineEvent) => void
+    initSideBar: () => void
+    revertSideBar: () => void
+  }
 }
 
 const YearSubRouter: React.FC<YearSubRouter> = ({
   year,
   setYear,
-  showSidebars,
-  hideSidebars,
-  onTimelineEventClick,
+  timelineConfig,
 }: YearSubRouter) => {
   let { path, url } = useRouteMatch()
   const [modules, setModules] = useState<Module[]>([])
@@ -56,21 +56,14 @@ const YearSubRouter: React.FC<YearSubRouter> = ({
   return (
     <Switch>
       <Route path={`${path}/modules`}>
-        <ModulesSubRouter
-          year={year}
-          modules={modules}
-          showSidebars={showSidebars}
-          hideSidebars={hideSidebars}
-        />
+        <ModulesSubRouter year={year} modules={modules} />
       </Route>
 
       <Route path={`${path}/timeline`}>
         <TimelineSubRoute
-          year={year}
+          timelineConfig={timelineConfig}
           modules={modules}
-          showSidebars={showSidebars}
-          hideSidebars={hideSidebars}
-          onTimelineEventClick={onTimelineEventClick}
+          year={year}
         />
       </Route>
     </Switch>

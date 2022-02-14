@@ -15,11 +15,11 @@ const Dashboard = React.lazy(() => import("components/pages/Dashboard"))
 interface StandardViewProps {
   toggledLeft: boolean
   toggledRight: boolean
-  showSidebars: () => void
-  hideSidebars: () => void
+  initTimelineSideBar: () => void
+  revertTimelineSideBar: () => void
   onOverlayClick: (event: React.MouseEvent<HTMLElement>) => void
   onSettingsClick: (event?: React.MouseEvent) => void
-  onTimelineEventClick: (e?: TimelineEvent) => void
+  onEventClick: (e?: TimelineEvent) => void
   onCalendarClick: (e?: CalendarEvent) => void
   year: string
   setYear: (year: string) => void
@@ -30,13 +30,19 @@ const StandardView: React.FC<StandardViewProps> = ({
   toggledRight,
   onOverlayClick,
   onSettingsClick,
-  showSidebars,
-  hideSidebars,
-  onTimelineEventClick,
+  revertTimelineSideBar,
+  initTimelineSideBar,
+  onEventClick,
   onCalendarClick,
   year,
   setYear,
 }: StandardViewProps) => {
+  const timelineConfig = {
+    onEventClick: onEventClick,
+    initSideBar: initTimelineSideBar,
+    revertSideBar: revertTimelineSideBar,
+  }
+
   return (
     <div
       id="wrapper"
@@ -73,9 +79,7 @@ const StandardView: React.FC<StandardViewProps> = ({
                 <YearSubRouter
                   year={props.match.params.year}
                   setYear={setYear}
-                  showSidebars={showSidebars}
-                  hideSidebars={hideSidebars}
-                  onTimelineEventClick={onTimelineEventClick}
+                  timelineConfig={timelineConfig}
                 />
               )
             }}

@@ -9,18 +9,18 @@ const Timeline = React.lazy(() => import("../Timeline"))
 
 interface TimelineRouteProps {
   year: string
+  timelineConfig: {
+    onEventClick: (e?: TimelineEvent) => void
+    initSideBar: () => void
+    revertSideBar: () => void
+  }
   modules: Module[]
-  showSidebars: () => void
-  hideSidebars: () => void
-  onTimelineEventClick: (e?: TimelineEvent) => void
 }
 
 export const TimelineSubRoute: React.FC<TimelineRouteProps> = ({
   year,
+  timelineConfig,
   modules,
-  showSidebars,
-  hideSidebars,
-  onTimelineEventClick,
 }: TimelineRouteProps) => {
   const KNOWN_NUMBER_OF_TERMS = 6
   const [activeTerm, setActiveTerm] = useState<Term>(getDefaultTerm())
@@ -67,12 +67,12 @@ export const TimelineSubRoute: React.FC<TimelineRouteProps> = ({
 
   return (
     <Timeline
-      showSidebars={showSidebars}
-      hideSidebars={hideSidebars}
+      initSideBar={timelineConfig.initSideBar}
+      revertSideBar={timelineConfig.revertSideBar}
       activeTerm={activeTerm}
       setActiveTerm={setActiveTerm}
       terms={terms}
-      onTimelineEventClick={onTimelineEventClick}
+      onEventClick={timelineConfig.onEventClick}
       modules={modules}
       year={year}
     />

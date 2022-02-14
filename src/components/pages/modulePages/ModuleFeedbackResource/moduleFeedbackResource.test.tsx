@@ -49,8 +49,6 @@ describe("<ModuleFeedbackResource />", () => {
         year={year}
         course={course}
         exercise={exercise}
-        showSidebars={() => {}}
-        hideSidebars={() => {}}
       />
     </Router>
   )
@@ -73,8 +71,6 @@ describe("<ModuleFeedbackResource />", () => {
         year={year}
         course={course}
         exercise={exercise}
-        showSidebars={() => {}}
-        hideSidebars={() => {}}
       />
     </Router>
   )

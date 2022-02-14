@@ -13,8 +13,6 @@ export interface ModuleResourceProps {
   course: string
   category: string
   index: number
-  showSidebars: () => void
-  hideSidebars: () => void
 }
 
 const ModuleResource: React.FC<ModuleResourceProps> = ({
@@ -23,8 +21,6 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
   course,
   category,
   index,
-  showSidebars,
-  hideSidebars,
 }) => {
   const [pdfInfo, setPdfInfo] = useState({
     filename: "",
@@ -54,13 +50,6 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
   }
 
   useEffect(() => {
-    hideSidebars()
-    return function cleanup() {
-      showSidebars()
-    }
-  }, [])
-
-  useEffect(() => {
     if (pdfInfo.filename === "") {
       request({
         endpoint: api.MATERIALS_RESOURCES,
@@ -76,9 +65,14 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
     }
   }, [pdfInfo])
 
+  const cssClass =
+    window.innerWidth <= 1024
+      ? styles.moduleResourceMobile
+      : styles.moduleResource
+
   if (error) {
     return (
-      <div className={styles.moduleResource}>
+      <div className={cssClass}>
         <WarningJumbotron
           message={`There was an error fetching this resource: ${error}`}
         />
@@ -92,7 +86,7 @@ const ModuleResource: React.FC<ModuleResourceProps> = ({
           {pdfInfo.filename} | {moduleTitle} | Scientia
         </title>
       </Helmet>
-      <div className={styles.moduleResource}>
+      <div className={cssClass}>
         <Dandruff heading={pdfInfo.filename} />
         <iframe
           title="PDF"
