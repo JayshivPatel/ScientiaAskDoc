@@ -2,8 +2,6 @@
 
 > Scientia project - A central hub for the EdTech services that are focused on enhancing the remote learning experience for students and faculty alike.
 
-_🚧 This platform is currently under development! 🚧_
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Requirements
@@ -23,17 +21,18 @@ nvm use 14
 First, run `yarn install` to install the node modules used for the frontend.
 In order for the API links to work, the following repository branches need to be cloned and run separately:
 
-### 1. materials@api
+### 1. materials
 
 Clone *Materials*. 
+
+> If you had cloned materials already, make sure you update your local copy. The branch you need is `master` now.
 
 ```shell
 # Clone the repository and checkout to the relevant branch
 git clone https://gitlab.doc.ic.ac.uk/edtech/materials.git
-git checkout api
 ```
 
-Follow the instructions in the [README](https://gitlab.doc.ic.ac.uk/edtech/materials/-/blob/api/README.md) to 
+Follow the instructions in the [README](https://gitlab.doc.ic.ac.uk/edtech/materials/-/blob/master/README.md) to 
 run the app on port 5000. Check that you meet the system requirements (near the top of the README) before attempting this.
 
 ### 2. emarking@api
