@@ -35,17 +35,18 @@ git clone https://gitlab.doc.ic.ac.uk/edtech/materials.git
 Follow the instructions in the [README](https://gitlab.doc.ic.ac.uk/edtech/materials/-/blob/master/README.md) to 
 run the app on port 5000. Check that you meet the system requirements (near the top of the README) before attempting this.
 
-### 2. emarking@api
+### 2. emarking
 
 Clone *Emarking*.
+
+> If you had cloned materials already, make sure you update your local copy. The branch you need is `master` now.
 
 ```shell
 # Clone the repository and checkout to the relevant branch
 git clone https://gitlab.doc.ic.ac.uk/edtech/emarking.git
-git checkout api
 ```
 
-Follow the instructions in the [README](https://gitlab.doc.ic.ac.uk/edtech/emarking/-/blob/api/README.md) to
+Follow the instructions in the [README](https://gitlab.doc.ic.ac.uk/edtech/emarking/-/blob/master/README.md) to
 run the app on port 5001. Check that you meet the system requirements (near the top of the README) before attempting this.
 
 
