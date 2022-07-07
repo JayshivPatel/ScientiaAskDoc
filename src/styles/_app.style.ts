@@ -87,6 +87,14 @@ export const Button = styled('button', {
         backgroundColor: '$appBackground',
       },
     },
+    disabled: {
+      true: {
+        cursor: 'default',
+        svg: {
+          fill: '$sand8',
+        },
+      },
+    },
     /* Press and hold animation */
     animate: {
       true: {
@@ -188,6 +196,7 @@ export const Checkbox = styled(CheckboxPrimitive, {
   height: '1.75rem',
   minHeight: '1.75rem',
   borderRadius: '0.375rem',
+  cursor: 'pointer',
   '&:hover': { backgroundColor: '$elementHover' },
   '&:focus': {
     backgroundColor: '$appBackground',
