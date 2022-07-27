@@ -12,12 +12,24 @@ const ExerciseDialog = ({
 }) => {
   return (
     <Dialog
-      title={'Submit your work: ' + exercise.title}
+      title={exercise.title}
       primaryButtonText={'Submit'}
       secondaryButtonText={'Cancel'}
       onPrimaryClick={() => {}}
       {...{ open, onOpenChange }}
-    ></Dialog>
+    >
+      <div>
+        <h4>Resources</h4>
+        {/* show specs / resources */}
+      </div>
+
+      {/* how many hours (?) */}
+
+      <div>
+        <h4>Submission</h4>
+        {/* upload answers */}
+      </div>
+    </Dialog>
   )
 }
 

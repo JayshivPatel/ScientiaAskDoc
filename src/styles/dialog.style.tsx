@@ -48,5 +48,5 @@ export const Title = styled(DialogTitle, {
   marginBottom: '1rem',
   fontWeight: 500,
   color: '$highContrast',
-  fontSize: 17,
+  fontSize: 18,
 })
