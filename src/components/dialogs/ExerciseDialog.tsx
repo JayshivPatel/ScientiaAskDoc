@@ -1,4 +1,6 @@
 import { formatInTimeZone } from 'date-fns-tz'
+import prettyBytes from 'pretty-bytes'
+import { useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import Dropzone from 'react-dropzone'
 
@@ -17,6 +19,33 @@ const ExerciseDialog = ({
   exercise: Exercise
 }) => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone()
+
+  interface SubmittedFile {
+    name: string
+    file: FormData
+    size: string
+  }
+
+  const [submittedFiles, setSubmittedFiles] = useState<SubmittedFile[]>([])
+
+  const onDrop = (files: any): void => {
+    setSubmittedFiles((previousFiles: SubmittedFile[]) => {
+      return [
+        ...previousFiles,
+        ...files.map((file: any) => {
+          let formData = new FormData()
+          formData.append('file', file)
+
+          return {
+            name: file.name,
+            file: formData,
+            size: prettyBytes(file.size),
+          }
+        }),
+      ]
+    })
+  }
+
   const items = [
     { title: 'Spec', link: 'https://google.com' },
     { title: 'Model Answer', link: 'https://example.com' },
@@ -71,7 +100,7 @@ const ExerciseDialog = ({
         <hr />
 
         <Tabs
-          data={acceptedFiles}
+          data={submittedFiles}
           generator={(file: any) => (
             <span>
               {file.name} - {file.size}
@@ -80,7 +109,7 @@ const ExerciseDialog = ({
         />
 
         <div style={{ cursor: 'pointer', borderStyle: 'dashed', borderWidth: '2px' }}>
-          <Dropzone>
+          <Dropzone onDrop={onDrop}>
             {({ getRootProps, getInputProps }) => (
               <section>
                 <div {...getRootProps()} style={{ textAlign: 'center', padding: '1rem' }}>
