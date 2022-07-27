@@ -1,5 +1,4 @@
-import { utcToZonedTime } from 'date-fns-tz'
-import React from 'react'
+import { formatInTimeZone } from 'date-fns-tz'
 import { useDropzone } from 'react-dropzone'
 import Dropzone from 'react-dropzone'
 
@@ -23,9 +22,16 @@ const ExerciseDialog = ({
     { title: 'Model Answer', link: 'https://example.com' },
   ]
 
+  // Date format: https://date-fns.org/v2.29.1/docs/format
+  const formatTimestamp = (date: string) => formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm aaa, dd LLL yyyy')
+
   const submittedItems = [
-    { title: 'report.pdf', timestamp: 'Friday 1st July 2022 at 3.30am', link: 'https://google.com' },
-    { title: 'data.txt', timestamp: 'Friday 1st July 2022 at 6.59am', link: 'https://bbc.co.uk' },
+    {
+      title: 'report.pdf',
+      timestamp: formatTimestamp('2022-07-27T19:56:59.669Z'),
+      link: 'https://google.com',
+    },
+    { title: 'data.txt', timestamp: formatTimestamp('2022-07-26T09:56:59.669Z'), link: 'https://bbc.co.uk' },
   ]
   return (
     <Dialog
