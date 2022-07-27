@@ -1,11 +1,11 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
 import { useState } from 'react'
-import { FileX, Upload } from 'react-bootstrap-icons'
-import Dropzone, { useDropzone } from 'react-dropzone'
+import { Trash3Fill, Upload } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise } from '../../constants/types'
+import { UploadButton, UploadWrapper } from '../../styles/exerciseDialog.style'
 import { Tabs } from '../Tabs'
 import Dialog from './Dialog'
 
@@ -18,18 +18,10 @@ const ExerciseDialog = ({
   onOpenChange: (_: boolean) => void
   exercise: Exercise
 }) => {
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone()
-
-  interface SubmittedFile {
-    name: string
-    file: FormData
-    size: string
-  }
-
   interface FileDetail {
     name: string
     type: string
-    file?: SubmittedFile | null
+    file?: File
   }
 
   const [fileDetails, setFileDetails] = useState<FileDetail[]>([
@@ -46,14 +38,6 @@ const ExerciseDialog = ({
   // Date format: https://date-fns.org/v2.29.1/docs/format
   const formatTimestamp = (date: string) => formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm aaa, dd LLL yyyy')
 
-  const submittedItems = [
-    {
-      title: 'report.pdf',
-      timestamp: formatTimestamp('2022-07-27T19:56:59.669Z'),
-      link: 'https://google.com',
-    },
-    { title: 'data.txt', timestamp: formatTimestamp('2022-07-26T09:56:59.669Z'), link: 'https://bbc.co.uk' },
-  ]
   return (
     <Dialog
       title={exercise.title}
@@ -79,34 +63,46 @@ const ExerciseDialog = ({
 
         <hr />
 
-        <div>
-          {fileDetails.map((file, index) => (
+        <UploadWrapper>
+          {fileDetails.map((file, fileIndex) => (
             <>
-              <label
+              <UploadButton
                 style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}
                 htmlFor={`file-upload-${file.name}`}
               >
                 <div>
-                  <p>{file.name}</p>
-                  <p>({file.type})</p>
+                  <p>
+                    {file.name} ({file.type})
+                  </p>
+                  <p>{file.file ? prettyBytes(file.file.size) : ' '}</p>
                 </div>
-                <div>
-                  <p></p>
+
+                {file.file ? (
+                  <>
+                    <p>{file.file?.name}</p>
+                    <Trash3Fill />
+                  </>
+                ) : (
                   <Upload />
-                </div>
-              </label>
-              <input
-                onChange={(e) => {
-                  //setFileDetails
-                  console.log(e.target.files[0])
-                }}
-                type="file"
-                id={`file-upload-${file.name}`}
-                hidden
-              />
+                )}
+                <input
+                  onChange={(event) => {
+                    if (event.target.files === null) return // clear
+                    setFileDetails((fileDetails: FileDetail[]) =>
+                      fileDetails.map((fileDetail, index) =>
+                        index === fileIndex ? { ...fileDetail, file: event.target.files![0] } : fileDetail
+                      )
+                    )
+                    console.log(event.target.files[0])
+                  }}
+                  type="file"
+                  id={`file-upload-${file.name}`}
+                  hidden
+                />
+              </UploadButton>
             </>
           ))}
-        </div>
+        </UploadWrapper>
 
         <p style={{ fontSize: '0.8rem' }}>By submitting, you agree that this is your own, unaided work.</p>
       </div>
