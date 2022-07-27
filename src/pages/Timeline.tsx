@@ -16,7 +16,7 @@ import {
   TIMELINE_TRACK_HEIGHT,
 } from '../constants/global'
 import { mockTimeline } from '../constants/mock'
-import { ModuleWithExercises, Term, TrackMap } from '../constants/types'
+import { Exercise, ModuleWithExercises, Term, TrackMap } from '../constants/types'
 import { daysSinceEpoch, generateTrackMap } from '../lib/utilities.service'
 import { Area, Container, Corner, Scrollbar, Thumb, Viewport } from '../styles/_app.style'
 
@@ -48,6 +48,7 @@ const Timeline = () => {
   const [term, setTerm] = useState<Term>(defaultTerm)
   const [trackMap, setTrackMap] = useState<TrackMap>({})
   const [rowHeights, setRowHeights] = useState<{ [code: string]: string }>({})
+  const [exercise, setExercise] = useState<Exercise | null>(null)
 
   useEffect(() => {
     if (modules !== []) {
@@ -85,7 +86,7 @@ const Timeline = () => {
             <Weeks start={defaultTerm.start} weeks={defaultTerm.weeks} />
             <Modules modules={modules} term={term.name} rowHeights={rowHeights} />
             {/* NOTE: Everything under here will be placed in the background area */}
-            <Tracks term={term} weeks={term.weeks} trackMap={trackMap} />
+            <Tracks term={term} weeks={term.weeks} trackMap={trackMap} setExercise={setExercise} />
             <DayIndicator weeks={term.weeks} currentDayColumn={dateToColumn(new Date(2021, 9, 21), term.start)} />
             <MainBackground cols={defaultTerm.weeks} rowHeights={rowHeights} />
           </Container>
@@ -98,7 +99,7 @@ const Timeline = () => {
         </Scrollbar>
         <Corner />
       </Area>
-      <ExerciseDialog open={true} onOpenChange={() => {}} />
+      <ExerciseDialog open={true} onOpenChange={() => {}} exercise={exercise} />
     </>
   )
 }
