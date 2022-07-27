@@ -1,4 +1,6 @@
 import React from 'react'
+import { useDropzone } from 'react-dropzone'
+import Dropzone from 'react-dropzone'
 
 import { Exercise } from '../../constants/types'
 import { Tabs } from '../Tabs'
@@ -39,6 +41,21 @@ const ExerciseDialog = ({
       <div>
         <h4>Submission</h4>
         {/* upload answers */}
+
+        <div style={{ cursor: 'pointer', borderStyle: 'dashed', borderWidth: '2px' }}>
+          <Dropzone onDrop={() => {}}>
+            {({ getRootProps, getInputProps }) => (
+              <section>
+                <div {...getRootProps()} style={{ textAlign: 'center', padding: '1rem' }}>
+                  <input {...getInputProps()} />
+                  <p>Drag files here</p>
+                  <p>or</p>
+                  <p>Select files from your device</p>
+                </div>
+              </section>
+            )}
+          </Dropzone>
+        </div>
       </div>
     </Dialog>
   )
