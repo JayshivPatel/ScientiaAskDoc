@@ -26,12 +26,10 @@ const ExerciseDialog = ({
     size: string
   }
 
-  const [submittedFiles, setSubmittedFiles] = useState<SubmittedFile[]>([])
-
   interface FileDetail {
     name: string
     type: string
-    file?: SubmittedFile
+    file?: SubmittedFile | null
   }
 
   const [fileDetails, setFileDetails] = useState<FileDetail[]>([
@@ -81,9 +79,8 @@ const ExerciseDialog = ({
 
         <hr />
 
-        <Tabs
-          data={fileDetails}
-          generator={(file: any) => (
+        <div>
+          {fileDetails.map((file, index) => (
             <>
               <label
                 style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}
@@ -100,16 +97,16 @@ const ExerciseDialog = ({
               </label>
               <input
                 onChange={(e) => {
-                  console.log(e.target.value)
-                  console.log(e.target.files)
+                  //setFileDetails
+                  console.log(e.target.files[0])
                 }}
                 type="file"
                 id={`file-upload-${file.name}`}
                 hidden
               />
             </>
-          )}
-        />
+          ))}
+        </div>
 
         <p style={{ fontSize: '0.8rem' }}>By submitting, you agree that this is your own, unaided work.</p>
       </div>
