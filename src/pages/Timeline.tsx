@@ -1,6 +1,7 @@
 import { plainToInstance } from 'class-transformer'
 import { useEffect, useState } from 'react'
 
+import ExerciseDialog from '../components/dialogs/ExerciseDialog'
 import { DayIndicator } from '../components/timeline/DayIndicator'
 import { MainBackground } from '../components/timeline/MainBackground'
 import { Modules } from '../components/timeline/Modules'
@@ -76,26 +77,29 @@ const Timeline = () => {
   }
 
   return (
-    <Area css={{ height: `calc(100vh - ${TOP_MARGIN})`, marginTop: `calc${TOP_MARGIN}` }}>
-      <Viewport>
-        <Container timeline>
-          <Switcher term={term.name} onSwitch={switchTerm} />
-          <Weeks start={defaultTerm.start} weeks={defaultTerm.weeks} />
-          <Modules modules={modules} term={term.name} rowHeights={rowHeights} />
-          {/* NOTE: Everything under here will be placed in the background area */}
-          <Tracks term={term} weeks={term.weeks} trackMap={trackMap} />
-          <DayIndicator weeks={term.weeks} currentDayColumn={dateToColumn(new Date(2021, 9, 21), term.start)} />
-          <MainBackground cols={defaultTerm.weeks} rowHeights={rowHeights} />
-        </Container>
-      </Viewport>
-      <Scrollbar orientation="vertical">
-        <Thumb />
-      </Scrollbar>
-      <Scrollbar orientation="horizontal">
-        <Thumb />
-      </Scrollbar>
-      <Corner />
-    </Area>
+    <>
+      <Area css={{ height: `calc(100vh - ${TOP_MARGIN})`, marginTop: `calc${TOP_MARGIN}` }}>
+        <Viewport>
+          <Container timeline>
+            <Switcher term={term.name} onSwitch={switchTerm} />
+            <Weeks start={defaultTerm.start} weeks={defaultTerm.weeks} />
+            <Modules modules={modules} term={term.name} rowHeights={rowHeights} />
+            {/* NOTE: Everything under here will be placed in the background area */}
+            <Tracks term={term} weeks={term.weeks} trackMap={trackMap} />
+            <DayIndicator weeks={term.weeks} currentDayColumn={dateToColumn(new Date(2021, 9, 21), term.start)} />
+            <MainBackground cols={defaultTerm.weeks} rowHeights={rowHeights} />
+          </Container>
+        </Viewport>
+        <Scrollbar orientation="vertical">
+          <Thumb />
+        </Scrollbar>
+        <Scrollbar orientation="horizontal">
+          <Thumb />
+        </Scrollbar>
+        <Corner />
+      </Area>
+      <ExerciseDialog open={true} onOpenChange={() => {}} />
+    </>
   )
 }
 
