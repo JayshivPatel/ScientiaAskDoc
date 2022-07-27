@@ -56,6 +56,8 @@ const ExerciseDialog = ({
             )}
           </Dropzone>
         </div>
+
+        <p style={{ fontSize: '0.8rem' }}>By submitting, you agree that this is your own, unaided work.</p>
       </div>
     </Dialog>
   )
