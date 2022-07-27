@@ -1,4 +1,7 @@
+import React from 'react'
+
 import { Exercise } from '../../constants/types'
+import { Tabs } from '../Tabs'
 import Dialog from './Dialog'
 
 const ExerciseDialog = ({
@@ -10,6 +13,10 @@ const ExerciseDialog = ({
   onOpenChange: (_: boolean) => void
   exercise: Exercise
 }) => {
+  const items = [
+    { title: 'Spec', link: 'https://google.com' },
+    { title: 'Model Answer', link: 'https://example.com' },
+  ]
   return (
     <Dialog
       title={exercise.title}
@@ -20,10 +27,14 @@ const ExerciseDialog = ({
     >
       <div>
         <h4>Resources</h4>
-        {/* show specs / resources */}
+        <Tabs
+          data={items}
+          generator={(tab: any) => <span>{tab.title}</span>}
+          onClick={(tab: any) => {
+            window.open(tab.link)
+          }}
+        />
       </div>
-
-      {/* how many hours (?) */}
 
       <div>
         <h4>Submission</h4>

@@ -101,7 +101,7 @@ const Timeline = () => {
       </Area>
       {exercise && (
         <ExerciseDialog
-          open={exercise !== null}
+          open={true}
           onOpenChange={() => {
             setExercise(null)
           }}
