@@ -1,6 +1,7 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
 import { useState } from 'react'
+import { FileX, Upload } from 'react-bootstrap-icons'
 import Dropzone, { useDropzone } from 'react-dropzone'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
@@ -27,29 +28,17 @@ const ExerciseDialog = ({
 
   const [submittedFiles, setSubmittedFiles] = useState<SubmittedFile[]>([])
 
-  const fileRequirements = [
+  interface FileDetail {
+    name: string
+    type: string
+    file?: SubmittedFile
+  }
+
+  const [fileDetails, setFileDetails] = useState<FileDetail[]>([
     { name: 'Report', type: 'pdf' },
     { name: 'Video-link', type: 'txt' },
     { name: 'Slides', type: 'pdf' },
-  ]
-
-  const onDrop = (files: any): void => {
-    setSubmittedFiles((previousFiles: SubmittedFile[]) => {
-      return [
-        ...previousFiles,
-        ...files.map((file: any) => {
-          let formData = new FormData()
-          formData.append('file', file)
-
-          return {
-            name: file.name,
-            file: formData,
-            size: prettyBytes(file.size),
-          }
-        }),
-      ]
-    })
-  }
+  ])
 
   const items = [
     { title: 'Spec', link: 'https://google.com' },
@@ -93,17 +82,31 @@ const ExerciseDialog = ({
         <hr />
 
         <Tabs
-          data={fileRequirements}
+          data={fileDetails}
           generator={(file: any) => (
             <>
-              <label className="row" htmlFor={`file-upload-${file.name}`}>
-                <div className="column" style={{ float: 'left' }}>
-                  <p>
-                    {file.name} ({file.type})
-                  </p>
+              <label
+                style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}
+                htmlFor={`file-upload-${file.name}`}
+              >
+                <div>
+                  <p>{file.name}</p>
+                  <p>({file.type})</p>
+                </div>
+                <div>
+                  <p></p>
+                  <Upload />
                 </div>
               </label>
-              <input type="file" id={`file-upload-${file.name}`} hidden />
+              <input
+                onChange={(e) => {
+                  console.log(e.target.value)
+                  console.log(e.target.files)
+                }}
+                type="file"
+                id={`file-upload-${file.name}`}
+                hidden
+              />
             </>
           )}
         />
