@@ -1,9 +1,18 @@
+import { Exercise } from '../../constants/types'
 import Dialog from './Dialog'
 
-const ExerciseDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange: (_: boolean) => void }) => {
+const ExerciseDialog = ({
+  open,
+  onOpenChange,
+  exercise,
+}: {
+  open: boolean
+  onOpenChange: (_: boolean) => void
+  exercise: Exercise
+}) => {
   return (
     <Dialog
-      title={'Submit your work'}
+      title={'Submit your work: ' + exercise.title}
       primaryButtonText={'Submit'}
       secondaryButtonText={'Cancel'}
       onPrimaryClick={() => {}}
