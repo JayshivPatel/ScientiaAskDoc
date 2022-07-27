@@ -17,6 +17,7 @@ const ExerciseDialog = ({
   onOpenChange: (_: boolean) => void
   exercise: Exercise
 }) => {
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone()
   const items = [
     { title: 'Spec', link: 'https://google.com' },
     { title: 'Model Answer', link: 'https://example.com' },
@@ -61,8 +62,19 @@ const ExerciseDialog = ({
           }}
         />
 
+        <hr />
+
+        <Tabs
+          data={acceptedFiles}
+          generator={(file: any) => (
+            <span>
+              {file.name} - {file.size}
+            </span>
+          )}
+        />
+
         <div style={{ cursor: 'pointer', borderStyle: 'dashed', borderWidth: '2px' }}>
-          <Dropzone onDrop={() => {}}>
+          <Dropzone>
             {({ getRootProps, getInputProps }) => (
               <section>
                 <div {...getRootProps()} style={{ textAlign: 'center', padding: '1rem' }}>
