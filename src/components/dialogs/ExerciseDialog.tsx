@@ -1,7 +1,9 @@
+import { utcToZonedTime } from 'date-fns-tz'
 import React from 'react'
 import { useDropzone } from 'react-dropzone'
 import Dropzone from 'react-dropzone'
 
+import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise } from '../../constants/types'
 import { Tabs } from '../Tabs'
 import Dialog from './Dialog'
@@ -18,6 +20,11 @@ const ExerciseDialog = ({
   const items = [
     { title: 'Spec', link: 'https://google.com' },
     { title: 'Model Answer', link: 'https://example.com' },
+  ]
+
+  const submittedItems = [
+    { title: 'report.pdf', timestamp: 'Friday 1st July 2022 at 3.30am', link: 'https://google.com' },
+    { title: 'data.txt', timestamp: 'Friday 1st July 2022 at 6.59am', link: 'https://bbc.co.uk' },
   ]
   return (
     <Dialog
@@ -41,6 +48,18 @@ const ExerciseDialog = ({
       <div>
         <h4>Submission</h4>
         {/* upload answers */}
+
+        <Tabs
+          data={submittedItems}
+          generator={(tab: any) => (
+            <span>
+              {tab.title} - {tab.timestamp}
+            </span>
+          )}
+          onClick={(tab: any) => {
+            window.open(tab.link)
+          }}
+        />
 
         <div style={{ cursor: 'pointer', borderStyle: 'dashed', borderWidth: '2px' }}>
           <Dropzone onDrop={() => {}}>
