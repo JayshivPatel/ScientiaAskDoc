@@ -1,8 +1,7 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
 import { useState } from 'react'
-import { useDropzone } from 'react-dropzone'
-import Dropzone from 'react-dropzone'
+import Dropzone, { useDropzone } from 'react-dropzone'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise } from '../../constants/types'
@@ -27,6 +26,12 @@ const ExerciseDialog = ({
   }
 
   const [submittedFiles, setSubmittedFiles] = useState<SubmittedFile[]>([])
+
+  const fileRequirements = [
+    { name: 'Report', type: 'pdf' },
+    { name: 'Video-link', type: 'txt' },
+    { name: 'Slides', type: 'pdf' },
+  ]
 
   const onDrop = (files: any): void => {
     setSubmittedFiles((previousFiles: SubmittedFile[]) => {
@@ -81,47 +86,27 @@ const ExerciseDialog = ({
         />
       </div>
 
-      <div>
+      <div style={{ marginTop: '1rem' }}>
         <h4>Submission</h4>
         {/* upload answers */}
-
-        <Tabs
-          data={submittedItems}
-          generator={(tab: any) => (
-            <span>
-              {tab.title} - {tab.timestamp}
-            </span>
-          )}
-          onClick={(tab: any) => {
-            window.open(tab.link)
-          }}
-        />
 
         <hr />
 
         <Tabs
-          data={submittedFiles}
+          data={fileRequirements}
           generator={(file: any) => (
-            <span>
-              {file.name} - {file.size}
-            </span>
+            <>
+              <label className="row" htmlFor={`file-upload-${file.name}`}>
+                <div className="column" style={{ float: 'left' }}>
+                  <p>
+                    {file.name} ({file.type})
+                  </p>
+                </div>
+              </label>
+              <input type="file" id={`file-upload-${file.name}`} hidden />
+            </>
           )}
         />
-
-        <div style={{ cursor: 'pointer', borderStyle: 'dashed', borderWidth: '2px' }}>
-          <Dropzone onDrop={onDrop}>
-            {({ getRootProps, getInputProps }) => (
-              <section>
-                <div {...getRootProps()} style={{ textAlign: 'center', padding: '1rem' }}>
-                  <input {...getInputProps()} />
-                  <p>Drag files here</p>
-                  <p>or</p>
-                  <p>Select files from your device</p>
-                </div>
-              </section>
-            )}
-          </Dropzone>
-        </div>
 
         <p style={{ fontSize: '0.8rem' }}>By submitting, you agree that this is your own, unaided work.</p>
       </div>
