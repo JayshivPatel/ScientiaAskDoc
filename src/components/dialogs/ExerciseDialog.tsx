@@ -36,12 +36,12 @@ const ExerciseDialog = ({
   ]
 
   // Date format: https://date-fns.org/v2.29.1/docs/format
-  const formatTimestamp = (date: string) => formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm aaa, dd LLL yyyy')
+  const formatTimestamp = (date: Date | string) => formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm aaa, dd LLL yyyy')
 
   return (
     <Dialog
       title={exercise.title}
-      primaryButtonText={'Submit'}
+      primaryButtonText={'Upload'}
       secondaryButtonText={'Cancel'}
       onPrimaryClick={() => {}}
       {...{ open, onOpenChange }}
@@ -60,15 +60,14 @@ const ExerciseDialog = ({
       <div style={{ marginTop: '1rem' }}>
         <h4>Submission</h4>
         {/* upload answers */}
-
+        Deadline: {formatTimestamp(exercise.endDate)} (UK Time)
         <hr />
-
         <UploadWrapper>
           {fileDetails.map((file, fileIndex) => (
             <div key={fileIndex} style={{ display: 'flex', justifyContent: 'space-between' }}>
               <UploadButton
                 style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}
-                htmlFor={`file-upload-${file.name}`}
+                htmlFor={`file-upload-${fileIndex}`}
               >
                 <div>
                   <p>
@@ -107,14 +106,13 @@ const ExerciseDialog = ({
                   disabled={!!file.file} // not working
                   type="file"
                   accept={file.type.join(',')}
-                  id={`file-upload-${file.name}`}
+                  id={`file-upload-${fileIndex}`}
                   hidden
                 />
               </UploadButton>
             </div>
           ))}
         </UploadWrapper>
-
         <p style={{ fontSize: '0.8rem' }}>By submitting, you agree that this is your own, unaided work.</p>
       </div>
     </Dialog>
