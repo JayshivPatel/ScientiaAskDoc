@@ -22,6 +22,7 @@ const ExerciseDialog = ({
     name: string
     type: string[]
     file?: File
+    timestamp?: Date
   }
 
   const [fileDetails, setFileDetails] = useState<FileDetail[]>([
@@ -71,9 +72,13 @@ const ExerciseDialog = ({
               >
                 <div>
                   <p>
-                    {file.name} ({file.type.join(', ')})
+                    {file.name} ({file.type.join(', ')}) <span>{} </span>
                   </p>
-                  <p>{file.file ? prettyBytes(file.file.size) : ' '}</p>
+                  <p>
+                    {file.file
+                      ? `${file.timestamp && formatTimestamp(file.timestamp)} &bull; ${prettyBytes(file.file.size)}`
+                      : ' '}
+                  </p>
                 </div>
 
                 {file.file ? (
@@ -98,7 +103,9 @@ const ExerciseDialog = ({
                     if (event.target.files === null) return // clear
                     setFileDetails((fileDetails: FileDetail[]) =>
                       fileDetails.map((fileDetail, index) =>
-                        index === fileIndex ? { ...fileDetail, file: event.target.files![0] } : fileDetail
+                        index === fileIndex
+                          ? { ...fileDetail, file: event.target.files![0], timestamp: new Date() }
+                          : fileDetail
                       )
                     )
                     console.log(event.target.files[0])
