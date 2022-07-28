@@ -1,6 +1,6 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Trash3Fill, Upload } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
@@ -20,14 +20,14 @@ const ExerciseDialog = ({
 }) => {
   interface FileDetail {
     name: string
-    type: string
+    type: string[]
     file?: File
   }
 
   const [fileDetails, setFileDetails] = useState<FileDetail[]>([
-    { name: 'Report', type: 'pdf' },
-    { name: 'Video-link', type: 'txt' },
-    { name: 'Slides', type: 'pdf' },
+    { name: 'Report', type: ['.pdf', '.txt'] },
+    { name: 'Video-link', type: ['.mp4', '.pdf'] },
+    { name: 'Slides', type: ['.pdf', '.txt'] },
   ])
 
   const items = [
@@ -65,14 +65,14 @@ const ExerciseDialog = ({
 
         <UploadWrapper>
           {fileDetails.map((file, fileIndex) => (
-            <>
+            <div key={fileIndex} style={{ display: 'flex', justifyContent: 'space-between' }}>
               <UploadButton
                 style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}
                 htmlFor={`file-upload-${file.name}`}
               >
                 <div>
                   <p>
-                    {file.name} ({file.type})
+                    {file.name} ({file.type.join(', ')})
                   </p>
                   <p>{file.file ? prettyBytes(file.file.size) : ' '}</p>
                 </div>
@@ -80,7 +80,16 @@ const ExerciseDialog = ({
                 {file.file ? (
                   <>
                     <p>{file.file?.name}</p>
-                    <Trash3Fill />
+                    <Trash3Fill
+                      onClick={() => {
+                        console.log({ fileDetails })
+                        setFileDetails((fileDetails: FileDetail[]) =>
+                          fileDetails.map((fileDetail, index) =>
+                            index === fileIndex ? { ...fileDetail, file: undefined } : fileDetail
+                          )
+                        )
+                      }}
+                    />
                   </>
                 ) : (
                   <Upload />
@@ -95,12 +104,14 @@ const ExerciseDialog = ({
                     )
                     console.log(event.target.files[0])
                   }}
+                  disabled={!!file.file} // not working
                   type="file"
+                  accept={file.type.join(',')}
                   id={`file-upload-${file.name}`}
                   hidden
                 />
               </UploadButton>
-            </>
+            </div>
           ))}
         </UploadWrapper>
 
