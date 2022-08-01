@@ -22,10 +22,10 @@ const Dialog = ({
 }: {
   open: boolean
   onOpenChange: (_: boolean) => void
-  onPrimaryClick: () => void
+  onPrimaryClick?: () => void
   title?: string
-  primaryButtonText: string
-  secondaryButtonText: string
+  primaryButtonText?: string
+  secondaryButtonText?: string
   children?: ReactNode
 }) => (
   <DialogRoot open={open} onOpenChange={onOpenChange}>
@@ -33,14 +33,18 @@ const Dialog = ({
       {title && <Title>{title}</Title>}
       {children}
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <DialogClose asChild>
-          <Button style={{ display: 'inline-block', width: '6rem' }}>{secondaryButtonText}</Button>
-        </DialogClose>
-        <DialogClose asChild>
-          <Button style={{ display: 'inline-block', marginLeft: '1rem', width: '6rem' }} onClick={onPrimaryClick}>
-            {primaryButtonText}
-          </Button>
-        </DialogClose>
+        {secondaryButtonText && (
+          <DialogClose asChild>
+            <Button style={{ display: 'inline-block', width: '6rem' }}>{secondaryButtonText}</Button>
+          </DialogClose>
+        )}
+        {primaryButtonText && (
+          <DialogClose asChild>
+            <Button style={{ display: 'inline-block', marginLeft: '1rem', width: '6rem' }} onClick={onPrimaryClick}>
+              {primaryButtonText}
+            </Button>
+          </DialogClose>
+        )}
       </div>
     </ContentFrame>
   </DialogRoot>

@@ -9,7 +9,8 @@ export const UploadWrapper = styled('div', {
 /* TODO: Implement user specified overrides */
 export const UploadButton = styled('label', {
   all: 'unset',
-  padding: '0.75rem',
+  padding: '1rem',
+  borderRadius: '8px',
   color: '$highContrast',
   display: 'flex',
   cursor: 'pointer',

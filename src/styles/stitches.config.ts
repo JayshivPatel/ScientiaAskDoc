@@ -1,4 +1,6 @@
 import {
+  amber,
+  amberDark,
   blackA,
   blue,
   blueDark,
@@ -34,6 +36,7 @@ export const { styled, css, globalCss, theme } = createStitches({
       ...green,
       ...cyan,
       ...blackA,
+      ...amber,
       appBackground: '$sand1',
       subtleBackground: '$sand2',
       elementBackground: '$sand3',
@@ -58,6 +61,7 @@ export const darkTheme = createTheme({
   colors: {
     ...sandDark,
     ...blueDark,
+    ...amberDark,
     ...redDark,
     ...greenDark,
     ...cyanDark,
