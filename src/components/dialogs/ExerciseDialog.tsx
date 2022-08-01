@@ -1,11 +1,12 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { Trash3Fill, Upload } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise } from '../../constants/types'
-import { UploadButton, UploadWrapper } from '../../styles/exerciseDialog.style'
+import { useExercises } from '../../lib/exercises.service'
+import { ModulePill, UploadButton, UploadWrapper } from '../../styles/exerciseDialog.style'
 import { Tabs } from '../Tabs'
 import Dialog from './Dialog'
 
@@ -41,12 +42,15 @@ const ExerciseDialog = ({
 
   return (
     <Dialog
-      title={exercise.title}
       primaryButtonText={'Upload'}
       secondaryButtonText={'Cancel'}
       onPrimaryClick={() => {}}
       {...{ open, onOpenChange }}
     >
+      <h3>{exercise.title}</h3>
+      <ModulePill>
+        {exercise.module_code}: {exercise.module_name}
+      </ModulePill>
       <div>
         <h4>Resources</h4>
         <Tabs
@@ -75,9 +79,8 @@ const ExerciseDialog = ({
                     {file.name} ({file.type.join(', ')}) <span>{} </span>
                   </p>
                   <p>
-                    {file.file
-                      ? `${file.timestamp && formatTimestamp(file.timestamp)} &bull; ${prettyBytes(file.file.size)}`
-                      : ' '}
+                    {file.file &&
+                      `${file.timestamp && formatTimestamp(file.timestamp)} • ${prettyBytes(file.file.size)}`}
                   </p>
                 </div>
 

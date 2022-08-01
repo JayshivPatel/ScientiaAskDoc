@@ -23,14 +23,14 @@ const Dialog = ({
   open: boolean
   onOpenChange: (_: boolean) => void
   onPrimaryClick: () => void
-  title: string
+  title?: string
   primaryButtonText: string
   secondaryButtonText: string
   children?: ReactNode
 }) => (
   <DialogRoot open={open} onOpenChange={onOpenChange}>
     <ContentFrame>
-      <Title>{title}</Title>
+      {title && <Title>{title}</Title>}
       {children}
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <DialogClose asChild>

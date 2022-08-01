@@ -99,15 +99,7 @@ const Timeline = () => {
         </Scrollbar>
         <Corner />
       </Area>
-      {exercise && (
-        <ExerciseDialog
-          open={true}
-          onOpenChange={() => {
-            setExercise(null)
-          }}
-          exercise={exercise}
-        />
-      )}
+      {exercise && <ExerciseDialog open={true} onOpenChange={() => setExercise(null)} exercise={exercise} />}
     </>
   )
 }

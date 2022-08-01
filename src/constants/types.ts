@@ -36,6 +36,8 @@ export class Exercise {
   number: number
   title: string
   type: string
+  module_code?: string
+  module_name?: string
 
   @Expose({ name: 'submission_type' })
   submissionType: string

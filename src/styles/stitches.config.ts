@@ -1,4 +1,16 @@
-import { blackA, blue, cyan, cyanDark, green, greenDark, red, redDark, sand, sandDark } from '@radix-ui/colors'
+import {
+  blackA,
+  blue,
+  blueDark,
+  cyan,
+  cyanDark,
+  green,
+  greenDark,
+  red,
+  redDark,
+  sand,
+  sandDark,
+} from '@radix-ui/colors'
 import { createStitches, createTheme } from '@stitches/react'
 
 export const { styled, css, globalCss, theme } = createStitches({
@@ -45,6 +57,7 @@ export const { styled, css, globalCss, theme } = createStitches({
 export const darkTheme = createTheme({
   colors: {
     ...sandDark,
+    ...blueDark,
     ...redDark,
     ...greenDark,
     ...cyanDark,

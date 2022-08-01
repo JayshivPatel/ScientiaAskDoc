@@ -18,3 +18,14 @@ export const UploadButton = styled('label', {
     background: '$elementHover',
   },
 })
+
+export const ModulePill = styled('p', {
+  background: '$blue5',
+  fontSize: '14px',
+  borderRadius: '16px',
+  padding: '4px 12px',
+  display: 'inline-block',
+  width: 'fit-content',
+  margin: 0,
+  textAlign: 'center',
+})
