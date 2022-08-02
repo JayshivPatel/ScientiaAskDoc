@@ -68,7 +68,7 @@ const ExerciseDialog = ({
   useEffect(() => console.log({ dataFiles }), [dataFiles])
 
   // Date format: https://date-fns.org/v2.29.1/docs/format
-  const formatTimestamp = (date: Date | string) => formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm aaa, d LLL yyyy')
+  const formatTimestamp = (date: Date | string) => formatInTimeZone(date, LONDON_TIMEZONE, 'd LLL yyyy, h:mm aaa zzz')
 
   return (
     <Dialog {...{ open, onOpenChange }}>
@@ -81,7 +81,7 @@ const ExerciseDialog = ({
         </ModulePill>
         <address>
           <a
-            title="Email the owner of this exercise: Andrea Callia D'Iddio (username)"
+            title="Email the exercise owner: Andrea Callia D'Iddio (username)"
             href="mailto:a.callia-diddio14@imperial.ac.uk"
           >
             <Envelope size={24} />
@@ -124,14 +124,14 @@ const ExerciseDialog = ({
 
       <div style={{ marginTop: '1rem' }}>
         <h4>Submission</h4>
-        <p style={{ fontSize: '14px', color: '$sand8' }}>Deadline: {formatTimestamp(exercise.endDate)} (UK Time)</p>
-        <hr />
+        <p style={{ fontSize: '14px', color: '$sand8' }}>Deadline: {formatTimestamp(exercise.endDate)}</p>
         <UploadWrapper>
           {filesToSubmit.map((file, fileIndex) => (
             <div key={fileIndex} style={{ display: 'flex', justifyContent: 'space-between' }}>
               <UploadButton
                 css={{
                   backgroundColor: file.file ? '$green5' : '',
+                  marginTop: '1rem',
                 }}
                 style={{
                   display: 'flex',
@@ -142,10 +142,8 @@ const ExerciseDialog = ({
               >
                 {file.file && <CheckCircle />}
                 <div>
-                  <p>
-                    {file.name} <div style={{ fontSize: '0.8rem' }}>({file.suffix.join(', ')})</div>
-                  </p>
-
+                  <p>{file.name}</p>
+                  <p style={{ fontSize: '0.8rem' }}>({file.suffix.join(', ')})</p>
                   <p style={{ fontSize: '12px', color: '$sand8' }}>
                     {file.file && file.timestamp && formatTimestamp(file.timestamp)}
                   </p>
@@ -169,8 +167,9 @@ const ExerciseDialog = ({
               )}
               <input
                 onChange={(event) => {
+                  console.log('hello')
                   if (event.target.files === null) return // clear
-                  // submitFileToExercise()
+                  // submitFileToExercise(event.target.files[0])
                   setFilesToSubmit((filesToSubmit: FileToSubmit[]) =>
                     filesToSubmit.map((fileToSubmit, index) =>
                       index === fileIndex
@@ -182,14 +181,16 @@ const ExerciseDialog = ({
                 }}
                 // disabled={!!file.file} // not working
                 type="file"
-                accept={file.suffix.join(',')}
+                accept={'.' + file.suffix.join(', .')}
                 id={`file-upload-${fileIndex}`}
                 hidden
               />
             </div>
           ))}
         </UploadWrapper>
-        <p style={{ fontSize: '0.8rem' }}>By uploading, you agree that this is your own, unaided work.</p>
+        <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>
+          By uploading, you agree that this is your own, unaided work.
+        </p>
       </div>
     </Dialog>
   )

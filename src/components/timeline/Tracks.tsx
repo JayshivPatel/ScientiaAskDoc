@@ -49,9 +49,10 @@ export const Tracks = ({
                 startColumn={dateToColumn(exercise.startDate, term.start)}
                 endColumn={dateToColumn(exercise.endDate, term.start)}
                 row={trackIndex + 1}
+                disabled={exercise.startDate >= new Date(2021, 10)}
                 onClick={() => {
-                  console.log(`Clicked on '${exercise.title}'`)
-                  setExercise(exercise)
+                  // TODO: change to new Date(). It's set to Oct 2021 for dev purposes
+                  if (exercise.startDate < new Date(2021, 10)) setExercise(exercise)
                 }}
               />
             )
