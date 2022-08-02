@@ -1,7 +1,7 @@
 //okipullup
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CheckCircle, Envelope, Trash3Fill, Upload } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
@@ -20,23 +20,46 @@ const ExerciseDialog = ({
   onOpenChange: (_: boolean) => void
   exercise: Exercise
 }) => {
-  interface FileDetail {
+  const { getExerciseMaterials } = useExercises()
+
+  interface Material {
     name: string
-    type: string[]
+    suffix: string[]
+    url: string
+  }
+
+  interface FileToSubmit {
+    name: string
+    suffix: string[]
+    max_size: number
+    url?: string
+    size?: number
     file?: File
     timestamp?: Date
   }
 
-  const [fileDetails, setFileDetails] = useState<FileDetail[]>([
-    { name: 'Report', type: ['.pdf', '.txt'] },
-    { name: 'Video-link', type: ['.mp4', '.pdf'] },
-    { name: 'Slides', type: ['.pdf', '.txt'] },
-  ])
+  const [spec, setSpec] = useState<Material | null>(null)
+  const [modelAnswers, setModelAnswers] = useState([])
+  const [dataFiles, setDataFiles] = useState([])
+  const [filesToUpload, setFilesToUpload] = useState<FileToSubmit[]>([])
 
-  const items = [
-    { title: 'Spec', link: 'https://google.com' },
-    { title: 'Model Answer', link: 'https://example.com' },
-  ]
+  // const items = [
+  //   { title: 'Spec', link: 'https://google.com' },
+  //   { title: 'Model Answer', link: 'https://example.com' },
+  // ]
+  // const [fileDetails, setFileDetails] = useState<FileDetail[]>([
+  //   { name: 'Report', type: ['.pdf', '.txt'] },
+  //   { name: 'Video-link', type: ['.mp4', '.pdf'] },
+  //   { name: 'Slides', type: ['.pdf', '.txt'] },
+  // ])
+
+  useEffect(() => {
+    const exerciseMaterials = getExerciseMaterials()
+    setSpec(exerciseMaterials.spec)
+    setModelAnswers(exerciseMaterials.modal_answers)
+    setDataFiles(exerciseMaterials.data_files)
+    setFilesToUpload(exerciseMaterials.submit)
+  }, [])
 
   // Date format: https://date-fns.org/v2.29.1/docs/format
   const formatTimestamp = (date: Date | string) => formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm aaa, d LLL yyyy')
@@ -49,17 +72,16 @@ const ExerciseDialog = ({
       </ModulePill>
       <address>
         <a href="mailto:a.callia-diddio14@imperial.ac.uk">
-          Set by: Andrea Callia D'Iddio
           <Envelope />
         </a>
       </address>
       <div style={{ marginTop: '1rem' }}>
         <h4>Resources</h4>
         <Tabs
-          data={items}
-          generator={(tab: any) => <span>{tab.title}</span>}
+          data={materials}
+          generator={(tab: any) => <span>{tab.name}</span>}
           onClick={(tab: any) => {
-            window.open(tab.link)
+            window.open(tab.url)
           }}
         />
       </div>
@@ -69,7 +91,7 @@ const ExerciseDialog = ({
         <p style={{ fontSize: '14px', color: '$sand8' }}>Deadline: {formatTimestamp(exercise.endDate)} (UK Time)</p>
         <hr />
         <UploadWrapper>
-          {fileDetails.map((file, fileIndex) => (
+          {filesToUpload.map((file, fileIndex) => (
             <div key={fileIndex} style={{ display: 'flex', justifyContent: 'space-between' }}>
               <UploadButton
                 css={{
@@ -85,7 +107,7 @@ const ExerciseDialog = ({
                 {file.file && <CheckCircle />}
                 <div>
                   <p>
-                    {file.name} ({file.type.join(', ')}) <span>{} </span>
+                    {file.name} ({file.suffix}) <span>{} </span>
                   </p>
 
                   <p style={{ fontSize: '12px', color: '$sand8' }}>
@@ -100,10 +122,10 @@ const ExerciseDialog = ({
               {file.file && (
                 <Trash3Fill
                   onClick={() => {
-                    console.log({ fileDetails })
-                    setFileDetails((fileDetails: FileDetail[]) =>
-                      fileDetails.map((fileDetail, index) =>
-                        index === fileIndex ? { ...fileDetail, file: undefined } : fileDetail
+                    console.log({ filesToUpload })
+                    setFilesToUpload((filesToUpload: any) =>
+                      filesToUpload.map((fileToUpload: any, index: number) =>
+                        index === fileIndex ? { ...fileToUpload, file: undefined } : fileToUpload
                       )
                     )
                   }}
