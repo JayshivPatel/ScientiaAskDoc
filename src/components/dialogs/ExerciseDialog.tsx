@@ -1,8 +1,7 @@
-//okipullup
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
 import { useEffect, useState } from 'react'
-import { CheckCircle, Envelope, Trash3Fill, Upload } from 'react-bootstrap-icons'
+import { Check, Envelope, FileEarmarkText, Trash3Fill, Upload } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise } from '../../constants/types'
@@ -56,16 +55,11 @@ const ExerciseDialog = ({
 
   useEffect(() => {
     if (!exerciseMaterials) return
-    console.log({ exerciseMaterials })
     setSpec(exerciseMaterials.spec)
     setModelAnswers(exerciseMaterials.model_answers)
     setDataFiles(exerciseMaterials.data_files)
-    setFilesToSubmit(exerciseMaterials.handin)
+    setFilesToSubmit(exerciseMaterials.hand_ins)
   }, [exerciseMaterials])
-
-  useEffect(() => console.log({ spec }), [spec])
-  useEffect(() => console.log({ modelAnswers }), [modelAnswers])
-  useEffect(() => console.log({ dataFiles }), [dataFiles])
 
   // Date format: https://date-fns.org/v2.29.1/docs/format
   const formatTimestamp = (date: Date | string) => formatInTimeZone(date, LONDON_TIMEZONE, 'd LLL yyyy, h:mm aaa zzz')
@@ -127,10 +121,18 @@ const ExerciseDialog = ({
         <p style={{ fontSize: '14px', color: '$sand8' }}>Deadline: {formatTimestamp(exercise.endDate)}</p>
         <UploadWrapper>
           {filesToSubmit.map((file, fileIndex) => (
-            <div key={fileIndex} style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div
+              key={fileIndex}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
               <UploadButton
                 css={{
-                  backgroundColor: file.file ? '$green5' : '',
+                  backgroundColor: file.file ? '$green5' : '$sand1',
+                  filter: 'drop-shadow(0 1px 2px rgba(0,0,0,.06)) drop-shadow(0 1px 3px rgba(0,0,0,.1))',
                   marginTop: '1rem',
                 }}
                 style={{
@@ -140,31 +142,33 @@ const ExerciseDialog = ({
                 }}
                 htmlFor={`file-upload-${fileIndex}`}
               >
-                {file.file && <CheckCircle />}
-                <div>
-                  <p>{file.name}</p>
-                  <p style={{ fontSize: '0.8rem' }}>({file.suffix.join(', ')})</p>
-                  <p style={{ fontSize: '12px', color: '$sand8' }}>
-                    {file.file && file.timestamp && formatTimestamp(file.timestamp)}
-                  </p>
-                  <p style={{ fontSize: '12px', color: '$sand8' }}>{file.file && prettyBytes(file.file.size)}</p>
-                </div>
+                {file.file && <Check style={{ fontSize: '1.5rem' }} />}
+                <FileEarmarkText size={20} />
+                <p>{file.name}</p>
+                <p style={{ fontSize: '0.8rem', display: 'inline-flex', verticalAlign: 'middle' }}>
+                  {'.' + file.suffix.join(', .')}
+                </p>
+                <p style={{ fontSize: '12px', color: '$sand8', verticalAlign: 'middle', alignItems: 'center' }}>
+                  {file.file &&
+                    `${file.timestamp && formatTimestamp(file.timestamp) + '•'} ${prettyBytes(file.file.size)}`}
+                </p>
 
                 {file.file ? <p>{file.file?.name}</p> : <Upload />}
+                {file.file && (
+                  <Trash3Fill
+                    style={{ fontSize: '1rem' }}
+                    onClick={() => {
+                      console.log({ filesToSubmit })
+                      setFilesToSubmit((filesToSubmit: any) =>
+                        filesToSubmit.map((fileToSubmit: any, index: number) =>
+                          index === fileIndex ? { ...fileToSubmit, file: undefined } : fileToSubmit
+                        )
+                      )
+                    }}
+                  />
+                )}
               </UploadButton>
 
-              {file.file && (
-                <Trash3Fill
-                  onClick={() => {
-                    console.log({ filesToSubmit })
-                    setFilesToSubmit((filesToSubmit: any) =>
-                      filesToSubmit.map((fileToSubmit: any, index: number) =>
-                        index === fileIndex ? { ...fileToSubmit, file: undefined } : fileToSubmit
-                      )
-                    )
-                  }}
-                />
-              )}
               <input
                 onChange={(event) => {
                   console.log('hello')

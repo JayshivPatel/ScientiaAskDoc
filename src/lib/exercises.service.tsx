@@ -74,41 +74,37 @@ export const useExercises = (): any => {
     //   })
 
     setExerciseMaterials({
-      owner: {
-        shortcode: 'kgk',
-      },
+      owner: { shortcode: 'pipl12', email: 'pipl12@imperial.ac.uk', name: null },
       spec: {
         name: 'specification',
-        suffix: 'pdf',
-        url: 'https://cate.doc.ic.ac.uk/showfile.cgi?key=2021:1:1:q5:SPECS',
+        suffix: ['pdf'],
+        url: 'https://cate.doc.ic.ac.uk/showfile.cgi?key=2021:1:1:v5:SPECS',
       },
-      handin: [
+      hand_ins: [
+        { name: 'final_report', suffix: ['pdf'], url: null, max_size: 1 },
+        { name: 'slides', suffix: ['pdf', 'ppt', 'pptx'], url: null, max_size: 1 },
+        { name: 'ethics_checklist', suffix: ['pdf', 'xls', 'xlsx'], url: null, max_size: 1 },
+      ],
+      model_answers: [
+        { name: 'solution', suffix: ['pdf'], url: 'https://cate.doc.ic.ac.uk/showfile.cgi?key=2021:1:2:v5:MODELS' },
         {
-          name: 'final_report',
+          name: 'ethics_checklist',
           suffix: ['pdf'],
-          max_size: 100000,
+          url: 'https://cate.doc.ic.ac.uk/showfile.cgi?key=2021:1:6:v5:MODELS',
         },
+      ],
+      data_files: [
         {
-          name: 'slides',
-          suffix: ['pdf', 'ppt', 'pptx'],
-          max_size: 100000,
-          url: 'https://cate.doc.ic.ac.uk/submission_file_1',
-          size: 2345,
+          name: 'ethics_checklist',
+          suffix: ['csv'],
+          url: 'https://cate.doc.ic.ac.uk/showfile.cgi?key=2021:1:7:v5:DATA',
         },
         {
           name: 'ethics_checklist',
-          suffix: ['pdf', 'xls', 'xlsx'],
-          max_size: 100000,
+          suffix: ['txt'],
+          url: 'https://cate.doc.ic.ac.uk/showfile.cgi?key=2021:1:8:v5:DATA',
         },
       ],
-      model_answers: [
-        {
-          name: 'solution',
-          suffix: 'pdf',
-          url: 'https://cate.doc.ic.ac.uk/showfile.cgi?key=2021:1:2:q5:MODELS',
-        },
-      ],
-      data_files: [], // ?
     })
   }
 

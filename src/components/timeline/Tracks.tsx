@@ -51,7 +51,7 @@ export const Tracks = ({
                 row={trackIndex + 1}
                 disabled={exercise.startDate >= new Date(2021, 10)}
                 onClick={() => {
-                  // TODO: change to new Date(). It's set to Oct 2021 for dev purposes
+                  // TODO: change to new Date(). It's set to 1 Oct 2021 for dev purposes
                   if (exercise.startDate < new Date(2021, 10)) setExercise(exercise)
                 }}
               />

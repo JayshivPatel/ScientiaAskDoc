@@ -10,13 +10,13 @@ export const UploadWrapper = styled('div', {
 export const UploadButton = styled('label', {
   all: 'unset',
   padding: '1rem',
-  borderRadius: '8px',
+  borderRadius: '12px',
   color: '$highContrast',
   display: 'flex',
   cursor: 'pointer',
   justifyContent: 'space-between',
   '&:hover': {
-    background: '$elementHover',
+    opacity: '80%',
   },
 })
 
