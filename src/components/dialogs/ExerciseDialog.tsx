@@ -127,6 +127,7 @@ const ExerciseDialog = ({
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
+                verticalAlign: 'middle',
               }}
             >
               <UploadButton
@@ -142,18 +143,55 @@ const ExerciseDialog = ({
                 }}
                 htmlFor={`file-upload-${fileIndex}`}
               >
-                {file.file && <Check style={{ fontSize: '1.5rem' }} />}
+                {file.file && (
+                  <Check size={20} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }} />
+                )}
                 <FileEarmarkText size={20} />
-                <p>{file.name}</p>
-                <p style={{ fontSize: '0.8rem', display: 'inline-flex', verticalAlign: 'middle' }}>
+                <p
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {file.name}
+                </p>
+                <p
+                  style={{
+                    fontSize: '0.8rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                  }}
+                >
                   {'.' + file.suffix.join(', .')}
                 </p>
-                <p style={{ fontSize: '12px', color: '$sand8', verticalAlign: 'middle', alignItems: 'center' }}>
+                <p
+                  style={{
+                    fontSize: '0.8rem',
+                    color: '$sand8',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                  }}
+                >
                   {file.file &&
                     `${file.timestamp && formatTimestamp(file.timestamp) + '•'} ${prettyBytes(file.file.size)}`}
                 </p>
 
-                {file.file ? <p>{file.file?.name}</p> : <Upload />}
+                {file.file ? (
+                  <p
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {file.file?.name}
+                  </p>
+                ) : (
+                  <Upload />
+                )}
                 {file.file && (
                   <Trash3Fill
                     style={{ fontSize: '1rem' }}
