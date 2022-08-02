@@ -146,7 +146,10 @@ const ExerciseDialog = ({
                 {file.file && (
                   <Check size={20} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }} />
                 )}
-                <FileEarmarkText size={20} />
+                <FileEarmarkText
+                  size={20}
+                  style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+                />
                 <p
                   style={{
                     display: 'flex',
@@ -166,42 +169,39 @@ const ExerciseDialog = ({
                 >
                   {'.' + file.suffix.join(', .')}
                 </p>
-                <p
-                  style={{
-                    fontSize: '0.8rem',
-                    color: '$sand8',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {file.file &&
-                    `${file.timestamp && formatTimestamp(file.timestamp) + '•'} ${prettyBytes(file.file.size)}`}
-                </p>
 
                 {file.file ? (
-                  <p
+                  <div
                     style={{
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'center',
                     }}
                   >
-                    {file.file?.name}
-                  </p>
+                    <p style={{}}>{file.file?.name}</p>
+                    <p
+                      style={{
+                        fontSize: '0.8rem',
+                        color: '#8F908C', // = $sand9
+                      }}
+                    >
+                      {`${file.timestamp && formatTimestamp(file.timestamp) + '•'} ${prettyBytes(file.file.size)}`}
+                    </p>
+                  </div>
                 ) : (
                   <Upload />
                 )}
                 {file.file && (
                   <Trash3Fill
                     style={{ fontSize: '1rem' }}
-                    onClick={() => {
+                    onClick={(event) => {
                       console.log({ filesToSubmit })
                       setFilesToSubmit((filesToSubmit: any) =>
                         filesToSubmit.map((fileToSubmit: any, index: number) =>
                           index === fileIndex ? { ...fileToSubmit, file: undefined } : fileToSubmit
                         )
                       )
+                      event.preventDefault()
                     }}
                   />
                 )}
@@ -209,7 +209,7 @@ const ExerciseDialog = ({
 
               <input
                 onChange={(event) => {
-                  console.log('hello')
+                  console.log(event.target)
                   if (event.target.files === null) return // clear
                   // submitFileToExercise(event.target.files[0])
                   setFilesToSubmit((filesToSubmit: FileToSubmit[]) =>
