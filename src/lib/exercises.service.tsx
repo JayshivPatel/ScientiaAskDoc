@@ -11,40 +11,40 @@ export const useExercises = (): any => {
   const axiosInstance = useContext(AxiosContext)
   // const { year } = useYear()
 
-  const getExerciseMaterials = async ({ academic_year, letter_year }: any) => {
+  const getExerciseMaterials = async ({ academicYear, yearGroup, setExerciseMaterials, exerciseId }: any) => {
+    // TODO: uncomment when ready to test with ABC API
     // await axiosInstance
     //   .request({
     //     method: 'GET',
-    //     url: `/{academic_year}/{year_group}/exercises/{exercise_id}/files`,
+    //     url: `/${academicYear}/${yearGroup}/exercises/${exerciseId}/files`,
     //   })
+    //   .then(setExerciseMaterials)
     //   .catch((error: any) => {
     //     // TODO: TOAST
     //     console.error(error)
     //   })
 
-    return {
+    setExerciseMaterials({
       owner: {
-        shortcode: 'mvalerie',
+        shortcode: 'kgk',
       },
       spec: {
         name: 'specification',
-        suffix: ['pdf'],
+        suffix: 'pdf',
         url: 'https://cate.doc.ic.ac.uk/showfile.cgi?key=2021:1:1:q5:SPECS',
       },
-      submit: [
+      handin: [
         {
           name: 'final_report',
           suffix: ['pdf'],
           max_size: 100000,
-          url: 'https://cate.doc.ic.ac.uk/submission_file_1',
-          size: 2345,
         },
         {
           name: 'slides',
           suffix: ['pdf', 'ppt', 'pptx'],
           max_size: 100000,
-          url: 'https://cate.doc.ic.ac.uk/submission_file_2',
-          size: 40149,
+          url: 'https://cate.doc.ic.ac.uk/submission_file_1',
+          size: 2345,
         },
         {
           name: 'ethics_checklist',
@@ -52,15 +52,15 @@ export const useExercises = (): any => {
           max_size: 100000,
         },
       ],
-      model_answer: [
+      model_answers: [
         {
           name: 'solution',
-          suffix: ['pdf'],
+          suffix: 'pdf',
           url: 'https://cate.doc.ic.ac.uk/showfile.cgi?key=2021:1:2:q5:MODELS',
         },
       ],
-      data_files: null, // ?
-    }
+      data_files: [], // ?
+    })
   }
 
   // const getExerciseMaterials = async ({ academic_year, id, letter_year, term }: any) => {
