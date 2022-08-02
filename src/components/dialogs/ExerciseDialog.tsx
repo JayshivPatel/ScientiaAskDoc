@@ -1,7 +1,7 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
 import { useEffect, useState } from 'react'
-import { Check, Envelope, FileEarmarkText, Trash3Fill, Upload } from 'react-bootstrap-icons'
+import { Check, Envelope, FileEarmark, FileEarmarkCheck, Trash3Fill, Upload } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise } from '../../constants/types'
@@ -143,13 +143,17 @@ const ExerciseDialog = ({
                 }}
                 htmlFor={`file-upload-${fileIndex}`}
               >
-                {file.file && (
-                  <Check size={20} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }} />
+                {file.file ? (
+                  <FileEarmarkCheck
+                    size={20}
+                    style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+                  />
+                ) : (
+                  <FileEarmark
+                    size={20}
+                    style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+                  />
                 )}
-                <FileEarmarkText
-                  size={20}
-                  style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
-                />
                 <p
                   style={{
                     display: 'flex',
