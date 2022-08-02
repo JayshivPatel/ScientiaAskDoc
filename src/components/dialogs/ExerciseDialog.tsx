@@ -72,31 +72,54 @@ const ExerciseDialog = ({
 
   return (
     <Dialog {...{ open, onOpenChange }}>
-      <h3>{exercise.title}</h3>
-      <ModulePill>
-        {exercise.module_code}: {exercise.module_name}
-      </ModulePill>
-      <address>
-        <a href="mailto:a.callia-diddio14@imperial.ac.uk">
-          <Envelope />
-        </a>
-      </address>
+      <h3>
+        {exercise.type}: {exercise.title}
+      </h3>
+      <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+        <ModulePill>
+          {exercise.module_code}: {exercise.module_name}
+        </ModulePill>
+        <address>
+          <a
+            title="Email the owner of this exercise: Andrea Callia D'Iddio (username)"
+            href="mailto:a.callia-diddio14@imperial.ac.uk"
+          >
+            <Envelope size={24} />
+          </a>
+        </address>
+      </div>
+
       <div style={{ marginTop: '1rem' }}>
         <h4>Resources</h4>
-
-        <UploadWrapper>
-          {spec && <a href={spec.url}>{spec.name}</a>}
-          {dataFiles.map((file, fileIndex) => (
-            <a key={fileIndex} href={file.url} style={{ display: 'flex', justifyContent: 'space-between' }}>
-              {file.name}
-            </a>
-          ))}
-          {modelAnswers.map((file, fileIndex) => (
-            <a key={fileIndex} href={file.url} style={{ display: 'flex', justifyContent: 'space-between' }}>
-              {file.name}
-            </a>
-          ))}
-        </UploadWrapper>
+        {spec && (
+          <Tabs
+            data={[spec]}
+            generator={(tab: any) => (
+              <span>
+                {tab.name}.{tab.suffix}
+              </span>
+            )}
+            onClick={(tab: any) => window.open(tab.url)}
+          />
+        )}
+        <Tabs
+          data={dataFiles}
+          generator={(tab: any) => (
+            <span>
+              {tab.name}.{tab.suffix}
+            </span>
+          )}
+          onClick={(tab: any) => window.open(tab.url)}
+        />
+        <Tabs
+          data={modelAnswers}
+          generator={(tab: any) => (
+            <span>
+              {tab.name}.{tab.suffix}
+            </span>
+          )}
+          onClick={(tab: any) => window.open(tab.url)}
+        />
       </div>
 
       <div style={{ marginTop: '1rem' }}>
@@ -147,6 +170,7 @@ const ExerciseDialog = ({
               <input
                 onChange={(event) => {
                   if (event.target.files === null) return // clear
+                  // submitFileToExercise()
                   setFilesToSubmit((filesToSubmit: FileToSubmit[]) =>
                     filesToSubmit.map((fileToSubmit, index) =>
                       index === fileIndex

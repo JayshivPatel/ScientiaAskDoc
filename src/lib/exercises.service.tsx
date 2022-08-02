@@ -10,6 +10,55 @@ export const getUTCDatetime = (date: string, time: string) => zonedTimeToUtc(dat
 export const useExercises = (): any => {
   const axiosInstance = useContext(AxiosContext)
   // const { year } = useYear()
+  // const moduleCode = useOutletContext<string | null>()
+
+  const uploadResource = async ({ file, ...resource }: any) => {
+    // await axiosInstance
+    //   .request({
+    //     method: 'POST',
+    //     url: endpoints.resources,
+    //     data: {
+    //       ...resource,
+    //       year: year.toString(),
+    //       course: moduleCode,
+    //     },
+    //   })
+    //   .then(({ data }: any) => {
+    //     if (resource.type === 'file') {
+    //       let formData = new FormData()
+    //       formData.append('file', file!)
+    //       axiosInstance
+    //         .request({
+    //           method: 'PUT',
+    //           url: endpoints.resources + '/' + data.id + '/file',
+    //           data: formData,
+    //         })
+    //         .catch((error: any) => {
+    //           // TODO: TOAST to report that file upload failed
+    //           console.error(error)
+    //         })
+    //     }
+    //   })
+    //   .then(() => {
+    //     axiosInstance
+    //       .request({
+    //         method: 'GET',
+    //         url: endpoints.resources,
+    //         params: { year, course: moduleCode },
+    //       })
+    //       .then(({ data }: any) => setGroupedMaterials(groupByProperty(data, 'category', 'index')))
+    //       .catch((error: any) => {
+    //         // TODO: TOAST to report that getting new materials failed
+    //         console.error(error)
+    //       })
+    //   })
+    //   .catch((error: any) => {
+    //     // TODO: TOAST to report that resource creation failed
+    //     console.error(error)
+    //   })
+  }
+
+  // const { year } = useYear()
 
   const getExerciseMaterials = async ({ academicYear, yearGroup, setExerciseMaterials, exerciseId }: any) => {
     // TODO: uncomment when ready to test with ABC API
@@ -62,20 +111,6 @@ export const useExercises = (): any => {
       data_files: [], // ?
     })
   }
-
-  // const getExerciseMaterials = async ({ academic_year, id, letter_year, term }: any) => {
-  // await axiosInstance
-  //   .request({
-  //     method: 'GET',
-  //     url: `/${academic_year}/exercises/${id}/${letter_year}/${term}/files`,
-  //   })
-  //   .then(data => data.json())
-  //   .then()
-  //   .catch((error: any) => {
-  //     // TODO: TOAST
-  //     console.error(error)
-  //   })
-  // }
 
   return { getExerciseMaterials }
 }
