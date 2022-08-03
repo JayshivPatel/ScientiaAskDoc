@@ -39,11 +39,18 @@ const ExerciseDialog = ({
     timestamp?: Date
   }
 
+  interface ExerciseOwner {
+    shortcode: string
+    email: string
+    name: string | null
+  }
+
   const [exerciseMaterials, setExerciseMaterials] = useState<any | null>(null)
   const [spec, setSpec] = useState<Material | null>(null)
   const [modelAnswers, setModelAnswers] = useState<Material[]>([])
   const [dataFiles, setDataFiles] = useState<Material[]>([])
   const [filesToSubmit, setFilesToSubmit] = useState<FileToSubmit[]>([])
+  const [owner, setOwner] = useState<ExerciseOwner | null>(null)
 
   useEffect(() => {
     getExerciseMaterials({
@@ -60,10 +67,13 @@ const ExerciseDialog = ({
     setModelAnswers(exerciseMaterials.model_answers)
     setDataFiles(exerciseMaterials.data_files)
     setFilesToSubmit(exerciseMaterials.hand_ins)
+    setOwner(exerciseMaterials.owner)
   }, [exerciseMaterials])
 
   // Date format: https://date-fns.org/v2.29.1/docs/format
   const formatTimestamp = (date: Date | string) => formatInTimeZone(date, LONDON_TIMEZONE, 'd LLL yyyy, h:mm aaa zzz')
+  const email_text = owner ? `Email the exercise owner: ${owner.name} (${owner.shortcode})` : ''
+  const email_url = owner ? `mailto:${owner.email}` : ''
 
   return (
     <Dialog {...{ open, onOpenChange }}>
@@ -71,19 +81,18 @@ const ExerciseDialog = ({
         <h3>
           {exercise.type}: {exercise.title}
         </h3>
-        <address style={{ float: 'right' }}>
-          <a
-            title="Email the exercise owner: Andrea Callia D'Iddio (username)"
-            href="mailto:a.callia-diddio14@imperial.ac.uk"
-          >
-            <Envelope size={24} />
-          </a>
-        </address>
+        {owner && (
+          <address style={{ float: 'right' }}>
+            <a title={email_text} href={email_url}>
+              <Envelope size={24} />
+            </a>
+          </address>
+        )}
       </div>
       <ModulePill>
         {exercise.module_code}: {exercise.module_name}
       </ModulePill>
-      // TODO: spec button placement not final - temporarily placed in centre.
+      {/* TODO: spec button placement not final - temporarily placed in centre. */}
       <div style={{ textAlign: 'center' }}>
         {spec && (
           <Button
