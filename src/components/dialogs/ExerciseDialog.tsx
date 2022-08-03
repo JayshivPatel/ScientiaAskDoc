@@ -7,10 +7,19 @@ import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise } from '../../constants/types'
 import { useExercises } from '../../lib/exercises.service'
 import { currentShortYear } from '../../lib/utilities.service'
-import { Button } from '../../styles/_app.style'
 import { ModulePill, SpecLink, UploadButton, UploadWrapper } from '../../styles/exerciseDialog.style'
 import { Tabs } from '../Tabs'
 import Dialog from './Dialog'
+
+export interface FileToSubmit {
+  name: string
+  suffix: string[]
+  max_size: number
+  url?: string
+  size?: number
+  file?: File
+  timestamp?: Date
+}
 
 const ExerciseDialog = ({
   open,
@@ -21,22 +30,12 @@ const ExerciseDialog = ({
   onOpenChange: (_: boolean) => void
   exercise: Exercise
 }) => {
-  const { getExerciseMaterials } = useExercises()
+  const { getExerciseMaterials, deleteFile, submitFile } = useExercises()
 
   interface Material {
     name: string
     suffix: string[]
     url: string
-  }
-
-  interface FileToSubmit {
-    name: string
-    suffix: string[]
-    max_size: number
-    url?: string
-    size?: number
-    file?: File
-    timestamp?: Date
   }
 
   interface ExerciseOwner {
@@ -216,6 +215,8 @@ const ExerciseDialog = ({
                   <Trash3Fill
                     style={{ fontSize: '1rem' }}
                     onClick={(event) => {
+                      // TODO: tell server to delete submission
+                      deleteFile(file)
                       console.log({ filesToSubmit })
                       setFilesToSubmit((filesToSubmit: any) =>
                         filesToSubmit.map((fileToSubmit: any, index: number) =>
@@ -231,9 +232,10 @@ const ExerciseDialog = ({
               <input
                 onChange={(event) => {
                   console.log(event.target)
-                  if (event.target.files === null) return // clear
+                  // TODO: on cancel of file browser: dont remove submission
+                  if (event.target.files === null) return
                   // if (exercise.endDate > new Date()) return
-                  // submitFileToExercise(event.target.files[0])
+                  submitFile(event.target.files[0])
                   setFilesToSubmit((filesToSubmit: FileToSubmit[]) =>
                     filesToSubmit.map((fileToSubmit, index) =>
                       index === fileIndex
