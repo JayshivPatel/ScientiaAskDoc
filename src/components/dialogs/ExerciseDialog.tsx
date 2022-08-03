@@ -1,12 +1,13 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
 import { useEffect, useState } from 'react'
-import { Check, Envelope, FileEarmark, FileEarmarkCheck, Trash3Fill, Upload } from 'react-bootstrap-icons'
+import { Envelope, FileEarmark, FileEarmarkCheck, Trash3Fill, Upload } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise } from '../../constants/types'
 import { useExercises } from '../../lib/exercises.service'
 import { currentShortYear } from '../../lib/utilities.service'
+import { Button } from '../../styles/_app.style'
 import { ModulePill, UploadButton, UploadWrapper } from '../../styles/exerciseDialog.style'
 import { Tabs } from '../Tabs'
 import Dialog from './Dialog'
@@ -66,14 +67,11 @@ const ExerciseDialog = ({
 
   return (
     <Dialog {...{ open, onOpenChange }}>
-      <h3>
-        {exercise.type}: {exercise.title}
-      </h3>
-      <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-        <ModulePill>
-          {exercise.module_code}: {exercise.module_name}
-        </ModulePill>
-        <address>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <h3>
+          {exercise.type}: {exercise.title}
+        </h3>
+        <address style={{ float: 'right' }}>
           <a
             title="Email the exercise owner: Andrea Callia D'Iddio (username)"
             href="mailto:a.callia-diddio14@imperial.ac.uk"
@@ -82,40 +80,52 @@ const ExerciseDialog = ({
           </a>
         </address>
       </div>
-
-      <div style={{ marginTop: '1rem' }}>
-        <h4>Resources</h4>
+      <ModulePill>
+        {exercise.module_code}: {exercise.module_name}
+      </ModulePill>
+      // TODO: spec button placement not final - temporarily placed in centre.
+      <div style={{ textAlign: 'center' }}>
         {spec && (
-          <Tabs
-            data={[spec]}
-            generator={(tab: any) => (
-              <span>
-                {tab.name}.{tab.suffix}
-              </span>
-            )}
-            onClick={(tab: any) => window.open(tab.url)}
-          />
+          <Button
+            style={{ width: 'auto', padding: '0.5rem 1rem 0.5rem 1rem' }}
+            onClick={() => {
+              window.open(spec.url)
+            }}
+          >
+            View specification
+          </Button>
         )}
-        <Tabs
-          data={dataFiles}
-          generator={(tab: any) => (
-            <span>
-              {tab.name}.{tab.suffix}
-            </span>
-          )}
-          onClick={(tab: any) => window.open(tab.url)}
-        />
-        <Tabs
-          data={modelAnswers}
-          generator={(tab: any) => (
-            <span>
-              {tab.name}.{tab.suffix}
-            </span>
-          )}
-          onClick={(tab: any) => window.open(tab.url)}
-        />
       </div>
-
+      <div style={{ marginTop: '1rem' }}>
+        {dataFiles.length !== 0 && (
+          <>
+            <h4>Data files</h4>
+            <Tabs
+              data={dataFiles}
+              generator={(tab: any) => (
+                <span>
+                  {tab.name}.{tab.suffix}
+                </span>
+              )}
+              onClick={(tab: any) => window.open(tab.url)}
+            />
+          </>
+        )}
+        {modelAnswers.length !== 0 && (
+          <>
+            <h4>Model answers</h4>
+            <Tabs
+              data={modelAnswers}
+              generator={(tab: any) => (
+                <span>
+                  {tab.name}.{tab.suffix}
+                </span>
+              )}
+              onClick={(tab: any) => window.open(tab.url)}
+            />
+          </>
+        )}
+      </div>
       <div style={{ marginTop: '1rem' }}>
         <h4>Submission</h4>
         <p style={{ fontSize: '14px', color: '$sand8' }}>Deadline: {formatTimestamp(exercise.endDate)}</p>
