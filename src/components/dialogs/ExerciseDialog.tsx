@@ -25,7 +25,7 @@ const ExerciseDialog = ({
 
   interface Material {
     name: string
-    suffix: string
+    suffix: string[]
     url: string
   }
 
@@ -54,14 +54,15 @@ const ExerciseDialog = ({
 
   useEffect(() => {
     getExerciseMaterials({
-      academic_year: currentShortYear(),
-      year_group: 'c1',
+      academicYear: currentShortYear(),
+      yearGroup: 'c1',
       exerciseId: exercise.number,
       setExerciseMaterials,
     })
   }, [exercise])
 
   useEffect(() => {
+    console.log({ exerciseMaterials })
     if (!exerciseMaterials) return
     setSpec(exerciseMaterials.spec)
     setModelAnswers(exerciseMaterials.model_answers)
@@ -72,8 +73,6 @@ const ExerciseDialog = ({
 
   // Date format: https://date-fns.org/v2.29.1/docs/format
   const formatTimestamp = (date: Date | string) => formatInTimeZone(date, LONDON_TIMEZONE, 'd LLL yyyy, h:mm aaa zzz')
-  const email_text = owner ? `Email the exercise owner: ${owner.name} (${owner.shortcode})` : ''
-  const email_url = owner ? `mailto:${owner.email}` : ''
 
   return (
     <Dialog {...{ open, onOpenChange }}>
@@ -83,7 +82,10 @@ const ExerciseDialog = ({
         </h3>
         {owner && (
           <address style={{ float: 'right' }}>
-            <a title={email_text} href={email_url}>
+            <a
+              title={'Email the exercise owner' + owner.name && `: ${owner.name} (${owner.shortcode})`}
+              href={`mailto:${owner.email}`}
+            >
               <Envelope size={24} />
             </a>
           </address>
@@ -113,7 +115,7 @@ const ExerciseDialog = ({
               data={dataFiles}
               generator={(tab: any) => (
                 <span>
-                  {tab.name}.{tab.suffix}
+                  {tab.name}.{tab.suffix[0]}
                 </span>
               )}
               onClick={(tab: any) => window.open(tab.url)}
@@ -127,7 +129,7 @@ const ExerciseDialog = ({
               data={modelAnswers}
               generator={(tab: any) => (
                 <span>
-                  {tab.name}.{tab.suffix}
+                  {tab.name}.{tab.suffix[0]}
                 </span>
               )}
               onClick={(tab: any) => window.open(tab.url)}
