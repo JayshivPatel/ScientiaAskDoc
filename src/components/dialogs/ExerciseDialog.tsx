@@ -8,7 +8,7 @@ import { Exercise } from '../../constants/types'
 import { useExercises } from '../../lib/exercises.service'
 import { currentShortYear } from '../../lib/utilities.service'
 import { Button } from '../../styles/_app.style'
-import { ModulePill, UploadButton, UploadWrapper } from '../../styles/exerciseDialog.style'
+import { ModulePill, SpecLink, UploadButton, UploadWrapper } from '../../styles/exerciseDialog.style'
 import { Tabs } from '../Tabs'
 import Dialog from './Dialog'
 
@@ -72,7 +72,7 @@ const ExerciseDialog = ({
   }, [exerciseMaterials])
 
   // Date format: https://date-fns.org/v2.29.1/docs/format
-  const formatTimestamp = (date: Date | string) => formatInTimeZone(date, LONDON_TIMEZONE, 'd LLL yyyy, h:mm aaa zzz')
+  const formatTimestamp = (date: Date | string) => formatInTimeZone(date, LONDON_TIMEZONE, 'E d LLL yyyy, h:mm aaa zzz')
 
   return (
     <Dialog {...{ open, onOpenChange }}>
@@ -83,7 +83,7 @@ const ExerciseDialog = ({
         {owner && (
           <address style={{ float: 'right' }}>
             <a
-              title={'Email the exercise owner' + owner.name && `: ${owner.name} (${owner.shortcode})`}
+              title={'Email the exercise owner' + (owner.name ? `: ${owner.name} (${owner.shortcode})` : '')}
               href={`mailto:${owner.email}`}
             >
               <Envelope size={24} />
@@ -95,46 +95,42 @@ const ExerciseDialog = ({
         {exercise.module_code}: {exercise.module_name}
       </ModulePill>
       {/* TODO: spec button placement not final - temporarily placed in centre. */}
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
         {spec && (
-          <Button
-            style={{ width: 'auto', padding: '0.5rem 1rem 0.5rem 1rem' }}
-            onClick={() => {
-              window.open(spec.url)
-            }}
-          >
+          <SpecLink target="_blank" href={spec.url}>
             View specification
-          </Button>
+          </SpecLink>
         )}
       </div>
-      <div style={{ marginTop: '1rem' }}>
+      {/* convert tabs to <a href=""></a> */}
+      <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'row' }}>
         {dataFiles.length !== 0 && (
-          <>
+          <div style={{ width: modelAnswers.length !== 0 ? '50%' : '100%', textAlign: 'center' }}>
             <h4>Data files</h4>
             <Tabs
               data={dataFiles}
               generator={(tab: any) => (
-                <span>
+                <span style={{ textAlign: 'center', width: '100%' }}>
                   {tab.name}.{tab.suffix[0]}
                 </span>
               )}
               onClick={(tab: any) => window.open(tab.url)}
             />
-          </>
+          </div>
         )}
         {modelAnswers.length !== 0 && (
-          <>
+          <div style={{ width: modelAnswers.length !== 0 ? '50%' : '100%', textAlign: 'center' }}>
             <h4>Model answers</h4>
             <Tabs
               data={modelAnswers}
               generator={(tab: any) => (
-                <span>
+                <span style={{ textAlign: 'center', width: '100%' }}>
                   {tab.name}.{tab.suffix[0]}
                 </span>
               )}
               onClick={(tab: any) => window.open(tab.url)}
             />
-          </>
+          </div>
         )}
       </div>
       <div style={{ marginTop: '1rem' }}>
@@ -236,6 +232,7 @@ const ExerciseDialog = ({
                 onChange={(event) => {
                   console.log(event.target)
                   if (event.target.files === null) return // clear
+                  // if (exercise.endDate > new Date()) return
                   // submitFileToExercise(event.target.files[0])
                   setFilesToSubmit((filesToSubmit: FileToSubmit[]) =>
                     filesToSubmit.map((fileToSubmit, index) =>
@@ -246,7 +243,7 @@ const ExerciseDialog = ({
                   )
                   console.log(event.target.files[0])
                 }}
-                // disabled={!!file.file} // not working
+                // disabled={exercise.endDate > new Date()}
                 type="file"
                 accept={'.' + file.suffix.join(', .')}
                 id={`file-upload-${fileIndex}`}

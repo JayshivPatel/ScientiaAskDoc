@@ -1,5 +1,27 @@
 import { styled } from './stitches.config'
 
+// TODO: refactor this css
+export const SpecLink = styled('a', {
+  width: 'auto',
+  padding: '0.5rem 1rem',
+  border: '2px solid $sand8',
+  color: '$sand8',
+  fontWeight: 600,
+  borderRadius: '8px',
+  textDecoration: 'none',
+  display: 'inline-block',
+  cursor: 'pointer',
+  userSelect: 'none',
+  marginTop: '24px',
+  transition: 'all .1s ease-in',
+
+  '&:hover': {
+    background: '$blue9',
+    border: '2px solid $blue9',
+    color: 'white',
+  },
+})
+
 export const UploadWrapper = styled('div', {
   position: 'relative',
   display: 'flex',
