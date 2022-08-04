@@ -1,24 +1,34 @@
+import { Trash3Fill } from 'react-bootstrap-icons'
+
 import { styled } from './stitches.config'
 
 // TODO: refactor this css
 export const SpecLink = styled('a', {
   width: 'auto',
+  alignItems: 'center',
   padding: '0.5rem 1rem',
   border: '2px solid $sand8',
   color: '$sand8',
   fontWeight: 600,
   borderRadius: '8px',
   textDecoration: 'none',
-  display: 'inline-block',
+  display: 'inline-flex',
   cursor: 'pointer',
   userSelect: 'none',
   marginTop: '24px',
   transition: 'all .1s ease-in',
-
   '&:hover': {
     background: '$blue9',
     border: '2px solid $blue9',
     color: 'white',
+    fill: 'white',
+  },
+})
+
+export const TrashButton = styled(Trash3Fill, {
+  fontSize: '1rem',
+  '&:hover': {
+    fill: 'red',
   },
 })
 

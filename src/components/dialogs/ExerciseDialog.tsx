@@ -1,13 +1,13 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
 import { useEffect, useState } from 'react'
-import { Envelope, FileEarmark, FileEarmarkCheck, Trash3Fill, Upload } from 'react-bootstrap-icons'
+import { CheckLg, Download, Envelope, FileEarmark, Upload } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise } from '../../constants/types'
 import { useExercises } from '../../lib/exercises.service'
 import { currentShortYear } from '../../lib/utilities.service'
-import { ModulePill, SpecLink, UploadButton, UploadWrapper } from '../../styles/exerciseDialog.style'
+import { ModulePill, SpecLink, TrashButton, UploadButton, UploadWrapper } from '../../styles/exerciseDialog.style'
 import { Tabs } from '../Tabs'
 import Dialog from './Dialog'
 
@@ -97,6 +97,7 @@ const ExerciseDialog = ({
       <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
         {spec && (
           <SpecLink target="_blank" href={spec.url}>
+            <Download style={{ marginRight: '0.5rem', fill: 'inherit', float: 'left' }} size={16} fill="#1B1B18" />
             View specification
           </SpecLink>
         )}
@@ -132,132 +133,139 @@ const ExerciseDialog = ({
           </div>
         )}
       </div>
-      <div style={{ marginTop: '1rem' }}>
-        <h4>Submission</h4>
-        <p style={{ fontSize: '14px', color: '$sand8' }}>Deadline: {formatTimestamp(exercise.endDate)}</p>
-        <UploadWrapper>
-          {filesToSubmit.map((file, fileIndex) => (
-            <div
-              key={fileIndex}
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                verticalAlign: 'middle',
-              }}
-            >
-              <UploadButton
-                css={{
-                  backgroundColor: file.file ? '$green5' : '$sand1',
-                  filter: 'drop-shadow(0 1px 2px rgba(0,0,0,.06)) drop-shadow(0 1px 3px rgba(0,0,0,.1))',
-                  marginTop: '1rem',
-                }}
+      {filesToSubmit.length > 0 && (
+        <div style={{ marginTop: '1rem' }}>
+          <h4>Submission</h4>
+          <p style={{ fontSize: '14px', color: '$sand8' }}>Deadline: {formatTimestamp(exercise.endDate)}</p>
+          <UploadWrapper>
+            {filesToSubmit.map((file, fileIndex) => (
+              <div
+                key={fileIndex}
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
-                  width: '100%',
+                  alignItems: 'center',
+                  verticalAlign: 'middle',
                 }}
-                htmlFor={`file-upload-${fileIndex}`}
               >
-                {file.file ? (
-                  <FileEarmarkCheck
-                    size={20}
-                    style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
-                  />
-                ) : (
-                  <FileEarmark
-                    size={20}
-                    style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
-                  />
-                )}
-                <p
+                <UploadButton
+                  css={{
+                    backgroundColor: '$sand1',
+                    filter: 'drop-shadow(0 1px 2px rgba(0,0,0,.06)) drop-shadow(0 1px 3px rgba(0,0,0,.1))',
+                    marginTop: '1rem',
+                  }}
                   style={{
                     display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
+                    justifyContent: 'space-between',
+                    width: '100%',
                   }}
+                  htmlFor={`file-upload-${fileIndex}`}
                 >
-                  {file.name}
-                </p>
-                <p
-                  style={{
-                    fontSize: '0.8rem',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {'.' + file.suffix.join(', .')}
-                </p>
-
-                {file.file ? (
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <p style={{}}>{file.file?.name}</p>
-                    <p
+                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                    {file.file ? (
+                      <CheckLg
+                        size={24}
+                        style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+                      />
+                    ) : (
+                      // <FileEarmarkCheck
+                      //   size={24}
+                      //   style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+                      // />
+                      <FileEarmark
+                        size={24}
+                        style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+                      />
+                    )}
+                    <div
                       style={{
-                        fontSize: '0.8rem',
-                        color: '#8F908C', // = $sand9
+                        marginLeft: '1rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
                       }}
                     >
-                      {`${file.timestamp && formatTimestamp(file.timestamp) + '•'} ${prettyBytes(file.file.size)}`}
-                    </p>
+                      <p style={{}}>{file.name}</p>
+                      <p
+                        style={{
+                          fontSize: '0.8rem',
+                          color: '#8F908C', // = $sand9
+                        }}
+                      >
+                        {'.' + file.suffix.join(', .')}
+                      </p>
+                    </div>
                   </div>
-                ) : (
-                  <Upload />
-                )}
-                {file.file && (
-                  <Trash3Fill
-                    style={{ fontSize: '1rem' }}
-                    onClick={(event) => {
-                      // TODO: tell server to delete submission
-                      deleteFile(file)
-                      console.log({ filesToSubmit })
-                      setFilesToSubmit((filesToSubmit: any) =>
-                        filesToSubmit.map((fileToSubmit: any, index: number) =>
-                          index === fileIndex ? { ...fileToSubmit, file: undefined } : fileToSubmit
+                  {file.file ? (
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <p style={{}}>{file.file?.name}</p>
+                      <p
+                        style={{
+                          fontSize: '0.8rem',
+                          color: '#8F908C', // = $sand9
+                        }}
+                      >
+                        {`${file.timestamp && formatTimestamp(file.timestamp) + '•'} ${prettyBytes(file.file.size)}`}
+                      </p>
+                    </div>
+                  ) : (
+                    <Upload size={24} />
+                  )}
+                  {file.file && (
+                    <TrashButton
+                      size={24}
+                      style={{ fontSize: '1rem' }}
+                      onClick={(event) => {
+                        // TODO: tell server to delete submission
+                        deleteFile(file)
+                        console.log({ filesToSubmit })
+                        setFilesToSubmit((filesToSubmit: any) =>
+                          filesToSubmit.map((fileToSubmit: any, index: number) =>
+                            index === fileIndex ? { ...fileToSubmit, file: undefined } : fileToSubmit
+                          )
                         )
-                      )
-                      event.preventDefault()
-                    }}
-                  />
-                )}
-              </UploadButton>
+                        event.preventDefault()
+                      }}
+                    />
+                  )}
+                </UploadButton>
 
-              <input
-                onChange={(event) => {
-                  console.log(event.target)
-                  // TODO: on cancel of file browser: dont remove submission
-                  if (event.target.files === null) return
-                  // if (exercise.endDate > new Date()) return
-                  submitFile(event.target.files[0])
-                  setFilesToSubmit((filesToSubmit: FileToSubmit[]) =>
-                    filesToSubmit.map((fileToSubmit, index) =>
-                      index === fileIndex
-                        ? { ...fileToSubmit, file: event.target.files![0], timestamp: new Date() }
-                        : fileToSubmit
+                <input
+                  onChange={(event) => {
+                    console.log(event.target)
+                    // TODO: on cancel of file browser: dont remove submission
+                    if (event.target.files === null) return
+                    // if (exercise.endDate > new Date()) return
+                    submitFile(event.target.files[0])
+                    setFilesToSubmit((filesToSubmit: FileToSubmit[]) =>
+                      filesToSubmit.map((fileToSubmit, index) =>
+                        index === fileIndex
+                          ? { ...fileToSubmit, file: event.target.files![0], timestamp: new Date() }
+                          : fileToSubmit
+                      )
                     )
-                  )
-                  console.log(event.target.files[0])
-                }}
-                // disabled={exercise.endDate > new Date()}
-                type="file"
-                accept={'.' + file.suffix.join(', .')}
-                id={`file-upload-${fileIndex}`}
-                hidden
-              />
-            </div>
-          ))}
-        </UploadWrapper>
-        <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>
-          By uploading, you agree that this is your own, unaided work.
-        </p>
-      </div>
+                    console.log(event.target.files[0])
+                  }}
+                  // disabled={exercise.endDate > new Date()}
+                  type="file"
+                  accept={'.' + file.suffix.join(', .')}
+                  id={`file-upload-${fileIndex}`}
+                  hidden
+                />
+              </div>
+            ))}
+          </UploadWrapper>
+          <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>
+            By uploading, you agree that this is your own, unaided work.
+          </p>
+        </div>
+      )}
     </Dialog>
   )
 }
