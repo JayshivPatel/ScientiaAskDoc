@@ -4,11 +4,13 @@ import { useContext } from 'react'
 import { FileToSubmit } from '../components/dialogs/ExerciseDialog'
 import { LONDON_TIMEZONE } from '../constants/global'
 import { AxiosContext } from './axios.context'
+import { useToast } from './toast.context'
 
 export const getUTCDatetime = (date: string, time: string) => zonedTimeToUtc(date + ' ' + time, LONDON_TIMEZONE)
 
 export const useExercises = (): any => {
   const axiosInstance = useContext(AxiosContext)
+  const { addToast } = useToast()
 
   const getExerciseMaterials = async ({ academicYear, yearGroup, setExerciseMaterials, exerciseId }: any) => {
     await axiosInstance
@@ -18,7 +20,7 @@ export const useExercises = (): any => {
       })
       .then(({ data }: any) => setExerciseMaterials(data))
       .catch((error: any) => {
-        // TODO: TOAST
+        addToast({ variant: 'error', title: 'There was an error fetching the materials for this exercise' })
         console.error(error)
       })
   }

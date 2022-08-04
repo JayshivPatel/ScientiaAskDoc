@@ -1,7 +1,7 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
 import { useEffect, useState } from 'react'
-import { CheckLg, Download, Envelope, FileEarmark, Upload } from 'react-bootstrap-icons'
+import { BoxArrowUpRight, CheckLg, Envelope, FileEarmark, Upload } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise } from '../../constants/types'
@@ -97,7 +97,11 @@ const ExerciseDialog = ({
       <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
         {spec && (
           <SpecLink target="_blank" href={spec.url}>
-            <Download style={{ marginRight: '0.5rem', fill: 'inherit', float: 'left' }} size={16} fill="#1B1B18" />
+            <BoxArrowUpRight
+              style={{ marginRight: '0.5rem', fill: 'inherit', float: 'left' }}
+              size={16}
+              fill="#1B1B18"
+            />
             View specification
           </SpecLink>
         )}
@@ -168,10 +172,6 @@ const ExerciseDialog = ({
                         style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
                       />
                     ) : (
-                      // <FileEarmarkCheck
-                      //   size={24}
-                      //   style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
-                      // />
                       <FileEarmark
                         size={24}
                         style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
@@ -185,7 +185,7 @@ const ExerciseDialog = ({
                         justifyContent: 'center',
                       }}
                     >
-                      <p style={{}}>{file.name}</p>
+                      <p>{file.name}</p>
                       <p
                         style={{
                           fontSize: '0.8rem',
@@ -204,7 +204,7 @@ const ExerciseDialog = ({
                         justifyContent: 'center',
                       }}
                     >
-                      <p style={{}}>{file.file?.name}</p>
+                      <p>{file.file?.name}</p>
                       <p
                         style={{
                           fontSize: '0.8rem',
@@ -261,9 +261,14 @@ const ExerciseDialog = ({
               </div>
             ))}
           </UploadWrapper>
-          <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>
+          <p style={{ fontSize: '0.8rem', marginTop: '1rem' }}>
             By uploading, you agree that this is your own, unaided work.
           </p>
+
+          <div style={{ display: 'flex', fontSize: '0.8rem', marginTop: '1rem' }}>
+            <p>How many hours did this coursework take you?</p>
+            <input style={{ display: 'inline', marginLeft: '0.5rem' }} />
+          </div>
         </div>
       )}
     </Dialog>
