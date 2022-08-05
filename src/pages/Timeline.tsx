@@ -16,6 +16,7 @@ import {
 } from '../constants/global'
 import { mockTimeline } from '../constants/mock'
 import { ModuleWithExercises, Term, TrackMap } from '../constants/types'
+import { AcademicPeriod, useTimeline } from '../lib/timeline.service'
 import { daysSinceEpoch, generateTrackMap } from '../lib/utilities.service'
 import { Area, Container, Corner, Scrollbar, Thumb, Viewport } from '../styles/_app.style'
 
@@ -41,6 +42,12 @@ const TOP_MARGIN = `(${NAVIGATION_HEIGHT})`
  * components: events, indicator and rows; note that the layers are ordered based on their relative heights.
  */
 const Timeline = () => {
+  const { getAcademicPeriods } = useTimeline()
+  const [periods, setPeriods] = useState<AcademicPeriod[]>([])
+
+  useEffect(() => getAcademicPeriods({ academicYear: '2122', setPeriods }), [])
+  useEffect(() => console.log({ periods }), [periods])
+
   const [modules, setModules] = useState<ModuleWithExercises[]>(
     plainToInstance(ModuleWithExercises, mockTimeline).sort((m1, m2) => (m1.code > m2.code ? 1 : -1))
   )
