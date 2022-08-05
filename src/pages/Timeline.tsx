@@ -16,7 +16,7 @@ import {
 } from '../constants/global'
 import { mockTimeline } from '../constants/mock'
 import { ModuleWithExercises, Term, TrackMap } from '../constants/types'
-import { AcademicPeriod, useTimeline } from '../lib/timeline.service'
+import { useTimeline } from '../lib/timeline.service'
 import { daysSinceEpoch, generateTrackMap } from '../lib/utilities.service'
 import { Area, Container, Corner, Scrollbar, Thumb, Viewport } from '../styles/_app.style'
 
@@ -43,15 +43,22 @@ const TOP_MARGIN = `(${NAVIGATION_HEIGHT})`
  */
 const Timeline = () => {
   const { getAcademicPeriods } = useTimeline()
-  const [periods, setPeriods] = useState<AcademicPeriod[]>([])
+  const [periods, setPeriods] = useState<Term[]>([])
+  const [term, setTerm] = useState<Term>(defaultTerm)
 
   useEffect(() => getAcademicPeriods({ academicYear: '2122', setPeriods }), [])
-  useEffect(() => console.log({ periods }), [periods])
+  useEffect(() => {
+    if (periods.length === 0) return
+    console.log({ periods })
+    const now = new Date(2022, 1, 10)
+    const currentTerm = periods.find((period) => period.start < now && now < period.end)
+    console.log({ currentTerm })
+    if (currentTerm) setTerm(currentTerm)
+  }, [periods])
 
   const [modules, setModules] = useState<ModuleWithExercises[]>(
     plainToInstance(ModuleWithExercises, mockTimeline).sort((m1, m2) => (m1.code > m2.code ? 1 : -1))
   )
-  const [term, setTerm] = useState<Term>(defaultTerm)
   const [trackMap, setTrackMap] = useState<TrackMap>({})
   const [rowHeights, setRowHeights] = useState<{ [code: string]: string }>({})
 
@@ -87,12 +94,12 @@ const Timeline = () => {
       <Viewport>
         <Container timeline>
           <Switcher term={term.name} onSwitch={switchTerm} />
-          <Weeks start={defaultTerm.start} weeks={defaultTerm.weeks} />
+          <Weeks start={term.start} weeks={term.weeks} />
           <Modules modules={modules} term={term.name} rowHeights={rowHeights} />
           {/* NOTE: Everything under here will be placed in the background area */}
           <Tracks term={term} weeks={term.weeks} trackMap={trackMap} />
           <DayIndicator weeks={term.weeks} currentDayColumn={dateToColumn(new Date(2021, 9, 21), term.start)} />
-          <MainBackground cols={defaultTerm.weeks} rowHeights={rowHeights} />
+          <MainBackground cols={term.weeks} rowHeights={rowHeights} />
         </Container>
       </Viewport>
       <Scrollbar orientation="vertical">

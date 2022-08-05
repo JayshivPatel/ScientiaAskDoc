@@ -1,13 +1,7 @@
 import { useContext } from 'react'
 
+import { Term } from '../constants/types'
 import { AxiosContext } from './axios.context'
-
-export interface AcademicPeriod {
-  name: string
-  weeks: number
-  start: string
-  end: string
-}
 
 export const useTimeline = (): any => {
   const axiosInstance = useContext(AxiosContext)
@@ -17,14 +11,22 @@ export const useTimeline = (): any => {
     setPeriods,
   }: {
     academicYear: string
-    setPeriods: (_: AcademicPeriod[]) => void
+    setPeriods: (_: Term[]) => void
   }) => {
     await axiosInstance
       .request({
         method: 'GET',
         url: `/${academicYear}/periods`,
       })
-      .then(({ data }: any) => setPeriods(data))
+      .then(({ data }: any) => {
+        setPeriods(
+          data.map(({ start, end, ...rest }: any) => ({
+            start: new Date(new Date(start).setDate(new Date(start).getDate() + 2)),
+            end: new Date(end),
+            ...rest,
+          }))
+        )
+      })
       .catch((error: any) => {
         console.error(error)
       })
