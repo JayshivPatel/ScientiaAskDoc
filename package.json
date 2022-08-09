@@ -90,6 +90,9 @@
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
       "!**/node_modules/**"
-    ]
+    ],
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(pretty-bytes)/)"
+    ] 
   }
 }
