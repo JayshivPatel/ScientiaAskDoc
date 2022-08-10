@@ -24,6 +24,16 @@ services:
     command: flask run -h '0.0.0.0' -p 5001
     volumes:
       - ../materials:/materials
+  emarking:
+    image: emarking
+    build: 
+      context: ../emarking
+      dockerfile: dev.Dockerfile
+    expose:
+      - 5002
+    command: flask run -h '0.0.0.0' -p 5002
+    volumes:
+      - ../emarking:/emarking
   frontend:
     image: node:16
     ports:
