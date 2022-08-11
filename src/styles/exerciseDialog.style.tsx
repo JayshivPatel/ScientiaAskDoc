@@ -25,6 +25,12 @@ export const SpecLink = styled('a', {
   },
 })
 
+export const ResourceLink = styled('a', {
+  textDecoration: 'underline !important',
+  textUnderlineOffset: '4px',
+  textDecorationColor: '$sand8 !important',
+})
+
 export const TrashButton = styled(Trash3Fill, {
   fontSize: '1rem',
   '&:hover': {

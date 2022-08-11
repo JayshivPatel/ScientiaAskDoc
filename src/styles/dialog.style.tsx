@@ -15,6 +15,7 @@ const contentShow = keyframes({
 
 export const Overlay = styled(DialogOverlay, {
   backgroundColor: '$overlayBackground',
+  backdropFilter: 'blur(8px)',
   position: 'fixed',
   zIndex: 9,
   inset: 0,
@@ -25,7 +26,7 @@ export const Overlay = styled(DialogOverlay, {
 
 export const Content = styled(DialogContent, {
   overflowY: 'scroll',
-  backgroundColor: '$sand5',
+  backgroundColor: '$appBackground',
   borderRadius: 8,
   boxShadow: 'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
   position: 'fixed',
