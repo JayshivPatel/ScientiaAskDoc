@@ -10,6 +10,7 @@ import { useExercises } from '../../lib/exercises.service'
 import { currentShortYear } from '../../lib/utilities.service'
 import {
   ModulePill,
+  ResourceLink,
   SpecLink,
   TrashButton,
   UploadButton,
@@ -122,28 +123,27 @@ const ExerciseDialog = ({
           </SpecLink>
         )}
       </div>
-      {/* convert tabs to <a href=""></a> */}
-      {dataFiles.length !== 0 && (
+      {dataFiles.length > 0 && (
         <div>
           <h4>Data files</h4>
           {dataFiles.map((file, index) => (
             <li>
-              <a key={index} href={file.url}>
+              <ResourceLink key={index} target="_blank" href={file.url}>
                 {file.name}.{file.suffix[0]}
-              </a>
+              </ResourceLink>
             </li>
           ))}
         </div>
       )}
-      {modelAnswers.length !== 0 && (
+      {modelAnswers.length > 0 && (
         <div style={{ marginTop: '1rem' }}>
           <h4>Model answers</h4>
           <ul>
             {modelAnswers.map((file, index) => (
               <li>
-                <a key={index} href={file.url}>
+                <ResourceLink key={index} target="_blank" href={file.url}>
                   {file.name}.{file.suffix[0]}
-                </a>
+                </ResourceLink>
               </li>
             ))}
           </ul>
