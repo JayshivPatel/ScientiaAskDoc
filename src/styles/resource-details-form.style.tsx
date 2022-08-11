@@ -46,6 +46,12 @@ const Input = styled('input', {
   height: '2.75rem',
   backgroundColor: '$appBackground',
   transition: 'background-color 0.3s ease-in-out',
+  '&:hover': {
+    borderColor: '$solidBackground',
+  },
+  '&:focus': {
+    borderColor: '$solidBackground',
+  },
 })
 
 export const TitleInput = styled(Input, {})
@@ -103,7 +109,9 @@ export const DropdownStyle = {
     // none of react-select's styles are passed to <Control />
     boxSizing: 'border-box',
     width: '100%',
-    borderColor: theme.colors.elementBackground.toString(),
+    borderColor: state.isFocused
+      ? theme.colors.solidBackground.toString()
+      : theme.colors.elementBorder.toString(),
     borderRadius: '0.5rem',
     padding: '0.25rem',
     height: '2.75rem',
