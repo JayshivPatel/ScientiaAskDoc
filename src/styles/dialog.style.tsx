@@ -1,6 +1,7 @@
 import { DialogContent, DialogOverlay, DialogTitle } from '@radix-ui/react-dialog'
 import { keyframes } from '@stitches/react'
 
+import { Button } from './_app.style'
 import { styled } from './stitches.config'
 
 const overlayShow = keyframes({
@@ -50,4 +51,30 @@ export const Title = styled(DialogTitle, {
   fontWeight: 500,
   color: '$highContrast',
   fontSize: 18,
+})
+
+const shadowMd = '0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)'
+
+export const PrimaryButton = styled(Button, {
+  padding: '0.5rem 1rem',
+  border: '2px solid $blue9',
+  background: '$blue9 !important',
+  color: 'white',
+  fontWeight: 600,
+  borderRadius: '8px',
+  cursor: 'pointer',
+  userSelect: 'none',
+  transition: 'all .1s ease-in',
+  boxShadow: shadowMd,
+})
+
+export const SecondaryButton = styled(Button, {
+  border: '2px solid $sand8',
+  color: '$sand12',
+  fontWeight: 600,
+  borderRadius: '8px',
+  cursor: 'pointer',
+  userSelect: 'none',
+  transition: 'all .1s ease-in',
+  boxShadow: shadowMd,
 })
