@@ -106,7 +106,7 @@ const ExerciseDialog = ({
         {exercise.moduleCode}: {module.title}
       </ModulePill>
       {/* TODO: spec button placement not final - temporarily placed in centre. */}
-      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+      <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
         {spec && (
           <SpecLink target="_blank" href={spec.url}>
             <BoxArrowUpRight
@@ -119,46 +119,32 @@ const ExerciseDialog = ({
         )}
       </div>
       {/* convert tabs to <a href=""></a> */}
-      <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'row' }}>
-        {dataFiles.length !== 0 && (
-          <div
-            style={{
-              width: modelAnswers.length !== 0 ? '50%' : '100%',
-              textAlign: 'center',
-            }}
-          >
-            <h4>Data files</h4>
-            <Tabs
-              data={dataFiles}
-              generator={(tab: any) => (
-                <span style={{ textAlign: 'center', width: '100%' }}>
-                  {tab.name}.{tab.suffix[0]}
-                </span>
-              )}
-              onClick={(tab: any) => window.open(tab.url)}
-            />
-          </div>
-        )}
-        {modelAnswers.length !== 0 && (
-          <div
-            style={{
-              width: modelAnswers.length !== 0 ? '50%' : '100%',
-              textAlign: 'center',
-            }}
-          >
-            <h4>Model answers</h4>
-            <Tabs
-              data={modelAnswers}
-              generator={(tab: any) => (
-                <span style={{ textAlign: 'center', width: '100%' }}>
-                  {tab.name}.{tab.suffix[0]}
-                </span>
-              )}
-              onClick={(tab: any) => window.open(tab.url)}
-            />
-          </div>
-        )}
-      </div>
+      {dataFiles.length !== 0 && (
+        <div>
+          <h4>Data files</h4>
+          {dataFiles.map((file, index) => (
+            <li>
+              <a key={index} href={file.url}>
+                {file.name}.{file.suffix[0]}
+              </a>
+            </li>
+          ))}
+        </div>
+      )}
+      {modelAnswers.length !== 0 && (
+        <div style={{ marginTop: '1rem' }}>
+          <h4>Model answers</h4>
+          <ul>
+            {modelAnswers.map((file, index) => (
+              <li>
+                <a key={index} href={file.url}>
+                  {file.name}.{file.suffix[0]}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       {filesToSubmit.length > 0 && (
         <div style={{ marginTop: '1rem' }}>
           <h4>Submission</h4>
@@ -314,6 +300,7 @@ const ExerciseDialog = ({
 
           <div style={{ display: 'flex', fontSize: '0.8rem', marginTop: '1rem' }}>
             <p>How many hours did this coursework take you?</p>
+            {/* 0-1 hours, 1-10 hours, 11-20 hours, 20+ hours */}
             <input style={{ display: 'inline', marginLeft: '0.5rem' }} />
           </div>
         </div>
