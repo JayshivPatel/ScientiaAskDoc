@@ -1,3 +1,4 @@
+import { Label } from '@radix-ui/react-select'
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
 import { useEffect, useState } from 'react'
@@ -58,6 +59,9 @@ const ExerciseDialog = ({
   const [dataFiles, setDataFiles] = useState<Material[]>([])
   const [filesToSubmit, setFilesToSubmit] = useState<FileToSubmit[]>([])
   const [owner, setOwner] = useState<ExerciseOwner | null>(null)
+  const [timeSpent, setTimeSpent] = useState('')
+
+  const EXERCISE_DURATIONS = ['0-1 hours', '1-10 hours', '11-20 hours', '20+ hours']
 
   useEffect(() => {
     getExerciseMaterials({
@@ -299,9 +303,20 @@ const ExerciseDialog = ({
           </p>
 
           <div style={{ display: 'flex', fontSize: '0.8rem', marginTop: '1rem' }}>
-            <p>How many hours did this coursework take you?</p>
-            {/* 0-1 hours, 1-10 hours, 11-20 hours, 20+ hours */}
-            <input style={{ display: 'inline', marginLeft: '0.5rem' }} />
+            <label htmlFor="exercise-duration">How many hours did this coursework take you?</label>
+            <select
+              value={timeSpent}
+              onChange={(event) => setTimeSpent(event.target.value)}
+              style={{ display: 'inline', marginLeft: '0.5rem' }}
+              name="exercise-duration"
+            >
+              <option value="">Select...</option>
+              {EXERCISE_DURATIONS.map((duration, index) => (
+                <option key={index} value={duration}>
+                  {duration}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       )}
