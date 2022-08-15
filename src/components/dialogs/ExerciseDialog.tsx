@@ -1,60 +1,46 @@
-import { Label } from '@radix-ui/react-select'
 import { formatInTimeZone } from 'date-fns-tz'
-import prettyBytes from 'pretty-bytes'
 import { useEffect, useState } from 'react'
-import { BoxArrowUpRight, CheckLg, Envelope, FileEarmark, Upload } from 'react-bootstrap-icons'
+import { BoxArrowUpRight, Envelope } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
-import { Exercise, ExerciseMaterials, Module, SubmittedFile } from '../../constants/types'
-import { useExercises } from '../../lib/exercises.service'
-import { currentShortYear } from '../../lib/utilities.service'
+import { Module } from '../../constants/types'
+import { useExerciseDialog } from '../../lib/exerciseDialog.context'
+import { useUser } from '../../lib/user.context'
 import {
   ModulePill,
   ResourceLink,
   SpecLink,
-  TrashButton,
-  UploadButton,
   UploadWrapper,
 } from '../../styles/exerciseDialog.style'
 import Dialog from './Dialog'
-import FileUpload from './FileUpload'
+import FileUpload from './exercise/FileUpload'
 
-const ExerciseDialog = ({
-  open,
-  onOpenChange,
-  exercise,
-  module,
-}: {
-  open: boolean
-  onOpenChange: (_: boolean) => void
-  exercise: Exercise
-  module: Module
-}) => {
-  const { getExerciseMaterials, deleteFile, submitFile } = useExercises()
+const EXERCISE_DURATIONS = ['0-1 hours', '1-10 hours', '11-20 hours', '20+ hours']
 
-  const [exerciseMaterials, setExerciseMaterials] = useState<ExerciseMaterials | null>(null)
+const ExerciseDialog = () => {
+  const { userDetails } = useUser()
+  const { exercise, setExercise, exerciseMaterials } = useExerciseDialog()
+
+  const [module, setModule] = useState<Module | null>(null)
+
+  useEffect(() => {
+    setModule(userDetails?.modules.find(({ code }) => code === exercise?.moduleCode) || null)
+  }, [exercise, userDetails])
+
+  useEffect(() => console.log({ exerciseMaterials }), [exerciseMaterials])
+
   const { owner, spec, dataFiles, modelAnswers, handIns } = exerciseMaterials || {}
   const [timeSpent, setTimeSpent] = useState('')
 
-  const EXERCISE_DURATIONS = ['0-1 hours', '1-10 hours', '11-20 hours', '20+ hours']
-
-  useEffect(() => {
-    // TODO: get user's year group
-    getExerciseMaterials({
-      academicYear: currentShortYear(),
-      yearGroup: 'c1',
-      exerciseId: exercise.number,
-      setExerciseMaterials,
-    })
-  }, [exercise])
-
   // Date format: https://date-fns.org/v2.29.1/docs/format
   const displayTimestamp = (date: Date | string) =>
-    formatInTimeZone(date, LONDON_TIMEZONE, 'E d LLL yyyy, h:mm aaa zzz')
+    formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm aaa zzz, EE d LLL yyyy')
 
   return (
-    exerciseMaterials && (
-      <Dialog {...{ open, onOpenChange }}>
+    exercise &&
+    exerciseMaterials &&
+    module && (
+      <Dialog open={true} onOpenChange={() => setExercise(null)}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <h3>
             {exercise.type}: {exercise.title}
@@ -74,7 +60,7 @@ const ExerciseDialog = ({
           )}
         </div>
         <ModulePill>
-          {exercise.moduleCode}: {module.title}
+          {module.code}: {module.title}
         </ModulePill>
         {/* TODO: spec button placement not final - temporarily placed in centre. */}
         <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
@@ -89,10 +75,10 @@ const ExerciseDialog = ({
             </SpecLink>
           )}
         </div>
-        {dataFiles!.length > 0 && (
+        {dataFiles && dataFiles.length > 0 && (
           <div>
             <h4>Data files</h4>
-            {dataFiles!.map((file, index) => (
+            {dataFiles.map((file, index) => (
               <li>
                 <ResourceLink key={index} target="_blank" href={file.url}>
                   {file.name}
@@ -101,11 +87,11 @@ const ExerciseDialog = ({
             ))}
           </div>
         )}
-        {modelAnswers!.length > 0 && (
+        {modelAnswers && modelAnswers.length > 0 && (
           <div style={{ marginTop: '1rem' }}>
             <h4>Model answers</h4>
             <ul>
-              {modelAnswers!.map((file, index) => (
+              {modelAnswers.map((file, index) => (
                 <li>
                   <ResourceLink key={index} target="_blank" href={file.url}>
                     {file.name}
@@ -115,15 +101,15 @@ const ExerciseDialog = ({
             </ul>
           </div>
         )}
-        {handIns!.length > 0 && (
+        {handIns && handIns.length > 0 && (
           <div style={{ marginTop: '1rem' }}>
             <h4>Submission</h4>
             <p style={{ fontSize: '14px', color: '$sand8' }}>
               Deadline: {displayTimestamp(exercise.endDate)}
             </p>
             <UploadWrapper>
-              {handIns!.map((handIn, index) => (
-                <FileUpload key={index} handIn={handIn} />
+              {handIns.map((handIn: any, index: any) => (
+                <FileUpload key={index} requiredFile={handIn} />
               ))}
             </UploadWrapper>
             <p style={{ fontSize: '0.8rem', marginTop: '1rem' }}>

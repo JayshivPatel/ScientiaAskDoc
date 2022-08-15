@@ -2,6 +2,7 @@ import { max, min } from 'date-fns'
 
 import { TIMELINE_TRACK_HEIGHT } from '../../constants/global'
 import { Exercise, Term, TrackMap } from '../../constants/types'
+import { useExerciseDialog } from '../../lib/exerciseDialog.context'
 import { dateToColumn } from '../../pages/Timeline'
 import { WEEKDAYS_WIDTHS, WEEKEND_WIDTH } from '../../styles/timeline/constants.style'
 import { Grid } from '../../styles/timeline/tracks.style'
@@ -11,13 +12,12 @@ export const Tracks = ({
   term,
   trackMap,
   weeks,
-  setExercise,
 }: {
   term: Term
   trackMap: TrackMap
   weeks: number
-  setExercise: (_: Exercise) => void
 }) => {
+  const { setExercise } = useExerciseDialog()
   // Ad hoc calculation of grid-template-rows heights to align to the hardcoded padding of the Module tabs
 
   const gridTemplateRows = Object.entries(trackMap)

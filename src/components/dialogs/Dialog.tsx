@@ -1,7 +1,6 @@
 import { DialogClose, DialogPortal, Dialog as DialogRoot } from '@radix-ui/react-dialog'
 import { ReactNode } from 'react'
 
-import { Button } from '../../styles/_app.style'
 import { Content, Overlay, PrimaryButton, SecondaryButton, Title } from '../../styles/dialog.style'
 
 const ContentFrame = ({
