@@ -1,6 +1,5 @@
 import { useContext } from 'react'
 
-import { FileToSubmit } from '../components/dialogs/ExerciseDialog'
 import { AxiosContext } from './axios.context'
 import { useToast } from './toast.context'
 
@@ -11,8 +10,8 @@ export const useExercises = (): any => {
   const getExerciseMaterials = async ({
     academicYear,
     yearGroup,
-    setExerciseMaterials,
     exerciseId,
+    setExerciseMaterials,
   }: any) => {
     await axiosInstance
       .request({
@@ -29,7 +28,66 @@ export const useExercises = (): any => {
       })
   }
 
-  const submitFile = (file: FileToSubmit) => {
+  // {
+  //   owner: {
+  //     shortcode: 'pipl12',
+  //     email: 'pipl12@imperial.ac.uk',
+  //     name: None,
+  //   },
+  //   spec: {
+  //     name: 'specification.pdf',
+  //     url: 'https://cate.doc.ic.ac.uk/showfile.cgi?key=2021:1:1:v5:SPECS',
+  //   },
+  //   hand_ins: [
+  //     {
+  //       name: 'final_report'
+  //       suffix: '.pdf',
+  //       max_size: 1,
+  //     },
+  //     {
+  //       name: 'slides',
+  //       suffix: 'pdf',
+  //       max_size: 1,
+  //     },
+  //     {
+  //       name: 'ethics_checklist',
+  //       suffix: 'pdf',
+  //       max_size: 1,
+  //     },
+  //   ],
+  //   model_answers: [
+  //     {
+  //       name: 'solution.pdf',
+  //       url: 'https://cate.doc.ic.ac.uk/showfile.cgi?key=2021:1:2:v5:MODELS',
+  //     },
+  //     {
+  //       name: 'ethics_checklist.pdf',
+  //       url: 'https://cate.doc.ic.ac.uk/showfile.cgi?key=2021:1:6:v5:MODELS',
+  //     },
+  //   ],
+  //   data_files: [
+  //     {
+  //       name: 'ethics_checklist.csv',
+  //       url: 'https://cate.doc.ic.ac.uk/showfile.cgi?key=2021:1:7:v5:DATA',
+  //     },
+  //     {
+  //       name: 'ethics_checklist.txt',
+  //       url: 'https://cate.doc.ic.ac.uk/showfile.cgi?key=2021:1:8:v5:DATA',
+  //     },
+  //   ],
+  // }
+
+  const submitFile = ({
+    year,
+    moduleCode,
+    exerciseNumber,
+    file,
+  }: {
+    year: string
+    moduleCode: string
+    exerciseNumber: number
+    file: File
+  }) => {
     console.log('Uploading: ', { file })
   }
 

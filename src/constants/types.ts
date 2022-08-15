@@ -89,3 +89,52 @@ export interface ResourceCreate {
   type: string
   path: string
 }
+
+interface Material {
+  name: string
+  url: string
+}
+
+interface RequiredSubmission {
+  name: string
+  max_size: number
+  suffix: string
+}
+
+interface ExerciseOwner {
+  shortcode: string
+  email: string
+  name: string | null
+}
+
+export class ExerciseMaterials {
+  owner: ExerciseOwner
+  spec: Material
+
+  @Expose({ name: 'data_files' })
+  dataFiles: Material[]
+
+  @Expose({ name: 'model_answers' })
+  modelAnswers: Material[]
+
+  @Expose({ name: 'hand_ins' })
+  handIns: RequiredSubmission[]
+}
+
+export class SubmittedFile {
+  id: string
+  username: string
+
+  @Type(() => Date)
+  timestamp: Date
+
+  @Expose({ name: 'target_submission_file_name' })
+  targetSubmissionFileName: string
+  year: string
+
+  @Expose({ name: 'module_code' })
+  moduleCode: string
+
+  @Expose({ name: 'exercise_number' })
+  exerciseNumber: number
+}
