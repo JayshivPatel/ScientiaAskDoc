@@ -39,6 +39,7 @@ export class Exercise {
 
   @Expose({ name: 'module_code' })
   moduleCode?: string
+  moduleTitle?: string
 
   @Expose({ name: 'submission_type' })
   submissionType: string
@@ -95,10 +96,11 @@ interface Material {
   url: string
 }
 
-interface RequiredSubmission {
+export interface RequiredSubmission {
   name: string
   max_size: number
   suffix: string
+  submitted: boolean
 }
 
 interface ExerciseOwner {
@@ -122,19 +124,12 @@ export class ExerciseMaterials {
 }
 
 export class SubmittedFile {
-  id: string
-  username: string
+  id: number
+  size: number
 
   @Type(() => Date)
   timestamp: Date
 
   @Expose({ name: 'target_submission_file_name' })
   targetSubmissionFileName: string
-  year: string
-
-  @Expose({ name: 'module_code' })
-  moduleCode: string
-
-  @Expose({ name: 'exercise_number' })
-  exerciseNumber: number
 }

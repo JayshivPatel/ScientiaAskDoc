@@ -1,7 +1,6 @@
 import { differenceInBusinessDays, differenceInCalendarWeeks, isMonday } from 'date-fns'
 import { useEffect, useState } from 'react'
 
-import ExerciseDialog from '../components/dialogs/ExerciseDialog'
 import { DayIndicator } from '../components/timeline/DayIndicator'
 import { MainBackground } from '../components/timeline/MainBackground'
 import { Modules } from '../components/timeline/Modules'
@@ -10,6 +9,7 @@ import { Tracks } from '../components/timeline/Tracks'
 import { Weeks } from '../components/timeline/Weeks'
 import { INDEXING_OFFSET, NAVIGATION_HEIGHT, TIMELINE_TRACK_HEIGHT } from '../constants/global'
 import { Exercise, Module, Term, TrackMap } from '../constants/types'
+import { ExerciseDialogProvider } from '../lib/exerciseDialog.context'
 import { useTimeline } from '../lib/timeline.service'
 import { useUser } from '../lib/user.context'
 import { generateTrackMap } from '../lib/utilities.service'
@@ -57,7 +57,6 @@ const Timeline = () => {
   const [trackMap, setTrackMap] = useState<TrackMap>({})
   const [trackMapForTerm, setTrackMapForTerm] = useState<TrackMap>({})
   const [rowHeights, setRowHeights] = useState<{ [code: string]: string }>({})
-  const [exercise, setExercise] = useState<Exercise | null>(null)
 
   useEffect(() => {
     const now = new Date()
@@ -114,7 +113,7 @@ const Timeline = () => {
   }, [trackMapForTerm])
 
   return term ? (
-    <>
+    <ExerciseDialogProvider>
       <Area
         css={{
           height: `calc(100vh - ${TOP_MARGIN})`,
@@ -127,12 +126,7 @@ const Timeline = () => {
             <Weeks start={term.start} weeks={term.weeks} />
             <Modules modules={modulesForTerm} rowHeights={rowHeights} />
             {/* NOTE: Everything under here will be placed in the background area */}
-            <Tracks
-              term={term}
-              weeks={term.weeks}
-              trackMap={trackMapForTerm}
-              setExercise={setExercise}
-            />
+            <Tracks term={term} weeks={term.weeks} trackMap={trackMapForTerm} />
             <DayIndicator
               weeks={term.weeks}
               currentDayColumn={dateToColumn(new Date(), term.start)}
@@ -148,15 +142,7 @@ const Timeline = () => {
         </Scrollbar>
         <Corner />
       </Area>
-      {exercise && (
-        <ExerciseDialog
-          open={true}
-          onOpenChange={() => setExercise(null)}
-          exercise={exercise}
-          module={modulesForTerm.find((module) => module.code === exercise.moduleCode) as Module}
-        />
-      )}
-    </>
+    </ExerciseDialogProvider>
   ) : (
     <div>Loading...</div>
   )
