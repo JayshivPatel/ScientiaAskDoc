@@ -19,7 +19,7 @@ const EXERCISE_DURATIONS = ['0-1 hours', '1-10 hours', '11-20 hours', '20+ hours
 
 const ExerciseDialog = () => {
   const { userDetails } = useUser()
-  const { exercise, setExercise, exerciseMaterials } = useExerciseDialog()
+  const { exercise, setExercise, exerciseMaterials, submittedFiles } = useExerciseDialog()
 
   const [module, setModule] = useState<Module | null>(null)
 
@@ -27,26 +27,24 @@ const ExerciseDialog = () => {
     setModule(userDetails?.modules.find(({ code }) => code === exercise?.moduleCode) || null)
   }, [exercise, userDetails])
 
-  useEffect(() => console.log({ exerciseMaterials }), [exerciseMaterials])
-
   const { owner, spec, dataFiles, modelAnswers, handIns } = exerciseMaterials || {}
   const [timeSpent, setTimeSpent] = useState('')
 
   // Date format: https://date-fns.org/v2.29.1/docs/format
   const displayTimestamp = (date: Date | string) =>
-    formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm aaa zzz, EE d LLL yyyy')
+    formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm aaa zzz, EEEE d LLL yyyy')
 
   return (
     exercise &&
     exerciseMaterials &&
     module && (
       <Dialog open={true} onOpenChange={() => setExercise(null)}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h3 style={{ fontWeight: 400, fontSize: '2rem', width: 'fit-content' }}>
             {exercise.type}: {exercise.title}
           </h3>
           {owner && (
-            <address style={{ float: 'right' }}>
+            <address style={{ display: 'flex', alignItems: 'center' }}>
               <a
                 title={
                   'Email the exercise owner' +
@@ -62,48 +60,76 @@ const ExerciseDialog = () => {
         <ModulePill>
           {module.code}: {module.title}
         </ModulePill>
-        {/* TODO: spec button placement not final - temporarily placed in centre. */}
-        <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
+
+        <div
+          style={{
+            display: 'grid',
+            width: '100%',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '2rem',
+            gridGap: '2rem',
+            marginTop: '1rem',
+          }}
+        >
           {spec && (
             <SpecLink target="_blank" href={spec.url}>
               <BoxArrowUpRight
-                style={{ marginRight: '0.5rem', fill: 'inherit', float: 'left' }}
+                style={{ marginRight: '0.5rem', fill: 'inherit', float: 'left', fontWeight: 500 }}
                 size={16}
-                fill="#1B1B18"
               />
               View specification
             </SpecLink>
           )}
+          {dataFiles && dataFiles.length > 0 && (
+            <div
+              style={{
+                // marginRight: '3rem',
+                border: '2px solid #c8c7c1',
+                borderRadius: '0.5rem',
+                padding: '1rem',
+                width: 'fit-content',
+              }}
+            >
+              <h4 style={{ fontWeight: '500', fontSize: '18px' }}>Data files</h4>
+              <ul>
+                {dataFiles.map((file, index) => (
+                  <li key={index}>
+                    <ResourceLink target="_blank" href={file.url}>
+                      {file.name}.csv
+                    </ResourceLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {modelAnswers && modelAnswers.length > 0 && (
+            <div
+              style={{
+                border: '2px solid #c8c7c1',
+                borderRadius: '0.5rem',
+                padding: '1rem',
+                width: 'fit-content',
+              }}
+            >
+              <h4 style={{ fontWeight: '500', fontSize: '18px' }}>Model answers</h4>
+              <ul>
+                {[modelAnswers[0]].map((file, index) => (
+                  <li key={index}>
+                    <ResourceLink target="_blank" href={file.url}>
+                      {file.name}.pdf
+                    </ResourceLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
-        {dataFiles && dataFiles.length > 0 && (
-          <div>
-            <h4>Data files</h4>
-            {dataFiles.map((file, index) => (
-              <li>
-                <ResourceLink key={index} target="_blank" href={file.url}>
-                  {file.name}
-                </ResourceLink>
-              </li>
-            ))}
-          </div>
-        )}
-        {modelAnswers && modelAnswers.length > 0 && (
-          <div style={{ marginTop: '1rem' }}>
-            <h4>Model answers</h4>
-            <ul>
-              {modelAnswers.map((file, index) => (
-                <li>
-                  <ResourceLink key={index} target="_blank" href={file.url}>
-                    {file.name}
-                  </ResourceLink>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+
         {handIns && handIns.length > 0 && (
           <div style={{ marginTop: '1rem' }}>
-            <h4>Submission</h4>
+            <h4>
+              Submission ({submittedFiles?.length || 0}/{handIns.length})
+            </h4>
             <p style={{ fontSize: '14px', color: '$sand8' }}>
               Deadline: {displayTimestamp(exercise.endDate)}
             </p>

@@ -1,7 +1,7 @@
 import { max, min } from 'date-fns'
 
 import { TIMELINE_TRACK_HEIGHT } from '../../constants/global'
-import { Exercise, Term, TrackMap } from '../../constants/types'
+import { Term, TrackMap } from '../../constants/types'
 import { useExerciseDialog } from '../../lib/exerciseDialog.context'
 import { dateToColumn } from '../../pages/Timeline'
 import { WEEKDAYS_WIDTHS, WEEKEND_WIDTH } from '../../styles/timeline/constants.style'
