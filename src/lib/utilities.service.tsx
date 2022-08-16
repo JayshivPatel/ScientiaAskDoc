@@ -1,5 +1,5 @@
 import { MILLISECONDS_IN_A_DAY } from '../constants/global'
-import { Exercise, ModuleWithExercises, Track, TrackMap } from '../constants/types'
+import { Exercise, Track, TrackMap } from '../constants/types'
 
 /* A file to store miscellaneous utility functions */
 

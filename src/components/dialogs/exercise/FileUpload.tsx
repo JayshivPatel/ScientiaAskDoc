@@ -108,15 +108,18 @@ const FileUpload = ({ requiredFile, key }: { requiredFile: RequiredSubmission; k
                 {prettyBytes(submittedFile.size)}
               </p>
             </div>
-            <BoxArrowUpRight size={24} style={{ fontSize: '1rem' }} />
-            <TrashButton
-              size={24}
-              style={{ fontSize: '1rem' }}
-              onClick={(event) => {
-                deleteFile(submittedFile)
-                event.preventDefault()
-              }}
-            />
+            <div>
+              <BoxArrowUpRight size={24} style={{ fontSize: '1rem', marginRight: '1rem' }} />
+
+              <TrashButton
+                size={24}
+                style={{ fontSize: '1rem' }}
+                onClick={(event) => {
+                  deleteFile(submittedFile)
+                  event.preventDefault()
+                }}
+              />
+            </div>
           </>
         ) : (
           <Upload size={24} />

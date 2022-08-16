@@ -7,6 +7,13 @@ import { AxiosContext } from './axios.context'
 import { useToast } from './toast.context'
 import { currentShortYear } from './utilities.service'
 
+/**
+ * Get exercise materials (returns owner, spec, dataFiles, modelAnswers, fileRequirements)
+ * Submit file
+ * Delete file submitted
+ * Get all files submitted for 1 exercise (returns URL, timestamp & file size for each file)
+ * Get individual file submitted (User views this on browser) */
+
 interface ExerciseDialogManager {
   exercise: Exercise | null
   setExercise: (_: Exercise | null) => void
