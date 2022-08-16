@@ -1,5 +1,6 @@
 import { utcToZonedTime } from 'date-fns-tz'
 import { useEffect, useState } from 'react'
+import { DragDropContext } from 'react-beautiful-dnd'
 import {
   Check,
   Dash,

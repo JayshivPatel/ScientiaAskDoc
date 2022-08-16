@@ -19,6 +19,7 @@
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
+    "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "^17.0.9",
     "axios": "^0.26.1",
     "boring-avatars": "^1.6.3",
@@ -30,6 +31,7 @@
     "pretty-bytes": "^6.0.0",
     "qs": "^6.11.0",
     "react": "^17.0.2",
+    "react-beautiful-dnd": "^13.1.0",
     "react-bootstrap-icons": "^1.8.2",
     "react-dom": "^17.0.2",
     "react-dropzone": "^14.2.2",
@@ -93,6 +95,6 @@
     ],
     "transformIgnorePatterns": [
       "/node_modules/(?!(pretty-bytes)/)"
-    ] 
+    ]
   }
 }
