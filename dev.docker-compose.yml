@@ -10,6 +10,7 @@ services:
     environment:
       - ENVIRONMENT=development
       - MATERIALS_ENTRYPOINT=http://materials:5001
+      - EMARKING_ENTRYPOINT=http://emarking:5002
       - API_ROLE_USERNAME=role_user1
       - API_ROLE_PASSWORD=role_user_password
     volumes:
