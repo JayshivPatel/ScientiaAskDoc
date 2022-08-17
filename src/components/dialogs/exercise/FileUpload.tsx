@@ -3,6 +3,7 @@ import prettyBytes from 'pretty-bytes'
 import { useEffect, useState } from 'react'
 import { BoxArrowUpRight, CheckLg, FileEarmark, Upload } from 'react-bootstrap-icons'
 
+import { endpoints } from '../../../constants/endpoints'
 import { LONDON_TIMEZONE } from '../../../constants/global'
 import { RequiredSubmission, SubmittedFile } from '../../../constants/types'
 import { useExerciseDialog } from '../../../lib/exerciseDialog.context'
@@ -110,14 +111,29 @@ const FileUpload = ({ requiredFile }: { requiredFile: RequiredSubmission }) => {
               </p>
             </div>
             <div>
-              <BoxArrowUpRight size={24} style={{ fontSize: '1rem', marginRight: '1rem' }} />
+              <BoxArrowUpRight
+                size={24}
+                style={{ fontSize: '1rem', marginRight: '1rem' }}
+                onClick={(event) => {
+                  event.preventDefault()
+                  window.open(
+                    endpoints.submissionFile(
+                      submittedFile.year,
+                      submittedFile.moduleCode,
+                      submittedFile.exerciseNumber,
+                      submittedFile.id
+                    ),
+                    '_blank'
+                  )
+                }}
+              />
 
               <TrashButton
                 size={24}
                 style={{ fontSize: '1rem' }}
                 onClick={(event) => {
-                  deleteFile(submittedFile)
                   event.preventDefault()
+                  deleteFile(submittedFile)
                 }}
               />
             </div>
