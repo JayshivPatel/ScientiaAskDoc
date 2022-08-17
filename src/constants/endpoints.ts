@@ -18,6 +18,8 @@ export const endpoints = {
   refresh: `${baseURL}/auth/refresh`,
   module: (year: string, moduleCode: string) => `${baseURL}/${year}/modules/${moduleCode}`,
   exercises: (year: string) => `${baseURL}/${year}/exercises`,
+  exerciseSubmissions: (year: string, moduleCode: string, exerciseNumber: number) =>
+    `${baseURL}/${year}/${moduleCode}/exercises/${exerciseNumber}/submissions`,
   resources: `${baseURL}/resources`,
   resource: (id: number) => `${baseURL}/resources/${id}`,
   resourceFile: (id: number) => `${baseURL}/resources/${id}/file`,

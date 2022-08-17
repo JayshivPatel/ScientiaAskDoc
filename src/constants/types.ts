@@ -124,8 +124,19 @@ export class ExerciseMaterials {
 }
 
 export class SubmittedFile {
+  username: string
   id: number
+  year: string
   size: number
+
+  @Expose({ name: 'module_code' })
+  moduleCode: string
+
+  @Expose({ name: 'file_size' })
+  fileSize: number
+
+  @Expose({ name: 'exercise_number' })
+  exerciseNumber: number
 
   @Type(() => Date)
   timestamp: Date

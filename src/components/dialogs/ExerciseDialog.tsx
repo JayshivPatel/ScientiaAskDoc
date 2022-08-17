@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { BoxArrowUpRight, Envelope } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
-import { Module } from '../../constants/types'
+import { Module, RequiredSubmission } from '../../constants/types'
 import { useExerciseDialog } from '../../lib/exerciseDialog.context'
 import { useUser } from '../../lib/user.context'
 import {
@@ -134,7 +134,7 @@ const ExerciseDialog = () => {
               Deadline: {displayTimestamp(exercise.endDate)}
             </p>
             <UploadWrapper>
-              {handIns.map((handIn: any, index: any) => (
+              {handIns.map((handIn: RequiredSubmission, index: number) => (
                 <FileUpload key={index} requiredFile={handIn} />
               ))}
             </UploadWrapper>

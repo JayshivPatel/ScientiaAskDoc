@@ -12,9 +12,10 @@ import { TrashButton, UploadButton } from '../../../styles/exerciseDialog.style'
 const displayTimestamp = (date: Date | string) =>
   formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm aaa zzz, EEEE d LLL yyyy')
 
-const FileUpload = ({ requiredFile, key }: { requiredFile: RequiredSubmission; key: number }) => {
+const FileUpload = ({ requiredFile }: { requiredFile: RequiredSubmission }) => {
   const { submittedFiles, submitFile, deleteFile } = useExerciseDialog()
   const [submittedFile, setSubmittedFile] = useState<SubmittedFile | null>(null)
+
   useEffect(() => {
     console.log({ submittedFiles })
     setSubmittedFile(
@@ -42,7 +43,7 @@ const FileUpload = ({ requiredFile, key }: { requiredFile: RequiredSubmission; k
           marginTop: '1rem',
           filter: 'drop-shadow(0 1px 2px rgba(0,0,0,.06)) drop-shadow(0 1px 3px rgba(0,0,0,.1))',
         }}
-        htmlFor={`exercise-upload-${key}`}
+        htmlFor={`exercise-upload-${requiredFile.name}`}
       >
         <div
           style={{
@@ -105,7 +106,7 @@ const FileUpload = ({ requiredFile, key }: { requiredFile: RequiredSubmission; k
                   color: '#8F908C', // = $sand9
                 }}
               >
-                {prettyBytes(submittedFile.size)}
+                {prettyBytes(submittedFile.fileSize)}
               </p>
             </div>
             <div>
@@ -133,11 +134,11 @@ const FileUpload = ({ requiredFile, key }: { requiredFile: RequiredSubmission; k
           // TODO: on cancel of file browser: dont remove submission
           if (event.target.files === null) return
           // if (exercise.endDate > new Date()) return
-          submitFile(event.target.files[0])
+          submitFile(event.target.files[0], requiredFile.name)
         }}
         // disabled={exercise.endDate > new Date()}
         accept={'.' + requiredFile.suffix}
-        id={`exercise-upload-${key}`}
+        id={`exercise-upload-${requiredFile.name}`}
         hidden
       />
     </div>
