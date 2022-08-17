@@ -77,7 +77,7 @@ export const ExerciseDialogProvider = ({ children }: { children: ReactNode }) =>
     axiosInstance
       .request({
         method: 'GET',
-        url: endpoints.exerciseSubmissions(`${year}`, exercise!.moduleCode!, exercise!.number),
+        url: endpoints.submissions(`${year}`, exercise!.moduleCode!, exercise!.number),
       })
       .then(({ data }: any) =>
         setSubmittedFiles(
@@ -108,17 +108,12 @@ export const ExerciseDialogProvider = ({ children }: { children: ReactNode }) =>
     axiosInstance
       .request({
         method: 'POST',
-        url: endpoints.exerciseSubmissions(`${year}`, exercise!.moduleCode!, exercise!.number),
+        url: endpoints.submissions(`${year}`, exercise!.moduleCode!, exercise!.number),
         data: formData,
       })
       .then(({ data }: { data: SubmittedFile }) => {
-        setSubmittedFiles((submittedFiles: SubmittedFile[]) =>
-          submittedFiles.map((submission) =>
-            submission.targetSubmissionFileName === data.targetSubmissionFileName
-              ? plainToInstance(SubmittedFile, data)
-              : submission
-          )
-        )
+        const submittedFile = plainToInstance(SubmittedFile, data)
+        setSubmittedFiles((submittedFiles: SubmittedFile[]) => [...submittedFiles, submittedFile])
       })
       .catch((error: any) => {
         addToast({
@@ -127,13 +122,29 @@ export const ExerciseDialogProvider = ({ children }: { children: ReactNode }) =>
         })
         console.error(error)
       })
-    // TODO: show new file
   }
 
-  const deleteFile = (file: RequiredSubmission) => {
+  const deleteFile = (file: SubmittedFile) => {
     console.log('Deleting: ', { file })
-    // TODO: call delete endpoint
-    // TODO: remove file from frontend
+    axiosInstance
+      .request({
+        method: 'DELETE',
+        url: endpoints.submission(`${year}`, exercise!.moduleCode!, exercise!.number, file.id),
+      })
+      .then(() => {
+        setSubmittedFiles((submittedFiles: SubmittedFile[]) =>
+          submittedFiles.filter(
+            (submission) => submission.targetSubmissionFileName !== file.targetSubmissionFileName
+          )
+        )
+      })
+      .catch((error: any) => {
+        addToast({
+          variant: 'error',
+          title: 'Unable to delete submitted files for this exercise',
+        })
+        console.error(error)
+      })
   }
 
   return (
