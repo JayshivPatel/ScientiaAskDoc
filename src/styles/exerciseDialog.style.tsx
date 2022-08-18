@@ -1,4 +1,4 @@
-import { Trash3Fill } from 'react-bootstrap-icons'
+import { BoxArrowUpRight, Trash3Fill } from 'react-bootstrap-icons'
 
 import { styled } from './stitches.config'
 
@@ -46,6 +46,14 @@ export const TrashButton = styled(Trash3Fill, {
   fontSize: '1rem',
   '&:hover': {
     fill: 'red',
+  },
+})
+
+export const OpenLinkButton = styled(BoxArrowUpRight, {
+  marginRight: '1rem',
+  fontSize: '1rem',
+  '&:hover': {
+    fill: '$lowContrast',
   },
 })
 

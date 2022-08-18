@@ -1,30 +1,39 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
-import { useEffect, useState } from 'react'
-import { BoxArrowUpRight, CheckLg, FileEarmark, Upload } from 'react-bootstrap-icons'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { CheckLg, FileEarmark, Upload } from 'react-bootstrap-icons'
 
 import { endpoints } from '../../../constants/endpoints'
 import { LONDON_TIMEZONE } from '../../../constants/global'
-import { RequiredSubmission, SubmittedFile } from '../../../constants/types'
-import { useExerciseDialog } from '../../../lib/exerciseDialog.context'
-import { TrashButton, UploadButton } from '../../../styles/exerciseDialog.style'
+import { Exercise, RequiredSubmission, SubmittedFile } from '../../../constants/types'
+import { useExercise } from '../../../lib/exerciseDialog.service'
+import { OpenLinkButton, TrashButton, UploadButton } from '../../../styles/exerciseDialog.style'
 
 // Date format: https://date-fns.org/v2.29.1/docs/format
 const displayTimestamp = (date: Date | string) =>
   formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm aaa zzz, EEEE d LLL yyyy')
 
-const FileUpload = ({ requiredFile }: { requiredFile: RequiredSubmission }) => {
-  const { submittedFiles, submitFile, deleteFile } = useExerciseDialog()
+const FileUpload = ({
+  exercise,
+  requiredFile,
+  submittedFiles,
+  setSubmittedFiles,
+}: {
+  exercise: Exercise
+  requiredFile: RequiredSubmission
+  submittedFiles: SubmittedFile[]
+  setSubmittedFiles: Dispatch<SetStateAction<SubmittedFile[]>>
+}) => {
+  const { submitFile, deleteFile } = useExercise()
   const [submittedFile, setSubmittedFile] = useState<SubmittedFile | null>(null)
 
   useEffect(() => {
-    console.log({ submittedFiles })
     setSubmittedFile(
       submittedFiles?.find(
         ({ targetSubmissionFileName }) => targetSubmissionFileName === requiredFile.name
       ) || null
     )
-  }, [submittedFiles])
+  }, [requiredFile.name, submittedFiles])
 
   return (
     <div
@@ -111,9 +120,8 @@ const FileUpload = ({ requiredFile }: { requiredFile: RequiredSubmission }) => {
               </p>
             </div>
             <div>
-              <BoxArrowUpRight
+              <OpenLinkButton
                 size={24}
-                style={{ fontSize: '1rem', marginRight: '1rem' }}
                 onClick={(event) => {
                   event.preventDefault()
                   window.open(
@@ -130,10 +138,9 @@ const FileUpload = ({ requiredFile }: { requiredFile: RequiredSubmission }) => {
 
               <TrashButton
                 size={24}
-                style={{ fontSize: '1rem' }}
                 onClick={(event) => {
                   event.preventDefault()
-                  deleteFile(submittedFile)
+                  deleteFile({ file: submittedFile, setSubmittedFiles })
                 }}
               />
             </div>
@@ -146,11 +153,15 @@ const FileUpload = ({ requiredFile }: { requiredFile: RequiredSubmission }) => {
       <input
         type="file"
         onChange={(event) => {
-          console.log({ event })
           // TODO: on cancel of file browser: dont remove submission
           if (event.target.files === null) return
           // if (exercise.endDate > new Date()) return
-          submitFile(event.target.files[0], requiredFile.name)
+          submitFile({
+            file: event.target.files[0],
+            targetName: requiredFile.name,
+            exercise,
+            setSubmittedFiles,
+          })
         }}
         // disabled={exercise.endDate > new Date()}
         accept={'.' + requiredFile.suffix}

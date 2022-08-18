@@ -1,4 +1,7 @@
 import { Expose, Type } from 'class-transformer'
+import { Dispatch, SetStateAction } from 'react'
+
+export type SetState<Value> = Dispatch<SetStateAction<Value>>
 
 export class UserDetails {
   login: string
@@ -39,7 +42,6 @@ export class Exercise {
 
   @Expose({ name: 'module_code' })
   moduleCode?: string
-  moduleTitle?: string
 
   @Expose({ name: 'submission_type' })
   submissionType: string

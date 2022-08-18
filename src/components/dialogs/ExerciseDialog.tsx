@@ -3,9 +3,15 @@ import { useEffect, useState } from 'react'
 import { BoxArrowUpRight, Envelope } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
-import { Module, RequiredSubmission } from '../../constants/types'
-import { useExerciseDialog } from '../../lib/exerciseDialog.context'
-import { useUser } from '../../lib/user.context'
+import {
+  Exercise,
+  ExerciseMaterials,
+  Module,
+  RequiredSubmission,
+  SetState,
+  SubmittedFile,
+} from '../../constants/types'
+import { useExercise } from '../../lib/exerciseDialog.service'
 import {
   ModulePill,
   ResourceLink,
@@ -17,15 +23,25 @@ import FileUpload from './exercise/FileUpload'
 
 const EXERCISE_DURATIONS = ['0-1 hours', '1-10 hours', '11-20 hours', '20+ hours']
 
-const ExerciseDialog = () => {
-  const { userDetails } = useUser()
-  const { exercise, setExercise, exerciseMaterials, submittedFiles } = useExerciseDialog()
-
-  const [module, setModule] = useState<Module | null>(null)
+const ExerciseDialog = ({
+  exercise,
+  setExercise,
+  module,
+}: {
+  exercise: Exercise
+  setExercise: SetState<Exercise | null>
+  module: Module
+}) => {
+  const { getExerciseMaterials, getSubmittedFiles } = useExercise()
+  const [exerciseMaterials, setExerciseMaterials] = useState<ExerciseMaterials | null>(null)
+  const [submittedFiles, setSubmittedFiles] = useState<SubmittedFile[]>([])
 
   useEffect(() => {
-    setModule(userDetails?.modules.find(({ code }) => code === exercise?.moduleCode) || null)
-  }, [exercise, userDetails])
+    if (!exercise) return
+    getExerciseMaterials({ exercise, setExerciseMaterials })
+    getSubmittedFiles({ exercise, setSubmittedFiles })
+    console.log('In the useEffect()')
+  }, [exercise])
 
   const { owner, spec, dataFiles, modelAnswers, handIns } = exerciseMaterials || {}
   const [timeSpent, setTimeSpent] = useState('')
@@ -36,8 +52,7 @@ const ExerciseDialog = () => {
 
   return (
     exercise &&
-    exerciseMaterials &&
-    module && (
+    exerciseMaterials && (
       <Dialog open={true} onOpenChange={() => setExercise(null)}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h3 style={{ fontWeight: 400, fontSize: '2rem', width: 'fit-content' }}>
@@ -58,7 +73,7 @@ const ExerciseDialog = () => {
           )}
         </div>
         <ModulePill>
-          {module.code}: {module.title}
+          {exercise.moduleCode}: {module.title}
         </ModulePill>
 
         <div
@@ -135,7 +150,12 @@ const ExerciseDialog = () => {
             </p>
             <UploadWrapper>
               {handIns.map((handIn: RequiredSubmission, index: number) => (
-                <FileUpload key={index} requiredFile={handIn} />
+                <FileUpload
+                  exercise={exercise}
+                  requiredFile={handIn}
+                  submittedFiles={submittedFiles}
+                  setSubmittedFiles={setSubmittedFiles}
+                />
               ))}
             </UploadWrapper>
             <p style={{ fontSize: '0.8rem', marginTop: '1rem' }}>
