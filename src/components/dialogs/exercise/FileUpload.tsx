@@ -5,7 +5,7 @@ import { CheckLg, FileEarmark, Upload } from 'react-bootstrap-icons'
 
 import { endpoints } from '../../../constants/endpoints'
 import { LONDON_TIMEZONE } from '../../../constants/global'
-import { Exercise, RequiredSubmission, SubmittedFile } from '../../../constants/types'
+import { Exercise, FileRequirement, SetState, SubmittedFile } from '../../../constants/types'
 import { useExercise } from '../../../lib/exerciseDialog.service'
 import { OpenLinkButton, TrashButton, UploadButton } from '../../../styles/exerciseDialog.style'
 
@@ -15,25 +15,28 @@ const displayTimestamp = (date: Date | string) =>
 
 const FileUpload = ({
   exercise,
-  requiredFile,
+  fileRequirement,
   submittedFiles,
   setSubmittedFiles,
 }: {
   exercise: Exercise
-  requiredFile: RequiredSubmission
+  fileRequirement: FileRequirement
   submittedFiles: SubmittedFile[]
-  setSubmittedFiles: Dispatch<SetStateAction<SubmittedFile[]>>
+  setSubmittedFiles: SetState<SubmittedFile[]>
 }) => {
-  const { submitFile, deleteFile } = useExercise()
+  const { submitFile, deleteFile } = useExercise(exercise)
   const [submittedFile, setSubmittedFile] = useState<SubmittedFile | null>(null)
+
+  useEffect(() => console.log({ submittedFiles }), [submittedFiles])
 
   useEffect(() => {
     setSubmittedFile(
       submittedFiles?.find(
-        ({ targetSubmissionFileName }) => targetSubmissionFileName === requiredFile.name
+        ({ targetFileName }) =>
+          targetFileName === fileRequirement.name + '.' + fileRequirement.suffix
       ) || null
     )
-  }, [requiredFile.name, submittedFiles])
+  }, [fileRequirement.name, submittedFiles])
 
   return (
     <div
@@ -53,7 +56,7 @@ const FileUpload = ({
           marginTop: '1rem',
           filter: 'drop-shadow(0 1px 2px rgba(0,0,0,.06)) drop-shadow(0 1px 3px rgba(0,0,0,.1))',
         }}
-        htmlFor={`exercise-upload-${requiredFile.name}`}
+        htmlFor={`exercise-upload-${fileRequirement.name}`}
       >
         <div
           style={{
@@ -89,14 +92,8 @@ const FileUpload = ({
               justifyContent: 'center',
             }}
           >
-            <p>{requiredFile.name}</p>
-            <p
-              style={{
-                fontSize: '0.8rem',
-                color: '#8F908C', // = $sand9
-              }}
-            >
-              .{requiredFile.suffix}
+            <p>
+              {fileRequirement.name}.{fileRequirement.suffix}
             </p>
           </div>
         </div>
@@ -129,6 +126,7 @@ const FileUpload = ({
                       submittedFile.year,
                       submittedFile.moduleCode,
                       submittedFile.exerciseNumber,
+                      submittedFile.targetFileName,
                       submittedFile.id
                     ),
                     '_blank'
@@ -158,14 +156,13 @@ const FileUpload = ({
           // if (exercise.endDate > new Date()) return
           submitFile({
             file: event.target.files[0],
-            targetName: requiredFile.name,
-            exercise,
+            targetFileName: fileRequirement.name + '.' + fileRequirement.suffix,
             setSubmittedFiles,
           })
         }}
         // disabled={exercise.endDate > new Date()}
-        accept={'.' + requiredFile.suffix}
-        id={`exercise-upload-${requiredFile.name}`}
+        accept={'.' + fileRequirement.suffix}
+        id={`exercise-upload-${fileRequirement.name}`}
         hidden
       />
     </div>

@@ -3,14 +3,7 @@ import { useEffect, useState } from 'react'
 import { BoxArrowUpRight, Envelope } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
-import {
-  Exercise,
-  ExerciseMaterials,
-  Module,
-  RequiredSubmission,
-  SetState,
-  SubmittedFile,
-} from '../../constants/types'
+import { Exercise, ExerciseMaterials, Module, SetState, SubmittedFile } from '../../constants/types'
 import { useExercise } from '../../lib/exerciseDialog.service'
 import {
   ModulePill,
@@ -32,18 +25,17 @@ const ExerciseDialog = ({
   setExercise: SetState<Exercise | null>
   module: Module
 }) => {
-  const { getExerciseMaterials, getSubmittedFiles } = useExercise()
+  const { getExerciseMaterials, getSubmittedFiles, submitWorkload } = useExercise(exercise)
   const [exerciseMaterials, setExerciseMaterials] = useState<ExerciseMaterials | null>(null)
   const [submittedFiles, setSubmittedFiles] = useState<SubmittedFile[]>([])
 
   useEffect(() => {
     if (!exercise) return
-    getExerciseMaterials({ exercise, setExerciseMaterials })
-    getSubmittedFiles({ exercise, setSubmittedFiles })
-    console.log('In the useEffect()')
+    getExerciseMaterials(setExerciseMaterials)
+    getSubmittedFiles(setSubmittedFiles)
   }, [exercise])
 
-  const { owner, spec, dataFiles, modelAnswers, handIns } = exerciseMaterials || {}
+  const { owner, spec, dataFiles, modelAnswers, fileRequirements } = exerciseMaterials || {}
   const [timeSpent, setTimeSpent] = useState('')
 
   // Date format: https://date-fns.org/v2.29.1/docs/format
@@ -90,9 +82,9 @@ const ExerciseDialog = ({
             <SpecLink target="_blank" href={spec.url}>
               <BoxArrowUpRight
                 style={{ marginRight: '0.5rem', fill: 'inherit', float: 'left', fontWeight: 500 }}
-                size={16}
+                size={18}
               />
-              View specification
+              Specification
             </SpecLink>
           )}
           {dataFiles && dataFiles.length > 0 && (
@@ -110,7 +102,7 @@ const ExerciseDialog = ({
                 {dataFiles.map((file, index) => (
                   <li key={index}>
                     <ResourceLink target="_blank" href={file.url}>
-                      {file.name}.csv
+                      {file.name}
                     </ResourceLink>
                   </li>
                 ))}
@@ -131,7 +123,7 @@ const ExerciseDialog = ({
                 {[modelAnswers[0]].map((file, index) => (
                   <li key={index}>
                     <ResourceLink target="_blank" href={file.url}>
-                      {file.name}.pdf
+                      {file.name}
                     </ResourceLink>
                   </li>
                 ))}
@@ -140,19 +132,20 @@ const ExerciseDialog = ({
           )}
         </div>
 
-        {handIns && handIns.length > 0 && (
+        {fileRequirements && fileRequirements.length > 0 && (
           <div style={{ marginTop: '1rem' }}>
             <h4>
-              Submission ({submittedFiles?.length || 0}/{handIns.length})
+              Submission ({submittedFiles?.length || 0}/{fileRequirements.length})
             </h4>
             <p style={{ fontSize: '14px', color: '$sand8' }}>
               Deadline: {displayTimestamp(exercise.endDate)}
             </p>
             <UploadWrapper>
-              {handIns.map((handIn: RequiredSubmission, index: number) => (
+              {fileRequirements.map((fileRequirement, index: number) => (
                 <FileUpload
+                  key={index}
                   exercise={exercise}
-                  requiredFile={handIn}
+                  fileRequirement={fileRequirement}
                   submittedFiles={submittedFiles}
                   setSubmittedFiles={setSubmittedFiles}
                 />
@@ -168,7 +161,10 @@ const ExerciseDialog = ({
               </label>
               <select
                 value={timeSpent}
-                onChange={(event) => setTimeSpent(event.target.value)}
+                onChange={(event) => {
+                  setTimeSpent(event.target.value)
+                  submitWorkload(event.target.value)
+                }}
                 style={{ display: 'inline', marginLeft: '0.5rem' }}
                 name="exercise-duration"
               >
