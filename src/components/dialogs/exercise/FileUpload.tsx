@@ -1,12 +1,11 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CheckLg, FileEarmark, Upload } from 'react-bootstrap-icons'
 
 import { endpoints } from '../../../constants/endpoints'
 import { LONDON_TIMEZONE } from '../../../constants/global'
 import { Exercise, FileRequirement, SetState, SubmittedFile } from '../../../constants/types'
-import { useExercise } from '../../../lib/exerciseDialog.service'
 import { OpenLinkButton, TrashButton, UploadButton } from '../../../styles/exerciseDialog.style'
 
 // Date format: https://date-fns.org/v2.29.1/docs/format
@@ -18,16 +17,17 @@ const FileUpload = ({
   fileRequirement,
   submittedFiles,
   setSubmittedFiles,
+  submitFile,
+  deleteFile,
 }: {
   exercise: Exercise
   fileRequirement: FileRequirement
   submittedFiles: SubmittedFile[]
   setSubmittedFiles: SetState<SubmittedFile[]>
+  submitFile: (_: { file: File; targetFileName: string }) => void
+  deleteFile: (_: SubmittedFile) => void
 }) => {
-  const { submitFile, deleteFile } = useExercise(exercise)
   const [submittedFile, setSubmittedFile] = useState<SubmittedFile | null>(null)
-
-  useEffect(() => console.log({ submittedFiles }), [submittedFiles])
 
   useEffect(() => {
     setSubmittedFile(
@@ -138,7 +138,7 @@ const FileUpload = ({
                 size={24}
                 onClick={(event) => {
                   event.preventDefault()
-                  deleteFile({ file: submittedFile, setSubmittedFiles })
+                  deleteFile(submittedFile)
                 }}
               />
             </div>
@@ -157,7 +157,6 @@ const FileUpload = ({
           submitFile({
             file: event.target.files[0],
             targetFileName: fileRequirement.name + '.' + fileRequirement.suffix,
-            setSubmittedFiles,
           })
         }}
         // disabled={exercise.endDate > new Date()}
