@@ -1,4 +1,4 @@
-import { BoxArrowUpRight, Trash3Fill } from 'react-bootstrap-icons'
+import { BoxArrowUpRight, Envelope, Trash3Fill } from 'react-bootstrap-icons'
 
 import { styled } from './stitches.config'
 
@@ -12,7 +12,7 @@ export const SpecLink = styled('a', {
   color: '$sand12',
   fill: '$sand12',
   fontWeight: 500,
-  fontSize: '18px',
+  fontSize: '16px',
   borderRadius: '8px',
   textDecoration: 'none',
   display: 'inline-flex',
@@ -42,7 +42,16 @@ export const ResourceLink = styled('a', {
   },
 })
 
+export const EmailButton = styled(Envelope, {
+  cursor: 'pointer',
+  fontSize: '1rem',
+  '&:hover': {
+    fill: '$lowContrast',
+  },
+})
+
 export const TrashButton = styled(Trash3Fill, {
+  cursor: 'pointer',
   fontSize: '1rem',
   '&:hover': {
     fill: 'red',
@@ -66,12 +75,16 @@ export const UploadWrapper = styled('div', {
 /* TODO: Implement user specified overrides */
 export const UploadButton = styled('label', {
   all: 'unset',
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '100%',
+  marginTop: '1rem',
   padding: '1rem',
   borderRadius: '12px',
   color: '$highContrast',
-  display: 'flex',
+  backgroundColor: '$sand1',
   cursor: 'pointer',
-  justifyContent: 'space-between',
+  filter: 'drop-shadow(0 1px 2px rgba(0,0,0,.06)) drop-shadow(0 1px 3px rgba(0,0,0,.1))',
   '&:hover': {
     backgroundColor: '$sand2',
   },

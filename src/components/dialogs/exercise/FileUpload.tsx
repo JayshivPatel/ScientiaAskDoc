@@ -1,7 +1,7 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
 import { useEffect, useState } from 'react'
-import { CheckLg, FileEarmark, Upload } from 'react-bootstrap-icons'
+import { CheckLg, Trash3Fill, Upload } from 'react-bootstrap-icons'
 
 import { endpoints } from '../../../constants/endpoints'
 import { LONDON_TIMEZONE } from '../../../constants/global'
@@ -59,14 +59,6 @@ const FileUpload = ({
       }}
     >
       <UploadButton
-        css={{ backgroundColor: '$sand1' }}
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          width: '100%',
-          marginTop: '1rem',
-          filter: 'drop-shadow(0 1px 2px rgba(0,0,0,.06)) drop-shadow(0 1px 3px rgba(0,0,0,.1))',
-        }}
         htmlFor={`exercise-upload-${fileRequirement.name}`}
         onClick={openSubmissionFile}
       >
@@ -87,7 +79,7 @@ const FileUpload = ({
               }}
             />
           ) : (
-            <FileEarmark
+            <Upload
               size={24}
               style={{
                 display: 'flex',
@@ -109,37 +101,31 @@ const FileUpload = ({
             </p>
           </div>
         </div>
-        {submittedFile ? (
-          <>
-            <div
+        {submittedFile && (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}
+          >
+            <p>{displayTimestamp(submittedFile.timestamp)}</p>
+            <p
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
+                fontSize: '0.8rem',
+                color: '#8F908C', // = $sand9
               }}
             >
-              <p>{displayTimestamp(submittedFile.timestamp)}</p>
-              <p
-                style={{
-                  fontSize: '0.8rem',
-                  color: '#8F908C', // = $sand9
-                }}
-              >
-                {prettyBytes(submittedFile.fileSize)}
-              </p>
-            </div>
-            <div>
-              <OpenLinkButton size={24} onClick={openSubmissionFile} />
-            </div>
-          </>
-        ) : (
-          <Upload size={24} />
+              {prettyBytes(submittedFile.fileSize)}
+            </p>
+          </div>
         )}
       </UploadButton>
+
       {submittedFile && <TrashButton size={24} onClick={() => deleteFile(submittedFile)} />}
       <input
         type="file"
-        disabled={!!submittedFile}
+        disabled={!!submittedFile} // || exercise.endDate > new Date()
         onChange={(event) => {
           if (!event.target.files) return
           // if (exercise.endDate > new Date()) return
@@ -151,7 +137,6 @@ const FileUpload = ({
           ;(event.target as HTMLInputElement).value = ''
           return false
         }}
-        // disabled={exercise.endDate > new Date()}
         accept={'.' + fileRequirement.suffix}
         id={`exercise-upload-${fileRequirement.name}`}
         hidden

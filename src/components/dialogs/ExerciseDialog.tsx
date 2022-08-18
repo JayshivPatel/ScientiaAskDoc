@@ -1,16 +1,11 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import { useState } from 'react'
-import { BoxArrowUpRight, Envelope } from 'react-bootstrap-icons'
+import { BoxArrowUpRight } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise, Module, SetState } from '../../constants/types'
 import { useExercise } from '../../lib/exerciseDialog.service'
-import {
-  ModulePill,
-  ResourceLink,
-  SpecLink,
-  UploadWrapper,
-} from '../../styles/exerciseDialog.style'
+import { EmailButton, ModulePill, SpecLink, UploadWrapper } from '../../styles/exerciseDialog.style'
 import Dialog from './Dialog'
 import FileUpload from './exercise/FileUpload'
 
@@ -45,13 +40,10 @@ const ExerciseDialog = ({
           {owner && (
             <address style={{ display: 'flex', alignItems: 'center' }}>
               <a
-                title={
-                  'Email the exercise owner' +
-                  (owner.name ? `: ${owner.name} (${owner.shortcode})` : '')
-                }
+                title={'Email the exercise owner: ' + (owner.name || owner.shortcode)}
                 href={`mailto:${owner.email}`}
               >
-                <Envelope size={24} />
+                <EmailButton size={24} />
               </a>
             </address>
           )}
@@ -63,6 +55,7 @@ const ExerciseDialog = ({
         <div
           style={{
             display: 'grid',
+            justifyItems: 'center',
             width: '100%',
             gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '2rem',
@@ -80,47 +73,22 @@ const ExerciseDialog = ({
             </SpecLink>
           )}
           {dataFiles && dataFiles.length > 0 && (
-            <div
-              style={{
-                // marginRight: '3rem',
-                border: '2px solid #c8c7c1',
-                borderRadius: '0.5rem',
-                padding: '1rem',
-                width: 'fit-content',
-              }}
-            >
-              <h4 style={{ fontWeight: '500', fontSize: '18px' }}>Data files</h4>
-              <ul>
-                {dataFiles.map((file, index) => (
-                  <li key={index}>
-                    <ResourceLink target="_blank" href={file.url}>
-                      {file.name}
-                    </ResourceLink>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <SpecLink target="_blank" href={dataFiles[0].url}>
+              <BoxArrowUpRight
+                style={{ marginRight: '0.5rem', fill: 'inherit', float: 'left', fontWeight: 500 }}
+                size={18}
+              />
+              Data Files
+            </SpecLink>
           )}
           {modelAnswers && modelAnswers.length > 0 && (
-            <div
-              style={{
-                border: '2px solid #c8c7c1',
-                borderRadius: '0.5rem',
-                padding: '1rem',
-                width: 'fit-content',
-              }}
-            >
-              <h4 style={{ fontWeight: '500', fontSize: '18px' }}>Model answers</h4>
-              <ul>
-                {[modelAnswers[0]].map((file, index) => (
-                  <li key={index}>
-                    <ResourceLink target="_blank" href={file.url}>
-                      {file.name}
-                    </ResourceLink>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <SpecLink target="_blank" href={modelAnswers[0].url}>
+              <BoxArrowUpRight
+                style={{ marginRight: '0.5rem', fill: 'inherit', float: 'left', fontWeight: 500 }}
+                size={18}
+              />
+              Model Answers
+            </SpecLink>
           )}
         </div>
 
