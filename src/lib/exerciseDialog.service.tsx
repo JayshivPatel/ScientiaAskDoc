@@ -1,9 +1,9 @@
 import { plainToInstance } from 'class-transformer'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { endpoints } from '../constants/endpoints'
 import { Exercise, ExerciseMaterials, SetState, SubmittedFile } from '../constants/types'
-import { AxiosContext } from './axios.context'
+import { AxiosContext, useAxios } from './axios.context'
 import { useToast } from './toast.context'
 import { useYear } from './year.context'
 
@@ -17,26 +17,30 @@ import { useYear } from './year.context'
 export const useExercise = (exercise: Exercise) => {
   const axiosInstance = useContext(AxiosContext)
   const { year } = useYear()
+  const { addToast } = useToast()
   // TODO: get year group from user details
   const yearGroup = 'c1'
 
-  const { addToast } = useToast()
+  const [exerciseMaterials, setExerciseMaterials] = useState<ExerciseMaterials | null>(null)
+  const [submittedFiles, setSubmittedFiles] = useState<SubmittedFile[]>([])
 
-  const getExerciseMaterials = (setExerciseMaterials: SetState<ExerciseMaterials | null>) => {
-    axiosInstance
-      .request({
-        method: 'GET',
-        url: `/${year}/${yearGroup}/exercises/${exercise.number}/files`,
+  const { data: rawExerciseMaterials, error: exerciseMaterialsError } = useAxios({
+    url: endpoints.exerciseMaterials(`${year}`, yearGroup, exercise.number),
+    method: 'GET',
+  })
+
+  useEffect(() => {
+    if (exerciseMaterialsError) {
+      addToast({
+        variant: 'error',
+        title: 'There was an error fetching the materials for this exercise',
       })
-      .then(({ data }: any) => setExerciseMaterials(plainToInstance(ExerciseMaterials, data)))
-      .catch((error: any) => {
-        addToast({
-          variant: 'error',
-          title: 'There was an error fetching the materials for this exercise',
-        })
-        console.error(error)
-      })
-  }
+      console.error(exerciseMaterialsError)
+    }
+    if (rawExerciseMaterials) {
+      setExerciseMaterials(plainToInstance(ExerciseMaterials, rawExerciseMaterials))
+    }
+  }, [addToast, exerciseMaterialsError, rawExerciseMaterials])
 
   const getSubmittedFiles = (setSubmittedFiles: SetState<SubmittedFile[]>) => {
     axiosInstance
@@ -126,8 +130,10 @@ export const useExercise = (exercise: Exercise) => {
   }
 
   return {
-    getExerciseMaterials,
+    exerciseMaterials,
+    submittedFiles,
     getSubmittedFiles,
+    setSubmittedFiles,
     submitFile,
     deleteFile,
     submitWorkload,
