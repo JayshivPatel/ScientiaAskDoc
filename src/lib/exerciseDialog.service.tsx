@@ -14,7 +14,7 @@ import { useYear } from './year.context'
  * Get all files submitted for 1 exercise (returns URL, timestamp & file size for each file)
  * Get individual file submitted (User views this on browser) */
 
-export const useExercise = () => {
+export const useExercise = (exercise: Exercise) => {
   const axiosInstance = useContext(AxiosContext)
   const { year } = useYear()
   // TODO: get year group from user details
@@ -22,13 +22,7 @@ export const useExercise = () => {
 
   const { addToast } = useToast()
 
-  const getExerciseMaterials = ({
-    exercise,
-    setExerciseMaterials,
-  }: {
-    exercise: Exercise
-    setExerciseMaterials: SetState<ExerciseMaterials | null>
-  }) => {
+  const getExerciseMaterials = (setExerciseMaterials: SetState<ExerciseMaterials | null>) => {
     axiosInstance
       .request({
         method: 'GET',
@@ -44,13 +38,7 @@ export const useExercise = () => {
       })
   }
 
-  const getSubmittedFiles = ({
-    exercise,
-    setSubmittedFiles,
-  }: {
-    exercise: Exercise
-    setSubmittedFiles: SetState<SubmittedFile[]>
-  }) => {
+  const getSubmittedFiles = (setSubmittedFiles: SetState<SubmittedFile[]>) => {
     axiosInstance
       .request({
         method: 'GET',
@@ -72,34 +60,31 @@ export const useExercise = () => {
 
   const submitFile = ({
     file,
-    targetName,
-    exercise,
+    targetFileName,
     setSubmittedFiles,
   }: {
     file: File
-    targetName: string
-    exercise: Exercise
+    targetFileName: string
     setSubmittedFiles: SetState<SubmittedFile[]>
   }) => {
-    console.log('Uploading: ', { file })
     let formData = new FormData()
-    formData.append('file', new File([file], targetName))
+    formData.append('file', new File([file], targetFileName))
     axiosInstance
       .request({
         method: 'POST',
         url: endpoints.submissions(year.toString(), exercise.moduleCode!, exercise.number),
         data: formData,
       })
-      .then(({ data }: { data: SubmittedFile }) => {
+      .then(({ data }: { data: SubmittedFile }) =>
         setSubmittedFiles((submittedFiles) => [
           ...submittedFiles,
           plainToInstance(SubmittedFile, data),
         ])
-      })
+      )
       .catch((error: any) => {
         addToast({
           variant: 'error',
-          title: 'Unable to fetch submitted files for this exercise',
+          title: "Can't fetch submitted files",
         })
         console.error(error)
       })
@@ -119,18 +104,25 @@ export const useExercise = () => {
       })
       .then(() => {
         setSubmittedFiles((submittedFiles) =>
-          submittedFiles.filter(
-            (submission) => submission.targetSubmissionFileName !== file.targetSubmissionFileName
-          )
+          submittedFiles.filter((submission) => submission.targetFileName !== file.targetFileName)
         )
       })
       .catch((error: any) => {
         addToast({
           variant: 'error',
-          title: 'Unable to delete submitted files for this exercise',
+          title: "Can't delete submitted file",
         })
         console.error(error)
       })
+  }
+
+  const submitWorkload = (workload: string) => {
+    if (workload === '') return
+    axiosInstance.request({
+      method: 'POST',
+      url: endpoints.submissionWorkload(`${year}`, exercise.moduleCode!, exercise.number),
+      params: { workload },
+    })
   }
 
   return {
@@ -138,5 +130,6 @@ export const useExercise = () => {
     getSubmittedFiles,
     submitFile,
     deleteFile,
+    submitWorkload,
   }
 }

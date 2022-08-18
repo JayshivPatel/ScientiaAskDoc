@@ -26,11 +26,12 @@ export const endpoints = {
     year: string,
     moduleCode: string,
     exerciseNumber: number,
+    targetFileName: string,
     submissionId: number
   ) =>
     `${baseURL}/${year}/${moduleCode}/exercises/${exerciseNumber}/submissions/${submissionId}/file`,
   submissionWorkload: (year: string, moduleCode: string, exerciseNumber: number) =>
-    `${baseURL}/${year}/${moduleCode}/exercises/${exerciseNumber}/submissions/workload`,
+    `${baseURL}/${year}/${moduleCode}/exercises/${exerciseNumber}/workload`,
   resources: `${baseURL}/resources`,
   resource: (id: number) => `${baseURL}/resources/${id}`,
   resourceFile: (id: number) => `${baseURL}/resources/${id}/file`,

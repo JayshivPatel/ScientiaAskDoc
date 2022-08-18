@@ -98,11 +98,10 @@ interface Material {
   url: string
 }
 
-export interface RequiredSubmission {
+export interface FileRequirement {
   name: string
   max_size: number
   suffix: string
-  submitted: boolean
 }
 
 interface ExerciseOwner {
@@ -122,7 +121,7 @@ export class ExerciseMaterials {
   modelAnswers: Material[]
 
   @Expose({ name: 'hand_ins' })
-  handIns: RequiredSubmission[]
+  fileRequirements: FileRequirement[]
 }
 
 export class SubmittedFile {
@@ -144,5 +143,5 @@ export class SubmittedFile {
   timestamp: Date
 
   @Expose({ name: 'target_submission_file_name' })
-  targetSubmissionFileName: string
+  targetFileName: string
 }
