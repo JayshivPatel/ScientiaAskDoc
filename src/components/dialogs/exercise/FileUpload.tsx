@@ -38,6 +38,21 @@ const FileUpload = ({
     )
   }, [fileRequirement.name, submittedFiles])
 
+  function openSubmissionFile(event: any) {
+    if (!submittedFile) return
+    event.preventDefault()
+    window.open(
+      endpoints.submissionFile(
+        submittedFile.year,
+        submittedFile.moduleCode,
+        submittedFile.exerciseNumber,
+        submittedFile.targetFileName,
+        submittedFile.id
+      ),
+      '_blank'
+    )
+  }
+
   return (
     <div
       style={{
@@ -57,6 +72,7 @@ const FileUpload = ({
           filter: 'drop-shadow(0 1px 2px rgba(0,0,0,.06)) drop-shadow(0 1px 3px rgba(0,0,0,.1))',
         }}
         htmlFor={`exercise-upload-${fileRequirement.name}`}
+        onClick={openSubmissionFile}
       >
         <div
           style={{
@@ -117,22 +133,7 @@ const FileUpload = ({
               </p>
             </div>
             <div>
-              <OpenLinkButton
-                size={24}
-                onClick={(event) => {
-                  event.preventDefault()
-                  window.open(
-                    endpoints.submissionFile(
-                      submittedFile.year,
-                      submittedFile.moduleCode,
-                      submittedFile.exerciseNumber,
-                      submittedFile.targetFileName,
-                      submittedFile.id
-                    ),
-                    '_blank'
-                  )
-                }}
-              />
+              <OpenLinkButton size={24} onClick={openSubmissionFile} />
 
               <TrashButton
                 size={24}
@@ -150,6 +151,7 @@ const FileUpload = ({
 
       <input
         type="file"
+        disabled={!!submittedFile}
         onChange={(event) => {
           // TODO: on cancel of file browser: dont remove submission
           if (event.target.files === null) return
