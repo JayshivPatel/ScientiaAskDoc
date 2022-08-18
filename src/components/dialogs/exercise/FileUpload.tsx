@@ -134,26 +134,25 @@ const FileUpload = ({
             </div>
             <div>
               <OpenLinkButton size={24} onClick={openSubmissionFile} />
-
-              <TrashButton
-                size={24}
-                onClick={(event) => {
-                  event.preventDefault()
-                  deleteFile(submittedFile)
-                }}
-              />
             </div>
           </>
         ) : (
           <Upload size={24} />
         )}
       </UploadButton>
+      {submittedFile && (
+        <TrashButton
+          size={24}
+          onClick={(event) => {
+            deleteFile(submittedFile)
+          }}
+        />
+      )}
 
       <input
         type="file"
         disabled={!!submittedFile}
         onChange={(event) => {
-          // TODO: on cancel of file browser: dont remove submission
           if (event.target.files === null) return
           // if (exercise.endDate > new Date()) return
           submitFile({
