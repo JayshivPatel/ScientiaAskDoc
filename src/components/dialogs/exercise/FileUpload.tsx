@@ -5,25 +5,21 @@ import { CheckLg, FileEarmark, Upload } from 'react-bootstrap-icons'
 
 import { endpoints } from '../../../constants/endpoints'
 import { LONDON_TIMEZONE } from '../../../constants/global'
-import { Exercise, FileRequirement, SetState, SubmittedFile } from '../../../constants/types'
+import { FileRequirement, SubmittedFile } from '../../../constants/types'
 import { OpenLinkButton, TrashButton, UploadButton } from '../../../styles/exerciseDialog.style'
 
 // Date format: https://date-fns.org/v2.29.1/docs/format
 const displayTimestamp = (date: Date | string) =>
-  formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm aaa zzz, EEEE d LLL yyyy')
+  formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm:ss aaa zzz, EEEE d LLL yyyy')
 
 const FileUpload = ({
-  exercise,
   fileRequirement,
   submittedFiles,
-  setSubmittedFiles,
   submitFile,
   deleteFile,
 }: {
-  exercise: Exercise
   fileRequirement: FileRequirement
   submittedFiles: SubmittedFile[]
-  setSubmittedFiles: SetState<SubmittedFile[]>
   submitFile: (_: { file: File; targetFileName: string }) => void
   deleteFile: (_: SubmittedFile) => void
 }) => {
@@ -36,7 +32,7 @@ const FileUpload = ({
           targetFileName === fileRequirement.name + '.' + fileRequirement.suffix
       ) || null
     )
-  }, [fileRequirement.name, submittedFiles])
+  }, [fileRequirement, submittedFiles])
 
   function openSubmissionFile(event: any) {
     if (!submittedFile) return
@@ -140,25 +136,20 @@ const FileUpload = ({
           <Upload size={24} />
         )}
       </UploadButton>
-      {submittedFile && (
-        <TrashButton
-          size={24}
-          onClick={(event) => {
-            deleteFile(submittedFile)
-          }}
-        />
-      )}
-
+      {submittedFile && <TrashButton size={24} onClick={() => deleteFile(submittedFile)} />}
       <input
         type="file"
         disabled={!!submittedFile}
         onChange={(event) => {
-          if (event.target.files === null) return
+          if (!event.target.files) return
           // if (exercise.endDate > new Date()) return
           submitFile({
             file: event.target.files[0],
             targetFileName: fileRequirement.name + '.' + fileRequirement.suffix,
           })
+          // Fixes Chrome and Firefox upload issue https://stackoverflow.com/a/25948969/10564311
+          ;(event.target as HTMLInputElement).value = ''
+          return false
         }}
         // disabled={exercise.endDate > new Date()}
         accept={'.' + fileRequirement.suffix}

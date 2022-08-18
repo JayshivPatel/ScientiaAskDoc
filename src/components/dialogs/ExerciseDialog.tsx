@@ -25,14 +25,8 @@ const ExerciseDialog = ({
   setExercise: SetState<Exercise | null>
   module: Module
 }) => {
-  const {
-    exerciseMaterials,
-    submittedFiles,
-    setSubmittedFiles,
-    submitWorkload,
-    submitFile,
-    deleteFile,
-  } = useExercise(exercise)
+  const { exerciseMaterials, submittedFiles, submitWorkload, submitFile, deleteFile } =
+    useExercise(exercise)
   const { owner, spec, dataFiles, modelAnswers, fileRequirements } = exerciseMaterials || {}
   const [timeSpent, setTimeSpent] = useState('')
 
@@ -142,10 +136,8 @@ const ExerciseDialog = ({
               {fileRequirements.map((fileRequirement, index: number) => (
                 <FileUpload
                   key={index}
-                  exercise={exercise}
                   fileRequirement={fileRequirement}
                   submittedFiles={submittedFiles}
-                  setSubmittedFiles={setSubmittedFiles}
                   submitFile={submitFile}
                   deleteFile={deleteFile}
                 />

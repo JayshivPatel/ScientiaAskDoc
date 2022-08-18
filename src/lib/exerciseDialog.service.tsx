@@ -115,7 +115,6 @@ export const useExercise = (exercise: Exercise) => {
   return {
     exerciseMaterials,
     submittedFiles,
-    setSubmittedFiles,
     submitFile,
     deleteFile,
     submitWorkload,
