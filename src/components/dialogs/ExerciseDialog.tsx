@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { BoxArrowUpRight, Envelope } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
-import { Exercise, ExerciseMaterials, Module, SetState, SubmittedFile } from '../../constants/types'
+import { Exercise, Module, SetState, SubmittedFile } from '../../constants/types'
 import { useExercise } from '../../lib/exerciseDialog.service'
 import {
   ModulePill,
@@ -25,13 +25,11 @@ const ExerciseDialog = ({
   setExercise: SetState<Exercise | null>
   module: Module
 }) => {
-  const { getExerciseMaterials, getSubmittedFiles, submitWorkload } = useExercise(exercise)
-  const [exerciseMaterials, setExerciseMaterials] = useState<ExerciseMaterials | null>(null)
+  const { exerciseMaterials, getSubmittedFiles, submitWorkload } = useExercise(exercise)
   const [submittedFiles, setSubmittedFiles] = useState<SubmittedFile[]>([])
 
   useEffect(() => {
     if (!exercise) return
-    getExerciseMaterials(setExerciseMaterials)
     getSubmittedFiles(setSubmittedFiles)
   }, [exercise])
 
