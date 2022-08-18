@@ -2,7 +2,7 @@ import { plainToInstance } from 'class-transformer'
 import { useContext, useEffect, useState } from 'react'
 
 import { endpoints } from '../constants/endpoints'
-import { Exercise, ExerciseMaterials, SetState, SubmittedFile } from '../constants/types'
+import { Exercise, ExerciseMaterials, SubmittedFile } from '../constants/types'
 import { AxiosContext, useAxios } from './axios.context'
 import { useToast } from './toast.context'
 import { useYear } from './year.context'
@@ -22,18 +22,15 @@ export const useExercise = (exercise: Exercise) => {
   const yearGroup = 'c1'
 
   const [exerciseMaterials, setExerciseMaterials] = useState<ExerciseMaterials | null>(null)
-  const [submittedFiles, setSubmittedFiles] = useState<SubmittedFile[]>([])
-
   const { data: rawExerciseMaterials, error: exerciseMaterialsError } = useAxios({
     url: endpoints.exerciseMaterials(`${year}`, yearGroup, exercise.number),
     method: 'GET',
   })
-
   useEffect(() => {
     if (exerciseMaterialsError) {
       addToast({
         variant: 'error',
-        title: 'There was an error fetching the materials for this exercise',
+        title: 'Error fetching exercise materials',
       })
       console.error(exerciseMaterialsError)
     }
@@ -42,35 +39,27 @@ export const useExercise = (exercise: Exercise) => {
     }
   }, [addToast, exerciseMaterialsError, rawExerciseMaterials])
 
-  const getSubmittedFiles = (setSubmittedFiles: SetState<SubmittedFile[]>) => {
-    axiosInstance
-      .request({
-        method: 'GET',
-        url: endpoints.submissions(`${year}`, exercise.moduleCode!, exercise.number),
+  const [submittedFiles, setSubmittedFiles] = useState<SubmittedFile[]>([])
+  const { data: rawSubmissions, error: submissionsError } = useAxios({
+    url: endpoints.submissions(`${year}`, exercise.moduleCode!, exercise.number),
+    method: 'GET',
+  })
+  useEffect(() => {
+    if (submissionsError) {
+      addToast({
+        variant: 'error',
+        title: 'Error fetching submitted files',
       })
-      .then(({ data }: { data: SubmittedFile[] }) =>
-        setSubmittedFiles(
-          data.map((submittedFile) => plainToInstance(SubmittedFile, submittedFile))
-        )
+      console.error(submissionsError)
+    }
+    if (rawSubmissions) {
+      setSubmittedFiles(
+        rawSubmissions.map((submittedFile: any) => plainToInstance(SubmittedFile, submittedFile))
       )
-      .catch((error: any) => {
-        addToast({
-          variant: 'error',
-          title: 'Unable to fetch submitted files for this exercise',
-        })
-        console.error(error)
-      })
-  }
+    }
+  }, [addToast, submissionsError, rawSubmissions])
 
-  const submitFile = ({
-    file,
-    targetFileName,
-    setSubmittedFiles,
-  }: {
-    file: File
-    targetFileName: string
-    setSubmittedFiles: SetState<SubmittedFile[]>
-  }) => {
+  const submitFile = ({ file, targetFileName }: { file: File; targetFileName: string }) => {
     let formData = new FormData()
     formData.append('file', new File([file], targetFileName))
     axiosInstance
@@ -94,13 +83,7 @@ export const useExercise = (exercise: Exercise) => {
       })
   }
 
-  const deleteFile = ({
-    file,
-    setSubmittedFiles,
-  }: {
-    file: SubmittedFile
-    setSubmittedFiles: SetState<SubmittedFile[]>
-  }) => {
+  const deleteFile = (file: SubmittedFile) => {
     axiosInstance
       .request({
         method: 'DELETE',
@@ -132,7 +115,6 @@ export const useExercise = (exercise: Exercise) => {
   return {
     exerciseMaterials,
     submittedFiles,
-    getSubmittedFiles,
     setSubmittedFiles,
     submitFile,
     deleteFile,

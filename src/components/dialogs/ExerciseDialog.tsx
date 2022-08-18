@@ -1,9 +1,9 @@
 import { formatInTimeZone } from 'date-fns-tz'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { BoxArrowUpRight, Envelope } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
-import { Exercise, Module, SetState, SubmittedFile } from '../../constants/types'
+import { Exercise, Module, SetState } from '../../constants/types'
 import { useExercise } from '../../lib/exerciseDialog.service'
 import {
   ModulePill,
@@ -25,14 +25,14 @@ const ExerciseDialog = ({
   setExercise: SetState<Exercise | null>
   module: Module
 }) => {
-  const { exerciseMaterials, getSubmittedFiles, submitWorkload } = useExercise(exercise)
-  const [submittedFiles, setSubmittedFiles] = useState<SubmittedFile[]>([])
-
-  useEffect(() => {
-    if (!exercise) return
-    getSubmittedFiles(setSubmittedFiles)
-  }, [exercise])
-
+  const {
+    exerciseMaterials,
+    submittedFiles,
+    setSubmittedFiles,
+    submitWorkload,
+    submitFile,
+    deleteFile,
+  } = useExercise(exercise)
   const { owner, spec, dataFiles, modelAnswers, fileRequirements } = exerciseMaterials || {}
   const [timeSpent, setTimeSpent] = useState('')
 
@@ -146,6 +146,8 @@ const ExerciseDialog = ({
                   fileRequirement={fileRequirement}
                   submittedFiles={submittedFiles}
                   setSubmittedFiles={setSubmittedFiles}
+                  submitFile={submitFile}
+                  deleteFile={deleteFile}
                 />
               ))}
             </UploadWrapper>
