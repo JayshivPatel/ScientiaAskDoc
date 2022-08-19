@@ -8,6 +8,7 @@ import { LONDON_TIMEZONE } from '../../../constants/global'
 import { FileRequirement, SubmittedFile } from '../../../constants/types'
 import { Button } from '../../../styles/_app.style'
 import { OpenLinkButton, TrashButton, UploadButton } from '../../../styles/exerciseDialog.style'
+import { css, theme } from '../../../styles/stitches.config'
 
 // Date format: https://date-fns.org/v2.29.1/docs/format
 const displayTimestamp = (date: Date | string) =>
@@ -59,7 +60,10 @@ const FileUpload = ({
       <UploadButton
         htmlFor={`exercise-upload-${fileRequirement.name}`}
         onClick={openSubmissionFile}
-        style={{ backgroundColor: submittedFile ? 'lightgreen' : 'white' }}
+        className={css({
+          backgroundColor: submittedFile ? '$green5' : '$elementBackground',
+          '&:hover': { backgroundColor: submittedFile ? '$green6' : '$elementHover' },
+        })()}
       >
         <div
           style={{
