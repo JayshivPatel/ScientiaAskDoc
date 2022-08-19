@@ -94,48 +94,54 @@ const ExerciseDialog = ({
 
         {fileRequirements && fileRequirements.length > 0 && (
           <div style={{ marginTop: '1rem' }}>
-            <h4>
-              Submission ({submittedFiles?.length || 0}/{fileRequirements.length})
-              {submittedFiles?.length === fileRequirements.length && ': you are all done! 🎉'}
-            </h4>
-            <p style={{ fontSize: '14px', color: '$sand8' }}>
-              Deadline: {displayTimestamp(exercise.endDate)}
-            </p>
-            <UploadWrapper>
-              {fileRequirements.map((fileRequirement, index: number) => (
-                <FileUpload
-                  key={index}
-                  fileRequirement={fileRequirement}
-                  submittedFiles={submittedFiles}
-                  submitFile={submitFile}
-                  deleteFile={deleteFile}
-                />
-              ))}
-            </UploadWrapper>
-            <p style={{ fontSize: '0.8rem', marginTop: '1rem' }}>
-              By uploading, you agree that this is your own, unaided work.
-            </p>
-
-            <div style={{ display: 'flex', fontSize: '0.8rem', marginTop: '1rem' }}>
-              <label htmlFor="exercise-duration">
-                How many hours did this coursework take you?
-              </label>
-              <select
-                value={timeSpent}
-                onChange={(event) => {
-                  setTimeSpent(event.target.value)
-                  submitWorkload(event.target.value)
-                }}
-                style={{ display: 'inline', marginLeft: '0.5rem' }}
-                name="exercise-duration"
-              >
-                <option value="">Select...</option>
-                {EXERCISE_DURATIONS.map((duration, index) => (
-                  <option key={index} value={duration}>
-                    {duration}
-                  </option>
+            <div>
+              <h4>
+                Submission ({submittedFiles?.length || 0}/{fileRequirements.length})
+                {submittedFiles?.length === fileRequirements.length && ': you are all done! 🎉'}
+              </h4>
+              <p style={{ fontSize: '14px', color: '$sand8' }}>
+                Deadline: {displayTimestamp(exercise.endDate)}
+              </p>
+              <UploadWrapper>
+                {fileRequirements.map((fileRequirement, index: number) => (
+                  <FileUpload
+                    key={index}
+                    fileRequirement={fileRequirement}
+                    submittedFiles={submittedFiles}
+                    submitFile={submitFile}
+                    deleteFile={deleteFile}
+                  />
                 ))}
-              </select>
+              </UploadWrapper>
+              {submittedFiles?.length > 0 && (
+                <div style={{ margin: '2rem' }}>
+                  <div style={{ display: 'flex', fontSize: '0.9rem', marginTop: '1rem' }}>
+                    <label htmlFor="exercise-duration">
+                      How many hours did this coursework take you?
+                    </label>
+                    <select
+                      value={timeSpent}
+                      onChange={(event) => {
+                        setTimeSpent(event.target.value)
+                        submitWorkload(event.target.value)
+                      }}
+                      style={{ display: 'inline', marginLeft: '0.5rem' }}
+                      name="exercise-duration"
+                    >
+                      <option value="">Select...</option>
+                      {EXERCISE_DURATIONS.map((duration, index) => (
+                        <option key={index} value={duration}>
+                          {duration}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
+              <hr />
+              <p style={{ fontSize: '0.9rem', marginTop: '1rem', textAlign: 'center' }}>
+                By uploading, you agree that this is your own, unaided work.
+              </p>
             </div>
           </div>
         )}
