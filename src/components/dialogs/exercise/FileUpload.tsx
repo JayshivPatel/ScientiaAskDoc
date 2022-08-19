@@ -6,6 +6,7 @@ import { CheckLg, Trash3Fill, Upload } from 'react-bootstrap-icons'
 import { endpoints } from '../../../constants/endpoints'
 import { LONDON_TIMEZONE } from '../../../constants/global'
 import { FileRequirement, SubmittedFile } from '../../../constants/types'
+import { Button } from '../../../styles/_app.style'
 import { OpenLinkButton, TrashButton, UploadButton } from '../../../styles/exerciseDialog.style'
 
 // Date format: https://date-fns.org/v2.29.1/docs/format
@@ -117,7 +118,11 @@ const FileUpload = ({
         )}
       </UploadButton>
 
-      {submittedFile && <TrashButton size={24} onClick={() => deleteFile(submittedFile)} />}
+      {submittedFile && (
+        <Button style={{ marginLeft: '1rem', width: '3.5rem', height: '3rem' }}>
+          <TrashButton size={24} onClick={() => deleteFile(submittedFile)} />
+        </Button>
+      )}
       <input
         type="file"
         disabled={!!submittedFile} // || exercise.endDate > new Date()
