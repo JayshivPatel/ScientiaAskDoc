@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { BoxArrowUpRight } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
-import { Exercise, Module, SetState } from '../../constants/types'
+import { Exercise, Module, SetState, SubmittedFile } from '../../constants/types'
 import { useExercise } from '../../lib/exerciseDialog.service'
 import { EmailButton, ModulePill, SpecLink, UploadWrapper } from '../../styles/exerciseDialog.style'
 import Dialog from './Dialog'
@@ -24,6 +24,8 @@ const ExerciseDialog = ({
     useExercise(exercise)
   const { owner, spec, dataFiles, modelAnswers, fileRequirements } = exerciseMaterials || {}
   const [timeSpent, setTimeSpent] = useState('')
+  const [submissionToDelete, setSubmissionToDelete] = useState<SubmittedFile>()
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
   // Date format: https://date-fns.org/v2.29.1/docs/format
   const displayTimestamp = (date: Date | string) =>
@@ -109,7 +111,10 @@ const ExerciseDialog = ({
                     fileRequirement={fileRequirement}
                     submittedFiles={submittedFiles}
                     submitFile={submitFile}
-                    deleteFile={deleteFile}
+                    onDeleteSubmission={(submission: SubmittedFile) => {
+                      setSubmissionToDelete(submission)
+                      setDeleteDialogOpen(true)
+                    }}
                   />
                 ))}
               </UploadWrapper>
@@ -144,6 +149,20 @@ const ExerciseDialog = ({
               </p>
             </div>
           </div>
+        )}
+
+        {submissionToDelete && (
+          <Dialog
+            onOpenChange={(isOpen) => {
+              setDeleteDialogOpen(isOpen)
+              if (!isOpen) setSubmissionToDelete(undefined)
+            }}
+            open={deleteDialogOpen}
+            title={`Are you sure you want to delete your submission for ${submissionToDelete.targetFileName}?`}
+            onPrimaryClick={() => deleteFile(submissionToDelete)}
+            primaryButtonText={'Delete'}
+            secondaryButtonText={'Cancel'}
+          />
         )}
       </Dialog>
     )

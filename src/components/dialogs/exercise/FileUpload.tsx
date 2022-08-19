@@ -18,12 +18,12 @@ const FileUpload = ({
   fileRequirement,
   submittedFiles,
   submitFile,
-  deleteFile,
+  onDeleteSubmission,
 }: {
   fileRequirement: FileRequirement
   submittedFiles: SubmittedFile[]
   submitFile: (_: { file: File; targetFileName: string }) => void
-  deleteFile: (_: SubmittedFile) => void
+  onDeleteSubmission: (_: SubmittedFile) => void
 }) => {
   const [submittedFile, setSubmittedFile] = useState<SubmittedFile | null>(null)
 
@@ -129,7 +129,7 @@ const FileUpload = ({
           style={{ marginLeft: '1rem', width: '3.5rem', height: '3rem' }}
           onClick={(event) => {
             event.preventDefault()
-            deleteFile(submittedFile)
+            onDeleteSubmission(submittedFile)
           }}
         >
           <TrashButton size={24} />

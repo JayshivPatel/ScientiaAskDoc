@@ -38,38 +38,44 @@ const Dialog = ({
   <DialogRoot open={open} onOpenChange={onOpenChange}>
     <ContentFrame>
       {title && <Title>{title}</Title>}
-      <form
-        onSubmit={(event) => {
-          event.preventDefault()
-          if (!isFormValid()) {
-            return false
-          } else {
-            onPrimaryClick()
-            onOpenChange(false)
-            return true
-          }
-        }}
-      >
-        {children}
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          {secondaryButtonText && (
-            <DialogClose asChild>
-              <SecondaryButton style={{ display: 'inline-block', width: '6rem' }}>
-                {secondaryButtonText}
-              </SecondaryButton>
-            </DialogClose>
-          )}
-          {primaryButtonText && (
-            <PrimaryButton
-              type="submit"
-              style={{ display: 'inline-block', marginLeft: '1rem', width: '6rem' }}
-              css={{ backgroundColor: '$blue8' }}
-            >
-              {primaryButtonText}
-            </PrimaryButton>
-          )}
-        </div>
-      </form>
+      {/*<form*/}
+      {/*  id={title}*/}
+      {/*  onSubmit={(event) => {*/}
+      {/*    event.preventDefault()*/}
+      {/*    if (!isFormValid()) {*/}
+      {/*      return false*/}
+      {/*    } else {*/}
+      {/*      onPrimaryClick()*/}
+      {/*      onOpenChange(false)*/}
+      {/*      return true*/}
+      {/*    }*/}
+      {/*  }}*/}
+      {/*>*/}
+      {children}
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        {secondaryButtonText && (
+          <DialogClose asChild>
+            <SecondaryButton style={{ display: 'inline-block', width: '6rem' }}>
+              {secondaryButtonText}
+            </SecondaryButton>
+          </DialogClose>
+        )}
+        {primaryButtonText && (
+          <PrimaryButton
+            type="submit"
+            style={{ display: 'inline-block', marginLeft: '1rem', width: '6rem' }}
+            css={{ backgroundColor: '$blue8' }}
+            // form={title}
+            onClick={() => {
+              onPrimaryClick()
+              onOpenChange(false)
+            }}
+          >
+            {primaryButtonText}
+          </PrimaryButton>
+        )}
+      </div>
+      {/*</form>*/}
     </ContentFrame>
   </DialogRoot>
 )
