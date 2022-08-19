@@ -96,6 +96,7 @@ const ExerciseDialog = ({
           <div style={{ marginTop: '1rem' }}>
             <h4>
               Submission ({submittedFiles?.length || 0}/{fileRequirements.length})
+              {submittedFiles?.length === fileRequirements.length && ': you are all done! 🎉'}
             </h4>
             <p style={{ fontSize: '14px', color: '$sand8' }}>
               Deadline: {displayTimestamp(exercise.endDate)}
