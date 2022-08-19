@@ -119,8 +119,14 @@ const FileUpload = ({
       </UploadButton>
 
       {submittedFile && (
-        <Button style={{ marginLeft: '1rem', width: '3.5rem', height: '3rem' }}>
-          <TrashButton size={24} onClick={() => deleteFile(submittedFile)} />
+        <Button
+          style={{ marginLeft: '1rem', width: '3.5rem', height: '3rem' }}
+          onClick={(event) => {
+            event.preventDefault()
+            deleteFile(submittedFile)
+          }}
+        >
+          <TrashButton size={24} />
         </Button>
       )}
       <input
