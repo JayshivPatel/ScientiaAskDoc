@@ -103,6 +103,7 @@ const FileUpload = ({
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
+              marginRight: '1rem',
             }}
           >
             <p>{displayTimestamp(submittedFile.timestamp)}</p>
