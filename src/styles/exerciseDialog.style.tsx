@@ -53,9 +53,6 @@ export const EmailButton = styled(Envelope, {
 export const TrashButton = styled(Trash3Fill, {
   cursor: 'pointer',
   fontSize: '1rem',
-  '&:hover': {
-    fill: 'red',
-  },
 })
 
 export const OpenLinkButton = styled(BoxArrowUpRight, {
