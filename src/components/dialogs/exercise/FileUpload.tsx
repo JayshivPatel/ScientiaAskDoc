@@ -27,10 +27,7 @@ const FileUpload = ({
 
   useEffect(() => {
     setSubmittedFile(
-      submittedFiles?.find(
-        ({ targetFileName }) =>
-          targetFileName === fileRequirement.name + '.' + fileRequirement.suffix
-      ) || null
+      submittedFiles?.find(({ targetFileName }) => targetFileName === fileRequirement.name) || null
     )
   }, [fileRequirement, submittedFiles])
 
@@ -96,9 +93,7 @@ const FileUpload = ({
               justifyContent: 'center',
             }}
           >
-            <p>
-              {fileRequirement.name}.{fileRequirement.suffix}
-            </p>
+            <p>{fileRequirement.name}</p>
           </div>
         </div>
         {submittedFile && (
@@ -131,13 +126,13 @@ const FileUpload = ({
           // if (exercise.endDate > new Date()) return
           submitFile({
             file: event.target.files[0],
-            targetFileName: fileRequirement.name + '.' + fileRequirement.suffix,
+            targetFileName: fileRequirement.name,
           })
           // Fixes Chrome and Firefox upload issue https://stackoverflow.com/a/25948969/10564311
           ;(event.target as HTMLInputElement).value = ''
           return false
         }}
-        accept={'.' + fileRequirement.suffix}
+        accept={fileRequirement.name.slice(fileRequirement.name.indexOf('.'))}
         id={`exercise-upload-${fileRequirement.name}`}
         hidden
       />
