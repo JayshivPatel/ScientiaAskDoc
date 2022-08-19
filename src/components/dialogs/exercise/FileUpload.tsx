@@ -59,6 +59,7 @@ const FileUpload = ({
       <UploadButton
         htmlFor={`exercise-upload-${fileRequirement.name}`}
         onClick={openSubmissionFile}
+        style={{ backgroundColor: submittedFile ? 'lightgreen' : 'white' }}
       >
         <div
           style={{
