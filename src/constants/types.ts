@@ -101,7 +101,6 @@ interface Material {
 export interface FileRequirement {
   name: string
   max_size: number
-  suffix: string
 }
 
 interface ExerciseOwner {
