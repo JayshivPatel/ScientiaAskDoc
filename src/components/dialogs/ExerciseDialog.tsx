@@ -1,5 +1,5 @@
 import { formatInTimeZone } from 'date-fns-tz'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BoxArrowUpRight } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
@@ -25,6 +25,7 @@ const ExerciseDialog = ({
     useExercise(exercise)
   const { owner, spec, dataFiles, modelAnswers, fileRequirements } = exerciseMaterials || {}
   const [timeSpent, setTimeSpent] = useState('')
+  const [selectedMembers, setSelectedMembers] = useState([])
 
   // Date format: https://date-fns.org/v2.29.1/docs/format
   const displayTimestamp = (date: Date | string) =>
@@ -96,7 +97,7 @@ const ExerciseDialog = ({
         <div style={{ marginTop: '1rem' }}>
           <h4>Group</h4>
 
-          <Groups />
+          <Groups selected={selectedMembers} setSelected={setSelectedMembers} />
         </div>
 
         {fileRequirements && fileRequirements.length > 0 && (

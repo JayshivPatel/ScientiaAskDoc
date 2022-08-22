@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 
@@ -13,8 +13,21 @@ const options = users.map((u) => {
 
 const animatedComponents = makeAnimated()
 
-const Groups = () => (
-  <Select options={options} closeMenuOnSelect={false} components={animatedComponents} isMulti />
-)
+const Groups = ({ selected, setSelected }: { selected: any; setSelected: any }) => {
+  const handleChange = (selectedOptions: any) => {
+    setSelected(selectedOptions)
+  }
+
+  return (
+    <Select
+      options={options}
+      closeMenuOnSelect={false}
+      components={animatedComponents}
+      isMulti
+      value={selected}
+      onChange={handleChange}
+    />
+  )
+}
 
 export default Groups
