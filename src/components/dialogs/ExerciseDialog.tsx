@@ -94,7 +94,7 @@ const ExerciseDialog = ({
         </div>
 
         <div style={{ marginTop: '1rem' }}>
-          <h4>Groups</h4>
+          <h4>Group</h4>
 
           <Groups />
         </div>
