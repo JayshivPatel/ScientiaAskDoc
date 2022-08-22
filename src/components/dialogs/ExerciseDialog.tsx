@@ -8,6 +8,7 @@ import { useExercise } from '../../lib/exerciseDialog.service'
 import { EmailButton, ModulePill, SpecLink, UploadWrapper } from '../../styles/exerciseDialog.style'
 import Dialog from './Dialog'
 import FileUpload from './exercise/FileUpload'
+import Groups from './exercise/GroupSubmission'
 
 const EXERCISE_DURATIONS = ['0-1 hours', '1-10 hours', '11-20 hours', '20+ hours']
 
@@ -90,6 +91,12 @@ const ExerciseDialog = ({
               Model Answers
             </SpecLink>
           )}
+        </div>
+
+        <div style={{ marginTop: '1rem' }}>
+          <h4>Groups</h4>
+
+          <Groups />
         </div>
 
         {fileRequirements && fileRequirements.length > 0 && (
