@@ -6,7 +6,7 @@ import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise, Module, SetState, SubmittedFile } from '../../constants/types'
 import { useExercise } from '../../lib/exerciseDialog.service'
 import { EmailButton, ModulePill, SpecLink, UploadWrapper } from '../../styles/exerciseDialog.style'
-import Dialog from './Dialog'
+import DeleteSubmissionDialog from './exercise/DeleteSubmissionDialog'
 import FileUpload from './exercise/FileUpload'
 
 const EXERCISE_DURATIONS = ['0-1 hours', '1-10 hours', '11-20 hours', '20+ hours']
@@ -34,7 +34,7 @@ const ExerciseDialog = ({
   return (
     exercise &&
     exerciseMaterials && (
-      <Dialog open={true} onOpenChange={() => setExercise(null)}>
+      <DeleteSubmissionDialog open={true} onOpenChange={() => setExercise(null)}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h3 style={{ fontWeight: 400, fontSize: '2rem', width: 'fit-content' }}>
             {exercise.type}: {exercise.title}
@@ -152,7 +152,7 @@ const ExerciseDialog = ({
         )}
 
         {submissionToDelete && (
-          <Dialog
+          <DeleteSubmissionDialog
             onOpenChange={(isOpen) => {
               setDeleteDialogOpen(isOpen)
               if (!isOpen) setSubmissionToDelete(undefined)
@@ -164,7 +164,7 @@ const ExerciseDialog = ({
             secondaryButtonText={'Cancel'}
           />
         )}
-      </Dialog>
+      </DeleteSubmissionDialog>
     )
   )
 }
