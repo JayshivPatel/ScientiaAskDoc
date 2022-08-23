@@ -34,8 +34,16 @@ const Groups = () => {
   }
 
   const addMember = (newMember: string) => {
-    setGroupMembers([...groupMembers, newMember])
+    setGroupMembers((prev) => [...prev, newMember])
   }
+
+  useEffect(() => {
+    console.log(groupMembers)
+  }, [groupMembers])
+
+  useEffect(() => {
+    console.log(`Members to invite: ${membersToInvite}`)
+  })
 
   return (
     <>
@@ -55,7 +63,15 @@ const Groups = () => {
         onChange={(selectedOptions: any) => setUnparsedSelected(selectedOptions)}
       />
 
-      <Button onClick={onInvite}>Invite</Button>
+      <Button
+        type="button"
+        onClick={() => {
+          onInvite()
+          setUnparsedSelected([])
+        }}
+      >
+        Invite
+      </Button>
     </>
   )
 }
