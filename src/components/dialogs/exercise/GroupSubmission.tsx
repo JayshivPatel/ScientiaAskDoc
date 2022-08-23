@@ -46,9 +46,8 @@ const Groups = () => {
   })
 
   return (
-    <>
-      <h6>Members</h6>
-      <ul>
+    <div>
+      <ul style={{ marginBottom: '1rem' }}>
         {groupMembers.map((m) => (
           <li>{m}</li>
         ))}
@@ -69,10 +68,11 @@ const Groups = () => {
           onInvite()
           setUnparsedSelected([])
         }}
+        style={{ width: 'auto', padding: '0.5rem', float: 'right' }}
       >
         Invite
       </Button>
-    </>
+    </div>
   )
 }
 
