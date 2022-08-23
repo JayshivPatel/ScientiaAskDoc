@@ -14,9 +14,11 @@ const options = users.map((u) => {
 const animatedComponents = makeAnimated()
 
 const Groups = ({ selected, setSelected }: { selected: any; setSelected: any }) => {
-  const handleChange = (selectedOptions: any) => {
-    setSelected(selectedOptions)
-  }
+  const [unparsedSelected, setUnparsedSelected] = useState([])
+
+  useEffect(() => {
+    setSelected(unparsedSelected.map(({ value, label }) => value))
+  }, [unparsedSelected])
 
   return (
     <Select
@@ -24,8 +26,8 @@ const Groups = ({ selected, setSelected }: { selected: any; setSelected: any }) 
       closeMenuOnSelect={false}
       components={animatedComponents}
       isMulti
-      value={selected}
-      onChange={handleChange}
+      value={unparsedSelected}
+      onChange={(selectedOptions: any) => setUnparsedSelected(selectedOptions)}
     />
   )
 }

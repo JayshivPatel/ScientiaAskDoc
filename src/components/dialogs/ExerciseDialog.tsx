@@ -96,6 +96,11 @@ const ExerciseDialog = ({
 
         <div style={{ marginTop: '1rem' }}>
           <h4>Group</h4>
+          <ul>
+            {selectedMembers.map((u) => (
+              <li>{u}</li>
+            ))}
+          </ul>
 
           <Groups selected={selectedMembers} setSelected={setSelectedMembers} />
         </div>
