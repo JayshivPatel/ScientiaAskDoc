@@ -5,6 +5,7 @@ import { BoxArrowUpRight } from 'react-bootstrap-icons'
 import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise, Module, SetState } from '../../constants/types'
 import { useExercise } from '../../lib/exerciseDialog.service'
+import { Button } from '../../styles/_app.style'
 import { EmailButton, ModulePill, SpecLink, UploadWrapper } from '../../styles/exerciseDialog.style'
 import Dialog from './Dialog'
 import FileUpload from './exercise/FileUpload'
@@ -25,6 +26,17 @@ const ExerciseDialog = ({
     useExercise(exercise)
   const { owner, spec, dataFiles, modelAnswers, fileRequirements } = exerciseMaterials || {}
   const [timeSpent, setTimeSpent] = useState('')
+  const [inGroup, setInGroup] = useState(false)
+
+  useEffect(() => {
+    // Replace with Axios call to check if in Group
+    setInGroup(false)
+  }, [])
+
+  const createGroup = () => {
+    // Axios call
+    setInGroup(true)
+  }
 
   // Date format: https://date-fns.org/v2.29.1/docs/format
   const displayTimestamp = (date: Date | string) =>
@@ -95,7 +107,13 @@ const ExerciseDialog = ({
 
         <div style={{ marginTop: '1rem' }}>
           <h4>Group</h4>
-          <Groups />
+          {inGroup ? (
+            <Groups />
+          ) : (
+            <Button type="button" onClick={() => createGroup()}>
+              Create group
+            </Button>
+          )}
         </div>
 
         {fileRequirements && fileRequirements.length > 0 && (
