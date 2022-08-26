@@ -7,7 +7,7 @@ import { useUser } from '../../../lib/user.context'
 import { Button } from '../../../styles/_app.style'
 
 // Hard-coded options, remove later
-const users = ['adumble', 'rweasley', 'hgranger', 'triddle', 'ssnape']
+const users = ['adumble', 'rweasley', 'hgranger', 'triddle', 'ssnape', 'abc123', 'def456', 'ghi789']
 
 const options = users.map((u) => {
   return {
@@ -37,6 +37,9 @@ const Groups = () => {
     setInviteOptions(getInviteOptions())
     setPeopleInvited(getPeopleInvited())
   }, [])
+
+  // Replace with Axios call
+  const GROUP_SIZE = 4
 
   const getGroupMembers = () => {
     // Replace with Axios call
@@ -101,6 +104,9 @@ const Groups = () => {
         isMulti
         value={unparsedSelected}
         onChange={(selectedOptions: any) => setUnparsedSelected(selectedOptions)}
+        isOptionDisabled={() =>
+          unparsedSelected.length >= GROUP_SIZE - (groupMembers.length + peopleInvited.length)
+        }
       />
 
       <Button
