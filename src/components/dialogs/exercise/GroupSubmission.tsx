@@ -15,11 +15,16 @@ const options = users.map((u) => {
   }
 })
 
+interface MemberOption {
+  value: string
+  label: string
+}
+
 const animatedComponents = makeAnimated()
 
 const Groups = () => {
   const { userDetails } = useUser()
-
+  const [inviteOptions, setInviteOptions] = useState<MemberOption[] | null>(null)
   const [unparsedSelected, setUnparsedSelected] = useState([])
   const [membersToInvite, setMembersToInvite] = useState<string[]>([])
   const [peopleInvited, setPeopleInvited] = useState<string[]>([])
@@ -42,6 +47,15 @@ const Groups = () => {
     setPeopleInvited((prev) => [...prev, receiver])
   }
 
+  useEffect(() => {
+    setInviteOptions(getInviteOptions())
+  }, [])
+
+  const getInviteOptions = () => {
+    // Axios call
+    return options
+  }
+
   return (
     <div>
       <ul style={{ marginBottom: '1rem' }}>
@@ -62,7 +76,7 @@ const Groups = () => {
       )}
 
       <Select
-        options={options}
+        options={inviteOptions!}
         closeMenuOnSelect={false}
         components={animatedComponents}
         isMulti
