@@ -81,6 +81,9 @@ const Groups = () => {
         Invite <Send />
       </Button>
 
+      {
+        // Remove the button later, this is just for dev purposes
+      }
       <Button
         type="button"
         onClick={() => {
@@ -88,7 +91,7 @@ const Groups = () => {
           setPeopleInvited([])
         }}
       >
-        Accept all invites (DEMO only)
+        Accept all invites
       </Button>
     </div>
   )
