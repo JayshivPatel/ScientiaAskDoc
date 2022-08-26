@@ -42,7 +42,7 @@ const Groups = () => {
 
   const isLeader = leader === userDetails?.login
 
-  // Replace with Axios call
+  // Obtain from exercise info once implemented
   const GROUP_SIZE = 4
 
   const getGroupMembers = () => {
