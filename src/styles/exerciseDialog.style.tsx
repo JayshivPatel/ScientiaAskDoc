@@ -107,3 +107,47 @@ export const LinkLogo = styled(BoxArrowUpRight, {
   float: 'left',
   fontWeight: 500,
 })
+
+export const TitleWrapper = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+})
+
+export const ExerciseTitle = styled('h3', {
+  fontWeight: 400,
+  fontSize: '2rem',
+  width: 'fit-content',
+})
+
+export const EmailAddress = styled('address', {
+  display: 'flex',
+  alignItems: 'center',
+})
+
+export const Deadline = styled('p', {
+  fontSize: '14px',
+  color: '$sand8',
+})
+
+export const SubmissionWrapper = styled('div', {
+  marginTop: '1rem',
+})
+
+export const WorkloadSurveyWrapper = styled('div', {
+  margin: '2rem',
+  display: 'flex',
+  fontSize: '0.9rem',
+  marginTop: '1rem',
+})
+
+export const WorkloadSelect = styled('select', {
+  display: 'inline',
+  marginLeft: '0.5rem',
+})
+
+export const PlagiarismDisclaimer = styled('p', {
+  fontSize: '0.9rem',
+  marginTop: '1rem',
+  textAlign: 'center',
+})

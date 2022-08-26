@@ -6,11 +6,19 @@ import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise, Module, SetState } from '../../constants/types'
 import { useExercise } from '../../lib/exerciseDialog.service'
 import {
+  Deadline,
+  EmailAddress,
   EmailButton,
+  ExerciseTitle,
   LinkLogo,
   ModulePill,
+  PlagiarismDisclaimer,
   SpecLink,
+  SubmissionWrapper,
+  TitleWrapper,
   UploadWrapper,
+  WorkloadSelect,
+  WorkloadSurveyWrapper,
 } from '../../styles/exerciseDialog.style'
 import Dialog from './Dialog'
 import FileUpload from './exercise/FileUpload'
@@ -39,21 +47,21 @@ const ExerciseDialog = ({
     exercise &&
     exerciseMaterials && (
       <Dialog open={true} onOpenChange={() => setExercise(null)}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h3 style={{ fontWeight: 400, fontSize: '2rem', width: 'fit-content' }}>
+        <TitleWrapper>
+          <ExerciseTitle>
             {exercise.type}: {exercise.title}
-          </h3>
+          </ExerciseTitle>
           {owner && (
-            <address style={{ display: 'flex', alignItems: 'center' }}>
+            <EmailAddress>
               <a
                 title={'Email the exercise owner: ' + (owner.name || owner.shortcode)}
                 href={`mailto:${owner.email}`}
               >
                 <EmailButton size={24} />
               </a>
-            </address>
+            </EmailAddress>
           )}
-        </div>
+        </TitleWrapper>
         <ModulePill>
           {exercise.moduleCode}: {module.title}
         </ModulePill>
@@ -90,57 +98,50 @@ const ExerciseDialog = ({
         </div>
 
         {fileRequirements && fileRequirements.length > 0 && (
-          <div style={{ marginTop: '1rem' }}>
-            <div>
-              <h4>
-                Submission ({submittedFiles?.length || 0}/{fileRequirements.length})
-                {submittedFiles?.length === fileRequirements.length && ': you are all done! 🎉'}
-              </h4>
-              <p style={{ fontSize: '14px', color: '$sand8' }}>
-                Deadline: {displayTimestamp(exercise.endDate)}
-              </p>
-              <UploadWrapper>
-                {fileRequirements.map((fileRequirement, index: number) => (
-                  <FileUpload
-                    key={index}
-                    fileRequirement={fileRequirement}
-                    submittedFiles={submittedFiles}
-                    submitFile={submitFile}
-                    deleteFile={deleteFile}
-                  />
-                ))}
-              </UploadWrapper>
-              {submittedFiles?.length > 0 && (
-                <div style={{ margin: '2rem' }}>
-                  <div style={{ display: 'flex', fontSize: '0.9rem', marginTop: '1rem' }}>
-                    <label htmlFor="exercise-duration">
-                      How many hours did this coursework take you?
-                    </label>
-                    <select
-                      value={timeSpent}
-                      onChange={(event) => {
-                        setTimeSpent(event.target.value)
-                        submitWorkload(event.target.value)
-                      }}
-                      style={{ display: 'inline', marginLeft: '0.5rem' }}
-                      name="exercise-duration"
-                    >
-                      <option value="">Select...</option>
-                      {EXERCISE_DURATIONS.map((duration, index) => (
-                        <option key={index} value={duration}>
-                          {duration}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              )}
-              <hr />
-              <p style={{ fontSize: '0.9rem', marginTop: '1rem', textAlign: 'center' }}>
-                By uploading, you agree that this is your own, unaided work.
-              </p>
-            </div>
-          </div>
+          <SubmissionWrapper>
+            <h4>
+              Submission ({submittedFiles?.length || 0}/{fileRequirements.length})
+              {submittedFiles?.length === fileRequirements.length && ': you are all done! 🎉'}
+            </h4>
+            <Deadline>Deadline: {displayTimestamp(exercise.endDate)}</Deadline>
+            <UploadWrapper>
+              {fileRequirements.map((fileRequirement, index: number) => (
+                <FileUpload
+                  key={index}
+                  fileRequirement={fileRequirement}
+                  submittedFiles={submittedFiles}
+                  submitFile={submitFile}
+                  deleteFile={deleteFile}
+                />
+              ))}
+            </UploadWrapper>
+            {submittedFiles?.length > 0 && (
+              <WorkloadSurveyWrapper>
+                <label htmlFor="exercise-duration">
+                  How many hours did this coursework take you?
+                </label>
+                <WorkloadSelect
+                  value={timeSpent}
+                  onChange={(event) => {
+                    setTimeSpent(event.target.value)
+                    submitWorkload(event.target.value)
+                  }}
+                  name="exercise-duration"
+                >
+                  <option value="">Select...</option>
+                  {EXERCISE_DURATIONS.map((duration, index) => (
+                    <option key={index} value={duration}>
+                      {duration}
+                    </option>
+                  ))}
+                </WorkloadSelect>
+              </WorkloadSurveyWrapper>
+            )}
+            <hr />
+            <PlagiarismDisclaimer>
+              By uploading, you agree that this is your own, unaided work.
+            </PlagiarismDisclaimer>
+          </SubmissionWrapper>
         )}
       </Dialog>
     )
