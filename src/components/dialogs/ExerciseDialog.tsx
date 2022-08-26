@@ -105,12 +105,16 @@ const ExerciseDialog = ({
           )}
         </div>
 
-        <div style={{ marginTop: '1rem' }}>
+        <div style={{ marginTop: '1rem', marginBottom: '1rem' }}>
           <h4>Group</h4>
           {inGroup ? (
             <Groups />
           ) : (
-            <Button type="button" onClick={() => createGroup()}>
+            <Button
+              type="button"
+              onClick={() => createGroup()}
+              style={{ width: 'auto', padding: '0.5rem' }}
+            >
               Create group
             </Button>
           )}
