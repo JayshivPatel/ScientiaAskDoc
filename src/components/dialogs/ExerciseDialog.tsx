@@ -38,6 +38,8 @@ const ExerciseDialog = ({
     setInGroup(true)
   }
 
+  const submissionType = 'group' // replace with Axios call
+
   // Date format: https://date-fns.org/v2.29.1/docs/format
   const displayTimestamp = (date: Date | string) =>
     formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm aaa zzz, EEEE d LLL yyyy')
@@ -105,9 +107,9 @@ const ExerciseDialog = ({
           )}
         </div>
 
-        <div style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-          <h4>Group</h4>
-          {inGroup ? (
+        <h4>Group</h4>
+        {submissionType === 'group' &&
+          (inGroup ? (
             <Groups />
           ) : (
             <Button
@@ -117,8 +119,7 @@ const ExerciseDialog = ({
             >
               Create group
             </Button>
-          )}
-        </div>
+          ))}
 
         {fileRequirements && fileRequirements.length > 0 && (
           <div style={{ marginTop: '1rem' }}>
