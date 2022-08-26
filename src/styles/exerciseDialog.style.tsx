@@ -100,3 +100,10 @@ export const ModulePill = styled('p', {
   margin: 0,
   textAlign: 'center',
 })
+
+export const LinkLogo = styled(BoxArrowUpRight, {
+  marginRight: '0.5rem',
+  fill: 'inherit',
+  float: 'left',
+  fontWeight: 500,
+})
