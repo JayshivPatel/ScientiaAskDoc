@@ -40,6 +40,8 @@ const Groups = () => {
     setLeader(getLeader())
   }, [])
 
+  const isLeader = leader === userDetails?.login
+
   // Replace with Axios call
   const GROUP_SIZE = 4
 
@@ -104,32 +106,36 @@ const Groups = () => {
         </>
       )}
 
-      <Select
-        options={inviteOptions!}
-        closeMenuOnSelect={false}
-        components={animatedComponents}
-        isMulti
-        value={unparsedSelected}
-        onChange={(selectedOptions: any) => setUnparsedSelected(selectedOptions)}
-        isOptionDisabled={() =>
-          unparsedSelected.length >= GROUP_SIZE - (groupMembers.length + peopleInvited.length)
-        }
-      />
+      {isLeader && (
+        <>
+          <Select
+            options={inviteOptions!}
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            isMulti
+            value={unparsedSelected}
+            onChange={(selectedOptions: any) => setUnparsedSelected(selectedOptions)}
+            isOptionDisabled={() =>
+              unparsedSelected.length >= GROUP_SIZE - (groupMembers.length + peopleInvited.length)
+            }
+          />
 
-      <Button
-        type="button"
-        onClick={() => {
-          onInvite()
-          setUnparsedSelected([])
-        }}
-        style={{ width: 'auto', padding: '0.5rem', float: 'right' }}
-        disabled={unparsedSelected.length === 0}
-      >
-        Invite <Send />
-      </Button>
+          <Button
+            type="button"
+            onClick={() => {
+              onInvite()
+              setUnparsedSelected([])
+            }}
+            style={{ width: 'auto', padding: '0.5rem', float: 'right' }}
+            disabled={unparsedSelected.length === 0}
+          >
+            Invite <Send />
+          </Button>
+        </>
+      )}
 
       {
-        // Remove the button later, this is just for dev purposes
+        // TODO: Remove this button later, it's just for dev purposes
       }
       <Button
         type="button"
