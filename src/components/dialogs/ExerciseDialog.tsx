@@ -5,7 +5,13 @@ import { BoxArrowUpRight } from 'react-bootstrap-icons'
 import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise, Module, SetState } from '../../constants/types'
 import { useExercise } from '../../lib/exerciseDialog.service'
-import { EmailButton, ModulePill, SpecLink, UploadWrapper } from '../../styles/exerciseDialog.style'
+import {
+  EmailButton,
+  LinkLogo,
+  ModulePill,
+  SpecLink,
+  UploadWrapper,
+} from '../../styles/exerciseDialog.style'
 import Dialog from './Dialog'
 import FileUpload from './exercise/FileUpload'
 
@@ -65,28 +71,19 @@ const ExerciseDialog = ({
         >
           {spec && (
             <SpecLink target="_blank" href={spec.url}>
-              <BoxArrowUpRight
-                style={{ marginRight: '0.5rem', fill: 'inherit', float: 'left', fontWeight: 500 }}
-                size={18}
-              />
+              <LinkLogo size={18} />
               Specification
             </SpecLink>
           )}
           {dataFiles && dataFiles.length > 0 && (
             <SpecLink target="_blank" href={dataFiles[0].url}>
-              <BoxArrowUpRight
-                style={{ marginRight: '0.5rem', fill: 'inherit', float: 'left', fontWeight: 500 }}
-                size={18}
-              />
+              <LinkLogo size={18} />
               Data Files
             </SpecLink>
           )}
           {modelAnswers && modelAnswers.length > 0 && (
             <SpecLink target="_blank" href={modelAnswers[0].url}>
-              <BoxArrowUpRight
-                style={{ marginRight: '0.5rem', fill: 'inherit', float: 'left', fontWeight: 500 }}
-                size={18}
-              />
+              <LinkLogo size={18} />
               Model Answers
             </SpecLink>
           )}
