@@ -30,12 +30,14 @@ const Groups = () => {
   const [membersToInvite, setMembersToInvite] = useState<string[]>([])
   const [peopleInvited, setPeopleInvited] = useState<string[]>([])
   const [groupMembers, setGroupMembers] = useState([userDetails?.login])
+  const [leader, setLeader] = useState('')
 
   // Setup start states:
   useEffect(() => {
     setGroupMembers(getGroupMembers())
     setInviteOptions(getInviteOptions())
     setPeopleInvited(getPeopleInvited())
+    setLeader(getLeader())
   }, [])
 
   // Replace with Axios call
@@ -54,6 +56,11 @@ const Groups = () => {
   const getPeopleInvited = () => {
     // Replace with Axios call
     return peopleInvited
+  }
+
+  const getLeader = () => {
+    // Replace with Axios call
+    return userDetails ? userDetails.login : ''
   }
 
   // Operations:
@@ -82,7 +89,7 @@ const Groups = () => {
     <div>
       <ul style={{ marginBottom: '1rem' }}>
         {groupMembers.map((m) => (
-          <li>{m}</li>
+          <li>{`${m}${m === leader ? ' (Leader)' : ''}`}</li>
         ))}
       </ul>
 
