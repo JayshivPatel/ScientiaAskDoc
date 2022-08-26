@@ -116,6 +116,7 @@ const Groups = () => {
           setUnparsedSelected([])
         }}
         style={{ width: 'auto', padding: '0.5rem', float: 'right' }}
+        disabled={unparsedSelected.length === 0}
       >
         Invite <Send />
       </Button>
