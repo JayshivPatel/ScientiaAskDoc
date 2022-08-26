@@ -77,8 +77,8 @@ const Groups = () => {
     // setPeopleInvited(getPeopleInvited)
   }
 
+  // TODO: remove along with 'Accept all invites' button, for dev purposes only
   const acceptInvite = (newMember: string) => {
-    // Replace next line with Axios call
     setGroupMembers((prev) => [...prev, newMember])
   }
 
