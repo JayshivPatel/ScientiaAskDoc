@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Send } from 'react-bootstrap-icons'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 
@@ -20,7 +21,8 @@ const Groups = () => {
   const { userDetails } = useUser()
 
   const [unparsedSelected, setUnparsedSelected] = useState([])
-  const [membersToInvite, setMembersToInvite] = useState([])
+  const [membersToInvite, setMembersToInvite] = useState<string[]>([])
+  const [peopleInvited, setPeopleInvited] = useState<string[]>([])
   const [groupMembers, setGroupMembers] = useState([userDetails?.login])
 
   useEffect(() => {
@@ -29,21 +31,16 @@ const Groups = () => {
 
   const onInvite = () => {
     console.log(`Inviting: ${membersToInvite}`)
-    console.log('Suppose they all accepted...')
-    membersToInvite.forEach((m) => addMember(m))
+    membersToInvite.forEach((m) => sendInvite(m))
   }
 
-  const addMember = (newMember: string) => {
+  const acceptInvite = (newMember: string) => {
     setGroupMembers((prev) => [...prev, newMember])
   }
 
-  useEffect(() => {
-    console.log(groupMembers)
-  }, [groupMembers])
-
-  useEffect(() => {
-    console.log(`Members to invite: ${membersToInvite}`)
-  })
+  const sendInvite = (receiver: string) => {
+    setPeopleInvited((prev) => [...prev, receiver])
+  }
 
   return (
     <div>
@@ -52,6 +49,17 @@ const Groups = () => {
           <li>{m}</li>
         ))}
       </ul>
+
+      {peopleInvited.length > 0 && (
+        <>
+          <h6>Invited:</h6>
+          <ul style={{ marginBottom: '1rem' }}>
+            {peopleInvited.map((p) => (
+              <li>{p}</li>
+            ))}
+          </ul>
+        </>
+      )}
 
       <Select
         options={options}
@@ -70,7 +78,17 @@ const Groups = () => {
         }}
         style={{ width: 'auto', padding: '0.5rem', float: 'right' }}
       >
-        Invite
+        Invite <Send />
+      </Button>
+
+      <Button
+        type="button"
+        onClick={() => {
+          peopleInvited.forEach((p) => acceptInvite(p))
+          setPeopleInvited([])
+        }}
+      >
+        Accept all invites (DEMO only)
       </Button>
     </div>
   )
