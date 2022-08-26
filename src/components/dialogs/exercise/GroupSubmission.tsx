@@ -31,7 +31,7 @@ const Groups = () => {
   const [peopleInvited, setPeopleInvited] = useState<string[]>([])
   const [groupMembers, setGroupMembers] = useState([userDetails?.login])
 
-  // Setup start states
+  // Setup start states:
   useEffect(() => {
     setGroupMembers(getGroupMembers())
     setInviteOptions(getInviteOptions())
@@ -53,6 +53,7 @@ const Groups = () => {
     return peopleInvited
   }
 
+  // Operations:
   useEffect(() => {
     setMembersToInvite(unparsedSelected.map(({ value, label }) => value))
   }, [unparsedSelected])
