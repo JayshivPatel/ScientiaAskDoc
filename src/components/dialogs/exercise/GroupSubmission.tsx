@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Hourglass, PersonPlusFill, Send, X } from 'react-bootstrap-icons'
+import { PersonPlusFill, Send, X } from 'react-bootstrap-icons'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 
@@ -12,7 +12,6 @@ import {
   InviteModeButton,
   StudentList,
 } from '../../../styles/exerciseDialog.style'
-import { Tab } from '../../../styles/tabs.style'
 
 // Hard-coded options, remove later
 const users = ['adumble', 'rweasley', 'hgranger', 'triddle', 'ssnape', 'abc123', 'def456', 'ghi789']
