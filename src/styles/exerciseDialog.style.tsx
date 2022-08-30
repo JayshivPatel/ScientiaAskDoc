@@ -87,7 +87,7 @@ export const UploadButton = styled('label', {
   },
 })
 
-export const ModulePill = styled('p', {
+export const Pill = styled('p', {
   background: '$blue5',
   fontSize: '14px',
   borderRadius: '16px',
@@ -99,6 +99,7 @@ export const ModulePill = styled('p', {
   height: 'fit-content',
   margin: 0,
   textAlign: 'center',
+  marginRight: '0.5rem',
 })
 
 export const LinkLogo = styled(BoxArrowUpRight, {

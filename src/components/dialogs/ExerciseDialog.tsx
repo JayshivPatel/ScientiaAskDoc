@@ -11,7 +11,7 @@ import {
   EmailButton,
   ExerciseTitle,
   LinkLogo,
-  ModulePill,
+  Pill,
   PlagiarismDisclaimer,
   SpecLink,
   SubmissionWrapper,
@@ -66,9 +66,11 @@ const ExerciseDialog = ({
             </EmailAddress>
           )}
         </TitleWrapper>
-        <ModulePill>
+        <Pill>{exercise.type}</Pill>
+        <Pill>
           {exercise.moduleCode}: {module.title}
-        </ModulePill>
+        </Pill>
+        <Pill>Expected length: {exerciseMaterials.expectedHours} hours</Pill>
 
         <div
           style={{
@@ -122,9 +124,8 @@ const ExerciseDialog = ({
             {submittedFiles?.length > 0 && (
               <WorkloadSurveyWrapper>
                 <label htmlFor="exercise-duration">
-                  {/* This exercise was estimated to take {exerciseMaterials.expectedHours} hours. How did you find the workload for this exercise? */}
-                  This exercise was estimated to take 10 hours. How did you find the workload for
-                  this exercise? {/* TODO: replace with line above when ready */}
+                  This exercise was estimated to take {exerciseMaterials.expectedHours} hours. How
+                  did you find the workload for this exercise?
                 </label>
                 <WorkloadSelect
                   value={timeSpent}
