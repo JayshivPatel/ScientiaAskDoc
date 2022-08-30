@@ -10,6 +10,8 @@ import { Button } from '../../styles/_app.style'
 import {
   EmailButton,
   GroupInstructionText,
+  GroupStatus,
+  LineBreak,
   ModulePill,
   SpecLink,
   UploadWrapper,
@@ -114,6 +116,8 @@ const ExerciseDialog = ({
           )}
         </div>
 
+        <LineBreak />
+
         {submissionType === 'group' &&
           (inGroup ? (
             <>
@@ -124,9 +128,11 @@ const ExerciseDialog = ({
             </>
           ) : (
             <>
+              <GroupStatus>You are not currently in a group.</GroupStatus>
+
               <GroupInstructionText>
-                You are not currently in a group. To join an existing group, ask the leader to
-                invite you through Scientia, then check your email for the invite link.
+                To join an existing group, ask the leader to invite you through Scientia, then check
+                your email for the invite link.
               </GroupInstructionText>
 
               <GroupInstructionText>
@@ -191,7 +197,7 @@ const ExerciseDialog = ({
                     </div>
                   </div>
                 )}
-                <hr />
+                <LineBreak />
                 <p style={{ fontSize: '0.9rem', marginTop: '1rem', textAlign: 'center' }}>
                   By uploading, you agree that this is your own, unaided work.
                 </p>
