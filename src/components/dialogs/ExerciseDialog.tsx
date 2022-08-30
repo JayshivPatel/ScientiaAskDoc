@@ -24,9 +24,9 @@ import Dialog from './Dialog'
 import FileUpload from './exercise/FileUpload'
 
 const EXERCISE_DURATIONS = [
-  'The exercise was shorter than expected',
-  'The exercise was the appropriate length',
-  'The exercise was too long',
+  'The exercise took less time than expected',
+  'The exercise took as much time as expected',
+  'The exercise took more time than expected',
 ]
 
 const ExerciseDialog = ({
