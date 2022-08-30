@@ -10,9 +10,10 @@ import {
   EmailAddress,
   EmailButton,
   ExerciseTitle,
-  LinkLogo,
+  LinkIcon,
   ModulePill,
   PlagiarismDisclaimer,
+  ResourcesWrapper,
   SpecLink,
   SubmissionWrapper,
   TitleWrapper,
@@ -66,36 +67,26 @@ const ExerciseDialog = ({
           {exercise.moduleCode}: {module.title}
         </ModulePill>
 
-        <div
-          style={{
-            display: 'grid',
-            justifyItems: 'center',
-            width: '100%',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '2rem',
-            gridGap: '2rem',
-            marginTop: '1rem',
-          }}
-        >
+        <ResourcesWrapper>
           {spec && (
             <SpecLink target="_blank" href={spec.url}>
-              <LinkLogo size={18} />
+              <LinkIcon size={18} />
               Specification
             </SpecLink>
           )}
           {dataFiles && dataFiles.length > 0 && (
             <SpecLink target="_blank" href={dataFiles[0].url}>
-              <LinkLogo size={18} />
+              <LinkIcon size={18} />
               Data Files
             </SpecLink>
           )}
           {modelAnswers && modelAnswers.length > 0 && (
             <SpecLink target="_blank" href={modelAnswers[0].url}>
-              <LinkLogo size={18} />
+              <LinkIcon size={18} />
               Model Answers
             </SpecLink>
           )}
-        </div>
+        </ResourcesWrapper>
 
         {fileRequirements && fileRequirements.length > 0 && (
           <SubmissionWrapper>
