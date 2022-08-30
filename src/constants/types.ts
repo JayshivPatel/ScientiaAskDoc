@@ -121,6 +121,9 @@ export class ExerciseMaterials {
 
   @Expose({ name: 'hand_ins' })
   fileRequirements: FileRequirement[]
+
+  @Expose({ name: 'expected_hours' })
+  expectedHours: number
 }
 
 export class SubmittedFile {
