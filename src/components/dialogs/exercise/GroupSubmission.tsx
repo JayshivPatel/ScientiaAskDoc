@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { PersonPlusFill, Send } from 'react-bootstrap-icons'
+import { PersonPlusFill, Send, X } from 'react-bootstrap-icons'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 
@@ -138,18 +138,31 @@ const Groups = () => {
                 }
               />
 
-              <Button
-                type="button"
-                onClick={() => {
-                  onInvite()
-                  setUnparsedSelected([])
-                  setInviteMode(false)
-                }}
-                style={{ width: 'auto', padding: '0.5rem', float: 'right' }}
-                disabled={unparsedSelected.length === 0}
-              >
-                <Send /> Send
-              </Button>
+              <div style={{ display: 'flex', justifyContent: 'end' }}>
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setUnparsedSelected([])
+                    setInviteMode(false)
+                  }}
+                  style={{ width: 'auto', padding: '0.5rem', marginLeft: '0.5rem' }}
+                >
+                  <X /> Cancel
+                </Button>
+
+                <Button
+                  type="button"
+                  onClick={() => {
+                    onInvite()
+                    setUnparsedSelected([])
+                    setInviteMode(false)
+                  }}
+                  style={{ width: 'auto', padding: '0.5rem', marginLeft: '0.5rem' }}
+                  disabled={unparsedSelected.length === 0}
+                >
+                  <Send /> Send
+                </Button>
+              </div>
             </>
           )}
         </>
