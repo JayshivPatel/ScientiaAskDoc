@@ -33,10 +33,6 @@ const Groups = () => {
   const [leader, setLeader] = useState('')
   const [inviteMode, setInviteMode] = useState(false)
 
-  useEffect(() => {
-    console.log(inviteMode)
-  }, [inviteMode])
-
   // Setup start states:
   useEffect(() => {
     setGroupMembers(getGroupMembers())
