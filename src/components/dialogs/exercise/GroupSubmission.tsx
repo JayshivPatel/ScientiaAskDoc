@@ -89,7 +89,7 @@ const Groups = () => {
 
   return (
     <div>
-      <ul style={{ marginBottom: '1rem' }}>
+      <ul style={{ marginBottom: '1rem', listStyleType: 'none' }}>
         {groupMembers.map((m) => (
           <li>{`${m}${m === leader ? ' (Leader)' : ''}`}</li>
         ))}
@@ -98,7 +98,7 @@ const Groups = () => {
       {peopleInvited.length > 0 && (
         <>
           <h6>Invited:</h6>
-          <ul style={{ marginBottom: '1rem' }}>
+          <ul style={{ marginBottom: '1rem', listStyleType: 'none' }}>
             {peopleInvited.map((p) => (
               <li>{p}</li>
             ))}
