@@ -6,10 +6,13 @@ import makeAnimated from 'react-select/animated'
 import { useUser } from '../../../lib/user.context'
 import { Button } from '../../../styles/_app.style'
 import {
-  GroupMemberList,
+  GroupHeader,
+  GroupWrapper,
   InviteButtonsWrapper,
   InviteModeButton,
+  StudentList,
 } from '../../../styles/exerciseDialog.style'
+import { Tab } from '../../../styles/tabs.style'
 
 // Hard-coded options, remove later
 const users = ['adumble', 'rweasley', 'hgranger', 'triddle', 'ssnape', 'abc123', 'def456', 'ghi789']
@@ -92,22 +95,25 @@ const Groups = () => {
 
   return (
     <div>
-      <GroupMemberList>
-        {groupMembers.map((m) => (
-          <li>{`${m}${m === leader ? ' (Leader)' : ''}`}</li>
-        ))}
-      </GroupMemberList>
+      <GroupWrapper>
+        <GroupHeader>Members:</GroupHeader>
+        <StudentList>
+          {groupMembers.map((m) => (
+            <li>{`${m}${m === leader ? ' (Leader)' : ''}`}</li>
+          ))}
+        </StudentList>
 
-      {peopleInvited.length > 0 && (
-        <>
-          <h6>Invited</h6>
-          <GroupMemberList>
-            {peopleInvited.map((p) => (
-              <li>{p}</li>
-            ))}
-          </GroupMemberList>
-        </>
-      )}
+        {peopleInvited.length > 0 && (
+          <div style={{ marginTop: '0.5rem' }}>
+            <GroupHeader>Invited:</GroupHeader>
+            <StudentList>
+              {peopleInvited.map((p) => (
+                <li>{p}</li>
+              ))}
+            </StudentList>
+          </div>
+        )}
+      </GroupWrapper>
 
       {isLeader && (
         <>

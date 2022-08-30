@@ -69,10 +69,6 @@ export const GroupInstructionText = styled('p', {
   color: '$highContrast',
 })
 
-export const GroupMemberList = styled('ul', {
-  marginBottom: '1rem',
-})
-
 export const InviteModeButton = styled(Button, {
   width: 'auto',
   padding: '0.5rem',
@@ -82,6 +78,30 @@ export const InviteModeButton = styled(Button, {
 export const InviteButtonsWrapper = styled('div', {
   display: 'flex',
   justifyContent: 'end',
+})
+
+export const GroupWrapper = styled('label', {
+  all: 'unset',
+  display: 'block',
+  width: 'auto',
+  marginTop: '0.75rem',
+  marginBottom: '1rem',
+  padding: '0.75rem',
+  borderRadius: '12px',
+  color: '$highContrast',
+  backgroundColor: '$sand1',
+  filter: 'drop-shadow(0 1px 2px rgba(0,0,0,.06)) drop-shadow(0 1px 3px rgba(0,0,0,.1))',
+  '&:hover': {
+    backgroundColor: '$sand2',
+  },
+})
+
+export const StudentList = styled('ul', {
+  listStyleType: 'none',
+})
+
+export const GroupHeader = styled('h6', {
+  marginLeft: '1rem',
 })
 
 export const UploadWrapper = styled('div', {
