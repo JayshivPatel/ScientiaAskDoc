@@ -124,7 +124,7 @@ const ExerciseDialog = ({
             {submittedFiles?.length > 0 && (
               <WorkloadSurveyWrapper>
                 <label htmlFor="exercise-duration">
-                  This exercise was estimated to take {exerciseMaterials.expectedHours} hours. How
+                  This exercise was intended to take {exerciseMaterials.expectedHours} hours. How
                   did you find the workload for this exercise?
                 </label>
                 <WorkloadSelect
