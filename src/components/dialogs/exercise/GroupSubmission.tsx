@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { PersonPlusFill } from 'react-bootstrap-icons'
+import { PersonPlusFill, Send } from 'react-bootstrap-icons'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 
@@ -31,6 +31,11 @@ const Groups = () => {
   const [peopleInvited, setPeopleInvited] = useState<string[]>([])
   const [groupMembers, setGroupMembers] = useState([userDetails?.login])
   const [leader, setLeader] = useState('')
+  const [inviteMode, setInviteMode] = useState(false)
+
+  useEffect(() => {
+    console.log(inviteMode)
+  }, [inviteMode])
 
   // Setup start states:
   useEffect(() => {
@@ -108,29 +113,45 @@ const Groups = () => {
 
       {isLeader && (
         <>
-          <Select
-            options={inviteOptions!}
-            closeMenuOnSelect={false}
-            components={animatedComponents}
-            isMulti
-            value={unparsedSelected}
-            onChange={(selectedOptions: any) => setUnparsedSelected(selectedOptions)}
-            isOptionDisabled={() =>
-              unparsedSelected.length >= GROUP_SIZE - (groupMembers.length + peopleInvited.length)
-            }
-          />
+          {!inviteMode ? (
+            <Button
+              type="button"
+              onClick={() => {
+                setInviteMode(true)
+              }}
+              style={{ width: 'auto', padding: '0.5rem', float: 'right' }}
+            >
+              <PersonPlusFill /> Invite
+            </Button>
+          ) : (
+            <>
+              <Select
+                options={inviteOptions!}
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                isMulti
+                value={unparsedSelected}
+                onChange={(selectedOptions: any) => setUnparsedSelected(selectedOptions)}
+                isOptionDisabled={() =>
+                  unparsedSelected.length >=
+                  GROUP_SIZE - (groupMembers.length + peopleInvited.length)
+                }
+              />
 
-          <Button
-            type="button"
-            onClick={() => {
-              onInvite()
-              setUnparsedSelected([])
-            }}
-            style={{ width: 'auto', padding: '0.5rem', float: 'right' }}
-            disabled={unparsedSelected.length === 0}
-          >
-            <PersonPlusFill /> Invite
-          </Button>
+              <Button
+                type="button"
+                onClick={() => {
+                  onInvite()
+                  setUnparsedSelected([])
+                  setInviteMode(false)
+                }}
+                style={{ width: 'auto', padding: '0.5rem', float: 'right' }}
+                disabled={unparsedSelected.length === 0}
+              >
+                <Send /> Send
+              </Button>
+            </>
+          )}
         </>
       )}
 

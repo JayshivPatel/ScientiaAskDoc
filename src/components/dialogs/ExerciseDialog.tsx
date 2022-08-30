@@ -108,10 +108,14 @@ const ExerciseDialog = ({
           )}
         </div>
 
-        <h4>Group</h4>
         {submissionType === 'group' &&
           (inGroup ? (
-            <Groups />
+            <>
+              <h4>
+                <PeopleFill /> Group
+              </h4>
+              <Groups />
+            </>
           ) : (
             <Button
               type="button"
