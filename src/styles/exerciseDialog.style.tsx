@@ -80,7 +80,7 @@ export const InviteButtonsWrapper = styled('div', {
   justifyContent: 'end',
 })
 
-export const GroupWrapper = styled('label', {
+export const GroupWrapper = styled('div', {
   all: 'unset',
   display: 'block',
   width: 'auto',
