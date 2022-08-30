@@ -75,6 +75,13 @@ export const GroupStatus = styled(GroupInstructionText, {
   textAlign: 'center',
 })
 
+export const CreateGroupButton = styled(Button, {
+  width: 'auto',
+  padding: '0.5rem',
+  marginLeft: '0.5rem',
+  marginTop: '1rem',
+})
+
 export const InviteModeButton = styled(Button, {
   width: 'auto',
   padding: '0.5rem',

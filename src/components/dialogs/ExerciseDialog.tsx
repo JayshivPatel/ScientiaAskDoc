@@ -8,6 +8,7 @@ import { Exercise, Module, SetState } from '../../constants/types'
 import { useExercise } from '../../lib/exerciseDialog.service'
 import { Button } from '../../styles/_app.style'
 import {
+  CreateGroupButton,
   EmailButton,
   GroupInstructionText,
   GroupStatus,
@@ -136,18 +137,9 @@ const ExerciseDialog = ({
                 Alternatively, you can create a group here:
               </GroupInstructionText>
 
-              <Button
-                type="button"
-                onClick={() => createGroup()}
-                style={{
-                  width: 'auto',
-                  padding: '0.5rem',
-                  marginLeft: '0.5rem',
-                  marginTop: '1rem',
-                }}
-              >
+              <CreateGroupButton type="button" onClick={() => createGroup()}>
                 <PeopleFill /> Create group
-              </Button>
+              </CreateGroupButton>
             </>
           ))}
 
