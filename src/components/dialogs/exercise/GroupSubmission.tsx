@@ -47,9 +47,6 @@ const Groups = () => {
 
   const isLeader = leader === userDetails?.login
 
-  // Obtain from exercise info once implemented
-  const GROUP_SIZE = 4
-
   const getGroupMembers = () => {
     // Replace with Axios call
     return [userDetails?.login]
@@ -132,10 +129,6 @@ const Groups = () => {
                 isMulti
                 value={unparsedSelected}
                 onChange={(selectedOptions: any) => setUnparsedSelected(selectedOptions)}
-                isOptionDisabled={() =>
-                  unparsedSelected.length >=
-                  GROUP_SIZE - (groupMembers.length + peopleInvited.length)
-                }
               />
 
               <div style={{ display: 'flex', justifyContent: 'end' }}>
