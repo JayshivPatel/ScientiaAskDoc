@@ -101,7 +101,17 @@ export const ModulePill = styled('p', {
   textAlign: 'center',
 })
 
-export const LinkLogo = styled(BoxArrowUpRight, {
+export const ResourcesWrapper = styled('div', {
+  display: 'grid',
+  justifyItems: 'center',
+  width: '100%',
+  gridTemplateColumns: 'repeat(3, 1fr)',
+  gap: '2rem',
+  gridGap: '2rem',
+  marginTop: '1rem',
+})
+
+export const LinkIcon = styled(BoxArrowUpRight, {
   marginRight: '0.5rem',
   fill: 'inherit',
   float: 'left',
