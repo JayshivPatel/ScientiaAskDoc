@@ -7,7 +7,13 @@ import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise, Module, SetState } from '../../constants/types'
 import { useExercise } from '../../lib/exerciseDialog.service'
 import { Button } from '../../styles/_app.style'
-import { EmailButton, ModulePill, SpecLink, UploadWrapper } from '../../styles/exerciseDialog.style'
+import {
+  EmailButton,
+  GroupInstructionText,
+  ModulePill,
+  SpecLink,
+  UploadWrapper,
+} from '../../styles/exerciseDialog.style'
 import Dialog from './Dialog'
 import FileUpload from './exercise/FileUpload'
 import Groups from './exercise/GroupSubmission'
@@ -118,12 +124,14 @@ const ExerciseDialog = ({
             </>
           ) : (
             <>
-              <p style={{ marginTop: '1rem' }}>
+              <GroupInstructionText>
                 You are not currently in a group. To join an existing group, ask the leader to
                 invite you through Scientia, then check your email for the invite link.
-              </p>
+              </GroupInstructionText>
 
-              <p style={{ marginTop: '1rem' }}>Alternatively, you can create a group here:</p>
+              <GroupInstructionText>
+                Alternatively, you can create a group here:
+              </GroupInstructionText>
 
               <Button
                 type="button"

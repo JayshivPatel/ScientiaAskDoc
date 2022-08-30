@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { PersonPlusFill, Send, X } from 'react-bootstrap-icons'
+import { Hourglass, PersonPlusFill, Send, X } from 'react-bootstrap-icons'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 
 import { useUser } from '../../../lib/user.context'
 import { Button } from '../../../styles/_app.style'
+import {
+  GroupMemberList,
+  InviteButtonsWrapper,
+  InviteModeButton,
+} from '../../../styles/exerciseDialog.style'
 
 // Hard-coded options, remove later
 const users = ['adumble', 'rweasley', 'hgranger', 'triddle', 'ssnape', 'abc123', 'def456', 'ghi789']
@@ -87,20 +92,20 @@ const Groups = () => {
 
   return (
     <div>
-      <ul style={{ marginBottom: '1rem', listStyleType: 'none' }}>
+      <GroupMemberList>
         {groupMembers.map((m) => (
           <li>{`${m}${m === leader ? ' (Leader)' : ''}`}</li>
         ))}
-      </ul>
+      </GroupMemberList>
 
       {peopleInvited.length > 0 && (
         <>
-          <h6>Invited:</h6>
-          <ul style={{ marginBottom: '1rem', listStyleType: 'none' }}>
+          <h6>Invited</h6>
+          <GroupMemberList>
             {peopleInvited.map((p) => (
               <li>{p}</li>
             ))}
-          </ul>
+          </GroupMemberList>
         </>
       )}
 
@@ -127,31 +132,29 @@ const Groups = () => {
                 onChange={(selectedOptions: any) => setUnparsedSelected(selectedOptions)}
               />
 
-              <div style={{ display: 'flex', justifyContent: 'end' }}>
-                <Button
+              <InviteButtonsWrapper>
+                <InviteModeButton
                   type="button"
                   onClick={() => {
                     setUnparsedSelected([])
                     setInviteMode(false)
                   }}
-                  style={{ width: 'auto', padding: '0.5rem', marginLeft: '0.5rem' }}
                 >
                   <X /> Cancel
-                </Button>
+                </InviteModeButton>
 
-                <Button
+                <InviteModeButton
                   type="button"
                   onClick={() => {
                     onInvite()
                     setUnparsedSelected([])
                     setInviteMode(false)
                   }}
-                  style={{ width: 'auto', padding: '0.5rem', marginLeft: '0.5rem' }}
                   disabled={unparsedSelected.length === 0}
                 >
                   <Send /> Send
-                </Button>
-              </div>
+                </InviteModeButton>
+              </InviteButtonsWrapper>
             </>
           )}
         </>

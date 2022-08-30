@@ -1,5 +1,6 @@
 import { BoxArrowUpRight, Envelope, Trash3Fill } from 'react-bootstrap-icons'
 
+import { Button } from './_app.style'
 import { styled } from './stitches.config'
 
 // TODO: refactor this css
@@ -61,6 +62,27 @@ export const OpenLinkButton = styled(BoxArrowUpRight, {
   '&:hover': {
     fill: '$lowContrast',
   },
+})
+
+export const GroupInstructionText = styled('p', {
+  marginTop: '1rem',
+  color: '$highContrast',
+})
+
+export const GroupMemberList = styled('ul', {
+  marginBottom: '1rem',
+  listStyleType: 'none',
+})
+
+export const InviteModeButton = styled(Button, {
+  width: 'auto',
+  padding: '0.5rem',
+  marginLeft: '0.5rem',
+})
+
+export const InviteButtonsWrapper = styled('div', {
+  display: 'flex',
+  justifyContent: 'end',
 })
 
 export const UploadWrapper = styled('div', {
