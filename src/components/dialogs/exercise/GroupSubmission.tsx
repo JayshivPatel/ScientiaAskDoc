@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Send } from 'react-bootstrap-icons'
+import { PersonPlusFill } from 'react-bootstrap-icons'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 
@@ -129,7 +129,7 @@ const Groups = () => {
             style={{ width: 'auto', padding: '0.5rem', float: 'right' }}
             disabled={unparsedSelected.length === 0}
           >
-            Invite <Send />
+            <PersonPlusFill /> Invite
           </Button>
         </>
       )}

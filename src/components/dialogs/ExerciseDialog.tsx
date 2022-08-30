@@ -1,6 +1,7 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import { useEffect, useState } from 'react'
 import { BoxArrowUpRight } from 'react-bootstrap-icons'
+import { PeopleFill } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise, Module, SetState } from '../../constants/types'
@@ -117,7 +118,7 @@ const ExerciseDialog = ({
               onClick={() => createGroup()}
               style={{ width: 'auto', padding: '0.5rem' }}
             >
-              Create group
+              <PeopleFill /> Create group
             </Button>
           ))}
 
