@@ -71,7 +71,6 @@ export const GroupInstructionText = styled('p', {
 
 export const GroupMemberList = styled('ul', {
   marginBottom: '1rem',
-  listStyleType: 'none',
 })
 
 export const InviteModeButton = styled(Button, {
