@@ -23,7 +23,11 @@ import {
 import Dialog from './Dialog'
 import FileUpload from './exercise/FileUpload'
 
-const EXERCISE_DURATIONS = ['0-1 hours', '1-10 hours', '11-20 hours', '20+ hours']
+const EXERCISE_DURATIONS = [
+  'The exercise was shorter than expected',
+  'The exercise was the appropriate length',
+  'The exercise was too long',
+]
 
 const ExerciseDialog = ({
   exercise,
@@ -118,7 +122,9 @@ const ExerciseDialog = ({
             {submittedFiles?.length > 0 && (
               <WorkloadSurveyWrapper>
                 <label htmlFor="exercise-duration">
-                  How many hours did this coursework take you?
+                  {/* This exercise was estimated to take {exerciseMaterials.expectedHours} hours. How did you find the workload for this exercise? */}
+                  This exercise was estimated to take 10 hours. How did you find the workload for
+                  this exercise? {/* TODO: replace with line above when ready */}
                 </label>
                 <WorkloadSelect
                   value={timeSpent}
