@@ -127,7 +127,7 @@ export const EmailAddress = styled('address', {
 
 export const Deadline = styled('p', {
   fontSize: '14px',
-  color: '$sand8',
+  color: '$highContrast',
 })
 
 export const SubmissionWrapper = styled('div', {
