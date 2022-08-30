@@ -64,12 +64,6 @@ export const OpenLinkButton = styled(BoxArrowUpRight, {
   },
 })
 
-export const LineBreak = styled('hr', {
-  marginTop: '1rem',
-  marginBottom: '1rem',
-  color: '$lowContrast',
-})
-
 export const GroupInstructionText = styled('p', {
   marginTop: '1rem',
   color: '$highContrast',

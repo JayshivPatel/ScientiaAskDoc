@@ -11,7 +11,6 @@ import {
   EmailButton,
   GroupInstructionText,
   GroupStatus,
-  LineBreak,
   ModulePill,
   SpecLink,
   UploadWrapper,
@@ -116,8 +115,6 @@ const ExerciseDialog = ({
           )}
         </div>
 
-        <LineBreak />
-
         {submissionType === 'group' &&
           (inGroup ? (
             <>
@@ -142,7 +139,12 @@ const ExerciseDialog = ({
               <Button
                 type="button"
                 onClick={() => createGroup()}
-                style={{ width: 'auto', padding: '0.5rem', margin: '0.5rem' }}
+                style={{
+                  width: 'auto',
+                  padding: '0.5rem',
+                  marginLeft: '0.5rem',
+                  marginTop: '1rem',
+                }}
               >
                 <PeopleFill /> Create group
               </Button>
@@ -197,7 +199,7 @@ const ExerciseDialog = ({
                     </div>
                   </div>
                 )}
-                <LineBreak />
+                <hr />
                 <p style={{ fontSize: '0.9rem', marginTop: '1rem', textAlign: 'center' }}>
                   By uploading, you agree that this is your own, unaided work.
                 </p>
