@@ -117,13 +117,22 @@ const ExerciseDialog = ({
               <Groups />
             </>
           ) : (
-            <Button
-              type="button"
-              onClick={() => createGroup()}
-              style={{ width: 'auto', padding: '0.5rem' }}
-            >
-              <PeopleFill /> Create group
-            </Button>
+            <>
+              <p style={{ marginTop: '1rem' }}>
+                You are not currently in a group. To join an existing group, ask the leader to
+                invite you through Scientia, then check your email for the invite link.
+              </p>
+
+              <p style={{ marginTop: '1rem' }}>Alternatively, you can create a group here:</p>
+
+              <Button
+                type="button"
+                onClick={() => createGroup()}
+                style={{ width: 'auto', padding: '0.5rem', margin: '0.5rem' }}
+              >
+                <PeopleFill /> Create group
+              </Button>
+            </>
           ))}
 
         {!(submissionType === 'group' && !inGroup) &&
