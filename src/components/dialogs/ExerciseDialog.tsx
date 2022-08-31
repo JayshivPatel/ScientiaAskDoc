@@ -107,28 +107,31 @@ const ExerciseDialog = ({
               ))}
             </UploadWrapper>
             {submittedFiles?.length > 0 && (
-              <WorkloadSurveyWrapper>
-                <label htmlFor="exercise-duration">
-                  How many hours did this coursework take you?
-                </label>
-                <WorkloadSelect
-                  value={timeSpent}
-                  onChange={(event) => {
-                    setTimeSpent(event.target.value)
-                    submitWorkload(event.target.value)
-                  }}
-                  name="exercise-duration"
-                >
-                  <option value="">Select...</option>
-                  {EXERCISE_DURATIONS.map((duration, index) => (
-                    <option key={index} value={duration}>
-                      {duration}
-                    </option>
-                  ))}
-                </WorkloadSelect>
-              </WorkloadSurveyWrapper>
+              <>
+                <WorkloadSurveyWrapper>
+                  <label htmlFor="exercise-duration">
+                    How many hours did this coursework take you?
+                  </label>
+                  <WorkloadSelect
+                    value={timeSpent}
+                    onChange={(event) => {
+                      setTimeSpent(event.target.value)
+                      submitWorkload(event.target.value)
+                    }}
+                    style={{ display: 'inline', marginLeft: '0.5rem' }}
+                    name="exercise-duration"
+                  >
+                    <option value="">Select...</option>
+                    {EXERCISE_DURATIONS.map((duration, index) => (
+                      <option key={index} value={duration}>
+                        {duration}
+                      </option>
+                    ))}
+                  </WorkloadSelect>
+                </WorkloadSurveyWrapper>
+                <hr />
+              </>
             )}
-            <hr />
             <PlagiarismDisclaimer>
               By uploading, you agree that this is your own, unaided work.
             </PlagiarismDisclaimer>
