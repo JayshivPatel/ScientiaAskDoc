@@ -144,3 +144,8 @@ export class SubmittedFile {
   @Expose({ name: 'target_submission_file_name' })
   targetFileName: string
 }
+
+export class UploadedFile {
+  file: File
+  filename: string
+}

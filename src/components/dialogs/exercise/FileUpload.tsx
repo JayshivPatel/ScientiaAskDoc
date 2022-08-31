@@ -5,7 +5,7 @@ import { CheckLg, Trash3Fill, Upload } from 'react-bootstrap-icons'
 
 import { endpoints } from '../../../constants/endpoints'
 import { LONDON_TIMEZONE } from '../../../constants/global'
-import { FileRequirement, SubmittedFile } from '../../../constants/types'
+import { FileRequirement, SubmittedFile, UploadedFile } from '../../../constants/types'
 import { Button } from '../../../styles/_app.style'
 import { OpenLinkButton, TrashButton, UploadButton } from '../../../styles/exerciseDialog.style'
 import { css, theme } from '../../../styles/stitches.config'
@@ -26,6 +26,11 @@ const FileUpload = ({
   deleteFile: (_: SubmittedFile) => void
 }) => {
   const [submittedFile, setSubmittedFile] = useState<SubmittedFile | null>(null)
+  const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null)
+
+  const uploadFile = (file: File) => {
+    setUploadedFile({ file, filename: file.name })
+  }
 
   useEffect(() => {
     setSubmittedFile(
@@ -141,10 +146,8 @@ const FileUpload = ({
         onChange={(event) => {
           if (!event.target.files) return
           // if (exercise.endDate > new Date()) return
-          submitFile({
-            file: event.target.files[0],
-            targetFileName: fileRequirement.name,
-          })
+          const newFile = event.target.files[0]
+          uploadFile(newFile)
           // Fixes Chrome and Firefox upload issue https://stackoverflow.com/a/25948969/10564311
           ;(event.target as HTMLInputElement).value = ''
           return false
