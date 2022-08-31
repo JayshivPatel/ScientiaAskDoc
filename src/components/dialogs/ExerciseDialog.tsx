@@ -5,6 +5,7 @@ import { BoxArrowUpRight } from 'react-bootstrap-icons'
 import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise, Module, SetState } from '../../constants/types'
 import { useExercise } from '../../lib/exerciseDialog.service'
+import { Button } from '../../styles/_app.style'
 import {
   Deadline,
   EmailAddress,
@@ -128,6 +129,13 @@ const ExerciseDialog = ({
                 </WorkloadSelect>
               </WorkloadSurveyWrapper>
             )}
+
+            <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'end' }}>
+              <Button type="submit" style={{ width: 'auto', padding: '0.5rem' }}>
+                Submit
+              </Button>
+            </div>
+
             <hr />
             <PlagiarismDisclaimer>
               By uploading, you agree that this is your own, unaided work.
