@@ -33,6 +33,7 @@ const FileUpload = ({
   }
 
   const submit = (file: File) => {
+    if (uploadedFile === null) return
     submitFile({
       file,
       targetFileName: fileRequirement.name,
