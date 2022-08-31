@@ -6,6 +6,7 @@ export type SetState<Value> = Dispatch<SetStateAction<Value>>
 export class UserDetails {
   login: string
   email: string
+  cohort: string
   firstname: string
   lastname: string
 

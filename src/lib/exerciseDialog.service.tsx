@@ -5,6 +5,7 @@ import { endpoints } from '../constants/endpoints'
 import { Exercise, ExerciseMaterials, SubmittedFile } from '../constants/types'
 import { AxiosContext, useAxios } from './axios.context'
 import { useToast } from './toast.context'
+import { useUser } from './user.context'
 import { useYear } from './year.context'
 
 /**
@@ -18,12 +19,11 @@ export const useExercise = (exercise: Exercise) => {
   const axiosInstance = useContext(AxiosContext)
   const { year } = useYear()
   const { addToast } = useToast()
-  // TODO: get year group from user details
-  const yearGroup = 'c1'
+  const { userDetails } = useUser()
 
   const [exerciseMaterials, setExerciseMaterials] = useState<ExerciseMaterials | null>(null)
   const { data: rawExerciseMaterials, error: exerciseMaterialsError } = useAxios({
-    url: endpoints.exerciseMaterials(`${year}`, yearGroup, exercise.number),
+    url: endpoints.exerciseMaterials(`${year}`, userDetails!.cohort, exercise.number),
     method: 'GET',
   })
   useEffect(() => {
