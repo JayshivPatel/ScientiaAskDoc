@@ -19,25 +19,33 @@ const FileUpload = ({
   submittedFiles,
   submitFile,
   deleteFile,
+  uploadRef,
 }: {
   fileRequirement: FileRequirement
   submittedFiles: SubmittedFile[]
   submitFile: (_: { file: File; targetFileName: string }) => void
   deleteFile: (_: SubmittedFile) => void
+  uploadRef: any
 }) => {
   const [submittedFile, setSubmittedFile] = useState<SubmittedFile | null>(null)
   const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null)
+
+  useEffect(() => {
+    uploadRef.current = submit
+  }, [])
+
+  useEffect(() => {
+    console.log({ uploadedFile })
+  }, [uploadedFile])
 
   const uploadFile = (file: File) => {
     setUploadedFile({ file, filename: file.name })
   }
 
-  const submit = (file: File) => {
+  const submit = () => {
+    console.log('About to submit!')
     if (uploadedFile === null) return
-    submitFile({
-      file,
-      targetFileName: fileRequirement.name,
-    })
+    console.log(`Submitting ${fileRequirement.name}`)
   }
 
   useEffect(() => {

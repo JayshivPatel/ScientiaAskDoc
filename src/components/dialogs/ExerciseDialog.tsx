@@ -1,9 +1,9 @@
 import { formatInTimeZone } from 'date-fns-tz'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { BoxArrowUpRight } from 'react-bootstrap-icons'
 
 import { LONDON_TIMEZONE } from '../../constants/global'
-import { Exercise, Module, SetState } from '../../constants/types'
+import { Exercise, Module, SetState, UploadedFile } from '../../constants/types'
 import { useExercise } from '../../lib/exerciseDialog.service'
 import { Button } from '../../styles/_app.style'
 import {
@@ -40,6 +40,8 @@ const ExerciseDialog = ({
     useExercise(exercise)
   const { owner, spec, dataFiles, modelAnswers, fileRequirements } = exerciseMaterials || {}
   const [timeSpent, setTimeSpent] = useState('')
+
+  const uploadRef = useRef(null)
 
   // Date format: https://date-fns.org/v2.29.1/docs/format
   const displayTimestamp = (date: Date | string) =>
@@ -104,6 +106,7 @@ const ExerciseDialog = ({
                   submittedFiles={submittedFiles}
                   submitFile={submitFile}
                   deleteFile={deleteFile}
+                  uploadRef={uploadRef}
                 />
               ))}
             </UploadWrapper>
@@ -131,7 +134,11 @@ const ExerciseDialog = ({
             )}
 
             <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'end' }}>
-              <Button type="submit" style={{ width: 'auto', padding: '0.5rem' }}>
+              <Button
+                type="button"
+                style={{ width: 'auto', padding: '0.5rem' }}
+                onClick={() => uploadRef.current}
+              >
                 Submit
               </Button>
             </div>
