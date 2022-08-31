@@ -1,10 +1,8 @@
-import { formatInTimeZone } from 'date-fns-tz'
 import { useState } from 'react'
-import { BoxArrowUpRight } from 'react-bootstrap-icons'
 
-import { LONDON_TIMEZONE } from '../../constants/global'
 import { Exercise, Module, SetState } from '../../constants/types'
 import { useExercise } from '../../lib/exerciseDialog.service'
+import { displayTimestamp } from '../../lib/utilities.service'
 import {
   Deadline,
   EmailAddress,
@@ -39,10 +37,6 @@ const ExerciseDialog = ({
     useExercise(exercise)
   const { owner, spec, dataFiles, modelAnswers, fileRequirements } = exerciseMaterials || {}
   const [timeSpent, setTimeSpent] = useState('')
-
-  // Date format: https://date-fns.org/v2.29.1/docs/format
-  const displayTimestamp = (date: Date | string) =>
-    formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm aaa zzz, EEEE d LLL yyyy')
 
   return (
     exercise &&

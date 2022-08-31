@@ -1,18 +1,13 @@
-import { formatInTimeZone } from 'date-fns-tz'
 import prettyBytes from 'pretty-bytes'
 import { useEffect, useState } from 'react'
-import { CheckLg, Trash3Fill, Upload } from 'react-bootstrap-icons'
+import { CheckLg, Upload } from 'react-bootstrap-icons'
 
 import { endpoints } from '../../../constants/endpoints'
-import { LONDON_TIMEZONE } from '../../../constants/global'
 import { FileRequirement, SubmittedFile } from '../../../constants/types'
+import { displayTimestamp } from '../../../lib/utilities.service'
 import { Button } from '../../../styles/_app.style'
-import { OpenLinkButton, TrashButton, UploadButton } from '../../../styles/exerciseDialog.style'
-import { css, theme } from '../../../styles/stitches.config'
-
-// Date format: https://date-fns.org/v2.29.1/docs/format
-const displayTimestamp = (date: Date | string) =>
-  formatInTimeZone(date, LONDON_TIMEZONE, 'h:mm:ss aaa zzz, EEEE d LLL yyyy')
+import { TrashButton, UploadButton } from '../../../styles/exerciseDialog.style'
+import { css } from '../../../styles/stitches.config'
 
 const FileUpload = ({
   fileRequirement,
