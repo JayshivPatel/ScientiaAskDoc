@@ -4,7 +4,6 @@ import { styled } from './stitches.config'
 
 // TODO: refactor this css
 export const SpecLink = styled('a', {
-  // width: 'auto',
   width: 'fit-content',
   alignItems: 'center',
   padding: '0.5rem 1rem',
