@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  src: '../../node_modules/@ibm/plex/scss/ibm-plex.scss';
+}
+
+.bubbles-container {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.bubbles:hover {
+  background-color: #a0a0a0;
+  color: #000000;
+  cursor: pointer;
+}
+
+.bubbles {
+  padding: 0.5rem;
+  border-radius: 25px;
+  background-color: #dedede;
+  border: 1.5px solid rgb(78, 78, 78);
+  margin: 3px;
+  color: #000000;
+  font-size: 1.15rem;
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+}

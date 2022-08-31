@@ -1,0 +1,28 @@
+ul {
+  list-style-position: outside;
+  list-style-type: disc;
+}
+summary {
+  font-size: 25px;
+  padding: 4px;
+}
+
+a:link {
+  font-size: 16px;
+}
+
+a:visited {
+  color: rgb(112, 112, 112);
+}
+
+a:hover {
+  color: rgb(255, 205, 230);
+}
+
+a:active {
+  color: blue;
+}
+
+h2 {
+  font-size: 22px;
+}

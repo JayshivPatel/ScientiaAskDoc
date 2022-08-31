@@ -46,7 +46,7 @@ const Module = () => {
           color: '$lowContrast',
           margin: '0.5rem 0rem',
           marginBottom: '1rem',
-          fontWeight: '400',
+          fontWeight: '100',
         })()}
       >
         {moduleCode}

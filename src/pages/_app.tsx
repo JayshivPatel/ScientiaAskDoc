@@ -16,6 +16,7 @@ import Login from './Login'
 import Materials from './Materials'
 import Module from './Module'
 import Modules from './Modules'
+import Questions from './Questions'
 import Timeline from './Timeline'
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
                     <Route index element={<Login />} />
                     <Route element={<ProtectedRoute />}>
                       <Route path=":requestedYear" element={<YearRoute />}>
+                        <Route path="questions" element={<Questions />} />
                         <Route path="timeline" element={<Timeline />} />
                         <Route path="modules">
                           <Route index element={<Modules />} />

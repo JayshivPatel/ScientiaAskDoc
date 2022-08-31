@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 
 import { Tabs } from '../components/Tabs'
+import Chatbot from '../components/askdoc/popup/chatbot'
 import { useUser } from '../lib/user.context'
 import { Container } from '../styles/_app.style'
 import { css } from '../styles/stitches.config'
+import { styled } from '../styles/stitches.config'
 
 const Modules = () => {
   const { userDetails } = useUser()
@@ -31,6 +33,9 @@ const Modules = () => {
         )}
         onClick={(tab: any) => navigate(`${tab.code}`)}
       />
+
+      <br></br>
+      <Chatbot />
     </Container>
   )
 }
