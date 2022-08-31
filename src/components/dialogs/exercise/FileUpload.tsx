@@ -32,6 +32,13 @@ const FileUpload = ({
     setUploadedFile({ file, filename: file.name })
   }
 
+  const submit = (file: File) => {
+    submitFile({
+      file,
+      targetFileName: fileRequirement.name,
+    })
+  }
+
   useEffect(() => {
     setSubmittedFile(
       submittedFiles?.find(({ targetFileName }) => targetFileName === fileRequirement.name) || null
