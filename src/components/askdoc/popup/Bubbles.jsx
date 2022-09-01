@@ -10,7 +10,7 @@ const Bubbles = (props) => {
   })
 
   const optionsMarkup = options.map((array) => (
-    <a key={array[0].key} href={array[1]} target="_blank">
+    <a key={array[0].key} rel="noreferrer" href={array[1]} target="_blank">
       <button className="bubbles" onClick={array[0].handler}>
         {array[0].text}
       </button>

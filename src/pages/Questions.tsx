@@ -32,7 +32,7 @@ const Questions = () => {
               <p>The PG Senior Tutors are:</p>
               <p>
                 Teaching:{' '}
-                <a target="_blank" rel="noreferrer" ref="mailto:t.lancaster@imperial.ac.uk">
+                <a target="_blank" rel="noreferrer" href="mailto:t.lancaster@imperial.ac.uk">
                   Dr Thomas Lancaster
                 </a>
               </p>
@@ -81,7 +81,7 @@ const Questions = () => {
 
             <li>
               <h2>Where is Maria's office?</h2>
-              <p>Maria’s room is located at room 226, Huxley Building.</p>
+              <p>Maria’s room is located at room 373, Huxley Building.</p>
             </li>
             <li>
               <h2>How do I book Labs?</h2>

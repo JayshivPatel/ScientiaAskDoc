@@ -5,7 +5,6 @@ import Chatbot from '../components/askdoc/popup/chatbot'
 import { useUser } from '../lib/user.context'
 import { Container } from '../styles/_app.style'
 import { css } from '../styles/stitches.config'
-import { styled } from '../styles/stitches.config'
 
 const Modules = () => {
   const { userDetails } = useUser()
