@@ -5,7 +5,12 @@ const MessageParser = ({ children, actions }) => {
   const parse = (message) => {
     let messageLower = message.toLowerCase()
 
-    if (messageLower.includes('hello')) {
+    if (
+      messageLower.includes('hello') ||
+      messageLower === 'hi' ||
+      messageLower.includes('how are you') ||
+      messageLower.includes('good morning')
+    ) {
       actions.initialGreeting()
       return
     }
@@ -13,7 +18,7 @@ const MessageParser = ({ children, actions }) => {
     if (
       messageLower.includes('who are you') ||
       messageLower.includes('what is your name') ||
-      messageLower.includes('when were you made')
+      messageLower.includes('when were you')
     ) {
       actions.outputInfo()
       return
@@ -35,7 +40,7 @@ const MessageParser = ({ children, actions }) => {
         processOutput(response)
       })
       .catch((err) => {
-        actions.outputMessage("Unfortunately, I'm having trouble connecting...")
+        actions.outputMessage("Unfortunately, I'm having trouble connecting ...")
         console.log(err)
       })
 

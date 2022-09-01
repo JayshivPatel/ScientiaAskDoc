@@ -25,20 +25,20 @@ const Questions = () => {
               <h2>Who is the department tutor?</h2>
               <p>
                 The UG Senior Tutor is{' '}
-                <a target="_blank" href="mailto:m.valera-espina@imperial.ac.uk">
+                <a target="_blank" rel="noreferrer" href="mailto:m.valera-espina@imperial.ac.uk">
                   Dr Maria Valera-Espina
                 </a>
               </p>
               <p>The PG Senior Tutors are:</p>
               <p>
                 Teaching:{' '}
-                <a target="_blank" href="mailto:t.lancaster@imperial.ac.uk">
+                <a target="_blank" rel="noreferrer" ref="mailto:t.lancaster@imperial.ac.uk">
                   Dr Thomas Lancaster
                 </a>
               </p>
               <p>
                 Research:{' '}
-                <a target="_blank" href="mailto:s.drossopolou@imperial.ac.uk">
+                <a target="_blank" rel="noreferrer" href="mailto:s.drossopolou@imperial.ac.uk">
                   Professor Sophia Drossopolou
                 </a>
               </p>
@@ -51,6 +51,7 @@ const Questions = () => {
                 The list of current DoCSoc committee members can be viewed{' '}
                 <a
                   target="_blank"
+                  rel="noreferrer"
                   href="https://www.imperialcollegeunion.org/activities/a-to-z/computing"
                 >
                   here
@@ -69,6 +70,7 @@ const Questions = () => {
                 Follow this{' '}
                 <a
                   target="_blank"
+                  rel="noreferrer"
                   href="https://www.imperial.ac.uk/media/imperial-college/visit/public/SouthKensingtonCampus.pdf"
                 >
                   link
@@ -85,7 +87,7 @@ const Questions = () => {
               <h2>How do I book Labs?</h2>
               <p>
                 Use the{' '}
-                <a target="_blank" href="https://mrbs.doc.ic.ac.uk/lab/">
+                <a target="_blank" rel="noreferrer" href="https://mrbs.doc.ic.ac.uk/lab/">
                   {' '}
                   link
                 </a>
@@ -107,7 +109,7 @@ const Questions = () => {
                 If you have a disability or impairment and you would like access to adjustments and
                 support, such as additional exam arrangements, your first point of contact should be
                 the Department Disability Officer{' '}
-                <a target="_blank" href="mailto:t.lancaster@imperial.ac.uk">
+                <a target="_blank" rel="noreferrer" href="mailto:t.lancaster@imperial.ac.uk">
                   Dr Thomas Lancaster
                 </a>
               </p>
@@ -115,6 +117,7 @@ const Questions = () => {
                 You must{' '}
                 <a
                   target="_blank"
+                  rel="noreferrer"
                   href="https://www.imperial.ac.uk/disability-advisory-service/current-students/evidence/"
                 >
                   submit
@@ -146,7 +149,7 @@ const Questions = () => {
               <h2>How do I see my exam schedule?</h2>
               <p>
                 Please visit the{' '}
-                <a target="_blank" href="https://exams.doc.ic.ac.uk">
+                <a target="_blank" rel="noreferrer" href="https://exams.doc.ic.ac.uk">
                   link
                 </a>{' '}
                 and follow the link "Exam Timetable"
@@ -157,7 +160,7 @@ const Questions = () => {
               <h2>Where can I find past exam papers?</h2>
               <p>
                 Please visit the{' '}
-                <a target="_blank" href="https://exams.doc.ic.ac.uk">
+                <a target="_blank" rel="noreferrer" href="https://exams.doc.ic.ac.uk">
                   link
                 </a>{' '}
                 and for the link "Past Exams Archive"
@@ -168,7 +171,11 @@ const Questions = () => {
               <h2>What percentage on an exam corresponds to a specific grade?</h2>
               <p>
                 See the converter on{' '}
-                <a target="_blank" href="https://cate.doc.ic.ac.uk/grading.cghi?key=2021">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://cate.doc.ic.ac.uk/grading.cghi?key=2021"
+                >
                   CATE
                 </a>
               </p>
@@ -217,7 +224,7 @@ const Questions = () => {
               <h2>Where can I see my grades?</h2>
               <p>
                 Follow this{' '}
-                <a target="_blank" href="https://exams.doc.ic.ac.uk/">
+                <a target="_blank" rel="noreferrer" href="https://exams.doc.ic.ac.uk/">
                   link
                 </a>{' '}
                 and click on the link at the top of the page called "Your own unofficial grades"
@@ -227,7 +234,7 @@ const Questions = () => {
               <h2>When is my first exam?</h2>
               <p>
                 Usually in the first week of May. Timetable available{' '}
-                <a target="_blank" href="https://exams.doc.ic.ac.uk">
+                <a target="_blank" rel="noreferrer" href="https://exams.doc.ic.ac.uk">
                   here
                 </a>
               </p>
@@ -255,7 +262,7 @@ const Questions = () => {
               <h2>Can I transfer from BEng to MEng? </h2>
               <p>
                 You need to contact the UG Senior Tutor,{' '}
-                <a target="_blank" href="mailto:m.valera-espina@imperial.ac.uk">
+                <a target="_blank" rel="noreferrer" href="mailto:m.valera-espina@imperial.ac.uk">
                   {' '}
                   Dr Maria Valera-Espina
                 </a>
@@ -266,7 +273,7 @@ const Questions = () => {
               <h2>Can I transfer from MEng to BEng? </h2>
               <p>
                 You need to contact the UG Senior Tutor,{' '}
-                <a target="_blank" href="mailto:m.valera-espina@imperial.ac.uk">
+                <a target="_blank" rel="noreferrer" href="mailto:m.valera-espina@imperial.ac.uk">
                   {' '}
                   Dr Maria Valera-Espina
                 </a>
@@ -277,7 +284,7 @@ const Questions = () => {
               <h2>Can I transfer from Computing to JMC? </h2>
               <p>
                 You need to contact the UG Senior Tutor,{' '}
-                <a target="_blank" href="mailto:m.valera-espina@imperial.ac.uk">
+                <a target="_blank" rel="noreferrer" href="mailto:m.valera-espina@imperial.ac.uk">
                   {' '}
                   Dr Maria Valera-Espina
                 </a>
@@ -290,6 +297,7 @@ const Questions = () => {
                 This information can be found here:{' '}
                 <a
                   target="_blank"
+                  rel="noreferrer"
                   href="https://www.imperial.ac.uk/admin-services/registry/term-dates/"
                 >
                   {' '}
@@ -304,6 +312,7 @@ const Questions = () => {
                 This can be found at{' '}
                 <a
                   target="_blank"
+                  rel="noreferrer"
                   href="https://www.imperial.ac.uk/admin-services/ict/self-service/admin-systems/my-imperial/"
                 >
                   {' '}
@@ -335,6 +344,7 @@ const Questions = () => {
                 visit this{' '}
                 <a
                   target="_blank"
+                  rel="noreferrer"
                   href="https://www.imperial.ac.uk/student-support-zone/your-health/doctor-and-dentist/"
                 >
                   link
@@ -348,7 +358,11 @@ const Questions = () => {
               <p>
                 Imperial offers different types of support, ranging from departmental to halls. To
                 find out more follow this{' '}
-                <a target="_blank" href="https://www.imperial.ac.uk/student-support-zone/support/">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://www.imperial.ac.uk/student-support-zone/support/"
+                >
                   {' '}
                   link
                 </a>
@@ -363,7 +377,7 @@ const Questions = () => {
               <h2>Where are my old repositories?</h2>
               <p>
                 Email{' '}
-                <a target="_blank" href="mailto:doc-help@imperial.ac.uk">
+                <a target="_blank" rel="noreferrer" href="mailto:doc-help@imperial.ac.uk">
                   {' '}
                   Doc Help
                 </a>{' '}
@@ -376,6 +390,7 @@ const Questions = () => {
                 The network to connect to is: Imperial-WPA (all current students). Follow this{' '}
                 <a
                   target="_blank"
+                  rel="noreferrer"
                   href="https://www.imperial.ac.uk/admin-services/ict/self-service/connect-communicate/wifi-and-networks/access-wifi/imperial-wpa/"
                 >
                   {' '}
@@ -419,7 +434,7 @@ const Questions = () => {
                 {' '}
                 ICHack is an annual hackathon organised by DoCSoc at Imperial. Further information
                 can be found at:{' '}
-                <a target="_blank" href="https://ichack.org">
+                <a target="_blank" rel="noreferrer" href="https://ichack.org">
                   {' '}
                   ICHack Website
                 </a>
@@ -517,6 +532,7 @@ const Questions = () => {
                 Information available here:{' '}
                 <a
                   target="_blank"
+                  rel="noreferrer"
                   href="https://www.imperial.ac.uk/computing/current-students/course-admin/regulations/beng-comp/"
                 >
                   {' '}
@@ -525,6 +541,7 @@ const Questions = () => {
                 ,{' '}
                 <a
                   target="_blank"
+                  rel="noreferrer"
                   href="https://www.imperial.ac.uk/computing/current-students/course-admin/regulations/meng-comp/"
                 >
                   {' '}
@@ -540,6 +557,7 @@ const Questions = () => {
                 can be found here:{' '}
                 <a
                   target="_blank"
+                  rel="noreferrer"
                   href="https://imperiallondon.sharepoint.com/sites/UG-DocMitigations-CO/Lists/Appeal%20Form/AllItems.aspx"
                 >
                   {' '}
@@ -547,7 +565,7 @@ const Questions = () => {
                 </a>{' '}
                 You must submit the form within 15 working days of the publication of results, to
                 the email address:{' '}
-                <a target="_blank" href="mailto:student.appeals@imperial.ac.uk">
+                <a target="_blank" rel="noreferrer" href="mailto:student.appeals@imperial.ac.uk">
                   {' '}
                   Student Appeals
                 </a>
